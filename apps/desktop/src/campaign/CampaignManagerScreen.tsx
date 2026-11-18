@@ -11,6 +11,7 @@ import { notACampaignFolder } from './campaignFolderModel';
 import { CampaignMigrationScreen } from './CampaignMigrationScreen';
 import { CampaignHelpButton } from './CampaignHelpScreen';
 import { legacyMigrationRows, olderCampaignFolder } from './campaignMigrationModel';
+import { ActionBanner, CAMPAIGN_MANAGER_ART } from '../characterHub/LandingScreen';
 
 function hasLegacyCampaigns(): boolean {
   try {
@@ -23,7 +24,7 @@ function hasLegacyCampaigns(): boolean {
 /**
  * Campaign Manager: the known campaign folders (`<app data>/campaign-folders.json`) on the left,
  * each with Forget, the selected folder's `campaign.json` on the right (its typed members, the
- * creator first), and a bottom action bar (Load / New campaign… / Open folder… / Edit / Cancel) —
+ * creator first) under the open banner, and a bottom action bar (New campaign… / Open folder… / Edit / Cancel) —
  * patterned after the Load Character screen. A campaign is identified by its folder path. Older
  * (pre-folder) campaigns open the migration screen first (`decisions.md §14`).
  */
@@ -45,6 +46,22 @@ function formatDate(iso: string): string {
   return Number.isNaN(parsed.getTime()) ? iso : parsed.toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' });
 }
 
+export const OPEN_CAMPAIGN_HINT = 'Select a campaign to open it';
+
+/** The open button: the main screen's Campaign Manager banner, at the full width of the detail column. */
+export function OpenCampaignBanner(props: { opened: OpenedCampaign | null; onOpen: (campaignDir: string) => void }) {
+  const { opened } = props;
+  return (
+    <ActionBanner
+      title={opened ? `Open ${opened.campaign.name}` : 'Open campaign'}
+      art={CAMPAIGN_MANAGER_ART}
+      onClick={() => opened && props.onOpen(opened.campaignDir)}
+      disabled={!opened}
+      disabledHint={OPEN_CAMPAIGN_HINT}
+    />
+  );
+}
+
 const CAPTION: CSSProperties = { color: 'var(--color-text-muted)', fontSize: '0.7rem', letterSpacing: '0.04em', margin: 0, textTransform: 'uppercase' };
 
 function DetailPane(props: { opened: OpenedCampaign | null; error: string | null; selected: boolean }) {
@@ -54,7 +71,7 @@ function DetailPane(props: { opened: OpenedCampaign | null; error: string | null
   if (!props.opened) {
     return (
       <p style={{ color: 'var(--color-text-muted)', margin: 0 }}>
-        {props.selected ? 'Opening…' : 'Select a campaign to preview it, then press Load or Edit.'}
+        {props.selected ? 'Opening…' : 'Select a campaign to preview it, then press Open or Edit.'}
       </p>
     );
   }
@@ -273,17 +290,17 @@ export function CampaignManagerScreen(props: {
           })}
         </div>
 
-        {/* Detail pane */}
-        <div style={{ border: '1px solid var(--color-border)', borderRadius: 12, flex: 1, overflowY: 'auto', padding: '1.25rem' }}>
-          <DetailPane opened={selected} error={openError} selected={Boolean(selectedId)} />
+        {/* Detail column: the open banner over the selected campaign's preview */}
+        <div style={{ display: 'flex', flex: 1, flexDirection: 'column', gap: '1rem', minWidth: 0 }}>
+          <OpenCampaignBanner opened={selected} onOpen={props.onLoad} />
+          <div style={{ border: '1px solid var(--color-border)', borderRadius: 12, flex: 1, overflowY: 'auto', padding: '1.25rem' }}>
+            <DetailPane opened={selected} error={openError} selected={Boolean(selectedId)} />
+          </div>
         </div>
       </div>
 
       {/* Action bar */}
       <div style={{ borderTop: '1px solid var(--color-border)', display: 'flex', gap: '0.6rem', marginTop: '1rem', paddingTop: '1rem' }}>
-        <button type="button" onClick={() => selected && props.onLoad(selected.campaignDir)} disabled={!selected} style={barButton('primary', Boolean(selected))}>
-          Load
-        </button>
         <button type="button" onClick={props.onCreate} style={barButton('default', true)}>
           New campaign…
         </button>
