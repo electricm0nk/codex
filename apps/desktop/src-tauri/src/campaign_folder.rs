@@ -1172,7 +1172,7 @@ mod tests {
 
         let loaded = load_campaign_character_at(&root.join("app-b"), &request).expect("loads");
 
-        assert!(loaded.snapshot.is_some(), "the fighter computes");
+        assert_eq!((loaded.summary.character_id.as_str(), loaded.summary.display_label.as_str()), ("char-1", "Aldric"), "the backup's sheet loads");
         let after: Vec<_> = fs::read_dir(&backup).unwrap().map(|e| e.unwrap().file_name()).collect();
         assert_eq!(after, before, "the shared backup gains no file");
         assert!(load_campaign_character_at(&root.join("app-b"), &CampaignCharacterRequest { folder: "../x".to_owned(), ..request }).is_err());
