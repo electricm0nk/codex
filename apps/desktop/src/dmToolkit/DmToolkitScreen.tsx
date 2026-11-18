@@ -1,6 +1,6 @@
-import { useMemo, useState, type CSSProperties } from 'react';
-import { getLegacyCampaigns as getCampaigns, type LegacyCampaign as Campaign } from '../campaign/campaignMigrationSource';
-import { DM_KIND_FIELDS, DM_KIND_LABELS, DM_RECORD_KINDS, getDmRecords, type DmRecord, type DmRecordKind } from './dmRecordModel';
+import { useEffect, useMemo, useState, type CSSProperties } from 'react';
+import { listKnownCampaigns } from '../boundary/campaignFolder/knownCampaigns';
+import { DM_KIND_FIELDS, DM_KIND_LABELS, DM_RECORD_KINDS, dmConsoleCampaigns, getDmRecords, type DmConsoleCampaign, type DmRecord, type DmRecordKind } from './dmRecordModel';
 import { buildDmConsoleView, nextSelectionForKind } from './dmConsoleModel';
 import { DM_LINK_LABELS, backlinksTo, createDmRecord, deleteDmRecord, linkDmRecords, unlinkDmRecords, updateDmRecord } from './dmRecordModel';
 import { linkCandidates, resolveLinks } from './dmLinksModel';
@@ -23,8 +23,10 @@ const mono: CSSProperties = { fontFamily: 'ui-monospace, monospace', fontWeight:
 const pane: CSSProperties = { border: '1px solid var(--color-border)', borderRadius: 12, display: 'flex', flexDirection: 'column', minHeight: 0 };
 
 export function DmToolkitScreen(props: { onBack: () => void }) {
-  const [campaigns] = useState<Campaign[]>(() => getCampaigns());
-  const [campaignId, setCampaignId] = useState<string | null>(() => campaigns[0]?.id ?? null);
+  // The known campaign folders (SD-42); null while `list_known_campaigns` runs.
+  const [campaigns, setCampaigns] = useState<DmConsoleCampaign[] | null>(null);
+  const [campaignsError, setCampaignsError] = useState<string | null>(null);
+  const [campaignId, setCampaignId] = useState<string | null>(null);
   const [kind, setKind] = useState<DmRecordKind>('World');
   const [queries, setQueries] = useState<Record<DmRecordKind, string>>({ World: '', Timeline: '', Place: '', Person: '', Clue: '', Scene: '', Rule: '' });
   const [selectedId, setSelectedId] = useState<string | null>(null);
@@ -41,7 +43,27 @@ export function DmToolkitScreen(props: { onBack: () => void }) {
 
   const records = useMemo(() => (campaignId ? getDmRecords(campaignId) : []), [campaignId, revision]);
   const view = buildDmConsoleView(records, kind, queries[kind], selectedId);
-  const campaign = campaigns.find((candidate) => candidate.id === campaignId) ?? null;
+  const campaign = campaigns?.find((candidate) => candidate.id === campaignId) ?? null;
+
+  useEffect(() => {
+    let live = true;
+    listKnownCampaigns().then(
+      (known) => {
+        if (!live) return;
+        const listed = dmConsoleCampaigns(known);
+        setCampaigns(listed);
+        setCampaignId(listed[0]?.id ?? null);
+      },
+      (cause: unknown) => {
+        if (!live) return;
+        setCampaigns([]);
+        setCampaignsError(cause instanceof Error ? cause.message : String(cause));
+      },
+    );
+    return () => {
+      live = false;
+    };
+  }, []);
 
   function switchKind(next: DmRecordKind) {
     setKind(next);
@@ -179,7 +201,7 @@ export function DmToolkitScreen(props: { onBack: () => void }) {
           })}
         </nav>
         <div style={{ alignItems: 'center', display: 'flex', gap: '0.6rem', marginLeft: 'auto' }}>
-          {campaigns.length > 1 ? (
+          {campaigns !== null && campaigns.length > 1 ? (
             <select
               aria-label="Campaign"
               value={campaignId ?? ''}
@@ -224,7 +246,9 @@ export function DmToolkitScreen(props: { onBack: () => void }) {
       {campaign === null ? (
         <div style={{ ...pane, alignItems: 'center', justifyContent: 'center', marginTop: '1rem', padding: '2rem', flex: 1 }}>
           <p style={{ color: 'var(--color-text-secondary)', margin: 0, textAlign: 'center' }}>
-            The console is scoped to a campaign, and there are no campaigns yet. Create one in Campaign Manager first.
+            {campaigns === null
+              ? 'Reading the campaign folders…'
+              : (campaignsError ?? 'The console is scoped to a campaign, and there are no campaigns yet. Create one in Campaign Manager first.')}
           </p>
         </div>
       ) : (

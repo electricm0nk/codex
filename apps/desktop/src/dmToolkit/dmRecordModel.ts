@@ -1,9 +1,11 @@
+import type { KnownCampaign } from '../boundary/campaignFolder/types';
+
 /**
  * DM Toolkit record store (v0.8 D-1).
  *
  * The console's records — the six NoDA kinds, each a short prose body plus
  * thin per-kind fields plus typed links to other records — live in
- * localStorage keyed per campaign, mirroring `campaign/campaignModel.ts`:
+ * localStorage keyed by the campaign folder's path (SD-42: a campaign is a folder):
  * localStorage is the source of truth, reads are guarded so a corrupt or
  * absent value reads as "no records" rather than an exception, and every
  * mutation writes the whole list back. (File-backed storage is the first
@@ -144,6 +146,17 @@ function defaultStorage(): DmStorage {
 }
 
 const RECORDS_KEY_PREFIX = 'codex.dmToolkit.records.';
+
+/** A campaign the console can scope to: `id` is the folder path its records are keyed by. */
+export interface DmConsoleCampaign {
+  id: string;
+  name: string;
+}
+
+/** The known campaign folders that open (`list_known_campaigns`), in its order; one that does not is left out. */
+export function dmConsoleCampaigns(known: readonly KnownCampaign[]): DmConsoleCampaign[] {
+  return known.flatMap((folder) => (folder.name === null ? [] : [{ id: folder.path, name: folder.name }]));
+}
 
 export function dmRecordsStorageKey(campaignId: string): string {
   return RECORDS_KEY_PREFIX + campaignId;

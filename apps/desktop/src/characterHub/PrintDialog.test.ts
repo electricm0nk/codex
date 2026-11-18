@@ -3,6 +3,8 @@ import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { assert, assertEqual } from '../testSupport/asserts';
 import type { PrintSheetPdfRequest, SaveSheetPdfRequest, SavedSheetPdf } from '../boundary/saveSheetPdf';
+import type { CampaignMembershipDto } from '../boundary/setCharacterCampaigns';
+import type { OpenedCampaign } from '../boundary/campaignFolder/types';
 import { FIRST_TIME_SECTIONS } from '../settings/printSections';
 import {
   PRINT_SECTION_BOXES,
@@ -34,6 +36,38 @@ interface Calls {
   printed: PrintSheetPdfRequest[];
 }
 
+/** Two campaign folders, as `open_campaign_folder` reads their `campaign.json`. */
+const FOLDERS: Record<string, { name: string; description: string }> = {
+  '/campaigns/Runelords': { name: 'Rise of the Runelords', description: 'Sandpoint, autumn.' },
+  '/campaigns/Shackles': { name: 'Skull and Shackles', description: 'At sea.' },
+};
+
+async function openCampaign(campaignDir: string): Promise<OpenedCampaign> {
+  const folder = FOLDERS[campaignDir];
+  if (!folder) {
+    throw new Error(`Failed opening a campaign folder: ${campaignDir} is not a campaign folder`);
+  }
+  return {
+    campaignDir,
+    campaign: { schemaVersion: 2, ...folder, ruleSetId: 'pf1e', ruleSetLabel: 'Pathfinder 1e', members: [], createdAt: '', updatedAt: '' },
+    nonce: 1,
+  };
+}
+
+const membership = (campaignDir: string, campaignName: string, active: boolean): CampaignMembershipDto => ({
+  campaignId: campaignDir,
+  campaignName,
+  campaignDir,
+  active,
+});
+
+/** Each character's `campaigns.json`: Aldric is in Runelords and was removed from Shackles. */
+const MEMBERSHIPS: Record<string, CampaignMembershipDto[]> = {
+  'char-aldric': [membership('/campaigns/Runelords', 'Runelords (old name)', true), membership('/campaigns/Shackles', 'Skull and Shackles', false)],
+  'char-elowen': [membership('/campaigns/Runelords', 'Rise of the Runelords', true), membership('/campaigns/Shackles', 'Skull and Shackles', true)],
+  'char-moved': [membership('/campaigns/Gone', 'Lost Lands', true)],
+};
+
 function fakeDeps(overrides: Partial<PrintDialogDeps> = {}): { deps: PrintDialogDeps; calls: Calls } {
   const calls: Calls = { saveDefault: [], saved: [], printed: [] };
   const answer = (filePath: string): SavedSheetPdf => ({ filePath, bytes: 4096, warnings: [] });
@@ -51,10 +85,8 @@ function fakeDeps(overrides: Partial<PrintDialogDeps> = {}): { deps: PrintDialog
       calls.printed.push(request);
       return answer(`/tmp/codex-print/${request.characterId}.pdf`);
     },
-    campaigns: () => [
-      { name: 'Rise of the Runelords', description: 'Sandpoint, autumn.', partyCharacterIds: ['char-aldric', 'char-elowen'] },
-      { name: 'Skull and Shackles', description: 'At sea.', partyCharacterIds: ['char-elowen'] },
-    ],
+    memberships: async (characterId) => MEMBERSHIPS[characterId] ?? [],
+    openCampaign,
     ...overrides,
   };
   return { deps, calls };
@@ -141,10 +173,24 @@ async function verifiesWarningsAndFailuresAreShown() {
   assertEqual(offline.calls.saveDefault.length, 0, 'and opens no dialog');
 }
 
-function verifiesCampaignNotesAndFileNames() {
+async function verifiesAFolderCampaignFromAnActiveMembershipPrints() {
   const { deps } = fakeDeps();
-  assertEqual(campaignNotesFor('char-elowen', deps.campaigns()).map((note) => note.name).join('|'), 'Rise of the Runelords|Skull and Shackles', 'both campaigns list Elowen');
-  assertEqual(campaignNotesFor('char-nobody', deps.campaigns()).length, 0, 'a character no campaign lists sends none');
+  const aldric = await campaignNotesFor(await deps.memberships('char-aldric'), deps.openCampaign);
+  assertEqual(
+    JSON.stringify(aldric),
+    JSON.stringify([{ name: 'Rise of the Runelords', description: 'Sandpoint, autumn.' }]),
+    "a folder campaign from an active membership prints: the folder's campaign.json name and description; an inactive membership does not",
+  );
+  const elowen = await campaignNotesFor(await deps.memberships('char-elowen'), deps.openCampaign);
+  assertEqual(elowen.map((note) => note.name).join('|'), 'Rise of the Runelords|Skull and Shackles', 'both active campaigns print, in membership order');
+  assertEqual((await campaignNotesFor(await deps.memberships('char-nobody'), deps.openCampaign)).length, 0, 'a character in no campaign sends none');
+  const moved = await campaignNotesFor(await deps.memberships('char-moved'), deps.openCampaign);
+  assertEqual(JSON.stringify(moved), JSON.stringify([{ name: 'Lost Lands', description: '' }]), 'a folder that does not open still prints the membership name, with no notes');
+  const source = readFileSync(join(here, 'PrintDialog.tsx'), 'utf8');
+  assert(!source.includes('campaignMigrationSource'), 'the dialog no longer reads the pre-SD-42 localStorage campaigns');
+}
+
+function verifiesFileNames() {
   assertEqual(printFileName('Aldric Ironhand'), 'Aldric Ironhand.pdf', 'name kept');
   assertEqual(printFileName('V/../'), 'V.pdf', 'path characters dropped');
   assertEqual(printFileName('...'), 'character.pdf', 'an empty name falls back');
@@ -230,7 +276,8 @@ async function main() {
   await verifiesADismissedSaveDialogWritesNothing();
   await verifiesPrintWritesTheTempCopyWithNoDialog();
   await verifiesWarningsAndFailuresAreShown();
-  verifiesCampaignNotesAndFileNames();
+  await verifiesAFolderCampaignFromAnActiveMembershipPrints();
+  verifiesFileNames();
   verifiesTheEightBoxesInBoxOrder();
   verifiesWhatIsSentAndTheSummary();
   verifiesTheThreeSheetsHostTheDialogAndTheBrowserPrintPathIsGone();

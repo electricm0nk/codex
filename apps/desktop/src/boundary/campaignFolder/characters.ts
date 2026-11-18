@@ -1,4 +1,5 @@
 import type { LoadSavedCharacterResponse } from '../loadSavedCharacterDetail';
+import type { CampaignMembershipDto } from '../setCharacterCampaigns';
 import { invokeCampaignFolder } from './invokeCampaignFolder';
 
 /** One `Characters/<folder>/` backup (`src/campaign/characters.rs` `Backup`). */
@@ -61,4 +62,9 @@ export function getDeviceIdentity(): Promise<DeviceIdentity> {
 /** Renames this device; the next backup write carries the new name (`set_device_name`). */
 export function setDeviceName(name: string): Promise<DeviceIdentity> {
   return invokeCampaignFolder('set_device_name', { name }, 'saving this device\'s name');
+}
+
+/** The campaigns a character on this device belongs to (its `campaigns.json`; none when it has none). */
+export function loadCharacterCampaigns(characterId: string): Promise<CampaignMembershipDto[]> {
+  return invokeCampaignFolder('load_character_campaigns', { characterId }, "reading the character's campaigns");
 }

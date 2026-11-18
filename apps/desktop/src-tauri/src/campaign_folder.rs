@@ -717,6 +717,13 @@ fn characters_root(app_data_dir: &Path) -> PathBuf {
     crate::character_hub::characters_root_from_app_data_dir(app_data_dir)
 }
 
+/// The character's campaign memberships (`campaigns.json`; none when absent), for the print
+/// dialog's Campaign cell.
+pub fn load_character_campaigns_at(app_data_dir: &Path, character_id: &str) -> Result<Vec<campaign_mirror::Membership>, String> {
+    crate::character_hub::validate_character_id(character_id)?;
+    campaign_mirror::load_memberships(&characters_root(app_data_dir).join(character_id)).map_err(|err| err.message)
+}
+
 pub fn list_campaign_characters_impl(campaign_dir: &str) -> Result<Vec<characters::Backup>, String> {
     characters::list(&require_absolute(campaign_dir)?).map_err(|err| err.message)
 }
@@ -762,6 +769,11 @@ fn copy_backup(from: &Path, to: &Path) -> std::io::Result<()> {
         }
     }
     Ok(())
+}
+
+#[tauri::command]
+pub fn load_character_campaigns(app: tauri::AppHandle, character_id: String) -> Result<Vec<campaign_mirror::Membership>, String> {
+    load_character_campaigns_at(&app_data_dir(&app)?, &character_id)
 }
 
 #[tauri::command]
@@ -1188,5 +1200,18 @@ mod tests {
         assert_eq!(after, before, "the shared backup gains no file");
         assert!(load_campaign_character_at(&root.join("app-b"), &CampaignCharacterRequest { folder: "../x".to_owned(), ..request }).is_err());
         let _ = fs::remove_dir_all(&root);
+    }
+
+    #[test]
+    fn load_character_campaigns_reads_the_memberships_file() {
+        let app_data = temp_dir("character-campaigns");
+        assert!(load_character_campaigns_at(&app_data, "char-none").unwrap().is_empty(), "no campaigns.json → no campaigns");
+        let root = characters_root(&app_data).join("char-aldric");
+        fs::create_dir_all(&root).unwrap();
+        let membership = Membership { campaign_id: "/c/Runelords".to_owned(), campaign_name: "Runelords".to_owned(), campaign_dir: PathBuf::from("/c/Runelords"), active: true, stand_in: false, last_backup_counter: None };
+        campaign_mirror::save_memberships(&root, std::slice::from_ref(&membership)).unwrap();
+        assert_eq!(load_character_campaigns_at(&app_data, "char-aldric").unwrap(), vec![membership]);
+        assert!(load_character_campaigns_at(&app_data, "../char-aldric").is_err(), "a traversal id is refused");
+        let _ = fs::remove_dir_all(&app_data);
     }
 }

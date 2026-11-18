@@ -68,6 +68,7 @@ use campaign_folder::{
     set_map_pins, stat_campaign_file, write_campaign_file,
     add_wiki_folder, delete_wiki_folder, list_wiki_folders, list_wiki_pages, new_wiki_page, rename_wiki_folder, resolve_wiki_link, search_campaign, wiki_backlinks,
     diff_campaign_character, get_device_identity, set_device_name, import_campaign_character, list_campaign_characters, load_campaign_character,
+    load_character_campaigns,
 };
 use character_hub::{
     add_equipment_selection, add_feat_selection, add_spell_selection,
@@ -358,6 +359,7 @@ fn main() {
             list_wiki_folders,
             list_wiki_pages,
             list_campaign_characters,
+            load_character_campaigns,
             import_campaign_character,
             diff_campaign_character,
             load_campaign_character,

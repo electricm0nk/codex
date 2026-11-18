@@ -11,6 +11,7 @@ import {
   unlinkDmRecords,
   updateDmRecord,
   backlinksTo,
+  dmConsoleCampaigns,
 } from './dmRecordModel';
 import { assert, assertEqual } from '../testSupport/asserts';
 
@@ -91,5 +92,26 @@ assertEqual(getDmRecords('legacy', storage)[0].visibility, 'gm', 'a pre-visibili
 // Corrupt storage reads as empty rather than throwing the console down.
 storage.setItem('codex.dmToolkit.records.broken', '{not json');
 assertEqual(getDmRecords('broken', storage).length, 0, 'unparseable storage reads as no records');
+
+// SD-42: a campaign is a folder. The console lists the known folders that open (their
+// campaign.json name) and keys each campaign's records by the folder path.
+const consoleCampaigns = dmConsoleCampaigns([
+  { path: '/home/gm/Campaigns/Red Hand', lastOpenedMs: 2, name: 'The Red Hand of Doom', error: null },
+  { path: '/home/gm/Campaigns/Gone', lastOpenedMs: 1, name: null, error: 'campaign.json not found' },
+  { path: 'C:\\Users\\gm\\Campaigns\\Kingmaker', lastOpenedMs: 0, name: 'Kingmaker', error: null },
+]);
+assertEqual(
+  JSON.stringify(consoleCampaigns),
+  JSON.stringify([
+    { id: '/home/gm/Campaigns/Red Hand', name: 'The Red Hand of Doom' },
+    { id: 'C:\\Users\\gm\\Campaigns\\Kingmaker', name: 'Kingmaker' },
+  ]),
+  'the console lists the known folders that open, keyed by the folder path; one that does not open is left out',
+);
+const folder = consoleCampaigns[0].id;
+const villain = createDmRecord(folder, { kind: 'Person', title: 'Azarketi' }, storage);
+assertEqual(getDmRecord(folder, villain.id, storage)?.title, 'Azarketi', 'records keyed by a folder path persist');
+assertEqual(getDmRecords(consoleCampaigns[1].id, storage).length, 0, 'another folder has its own records');
+assertEqual(getDmRecords('/home/gm/Campaigns', storage).length, 0, 'a parent folder path is a different key');
 
 console.log('dmRecordModel tests passed');
