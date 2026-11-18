@@ -11,7 +11,7 @@ import { assertEqual } from '../testSupport/asserts';
 /** Deep equality through JSON (the shared `assertEqual` compares with `===`). */
 const same = (actual: unknown, expected: unknown, message: string) => assertEqual(JSON.stringify(actual), JSON.stringify(expected), message);
 
-const page = (path: string, title: string): WikiPage => ({ path, title, type: null, tags: [] });
+const page = (path: string, title: string, frontmatterUnread = false): WikiPage => ({ path, title, type: null, tags: [], frontmatterUnread });
 const file = (path: string): CampaignTreeEntry => ({ name: path.split('/').pop()!, path, isDir: false, children: [] });
 const dir = (path: string, children: CampaignTreeEntry[]): CampaignTreeEntry => ({ name: path.split('/').pop()!, path, isDir: true, children });
 
@@ -46,7 +46,17 @@ function testDeleteRefusalListsTheFiles() {
   assertEqual(deleteRefusal('Wiki/Items', ['Wiki/Items/Sword.md']).includes('holds 1 file ('), true, 'one file, singular');
 }
 
+function testUnreadFrontmatterRowCarriesTheMark() {
+  const rows = wikiRows([], [page('Wiki/Inn.md', 'Inn', true), page('Wiki/Lore.md', 'Lore')]);
+  same(
+    rows.filter((row) => row.kind === 'page').map((row) => (row.kind === 'page' ? [row.title, row.mark] : null)),
+    [['Inn', 'frontmatter not read'], ['Lore', null]],
+    'SD-o: a page whose frontmatter Codex could not read is listed by filename with the mark'
+  );
+}
+
 testRowsNestPagesUnderTheirFolders();
 testCompletionNamesAreTitlesAndStems();
 testDeleteRefusalListsTheFiles();
-console.log('wikiModel: 3 cases passed');
+testUnreadFrontmatterRowCarriesTheMark();
+console.log('wikiModel: 4 cases passed');

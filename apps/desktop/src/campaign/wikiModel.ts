@@ -7,7 +7,7 @@ import { WIKI_DIR } from './mapsModel';
 
 export type WikiRow =
   | { kind: 'folder'; path: string; name: string; depth: number; pages: number }
-  | { kind: 'page'; path: string; title: string; depth: number };
+  | { kind: 'page'; path: string; title: string; depth: number; mark: string | null };
 
 const parentOf = (path: string) => path.slice(0, path.lastIndexOf('/'));
 const depthOf = (path: string) => path.split('/').length - 1;
@@ -19,7 +19,16 @@ export function wikiRows(folders: readonly string[], pages: readonly WikiPage[])
     const name = folder.split('/').pop()!;
     return [
       { kind: 'folder', path: folder, name, depth: depthOf(folder), pages: own.length },
-      ...own.map((page): WikiRow => ({ kind: 'page', path: page.path, title: page.title, depth: depthOf(folder) + 1 })),
+      ...own.map(
+        (page): WikiRow => ({
+          kind: 'page',
+          path: page.path,
+          title: page.title,
+          depth: depthOf(folder) + 1,
+          // SD-o, the Adventure Log's wording (`adventureLogModel.ts`).
+          mark: page.frontmatterUnread ? 'frontmatter not read' : null,
+        })
+      ),
     ];
   });
 }

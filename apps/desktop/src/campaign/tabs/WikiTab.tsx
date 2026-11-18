@@ -242,7 +242,7 @@ export function WikiTab(props: {
                         width: '100%',
                       }}
                     >
-                      {row.kind === 'folder' ? `▸ ${row.name}/ (${row.pages})` : row.title}
+                      {row.kind === 'folder' ? `▸ ${row.name}/ (${row.pages})` : row.mark ? `${row.title} (${row.mark})` : row.title}
                     </button>
                   </li>
                 );

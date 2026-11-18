@@ -26,6 +26,8 @@ pub struct Page {
     #[serde(rename = "type")]
     pub kind: Option<String>,
     pub tags: Vec<String>,
+    /// SD-o: a `---` block Codex cannot read; the page is listed by its stem and never rewritten.
+    pub frontmatter_unread: bool,
 }
 
 /// One search result: a title hit (`title_match`) or a text hit, with the text around the match.
@@ -173,6 +175,7 @@ struct Doc {
     title: Option<String>,
     kind: Option<String>,
     tags: Vec<String>,
+    frontmatter_unread: bool,
     text: String,
 }
 
@@ -196,7 +199,9 @@ fn docs(dir: &Path, rel: &str) -> Result<Vec<Doc>, CampaignStoreError> {
         let file = dir.join(&path);
         let text = String::from_utf8_lossy(&fs::read(&file).map_err(|cause| io_error(&file, cause))?).into_owned();
         let (mut title, mut kind, mut tags) = (None, None, Vec::new());
-        if let Parsed::Read(fm) = frontmatter::parse(&text) {
+        let parsed = frontmatter::parse(&text);
+        let frontmatter_unread = matches!(parsed, Parsed::Unreadable);
+        if let Parsed::Read(fm) = parsed {
             title = fm.str("title").map(str::to_owned);
             kind = fm.str("type").map(str::to_owned);
             tags = match fm.get("tags") {
@@ -207,7 +212,7 @@ fn docs(dir: &Path, rel: &str) -> Result<Vec<Doc>, CampaignStoreError> {
         }
         let name = path.rsplit('/').next().unwrap_or(&path);
         let stem = name[..name.len() - 3].to_owned();
-        out.push(Doc { path, stem, title, kind, tags, text });
+        out.push(Doc { path, stem, title, kind, tags, frontmatter_unread, text });
     }
     Ok(out)
 }
@@ -216,7 +221,13 @@ fn docs(dir: &Path, rel: &str) -> Result<Vec<Doc>, CampaignStoreError> {
 pub fn pages(dir: &Path) -> Result<Vec<Page>, CampaignStoreError> {
     let mut out: Vec<Page> = docs(dir, WIKI_DIR)?
         .into_iter()
-        .map(|d| Page { title: d.shown_title().to_owned(), path: d.path, kind: d.kind, tags: d.tags })
+        .map(|d| Page {
+            title: d.shown_title().to_owned(),
+            path: d.path,
+            kind: d.kind,
+            tags: d.tags,
+            frontmatter_unread: d.frontmatter_unread,
+        })
         .collect();
     out.sort_by_key(|p| p.path.to_lowercase());
     Ok(out)
@@ -449,6 +460,29 @@ mod tests {
         put(&dir, "Wiki/Items/Sword.md", "---\ntitle: The Sword\ntags: [weapon, cursed]\n---\n");
         let sword = pages(&dir).unwrap().into_iter().find(|p| p.path == "Wiki/Items/Sword.md").unwrap();
         assert_eq!((sword.title.as_str(), sword.tags), ("The Sword", vec!["weapon".to_owned(), "cursed".to_owned()]));
+        let _ = fs::remove_dir_all(&dir);
+    }
+
+    #[test]
+    fn wiki_unreadable_frontmatter_listed_by_stem_with_mark() {
+        // SD-o: a frontmatter Codex cannot read is listed by filename with a mark, never hidden or
+        // rewritten; a page with no frontmatter at all (a plain Obsidian note) carries no mark.
+        let dir = campaign("unread");
+        let broken = "---\ntitle The Inn\n# The Inn\n";
+        put(&dir, "Wiki/Places/Inn.md", broken);
+        put(&dir, "Wiki/Places/Plain.md", "# Plain\n");
+        put(&dir, "Wiki/Places/Read.md", "---\ntitle: Read\n---\n");
+        let listed: Vec<(String, String, bool)> =
+            pages(&dir).unwrap().into_iter().map(|p| (p.path, p.title, p.frontmatter_unread)).collect();
+        assert_eq!(
+            listed,
+            [
+                ("Wiki/Places/Inn.md".to_owned(), "Inn".to_owned(), true),
+                ("Wiki/Places/Plain.md".to_owned(), "Plain".to_owned(), false),
+                ("Wiki/Places/Read.md".to_owned(), "Read".to_owned(), false),
+            ]
+        );
+        assert_eq!(fs::read_to_string(dir.join("Wiki/Places/Inn.md")).unwrap(), broken, "never rewritten");
         let _ = fs::remove_dir_all(&dir);
     }
 

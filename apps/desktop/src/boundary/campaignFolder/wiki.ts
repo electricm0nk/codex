@@ -7,6 +7,8 @@ export interface WikiPage {
   title: string;
   type: string | null;
   tags: string[];
+  /** SD-o: the file has a frontmatter block Codex cannot read (listed by filename, never rewritten). */
+  frontmatterUnread: boolean;
 }
 
 /** One search result (`src/campaign/wiki.rs` `Hit`): title hits come first. */
