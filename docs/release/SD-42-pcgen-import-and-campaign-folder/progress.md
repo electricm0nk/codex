@@ -16,7 +16,7 @@ status: planning-ready
 |---|---|---|---|
 | C | 2 | 2 (C0, C1) | C complete |
 | E1 import converter (lane `import`) | 11 | 11 (E1.1–E1.10, E1.MC) | E1 complete; import lane ended |
-| E2 campaign folder (lane `campaign`) | 14 | 0 | waiting on C1 |
+| E2 campaign folder (lane `campaign`) | 16 | 16 (E2.1–E2.15, E2.MC) | E2 complete; campaign lane ended |
 | E3 editor (lane `editor`) | 4 | 4 (E3.1–E3.3, E3.MC) | E3 complete; editor lane ended |
 | E4 desktop wiring (Phase 2) | 15 | 0 | waiting on E1.MC, E2.MC, E3.MC, SD-41 merged |
 | E5 gate + closure | 5 | 0 | waiting on E4.MC |
@@ -79,11 +79,21 @@ the post-gate run. A run with parallel lanes is never resumed, R9.)
 | 2026-11-18 | E2.12 | complete | the commit adding the E2.12 receipt (code a3edf841f6) | `artifacts/epic_2/E2.12_cycle_receipt.md` | `AppMenuHost.claimMain`/`goMain`; `withOptions` composes `[Main menu?] + items + Options`; App's host holds the claim; the hub claims `() => setMode('landing')` while `mode !== 'landing'` (prop from App, so `layout/AppMenu` users stay 3); npm 213/213 |
 | 2026-11-18 | E2.13 | complete | the commit adding the E2.13 receipt (code cd33e7d82d) | `artifacts/epic_2/E2.13_cycle_receipt.md` | `LandingScreen` exports `ActionBanner` + `CAMPAIGN_MANAGER_ART`; the Manager's `OpenCampaignBanner` ("Open <name>", full width, disabled with a hint) heads the detail column in place of the bar's `Load`; 3 cases; npm 214/214; ui-smoke row `campaign-sheet-tabs` (`Load` target) is E4.4's rewrite |
 | 2026-11-18 | E2.14 | complete | the commit adding the E2.14 receipt (code d545ead414) | `artifacts/epic_2/E2.14_cycle_receipt.md` | print's Campaign cell + Bio notes from the character's active memberships (new `load_character_campaigns`) and each folder's `campaign.json`; the DM console lists the known folders, records keyed by folder path; `campaignMigrationSource.ts` deleted (no consumer); desktop 1518 passed; npm 214/214 |
+| 2026-11-18 | E2.MC | complete | the commit adding the E2.MC receipt | `artifacts/epic_2/E2.MC_cycle_receipt.md` | merge check on `a83f430c1e`: root lib 3188, desktop 1518, npm 214/214, NR-6 0, every E2 floor re-derived; 19 screenshots of an app-made campaign; NR-18 over the app's files; fixed SD-r retry in `campaign_mirror`, pinned the help template, Friends copy; root lib 3191 after |
 
 ## Epic reports
 
 (Each merge check appends its Epic report block here: cards, counts before → after, retro summary for the
 epic's window, what it looked at, what it fixed.)
+
+### Epic 2 — campaign folder (E2.MC, 2026-11-18)
+
+- **Cards:** 16 of 16 complete (E2.1–E2.15, E2.MC); discovered during the epic: E2.14 (by E2.3), E2.15 (by E2.10), both landed; operator-added E2.12, E2.13 (`decisions.md §26`). No discovered card from this check. Re-derive: `awk -F'|' '$2 ~ /^ E2\./ && $5 ~ /complete/' kanban.md | awk 'END{print NR}'` → 16.
+- **Counts before → after (this check, `origin/tranche-22` @ `a83f430c1e`):** root `cargo test --locked -j 8 --lib` 3188 → 3191 passed, 0 failed; desktop full suite 1518 passed, 0 failed (4 result lines + 1 harness-less binary, all attributed); `npm test` 214/214 test files; NR-6 grep 0; E2 named-test floors all hold (receipt lists 14 filters). Partition over the lane's 39 commits → 1 (`character_hub.rs` in E2.10 `8d16f91c37`, after SD-41 merged into `tranche-22` at `5dbef7c409`; a named test-line fence exit).
+- **Retro (window `2026-11-17` → now, actors sd42-e2.1 … sd42-e2.15; `python3 scripts/retro.py summary --since 2026-11-17 --actor sd42-e2.1 … --actor sd42-e2.15`):** 12 events — 11 corrections, 1 incident (npm test 213/214 once with the name lost behind `| tail`; re-run 214/214). 10 of the 11 corrections are against this package's own `epic-breakdown.md` E2 rows, and 5 of those (E2.6, E2.7, E2.8, E2.10, E2.14) are one key: **FILES YOU OWN not closed** — the row named the component but not the file that mounts it (`CampaignSheet.tsx` ×2), the command/registration/boundary it needs (×3). R-W: this key fired 5 times, so a control is owed, not a caution: **the lead's R22 grep for every E4 card must include `git grep -l <each new or changed component/command name>` over `apps/desktop/src` and `main.rs`, and E4.4/E4.MC must fail a row whose receipt's closure-check row lists a fence exit the row did not name** (the lead owns the dispatch script; recorded here for the Phase-2 dispatch). This check adds 2 corrections (SD-n's image cap vs an MC's minimum; the E2.5/E2.10 gaps) and 1 derived verification event.
+- **Looked at:** 19 PNGs of a campaign the app itself created under an isolated `XDG_DATA_HOME` (`artifacts/epic_2/E2.MC/`, 1684 KB): Manager empty and with a folder, Help (template and live tree), Create (real GTK folder dialog), Edit, the four tabs (log entry, wiki page with backlinks, a map added through the dialog with a pin), ☰ Main menu first, membership dialog, the Characters list, the import dialog, a stand-in import and its compare, the DM console and Encounter Builder reading the folder, Settings' device name.
+- **Fixed by this check:** the backup mirror's final rename now retries once after 200 ms (SD-r; E2.10 had left it out); the help screen's hand-kept `TEMPLATE_TREE` is pinned to `LAYOUT_DIRS` by a root test; the Friends section no longer promises "campaign invites"; NR-18 is a standing root test over every Rust writer (and over any folder via `CODEX_NR18_DIR`); E2.15's receipt gained its closure-check row; SD-n's image cap now exempts merge checks (`§20`).
+- **Not fixed (named):** Help modal ignores Escape; the editor's "Saved" note is unstyled; the sheet's "Open <campaign>" takes ~10–30 s on this box; an SD-41 membership whose folder is not known reaches "not an absolute folder path" (E2.3); ui-smoke rows → E4.4; the mirror hook → E4.3.
 
 ### Epic 3 — editor (E3.MC, 2026-11-17)
 
