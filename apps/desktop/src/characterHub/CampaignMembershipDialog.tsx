@@ -113,6 +113,11 @@ export function CampaignMembershipDialog(props: {
                     }}
                   />
                   <span style={{ fontWeight: 600 }}>{choice.campaignName}</span>
+                  {choice.standIn ? (
+                    <span data-testid={`campaign-membership-stand-in-${choice.campaignName}`} title="Imported to play in another device's place: your saves stay on this device" style={{ color: 'var(--color-text-muted)', fontSize: '0.75rem' }}>
+                      stand-in
+                    </span>
+                  ) : null}
                 </label>
               ))}
               {listing.unreadable > 0 ? (

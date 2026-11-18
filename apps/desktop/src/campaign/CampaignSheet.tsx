@@ -178,7 +178,7 @@ function CharacterActions(props: { campaignDir: string; row: CharacterRow; onImp
               setBusy(true);
               importCampaignCharacter(props.campaignDir, props.row.folder, mode)
                 .then(() => {
-                  setMessage(`${props.row.title} is on this device now: open it from the character list.`);
+                  setMessage(`${props.row.title} is on this device now, in your character list.`);
                   props.onImported();
                 })
                 .catch(fail)
@@ -204,6 +204,8 @@ export function CampaignSheet(props: {
   campaignDir: string;
   onClose: () => void;
   onOpenCharacterSheet: (row: CharacterHubListRowSurface, detail: LoadSavedCharacterResponse | null) => void;
+  /** An imported backup is now a character on this device: the hub re-lists its characters. */
+  onCharacterImported: () => void;
 }) {
   const [loaded, setLoaded] = useState<Loaded>({ kind: 'loading' });
   const [savedCharacters, setSavedCharacters] = useState<CharacterHubListRowSurface[]>([]);
@@ -358,7 +360,11 @@ export function CampaignSheet(props: {
               }
             />
           ) : null}
-          {selected?.readable ? <CharacterActions campaignDir={props.campaignDir} row={selected} onImported={reloadCharacters} /> : null}
+          {selected?.readable ? <CharacterActions campaignDir={props.campaignDir} row={selected} onImported={() => {
+                reloadCharacters();
+                props.onCharacterImported();
+              }}
+            /> : null}
 
           <div>
             <div style={{ borderBottom: '1px solid var(--color-border)', display: 'flex', flexWrap: 'wrap', gap: '1.25rem', marginBottom: '1rem' }}>

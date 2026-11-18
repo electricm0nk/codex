@@ -179,7 +179,7 @@ import { adjustCharacterMoney, copperToGp, gpToCopper, loadCharacterMoney, type 
 import type { ActiveStateDto } from '../boundary/addEquipmentSelection';
 import type { CampaignMembershipDto } from '../boundary/setCharacterCampaigns';
 import { CampaignMembershipDialog } from './CampaignMembershipDialog';
-import { activeCampaigns, campaignFieldText } from './campaignMembershipModel';
+import { activeCampaigns, campaignFieldText, standInCampaigns } from './campaignMembershipModel';
 
 /**
  * Pathfinder 1e character sheet, patterned after Pathbuilder 2e's three-column
@@ -4670,6 +4670,11 @@ export function CharacterSheet(props: {
         {/* MIDDLE: stat panels on top, weapons/defense/gear at the bottom */}
         <div className="sheet-mid" style={{ display: 'flex', flex: 1, flexDirection: 'column', gap: '0.6rem', minWidth: 0 }}>
           <IdentityPanel name={props.row.displayLabel} campaign={campaignFieldText(campaignMemberships)} onEditCampaigns={() => setCampaignDialogOpen(true)} />
+          {standInCampaigns(campaignMemberships).length > 0 ? (
+            <div role="status" data-testid="sheet-stand-in-banner" className="no-print" style={{ ...panel, backgroundColor: 'var(--color-surface-2)', fontSize: '0.8rem', padding: '0.5rem 0.75rem' }}>
+              Stand-in copy — your saves stay local ({standInCampaigns(campaignMemberships).join(', ')}).
+            </div>
+          ) : null}
           {mirrorWarnings.length > 0 ? (
             <div role="alert" data-testid="sheet-mirror-warnings" className="no-print" style={{ ...panel, alignItems: 'flex-start', backgroundColor: 'var(--color-warn-bg)', border: '1px solid var(--color-warn-border)', color: 'var(--color-warn)', display: 'flex', fontSize: '0.8rem', gap: '0.75rem', justifyContent: 'space-between', padding: '0.5rem 0.75rem' }}>
               <ul style={{ margin: 0, paddingLeft: '1.1rem' }}>

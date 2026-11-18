@@ -7111,10 +7111,19 @@ pub struct SetCharacterCampaignsRequest {
 }
 
 /// Writes `campaigns.json` and copies the character to its active campaigns at once; the warnings
-/// name each copy that failed.
+/// name each copy that failed. The dialog edits only which campaigns are active: a membership's
+/// stand-in mark and backup counter are the file's (`decisions.md §16`), never the request's.
 pub(crate) fn set_character_campaigns_at_root(root: &Path, memberships: &[Membership]) -> Result<Vec<String>, String> {
     character_identity(root)?;
-    campaign_mirror::save_memberships(root, memberships).map_err(|err| err.message)?;
+    let kept = campaign_mirror::load_memberships(root).map_err(|err| err.message)?;
+    let memberships: Vec<Membership> = memberships
+        .iter()
+        .map(|membership| {
+            let old = kept.iter().find(|old| old.campaign_dir == membership.campaign_dir);
+            Membership { stand_in: old.is_some_and(|old| old.stand_in), last_backup_counter: old.and_then(|old| old.last_backup_counter), ..membership.clone() }
+        })
+        .collect();
+    campaign_mirror::save_memberships(root, &memberships).map_err(|err| err.message)?;
     Ok(after_write(root))
 }
 
@@ -24155,3 +24164,9 @@ mod pf_seed_render_hash;
 #[cfg(test)]
 #[path = "import_writes_equipment_sets.rs"]
 mod import_writes_equipment_sets;
+
+/// The two-master checks on the desktop's writers (SD-42 E4.3). A child module so it reaches
+/// `after_write`'s writers and `set_character_campaigns_at_root`.
+#[cfg(test)]
+#[path = "mirror_two_master.rs"]
+mod mirror_two_master;

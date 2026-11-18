@@ -6,7 +6,7 @@ import { formatError, hasTauriRuntime } from './runtime';
  *
  * Invokes the `set_character_campaigns` Tauri command, which writes the character's
  * `campaigns.json` and at once copies the whole character folder to each active campaign's
- * `characters/` folder. An inactive membership keeps its folder and stops being updated. Returns
+ * `Characters/` folder (a stand-in's never). An inactive membership keeps its folder and stops being updated. Returns
  * one warning per campaign copy that could not be written ("<dir>: <reason>"); the memberships
  * are saved either way.
  */
@@ -18,6 +18,10 @@ export interface CampaignMembershipDto {
   campaignDir: string;
   /** Checked: every save of the character is copied there. */
   active: boolean;
+  /** Imported to play in another device's place: saves stay local (SD-42 `decisions.md §16`). Kept by the command. */
+  standIn?: boolean;
+  /** The backup counter this install last wrote. Kept by the command; the dialog never sends a new one. */
+  lastBackupCounter?: number;
 }
 
 export interface SetCharacterCampaignsRequest {

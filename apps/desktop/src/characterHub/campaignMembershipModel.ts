@@ -13,6 +13,8 @@ export interface CampaignChoice {
   campaignDir: string;
   /** Checked = an active membership. */
   checked: boolean;
+  /** This copy plays in another device's place: its saves never reach the folder. */
+  standIn: boolean;
 }
 
 export interface CampaignChoices {
@@ -29,6 +31,7 @@ export function campaignChoices(known: readonly KnownCampaign[], memberships: re
       campaignName: campaign.name ?? campaign.path,
       campaignDir: campaign.path,
       checked: memberships.some((membership) => membership.campaignDir === campaign.path && membership.active),
+      standIn: memberships.some((membership) => membership.campaignDir === campaign.path && membership.standIn === true),
     })),
   };
 }
@@ -65,4 +68,9 @@ export function activeCampaigns(memberships: readonly CampaignMembershipDto[]): 
 export function campaignFieldText(memberships: readonly CampaignMembershipDto[]): string {
   const names = activeCampaigns(memberships).map((membership) => membership.campaignName);
   return names.length ? names.join(', ') : '—';
+}
+
+/** The active campaigns this copy stands in for: the sheet's banner shows when there is one. */
+export function standInCampaigns(memberships: readonly CampaignMembershipDto[]): string[] {
+  return activeCampaigns(memberships).filter((membership) => membership.standIn === true).map((membership) => membership.campaignName);
 }

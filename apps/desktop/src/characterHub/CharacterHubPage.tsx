@@ -234,6 +234,7 @@ function CharacterHubScreens({
       <CampaignSheet
         campaignDir={activeCampaignDir}
         onClose={() => setMode('campaign-list')}
+        onCharacterImported={reload}
         onOpenCharacterSheet={(row, detail) => {
           setSheet({ row, detail });
           setSheetReturnMode('campaign-sheet');

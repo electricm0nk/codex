@@ -1,4 +1,4 @@
-import { applyCampaignChoices, activeCampaigns, campaignChoices, campaignFieldText } from './campaignMembershipModel';
+import { applyCampaignChoices, activeCampaigns, campaignChoices, campaignFieldText, standInCampaigns } from './campaignMembershipModel';
 import type { CampaignMembershipDto } from '../boundary/setCharacterCampaigns';
 import type { KnownCampaign } from '../boundary/campaignFolder/types';
 import { assertEqual } from '../testSupport/asserts';
@@ -59,4 +59,16 @@ const BROKEN: KnownCampaign = { path: '/mnt/usb/Gone', lastOpenedMs: 0, name: nu
   assertEqual(JSON.stringify(applyCampaignChoices(before, listed.choices, [])), JSON.stringify(before), 'an unlisted membership is untouched');
 }
 
-console.log('campaignMembershipModel: 4 cases passed');
+// Case 5 (SD-42 E4.3): a stand-in membership is marked in the dialog, keeps its mark and counter through a save, and drives the banner.
+{
+  const before: CampaignMembershipDto[] = [{ campaignId: RISE.path, campaignName: 'Rise of the Runelords', campaignDir: RISE.path, active: true, standIn: true, lastBackupCounter: 3 }];
+  const listed = campaignChoices([RISE, SKULL], before);
+  assertEqual(listed.choices.map((choice) => `${choice.campaignName}:${choice.standIn}`).join(','), 'Rise of the Runelords:true,Skull & Shackles:false', 'the stand-in folder is marked');
+  const result = applyCampaignChoices(before, listed.choices, [RISE.path, SKULL.path]);
+  assertEqual(JSON.stringify(result[0]), JSON.stringify(before[0]), 'the stand-in mark and counter ride through the save');
+  assertEqual(result[1].standIn, undefined, 'a newly checked folder is never a stand-in');
+  assertEqual(standInCampaigns(result).join(','), 'Rise of the Runelords', 'the banner names the campaign');
+  assertEqual(standInCampaigns(applyCampaignChoices(before, listed.choices, [])).length, 0, 'an unchecked stand-in shows no banner');
+}
+
+console.log('campaignMembershipModel: 5 cases passed');
