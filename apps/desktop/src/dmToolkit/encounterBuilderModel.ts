@@ -6,7 +6,11 @@ import type { RateEncounterRequest } from '../boundary/rateEncounter';
  * those from the id), no CRs (a monster goes as its catalog key). Levels
  * typed by hand are bounded to the engine's `u8` domain, 1–20.
  */
-export type PartyMember = { kind: 'saved'; characterId: string } | { kind: 'typed'; level: number };
+export type PartyMember =
+  | { kind: 'saved'; characterId: string }
+  | { kind: 'typed'; level: number }
+  /** A campaign folder's `Characters/<folder>/` backup (decisions.md §17); the engine reads its level. */
+  | { kind: 'campaign'; campaignDir: string; folder: string; label: string };
 export interface MonsterRow {
   catalogKey: string;
   count: number;
@@ -21,6 +25,9 @@ export function emptyBuilder(): EncounterBuilder {
 }
 export function addSavedMember(b: EncounterBuilder, characterId: string): EncounterBuilder {
   return { ...b, party: [...b.party, { kind: 'saved', characterId }] };
+}
+export function addCampaignMember(b: EncounterBuilder, campaignDir: string, folder: string, label: string): EncounterBuilder {
+  return { ...b, party: [...b.party, { kind: 'campaign', campaignDir, folder, label }] };
 }
 export function addTypedMember(b: EncounterBuilder, level: number): EncounterBuilder {
   if (!Number.isInteger(level) || level < 1 || level > 20) {
@@ -51,7 +58,13 @@ export function toRequest(b: EncounterBuilder): RateEncounterRequest | null {
     return null;
   }
   return {
-    party: b.party.map((member) => (member.kind === 'saved' ? { characterId: member.characterId } : { level: member.level })),
+    party: b.party.map((member) =>
+      member.kind === 'saved'
+        ? { characterId: member.characterId }
+        : member.kind === 'campaign'
+          ? { campaignCharacter: { campaignDir: member.campaignDir, folder: member.folder } }
+          : { level: member.level },
+    ),
     monsters: b.monsters.flatMap((row) => Array.from({ length: row.count }, () => ({ catalogKey: row.catalogKey }))),
   };
 }

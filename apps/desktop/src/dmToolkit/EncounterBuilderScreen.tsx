@@ -2,8 +2,10 @@ import { useEffect, useMemo, useState, type CSSProperties } from 'react';
 import { loadMonsterCatalog, type MonsterCatalogEntryDto } from '../boundary/loadMonsterCatalog';
 import { loadListSavedCharacters, type CharacterSummaryDto } from '../boundary/loadListSavedCharacters';
 import { rateEncounter, type RateEncounterResponse } from '../boundary/rateEncounter';
+import { listKnownCampaigns } from '../boundary/campaignFolder/knownCampaigns';
+import { listCampaignCharacters, type CampaignCharacterBackup } from '../boundary/campaignFolder/characters';
 import { hasTauriRuntime } from '../boundary/runtime';
-import { addMonster, addSavedMember, addTypedMember, emptyBuilder, removeMember, removeMonster, setMonsterCount, toRequest, type EncounterBuilder } from './encounterBuilderModel';
+import { addCampaignMember, addMonster, addSavedMember, addTypedMember, emptyBuilder, removeMember, removeMonster, setMonsterCount, toRequest, type EncounterBuilder } from './encounterBuilderModel';
 import { buildEncounterView, describeTier, formatCr } from './encounterViewModel';
 import { formatEncounterRecord } from './encounterRecord';
 import { createDmRecord, getDmRecords, updateDmRecord, type DmRecord } from './dmRecordModel';
@@ -26,6 +28,13 @@ const accentButton: CSSProperties = { background: 'var(--color-accent)', border:
 const quietButton: CSSProperties = { background: 'none', border: '1px solid var(--color-border)', borderRadius: 8, color: 'var(--color-text)', cursor: 'pointer', fontSize: '0.75rem', fontWeight: 600, padding: '0.35rem 0.7rem' };
 const inputStyle: CSSProperties = { background: 'var(--color-surface)', border: '1px solid var(--color-border)', borderRadius: 8, boxSizing: 'border-box', color: 'var(--color-text)', fontFamily: 'inherit', fontSize: '0.9rem', padding: '0.5rem 0.7rem' };
 
+interface CampaignGroup {
+  path: string;
+  name: string;
+  characters: CampaignCharacterBackup[];
+  error: string | null;
+}
+
 export function EncounterBuilderScreen(props: {
   /** The DM Toolkit's current campaign; `null` when none exists (then nothing can be saved to a scene). */
   campaignId: string | null;
@@ -46,6 +55,26 @@ export function EncounterBuilderScreen(props: {
   const [sceneTarget, setSceneTarget] = useState('');
   const [newSceneTitle, setNewSceneTitle] = useState('');
   const [saveStatus, setSaveStatus] = useState<string | null>(null);
+  // decisions.md §17: the known campaign folders' Characters/ backups, read when "Add from campaign…" opens.
+  const [campaignGroups, setCampaignGroups] = useState<CampaignGroup[] | null>(null);
+  const [campaignError, setCampaignError] = useState<string | null>(null);
+
+  function openCampaignPicker() {
+    setCampaignError(null);
+    listKnownCampaigns()
+      .then((known) =>
+        Promise.all(
+          known.map((campaign) =>
+            listCampaignCharacters(campaign.path).then(
+              (characters): CampaignGroup => ({ path: campaign.path, name: campaign.name ?? campaign.path, characters, error: null }),
+              (cause: unknown): CampaignGroup => ({ path: campaign.path, name: campaign.name ?? campaign.path, characters: [], error: cause instanceof Error ? cause.message : String(cause) }),
+            ),
+          ),
+        ),
+      )
+      .then(setCampaignGroups)
+      .catch((cause: unknown) => setCampaignError(cause instanceof Error ? cause.message : String(cause)));
+  }
 
   useEffect(() => {
     let live = true;
@@ -108,7 +137,13 @@ export function EncounterBuilderScreen(props: {
     if (!props.campaignId || !rating) {
       return;
     }
-    const names = Object.fromEntries(saved.map((entry) => [entry.characterId, entry.displayLabel]));
+    const names: Record<string, string> = Object.fromEntries(saved.map((entry) => [entry.characterId, entry.displayLabel]));
+    builder.party.forEach((member, index) => {
+      const id = rating.party[index]?.characterId;
+      if (member.kind === 'campaign' && id) {
+        names[id] = member.label;
+      }
+    });
     const text = formatEncounterRecord(rating, names, new Date().toISOString());
     if (sceneTarget === '') {
       const title = newSceneTitle.trim();
@@ -147,17 +182,20 @@ export function EncounterBuilderScreen(props: {
         {/* Party */}
         <div style={{ ...pane, overflowY: 'auto', padding: '1rem' }}>
           <h2 style={heading}>Party</h2>
-          {builder.party.length === 0 ? <p style={{ color: 'var(--color-text-muted)', fontSize: '0.85rem' }}>No party yet. Add saved characters or typed levels.</p> : null}
+          {builder.party.length === 0 ? <p style={{ color: 'var(--color-text-muted)', fontSize: '0.85rem' }}>No party yet. Add saved characters, campaign characters or typed levels.</p> : null}
           {builder.party.map((member, index) => {
             const rated = rating?.party[index];
-            const label = member.kind === 'saved' ? savedById.get(member.characterId)?.displayLabel ?? member.characterId : `Level ${member.level} (typed)`;
+            const label =
+              member.kind === 'saved' ? savedById.get(member.characterId)?.displayLabel ?? member.characterId : member.kind === 'campaign' ? member.label : `Level ${member.level} (typed)`;
             return (
-              <div key={`${index}:${member.kind === 'saved' ? member.characterId : member.level}`} style={{ alignItems: 'center', borderBottom: '1px solid var(--color-border)', display: 'flex', gap: '0.5rem', padding: '0.45rem 0' }}>
+              <div key={`${index}:${member.kind === 'saved' ? member.characterId : member.kind === 'campaign' ? `${member.campaignDir}/${member.folder}` : member.level}`} style={{ alignItems: 'center', borderBottom: '1px solid var(--color-border)', display: 'flex', gap: '0.5rem', padding: '0.45rem 0' }}>
                 <span style={{ flex: 1, fontSize: '0.85rem' }}>
                   {label}
-                  {member.kind === 'saved' ? (
+                  {member.kind !== 'typed' ? (
                     <span style={{ color: 'var(--color-text-muted)', display: 'block', fontSize: '0.72rem' }}>
-                      {rated ? `Level ${rated.level} — read from the saved build by the engine` : 'level resolved by the engine when rated'}
+                      {rated
+                        ? `Level ${rated.level} — read from the ${member.kind === 'campaign' ? 'campaign backup' : 'saved build'} by the engine`
+                        : 'level resolved by the engine when rated'}
                     </span>
                   ) : null}
                 </span>
@@ -175,6 +213,34 @@ export function EncounterBuilderScreen(props: {
               <button key={entry.characterId} type="button" onClick={() => setBuilder((b) => addSavedMember(b, entry.characterId))} style={{ ...quietButton, display: 'block', marginBottom: '0.3rem', textAlign: 'left', width: '100%' }}>
                 {entry.displayLabel}
               </button>
+            ))}
+          </div>
+          <div style={{ marginTop: '1rem' }}>
+            <h3 style={{ ...heading, marginTop: 0 }}>Add from a campaign folder</h3>
+            <button type="button" onClick={openCampaignPicker} style={{ ...quietButton, width: '100%' }}>
+              {campaignGroups === null ? 'Add from campaign…' : 'Refresh campaign characters'}
+            </button>
+            {campaignError ? <p style={{ color: 'var(--color-error)', fontSize: '0.8rem' }}>{campaignError}</p> : null}
+            {campaignGroups !== null && campaignGroups.length === 0 ? <p style={{ color: 'var(--color-text-muted)', fontSize: '0.8rem' }}>No campaign folders are known on this device.</p> : null}
+            {(campaignGroups ?? []).map((group) => (
+              <div key={group.path} style={{ marginTop: '0.5rem' }}>
+                <span style={{ color: 'var(--color-text-secondary)', display: 'block', fontSize: '0.75rem', fontWeight: 700 }}>{group.name}</span>
+                {group.error ? <p style={{ color: 'var(--color-error)', fontSize: '0.8rem', margin: '0.2rem 0' }}>{group.error}</p> : null}
+                {!group.error && group.characters.length === 0 ? <p style={{ color: 'var(--color-text-muted)', fontSize: '0.8rem', margin: '0.2rem 0' }}>No characters in its Characters/ folder.</p> : null}
+                {group.characters.map((backup) => (
+                  <button
+                    key={backup.folder}
+                    type="button"
+                    disabled={backup.error !== null}
+                    title={backup.error ?? undefined}
+                    onClick={() => setBuilder((b) => addCampaignMember(b, group.path, backup.folder, backup.label || backup.folder))}
+                    style={{ ...quietButton, display: 'block', marginTop: '0.3rem', opacity: backup.error ? 0.5 : 1, textAlign: 'left', width: '100%' }}
+                  >
+                    {backup.label || backup.folder}
+                    {backup.error ? ` — cannot be read: ${backup.error}` : ''}
+                  </button>
+                ))}
+              </div>
             ))}
           </div>
           <div style={{ marginTop: '1rem' }}>
