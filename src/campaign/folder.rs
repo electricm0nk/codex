@@ -389,4 +389,87 @@ mod tests {
         let _ = fs::remove_dir_all(&dir);
         let _ = fs::remove_dir_all(&not_campaign);
     }
+
+    /// NR-18: every file a Codex writer puts in a campaign folder is plain UTF-8 text a Markdown
+    /// editor can open — a `.md` whose frontmatter the tolerant parser reads (or that has none) and a
+    /// `campaign.json` that is JSON. Images and `.codex/` are the only other files. With
+    /// `CODEX_NR18_DIR` set, the folder the app wrote (E2.MC's run) is walked too.
+    fn assert_plain_campaign_files(dir: &Path) -> usize {
+        fn walk(dir: &Path, out: &mut Vec<PathBuf>) {
+            for entry in fs::read_dir(dir).expect("readable folder") {
+                let path = entry.expect("entry").path();
+                if path.is_dir() {
+                    walk(&path, out);
+                } else {
+                    out.push(path);
+                }
+            }
+        }
+        let mut files = Vec::new();
+        walk(dir, &mut files);
+        let mut checked = 0;
+        for file in files {
+            let rel = file.strip_prefix(dir).expect("inside").to_string_lossy().replace('\\', "/");
+            if rel.starts_with(".codex/") || rel.starts_with("Characters/") {
+                continue;
+            }
+            let ext = file.extension().map(|e| e.to_string_lossy().to_lowercase()).unwrap_or_default();
+            if matches!(ext.as_str(), "png" | "jpg" | "jpeg" | "gif" | "webp") {
+                continue;
+            }
+            let bytes = fs::read(&file).expect("readable file");
+            let text = String::from_utf8(bytes).unwrap_or_else(|_| panic!("{rel} is not UTF-8 text"));
+            assert!(!text.contains('\0'), "{rel} holds a NUL byte");
+            match ext.as_str() {
+                "md" => assert_ne!(crate::campaign::frontmatter::parse(&text), crate::campaign::frontmatter::Parsed::Unreadable, "{rel}: the tolerant parser cannot read its frontmatter"),
+                "json" => {
+                    serde_json::from_str::<serde_json::Value>(&text).unwrap_or_else(|err| panic!("{rel} is not JSON: {err}"));
+                }
+                other => panic!("{rel}: a file kind ({other:?}) no Codex writer should leave in a campaign folder"),
+            }
+            checked += 1;
+        }
+        checked
+    }
+
+    #[test]
+    fn campaign_folder_every_written_file_is_plain_text() {
+        let dir = temp_dir("nr18").join("The Void Between");
+        create_layout(&dir, &sample()).expect("layout created");
+        crate::campaign::adventure_log::new_entry(&dir, "The Void Between", "Dana", "Session 1", "2026-11-18").expect("log entry");
+        crate::campaign::wiki::new_page(&dir, "Wiki/NPCs", "Ameiko Kaijitsu").expect("wiki page");
+        let image = temp_dir("nr18-src").join("Sandpoint.png");
+        fs::create_dir_all(image.parent().unwrap()).unwrap();
+        fs::write(&image, [0x89u8, b'P', b'N', b'G', 0, 1, 2]).unwrap();
+        assert_eq!(crate::campaign::maps::add_map(&dir, &image).expect("map added"), "Maps/Sandpoint.png");
+        let pins = [crate::campaign::maps::Pin { x: 0.42, y: 0.17, label: "Ferry # 1".to_owned(), page: "[[Ameiko Kaijitsu]]".to_owned() }];
+        crate::campaign::maps::set_pins(&dir.join("Maps/Sandpoint.md"), &pins).expect("pins set");
+        // campaign.json, Party Resources.md, the log entry, the page, the map's notes.
+        assert_eq!(assert_plain_campaign_files(&dir), 5);
+        if let Ok(app_dir) = std::env::var("CODEX_NR18_DIR") {
+            let checked = assert_plain_campaign_files(Path::new(&app_dir));
+            println!("CODEX_NR18_DIR {app_dir}: {checked} files read as plain text");
+        }
+        fs::remove_dir_all(dir.parent().unwrap()).ok();
+        fs::remove_dir_all(image.parent().unwrap()).ok();
+    }
+
+    /// The help screen's template tree (`campaignHelpModel.ts` `TEMPLATE_TREE`, E2.5) is a copy of
+    /// what `create_layout` makes; this pins the copy to `LAYOUT_DIRS` and the two root files, so a
+    /// layout change cannot leave the help screen describing a different folder.
+    #[test]
+    fn campaign_folder_help_template_matches_the_layout() {
+        let model = Path::new(env!("CARGO_MANIFEST_DIR")).join("apps/desktop/src/campaign/campaignHelpModel.ts");
+        let text = fs::read_to_string(&model).expect("the help model is readable");
+        let start = text.find("export const TEMPLATE_TREE").expect("TEMPLATE_TREE is declared");
+        let tree = &text[start..start + text[start..].find("];").expect("TEMPLATE_TREE ends")];
+        let mut dirs: Vec<&str> = tree.split("dir('").skip(1).map(|rest| &rest[..rest.find('\'').unwrap()]).collect();
+        dirs.sort_unstable();
+        let mut layout = LAYOUT_DIRS.to_vec();
+        layout.sort_unstable();
+        assert_eq!(dirs, layout, "TEMPLATE_TREE's folders are LAYOUT_DIRS");
+        let mut files: Vec<&str> = tree.split("file('").skip(1).map(|rest| &rest[..rest.find('\'').unwrap()]).collect();
+        files.sort_unstable();
+        assert_eq!(files, [".codex/nonce", "Party Resources.md", CAMPAIGN_JSON], "and its files are the ones create_layout writes");
+    }
 }

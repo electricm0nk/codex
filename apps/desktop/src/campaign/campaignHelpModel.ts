@@ -86,7 +86,7 @@ function file(path: string): CampaignTreeEntry {
 /**
  * What "New campaign…" creates (`src/campaign/folder.rs` `LAYOUT_DIRS` + `campaign.json` +
  * `Party Resources.md` + the `.codex/nonce` counter), in the order `list_campaign_tree` sorts.
- * shortcut: a hand-kept mirror of `LAYOUT_DIRS`; read it from a command if the layout starts changing.
+ * shortcut: a hand-kept mirror of `LAYOUT_DIRS`, pinned by the root test `campaign_folder_help_template_matches_the_layout`; read it from a command if the layout starts changing.
  */
 export const TEMPLATE_TREE: CampaignTreeEntry[] = [
   dir('.codex', [file('.codex/nonce')]),

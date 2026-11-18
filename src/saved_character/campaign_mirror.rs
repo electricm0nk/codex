@@ -231,7 +231,7 @@ fn mirror_one(device: &DeviceIdentity, root: &Path, membership: &Membership, fol
         if target.exists() {
             fs::remove_dir_all(&target)?;
         }
-        fs::rename(&tmp, &target)
+        rename_retrying(&tmp, &target, |from, to| fs::rename(from, to), crate::campaign::folder::WRITE_RETRY_DELAY)
     })();
     result.map(|()| master.save_counter).map_err(|err| {
         let _ = fs::remove_dir_all(&tmp);
@@ -257,6 +257,15 @@ pub(crate) fn copy_tree(from: &Path, to: &Path, top: bool) -> io::Result<()> {
         }
     }
     Ok(())
+}
+
+/// SD-r: a sync client may hold the folder for a moment; one retry after `delay`, then the error.
+fn rename_retrying(from: &Path, to: &Path, mut rename: impl FnMut(&Path, &Path) -> io::Result<()>, delay: std::time::Duration) -> io::Result<()> {
+    if rename(from, to).is_ok() {
+        return Ok(());
+    }
+    std::thread::sleep(delay);
+    rename(from, to)
 }
 
 fn write_atomic(path: &Path, text: &str) -> io::Result<()> {
@@ -315,6 +324,26 @@ fn store_error(message: String) -> SavedCharacterStoreError {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    /// SD-r: a sync client holding the old backup folder mid-write gets one retry after the delay.
+    #[test]
+    fn characters_backup_final_rename_retries_once() {
+        let calls = std::cell::Cell::new(0);
+        let flaky = |_: &Path, _: &Path| {
+            calls.set(calls.get() + 1);
+            if calls.get() == 1 { Err(io::Error::other("busy")) } else { Ok(()) }
+        };
+        rename_retrying(Path::new("a"), Path::new("b"), flaky, std::time::Duration::ZERO).expect("the retry succeeds");
+        assert_eq!(calls.get(), 2);
+
+        calls.set(0);
+        let stuck = |_: &Path, _: &Path| {
+            calls.set(calls.get() + 1);
+            Err(io::Error::other("busy"))
+        };
+        assert!(rename_retrying(Path::new("a"), Path::new("b"), stuck, std::time::Duration::ZERO).is_err(), "two failures report");
+        assert_eq!(calls.get(), 2, "exactly one retry");
+    }
     use crate::saved_character::local_store::SavedCharacterStore;
     use sha2::{Digest, Sha256};
     use std::collections::BTreeMap;
