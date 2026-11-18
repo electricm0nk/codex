@@ -2986,7 +2986,10 @@ pub(crate) fn load_saved_character_at_root(
     let custom = custom_or_empty(root);
     let created_copies: Vec<(CopyKey, &crate::character_custom::CustomRecordDto)> =
         custom.equipment.iter().map(|record| (crate::character_custom::custom_copy(record), record)).collect();
-    let weighed: Vec<(CopyKey, f64)> = created_copies.iter().filter_map(|(copy, record)| record.weight_lbs.map(|lbs| (copy.clone(), lbs))).collect();
+    // A created item's `weight_lbs` is one piece's; the sets file states the stack's pieces (an import's `QUANTITY`).
+    let pieces = |copy: &CopyKey| sets.copies.get(&copy.map_key()).and_then(|facts| facts.quantity).unwrap_or(1);
+    let weighed: Vec<(CopyKey, f64)> =
+        created_copies.iter().filter_map(|(copy, record)| record.weight_lbs.map(|lbs| (copy.clone(), lbs * f64::from(pieces(copy))))).collect();
     let extra: Vec<codex::rules_core::encumbrance::WeighedCopy> = weighed
         .iter()
         .map(|(copy, lbs)| codex::rules_core::encumbrance::WeighedCopy {
@@ -7639,6 +7642,9 @@ pub struct ImportedCharacterFileDto {
     /// `money.json`, when the character holds any. An old file imports with none.
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub money: Option<StoredMoney>,
+    /// The envelope's `game_system` (a PCGen import names it, SD-42 `decisions.md §8`); absent is Pathfinder.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub game_system: Option<String>,
 }
 
 fn character_input_from_dto(dto: CharacterInputDto, fresh_character_id: &str) -> CharacterInput {
@@ -7817,16 +7823,33 @@ fn import_character_from_json(
         .map_err(|err| format!("invalid character import JSON: {err}"))?;
 
     let character_input = character_input_from_dto(parsed.character_input, fresh_character_id);
+    let starfinder = parsed.game_system.as_deref() == Some(crate::sf_adapter::STARFINDER_RULE_SYSTEM_ID);
 
-    let (snapshot, corpus_receipt) =
+    let (snapshot, corpus_derived) = if starfinder {
+        let package = crate::sf_adapter::package().map_err(|refusal| format!("{}: {}", refusal.id, refusal.message))?;
+        match crate::sf_adapter::compute_sheet(package, &character_input) {
+            Ok(sheet) => (crate::sf_adapter::snapshot_dto(&sheet.to_chassis()), crate::sf_adapter::corpus_derived_dto(&sheet)),
+            Err(refusal) => {
+                return Ok(CreateCharacterResponse::Blocked {
+                    diagnostics: vec![DiagnosticDto { id: refusal.id.to_owned(), message: refusal.message, claim_blocking: true }],
+                });
+            }
+        }
+    } else {
         match resolve_unified_pilot_snapshot(&character_input, corpus_fixture_bundle()) {
-            Ok(result) => result,
+            Ok((snapshot, corpus_receipt)) => (
+                map_snapshot_dto(&snapshot),
+                map_corpus_derived_dto(&corpus_receipt.corpus_derived, &character_input.chosen.equipment_selections),
+            ),
             Err(diagnostics) => {
                 return Ok(CreateCharacterResponse::Blocked {
                     diagnostics: map_diagnostics_dto(&diagnostics),
                 });
             }
-        };
+        }
+    };
+    let (game_system, provenance) =
+        if starfinder { (crate::sf_adapter::STARFINDER_RULE_SYSTEM_ID, crate::sf_adapter::STARFINDER_RULE_SYSTEM_ID) } else { (GAME_SYSTEM_ID, SOURCE_PACKAGE_ID) };
 
     let envelope = SavedCharacterEnvelope {
         character_id: fresh_character_id.to_owned(),
@@ -7835,8 +7858,8 @@ fn import_character_from_json(
         saved_at: saved_at.to_owned(),
         schema_version: CURRENT_SAVED_CHARACTER_SCHEMA_VERSION,
         app_or_runtime_version: app_version.to_owned(),
-        content_or_rules_provenance: SOURCE_PACKAGE_ID.to_owned(),
-        game_system: GAME_SYSTEM_ID.to_owned(),
+        content_or_rules_provenance: provenance.to_owned(),
+        game_system: game_system.to_owned(),
         latest_authoritative_revision_ref: format!("{fresh_character_id}.rev.1"),
         display_label: parsed.display_label,
         character_input,
@@ -7861,10 +7884,11 @@ fn import_character_from_json(
         adjust_character_money_at_root(root, total)?;
     }
 
+    let summary = if starfinder { crate::sf_adapter::summary_dto(&envelope) } else { summarize_envelope(&envelope) };
     Ok(CreateCharacterResponse::Saved {
-        summary: Box::new(summarize_envelope(&envelope)),
-        snapshot: Box::new(map_snapshot_dto(&snapshot)),
-        corpus_derived: Box::new(map_corpus_derived_dto(&corpus_receipt.corpus_derived, &envelope.character_input.chosen.equipment_selections)),
+        summary: Box::new(summary),
+        snapshot: Box::new(snapshot),
+        corpus_derived: Box::new(corpus_derived),
         starting_wealth_note: None,
         mirror_warnings: mirror_warnings_at_root(root),
     })
@@ -7943,6 +7967,8 @@ pub struct PcgImportReportDto {
 struct PcgSidecarExtras {
     bio: CharacterBioDto,
     report: PcgImportReportDto,
+    game_system: String,
+    equipment_sets: EquipmentSets,
 }
 
 #[derive(Debug, Clone, Serialize)]
@@ -7984,9 +8010,84 @@ fn run_pcg_sidecar(sidecar: &Path, pcg_file: &Path, data_root: &Path, out: &Path
     }
 }
 
-/// Reads the sidecar's JSON through `import_character_from_json`, then writes `bio.json` and
-/// `money.json`, which it ignores. `root` is a fresh character's: anything short of a whole saved
-/// character removes it, so a refused or failed import leaves nothing to list.
+/// Each held line's Buy Custom parts (`eqmods`: masterwork, material, special abilities) become
+/// the modifiers Buy Custom gives that build, through the same [`custom_equipment_quote`], so the
+/// engine prices and weighs the copy as it would a bought one (`decisions.md §6`). The line's own
+/// `+N` stays, so its copy key does not move. A build the quote refuses keeps its `+N` alone and
+/// returns a line saying why, for the Notes and the report (Q5: never dropped silently).
+fn apply_pcg_custom_builds(file: &mut serde_json::Value) -> Vec<String> {
+    use codex::rules_core::body_slots::Enhanceable;
+    let mut refused = Vec::new();
+    let Some(rows) = file.pointer_mut("/characterInput/chosen/equipmentSelections").and_then(serde_json::Value::as_array_mut) else {
+        return refused;
+    };
+    for row in rows {
+        let strings = |field: &str| -> Vec<String> {
+            row.get(field).and_then(serde_json::Value::as_array).map_or_else(Vec::new, |list| list.iter().filter_map(|v| v.as_str().map(str::to_owned)).collect())
+        };
+        let eqmods = strings("eqmods");
+        if eqmods.is_empty() {
+            continue;
+        }
+        let mut modifiers = strings("appliedModifiers");
+        let item_id = row.get("itemId").and_then(serde_json::Value::as_str).unwrap_or_default().to_owned();
+        let enhancement = (1..=10u8)
+            .filter(|n| [Enhanceable::Armor, Enhanceable::Shield, Enhanceable::Weapon].iter().any(|kind| modifiers.contains(&kind.modifier_key(*n))))
+            .max()
+            .unwrap_or(0);
+        let mut build = CustomEquipmentBuild { base_item_id: item_id.clone(), enhancement, ..CustomEquipmentBuild::default() };
+        for key in &eqmods {
+            if key.starts_with("Special Quality ~ Masterwork ~ ") {
+                build.masterwork = true;
+            } else if key.starts_with("Material ~ ") && build.material.is_none() {
+                build.material = Some(key.clone());
+            } else {
+                build.special_abilities.push(key.clone());
+            }
+        }
+        match custom_equipment_quote(&build) {
+            Ok(quote) => {
+                for key in quote.modifiers {
+                    if !modifiers.contains(&key) {
+                        modifiers.push(key);
+                    }
+                }
+                row["appliedModifiers"] = serde_json::json!(modifiers);
+            }
+            Err(why) => refused.push(format!("{item_id}: {} not applied: {why}", eqmods.join(", "))),
+        }
+    }
+    refused
+}
+
+/// Each Create item takes the state its place in the imported set projects to (worn in its slot,
+/// carried, or left behind), since `custom.json`, not the sets file, holds a custom item's state.
+fn place_pcg_create_items(file: &mut serde_json::Value, sets: &EquipmentSets) {
+    let active = sets.active_set();
+    let Some(records) = file.pointer_mut("/custom/equipment").and_then(serde_json::Value::as_array_mut) else {
+        return;
+    };
+    for record in records {
+        let Some(id) = record.get("id").and_then(serde_json::Value::as_str) else { continue };
+        let copy = CopyKey { item_id: format!("{CUSTOM_ITEM_PREFIX}{id}"), bonus: 0, ordinal: 0 };
+        match equipment_sets::project(active, std::slice::from_ref(&copy))[0] {
+            ActiveState::EquippedActive => {
+                record["worn"] = serde_json::json!(true);
+                if let Location::Slot { slot } = equipment_sets::location_of(active, &copy) {
+                    record["slot"] = serde_json::json!(slot);
+                }
+            }
+            ActiveState::Absent => record["leftBehind"] = serde_json::json!(true),
+            ActiveState::SelectedInactive => {}
+        }
+    }
+}
+
+/// Reads the sidecar's JSON through `import_character_from_json`, then writes what it ignores:
+/// `bio.json` (the Notes block), `equipment_sets.json` (every stack where the file puts it, with its
+/// pieces, so the Default migration never runs on an import) and the envelope's game system.
+/// `root` is a fresh character's: anything short of a whole saved character removes it, so a
+/// refused or failed import leaves nothing to list.
 fn import_pcg_json(
     contents: &str,
     root: &Path,
@@ -7994,13 +8095,26 @@ fn import_pcg_json(
     saved_at: &str,
     app_version: &str,
 ) -> Result<ImportPcgResponse, String> {
-    let extras: PcgSidecarExtras =
-        serde_json::from_str(contents).map_err(|err| format!("invalid PCGen import JSON: {err}"))?;
-    let written = import_character_from_json(contents, root, fresh_character_id, saved_at, app_version).and_then(|outcome| {
-        if matches!(outcome, CreateCharacterResponse::Saved { .. }) {
-            save_character_bio_at_root(root, &extras.bio)?;
-        }
-        Ok(outcome)
+    let invalid = |err: serde_json::Error| format!("invalid PCGen import JSON: {err}");
+    let mut extras: PcgSidecarExtras = serde_json::from_str(contents).map_err(invalid)?;
+    let mut file: serde_json::Value = serde_json::from_str(contents).map_err(invalid)?;
+    let refused = apply_pcg_custom_builds(&mut file);
+    if !refused.is_empty() {
+        extras.bio.notes.push_str("\n\n### Custom parts not applied\n\n");
+        extras.bio.notes.push_str(&refused.iter().map(|line| format!("- {line}")).collect::<Vec<_>>().join("\n"));
+        extras.report.warnings.extend(refused);
+    }
+    place_pcg_create_items(&mut file, &extras.equipment_sets);
+    let starfinder = extras.game_system == crate::sf_adapter::STARFINDER_RULE_SYSTEM_ID;
+    let written = import_character_from_json(&file.to_string(), root, fresh_character_id, saved_at, app_version).and_then(|outcome| {
+        let CreateCharacterResponse::Saved { summary, snapshot, corpus_derived, starting_wealth_note, .. } = outcome else {
+            return Ok(outcome);
+        };
+        save_character_bio_at_root(root, &extras.bio)?;
+        save_sets(root, &extras.equipment_sets)?;
+        // The save weighed every copy as one bundle where it was saved; the first load weighs the set.
+        let corpus_derived = if starfinder { corpus_derived } else { Box::new(load_saved_character_at_root(root)?.corpus_derived) };
+        Ok(CreateCharacterResponse::Saved { summary, snapshot, corpus_derived, starting_wealth_note, mirror_warnings: mirror_warnings_at_root(root) })
     });
     if !matches!(written, Ok(CreateCharacterResponse::Saved { .. })) && root.exists() {
         std::fs::remove_dir_all(root).map_err(|err| format!("{}: {err}", root.display()))?;
@@ -8067,6 +8181,7 @@ fn export_character_to_json(root: &Path) -> Result<String, String> {
         hit_points: (hit_points != CharacterHitPointsDto::default()).then_some(hit_points),
         bio: (bio != CharacterBioDto::default()).then_some(bio),
         money: (total_copper > 0).then_some(StoredMoney { total_copper }),
+        game_system: None,
     };
 
     serde_json::to_string_pretty(&dto).map_err(|err| format!("failed to serialize character for export: {err}"))
@@ -23908,3 +24023,9 @@ mod starter_seed_tests {
 #[cfg(test)]
 #[path = "pf_seed_render_hash.rs"]
 mod pf_seed_render_hash;
+
+/// The PCGen import writes the sets, the Create items and the Notes (SD-42 E4.1). A child module so
+/// it reaches `import_pcg_json` and the held-list helpers.
+#[cfg(test)]
+#[path = "import_writes_equipment_sets.rs"]
+mod import_writes_equipment_sets;

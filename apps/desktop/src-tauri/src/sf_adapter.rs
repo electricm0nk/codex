@@ -568,7 +568,7 @@ pub(crate) fn summary_dto(envelope: &SavedCharacterEnvelope) -> CharacterSummary
     }
 }
 
-fn snapshot_dto(chassis: &PilotBaseChassisComputation) -> PilotSnapshotDto {
+pub(crate) fn snapshot_dto(chassis: &PilotBaseChassisComputation) -> PilotSnapshotDto {
     let m = chassis.ability_modifiers;
     let saves = |s: BaseSaves| BaseSavesDto { fortitude: s.fortitude, reflex: s.reflex, will: s.will };
     PilotSnapshotDto {
@@ -596,7 +596,7 @@ fn snapshot_dto(chassis: &PilotBaseChassisComputation) -> PilotSnapshotDto {
 /// fields (school coverage, resolved equipment, pound/gold-piece weights)
 /// are empty or 0; the Starfinder bulk condition fills `level` and the load
 /// caps, and the worn armour's penalty fills `armor_check_penalty_total`.
-fn corpus_derived_dto(sheet: &SfSheet) -> CorpusDerivedDto {
+pub(crate) fn corpus_derived_dto(sheet: &SfSheet) -> CorpusDerivedDto {
     let condition = sheet.carried.condition;
     CorpusDerivedDto {
         school_coverage: Vec::new(),
