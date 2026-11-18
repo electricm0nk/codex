@@ -416,11 +416,14 @@ pub fn compute_encumbrance(
     extra: &[WeighedCopy],
     quantities: &[(CopyKey, u32)],
 ) -> EncumbranceComputation {
-    compute_encumbrance_sized(equipment_selections, corpus, strength_score, size, extra, quantities, &[])
+    compute_encumbrance_sized(equipment_selections, corpus, strength_score, size, extra, quantities, &[], &[])
 }
 
 /// [`compute_encumbrance`] with `item_sizes`, the copies made for another size than Medium (SD-41
 /// E2.12): each weighs and costs its record × [`copy_size_multipliers`]. `size` is the wearer's.
+/// `weight_overrides` (SD-42 E4.2) are the copies whose file states their own weight per unit
+/// ([`copy_weight_lbs`]).
+#[allow(clippy::too_many_arguments)]
 pub fn compute_encumbrance_sized(
     equipment_selections: &[EquipmentSelection],
     corpus: &SourcePackageContent,
@@ -429,6 +432,7 @@ pub fn compute_encumbrance_sized(
     extra: &[WeighedCopy],
     quantities: &[(CopyKey, u32)],
     item_sizes: &[(CopyKey, SizeCategory)],
+    weight_overrides: &[(CopyKey, f64)],
 ) -> EncumbranceComputation {
     let mut per_item = Vec::new();
     let mut unresolved_item_ids = Vec::new();
@@ -445,10 +449,9 @@ pub fn compute_encumbrance_sized(
             unresolved_item_ids.push(selection.item_id.clone());
             continue;
         };
-        let (weight, cost) = record.weight_and_cost();
+        let cost = record.weight_and_cost().1;
         // A derived record stating neither reads the record it is made from.
         let stand_in = stand_in_record(record, corpus);
-        let weight = weight.or_else(|| stand_in.and_then(|base| base.weight_lbs));
         let cost = cost.or_else(|| stand_in.and_then(|base| base.cost_gp));
         let bundles = copy_bundles(record, stand_in, key, quantities);
 
@@ -457,13 +460,11 @@ pub fn compute_encumbrance_sized(
         // supplementary: a real corpus absence there (a formula-priced
         // modifier, an unpriced `(Base)` template) must not evict an item
         // whose weight is perfectly well known.
-        let Some(weight_lbs) = weight else {
+        let Some(weight_lbs) = copy_weight_lbs(record, stand_in, key, &selection.applied_modifiers, corpus, quantities, item_sizes, weight_overrides) else {
             unresolved_item_ids.push(selection.item_id.clone());
             continue;
         };
-        let (cost_times, weight_times) = copy_size_multipliers(key, item_sizes);
-        let weight_lbs = weight_lbs * bundles * weight_times / modifier_weight_divisor(&selection.applied_modifiers, corpus);
-        let cost_gp = cost.map(|cost| cost * bundles * cost_times);
+        let cost_gp = cost.map(|cost| cost * bundles * copy_size_multipliers(key, item_sizes).0);
 
         total_carried_weight_lbs += weight_lbs;
         total_carried_cost_gp += cost_gp.unwrap_or(0.0);
@@ -514,6 +515,40 @@ pub(crate) fn copy_bundles(
     quantities.iter().find(|(copy, _)| copy == key).map_or(1.0, |(_, pieces)| {
         f64::from(*pieces) / f64::from(record.base_quantity.or(stand_in.and_then(|base| base.base_quantity)).unwrap_or(1).max(1))
     })
+}
+
+/// One copy's weight as the engine weighs it, on the character and in a container: one unit's weight
+/// times its bundles ([`copy_bundles`]). The unit weighs what the equipment-sets file states for the
+/// copy (`weight_override_lbs`, SD-42 E4.2: a `.pcg` line's own `WT`, its size and material already
+/// in it), else its record's (or stand-in's) times its size's weight ([`copy_size_multipliers`])
+/// over its modifiers' divisor ([`modifier_weight_divisor`]). `None` when neither states a weight.
+/// The one place the engine reads a weight override.
+#[allow(clippy::too_many_arguments)]
+pub(crate) fn copy_weight_lbs(
+    record: &crate::rules_core::equipment_record::CorpusEquipmentRecord,
+    stand_in: Option<&crate::rules_core::equipment_record::CorpusEquipmentRecord>,
+    key: &CopyKey,
+    applied_modifiers: &[String],
+    corpus: &SourcePackageContent,
+    quantities: &[(CopyKey, u32)],
+    item_sizes: &[(CopyKey, SizeCategory)],
+    weight_overrides: &[(CopyKey, f64)],
+) -> Option<f64> {
+    let bundles = copy_bundles(record, stand_in, key, quantities);
+    if let Some((_, lbs)) = weight_overrides.iter().find(|(copy, _)| copy == key) {
+        return Some(lbs * bundles);
+    }
+    let weight = record.weight_and_cost().0.or_else(|| stand_in.and_then(|base| base.weight_lbs))?;
+    Some(weight * bundles * copy_size_multipliers(key, item_sizes).1 / modifier_weight_divisor(applied_modifiers, corpus))
+}
+
+/// What `pieces` of a copy list at, in copper, for the sell path (SD-42 E4.2): its file's own price
+/// per unit (`cost_override_copper`, a `.pcg` line's `COST`) when it states one, else `price_gp`,
+/// the unit's price; a unit is a bundle of `bundle_pieces`, floored to a copper. `None` when
+/// neither states a price. The one place the engine reads a price override.
+pub fn copy_listed_copper(price_gp: Option<f64>, cost_override_copper: Option<u64>, pieces: u32, bundle_pieces: u32) -> Option<u64> {
+    let unit = cost_override_copper.or_else(|| price_gp.map(crate::rules_core::money::gp_to_copper))?;
+    Some(unit.saturating_mul(u64::from(pieces)) / u64::from(bundle_pieces.max(1)))
 }
 
 /// What a copy's size multiplies its record's `(cost, weight)` by (SD-41 E2.12); `(1, 1)` for a
@@ -818,6 +853,19 @@ mod tests {
         assert_eq!((sixty.total_carried_weight_lbs, sixty.total_carried_cost_gp), (9.0, 6.0), "60 of 20 per 3 lb / 2 gp: {sixty:#?}");
         let ten = arrows_weighing(&[(arrows_copy(0), 10)]);
         assert_eq!((ten.total_carried_weight_lbs, ten.total_carried_cost_gp), (1.5, 1.0), "{ten:#?}");
+    }
+
+    /// SD-42 E4.2 (`decisions.md §6`): what the sell path lists a copy at. A copy whose file states
+    /// its own price (a `.pcg` line's `COST`, "Mourn" at 315 gp over a 15 gp Longsword) lists at
+    /// that, never the record's; a bundle's stated price is per bundle; a stated 0 is free, not unpriced.
+    #[test]
+    fn copy_override_cost_in_sell() {
+        assert_eq!(copy_listed_copper(Some(15.0), Some(31_500), 1, 1), Some(31_500), "the line's price");
+        assert_eq!(copy_listed_copper(Some(15.0), None, 1, 1), Some(1_500), "the record's, with none stated");
+        assert_eq!(copy_listed_copper(Some(1.0), Some(300), 60, 20), Some(900), "60 pieces are 3 bundles of 300 cp");
+        assert_eq!(copy_listed_copper(Some(1.0), Some(300), 10, 20), Some(150), "half a bundle");
+        assert_eq!(copy_listed_copper(Some(1.0), Some(0), 1, 1), Some(0), "stated free");
+        assert_eq!(copy_listed_copper(None, None, 1, 1), None, "unpriced");
     }
 
     #[test]

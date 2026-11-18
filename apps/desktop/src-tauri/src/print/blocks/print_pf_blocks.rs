@@ -2579,6 +2579,39 @@ fn print_pf_blocks_gear_ammunition_boxes_only_under_projectile_weapons() {
     assert!(text.contains(&words), "`{words}` prints: {text}");
 }
 
+/// SD-42 E4.2 (`decisions.md §6, §24`): a copy's properties (a `.pcg` line's `SPROP`) print under
+/// its Inventory line, and its own die (`_DAMAGE|2d4`) is the die its Weapons line prints. Aldric
+/// carrying a Dagger written with two properties and a 2d4 die; with `PRINT_PF_BLOCKS_OUT` set the
+/// PDF is kept as `aldric-copy-overrides.pdf`.
+#[test]
+fn print_pf_blocks_gear_properties() {
+    use codex::saved_character::equipment_sets::{self, CopyKey};
+    let root = seeded("gear-properties", ALDRIC_ID);
+    hold(&root, "Dagger (Base)", ActiveState::SelectedInactive);
+    load_saved_character_at_root(&root).expect("the first load writes the sets");
+    let mut sets = equipment_sets::load(&root).unwrap().expect("the sets file");
+    let facts = sets.copies.entry(CopyKey { item_id: "Dagger (Base)".to_owned(), bonus: 0, ordinal: 0 }.map_key()).or_default();
+    facts.properties = vec!["Keen edge".to_owned(), "Glows faintly".to_owned()];
+    facts.damage_override = Some("2d4".to_owned());
+    equipment_sets::save(&root, &sets).unwrap();
+
+    let document = sheet_document_at_root(&root, &request(false, false, false)).expect("the document builds");
+    let sections = gear_sections(gear_block(&document));
+    let carried = &sections.iter().find(|(title, _)| *title == "Carried").expect("Carried").1;
+    let dagger = carried.iter().find(|row| row.label.starts_with("Dagger")).unwrap_or_else(|| panic!("the dagger: {carried:?}"));
+    assert_eq!(dagger.notes, ["Keen edge", "Glows faintly"], "the properties, under the line, as written");
+    let weapons = document.blocks.iter().find(|block| block.id == "weapons").expect("the Weapons block");
+    let line = weapons.rows.iter().find(|row| row.label.starts_with("Dagger")).unwrap_or_else(|| panic!("the dagger's line: {:?}", weapons.rows));
+    assert!(line.values[1].starts_with("2d4"), "the copy's die: {line:?}");
+    let pdf = render(&root, &request(false, false, false));
+    keep_pdf("aldric-copy-overrides", &pdf);
+    let text = pdf_text(&pdf);
+    let gear: String = text_between(&text, "Gear Item", "Money PP").split_whitespace().collect();
+    assert!(gear.contains("Dagger1lbKeenedgeGlowsfaintly"), "the properties under the dagger: {gear}");
+    let weapons_text: String = text_between(&text, "Weapons Weapon", "Saving Throws").split_whitespace().collect();
+    assert!(weapons_text.contains("2d4"), "{weapons_text}");
+}
+
 /// SD-41 E4.1 (`decisions.md §25, §28`): identical copies print as one stack, `<name> ×<pieces>`
 /// (a bundle's `(20)` dropped once bought), with the engine's weight per copy (`3 × 3 lb`); a
 /// created item prints with the weight it states. Aldric carrying three Arrows (20) and a created

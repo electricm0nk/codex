@@ -828,6 +828,12 @@ pub struct WeaponDamageBreakdown {
     /// The ammunition family the weapon's record names (`Arrow`), for the tab's "Arrow: 20 carried";
     /// `None` for a weapon that names none or uses no ammunition.
     pub ammunition_family: Option<String>,
+    /// The copy this row is (its `+N` and ordinal, as the equipment-sets file keys it); `None` on the
+    /// Unarmed row.
+    pub copy: Option<CopyKey>,
+    /// The die this copy deals instead of its record's, as its file writes it (`2d4`, SD-42
+    /// `decisions.md §6`); `base_dice` holds it when it reads as dice.
+    pub damage_override: Option<String>,
 }
 
 /// The corpus record every character's Unarmed row is built from (Core Rulebook
@@ -862,7 +868,7 @@ pub fn resolve_weapon_damage_breakdown(
     equipment_effects: &EquipmentEffects,
     str_modifier: i16,
 ) -> Vec<WeaponDamageBreakdown> {
-    weapon_rows(character, corpus, equipment_effects, str_modifier, ActiveState::EquippedActive, &[], &[])
+    weapon_rows(character, corpus, equipment_effects, str_modifier, ActiveState::EquippedActive, &[], &[], &[])
 }
 
 /// SD-41 E1.4: the in-hand rows of [`resolve_weapon_damage_breakdown`] (unchanged, first), then
@@ -880,8 +886,25 @@ pub fn resolve_weapon_damage_breakdown_with_carried(
     quantities: &[(CopyKey, u32)],
     sizes: &[(CopyKey, crate::rules_core::size::SizeCategory)],
 ) -> Vec<WeaponDamageBreakdown> {
-    let mut rows = weapon_rows(character, corpus, equipment_effects, str_modifier, ActiveState::EquippedActive, quantities, sizes);
-    rows.extend(weapon_rows(character, corpus, equipment_effects, str_modifier, ActiveState::SelectedInactive, quantities, sizes));
+    resolve_weapon_damage_breakdown_with_copies(character, corpus, equipment_effects, str_modifier, quantities, sizes, &[])
+}
+
+/// SD-42 E4.2 (`decisions.md §6, §24`): [`resolve_weapon_damage_breakdown_with_carried`] with
+/// `damage_overrides`, the die each named copy deals instead of its record's (the equipment-sets
+/// file's `damage_override`, as written). The one place the engine reads it: a copy it names rolls
+/// that die whatever its record or size says; a die that does not read as dice leaves `base_dice`
+/// absent and the text in `damage_override`.
+pub fn resolve_weapon_damage_breakdown_with_copies(
+    character: &CharacterInput,
+    corpus: &SourcePackageContent,
+    equipment_effects: &EquipmentEffects,
+    str_modifier: i16,
+    quantities: &[(CopyKey, u32)],
+    sizes: &[(CopyKey, crate::rules_core::size::SizeCategory)],
+    damage_overrides: &[(CopyKey, String)],
+) -> Vec<WeaponDamageBreakdown> {
+    let mut rows = weapon_rows(character, corpus, equipment_effects, str_modifier, ActiveState::EquippedActive, quantities, sizes, damage_overrides);
+    rows.extend(weapon_rows(character, corpus, equipment_effects, str_modifier, ActiveState::SelectedInactive, quantities, sizes, damage_overrides));
     rows.extend(unarmed_strike_row(character, corpus, equipment_effects, str_modifier));
     rows
 }
@@ -936,6 +959,8 @@ fn unarmed_strike_row(
         uses_ammunition: false,
         ammunition_carried: 0,
         ammunition_family: None,
+        copy: None,
+        damage_override: None,
     })
 }
 
@@ -982,6 +1007,7 @@ fn copy_bonus(selection: &EquipmentSelection) -> u8 {
 }
 
 /// One breakdown per weapon selection in `state`, in input order.
+#[allow(clippy::too_many_arguments)]
 fn weapon_rows(
     character: &CharacterInput,
     corpus: &SourcePackageContent,
@@ -990,6 +1016,7 @@ fn weapon_rows(
     state: ActiveState,
     quantities: &[(CopyKey, u32)],
     sizes: &[(CopyKey, crate::rules_core::size::SizeCategory)],
+    damage_overrides: &[(CopyKey, String)],
 ) -> Vec<WeaponDamageBreakdown> {
     let feat_effects: Vec<DamageRollFeatEffect> = character
         .chosen
@@ -1008,13 +1035,17 @@ fn weapon_rows(
             let weapon_item_id = selection.item_id.as_str();
             let mut base_dice = resolve_base_damage_dice(weapon_item_id, corpus)?;
             let size = sizes.iter().find(|(copy, _)| *copy == key).map(|(_, size)| *size);
-            let base_dice = match size {
-                None => Some(base_dice),
-                Some(size) => weapon_damage_for_size(base_dice.base_dice, size).map(|die| {
-                    base_dice.base_dice = die;
-                    base_dice
-                }),
+            let damage_override = damage_overrides.iter().find(|(copy, _)| *copy == key).map(|(_, die)| die.clone());
+            // The copy's own die is its size's already (PCGen writes the die the copy deals).
+            let die = match (&damage_override, size) {
+                (Some(written), _) => DiceExpression::parse(written.trim()),
+                (None, None) => Some(base_dice.base_dice),
+                (None, Some(size)) => weapon_damage_for_size(base_dice.base_dice, size),
             };
+            let base_dice = die.map(|die| {
+                base_dice.base_dice = die;
+                base_dice
+            });
             let ammunition_user = equipment_converted_resolve(weapon_item_id, corpus).and_then(|record| {
                 Some(record).filter(|r| r.uses_ammunition()).or_else(|| stand_in_record(record, corpus).filter(|base| base.uses_ammunition()))
             });
@@ -1055,6 +1086,8 @@ fn weapon_rows(
                 ammunition_carried: ammunition_user
                     .map_or(0, |weapon| ammunition_carried(character, corpus, weapon.ammunition_family(), quantities)),
                 ammunition_family: ammunition_user.and_then(|weapon| weapon.ammunition_family()).map(str::to_owned),
+                copy: Some(key),
+                damage_override,
             })
         })
         .collect()
@@ -1548,6 +1581,56 @@ mod carried_weapon_tests {
             resolve_weapon_damage_breakdown_with_carried(i, c, e, s, &[], &[(second, SizeCategory::Large)])
         });
         assert_eq!(dice(sized), vec![Some(die(1, 8)), Some(die(2, 6))], "the second copy is the Large one");
+    }
+
+    /// SD-42 E4.2 (`decisions.md §6, §24`): a copy whose file writes its own die (a `.pcg` line's
+    /// `_DAMAGE|2d4`) rolls that die, as written, whatever its record or its size says, and the
+    /// engine's damage total prints it; the other copy keeps its record's 1d8. A die that does not
+    /// read as dice leaves the die absent (never the record's) and keeps the words.
+    #[test]
+    fn copy_override_damage_die_prints_as_written() {
+        use crate::rules_core::size::SizeCategory;
+        let swords = || vec![select("Longsword (Base)", ActiveState::EquippedActive, &[]), select("Longsword (Base)", ActiveState::EquippedActive, &[])];
+        let held = rows(swords(), |i, c, e, s| {
+            let first = CopyKey { item_id: "Longsword (Base)".to_owned(), bonus: 0, ordinal: 0 };
+            resolve_weapon_damage_breakdown_with_copies(i, c, e, s, &[], &[(first.clone(), SizeCategory::Large)], &[(first, "2d4".to_owned())])
+        });
+        let dice: Vec<Option<DiceExpression>> = held.iter().filter(|row| !row.unarmed).map(|row| row.base_dice.as_ref().map(|dice| dice.base_dice)).collect();
+        assert_eq!(dice, vec![Some(DiceExpression { count: 2, die_size: 4 }), Some(DiceExpression { count: 1, die_size: 8 })], "{held:#?}");
+        assert_eq!((held[0].damage_override.as_deref(), held[1].damage_override.as_deref()), (Some("2d4"), None));
+        assert_eq!(held[0].copy, Some(CopyKey { item_id: "Longsword (Base)".to_owned(), bonus: 0, ordinal: 0 }));
+        let strength = held[0].str_modifier.as_ref().map(|part| (part.str_damage_modifier, "OneHanded".to_owned()));
+        let total = weapon_damage_total_row("Longsword (Base)", held[0].base_dice.as_ref().map(|dice| dice.base_dice), strength, None, None, &[]).expect("a die, a total");
+        assert!(total.detail.starts_with("2d4+4:"), "{}", total.detail);
+
+        let words = rows(vec![select("Longsword (Base)", ActiveState::EquippedActive, &[])], |i, c, e, s| {
+            let first = CopyKey { item_id: "Longsword (Base)".to_owned(), bonus: 0, ordinal: 0 };
+            resolve_weapon_damage_breakdown_with_copies(i, c, e, s, &[], &[], &[(first, "1d6 fire".to_owned())])
+        });
+        assert_eq!((words[0].base_dice.as_ref(), words[0].damage_override.as_deref()), (None, Some("1d6 fire")), "{words:#?}");
+    }
+
+    /// SD-42 E4.2: with no override for a copy — none at all, or one naming another copy — the rows,
+    /// the carried weight and the listed price are what they were.
+    #[test]
+    fn copy_override_absent_changes_nothing() {
+        use crate::rules_core::encumbrance::{compute_encumbrance, compute_encumbrance_sized, copy_listed_copper};
+        use crate::rules_core::size::SizeCategory;
+        let loadout = || vec![select("Longsword (Base)", ActiveState::EquippedActive, PLUS_ONE), select("Dagger (Base)", ActiveState::SelectedInactive, &[])];
+        let before = rows(loadout(), |i, c, e, s| resolve_weapon_damage_breakdown_with_carried(i, c, e, s, &[], &[]));
+        let other = rows(loadout(), |i, c, e, s| {
+            let elsewhere = CopyKey { item_id: "Longsword (Base)".to_owned(), bonus: 1, ordinal: 5 };
+            resolve_weapon_damage_breakdown_with_copies(i, c, e, s, &[], &[], &[(elsewhere, "2d4".to_owned())])
+        });
+        assert_eq!(other, before);
+        assert!(before.iter().all(|row| row.damage_override.is_none()));
+
+        let corpus = load_equipment_corpus(&[BookCorpusRoot { book_id: "core_rulebook", dir: Path::new("data/corpus/core_rulebook") }]);
+        let elsewhere = CopyKey { item_id: "Dagger (Base)".to_owned(), bonus: 0, ordinal: 3 };
+        let plain = compute_encumbrance(&loadout(), &corpus, 12, SizeCategory::Medium, &[], &[]);
+        let named_elsewhere = compute_encumbrance_sized(&loadout(), &corpus, 12, SizeCategory::Medium, &[], &[], &[], &[(elsewhere, 0.25)]);
+        assert_eq!(named_elsewhere, plain);
+        assert_eq!(copy_listed_copper(Some(15.0), None, 1, 1), Some(crate::rules_core::money::gp_to_copper(15.0)));
     }
 
     /// The old entry point keeps its contract: in-hand weapons only, each `in_hand: true`.

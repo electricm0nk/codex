@@ -390,6 +390,11 @@ export function GearPanels(props: GearPanelsProps) {
           {`${row.weightLabel} · ${row.locationLabel}`}
           {row.capacityLabel ? ` · ${row.capacityLabel}` : ''}
         </span>
+        {(row.held.properties ?? []).map((property) => (
+          <span key={property} data-testid="gear-property" style={{ ...quiet, display: 'block' }}>
+            {property}
+          </span>
+        ))}
       </span>
       <span style={{ display: 'flex', flexShrink: 0, gap: '0.3rem' }}>
         <MoveToMenu model={model} row={row} busy={props.busy} onChoose={(location, label) => run({ kind: 'move', row, location, targetLabel: label }, at)} />

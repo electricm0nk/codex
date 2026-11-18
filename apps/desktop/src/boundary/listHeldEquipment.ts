@@ -75,6 +75,14 @@ export interface PlacedEquipmentCopyDto extends HeldEquipmentCopyDto {
   copies: CopyKeyDto[];
   /** Pieces in one bundle as the book sells it; 1 for a single item. */
   baseQuantity: number;
+  /** The copy's properties (a `.pcg` line's `SPROP`), printed under it; absent when it has none. */
+  properties?: string[];
+  /** The die the copy deals instead of its record's, as written; the Weapons row rolls it. */
+  damageOverride?: string;
+  /** One unit's weight its file states; the engine weighs the copy by it. */
+  weightOverrideLbs?: number;
+  /** One unit's price in copper its file states; Sell lists the copy at it. */
+  costOverrideCopper?: number;
 }
 
 /** What the Market can buy back: a custom item is the GM's, and has no price. */

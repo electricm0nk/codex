@@ -30,7 +30,7 @@ use codex::rules_core::character_input::{
     AbilityScores, AcquisitionMode, ActiveState, CharacterClassLevel, CharacterInput,
     ChosenCharacterState, EquipmentSelection, SelectedChoice, SkillAllocation, SpellSelection,
 };
-use codex::rules_core::damage_total::{resolve_weapon_damage_breakdown_with_carried, WeaponDamageBreakdown};
+use codex::rules_core::damage_total::{resolve_weapon_damage_breakdown_with_copies, WeaponDamageBreakdown};
 use codex::rules_core::feat_effects;
 use codex::rules_core::game_system::GameSystem;
 use codex::rules_core::level_up::{compute_level_up_grants_for_class, LevelUpPlan};
@@ -638,7 +638,7 @@ pub struct LoadSavedCharacterResponse {
     pub explanations: Vec<ExplanationDto>,
     /// One entry per `EquippedActive` weapon, then per carried
     /// (`SelectedInactive`, `inHand: false`) weapon, then the Unarmed row
-    /// (`damage_total::resolve_weapon_damage_breakdown_with_carried`),
+    /// (`damage_total::resolve_weapon_damage_breakdown_with_copies`),
     /// carrying each weapon's corpus-cited damage facets.
     ///
     /// Each facet stays its own field. The one summed figure, the damage
@@ -1158,6 +1158,13 @@ pub struct WeaponDamageDto {
     /// The ammunition family the record names (`Arrow`); left out when it names none.
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub ammunition_family: Option<String>,
+    /// The die this copy deals instead of its record's, as its file writes it (SD-42 `decisions.md
+    /// §6`); `base_dice` holds it when it reads as dice. Left out when the copy has none.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub damage_override: Option<String>,
+    /// The copy's properties (a `.pcg` line's `SPROP`), printed as text; left out when it has none.
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    pub properties: Vec<String>,
 }
 
 /// Projects the engine's per-weapon damage breakdown onto the wire.
@@ -1227,6 +1234,8 @@ pub(crate) fn map_weapon_damage_dto(
             uses_ammunition: breakdown.uses_ammunition,
             ammunition_carried: breakdown.ammunition_carried,
             ammunition_family: breakdown.ammunition_family.clone(),
+            damage_override: breakdown.damage_override.clone(),
+            properties: Vec::new(),
         })
         .collect()
 }
@@ -2998,7 +3007,8 @@ pub(crate) fn load_saved_character_at_root(
             active_state: equipment_sets::project(sets.active_set(), std::slice::from_ref(copy))[0],
         })
         .collect();
-    corpus_receipt.corpus_derived.encumbrance = carried_load(&sheet_input, &quantities, &extra, &item_sizes);
+    let weight_overrides = copy_facts(&sets, &copy_keys, |facts| facts.weight_override_lbs);
+    corpus_receipt.corpus_derived.encumbrance = carried_load(&sheet_input, &quantities, &extra, &item_sizes, &weight_overrides);
     let held_by_key: Vec<(CopyKey, &str, &[String])> = copy_keys
         .iter()
         .zip(&envelope.character_input.chosen.equipment_selections)
@@ -3006,7 +3016,7 @@ pub(crate) fn load_saved_character_at_root(
         .collect();
     let containers: Vec<(CopyKey, f64)> =
         created_copies.iter().filter_map(|(copy, record)| record.container_capacity_lbs.map(|lbs| (copy.clone(), lbs))).collect();
-    let container_loads = codex::rules_core::containers::container_loads(sets.active_set(), &held_by_key, corpus_fixture_bundle(), &containers, &weighed, &quantities, &item_sizes)
+    let container_loads = codex::rules_core::containers::container_loads(sets.active_set(), &held_by_key, corpus_fixture_bundle(), &containers, &weighed, &quantities, &item_sizes, &weight_overrides)
         .into_iter()
         .map(|load| ContainerLoadDto { copy: load.copy, contents_lbs: load.contents_lbs, capacity: load.capacity.into(), over: load.over })
         .collect();
@@ -3029,14 +3039,21 @@ pub(crate) fn load_saved_character_at_root(
         let rows: Vec<_> = rows.into_iter().filter(|row| !explanations.iter().any(|held| held.id == row.id)).collect();
         explanations.extend(map_explanations_dto(&rows));
     }
-    let weapon_damage = map_weapon_damage_dto(&resolve_weapon_damage_breakdown_with_carried(
+    let breakdowns = resolve_weapon_damage_breakdown_with_copies(
         &sheet_input,
         corpus_fixture_bundle(),
         &corpus_receipt.corpus_derived.equipment_effects,
         corpus_receipt.base.ability_modifiers.strength,
         &quantities,
         &item_sizes,
-    ));
+        &copy_facts(&sets, &copy_keys, |facts| facts.damage_override.clone()),
+    );
+    let mut weapon_damage = map_weapon_damage_dto(&breakdowns);
+    for (row, breakdown) in weapon_damage.iter_mut().zip(&breakdowns) {
+        if let Some(facts) = breakdown.copy.as_ref().and_then(|copy| sets.copies.get(&copy.map_key())) {
+            row.properties = facts.properties.clone();
+        }
+    }
     let (sheet_lines, sheet_rules_unavailable_reason, feat_skill_bonuses, conditional_notes) =
         sheet_lines_for(&sheet_input, &corpus_receipt.base);
     if let Some(snapshot) = snapshot.as_mut() {
@@ -5443,7 +5460,7 @@ pub(crate) fn sell_held_pieces_at_root(
 
     let taken = take_pieces_at_root(root, &sold, deal.quantity, deal.quantity.is_none(), saved_at)?;
     if let CreateCharacterResponse::Saved { .. } = &taken.response {
-        let listed = cost_gp.map_or(0, |gp| money::gp_to_copper(gp).saturating_mul(u64::from(taken.pieces)) / u64::from(taken.bundle_pieces));
+        let listed = codex::rules_core::encumbrance::copy_listed_copper(cost_gp, taken.cost_override_copper, taken.pieces, taken.bundle_pieces).unwrap_or(0);
         let refund = match (mode, deal.negotiated_copper) {
             (PriceMode::Cashless, _) => 0,
             (_, Some(negotiated)) => negotiated,
@@ -5462,6 +5479,8 @@ struct TakenPieces {
     response: CreateCharacterResponse,
     pieces: u32,
     bundle_pieces: u32,
+    /// The taken stack's price per unit its file states (SD-42 E4.2).
+    cost_override_copper: Option<u64>,
 }
 
 /// Which lines of `stack` (in order) `wanted` pieces take: whole lines first, then the line the
@@ -5494,6 +5513,7 @@ fn take_pieces_at_root(root: &Path, copy: &CopyKey, quantity: Option<u32>, line_
     let Some(source) = rows.iter().find(|row| &row.copies[0] == copy && !row.item_id.starts_with(CUSTOM_ITEM_PREFIX)) else {
         return Err(format!("'{}' cannot be removed: this character does not hold that copy", copy.map_key()));
     };
+    let cost_override_copper = sets.copies.get(&copy.map_key()).and_then(|facts| facts.cost_override_copper);
     let stack: Vec<&HeldEquipmentCopyDto> =
         std::iter::once(source).chain(rows.iter().filter(|row| !line_only && &row.copies[0] != copy && same_stack(row, source))).collect();
     let total: u32 = stack.iter().map(|row| row.quantity).sum();
@@ -5522,7 +5542,7 @@ fn take_pieces_at_root(root: &Path, copy: &CopyKey, quantity: Option<u32>, line_
             forget_copy_in_sets(root, removed)?;
         }
     }
-    Ok(TakenPieces { response, pieces: wanted, bundle_pieces: source.base_quantity.max(1) })
+    Ok(TakenPieces { response, pieces: wanted, bundle_pieces: source.base_quantity.max(1), cost_override_copper })
 }
 
 /// Discards `quantity` pieces (absent: the whole stack) of the stack `copy` is in, for no money
@@ -5576,6 +5596,18 @@ pub struct HeldEquipmentCopyDto {
     /// The wielder size the copy was made for (Buy Custom, E2.12); absent for Medium.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub size: Option<codex::rules_core::size::SizeCategory>,
+    /// The copy's properties (a `.pcg` line's `SPROP`, SD-42 `decisions.md §6`), printed under it.
+    #[serde(skip_serializing_if = "Vec::is_empty")]
+    pub properties: Vec<String>,
+    /// The die the copy deals instead of its record's, as written; the Weapons row rolls it.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub damage_override: Option<String>,
+    /// One unit's weight the copy's file states; the engine weighs the copy by it.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub weight_override_lbs: Option<f64>,
+    /// One unit's price in copper the copy's file states; Sell lists the copy at it.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub cost_override_copper: Option<u64>,
 }
 
 #[derive(Debug, Clone, Deserialize)]
@@ -5620,6 +5652,8 @@ pub(crate) fn list_held_equipment_stacks_at_root(root: &Path) -> Result<Vec<Held
         let same = |stack: &&mut HeldEquipmentCopyDto| {
             (&stack.item_id, stack.bonus, &stack.name, &stack.location, stack.override_flag, &stack.abilities, stack.size)
                 == (&row.item_id, row.bonus, &row.name, &row.location, row.override_flag, &row.abilities, row.size)
+                && (&stack.properties, &stack.damage_override, stack.weight_override_lbs, stack.cost_override_copper)
+                    == (&row.properties, &row.damage_override, row.weight_override_lbs, row.cost_override_copper)
         };
         match stacks.iter_mut().find(same) {
             Some(stack) => {
@@ -5710,6 +5744,12 @@ fn copy_quantities(sets: &EquipmentSets, keys: &[CopyKey]) -> Vec<(CopyKey, u32)
     keys.iter().filter_map(|copy| sets.copies.get(&copy.map_key()).and_then(|facts| facts.quantity).map(|pieces| (copy.clone(), pieces))).collect()
 }
 
+/// What `read` finds in each copy's facts in the sets file (SD-42 E4.2: the weight and damage
+/// overrides), for the load, the containers and the weapon rows.
+fn copy_facts<T>(sets: &EquipmentSets, keys: &[CopyKey], read: impl Fn(&equipment_sets::CopyFacts) -> Option<T>) -> Vec<(CopyKey, T)> {
+    keys.iter().filter_map(|copy| sets.copies.get(&copy.map_key()).and_then(&read).map(|value| (copy.clone(), value))).collect()
+}
+
 /// Each copy's size the sets file states (Buy Custom, E2.12), for the load, the containers and the
 /// weapon rows.
 fn copy_sizes(sets: &EquipmentSets, keys: &[CopyKey]) -> Vec<(CopyKey, codex::rules_core::size::SizeCategory)> {
@@ -5718,16 +5758,17 @@ fn copy_sizes(sets: &EquipmentSets, keys: &[CopyKey]) -> Vec<(CopyKey, codex::ru
 
 /// What the character carries, weighed with each copy's pieces and the created items' weights:
 /// the same call `compute_pilot_with_corpus` makes (effective Strength, the race's size), plus `extra`, `quantities`
-/// and the copies' own sizes.
+/// the copies' own sizes and the weights their file states.
 fn carried_load(
     input: &CharacterInput,
     quantities: &[(CopyKey, u32)],
     extra: &[codex::rules_core::encumbrance::WeighedCopy],
     item_sizes: &[(CopyKey, codex::rules_core::size::SizeCategory)],
+    weight_overrides: &[(CopyKey, f64)],
 ) -> codex::rules_core::encumbrance::EncumbranceComputation {
     let strength = apply_human_ability_bonus(input, &mut Vec::new()).strength;
     let (size, _) = codex::rules_core::contract::encumbrance_size_for_race(&input.chosen.race_id);
-    codex::rules_core::encumbrance::compute_encumbrance_sized(&input.chosen.equipment_selections, corpus_fixture_bundle(), strength, size, extra, quantities, item_sizes)
+    codex::rules_core::encumbrance::compute_encumbrance_sized(&input.chosen.equipment_selections, corpus_fixture_bundle(), strength, size, extra, quantities, item_sizes, weight_overrides)
 }
 
 /// The rows with each copy's location, custom name and pieces from the active set. A copy whose
@@ -5748,6 +5789,10 @@ fn placed_in(mut rows: Vec<HeldEquipmentCopyDto>, sets: &EquipmentSets) -> Vec<H
                 row.quantity = pieces;
             }
             row.size = facts.size;
+            row.properties = facts.properties.clone();
+            row.damage_override = facts.damage_override.clone();
+            row.weight_override_lbs = facts.weight_override_lbs;
+            row.cost_override_copper = facts.cost_override_copper;
         }
     }
     rows
@@ -5793,6 +5838,10 @@ fn held_copy_rows(root: &Path, input: &CharacterInput) -> Result<Vec<HeldEquipme
                 base_quantity: pieces,
                 abilities: copy_abilities(selection),
                 size: None,
+                properties: Vec::new(),
+                damage_override: None,
+                weight_override_lbs: None,
+                cost_override_copper: None,
             }
         })
         .collect();
@@ -5819,6 +5868,10 @@ fn held_copy_rows(root: &Path, input: &CharacterInput) -> Result<Vec<HeldEquipme
             base_quantity: 1,
             abilities: Vec::new(),
             size: None,
+            properties: Vec::new(),
+            damage_override: None,
+            weight_override_lbs: None,
+            cost_override_copper: None,
         }
     }));
     tag_admitted_copies(&mut rows, &admitted_records_at_root(root, input));
@@ -11926,7 +11979,7 @@ mod tests {
         assert_eq!(receipt.corpus_derived.equipment_effects.attack_bonus_delta, None, "no weapon in hand");
         // SD-41 E2.4: the stowed sword has one row, marked carried, with its own +1.
         let rows: Vec<WeaponDamageBreakdown> =
-            resolve_weapon_damage_breakdown_with_carried(&input, corpus_fixture_bundle(), &receipt.corpus_derived.equipment_effects, 3, &[], &[])
+            codex::rules_core::damage_total::resolve_weapon_damage_breakdown_with_carried(&input, corpus_fixture_bundle(), &receipt.corpus_derived.equipment_effects, 3, &[], &[])
                 .into_iter()
                 .filter(|row| !row.unarmed)
                 .collect();
@@ -21934,6 +21987,79 @@ mod tests {
         let bundle = codex::rules_core::equipment_resolver::equipment_converted_resolve("Arrows (20)", corpus_fixture_bundle()).unwrap().weight_lbs.unwrap();
         assert_eq!(doubled, before + bundle, "40 pieces are two bundles");
         assert_eq!(stacks_of(&root, "Arrows (20)")[0].quantity, 40);
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    // ----- SD-42 E4.2: copy overrides end to end (`decisions.md §6, §24`) -----
+
+    /// Writes `facts` for `copy` into the root's sets file (as an import writes them).
+    fn copy_overrides_write(root: &Path, copy: &CopyKey, facts: impl FnOnce(&mut equipment_sets::CopyFacts)) {
+        load_saved_character_at_root(root).expect("the first load writes the sets");
+        let mut sets = equipment_sets::load(root).unwrap().expect("the sets file");
+        facts(sets.copies.entry(copy.map_key()).or_default());
+        equipment_sets::save(root, &sets).unwrap();
+    }
+
+    /// A carried Dagger whose file writes `_DAMAGE|2d4` and two `SPROP` lines: its Weapons row rolls 2d4
+    /// (the engine's damage total prints `2d4+…`), carries the override and the properties, and the
+    /// held row carries them; the wire names the new keys only where they are stated.
+    #[test]
+    fn copy_overrides_damage_die_and_properties_reach_the_weapons_row() {
+        let root = sets_root("copy-overrides-damage", &[("Dagger (Base)", ActiveState::SelectedInactive)]);
+        let before = load_saved_character_at_root(&root).unwrap();
+        let plain = before.weapon_damage.iter().find(|row| row.weapon_item_id == "Dagger (Base)").expect("the dagger's row");
+        assert_eq!(plain.base_dice.map(|dice| (dice.count, dice.die_size)), Some((1, 4)));
+        let plain_json = serde_json::to_value(plain).unwrap();
+        assert!(plain_json.get("damageOverride").is_none() && plain_json.get("properties").is_none(), "{plain_json}");
+
+        copy_overrides_write(&root, &sets_key("Dagger (Base)", 0), |facts| {
+            facts.damage_override = Some("2d4".to_owned());
+            facts.properties = vec!["Keen edge".to_owned(), "Glows faintly".to_owned()];
+        });
+        let loaded = load_saved_character_at_root(&root).unwrap();
+        let dagger = loaded.weapon_damage.iter().find(|row| row.weapon_item_id == "Dagger (Base)").expect("the dagger's row");
+        assert_eq!(dagger.base_dice.map(|dice| (dice.count, dice.die_size)), Some((2, 4)));
+        assert_eq!(dagger.damage_override.as_deref(), Some("2d4"));
+        assert_eq!(dagger.properties, ["Keen edge", "Glows faintly"]);
+        let json = serde_json::to_value(dagger).unwrap();
+        assert_eq!((json["damageOverride"].clone(), json["properties"].clone()), (serde_json::json!("2d4"), serde_json::json!(["Keen edge", "Glows faintly"])));
+        let total = loaded.explanations.iter().find(|row| row.id == "combat.weapon_damage_total.dagger").expect("the damage total");
+        assert!(total.detail.starts_with("2d4"), "{}", total.detail);
+        let held = stacks_of(&root, "Dagger (Base)");
+        assert_eq!((held[0].properties.clone(), held[0].damage_override.as_deref()), (vec!["Keen edge".to_owned(), "Glows faintly".to_owned()], Some("2d4")));
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// A Longsword whose file states 0.5 lb, put in a carried Backpack: the load and the Backpack's
+    /// contents weigh 0.5, not the record's 4; the held row says so.
+    #[test]
+    fn copy_overrides_weight_reaches_the_load_and_the_container() {
+        let root = sets_root("copy-overrides-weight", &[("Backpack", ActiveState::SelectedInactive), ("Longsword (Base)", ActiveState::SelectedInactive)]);
+        let before = load_saved_character_at_root(&root).unwrap().corpus_derived.encumbrance.total_carried_weight_lbs;
+        let (backpack, sword) = (sets_key("Backpack", 0), sets_key("Longsword (Base)", 0));
+        copy_overrides_write(&root, &sword, |facts| facts.weight_override_lbs = Some(0.5));
+        let mut sets = equipment_sets::load(&root).unwrap().unwrap();
+        sets.sets[0].locations.retain(|entry| entry.copy != sword);
+        sets.sets[0].locations.push(equipment_sets::SetEntry { copy: sword.clone(), location: Location::Inside { container: backpack.clone() } });
+        equipment_sets::save(&root, &sets).unwrap();
+        let loaded = load_saved_character_at_root(&root).unwrap();
+        assert_eq!(loaded.corpus_derived.encumbrance.total_carried_weight_lbs, before - 4.0 + 0.5, "{:?}", loaded.corpus_derived.encumbrance);
+        let load = loaded.container_loads.iter().find(|load| load.copy == backpack).expect("the Backpack's load");
+        assert_eq!(load.contents_lbs, 0.5);
+        assert_eq!(stacks_of(&root, "Longsword (Base)")[0].weight_override_lbs, Some(0.5));
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// A Dagger (2 gp) whose file states 10 gp sells for 5 gp in the Standard mode, not 1 gp.
+    #[test]
+    fn copy_overrides_sell_lists_the_files_price() {
+        let root = sets_root("copy-overrides-sell", &[("item:dagger", ActiveState::SelectedInactive)]);
+        copy_overrides_write(&root, &sets_key("item:dagger", 0), |facts| facts.cost_override_copper = Some(1_000));
+        assert_eq!(stacks_of(&root, "item:dagger")[0].cost_override_copper, Some(1_000));
+        let start = load_character_money_at_root(&root).unwrap().total_copper;
+        let named = CopyNamed { bonus: None, from_state: None };
+        sell_held_pieces_at_root(&root, "item:dagger", "2026-11-18T00:00:00Z", PriceMode::Standard, named, Deal::default()).expect("the sale runs");
+        assert_eq!(load_character_money_at_root(&root).unwrap().total_copper, start + 500, "half the file's 10 gp");
         std::fs::remove_dir_all(&root).ok();
     }
 

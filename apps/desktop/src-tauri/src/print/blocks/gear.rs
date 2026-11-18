@@ -273,11 +273,13 @@ impl<'a> Lines<'a> {
         let kind = NESTING[depth.min(NESTING.len() - 1)];
         let containers: Vec<(usize, &ContainerLoadDto)> =
             row.copies.iter().enumerate().filter_map(|(at, copy)| loads.iter().find(|load| &load.copy == copy).map(|load| (at, load))).collect();
+        // The copy's properties print under it as text (SD-42 `decisions.md §6`), weighed or not.
+        let properties = row.properties.iter().cloned();
         if containers.is_empty() {
             let line = if weighed {
-                SheetRow::new(stack_label(row, row.quantity), [slot, weight_words(&self.weights[index], row.copies.len())]).with_notes(row.override_flag.map(override_tag))
+                SheetRow::new(stack_label(row, row.quantity), [slot, weight_words(&self.weights[index], row.copies.len())]).with_notes(row.override_flag.map(override_tag).into_iter().chain(properties))
             } else {
-                SheetRow::new(stack_label(row, row.quantity), Vec::<String>::new())
+                SheetRow::new(stack_label(row, row.quantity), Vec::<String>::new()).with_notes(properties)
             };
             out.push(line.of_kind(kind));
             return;
@@ -288,9 +290,9 @@ impl<'a> Lines<'a> {
             let label = if row.copies.len() > 1 { format!("{name} #{}", at + 1) } else { name };
             let line = if weighed {
                 let weight = self.weights[index].get(at).filter(|_| self.weights[index].len() == row.copies.len()).map_or_else(|| NO_VALUE.to_owned(), |lbs| pounds(*lbs));
-                SheetRow::new(label, [slot.clone(), weight]).with_notes(row.override_flag.map(override_tag).into_iter().chain([load_note(load, self.ignore_capacity)]))
+                SheetRow::new(label, [slot.clone(), weight]).with_notes(row.override_flag.map(override_tag).into_iter().chain([load_note(load, self.ignore_capacity)]).chain(properties.clone()))
             } else {
-                SheetRow::new(label, Vec::<String>::new())
+                SheetRow::new(label, Vec::<String>::new()).with_notes(properties.clone())
             };
             out.push(line.of_kind(kind));
             let contents: Vec<usize> = (0..self.held.len())
@@ -310,7 +312,8 @@ impl<'a> Lines<'a> {
 /// `Equipped`); then Carried; each container's contents under it, one level deeper per nesting,
 /// the container's load beside it; then Not Carried, names only. Identical copies print as one
 /// stack (`<name> ×<pieces>`), each line with the weight the engine weighs its copies at. Then the
-/// carried weight, the load and the three limits, the engine's rows. The `gear` look indents the
+/// carried weight, the load and the three limits, the engine's rows. A copy's properties (SD-42
+/// E4.2) print as notes under its line. The `gear` look indents the
 /// nested lines and adds two blank rows per section.
 pub fn inventory(sources: &SheetSources) -> SheetBlock {
     let encumbrance = &sources.loaded.corpus_derived.encumbrance;

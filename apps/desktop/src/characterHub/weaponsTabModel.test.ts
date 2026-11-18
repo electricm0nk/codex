@@ -163,7 +163,18 @@ function verifiesDropNamesTheRowsOwnCopyAndMovesItToNotCarried() {
   assertEqual(last.drop, null, 'nothing to drop on the Unarmed row');
 }
 
+/** SD-42 E4.2: a copy's own die is the engine's `baseDice` (shown as is); one that is not plain dice shows as written; its properties ride under the row. */
+function verifiesACopysOwnDieAndPropertiesShowAsWritten() {
+  const own = buildWeaponsTabSurface([longsword({ baseDice: { count: 2, dieSize: 4 }, damageOverride: '2d4', properties: ['Keen edge', 'Glows faintly'] })], CORPUS_DERIVED).rows[0];
+  assertEqual(own.baseDice, '2d4', 'the engine already rolled the copy\'s die');
+  assertEqual(own.properties.join(' | '), 'Keen edge | Glows faintly', 'the properties, as written');
+  const words = buildWeaponsTabSurface([longsword({ baseDice: null, damageOverride: '1d6 fire' })], CORPUS_DERIVED).rows[0];
+  assertEqual(words.baseDice, '1d6 fire', 'a die the engine cannot read shows as written, never the record\'s');
+  assertEqual(buildWeaponsTabSurface([longsword()], CORPUS_DERIVED).rows[0].properties.length, 0, 'none when the copy has none');
+}
+
 async function main() {
+  verifiesACopysOwnDieAndPropertiesShowAsWritten();
   verifiesDropNamesTheRowsOwnCopyAndMovesItToNotCarried();
   verifiesInHandThenCarriedThenUnarmedLast();
   verifiesAmmunitionBoxesOnlyUnderAmmunitionWeapons();

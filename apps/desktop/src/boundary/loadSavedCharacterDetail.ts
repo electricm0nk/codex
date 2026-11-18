@@ -387,6 +387,10 @@ export interface WeaponDamageDto {
   ammunitionCarried: number;
   /** The ammunition family the weapon's record names (`Arrow`); absent when it names none. */
   ammunitionFamily?: string;
+  /** The die this copy deals instead of its record's, as its file writes it (`2d4`); `baseDice` holds it when it reads as dice. */
+  damageOverride?: string;
+  /** The copy's properties (a `.pcg` line's `SPROP`), printed as text; absent when it has none. */
+  properties?: string[];
 }
 
 export interface ChosenFeatTargetsDto {

@@ -912,6 +912,11 @@ function WeaponsTab(props: {
                 Feat damage: {row.featEffects.join(', ')}
               </p>
             ) : null}
+            {row.properties.map((property) => (
+              <p key={property} style={{ color: 'var(--color-text-secondary)', fontSize: '0.72rem', margin: '0.25rem 0 0' }}>
+                {property}
+              </p>
+            ))}
             {row.ammunition ? (
               <div aria-label={`${row.name} ammunition`} style={{ alignItems: 'center', display: 'flex', flexWrap: 'wrap', gap: '0.2rem', marginTop: '0.3rem' }}>
                 {Array.from({ length: row.ammunition.boxes }, (_, box) => (
