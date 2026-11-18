@@ -60,21 +60,31 @@ type Mode =
  * The hub inside its frame. Create a character uses the whole window; every other screen keeps the
  * centered reading width it was designed for (see `layout/screenLayout.ts`).
  */
-export function CharacterHubPage() {
+export function CharacterHubPage({ claimMain }: { claimMain: (goMain: () => void) => () => void }) {
   const [wide, setWide] = useState(false);
   return (
     <div style={hubFrameStyle(wide)}>
-      <CharacterHubScreens onWideChange={setWide} />
+      <CharacterHubScreens onWideChange={setWide} claimMain={claimMain} />
     </div>
   );
 }
 
-function CharacterHubScreens({ onWideChange }: { onWideChange: (wide: boolean) => void }) {
+function CharacterHubScreens({
+  onWideChange,
+  claimMain,
+}: {
+  onWideChange: (wide: boolean) => void;
+  /** App's menu host claim (`AppMenuHost.claimMain`). */
+  claimMain: (goMain: () => void) => () => void;
+}) {
   const [mode, setMode] = useState<Mode>('landing');
   // Layout effect, not a plain effect: the frame must widen before the Create form paints.
   useLayoutEffect(() => {
     onWideChange(mode === 'create');
   }, [mode, onWideChange]);
+  // Every ☰ menu off the main screen starts with "Main menu" (decisions.md §26.1): claimed here, released on return.
+  const offMain = mode !== 'landing';
+  useLayoutEffect(() => (offMain ? claimMain(() => setMode('landing')) : undefined), [offMain, claimMain]);
   const [ruleSet, setRuleSet] = useState<RuleSetId>('pathfinder-1e');
   const [starfinderCatalogKind, setStarfinderCatalogKind] = useState<StarfinderCatalogKind>('race');
   const [cyberpunkCatalogKind, setCyberpunkCatalogKind] = useState<string>('role');

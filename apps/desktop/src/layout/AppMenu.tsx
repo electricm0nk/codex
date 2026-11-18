@@ -10,17 +10,27 @@ export interface AppMenuItem {
 /**
  * What App gives every ☰ menu: `openOptions` opens the Settings modal; `claimMenu` is called by a
  * screen that draws its own ☰ menu in its top bar, so App hides its own (the release is returned).
+ * `claimMain` is the hub's claim while it is off the main screen (decisions.md §26.1); `goMain` is the
+ * current claim, or null on the main screen, so every ☰ menu starts with "Main menu" exactly off it.
  */
 export interface AppMenuHost {
   openOptions: () => void;
   claimMenu: () => () => void;
+  claimMain: (goMain: () => void) => () => void;
+  goMain: (() => void) | null;
 }
 
 export const AppMenuHostContext = createContext<AppMenuHost | null>(null);
 
-/** A screen's entries with Options last (decisions.md §24.10). */
-export function withOptions(items: ReadonlyArray<AppMenuItem>, openOptions: () => void): AppMenuItem[] {
-  return [...items, { label: 'Options', onSelect: openOptions, dividerBefore: items.length > 0 }];
+/** A screen's entries with Main menu first when claimed (decisions.md §26.1) and Options last (§24.10). */
+export function withOptions(
+  items: ReadonlyArray<AppMenuItem>,
+  openOptions: () => void,
+  goMain: (() => void) | null = null
+): AppMenuItem[] {
+  const head: AppMenuItem[] = goMain ? [{ label: 'Main menu', onSelect: goMain }] : [];
+  const screen = items.map((item, index) => (index === 0 && head.length > 0 ? { ...item, dividerBefore: true } : item));
+  return [...head, ...screen, { label: 'Options', onSelect: openOptions, dividerBefore: head.length + items.length > 0 }];
 }
 
 const DROPDOWN_STYLE: CSSProperties = {
@@ -94,7 +104,7 @@ export function AppMenu(props: { items: ReadonlyArray<AppMenuItem>; fixed?: bool
         <>
           <div onClick={() => setOpen(false)} style={{ inset: 0, position: 'fixed', zIndex: 20 }} />
           <div style={{ ...DROPDOWN_STYLE, ...(props.fixed ? { right: 0 } : { left: 0 }) }}>
-            <AppMenuList items={withOptions(props.items, host.openOptions)} onChosen={() => setOpen(false)} />
+            <AppMenuList items={withOptions(props.items, host.openOptions, host.goMain)} onChosen={() => setOpen(false)} />
           </div>
         </>
       ) : null}

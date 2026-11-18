@@ -34,6 +34,30 @@ assertEqual(withOptions([], () => undefined).map((item) => item.label).join(), '
 const html = renderToStaticMarkup(createElement(AppMenuList, { items, onChosen: () => undefined }));
 assert(html.includes('>Options</button>'), `the open ☰ menu shows an Options entry: ${html}`);
 
+// "Main menu" first (operator UI-1, decisions.md §26.1): present iff the hub claims a goMain (every mode but 'landing').
+let wentMain = 0;
+const goMain = () => {
+  wentMain += 1;
+};
+const onScreen = withOptions(sheetItems, () => undefined, goMain);
+assertEqual(onScreen.map((item) => item.label).join(), 'Main menu,Open,Print,Options', 'main menu is first on a screen menu');
+assertEqual(onScreen[1]!.dividerBefore, true, 'main menu is first on a screen menu: a divider follows it');
+assertEqual(
+  withOptions([], () => undefined, goMain).map((item) => item.label).join(),
+  'Main menu,Options',
+  'main menu is first on the app menu'
+);
+assertEqual(
+  withOptions(sheetItems, () => undefined, null).map((item) => item.label).join(),
+  'Open,Print,Options',
+  'main menu is absent when nothing claims it (the landing screen)'
+);
+assertEqual(withOptions([], () => undefined).map((item) => item.label).join(), 'Options', 'main menu is absent when nothing claims it (the landing screen): the app menu');
+onScreen[0]!.onSelect();
+assertEqual(wentMain, 1, 'choosing main menu runs the claimed goMain');
+const mainHtml = renderToStaticMarkup(createElement(AppMenuList, { items: onScreen, onChosen: () => undefined }));
+assert(mainHtml.indexOf('>Main menu</button>') >= 0 && mainHtml.indexOf('>Main menu</button>') < mainHtml.indexOf('>Open</button>'), `the open ☰ menu draws Main menu first: ${mainHtml}`);
+
 // App: no ⚙ button; the host's openOptions opens SettingsModal; the app ☰ menu shows unless a screen claims the bar.
 const app = read('App.tsx');
 assert(!app.includes('⚙') && !/aria-label="Open\s+settings"/.test(app), 'the fixed ⚙ button is removed from App.tsx');
@@ -66,5 +90,13 @@ for (const other of [
   assert(!read(other).includes('<AppMenu '), `${other}: no menu of its own, so App's ☰ menu shows there`);
 }
 assert(!read('characterHub/CharacterSheet.tsx').includes('setMenuOpen'), "the sheet's dropdown is the lifted AppMenu, not a copy");
+
+// The hub claims Main menu whenever it is off the main screen; App's host holds the claim.
+assert(
+  /useLayoutEffect\(\s*\(\)\s*=>\s*\(offMain \? claimMain\(\(\) => setMode\('landing'\)\) : undefined\)/.test(hub) &&
+    /const offMain = mode !== 'landing';/.test(hub),
+  "CharacterHubPage.tsx claims claimMain under mode !== 'landing' with () => setMode('landing')"
+);
+assert(/claimMain:\s*\(next\b/.test(app) && /\{ \.\.\.menuCallbacks, goMain \}/.test(app) && /<CharacterHubPage claimMain=\{menuCallbacks\.claimMain\} \/>/.test(app), "App's menu host implements claimMain and hands AppMenu the claimed goMain");
 
 console.log('AppMenu.test.ts: all assertions passed');

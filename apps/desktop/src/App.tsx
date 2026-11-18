@@ -810,16 +810,24 @@ export default function App() {
   const [settingsOpen, setSettingsOpen] = useState(false);
   // How many screen ☰ menus are mounted; while one is, App's own stays hidden.
   const [screenMenus, setScreenMenus] = useState(0);
-  const menuHost = useMemo<AppMenuHost>(
+  // The hub's way back to the main screen while it is off it (decisions.md §26.1); null on the main screen.
+  const [goMain, setGoMain] = useState<(() => void) | null>(null);
+  // The callbacks stay stable so the claims' layout effects do not re-run when goMain changes.
+  const menuCallbacks = useMemo(
     () => ({
       openOptions: () => setSettingsOpen(true),
       claimMenu: () => {
         setScreenMenus((count) => count + 1);
         return () => setScreenMenus((count) => count - 1);
       },
+      claimMain: (next: () => void) => {
+        setGoMain(() => next);
+        return () => setGoMain((current) => (current === next ? null : current));
+      },
     }),
     []
   );
+  const menuHost = useMemo<AppMenuHost>(() => ({ ...menuCallbacks, goMain }), [menuCallbacks, goMain]);
   const [settingsTab, setSettingsTab] = useState<SettingsTab>('appearance');
   const [themeMode, setThemeMode] = useState<ThemeMode>(getStoredThemeMode);
   const [surface, setSurface] = useState<TesterWorkbenchSurface | null>(null);
@@ -861,7 +869,7 @@ export default function App() {
       {/* The ☰ menu with Options (decisions.md §24.10): App's own, top-right, on every screen whose top bar has none. */}
       {screenMenus === 0 ? <AppMenu items={[]} fixed /> : null}
 
-      <CharacterHubPage />
+      <CharacterHubPage claimMain={menuCallbacks.claimMain} />
 
       <SettingsModal
         open={settingsOpen}
