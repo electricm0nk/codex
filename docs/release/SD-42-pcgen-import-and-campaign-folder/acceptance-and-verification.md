@@ -91,7 +91,7 @@ git log <C1 sha>..HEAD -p -S"$SD42_PII" -- . | awk 'END{print NR}'   # 0 (the pl
 
 ```bash
 cargo test --locked -j 8 --lib weightless_ -- --test-threads=8                          # E4.7: ≥ 5 passed
-cargo run --locked --bin gen_settled_corpus -- --check                                  # E4.7: exit 0 (30 settled bundles regenerated, no drift)
+cargo run --locked -p codex-ingest --bin gen_settled_corpus -- --check                 # E4.7: exit 0 (5 settled bundles regenerated, no drift; decisions.md §20)
 cd apps/desktop/src-tauri && cargo test --locked -j 8 slot_kind -- --test-threads=8     # E4.8: ≥ 5 passed; equipment.wrong_slot refused with words
 cd apps/desktop/src-tauri && cargo test --locked -j 8 rename_copy_ -- --test-threads=8  # E4.9: ≥ 4 passed; print block reads "Camping Gear (Sack)"
 cd apps/desktop/src-tauri && cargo test --locked -j 8 attach_modifier_to_copy -- --test-threads=8   # E4.9: ≥ 2 passed; the pick lands on the chosen copy

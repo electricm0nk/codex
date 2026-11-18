@@ -122,17 +122,26 @@ export function stackLabel(held: PlacedEquipmentCopyDto): string {
   return held.quantity > 1 ? `${name} ×${held.quantity}` : name;
 }
 
+/** The engine's `contentsWeightPct` in words (SD-42 E4.7); nothing for a plain container. */
+function contentsWeightWords(pct: number | undefined): string {
+  if (pct === undefined || pct >= 100) {
+    return '';
+  }
+  return pct === 0 ? ', contents weigh nothing' : `, contents weigh ${100 - pct} % less`;
+}
+
 function capacityLabel(load: ContainerLoadDto | undefined): string | null {
   if (!load) {
     return null;
   }
+  const weighs = contentsWeightWords(load.contentsWeightPct);
   switch (load.capacity.kind) {
     case 'pounds':
-      return `${lb(load.contentsLbs)} of ${lb(load.capacity.lbs)} lb`;
+      return `${lb(load.contentsLbs)} of ${lb(load.capacity.lbs)} lb${weighs}`;
     case 'unlimited':
-      return `${lb(load.contentsLbs)} lb, no limit`;
+      return `${lb(load.contentsLbs)} lb, no limit${weighs}`;
     case 'unstated':
-      return `${lb(load.contentsLbs)} lb`;
+      return `${lb(load.contentsLbs)} lb${weighs}`;
   }
 }
 

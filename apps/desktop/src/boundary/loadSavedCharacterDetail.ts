@@ -274,6 +274,8 @@ export interface ContainerLoadDto {
   contentsLbs: number;
   capacity: ContainerCapacityDto;
   over: boolean;
+  /** What the contents weigh toward the carried total, in percent (SD-42 E4.7): 0 for a Bag of Holding; absent means 100. */
+  contentsWeightPct?: number;
 }
 
 /** Mirrors `Resistances` (engine `pilot_compute::resistances`). */

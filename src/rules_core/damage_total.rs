@@ -1628,7 +1628,7 @@ mod carried_weapon_tests {
         let corpus = load_equipment_corpus(&[BookCorpusRoot { book_id: "core_rulebook", dir: Path::new("data/corpus/core_rulebook") }]);
         let elsewhere = CopyKey { item_id: "Dagger (Base)".to_owned(), bonus: 0, ordinal: 3 };
         let plain = compute_encumbrance(&loadout(), &corpus, 12, SizeCategory::Medium, &[], &[]);
-        let named_elsewhere = compute_encumbrance_sized(&loadout(), &corpus, 12, SizeCategory::Medium, &[], &[], &[], &[(elsewhere, 0.25)]);
+        let named_elsewhere = compute_encumbrance_sized(&loadout(), &corpus, 12, SizeCategory::Medium, &[], &[], &[], &[(elsewhere, 0.25)], &[]);
         assert_eq!(named_elsewhere, plain);
         assert_eq!(copy_listed_copper(Some(15.0), None, 1, 1), Some(crate::rules_core::money::gp_to_copper(15.0)));
     }

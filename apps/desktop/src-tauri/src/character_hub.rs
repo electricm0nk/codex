@@ -779,6 +779,18 @@ pub struct ContainerLoadDto {
     pub contents_lbs: f64,
     pub capacity: ContainerCapacityDto,
     pub over: bool,
+    /// What the contents weigh toward the carried total, in percent (SD-42 E4.7): 0 for a Bag of
+    /// Holding. Left out when 100 (a plain container).
+    #[serde(default = "full_contents_weight_pct", skip_serializing_if = "is_full_contents_weight_pct")]
+    pub contents_weight_pct: u8,
+}
+
+fn full_contents_weight_pct() -> u8 {
+    100
+}
+
+fn is_full_contents_weight_pct(pct: &u8) -> bool {
+    *pct == 100
 }
 
 /// `ContainerCapacity` on the wire: `{ kind: 'pounds', lbs }`, `{ kind: 'unlimited' }`, `{ kind: 'unstated' }`.
@@ -2999,26 +3011,29 @@ pub(crate) fn load_saved_character_at_root(
     let pieces = |copy: &CopyKey| sets.copies.get(&copy.map_key()).and_then(|facts| facts.quantity).unwrap_or(1);
     let weighed: Vec<(CopyKey, f64)> =
         created_copies.iter().filter_map(|(copy, record)| record.weight_lbs.map(|lbs| (copy.clone(), lbs * f64::from(pieces(copy))))).collect();
-    let extra: Vec<codex::rules_core::encumbrance::WeighedCopy> = weighed
-        .iter()
-        .map(|(copy, lbs)| codex::rules_core::encumbrance::WeighedCopy {
-            id: copy.item_id.clone(),
-            weight_lbs: *lbs,
-            active_state: equipment_sets::project(sets.active_set(), std::slice::from_ref(copy))[0],
-        })
-        .collect();
-    let weight_overrides = copy_facts(&sets, &copy_keys, |facts| facts.weight_override_lbs);
-    corpus_receipt.corpus_derived.encumbrance = carried_load(&sheet_input, &quantities, &extra, &item_sizes, &weight_overrides);
     let held_by_key: Vec<(CopyKey, &str, &[String])> = copy_keys
         .iter()
         .zip(&envelope.character_input.chosen.equipment_selections)
         .map(|(copy, selection)| (copy.clone(), selection.item_id.as_str(), selection.applied_modifiers.as_slice()))
         .collect();
+    // What sits in a Bag of Holding adds nothing to the carried total (SD-42 E4.7); a created item there too.
+    let weight_factors = codex::rules_core::containers::contents_weight_factors(sets.active_set(), &held_by_key, corpus_fixture_bundle());
+    let factor_of = |copy: &CopyKey| weight_factors.iter().find(|(key, _)| key == copy).map_or(1.0, |(_, factor)| *factor);
+    let extra: Vec<codex::rules_core::encumbrance::WeighedCopy> = weighed
+        .iter()
+        .map(|(copy, lbs)| codex::rules_core::encumbrance::WeighedCopy {
+            id: copy.item_id.clone(),
+            weight_lbs: lbs * factor_of(copy),
+            active_state: equipment_sets::project(sets.active_set(), std::slice::from_ref(copy))[0],
+        })
+        .collect();
+    let weight_overrides = copy_facts(&sets, &copy_keys, |facts| facts.weight_override_lbs);
+    corpus_receipt.corpus_derived.encumbrance = carried_load(&sheet_input, &quantities, &extra, &item_sizes, &weight_overrides, &weight_factors);
     let containers: Vec<(CopyKey, f64)> =
         created_copies.iter().filter_map(|(copy, record)| record.container_capacity_lbs.map(|lbs| (copy.clone(), lbs))).collect();
     let container_loads = codex::rules_core::containers::container_loads(sets.active_set(), &held_by_key, corpus_fixture_bundle(), &containers, &weighed, &quantities, &item_sizes, &weight_overrides)
         .into_iter()
-        .map(|load| ContainerLoadDto { copy: load.copy, contents_lbs: load.contents_lbs, capacity: load.capacity.into(), over: load.over })
+        .map(|load| ContainerLoadDto { copy: load.copy, contents_lbs: load.contents_lbs, capacity: load.capacity.into(), over: load.over, contents_weight_pct: load.contents_weight_pct })
         .collect();
 
     // Both already computed above — `corpus_receipt.base` IS the
@@ -5758,17 +5773,18 @@ fn copy_sizes(sets: &EquipmentSets, keys: &[CopyKey]) -> Vec<(CopyKey, codex::ru
 
 /// What the character carries, weighed with each copy's pieces and the created items' weights:
 /// the same call `compute_pilot_with_corpus` makes (effective Strength, the race's size), plus `extra`, `quantities`
-/// the copies' own sizes and the weights their file states.
+/// the copies' own sizes, the weights their file states and what each copy's containers let it weigh.
 fn carried_load(
     input: &CharacterInput,
     quantities: &[(CopyKey, u32)],
     extra: &[codex::rules_core::encumbrance::WeighedCopy],
     item_sizes: &[(CopyKey, codex::rules_core::size::SizeCategory)],
     weight_overrides: &[(CopyKey, f64)],
+    weight_factors: &[(CopyKey, f64)],
 ) -> codex::rules_core::encumbrance::EncumbranceComputation {
     let strength = apply_human_ability_bonus(input, &mut Vec::new()).strength;
     let (size, _) = codex::rules_core::contract::encumbrance_size_for_race(&input.chosen.race_id);
-    codex::rules_core::encumbrance::compute_encumbrance_sized(&input.chosen.equipment_selections, corpus_fixture_bundle(), strength, size, extra, quantities, item_sizes, weight_overrides)
+    codex::rules_core::encumbrance::compute_encumbrance_sized(&input.chosen.equipment_selections, corpus_fixture_bundle(), strength, size, extra, quantities, item_sizes, weight_overrides, weight_factors)
 }
 
 /// The rows with each copy's location, custom name and pieces from the active set. A copy whose
@@ -22154,6 +22170,30 @@ mod tests {
         assert_eq!(active_location(&root, &sets_key(ROPE, 0)), Location::Inside { container: pack.clone() }, "the rope stays in the pack");
         move_saved(&root, &pack, Location::Carried, None);
         assert_eq!(worn_vs_carried_weight(&root), before);
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// SD-42 E4.7 (operator BAG-1, `decisions.md §27.1`): 60 lb of rope moved into a carried Bag of
+    /// Holding (Type I) leaves the load's total 60 lb lighter; the bag's own load still reads the
+    /// 60 lb against its 250, and the wire says its contents weigh nothing.
+    #[test]
+    fn move_equipment_into_bag_of_holding_drops_its_contents_from_the_load() {
+        const BAG: &str = "Bag of Holding (Type I)";
+        const ROPE: &str = "Rope (50 ft.)";
+        let mut items = vec![(BAG, ActiveState::SelectedInactive)];
+        items.extend([(ROPE, ActiveState::SelectedInactive); 6]);
+        let root = sets_root("move-bag-of-holding", &items);
+        assert_eq!((fixture_weight(BAG), fixture_weight(ROPE)), (15.0, 10.0));
+        let bag = sets_key(BAG, 0);
+        let before = worn_vs_carried_weight(&root);
+        for ordinal in 0..6 {
+            move_saved(&root, &sets_key(ROPE, ordinal), Location::Inside { container: bag.clone() }, None);
+        }
+        let loaded = load_saved_character_at_root(&root).unwrap();
+        assert_eq!(loaded.corpus_derived.encumbrance.total_carried_weight_lbs, before - 60.0, "the rope inside weighs nothing");
+        let load = loaded.container_loads.iter().find(|load| load.copy == bag).expect("the bag's load");
+        assert_eq!((load.contents_lbs, load.capacity, load.over, load.contents_weight_pct), (60.0, ContainerCapacityDto::Pounds { lbs: 250.0 }, false, 0));
+        assert_eq!(serde_json::to_value(load).unwrap()["contentsWeightPct"], 0);
         std::fs::remove_dir_all(&root).ok();
     }
 

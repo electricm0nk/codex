@@ -1403,6 +1403,10 @@
         "base_damage_dice": null,
         "base_item": null,
         "container": true,
+        "container_capacity": {
+          "Pounds": 263.0
+        },
+        "contents_weight_pct": 0,
         "cost_gp": 50.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
@@ -1443,6 +1447,10 @@
         "base_damage_dice": null,
         "base_item": null,
         "container": true,
+        "container_capacity": {
+          "Pounds": 263.0
+        },
+        "contents_weight_pct": 0,
         "cost_gp": 75.0,
         "critical_multiplier": null,
         "critical_threat_range": null,

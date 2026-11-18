@@ -19,13 +19,16 @@ pub struct ContainerLoad {
     pub contents_lbs: f64,
     pub capacity: ContainerCapacity,
     pub over: bool,
+    /// What the contents weigh toward the carried total, in percent (SD-42 E4.7): 0 for a Bag of
+    /// Holding, 100 for a plain container and a Create item. `contents_lbs` is always in full.
+    pub contents_weight_pct: u8,
 }
 
 impl ContainerLoad {
     /// `over` only for `Pounds`: `Unlimited` and `Unstated` (DEF-1) are never over.
     pub fn new(copy: CopyKey, contents_lbs: f64, capacity: ContainerCapacity) -> Self {
         let over = matches!(capacity, ContainerCapacity::Pounds(lbs) if contents_lbs > lbs);
-        Self { copy, contents_lbs, capacity, over }
+        Self { copy, contents_lbs, capacity, over, contents_weight_pct: 100 }
     }
 }
 
@@ -50,18 +53,18 @@ pub fn container_loads(
     weight_overrides: &[(CopyKey, f64)],
 ) -> Vec<ContainerLoad> {
     let mut weights: BTreeMap<&CopyKey, f64> = BTreeMap::new();
-    let mut containers: Vec<(CopyKey, ContainerCapacity)> = Vec::new();
+    let mut containers: Vec<(CopyKey, ContainerCapacity, u8)> = Vec::new();
     for (copy, item_id, modifiers) in held {
         let Some(record) = equipment_converted_resolve(item_id, corpus) else { continue };
         let stand_in = stand_in_record(record, corpus);
         let weight = copy_weight_lbs(record, stand_in, copy, modifiers, corpus, quantities, item_sizes, weight_overrides);
         weights.insert(copy, weight.unwrap_or(0.0));
         if record.is_container() {
-            containers.push((copy.clone(), record.capacity()));
+            containers.push((copy.clone(), record.capacity(), record.contents_weight_pct));
         }
     }
     weights.extend(weighed.iter().map(|(copy, lbs)| (copy, *lbs)));
-    containers.extend(created.iter().map(|(copy, lbs)| (copy.clone(), ContainerCapacity::Pounds(*lbs))));
+    containers.extend(created.iter().map(|(copy, lbs)| (copy.clone(), ContainerCapacity::Pounds(*lbs), 100)));
 
     // Each weighed copy's enclosing containers, innermost first; a cycle (a hand-edited file,
     // `project` logs it) stops the walk.
@@ -80,11 +83,42 @@ pub fn container_loads(
 
     containers
         .into_iter()
-        .map(|(copy, capacity)| {
+        .map(|(copy, capacity, contents_weight_pct)| {
             let lbs = contents.get(&copy).copied().unwrap_or(0.0);
-            ContainerLoad::new(copy, lbs, capacity)
+            ContainerLoad { contents_weight_pct, ..ContainerLoad::new(copy, lbs, capacity) }
         })
         .collect()
+}
+
+/// What each copy in `set` weighs toward the carried total (SD-42 E4.7, `decisions.md §27.1`):
+/// the product of its enclosing `Inside` containers' [`contents_weight_factor`]s, so a copy in a
+/// Backpack in a Bag of Holding is 0 and one in the Versatile Vest 0.6. Only copies below 1 are
+/// listed; a container's own weight is its enclosing containers' business, not its own. `held` is
+/// [`container_loads`]' list; a Create item container (no flag in `custom.json`) is 1.
+///
+/// [`contents_weight_factor`]: crate::rules_core::equipment_record::CorpusEquipmentRecord::contents_weight_factor
+pub fn contents_weight_factors(set: &EquipmentSet, held: &[(CopyKey, &str, &[String])], corpus: &SourcePackageContent) -> Vec<(CopyKey, f64)> {
+    let factor_of: BTreeMap<&CopyKey, f64> = held
+        .iter()
+        .filter_map(|(copy, item_id, _)| Some((copy, equipment_converted_resolve(item_id, corpus)?.contents_weight_factor())))
+        .filter(|(_, factor)| *factor < 1.0)
+        .collect();
+    let mut factors = Vec::new();
+    for entry in &set.locations {
+        let mut seen = BTreeSet::from([entry.copy.clone()]);
+        let (mut current, mut factor) = (entry.copy.clone(), 1.0_f64);
+        while let Location::Inside { container } = location_of(set, &current) {
+            if !seen.insert(container.clone()) {
+                break;
+            }
+            factor *= factor_of.get(&container).copied().unwrap_or(1.0);
+            current = container;
+        }
+        if factor < 1.0 {
+            factors.push((entry.copy.clone(), factor));
+        }
+    }
+    factors
 }
 
 #[cfg(test)]
@@ -181,7 +215,7 @@ mod tests {
         keys.extend(rations.clone());
         let set = EquipmentSet { name: "Default".to_owned(), locations: inside(&rations, &sack) };
         let loads = container_loads(&set, &held(&keys), &corpus, &[], &[], &[], &[], &[]);
-        assert_eq!(loads, vec![ContainerLoad { copy: sack, contents_lbs: 500.0, capacity: ContainerCapacity::Unlimited, over: false }]);
+        assert_eq!(loads, vec![ContainerLoad { copy: sack, contents_lbs: 500.0, capacity: ContainerCapacity::Unlimited, over: false, contents_weight_pct: 100 }]);
 
         let unstated = ContainerLoad::new(key("custom:x", 0), 500.0, ContainerCapacity::Unstated);
         assert!(!unstated.over, "Unstated (DEF-1) is never over");
@@ -269,7 +303,7 @@ mod tests {
         let loads = container_loads(&set, &held, &corpus, &[], &[], &quantities, &sizes, &overrides);
         assert_eq!(load_of(&loads, &sack).contents_lbs, 3.5, "{loads:?}");
         let carried = |item: &str| EquipmentSelection { item_id: item.to_owned(), equipped_or_active: false, active_state: ActiveState::SelectedInactive, applied_modifiers: Vec::new() };
-        let encumbrance = compute_encumbrance_sized(&[carried(&sword.item_id), carried(ARROWS)], &corpus, 10, SizeCategory::Medium, &[], &quantities, &sizes, &overrides);
+        let encumbrance = compute_encumbrance_sized(&[carried(&sword.item_id), carried(ARROWS)], &corpus, 10, SizeCategory::Medium, &[], &quantities, &sizes, &overrides, &[]);
         assert_eq!(encumbrance.total_carried_weight_lbs, 3.5, "{encumbrance:#?}");
         assert_eq!(encumbrance.total_carried_cost_gp, 30.0 + 3.0, "the price is not the weight's: the Large sword's 30 gp, three bundles at 1 gp");
     }
@@ -288,9 +322,107 @@ mod tests {
         let sizes = [(sword.clone(), SizeCategory::Large)];
         let loads = container_loads(&set, &held, &corpus, &[], &[], &[], &sizes, &[]);
         let selection = EquipmentSelection { item_id: sword.item_id.clone(), equipped_or_active: false, active_state: ActiveState::SelectedInactive, applied_modifiers: Vec::new() };
-        let encumbrance = compute_encumbrance_sized(&[selection], &corpus, 10, SizeCategory::Medium, &[], &[], &sizes, &[]);
+        let encumbrance = compute_encumbrance_sized(&[selection], &corpus, 10, SizeCategory::Medium, &[], &[], &sizes, &[], &[]);
         assert_eq!(encumbrance.total_carried_weight_lbs, 8.0, "{encumbrance:#?}");
         assert_eq!(encumbrance.total_carried_cost_gp, 30.0, "the Large copy costs twice the 15 gp");
         assert_eq!(load_of(&loads, &sack).contents_lbs, 8.0, "one weight rule, two sums");
+    }
+
+    // SD-42 E4.7 (`decisions.md §27.1`, operator BAG-1 / HVS-1): what sits in a weightless
+    // container adds nothing to the carried total; the capacity check still counts it.
+    const BAG_I: &str = "item:Bag of Holding (Type I)"; // 15 lb, CONTAINS:*250
+    const HAVERSACK: &str = "item:Handy Haversack"; // 5 lb, CONTAINS:*120
+    const BACKPACK: &str = "Backpack"; // 2 lb, 60 lb by the §32 override
+
+    /// Every copy of `keys` carried, weighed with the set's weight factors: the carried total, the
+    /// factors, and the loads.
+    fn weigh_carried(set: &EquipmentSet, keys: &[CopyKey]) -> (f64, Vec<(CopyKey, f64)>, Vec<ContainerLoad>) {
+        use crate::rules_core::character_input::{ActiveState, EquipmentSelection};
+        use crate::rules_core::encumbrance::compute_encumbrance_sized;
+        let corpus = core_rulebook();
+        let factors = contents_weight_factors(set, &held(keys), &corpus);
+        let selections: Vec<EquipmentSelection> = keys
+            .iter()
+            .map(|copy| EquipmentSelection { item_id: copy.item_id.clone(), equipped_or_active: false, active_state: ActiveState::SelectedInactive, applied_modifiers: Vec::new() })
+            .collect();
+        let encumbrance = compute_encumbrance_sized(&selections, &corpus, 10, SizeCategory::Medium, &[], &[], &[], &[], &factors);
+        assert!(encumbrance.unresolved_item_ids.is_empty(), "{encumbrance:#?}");
+        let loads = container_loads(set, &held(keys), &corpus, &[], &[], &[], &[], &[]);
+        (encumbrance.total_carried_weight_lbs, factors, loads)
+    }
+
+    /// A Bag of Holding (Type I), 15 lb, holding 300 lb of rations, and a sack beside it: the total
+    /// is the bag and the sack, 15.5; the bag's load still reads 300 of 250 lb, over.
+    #[test]
+    fn weightless_bag_of_holding_contents_add_nothing_to_the_carried_total() {
+        let bag = key(BAG_I, 0);
+        let rations = copies(RATIONS, 300);
+        let mut keys = vec![bag.clone(), key(SACK, 0)];
+        keys.extend(rations.clone());
+        let set = EquipmentSet { name: "Default".to_owned(), locations: inside(&rations, &bag) };
+        let (total, factors, loads) = weigh_carried(&set, &keys);
+        assert_eq!(total, 15.5, "the bag's own 15 lb and the sack's 0.5");
+        assert_eq!(factors.len(), 300, "each ration inside the bag weighs nothing");
+        assert_eq!(load_of(&loads, &bag), &ContainerLoad { copy: bag.clone(), contents_lbs: 300.0, capacity: ContainerCapacity::Pounds(250.0), over: true, contents_weight_pct: 0 });
+    }
+
+    /// The Handy Haversack (5 lb, `*120`) holding 100 lb: the total is the haversack's 5.
+    #[test]
+    fn weightless_handy_haversack_same_rule() {
+        let sack = key(HAVERSACK, 0);
+        let rations = copies(RATIONS, 100);
+        let mut keys = vec![sack.clone()];
+        keys.extend(rations.clone());
+        let set = EquipmentSet { name: "Default".to_owned(), locations: inside(&rations, &sack) };
+        let (total, _, loads) = weigh_carried(&set, &keys);
+        assert_eq!(total, 5.0);
+        assert_eq!((load_of(&loads, &sack).contents_lbs, load_of(&loads, &sack).capacity, load_of(&loads, &sack).over), (100.0, ContainerCapacity::Pounds(120.0), false));
+    }
+
+    /// A Backpack (2 lb) holding 20 lb of rations, inside the bag: the total is the bag's 15 alone;
+    /// the backpack's own load is 20 of 60, not over; the bag holds 22.
+    #[test]
+    fn weightless_nested_backpack_inside_a_bag_adds_nothing() {
+        let (bag, pack) = (key(BAG_I, 0), key(BACKPACK, 0));
+        let rations = copies(RATIONS, 20);
+        let mut keys = vec![bag.clone(), pack.clone()];
+        keys.extend(rations.clone());
+        let mut locations = inside(&rations, &pack);
+        locations.extend(inside(std::slice::from_ref(&pack), &bag));
+        let set = EquipmentSet { name: "Default".to_owned(), locations };
+        let (total, factors, loads) = weigh_carried(&set, &keys);
+        assert_eq!(total, 15.0, "{factors:?}");
+        assert_eq!((load_of(&loads, &pack).contents_lbs, load_of(&loads, &pack).over, load_of(&loads, &pack).contents_weight_pct), (20.0, false, 100));
+        assert_eq!(load_of(&loads, &bag).contents_lbs, 22.0);
+    }
+
+    /// The settled Core Rulebook records read the capacity behind the flag: `*250` → 250 lb, `*120`
+    /// → 120 lb, `*UNLIM` → unlimited, each with its contents at 0 %; `UNLIM|Any` (the Sack) stays
+    /// unlimited at 100 %. (`40%26|Any` is in no Codex corpus book: the converter's own test holds it.)
+    #[test]
+    fn weightless_capacity_parses_through_the_flag() {
+        use crate::rules_core::equipment_resolver::equipment_converted_resolve;
+        let corpus = core_rulebook();
+        let read = |id: &str| {
+            let record = equipment_converted_resolve(id, &corpus).unwrap_or_else(|| panic!("no record {id}"));
+            (record.capacity(), record.contents_weight_pct)
+        };
+        assert_eq!(read(BAG_I), (ContainerCapacity::Pounds(250.0), 0));
+        assert_eq!(read(HAVERSACK), (ContainerCapacity::Pounds(120.0), 0));
+        assert_eq!(read("item:Portable Hole"), (ContainerCapacity::Unlimited, 0));
+        assert_eq!(read(SACK), (ContainerCapacity::Unlimited, 100));
+    }
+
+    /// A plain Sack holding 20 lb changes nothing: the total is the sack and its contents, no factor.
+    #[test]
+    fn weightless_plain_sack_changes_nothing() {
+        let sack = key(SACK, 0);
+        let rations = copies(RATIONS, 20);
+        let mut keys = vec![sack.clone()];
+        keys.extend(rations.clone());
+        let set = EquipmentSet { name: "Default".to_owned(), locations: inside(&rations, &sack) };
+        let (total, factors, loads) = weigh_carried(&set, &keys);
+        assert_eq!((total, factors), (20.5, vec![]));
+        assert_eq!(load_of(&loads, &sack).contents_weight_pct, 100);
     }
 }

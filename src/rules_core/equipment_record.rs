@@ -220,6 +220,11 @@ pub struct CorpusEquipmentRecord {
     /// What a container holds, settled only when [`Self::container`] is true; `Unstated` otherwise.
     #[serde(default, skip_serializing_if = "ContainerCapacity::is_unstated")]
     pub container_capacity: ContainerCapacity,
+    /// What a container's contents weigh toward the carried total, in percent (SD-42 E4.7,
+    /// `decisions.md §27.1`): `CONTAINS:*…` (a Bag of Holding) is 0, `CONTAINS:N%…` is 100 − N, any
+    /// other 100. The capacity check still counts the contents in full. Omitted when 100.
+    #[serde(default = "full_weight_pct", skip_serializing_if = "is_full_weight_pct")]
+    pub contents_weight_pct: u8,
     /// Whether the item fires ammunition: its type holds `Projectile` (SD-41 `decisions.md §23`).
     /// `Thrown` does not count. Omitted from the settled bundle when `false`.
     #[serde(default, skip_serializing_if = "std::ops::Not::not")]
@@ -291,6 +296,14 @@ pub struct PriceTerm {
     pub per_plus_squared_gp: f64,
 }
 
+fn full_weight_pct() -> u8 {
+    100
+}
+
+fn is_full_weight_pct(pct: &u8) -> bool {
+    *pct == 100
+}
+
 fn is_zero_i16(n: &i16) -> bool {
     *n == 0
 }
@@ -335,7 +348,8 @@ pub fn modified_price_gp(base_gp: f64, base_lb: f64, host_types: &[String], modi
 }
 
 /// A container's stated capacity (SD-41 `decisions.md §7`). `Unstated` covers a container that
-/// states none and the weight-reduction kinds, whose contents weigh in full (DEF-1).
+/// states none. A weight-reduction kind (`*250`, `40%26`) states its capacity behind the flag
+/// (SD-42 E4.7); the flag itself is [`CorpusEquipmentRecord::contents_weight_pct`].
 #[derive(Debug, Clone, Copy, Default, PartialEq, serde::Serialize, serde::Deserialize)]
 pub enum ContainerCapacity {
     Pounds(f64),
@@ -359,6 +373,13 @@ impl CorpusEquipmentRecord {
     /// The container's capacity; `Unstated` for a non-container.
     pub fn capacity(&self) -> ContainerCapacity {
         self.container_capacity
+    }
+
+    /// What each pound inside this container adds to the carried total (SD-42 E4.7): its
+    /// `contents_weight_pct` over 100 for a container, 1 for anything else. A record built from
+    /// `Default` states 0 %, so only a settled container reads the field.
+    pub fn contents_weight_factor(&self) -> f64 {
+        if self.container { f64::from(self.contents_weight_pct.min(100)) / 100.0 } else { 1.0 }
     }
 
     /// Whether the item fires ammunition (`Projectile`).
@@ -498,15 +519,15 @@ mod container_tests {
     }
 
     #[test]
-    fn container_capacity_population_is_210_88_73_49() {
+    fn container_capacity_population_is_210_132_78() {
         // The source population: every corpus record with a CONTAINS token, by its first field.
         let maps = corpus_token_maps();
+        // The weight flag (`*`, `N%`) is stripped first: the capacity stands behind it (SD-42 E4.7).
         let first_kind = |value: &str| {
             let first = value.split('|').next().unwrap_or("");
+            let first = first.strip_prefix('*').unwrap_or_else(|| first.split_once('%').map_or(first, |(_, rest)| rest));
             if first.starts_with("UNLIM") {
                 "unlim"
-            } else if first.starts_with('*') {
-                "unstated"
             } else if first.parse::<f64>().is_ok() {
                 "lb"
             } else {
@@ -517,8 +538,8 @@ mod container_tests {
         let count = |rows: &[&str], kind: &str| rows.iter().filter(|k| **k == kind).count();
         assert_eq!(
             (contains.len(), count(&contains, "lb"), count(&contains, "unlim"), count(&contains, "unstated"), count(&contains, "other")),
-            (210, 88, 73, 49, 0),
-            "CONTAINS records by first field"
+            (210, 132, 78, 0, 0),
+            "CONTAINS records by first field, behind the weight flag (SD-42 E4.7: the 49 `*` records were unstated)"
         );
 
         // The settled containers: Container-typed, not a weapon (no DAMAGE, no Weapon type word).
@@ -547,7 +568,18 @@ mod container_tests {
             .collect();
         let tally = |rows: &[&str]| (rows.len(), count(rows, "lb"), count(rows, "unlim"), count(rows, "unstated"));
         assert_eq!(tally(&a), tally(&b), "settled containers agree with the source predicate");
-        assert_eq!(tally(&a), (130, 33, 49, 48), "settled containers: total, lb, unlimited, unstated (the Backpack: 60 lb, §32)");
+        assert_eq!(tally(&a), (130, 76, 54, 0), "settled containers: total, lb, unlimited, unstated (the Backpack: 60 lb, §32)");
+        // SD-42 E4.7: the weightless containers, settled (A) and by the source's flag (B).
+        let flagged_a = settled.iter().filter(|(_, r)| r.is_container() && r.contents_weight_pct < 100).count();
+        let flagged_b = maps
+            .iter()
+            .filter(|m| {
+                let words: Vec<&str> = m.get("TYPE").map_or(vec![], |t| t.split('.').collect());
+                words.contains(&"Container") && !words.contains(&"Weapon") && !m.contains_key("DAMAGE")
+            })
+            .filter(|m| m.get("CONTAINS").is_some_and(|v| v.starts_with('*') || v.split('|').next().is_some_and(|f| f.contains('%'))))
+            .count();
+        assert_eq!((flagged_a, flagged_b), (48, 48), "weightless containers: settled, source");
         assert!(
             settled.iter().all(|(_, r)| r.is_container() || r.capacity() == ContainerCapacity::Unstated),
             "capacity is settled only on containers"

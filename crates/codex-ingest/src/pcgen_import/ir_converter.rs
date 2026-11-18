@@ -525,6 +525,7 @@ pub fn equipment_record_to_corpus(record: &EquipmentRecord) -> CorpusEquipmentRe
         is_modifier: matches!(record.kind, EquipmentRecordKind::EquipMod),
         container: container_of(record),
         container_capacity: if container_of(record) { container_capacity_of(record) } else { ContainerCapacity::Unstated },
+        contents_weight_pct: if container_of(record) { contents_weight_pct_of(record) } else { 100 },
         uses_ammunition: uses_ammunition_of(record),
         ammunition_family: if uses_ammunition_of(record) { ammunition_family_of(record) } else { None },
         ammunition_kinds: ammunition_kinds_of(record),
@@ -694,15 +695,34 @@ fn unmatched_capacity_override_keys<'a>(
     rows.iter().map(|row| row.key.as_str()).filter(|key| !identities.contains(*key)).collect()
 }
 
+/// `CONTAINS`'s first `|` field split into its weight flag and the capacity behind it (PCGen's
+/// `[*|N%]<UNLIM|pounds>`): `*` → the contents weigh 0 %, `N%` → 100 − N %, none → 100 %
+/// (SD-42 E4.7, `decisions.md §27.1`). `None` when the record has no `CONTAINS`.
+fn contains_first_field(record: &EquipmentRecord) -> Option<(u8, &str)> {
+    let first = equipment_token_value(record, "CONTAINS")?.split('|').next()?;
+    if let Some(rest) = first.strip_prefix('*') {
+        return Some((0, rest));
+    }
+    if let Some((Ok(reduce), rest)) = first.split_once('%').map(|(pct, rest)| (pct.parse::<u8>(), rest)) {
+        return Some((100u8.saturating_sub(reduce), rest));
+    }
+    Some((100, first))
+}
+
+/// What a container's contents weigh toward the carried total, in percent: [`contains_first_field`]'s flag.
+fn contents_weight_pct_of(record: &EquipmentRecord) -> u8 {
+    contains_first_field(record).map_or(100, |(pct, _)| pct)
+}
+
 /// A container's capacity: a cited override row for the record's identity wins (`decisions.md
-/// §32`); else `CONTAINS`'s first `|` field: `UNLIM…` is unlimited, a number is pounds, and a
-/// `*…` weight-reduction kind or an absent token states none (DEF-1).
+/// §32`); else `CONTAINS`'s first `|` field behind its weight flag: `UNLIM…` is unlimited, a
+/// number is pounds, and an absent token or anything else states none.
 fn container_capacity_of(record: &EquipmentRecord) -> ContainerCapacity {
     let identity = equipment_token_value(record, "KEY").unwrap_or(record.name.as_str());
     if let Some(row) = capacity_overrides().iter().find(|row| row.key == identity) {
         return ContainerCapacity::Pounds(row.capacity_lbs);
     }
-    let Some(first) = equipment_token_value(record, "CONTAINS").and_then(|value| value.split('|').next()) else {
+    let Some((_, first)) = contains_first_field(record) else {
         return ContainerCapacity::Unstated;
     };
     if first.starts_with("UNLIM") {
@@ -2351,9 +2371,37 @@ mod tests {
         assert_eq!(capacity(Some("UNLIM|Any")), ContainerCapacity::Unlimited);
         assert_eq!(capacity(Some("2000|Any")), ContainerCapacity::Pounds(2000.0));
         assert_eq!(capacity(Some("1.5|Liquid=3")), ContainerCapacity::Pounds(1.5));
-        assert_eq!(capacity(Some("*20|Any")), ContainerCapacity::Unstated, "weight-reduction kind (DEF-1)");
+        assert_eq!(capacity(Some("*20|Any")), ContainerCapacity::Pounds(20.0), "the capacity behind the weightless flag (E4.7)");
         assert_eq!(capacity(None), ContainerCapacity::Unstated);
         assert_eq!(equipment_record_to_corpus(&equipment_with(&[("TYPE", "Goods.Container"), ("CONTAINS", "60|Any")])).capacity(), ContainerCapacity::Pounds(60.0));
+    }
+
+    /// SD-42 E4.7 (`decisions.md §27.1`): the capacity behind `CONTAINS`'s weight flag — `*250`
+    /// (a Bag of Holding), `*UNLIM` (a Portable Hole), `40%26|Any` (the Versatile Vest) — and a
+    /// plain `UNLIM|Any`.
+    #[test]
+    fn container_capacity_parses_through_the_weight_flag() {
+        let capacity = |contains: &str| container_capacity_of(&equipment_with(&[("TYPE", "Goods.Container"), ("CONTAINS", contains)]));
+        assert_eq!(capacity("*250|Any"), ContainerCapacity::Pounds(250.0));
+        assert_eq!(capacity("*UNLIM"), ContainerCapacity::Unlimited);
+        assert_eq!(capacity("*UNLIM|Arrow=60|Javelin=50"), ContainerCapacity::Unlimited);
+        assert_eq!(capacity("40%26|Any"), ContainerCapacity::Pounds(26.0));
+        assert_eq!(capacity("UNLIM|Any"), ContainerCapacity::Unlimited);
+    }
+
+    /// SD-42 E4.7: the settled `contents_weight_pct` — `*` → 0, `N%` → 100 − N, no flag or no
+    /// `CONTAINS` → 100, and a non-container (a weapon's `CONTAINS` is its ammunition) → 100.
+    #[test]
+    fn container_capacity_flag_settles_contents_weight_pct() {
+        let pct = |tokens: &[(&str, &str)]| equipment_record_to_corpus(&equipment_with(tokens)).contents_weight_pct;
+        assert_eq!(pct(&[("TYPE", "Magic.Wondrous.Container"), ("CONTAINS", "*250|Any")]), 0);
+        assert_eq!(pct(&[("TYPE", "Magic.Wondrous.Container"), ("CONTAINS", "*UNLIM")]), 0);
+        assert_eq!(pct(&[("TYPE", "Magic.Wondrous.Container"), ("CONTAINS", "40%26|Any")]), 60);
+        assert_eq!(pct(&[("TYPE", "Goods.Container"), ("CONTAINS", "UNLIM|Any")]), 100);
+        assert_eq!(pct(&[("TYPE", "Goods.Container")]), 100);
+        assert_eq!(pct(&[("TYPE", "Weapon.Ranged.Container.Projectile.Bow"), ("CONTAINS", "*UNLIM|Arrow"), ("DAMAGE", "1d8")]), 100);
+        let bag = equipment_record_to_corpus(&equipment_with(&[("TYPE", "Magic.Wondrous.Container"), ("CONTAINS", "*250|Any")]));
+        assert_eq!((bag.contents_weight_factor(), bag.capacity()), (0.0, ContainerCapacity::Pounds(250.0)));
     }
 
     /// SD-41 E1.12 (`decisions.md §32`): a cited override row wins over the `CONTAINS` token, by

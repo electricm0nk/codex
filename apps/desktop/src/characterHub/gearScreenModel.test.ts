@@ -113,6 +113,17 @@ assert(!moveTargets(twoRings, twoRings.rows.find((candidate) => candidate.held.n
 // 5. Over capacity: a warning row per over container, the "x of y lb" from the engine's load.
 assertEqual(row('Backpack').capacityLabel, '61 of 60 lb', 'capacity: x of y lb from containerLoads');
 assertEqual(row('Belt Pouch').capacityLabel, '1 lb', 'capacity: an unstated limit shows the contents only');
+// SD-42 E4.7: a weightless container's title says so; a plain one's is unchanged.
+const weightless = gearScreenModel([held('Bag of Holding', { kind: 'carried' }), held('Sack', { kind: 'carried' })], {
+  perItem: [],
+  containerLoads: [
+    { copy: key('item:bag_of_holding'), contentsLbs: 300, capacity: { kind: 'pounds', lbs: 250 }, over: true, contentsWeightPct: 0 },
+    { copy: key('item:sack'), contentsLbs: 2, capacity: { kind: 'unlimited' }, over: false, contentsWeightPct: 60 },
+  ],
+});
+const weightlessRow = (name: string) => weightless.rows.find((candidate) => candidate.held.name === name)!;
+assertEqual(weightlessRow('Bag of Holding').capacityLabel, '300 of 250 lb, contents weigh nothing', 'weightless: the bag says its contents weigh nothing');
+assertEqual(weightlessRow('Sack').capacityLabel, '2 lb, no limit, contents weigh 40 % less', 'weightless: a reducing container says how much less');
 assertEqual(model.warnings.length, 1, 'warning: one over-capacity container');
 assertEqual(model.warnings[0].text, 'Backpack holds 61 lb, over its 60 lb.', 'warning: words');
 assertEqual(model.capacityOverride, false, 'no override, no tag');

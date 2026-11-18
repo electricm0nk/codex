@@ -416,13 +416,15 @@ pub fn compute_encumbrance(
     extra: &[WeighedCopy],
     quantities: &[(CopyKey, u32)],
 ) -> EncumbranceComputation {
-    compute_encumbrance_sized(equipment_selections, corpus, strength_score, size, extra, quantities, &[], &[])
+    compute_encumbrance_sized(equipment_selections, corpus, strength_score, size, extra, quantities, &[], &[], &[])
 }
 
 /// [`compute_encumbrance`] with `item_sizes`, the copies made for another size than Medium (SD-41
 /// E2.12): each weighs and costs its record × [`copy_size_multipliers`]. `size` is the wearer's.
 /// `weight_overrides` (SD-42 E4.2) are the copies whose file states their own weight per unit
-/// ([`copy_weight_lbs`]).
+/// ([`copy_weight_lbs`]). `weight_factors` (SD-42 E4.7) are what each copy's pounds count toward
+/// the carried total, from [`crate::rules_core::containers::contents_weight_factors`] (0 inside a
+/// Bag of Holding); a copy with no entry counts in full, and its `per_item` row keeps its own weight.
 #[allow(clippy::too_many_arguments)]
 pub fn compute_encumbrance_sized(
     equipment_selections: &[EquipmentSelection],
@@ -433,6 +435,7 @@ pub fn compute_encumbrance_sized(
     quantities: &[(CopyKey, u32)],
     item_sizes: &[(CopyKey, SizeCategory)],
     weight_overrides: &[(CopyKey, f64)],
+    weight_factors: &[(CopyKey, f64)],
 ) -> EncumbranceComputation {
     let mut per_item = Vec::new();
     let mut unresolved_item_ids = Vec::new();
@@ -466,7 +469,7 @@ pub fn compute_encumbrance_sized(
         };
         let cost_gp = cost.map(|cost| cost * bundles * copy_size_multipliers(key, item_sizes).0);
 
-        total_carried_weight_lbs += weight_lbs;
+        total_carried_weight_lbs += weight_lbs * weight_factors.iter().find(|(copy, _)| copy == key).map_or(1.0, |(_, factor)| *factor);
         total_carried_cost_gp += cost_gp.unwrap_or(0.0);
         per_item.push(CarriedItem { item_id: selection.item_id.clone(), weight_lbs, cost_gp });
     }
