@@ -1457,10 +1457,10 @@ pub(crate) mod tests {
         };
         CprCharacterStore::save_lifepath(&lifepath, &root).expect("saves the Lifepath");
 
-        let membership = Membership { campaign_id: "camp-1".to_owned(), campaign_name: "Night City".to_owned(), campaign_dir: campaign.clone(), active: true };
+        let membership = Membership { campaign_id: "camp-1".to_owned(), campaign_name: "Night City".to_owned(), campaign_dir: campaign.clone(), active: true, stand_in: false, last_backup_counter: None };
         let warnings = crate::character_hub::set_character_campaigns_at_root(&root, &[membership]).expect("a CPR character joins a campaign");
         assert!(warnings.is_empty(), "{warnings:?}");
-        let folders: Vec<std::path::PathBuf> = std::fs::read_dir(campaign.join("characters")).expect("the campaign holds the character").map(|e| e.unwrap().path()).collect();
+        let folders: Vec<std::path::PathBuf> = std::fs::read_dir(campaign.join("Characters")).expect("the campaign holds the character").map(|e| e.unwrap().path()).collect();
         assert_eq!(folders.len(), 1, "{folders:?}");
         let copy = &folders[0];
         assert!(copy.file_name().unwrap().to_string_lossy().ends_with("cpr-edgerunner"), "{copy:?}");

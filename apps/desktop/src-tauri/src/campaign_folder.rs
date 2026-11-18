@@ -10,7 +10,7 @@ use std::time::UNIX_EPOCH;
 use serde::{Deserialize, Serialize};
 use tauri::Manager;
 
-use codex::campaign::{adventure_log, folder, maps, wiki};
+use codex::campaign::{adventure_log, characters, folder, maps, wiki};
 use codex::campaign::local_store::{CampaignStore, CAMPAIGN_JSON};
 use codex::campaign::CampaignFolderSnapshot;
 
@@ -678,10 +678,106 @@ pub fn search_campaign(request: SearchCampaignRequest) -> Result<Vec<wiki::Hit>,
     wiki_result(&request.campaign_dir, |dir| wiki::search(dir, &request.query))
 }
 
+// --- Characters/ backups (decisions.md §16) ---
+
+#[derive(Debug, Clone, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct CampaignCharacterRequest {
+    pub campaign_dir: String,
+    /// The backup's folder name in `Characters/`.
+    pub folder: String,
+}
+
+#[derive(Debug, Clone, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct ImportCampaignCharacterRequest {
+    pub campaign_dir: String,
+    pub folder: String,
+    pub mode: characters::ImportMode,
+}
+
+#[derive(Debug, Clone, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct ImportedCampaignCharacterDto {
+    pub character_id: String,
+}
+
+fn characters_root(app_data_dir: &Path) -> PathBuf {
+    crate::character_hub::characters_root_from_app_data_dir(app_data_dir)
+}
+
+pub fn list_campaign_characters_impl(campaign_dir: &str) -> Result<Vec<characters::Backup>, String> {
+    characters::list(&require_absolute(campaign_dir)?).map_err(|err| err.message)
+}
+
+pub fn import_campaign_character_at(app_data_dir: &Path, request: &ImportCampaignCharacterRequest) -> Result<ImportedCampaignCharacterDto, String> {
+    let campaign_dir = require_absolute(&request.campaign_dir)?;
+    characters::import(&campaign_dir, &request.folder, &characters_root(app_data_dir), request.mode)
+        .map(|imported| ImportedCampaignCharacterDto { character_id: imported.character_id })
+        .map_err(|err| err.message)
+}
+
+/// The files that differ between this device's copy of the character and its backup.
+pub fn diff_campaign_character_at(app_data_dir: &Path, request: &CampaignCharacterRequest) -> Result<Vec<characters::FileDiff>, String> {
+    let backup = characters::backup_path(&require_absolute(&request.campaign_dir)?, &request.folder).map_err(|err| err.message)?;
+    let character_id = characters::backup_character_id(&backup).map_err(|err| err.message)?;
+    let local = characters_root(app_data_dir).join(&character_id);
+    if !local.is_dir() {
+        return Err(format!("{} is not on this device", request.folder));
+    }
+    characters::diff(&local, &backup).map_err(|err| err.message)
+}
+
+/// The sheet of a backup, read-only: the load path writes first-load files into the root it reads,
+/// so it reads a fresh copy under `<app data>/campaign-character-view/`, never the shared backup.
+pub fn load_campaign_character_at(app_data_dir: &Path, request: &CampaignCharacterRequest) -> Result<crate::character_hub::LoadSavedCharacterResponse, String> {
+    let backup = characters::backup_path(&require_absolute(&request.campaign_dir)?, &request.folder).map_err(|err| err.message)?;
+    let view = app_data_dir.join("campaign-character-view").join(&request.folder);
+    if view.exists() {
+        fs::remove_dir_all(&view).map_err(|err| format!("could not clear {}: {err}", view.display()))?;
+    }
+    copy_backup(&backup, &view).map_err(|err| format!("could not copy {}: {err}", backup.display()))?;
+    crate::character_hub::load_saved_character_at_root(&view)
+}
+
+fn copy_backup(from: &Path, to: &Path) -> std::io::Result<()> {
+    fs::create_dir_all(to)?;
+    for entry in fs::read_dir(from)? {
+        let entry = entry?;
+        if entry.file_type()?.is_dir() {
+            copy_backup(&entry.path(), &to.join(entry.file_name()))?;
+        } else {
+            fs::copy(entry.path(), to.join(entry.file_name()))?;
+        }
+    }
+    Ok(())
+}
+
+#[tauri::command]
+pub fn list_campaign_characters(campaign_dir: String) -> Result<Vec<characters::Backup>, String> {
+    list_campaign_characters_impl(&campaign_dir)
+}
+
+#[tauri::command]
+pub fn import_campaign_character(app: tauri::AppHandle, request: ImportCampaignCharacterRequest) -> Result<ImportedCampaignCharacterDto, String> {
+    import_campaign_character_at(&app_data_dir(&app)?, &request)
+}
+
+#[tauri::command]
+pub fn diff_campaign_character(app: tauri::AppHandle, request: CampaignCharacterRequest) -> Result<Vec<characters::FileDiff>, String> {
+    diff_campaign_character_at(&app_data_dir(&app)?, &request)
+}
+
+#[tauri::command]
+pub fn load_campaign_character(app: tauri::AppHandle, request: CampaignCharacterRequest) -> Result<crate::character_hub::LoadSavedCharacterResponse, String> {
+    load_campaign_character_at(&app_data_dir(&app)?, &request)
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
     use codex::campaign::{FolderMember, CAMPAIGN_FOLDER_SCHEMA_VERSION};
+    use codex::saved_character::campaign_mirror::{self, Membership};
 
     fn temp_dir(label: &str) -> PathBuf {
         let dir = std::env::temp_dir().join(format!("codex-campaign-folder-cmd-{label}-{}", std::process::id()));
@@ -1000,6 +1096,86 @@ mod tests {
         assert!(delete_wiki_folder(at("Wiki/Deities")).unwrap().is_empty());
         assert_eq!(delete_wiki_folder(at("Wiki/NPCs")).unwrap(), ["Wiki/NPCs/Ameiko.md"]);
         assert!(list_wiki_folders("relative/path".to_owned()).is_err(), "an absolute campaign folder only");
+        let _ = fs::remove_dir_all(&root);
+    }
+
+    // --- Characters/ backups (decisions.md §16) ---
+
+    /// Device A's fighter saved into a new campaign folder; returns (campaign dir, A's app data).
+    fn campaign_with_a_backup(label: &str) -> (PathBuf, PathBuf) {
+        let root = temp_dir(label);
+        let campaign = create_campaign_folder_at(&root.join("app-a"), &create_request(&root, "Runelords")).unwrap();
+        let campaign_dir = PathBuf::from(&campaign.campaign_dir);
+        let app_a = root.join("app-a");
+        let fixture = Path::new(env!("CARGO_MANIFEST_DIR")).join("../../../tests/fixtures/sd14/pf1_human_fighter_level1_saved_character");
+        let mut envelope = codex::saved_character::local_store::SavedCharacterStore::load(&fixture).expect("fixture loads");
+        envelope.character_id = "char-1".to_owned();
+        envelope.display_label = "Aldric".to_owned();
+        let root_a = characters_root(&app_a).join("char-1");
+        fs::create_dir_all(&root_a).unwrap();
+        let membership = Membership { campaign_id: campaign.campaign_dir.clone(), campaign_name: "Runelords".to_owned(), campaign_dir: campaign_dir.clone(), active: true, stand_in: false, last_backup_counter: None };
+        campaign_mirror::save_memberships(&root_a, &[membership]).unwrap();
+        assert!(crate::character_hub::save_and_mirror(&envelope, &root_a).unwrap().is_empty());
+        (campaign_dir, root)
+    }
+
+    fn import_request(campaign_dir: &Path, mode: characters::ImportMode) -> ImportCampaignCharacterRequest {
+        ImportCampaignCharacterRequest { campaign_dir: campaign_dir.to_string_lossy().into_owned(), folder: "aldric-char-1".to_owned(), mode }
+    }
+
+    #[test]
+    fn import_campaign_character_as_stand_in_lands_in_the_list_and_diffs() {
+        let (campaign_dir, root) = campaign_with_a_backup("import-stand-in");
+        let listed = list_campaign_characters_impl(&campaign_dir.to_string_lossy()).unwrap();
+        assert_eq!(listed.iter().map(|b| (b.folder.as_str(), b.label.as_str(), b.counter)).collect::<Vec<_>>(), [("aldric-char-1", "Aldric", Some(1))]);
+        let app_b = root.join("app-b");
+
+        let imported = import_campaign_character_at(&app_b, &import_request(&campaign_dir, characters::ImportMode::StandIn)).unwrap();
+
+        assert_eq!(imported.character_id, "char-1");
+        let listing = codex::saved_character::local_store::SavedCharacterStore::list_all(&characters_root(&app_b)).unwrap();
+        assert_eq!(listing.characters.iter().map(|c| c.character_id.as_str()).collect::<Vec<_>>(), ["char-1"], "the copy is in this device's character list");
+        let root_b = characters_root(&app_b).join("char-1");
+        assert!(campaign_mirror::load_memberships(&root_b).unwrap()[0].stand_in);
+        let request = CampaignCharacterRequest { campaign_dir: campaign_dir.to_string_lossy().into_owned(), folder: "aldric-char-1".to_owned() };
+        assert!(diff_campaign_character_at(&app_b, &request).unwrap().is_empty(), "a fresh stand-in equals its backup");
+        fs::write(root_b.join("bio.json"), "{}").unwrap();
+        let diffs = diff_campaign_character_at(&app_b, &request).unwrap();
+        assert_eq!(diffs.iter().map(|d| d.path.as_str()).collect::<Vec<_>>(), ["bio.json"]);
+        assert!(diff_campaign_character_at(&root.join("app-c"), &request).is_err(), "no local copy, no diff");
+        let _ = fs::remove_dir_all(&root);
+    }
+
+    #[test]
+    fn import_campaign_character_move_master_next_save_names_this_device() {
+        let (campaign_dir, root) = campaign_with_a_backup("import-move");
+        let app_b = root.join("app-b");
+
+        import_campaign_character_at(&app_b, &import_request(&campaign_dir, characters::ImportMode::MoveMaster)).unwrap();
+        let root_b = characters_root(&app_b).join("char-1");
+        let envelope = codex::saved_character::local_store::SavedCharacterStore::load(&root_b).unwrap();
+        assert!(crate::character_hub::save_and_mirror(&envelope, &root_b).unwrap().is_empty());
+
+        let master = campaign_mirror::read_master(&campaign_dir.join("Characters").join("aldric-char-1")).unwrap().unwrap();
+        assert_eq!(master.device_id, campaign_mirror::device_identity(&app_b).unwrap().id);
+        assert_eq!(master.save_counter, 2);
+        assert!(import_campaign_character_at(&app_b, &import_request(&campaign_dir, characters::ImportMode::StandIn)).is_err(), "never over a local copy");
+        let _ = fs::remove_dir_all(&root);
+    }
+
+    #[test]
+    fn load_campaign_character_reads_a_copy_never_the_backup() {
+        let (campaign_dir, root) = campaign_with_a_backup("load-backup");
+        let backup = campaign_dir.join("Characters").join("aldric-char-1");
+        let before: Vec<_> = fs::read_dir(&backup).unwrap().map(|e| e.unwrap().file_name()).collect();
+        let request = CampaignCharacterRequest { campaign_dir: campaign_dir.to_string_lossy().into_owned(), folder: "aldric-char-1".to_owned() };
+
+        let loaded = load_campaign_character_at(&root.join("app-b"), &request).expect("loads");
+
+        assert!(loaded.snapshot.is_some(), "the fighter computes");
+        let after: Vec<_> = fs::read_dir(&backup).unwrap().map(|e| e.unwrap().file_name()).collect();
+        assert_eq!(after, before, "the shared backup gains no file");
+        assert!(load_campaign_character_at(&root.join("app-b"), &CampaignCharacterRequest { folder: "../x".to_owned(), ..request }).is_err());
         let _ = fs::remove_dir_all(&root);
     }
 }

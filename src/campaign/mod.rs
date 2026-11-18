@@ -8,6 +8,7 @@
 //! (per the `saved_character` precedent).
 
 pub mod adventure_log;
+pub mod characters;
 pub mod folder;
 pub mod frontmatter;
 pub mod local_store;

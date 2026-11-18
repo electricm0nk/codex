@@ -1340,7 +1340,7 @@ pub(crate) use crate::pf1_adapter::{
 /// Join the OS app-data directory with the characters-root subdirectory.
 /// Split out as a pure function so it's unit-testable without a real
 /// `AppHandle`.
-fn characters_root_from_app_data_dir(app_data_dir: &Path) -> PathBuf {
+pub(crate) fn characters_root_from_app_data_dir(app_data_dir: &Path) -> PathBuf {
     app_data_dir.join(CHARACTERS_ROOT_DIR_NAME)
 }
 
@@ -22558,12 +22558,12 @@ mod tests {
     // ----- SD-41 E2.7: campaign write-through (decisions.md §29) -----
 
     fn campaign_membership(dir: &Path, active: bool) -> campaign_mirror::Membership {
-        campaign_mirror::Membership { campaign_id: "camp-1".to_owned(), campaign_name: "Rise of the Runelords".to_owned(), campaign_dir: dir.to_path_buf(), active }
+        campaign_mirror::Membership { campaign_id: "camp-1".to_owned(), campaign_name: "Rise of the Runelords".to_owned(), campaign_dir: dir.to_path_buf(), active, stand_in: false, last_backup_counter: None }
     }
 
-    /// The one character folder in a campaign's `characters/`.
+    /// The one character folder in a campaign's `Characters/`.
     fn campaign_copy(campaign: &Path) -> PathBuf {
-        let folders: Vec<PathBuf> = std::fs::read_dir(campaign.join("characters")).expect("the campaign has a characters folder").map(|entry| entry.unwrap().path()).collect();
+        let folders: Vec<PathBuf> = std::fs::read_dir(campaign.join("Characters")).expect("the campaign has a Characters folder").map(|entry| entry.unwrap().path()).collect();
         assert_eq!(folders.len(), 1, "{folders:?}");
         folders[0].clone()
     }
@@ -22585,7 +22585,7 @@ mod tests {
         assert_eq!(std::fs::read(copy.join("authoritative_character_input.txt")).unwrap(), std::fs::read(root.join("authoritative_character_input.txt")).unwrap(), "and the re-saved input");
 
         let loaded = load_saved_character_at_root(&root).expect("loads");
-        assert_eq!(loaded.campaigns, vec![campaign_membership(&campaign, true)]);
+        assert_eq!(loaded.campaigns.iter().map(|m| (m.campaign_dir.as_path(), m.active, m.stand_in, m.last_backup_counter.is_some())).collect::<Vec<_>>(), [(campaign.as_path(), true, false, true)]);
         assert!(loaded.mirror_warnings.is_empty(), "{:?}", loaded.mirror_warnings);
 
         // A clone is a new character: it joins no campaign.
@@ -22594,7 +22594,7 @@ mod tests {
         let cloned = clone_character_at_roots(&root, &clone_root, &request, "test-version").expect("clones");
         assert!(matches!(cloned, CreateCharacterResponse::Saved { .. }), "{cloned:?}");
         assert!(!clone_root.join(campaign_mirror::MEMBERSHIPS_FILE).exists(), "clone_character copies no campaigns.json");
-        assert_eq!(std::fs::read_dir(campaign.join("characters")).unwrap().count(), 1, "the clone wrote nothing to the campaign");
+        assert_eq!(std::fs::read_dir(campaign.join("Characters")).unwrap().count(), 1, "the clone wrote nothing to the campaign");
         for dir in [&root, &campaign, &clone_root] {
             std::fs::remove_dir_all(dir).ok();
         }
@@ -22627,8 +22627,8 @@ mod tests {
     fn campaign_write_through_unwritable_dir_warns_and_keeps_local() {
         let root = created_character("campaign-unwritable");
         let campaign = tempdir("campaign-unwritable-dir");
-        // `characters` is a file, so no copy can be written under it (whoever runs the test).
-        std::fs::write(campaign.join("characters"), "not a folder").unwrap();
+        // `Characters` is a file, so no copy can be written under it (whoever runs the test).
+        std::fs::write(campaign.join("Characters"), "not a folder").unwrap();
         let warnings = set_character_campaigns_at_root(&root, &[campaign_membership(&campaign, true)]).expect("the membership saves anyway");
         assert_eq!(warnings.len(), 1, "{warnings:?}");
 

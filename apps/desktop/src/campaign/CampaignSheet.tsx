@@ -1,7 +1,9 @@
 import { useEffect, useMemo, useState, type CSSProperties } from 'react';
 import { openCampaignFolder } from '../boundary/campaignFolder/knownCampaigns';
 import type { CampaignFolderSnapshot, CampaignTreeEntry } from '../boundary/campaignFolder/types';
-import { CAMPAIGN_TABS, partyCharacterIds, type CampaignTab } from './campaignFolderModel';
+import { CAMPAIGN_TABS, type CampaignTab } from './campaignFolderModel';
+import { characterRows, diffLines, IMPORT_CHOICES, type CharacterRow } from './charactersModel';
+import { diffCampaignCharacter, importCampaignCharacter, listCampaignCharacters, loadCampaignCharacter, type CampaignCharacterBackup, type ImportMode } from '../boundary/campaignFolder/characters';
 import { loadCharacterHubListSurfaceRuntime } from '../characterHub/characterHubRuntime';
 import type { CharacterHubListRowSurface } from '../characterHub/buildCharacterHubListSurface';
 import { loadSavedCharacterDetail, type LoadSavedCharacterResponse } from '../boundary/loadSavedCharacterDetail';
@@ -17,11 +19,11 @@ import { PartyResourcesTab } from './tabs/PartyResourcesTab';
 import { WikiTab } from './tabs/WikiTab';
 
 /**
- * Post-load campaign screen, styled like the Character Sheet: a full-bleed header, a left party
- * list, and a tabbed panel for the campaign folder's files (Party Resources / Adventure Log / Maps /
+ * Post-load campaign screen, styled like the Character Sheet: a full-bleed header, a left Characters
+ * list (the folder's `Characters/` backups, E2.10: open one read-only, import it as a stand-in or as
+ * the moved master, compare this device's copy with it), and a tabbed panel for the campaign folder's files (Party Resources / Adventure Log / Maps /
  * Wiki). Everything is read from the folder (SD-42 `decisions.md §11`): `campaign.json`, and the
- * tree for the tabs and the party (the characters copied into `Characters/` that this install
- * holds). Party Resources opens its file in the editor (E2.6); the Adventure Log lists its sessions
+ * tree for the tabs, and `list_campaign_characters` for the Characters list. Party Resources opens its file in the editor (E2.6); the Adventure Log lists its sessions
  * and opens one in the editor (E2.7); Maps shows each map with its pins (E2.8), and a pin opens its
  * page on the Wiki tab (E2.9): folders, pages, links, backlinks and search.
  */
@@ -36,7 +38,7 @@ function fmt(value: number): string {
   return value >= 0 ? `+${value}` : `${value}`;
 }
 
-function MemberDetailPanel(props: { row: CharacterHubListRowSurface; onOpenFullSheet: () => void }) {
+function MemberDetailPanel(props: { row: CharacterHubListRowSurface; loadKey: string; load: () => Promise<LoadSavedCharacterResponse>; onOpenFullSheet?: () => void }) {
   const [detail, setDetail] = useState<LoadSavedCharacterResponse | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -44,10 +46,8 @@ function MemberDetailPanel(props: { row: CharacterHubListRowSurface; onOpenFullS
     let cancelled = false;
     setLoading(true);
     setDetail(null);
-    const loader = hasTauriRuntime()
-      ? loadSavedCharacterDetail({ characterId: props.row.characterId })
-      : Promise.resolve(buildPreviewDetail());
-    loader
+    props
+      .load()
       .then((loaded) => {
         if (!cancelled) {
           setDetail(loaded);
@@ -66,7 +66,8 @@ function MemberDetailPanel(props: { row: CharacterHubListRowSurface; onOpenFullS
     return () => {
       cancelled = true;
     };
-  }, [props.row.characterId]);
+    // `loadKey` names what `load` reads.
+  }, [props.loadKey]);
 
   const snapshot = detail?.snapshot;
 
@@ -74,13 +75,17 @@ function MemberDetailPanel(props: { row: CharacterHubListRowSurface; onOpenFullS
     <div style={{ ...panel, padding: '1.1rem 1.25rem' }}>
       <div style={{ alignItems: 'baseline', display: 'flex', justifyContent: 'space-between' }}>
         <h3 style={{ margin: 0 }}>{props.row.displayLabel}</h3>
-        <button
-          type="button"
-          onClick={props.onOpenFullSheet}
-          style={{ background: 'none', border: '1px solid var(--color-border)', borderRadius: 6, color: 'var(--color-accent)', cursor: 'pointer', fontSize: '0.8rem', padding: '0.3rem 0.7rem' }}
-        >
-          View full sheet →
-        </button>
+        {props.onOpenFullSheet ? (
+          <button
+            type="button"
+            onClick={props.onOpenFullSheet}
+            style={{ background: 'none', border: '1px solid var(--color-border)', borderRadius: 6, color: 'var(--color-accent)', cursor: 'pointer', fontSize: '0.8rem', padding: '0.3rem 0.7rem' }}
+          >
+            View full sheet →
+          </button>
+        ) : (
+          <span style={{ color: 'var(--color-text-muted)', fontSize: '0.75rem' }}>Campaign copy · read-only</span>
+        )}
       </div>
       <p style={{ color: 'var(--color-text-secondary)', fontSize: '0.85rem', margin: '0.3rem 0 0.9rem' }}>
         {props.row.raceLabel} {formatHeldClasses(props.row.classSummary)}
@@ -109,6 +114,90 @@ function MemberDetailPanel(props: { row: CharacterHubListRowSurface; onOpenFullS
   );
 }
 
+/** Import a backup onto this device, or compare this device's copy with it (decisions.md §16). */
+function CharacterActions(props: { campaignDir: string; row: CharacterRow; onImported: () => void }) {
+  const [mode, setMode] = useState<ImportMode>(IMPORT_CHOICES.find((choice) => choice.isDefault)!.mode);
+  const [message, setMessage] = useState<string | null>(null);
+  const [diff, setDiff] = useState<string[] | null>(null);
+  const [busy, setBusy] = useState(false);
+
+  useEffect(() => {
+    setMessage(null);
+    setDiff(null);
+  }, [props.row.folder]);
+
+  const fail = (cause: unknown) => setMessage(cause instanceof Error ? cause.message : String(cause));
+  const button: CSSProperties = { background: 'var(--color-accent)', border: 'none', borderRadius: 6, color: 'var(--color-on-accent)', cursor: 'pointer', fontWeight: 600, padding: '0.4rem 0.9rem' };
+
+  return (
+    <div style={{ ...panel, padding: '0.9rem 1.25rem' }}>
+      {props.row.onThisDevice ? (
+        <>
+          <p style={{ color: 'var(--color-text-secondary)', fontSize: '0.85rem', margin: '0 0 0.6rem' }}>This device holds a copy of this character. Compare it with the campaign copy (nothing is merged).</p>
+          <button
+            type="button"
+            disabled={busy}
+            style={button}
+            onClick={() => {
+              setBusy(true);
+              diffCampaignCharacter(props.campaignDir, props.row.folder)
+                .then((diffs) => setDiff(diffLines(diffs)))
+                .catch(fail)
+                .finally(() => setBusy(false));
+            }}
+          >
+            Compare with the campaign copy
+          </button>
+          {diff ? (
+            <ul style={{ fontSize: '0.85rem', margin: '0.7rem 0 0', paddingLeft: '1.2rem' }}>
+              {diff.map((line) => (
+                <li key={line}>{line}</li>
+              ))}
+            </ul>
+          ) : null}
+        </>
+      ) : (
+        <fieldset style={{ border: 'none', margin: 0, padding: 0 }}>
+          <legend style={{ fontWeight: 700, marginBottom: '0.5rem' }}>Import to this device…</legend>
+          {IMPORT_CHOICES.map((choice) => (
+            <label key={choice.mode} style={{ display: 'flex', gap: '0.5rem', marginBottom: '0.45rem' }}>
+              <input type="radio" name="import-mode" checked={mode === choice.mode} onChange={() => setMode(choice.mode)} />
+              <span>
+                <strong>{choice.label}</strong>
+                {choice.isDefault ? ' (default)' : ''}
+                <br />
+                <span style={{ color: 'var(--color-text-muted)', fontSize: '0.8rem' }}>{choice.help}</span>
+              </span>
+            </label>
+          ))}
+          <button
+            type="button"
+            disabled={busy}
+            style={button}
+            onClick={() => {
+              setBusy(true);
+              importCampaignCharacter(props.campaignDir, props.row.folder, mode)
+                .then(() => {
+                  setMessage(`${props.row.title} is on this device now: open it from the character list.`);
+                  props.onImported();
+                })
+                .catch(fail)
+                .finally(() => setBusy(false));
+            }}
+          >
+            Import
+          </button>
+        </fieldset>
+      )}
+      {message ? (
+        <p role="status" style={{ color: 'var(--color-text-secondary)', fontSize: '0.85rem', margin: '0.6rem 0 0' }}>
+          {message}
+        </p>
+      ) : null}
+    </div>
+  );
+}
+
 type Loaded = { kind: 'loading' } | { kind: 'failed'; message: string } | { kind: 'open'; campaign: CampaignFolderSnapshot; tree: CampaignTreeEntry[] };
 
 export function CampaignSheet(props: {
@@ -118,16 +207,23 @@ export function CampaignSheet(props: {
 }) {
   const [loaded, setLoaded] = useState<Loaded>({ kind: 'loading' });
   const [savedCharacters, setSavedCharacters] = useState<CharacterHubListRowSurface[]>([]);
-  const [selectedMemberId, setSelectedMemberId] = useState<string | null>(null);
+  const [backups, setBackups] = useState<CampaignCharacterBackup[]>([]);
+  const [selectedFolder, setSelectedFolder] = useState<string | null>(null);
   const [tab, setTab] = useState<CampaignTab>('resources');
   // The page open on the Wiki tab (a map pin opens one there too).
   const [wikiPage, setWikiPage] = useState<string | null>(null);
 
-  useEffect(() => {
+  const reloadCharacters = () => {
     loadCharacterHubListSurfaceRuntime()
       .then((surface) => setSavedCharacters(surface.rows))
       .catch(() => setSavedCharacters([]));
-  }, []);
+    listCampaignCharacters(props.campaignDir)
+      .then(setBackups)
+      .catch(() => setBackups([]));
+  };
+
+  // Reload when the folder changes.
+  useEffect(reloadCharacters, [props.campaignDir]);
 
   useEffect(() => {
     let live = true;
@@ -145,18 +241,13 @@ export function CampaignSheet(props: {
       .catch((cause: unknown) => setLoaded({ kind: 'failed', message: cause instanceof Error ? cause.message : String(cause) }));
   };
 
-  const tree = loaded.kind === 'open' ? loaded.tree : null;
-  const partyRows = useMemo(() => {
-    if (!tree) return [];
-    const ids = partyCharacterIds(tree, savedCharacters.map((row) => row.characterId));
-    return savedCharacters.filter((row) => ids.includes(row.characterId));
-  }, [savedCharacters, tree]);
+  const rows = useMemo(() => characterRows(backups, savedCharacters.map((row) => row.characterId)), [backups, savedCharacters]);
 
   useEffect(() => {
-    if (!selectedMemberId && partyRows.length > 0) {
-      setSelectedMemberId(partyRows[0].characterId);
+    if (!selectedFolder && rows.length > 0) {
+      setSelectedFolder(rows[0].folder);
     }
-  }, [partyRows, selectedMemberId]);
+  }, [rows, selectedFolder]);
 
   if (loaded.kind !== 'open') {
     return (
@@ -172,7 +263,8 @@ export function CampaignSheet(props: {
   }
 
   const { campaign } = loaded;
-  const selectedMember = partyRows.find((row) => row.characterId === selectedMemberId) ?? null;
+  const selected = rows.find((row) => row.folder === selectedFolder) ?? null;
+  const localRow = selected?.onThisDevice ? (savedCharacters.find((row) => row.characterId === selected.characterId) ?? null) : null;
 
   return (
     <div style={{ marginLeft: 'calc(50% - 50vw)', marginTop: '-3rem', width: '100vw' }}>
@@ -203,24 +295,24 @@ export function CampaignSheet(props: {
       </div>
 
       <div style={{ display: 'flex', gap: '0.75rem', padding: '1rem 1.5rem' }}>
-        {/* Left: party member list */}
+        {/* Left: the folder's Characters/ backups */}
         <div style={{ borderRight: '1px solid var(--color-border)', flex: '0 0 240px', paddingRight: '0.75rem' }}>
           <p style={{ color: 'var(--color-text-muted)', fontSize: '0.7rem', fontWeight: 700, letterSpacing: '0.06em', marginBottom: '0.6rem', textTransform: 'uppercase' }}>
-            Party ({partyRows.length})
+            Characters ({rows.length})
           </p>
-          {partyRows.length === 0 ? (
+          {rows.length === 0 ? (
             <p style={{ color: 'var(--color-text-secondary)', fontSize: '0.85rem' }}>
-              No party members yet. A character joins from its sheet&apos;s Campaign dialog, which copies it into this folder&apos;s Characters/.
+              No characters yet. A character joins from its sheet&apos;s Campaign dialog, which copies it into this folder&apos;s Characters/.
             </p>
           ) : (
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
-              {partyRows.map((row) => {
-                const active = row.characterId === selectedMemberId;
+              {rows.map((row) => {
+                const active = row.folder === selectedFolder;
                 return (
                   <button
-                    key={row.characterId}
+                    key={row.folder}
                     type="button"
-                    onClick={() => setSelectedMemberId(row.characterId)}
+                    onClick={() => setSelectedFolder(row.folder)}
                     style={{
                       ...panel,
                       backgroundColor: active ? 'var(--color-accent)' : 'var(--color-surface)',
@@ -229,9 +321,12 @@ export function CampaignSheet(props: {
                       textAlign: 'left',
                     }}
                   >
-                    <p style={{ color: active ? 'var(--color-on-accent)' : 'var(--color-text)', fontWeight: 700, margin: 0 }}>{row.displayLabel}</p>
+                    <p style={{ color: active ? 'var(--color-on-accent)' : 'var(--color-text)', fontWeight: 700, margin: 0 }}>{row.title}</p>
                     <p style={{ color: active ? 'var(--color-on-accent-muted)' : 'var(--color-text-muted)', fontSize: '0.75rem', margin: '0.1rem 0 0' }}>
-                      {row.raceLabel}
+                      {row.subtitle}
+                    </p>
+                    <p style={{ color: active ? 'var(--color-on-accent-muted)' : 'var(--color-text-faint)', fontSize: '0.7rem', margin: '0.1rem 0 0' }}>
+                      {row.master}
                     </p>
                   </button>
                 );
@@ -242,20 +337,28 @@ export function CampaignSheet(props: {
 
         {/* Right: selected member + campaign assets */}
         <div style={{ display: 'flex', flex: 1, flexDirection: 'column', gap: '1rem', minWidth: 0 }}>
-          {selectedMember ? (
+          {selected?.readable ? (
             <MemberDetailPanel
-              row={selectedMember}
-              onOpenFullSheet={() => {
-                if (hasTauriRuntime()) {
-                  loadSavedCharacterDetail({ characterId: selectedMember.characterId })
-                    .then((detail) => props.onOpenCharacterSheet(selectedMember, detail))
-                    .catch(() => props.onOpenCharacterSheet(selectedMember, null));
-                } else {
-                  props.onOpenCharacterSheet(selectedMember, buildPreviewDetail());
-                }
-              }}
+              row={selected.surface}
+              loadKey={`${props.campaignDir}/${selected.folder}`}
+              load={() => (hasTauriRuntime() ? loadCampaignCharacter(props.campaignDir, selected.folder) : Promise.resolve(buildPreviewDetail()))}
+              onOpenFullSheet={
+                localRow
+                  ? () => {
+                      // This device's own copy, as the hub opens it.
+                      if (hasTauriRuntime()) {
+                        loadSavedCharacterDetail({ characterId: localRow.characterId })
+                          .then((detail) => props.onOpenCharacterSheet(localRow, detail))
+                          .catch(() => props.onOpenCharacterSheet(localRow, null));
+                      } else {
+                        props.onOpenCharacterSheet(localRow, buildPreviewDetail());
+                      }
+                    }
+                  : undefined
+              }
             />
           ) : null}
+          {selected?.readable ? <CharacterActions campaignDir={props.campaignDir} row={selected} onImported={reloadCharacters} /> : null}
 
           <div>
             <div style={{ borderBottom: '1px solid var(--color-border)', display: 'flex', flexWrap: 'wrap', gap: '1.25rem', marginBottom: '1rem' }}>
