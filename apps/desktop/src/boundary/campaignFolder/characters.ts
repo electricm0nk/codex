@@ -47,3 +47,18 @@ export function diffCampaignCharacter(campaignDir: string, folder: string): Prom
 export function loadCampaignCharacter(campaignDir: string, folder: string): Promise<LoadSavedCharacterResponse> {
   return invokeCampaignFolder('load_campaign_character', { request: { campaignDir, folder } }, 'loading the campaign character');
 }
+
+/** This install's id and the name a backup's `master.json` shows (`get_device_identity`). */
+export interface DeviceIdentity {
+  id: string;
+  name: string;
+}
+
+export function getDeviceIdentity(): Promise<DeviceIdentity> {
+  return invokeCampaignFolder('get_device_identity', {}, 'reading this device\'s name');
+}
+
+/** Renames this device; the next backup write carries the new name (`set_device_name`). */
+export function setDeviceName(name: string): Promise<DeviceIdentity> {
+  return invokeCampaignFolder('set_device_name', { name }, 'saving this device\'s name');
+}

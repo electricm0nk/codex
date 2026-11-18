@@ -1,5 +1,6 @@
 import { createCampaignFolder, listKnownCampaigns, openCampaignFolder, saveCampaignJson } from './knownCampaigns';
 import { listCampaignTree, readCampaignFile, writeCampaignFile } from './campaignFiles';
+import { getDeviceIdentity, setDeviceName } from './characters';
 import { assertEqual } from '../../testSupport/asserts';
 
 /**
@@ -16,6 +17,8 @@ async function messageOf(call: () => Promise<unknown>): Promise<string> {
 }
 
 async function main() {
+  assertEqual(await messageOf(() => getDeviceIdentity()), "Tauri runtime not available for reading this device's name", 'device identity');
+  assertEqual(await messageOf(() => setDeviceName('x')), "Tauri runtime not available for saving this device's name", 'device name');
   assertEqual(
     await messageOf(() => listKnownCampaigns()),
     'Tauri runtime not available for listing campaign folders',

@@ -67,7 +67,7 @@ use campaign_folder::{
     list_known_campaigns, list_maps, migrate_campaign, new_adventure_log_entry, open_campaign_folder, read_campaign_file, save_attachment, save_campaign_json,
     set_map_pins, stat_campaign_file, write_campaign_file,
     add_wiki_folder, delete_wiki_folder, list_wiki_folders, list_wiki_pages, new_wiki_page, rename_wiki_folder, resolve_wiki_link, search_campaign, wiki_backlinks,
-    diff_campaign_character, import_campaign_character, list_campaign_characters, load_campaign_character,
+    diff_campaign_character, get_device_identity, set_device_name, import_campaign_character, list_campaign_characters, load_campaign_character,
 };
 use character_hub::{
     add_equipment_selection, add_feat_selection, add_spell_selection,
@@ -337,6 +337,8 @@ fn main() {
             import_character,
             import_pcg,
             list_known_campaigns,
+            get_device_identity,
+            set_device_name,
             add_known_campaign_folder,
             forget_known_campaign_folder,
             create_campaign_folder,

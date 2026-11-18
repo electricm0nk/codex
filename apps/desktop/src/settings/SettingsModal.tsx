@@ -1,5 +1,6 @@
 import { useEffect, type ReactNode } from 'react';
 import { SETTINGS_DIALOG_SIZE } from '../layout/screenLayout';
+import { DeviceNameField } from './DeviceNameField';
 import { PrintPanel } from './PrintPanel';
 
 /**
@@ -163,7 +164,9 @@ export function SettingsModal(props: {
               ×
             </button>
           </header>
-          <div style={{ flex: 1, fontSize: '1.05rem', overflowY: 'auto', padding: '1.75rem' }}>{props.activeTab === 'print' ? <PrintPanel /> : props.panels[props.activeTab]}</div>
+          <div style={{ flex: 1, fontSize: '1.05rem', overflowY: 'auto', padding: '1.75rem' }}>{props.activeTab === 'print' ? <PrintPanel /> : props.panels[props.activeTab]}
+            {props.activeTab === 'friends' ? <DeviceNameField /> : null}
+          </div>
         </section>
       </div>
     </div>

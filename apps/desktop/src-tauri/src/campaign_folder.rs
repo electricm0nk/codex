@@ -13,6 +13,7 @@ use tauri::Manager;
 use codex::campaign::{adventure_log, characters, folder, maps, wiki};
 use codex::campaign::local_store::{CampaignStore, CAMPAIGN_JSON};
 use codex::campaign::CampaignFolderSnapshot;
+use codex::saved_character::campaign_mirror;
 
 const KNOWN_FOLDERS_FILE: &str = "campaign-folders.json";
 /// Where dragged-in images go (one of `folder::LAYOUT_DIRS`).
@@ -506,6 +507,16 @@ fn app_data_dir(app: &tauri::AppHandle) -> Result<PathBuf, String> {
     app.path()
         .app_data_dir()
         .map_err(|err| format!("could not resolve app data directory: {err}"))
+}
+
+#[tauri::command]
+pub fn get_device_identity(app: tauri::AppHandle) -> Result<campaign_mirror::DeviceIdentity, String> {
+    campaign_mirror::device_identity(&app_data_dir(&app)?).map_err(|err| err.to_string())
+}
+
+#[tauri::command]
+pub fn set_device_name(app: tauri::AppHandle, name: String) -> Result<campaign_mirror::DeviceIdentity, String> {
+    campaign_mirror::set_device_name(&app_data_dir(&app)?, &name).map_err(|err| err.to_string())
 }
 
 #[tauri::command]

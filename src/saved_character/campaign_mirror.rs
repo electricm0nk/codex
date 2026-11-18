@@ -102,10 +102,26 @@ pub fn device_identity(app_data: &Path) -> Result<DeviceIdentity, SavedCharacter
         Err(_) => {}
     }
     let device = DeviceIdentity { id: random_id(), name: host_name() };
-    let text = serde_json::to_string_pretty(&device).map_err(|err| store_error(err.to_string()))?;
+    write_device(app_data, &device)?;
+    Ok(device)
+}
+
+fn write_device(app_data: &Path, device: &DeviceIdentity) -> Result<(), SavedCharacterStoreError> {
+    let path = app_data.join(DEVICE_FILE);
+    let text = serde_json::to_string_pretty(device).map_err(|err| store_error(err.to_string()))?;
     fs::create_dir_all(app_data)
         .and_then(|()| write_atomic(&path, &text))
-        .map_err(|err| store_error(format!("could not write {}: {err}", path.display())))?;
+        .map_err(|err| store_error(format!("could not write {}: {err}", path.display())))
+}
+
+/// Renames this device (the name a backup's `master.json` shows); trimmed, never blank, keeps the id.
+pub fn set_device_name(app_data: &Path, name: &str) -> Result<DeviceIdentity, SavedCharacterStoreError> {
+    let name = name.trim();
+    if name.is_empty() {
+        return Err(store_error("the device name cannot be blank".to_string()));
+    }
+    let device = DeviceIdentity { name: name.to_string(), ..device_identity(app_data)? };
+    write_device(app_data, &device)?;
     Ok(device)
 }
 
@@ -483,6 +499,23 @@ mod tests {
         assert_eq!(names, vec![BACKUP_DIR.to_owned()], "characters/ is renamed, not kept beside Characters/");
         assert_eq!(fs::read_to_string(campaign.join(BACKUP_DIR).join("aldric-char-old").join("envelope.txt")).unwrap(), "an SD-41 copy", "the old copy moves with it");
         assert!(backup(&campaign).join("bio.json").is_file());
+    }
+
+    #[test]
+    fn characters_backup_device_name_is_saved_and_keeps_the_id() {
+        let app = tempdir("device-name");
+        let before = device_identity(&app).unwrap();
+        let after = set_device_name(&app, "  Table laptop ").unwrap();
+        assert_eq!((after.id.as_str(), after.name.as_str()), (before.id.as_str(), "Table laptop"));
+        assert_eq!(device_identity(&app).unwrap(), after, "the next read, and so the next backup, carries the new name");
+    }
+
+    #[test]
+    fn characters_backup_device_name_refuses_blank() {
+        let app = tempdir("device-name-blank");
+        let before = device_identity(&app).unwrap();
+        assert!(set_device_name(&app, "   ").is_err());
+        assert_eq!(device_identity(&app).unwrap(), before, "a refused name changes nothing");
     }
 
     #[test]
