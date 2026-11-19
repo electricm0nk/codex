@@ -1,10 +1,12 @@
-import { useEffect, useRef, useState, type CSSProperties, type DragEvent, type HTMLAttributes, type KeyboardEvent } from 'react';
+import { useEffect, useRef, useState, type CSSProperties, type DragEvent, type HTMLAttributes, type KeyboardEvent, type MouseEvent, type ReactNode } from 'react';
+import type { HeldEquipmentDetailDto } from '../boundary/describeHeldEquipment';
 import { discardEquipmentCopy } from '../boundary/discardEquipmentCopy';
 import { activateEquipmentSet, createEquipmentSet, deleteEquipmentSet, renameEquipmentSet } from '../boundary/equipmentSets';
 import type { CopyKeyDto, LocationDto, PlacedEquipmentCopyDto } from '../boundary/listHeldEquipment';
 import { moveEquipmentCopy } from '../boundary/moveEquipmentCopy';
 import { renameEquipmentCopy } from '../boundary/renameEquipmentCopy';
 import { CustomizeCopyDialog, renameRequest, type CustomizeTarget } from './CustomizeCopyDialog';
+import { GearDetail } from './GearDetail';
 import type { EquipmentSetsSummaryDto } from '../boundary/loadSavedCharacterDetail';
 import { OverrideTag } from './OverrideTag';
 import {
@@ -77,6 +79,12 @@ export interface GearPanelsProps {
   onCustomizeName: (copy: CopyKeyDto, text: string) => void;
   /** Customize's Attach modifier: the Equipmods picker for this copy. */
   onCustomizeModifier: (target: CustomizeTarget) => void;
+  /** The selected row's id (`aria-selected`), whose detail panel shows under the tables. */
+  selectedId?: string | null;
+  /** A click on a row, outside its buttons, selects it. */
+  onSelect?: (row: GearRow) => void;
+  /** The selected row's detail panel (SD-42 `decisions.md §27.4`). */
+  detail?: ReactNode;
 }
 
 /** A "Move to" button and its keyboard-complete `role="menu"` (`decisions.md §14`). */
@@ -372,6 +380,15 @@ export function GearPanels(props: GearPanelsProps) {
     },
   });
   const tag = (row: GearRow) => (row.held.override ? <OverrideTag flag={row.held.override} /> : null);
+  // A row is selected by a click on it, not on one of its buttons, menus or forms.
+  const selectable = (row: GearRow) => ({
+    'aria-selected': props.selectedId === row.id,
+    onClick: (event: MouseEvent<HTMLElement>) => {
+      if (!(event.target as HTMLElement).closest('button, input, select, label, [role="menu"], [role="group"]')) {
+        props.onSelect?.(row);
+      }
+    },
+  });
 
   const treeItem = (item: GearTreeItem, depth: number) => {
     const at = `tree:${copyId(item.copy)}`;
@@ -459,7 +476,7 @@ export function GearPanels(props: GearPanelsProps) {
             .map((row) => {
               const at = `row:${row.id}`;
               return (
-                <div key={at} data-testid={`gear-row-${row.id}`}>
+                <div key={at} data-testid={`gear-row-${row.id}`} {...selectable(row)}>
                   {gearRow(row, at)}
                   {formAt(at)}
                 </div>
@@ -482,7 +499,7 @@ export function GearPanels(props: GearPanelsProps) {
                       table.rows.map((row) => {
                         const at = `row:${row.id}`;
                         return (
-                          <tr key={at} data-testid={`gear-row-${row.id}`}>
+                          <tr key={at} data-testid={`gear-row-${row.id}`} {...selectable(row)}>
                             <td>
                               {gearRow(row, at)}
                               {formAt(at)}
@@ -497,6 +514,7 @@ export function GearPanels(props: GearPanelsProps) {
             </div>
           ) : null}
           <p style={{ ...quiet, marginTop: '0.5rem' }}>{DROP_SELL_DISCARD_CAPTION}</p>
+          {props.detail}
           {customizing ? (
             <CustomizeCopyDialog
               key={copyId(customizing.copy)}
@@ -555,6 +573,8 @@ export interface GearScreenProps {
   onSell: (held: PlacedEquipmentCopyDto, quantity?: number, negotiatedGp?: number) => Promise<string | null>;
   /** Customize's Attach modifier: opens the Equipmods picker for this copy. */
   onPickModifier: (target: CustomizeTarget) => void;
+  /** Reads the detail panel's data for one held copy (`describe_held_equipment`). */
+  describe: (copy: CopyKeyDto) => Promise<HeldEquipmentDetailDto>;
 }
 
 /**
@@ -566,6 +586,29 @@ export function GearScreen(props: GearScreenProps) {
   const [loadError, setLoadError] = useState<string | null>(null);
   const [refusal, setRefusal] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
+  const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [detail, setDetail] = useState<{ id: string; dto: HeldEquipmentDetailDto } | { id: string; error: string } | null>(null);
+  const model = copies === null ? null : gearScreenModel(copies, props.context);
+  // A sold, discarded or regrouped row is no longer there to describe.
+  const selected = model?.rows.find((row) => row.id === selectedId) ?? null;
+
+  useEffect(() => {
+    if (!selected) {
+      setDetail(null);
+      return;
+    }
+    let current = true;
+    const id = selected.id;
+    props
+      .describe(selected.held.copies[0])
+      .then((dto) => current && setDetail({ id, dto }))
+      .catch((cause: unknown) => current && setDetail({ id, error: cause instanceof Error ? cause.message : String(cause) }));
+    return () => {
+      current = false;
+    };
+    // `describe` is a new closure each render; the row and the held list are what change it.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selected?.id, copies]);
 
   useEffect(() => {
     let current = true;
@@ -605,12 +648,24 @@ export function GearScreen(props: GearScreenProps) {
       </p>
     );
   }
-  if (copies === null) {
+  if (model === null) {
     return <p style={quiet}>Loading what this character holds.</p>;
   }
+  const shown = selected && detail?.id === selected.id ? detail : null;
   return (
     <GearPanels
-      model={gearScreenModel(copies, props.context)}
+      model={model}
+      selectedId={selected?.id ?? null}
+      onSelect={(row) => setSelectedId(row.id)}
+      detail={
+        shown === null ? null : 'dto' in shown ? (
+          <GearDetail detail={shown.dto} locationLabel={selected!.locationLabel} />
+        ) : (
+          <p role="alert" style={danger}>
+            {shown.error}
+          </p>
+        )
+      }
       armorClass={props.armorClass}
       carriedLbs={props.carriedLbs}
       sets={props.sets}

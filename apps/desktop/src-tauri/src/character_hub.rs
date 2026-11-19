@@ -1103,6 +1103,22 @@ pub(crate) fn map_explanations_dto(
         .collect()
 }
 
+/// One worn item's AC-block row on the wire (the sheet's `equipmentEffects.perItem`, and the gear
+/// detail panel's armor stats).
+fn map_resolved_equipment_effect_dto(effect: &codex::rules_core::equipment_effects::ResolvedEquipmentEffect) -> ResolvedEquipmentEffectDto {
+    ResolvedEquipmentEffectDto {
+        item_id: effect.item_id.clone(),
+        equipment_record_key: effect.equipment_record_key.clone(),
+        category: format!("{:?}", effect.category),
+        armor_class_bonus: effect.armor_class_bonus,
+        armor_class_enhancement: effect.armor_class_enhancement,
+        max_dex: effect.max_dex,
+        spell_failure: effect.spell_failure,
+        armor_check_penalty: effect.armor_check_penalty,
+        spell_resistance_bonus: effect.spell_resistance_bonus,
+    }
+}
+
 /// Wire form of `damage_total::DiceExpression`.
 #[derive(Debug, Clone, Copy, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -1503,17 +1519,7 @@ pub(crate) fn map_corpus_derived_dto(section: &CorpusDerivedSection, selections:
                 .equipment_effects
                 .per_item
                 .iter()
-                .map(|effect| ResolvedEquipmentEffectDto {
-                    item_id: effect.item_id.clone(),
-                    equipment_record_key: effect.equipment_record_key.clone(),
-                    category: format!("{:?}", effect.category),
-                    armor_class_bonus: effect.armor_class_bonus,
-                    armor_class_enhancement: effect.armor_class_enhancement,
-                    max_dex: effect.max_dex,
-                    spell_failure: effect.spell_failure,
-                    armor_check_penalty: effect.armor_check_penalty,
-                    spell_resistance_bonus: effect.spell_resistance_bonus,
-                })
+                .map(map_resolved_equipment_effect_dto)
                 .collect(),
             armor_class_delta: section.equipment_effects.armor_class_delta,
             armor_check_penalty_total: section.equipment_effects.armor_check_penalty_total,
@@ -2976,6 +2982,12 @@ fn sheet_skill_trait_modifier_rows(input: &CharacterInput) -> Vec<ExplanationDto
 pub(crate) fn load_saved_character_at_root(
     root: &Path,
 ) -> Result<LoadSavedCharacterResponse, String> {
+    load_saved_character_and_weapon_copies_at_root(root).map(|(sheet, _)| sheet)
+}
+
+/// [`load_saved_character_at_root`], and beside it the copy each `weapon_damage` row is (`None` for
+/// the Unarmed row), for the gear detail panel (SD-42 E4.10).
+fn load_saved_character_and_weapon_copies_at_root(root: &Path) -> Result<(LoadSavedCharacterResponse, Vec<Option<CopyKey>>), String> {
     let mut envelope = SavedCharacterStore::load(root).map_err(|err| err.message)?;
     build_character_ledger_on_first_load(root, &envelope.character_input);
     // Before anything computes: an old save gets its Default set and its bundle pieces (§8, §30).
@@ -3117,7 +3129,7 @@ pub(crate) fn load_saved_character_at_root(
     let ability_modifiers = snapshot.as_ref().map_or(corpus_receipt.base.ability_modifiers, |snapshot| snapshot.ability_modifiers);
     let selected_skill_modifiers = snapshot.as_ref().map(|snapshot| snapshot.skill.selected_modifier);
     push_skill_total_rows(&envelope.character_input, ability_modifiers, selected_skill_modifiers, &mut sheet);
-    Ok(sheet)
+    Ok((sheet, breakdowns.into_iter().map(|breakdown| breakdown.copy).collect()))
 }
 
 /// SD-40 E2.14: one `combat.weapon_damage_total.<weapon>` row per weapon in hand with dice, summed
@@ -6892,6 +6904,104 @@ pub struct RenameEquipmentCopyRequest {
 pub fn rename_equipment_copy(app: tauri::AppHandle, request: RenameEquipmentCopyRequest) -> Result<Vec<HeldEquipmentCopyDto>, String> {
     let root = resolve_character_root(&app, &request.character_id)?;
     rename_equipment_copy_at_root(&root, &request.copy, &request.name)
+}
+
+/// A container's own facts (SD-42 `decisions.md §27.4`), off its record.
+#[derive(Debug, Clone, Copy, PartialEq, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct ContainerStatsDto {
+    pub capacity: ContainerCapacityDto,
+    /// What the contents weigh toward the carried total, in percent: 0 for a Bag of Holding.
+    pub contents_weight_pct: u8,
+}
+
+/// Everything the gear detail panel shows of one held copy (SD-42 `decisions.md §27.4`): the record
+/// as the catalog serves it, the weapon row and the armor stats the sheet computes for it, its
+/// container facts, and the copy's own facts. `null` where the record states none, never 0.
+#[derive(Debug, Clone, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct HeldEquipmentDetailDto {
+    pub entry: crate::equipment_catalog::EquipmentCatalogEntryDto,
+    /// The sheet's Weapons row for this copy; `null` for a non-weapon and for a copy left behind,
+    /// which the sheet rolls no row for.
+    pub weapon: Option<WeaponDamageDto>,
+    pub armor: Option<ResolvedEquipmentEffectDto>,
+    pub container: Option<ContainerStatsDto>,
+    pub copy: HeldEquipmentCopyDto,
+}
+
+/// Describes the held stack `copy` is in; see [`HeldEquipmentDetailDto`]. Formats nothing and sums
+/// nothing: each value is the engine's, as the sheet and the held list already compute it.
+pub(crate) fn describe_held_equipment_at_root(root: &Path, copy: &CopyKey) -> Result<HeldEquipmentDetailDto, String> {
+    let row = list_held_equipment_stacks_at_root(root)?
+        .into_iter()
+        .find(|row| row.copies.contains(copy))
+        .ok_or_else(|| format!("'{}' cannot be described: this character does not hold that copy", copy.map_key()))?;
+    if let Some(id) = row.item_id.strip_prefix(CUSTOM_ITEM_PREFIX) {
+        let custom = custom_or_empty(root);
+        let record = custom.equipment.iter().find(|record| record.id == id).ok_or_else(|| format!("'{id}' is not a created item"))?;
+        return Ok(HeldEquipmentDetailDto {
+            entry: crate::equipment_catalog::EquipmentCatalogEntryDto {
+                key: row.item_id.clone(),
+                category: "Custom".to_owned(),
+                name: record.name.clone(),
+                cost_gp: record.price_gp,
+                weight_lbs: record.weight_lbs,
+                book: String::new(),
+                types: Vec::new(),
+                description: (!record.description.trim().is_empty()).then(|| record.description.clone()),
+                slot: row.slot,
+            },
+            weapon: None,
+            armor: None,
+            container: record.container_capacity_lbs.map(|lbs| ContainerStatsDto { capacity: ContainerCapacityDto::Pounds { lbs }, contents_weight_pct: 100 }),
+            copy: row,
+        });
+    }
+    let (sheet, weapon_copies) = load_saved_character_and_weapon_copies_at_root(root)?;
+    let weapon = weapon_copies.iter().position(|held| held.as_ref().is_some_and(|held| row.copies.contains(held))).map(|index| sheet.weapon_damage[index].clone());
+    let corpus = corpus_fixture_bundle();
+    let record = codex::rules_core::equipment_resolver::equipment_converted_resolve(&row.item_id, corpus);
+    let entry = crate::equipment_catalog::catalog_row(&row.item_id)
+        .or_else(|| crate::equipment_catalog::catalog_row(&record?.identity))
+        .cloned()
+        .unwrap_or_else(|| crate::equipment_catalog::EquipmentCatalogEntryDto {
+            key: row.item_id.clone(),
+            category: String::new(),
+            name: row.base_name.clone(),
+            cost_gp: record.and_then(|record| record.cost_gp),
+            weight_lbs: record.and_then(|record| record.weight_lbs),
+            book: String::new(),
+            types: Vec::new(),
+            description: None,
+            slot: row.slot,
+        });
+    let input = SavedCharacterStore::load(root).map_err(|err| err.message)?.character_input;
+    let selections = &input.chosen.equipment_selections;
+    let armor = selection_copy_keys(selections)
+        .iter()
+        .position(|key| row.copies.contains(key))
+        .and_then(|index| codex::rules_core::equipment_effects::compute_equipment_effects(std::slice::from_ref(&selections[index]), corpus).per_item.into_iter().next())
+        .filter(|effect| effect.armor_class_bonus.is_some() || effect.max_dex.is_some() || effect.armor_check_penalty.is_some() || effect.spell_failure.is_some())
+        .map(|effect| map_resolved_equipment_effect_dto(&effect));
+    let container = record
+        .filter(|record| record.is_container())
+        .map(|record| ContainerStatsDto { capacity: record.capacity().into(), contents_weight_pct: record.contents_weight_pct });
+    Ok(HeldEquipmentDetailDto { entry, weapon, armor, container, copy: row })
+}
+
+#[derive(Debug, Clone, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct DescribeHeldEquipmentRequest {
+    pub character_id: String,
+    pub copy: CopyKey,
+}
+
+/// The gear detail panel's data for one held copy; see [`describe_held_equipment_at_root`].
+#[tauri::command]
+pub fn describe_held_equipment(app: tauri::AppHandle, request: DescribeHeldEquipmentRequest) -> Result<HeldEquipmentDetailDto, String> {
+    let root = resolve_character_root(&app, &request.character_id)?;
+    describe_held_equipment_at_root(&root, &request.copy)
 }
 
 #[derive(Debug, Clone, Deserialize)]
@@ -23192,6 +23302,73 @@ mod tests {
         for dir in [&root, &campaign] {
             std::fs::remove_dir_all(dir).ok();
         }
+    }
+    // ----- SD-42 E4.10: the gear detail panel (operator DET-1, `decisions.md §27.4`) -----
+
+    /// A carried Longsword's detail: its record (a description), its weapon row as the sheet
+    /// computes it, no armor block, no container block, and the copy itself.
+    #[test]
+    fn describe_held_longsword_carries_weapon_stats_and_description() {
+        const SWORD: &str = "Longsword (Base)";
+        let root = sets_root("describe-held-longsword", &[(SWORD, ActiveState::SelectedInactive)]);
+        let detail = describe_held_equipment_at_root(&root, &sets_key(SWORD, 0)).expect("the sword is held");
+        std::fs::remove_dir_all(&root).ok();
+        assert_eq!(detail.entry.key, SWORD);
+        assert!(detail.entry.description.as_deref().is_some_and(|words| !words.is_empty()), "{:?}", detail.entry.description);
+        let weapon = detail.weapon.as_ref().expect("a longsword has weapon stats");
+        let dice = weapon.base_dice.expect("the record's die");
+        assert_eq!((dice.count, dice.die_size, weapon.critical_threat_range, weapon.critical_multiplier), (1, 8, Some([19, 20]), Some(2)));
+        assert!(!weapon.in_hand, "carried, as the sheet's row says");
+        assert!(detail.armor.is_none() && detail.container.is_none(), "{detail:?}");
+        assert_eq!((detail.copy.item_id.as_str(), detail.copy.quantity), (SWORD, 1));
+    }
+
+    /// A Chain Shirt's detail carries the engine's armor stats and no weapon row.
+    #[test]
+    fn describe_held_chain_shirt_carries_armor_stats() {
+        const SHIRT: &str = "Chain Shirt (Base)";
+        let root = sets_root("describe-held-chain-shirt", &[(SHIRT, ActiveState::SelectedInactive)]);
+        let detail = describe_held_equipment_at_root(&root, &sets_key(SHIRT, 0)).expect("the shirt is held");
+        std::fs::remove_dir_all(&root).ok();
+        let armor = detail.armor.as_ref().expect("armor stats");
+        assert_eq!((armor.armor_class_bonus, armor.max_dex, armor.armor_check_penalty, armor.spell_failure), (Some(4), Some(4), Some(-2), Some(20.0)));
+        assert!(detail.weapon.is_none(), "{:?}", detail.weapon);
+    }
+
+    /// A Bag of Holding (Type I)'s detail states its 250 lb and that its contents weigh nothing.
+    #[test]
+    fn describe_held_bag_of_holding_carries_capacity_and_weightless() {
+        const BAG: &str = "Bag of Holding (Type I)";
+        let root = sets_root("describe-held-bag", &[(BAG, ActiveState::SelectedInactive)]);
+        let detail = describe_held_equipment_at_root(&root, &sets_key(BAG, 0)).expect("the bag is held");
+        std::fs::remove_dir_all(&root).ok();
+        let container = detail.container.expect("a container");
+        assert_eq!((container.capacity, container.contents_weight_pct), (ContainerCapacityDto::Pounds { lbs: 250.0 }, 0));
+        assert_eq!(serde_json::to_value(container).unwrap()["contentsWeightPct"], 0);
+    }
+
+    /// A Create item that states no price, no weight and no words reads `null` for each, never 0,
+    /// and carries no weapon, armor or container block.
+    #[test]
+    fn describe_held_unstated_values_are_null_never_zero() {
+        let root = sets_root("describe-held-unstated", &[]);
+        custom_items_saved(&root, vec![custom_item("trinket", "Lucky Trinket", None, Vec::new())]);
+        let copy = crate::character_custom::custom_copy(&custom_item("trinket", "Lucky Trinket", None, Vec::new()));
+        let detail = describe_held_equipment_at_root(&root, &copy).expect("the trinket is held");
+        std::fs::remove_dir_all(&root).ok();
+        assert_eq!((detail.entry.name.as_str(), detail.entry.cost_gp, detail.entry.weight_lbs), ("Lucky Trinket", None, None));
+        assert!(detail.entry.description.is_none() && detail.weapon.is_none() && detail.armor.is_none() && detail.container.is_none(), "{detail:?}");
+        let value = serde_json::to_value(&detail).unwrap();
+        assert!(value["entry"]["costGp"].is_null() && value["entry"]["weightLbs"].is_null() && value["weapon"].is_null(), "{value}");
+    }
+
+    /// A copy the character does not hold is an error, with words.
+    #[test]
+    fn describe_held_unknown_copy_is_an_error() {
+        let root = sets_root("describe-held-unknown", &[("Sack", ActiveState::SelectedInactive)]);
+        let missing = describe_held_equipment_at_root(&root, &sets_key("Sack", 3));
+        std::fs::remove_dir_all(&root).ok();
+        assert!(missing.unwrap_err().contains("does not hold"));
     }
 }
 

@@ -109,6 +109,7 @@ import { createCustomItem } from '../boundary/createCustomItem';
 import { GearScreen } from './GearScreen';
 import type { CustomizeTarget } from './CustomizeCopyDialog';
 import { OverrideTag, classLevelsAdmitted, flagsOf } from './OverrideTag';
+import { describeHeldEquipment } from '../boundary/describeHeldEquipment';
 import { listHeldEquipment, sellableCopies, type HeldEquipmentCopyDto, type PlacedEquipmentCopyDto } from '../boundary/listHeldEquipment';
 import { listMarket, type MarketCategory } from '../boundary/listMarket';
 import { listWeaponTargets } from '../boundary/listWeaponTargets';
@@ -1633,6 +1634,7 @@ function GearTab(props: {
         onChange={props.onGearChange}
         onSell={props.onGearSell}
         onPickModifier={props.onPickModifier}
+        describe={(copy) => describeHeldEquipment({ characterId: props.characterId, copy })}
       />
       {unresolved.length > 0 ? <UnresolvedNotice ids={unresolved} kind="item" /> : null}
     </div>
