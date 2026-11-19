@@ -197,8 +197,9 @@ fn main() {
         .plugin(tauri_plugin_opener::init())
         .plugin(tauri_plugin_dialog::init())
         .setup(|app| {
-            // A Linux AppImage started from anywhere but ~/Codex/Codex.AppImage offers to install
-            // itself there (once per file); an installed one refreshes its menu entry and icon.
+            // A Linux AppImage writes its menu entry and icon (naming the running file) on every
+            // start, then, started from anywhere but ~/Codex/Codex.AppImage, offers to install
+            // itself there (once per file).
             // Runs before the installed-state seed below. Not an AppImage: does nothing.
             update::self_install::run_at_startup(app.handle(), &app.package_info().version.to_string());
 
