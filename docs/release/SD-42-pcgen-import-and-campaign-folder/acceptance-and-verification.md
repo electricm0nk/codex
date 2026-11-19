@@ -119,7 +119,7 @@ gh run list -w linux-build-check.yml -b tranche-22 -L 1 --json conclusion,url   
 ```bash
 cd docs/release/SD-42-pcgen-import-and-campaign-folder
 test -s kanban.md || { echo NO_KANBAN; exit 2; }
-awk -F'|' '$2 ~ /^ (C|E)[0-9]/ { n++ } END { if (n != 55) print "ROW_COUNT " n }' kanban.md   # 55: 37 + E1.8 + E1.9 + E2.14 + E2.12, E2.13, E4.6 (decisions.md §26) + E4.7–E4.11 (decisions.md §27) + E4.12 (decisions.md §28) + E1.10, E4.13 (discovered by E1.7) + E4.14 (discovered by E1.10) + E2.15 (discovered by E2.10) + E4.15 (discovered by E4.2) + E4.16 (discovered by E4.9)
+awk -F'|' '$2 ~ /^ (C|E)[0-9]/ { n++ } END { if (n != 56) print "ROW_COUNT " n }' kanban.md   # 56: 37 + E1.8 + E1.9 + E2.14 + E2.12, E2.13, E4.6 (decisions.md §26) + the later discovered and operator cards (kanban.md's count line) + E4.7–E4.11 (decisions.md §27) + E4.12 (decisions.md §28) + E1.10, E4.13 (discovered by E1.7) + E4.14 (discovered by E1.10) + E2.15 (discovered by E2.10) + E4.15 (discovered by E4.2) + E4.16 (discovered by E4.9)
 awk -F'|' '$2 ~ /^ (C|E)[0-9]/ && $2 !~ /^ E5\.[2-4] / && $5 !~ /^ complete *$/ { print $2 "|" $5 }' kanban.md
 grep -c '^- \(Import ([^)]*)\|Campaign Manager ([^)]*)\|Editor\) — usable: yes' artifacts/epic_5/E5.G_cycle_receipt.md   # 3 (anchored; the receipt's own instructions must not match)
 test -s artifacts/epic_4/E4.5_cycle_receipt.md && grep -c 'copies_emitted' artifacts/epic_4/E4.5_cycle_receipt.md   # ≥ 1: the local proof run's counts are in the receipt (Q9)
