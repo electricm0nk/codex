@@ -1,0 +1,7 @@
+R21 RED on the base 95081e4087 (E4.4's own run; the dispatch carried none):
+$ cd apps/desktop && RUN_DESKTOP_AGENT=sd42-E4.4-r2 node scripts/ui-smoke/run.mjs --only import-pcg-sample-report,sheet-gear-customize,main-menu-first --out <scratch>/red
+Error: --only import-pcg-sample-report: no such row id in spec.json
+EXIT=1
+Base run of the 8 old campaign rows (same base, --out <scratch>/base), stopped after 2 rows:
+FAIL  landing-campaign-gate  -- target not found: 'Google Drive (no element named 'Google Drive')' at setup settings-tab-google-drive-disconnect step 3/5 (click "Google Drive")
+FAIL  campaign-manager-list  -- target not found: 'Google Drive (no element named 'Google Drive')' at setup settings-tab-google-drive-save step 3/9 (click "Google Drive")
