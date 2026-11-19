@@ -38,6 +38,17 @@ function placesOf(slot: BodySlotDto): number {
   return slot === 'ring' ? 2 : 1;
 }
 
+const HANDS: ReadonlyArray<BodySlotDto> = ['wield_main', 'wield_off', 'wield_two_handed'];
+
+/**
+ * The slots a copy whose own slot is `own` may go in: the engine's `body_slots::slot_kinds_allowed`
+ * (SD-42 `decisions.md §27.2`), which refuses the same moves at the write. Its own slot; a wielded
+ * copy any hand; a slotless copy none.
+ */
+export function slotKindsAllowed(own: BodySlotDto): ReadonlyArray<BodySlotDto> {
+  return HANDS.includes(own) ? HANDS : own === 'none' ? [] : [own];
+}
+
 export type GearFilter = 'all' | 'equipped' | 'notEquipped';
 
 export interface GearRow {
@@ -243,7 +254,7 @@ export function gearScreenModel(held: PlacedEquipmentCopyDto[], context: GearCon
   carried.items.push(...rows.filter((row) => !placed.has(row)).flatMap((row) => nodesOf(row, new Set())));
   tree.push(carried, notCarried);
 
-  const warnings = ignore
+  const capacityWarnings = ignore
     ? []
     : context.containerLoads
         .filter((load) => load.over && load.capacity.kind === 'pounds')
@@ -251,6 +262,9 @@ export function gearScreenModel(held: PlacedEquipmentCopyDto[], context: GearCon
           copy: load.copy,
           text: `${containerName(load.copy)} holds ${lb(load.contentsLbs)} lb, over its ${lb(load.capacity.kind === 'pounds' ? load.capacity.lbs : 0)} lb.`,
         }));
+  // A copy saved in a slot not of its kind stays there; the engine words the warning (§27.2).
+  const slotWarnings = rows.flatMap((row) => (row.held.slotWarning ? [{ copy: row.held.copies[0], text: `${row.label} is ${row.held.slotWarning}.` }] : []));
+  const warnings = [...capacityWarnings, ...slotWarnings];
 
   return { rows, tree, warnings, capacityOverride: ignore, slotOverride: context.ignoreSlotLimits === true, containerLoads: context.containerLoads };
 }
@@ -265,7 +279,7 @@ export function filterGearRows(rows: GearRow[], filter: GearFilter): GearRow[] {
   return filter === 'all' ? rows : rows.filter((row) => equipped(row) === (filter === 'equipped'));
 }
 
-/** Every place a row can go: free slots (any slot under the slot override), Equipped, Carried, Not Carried, every container not it or in it. */
+/** Every place a row can go: free slots of the row's own kind (any slot under the slot override), Equipped, Carried, Not Carried, every container not it or in it. */
 export function moveTargets(model: GearModel, row: GearRow): MoveTarget[] {
   const own = row.held.location;
   const inside = new Set(row.held.copies.map(copyId));
@@ -291,7 +305,7 @@ export function moveTargets(model: GearModel, row: GearRow): MoveTarget[] {
     if (isOwn) {
       continue;
     }
-    if (location.kind === 'slot' && !model.slotOverride && copiesIn(section.items) >= placesOf(location.slot)) {
+    if (location.kind === 'slot' && !model.slotOverride && (copiesIn(section.items) >= placesOf(location.slot) || !slotKindsAllowed(row.held.slot).includes(location.slot))) {
       continue;
     }
     targets.push({ id: section.id, label: section.label, location });
@@ -343,7 +357,7 @@ export const DRAG_FORMAT = 'application/x-codex-gear-row';
 /**
  * Where a drop of the dragged row onto `targetId` (a tree section's id or a Move to target's
  * `inside-<copy>`) moves it: the same location the Move to menu would, or null where the menu offers
- * nothing (itself, inside itself, a full slot without the slot override, a non-container, its own place) (`decisions.md §14`).
+ * nothing (itself, inside itself, a full slot or one not of its kind without the slot override, a non-container, its own place) (`decisions.md §14`).
  */
 export function dropTarget(dataTransfer: Pick<DataTransfer, 'getData'>, targetId: string, model: GearModel): LocationDto | null {
   const row = model.rows.find((candidate) => candidate.id === dataTransfer.getData(DRAG_FORMAT));

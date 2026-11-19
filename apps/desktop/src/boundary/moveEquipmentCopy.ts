@@ -10,7 +10,9 @@ import type { CopyKeyDto, LocationDto } from './listHeldEquipment';
  * whole stack `copy` is in) to `location`, projects the active set onto the saved character,
  * recomputes via the real rules-core engine, and re-saves. Part of a stack splits: the moved pieces
  * join a stack of the same item at `location`, or start one. Drop is a move to `notCarried`.
- * Comes back `Blocked`, nothing saved, for a full slot (`equipment.slot_taken`), a target that is
+ * Comes back `Blocked`, nothing saved, for a full slot (`equipment.slot_taken`), a slot not of the
+ * copy's own kind (`equipment.wrong_slot`, "Backpack cannot go in the Shield slot: it is worn in no
+ * slot"; both lifted by "Ignore body slot limits"), a target that is
  * not a container (`equipment.not_a_container`) or one inside the moved copy
  * (`equipment.container_cycle`).
  */

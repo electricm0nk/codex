@@ -83,6 +83,8 @@ export interface PlacedEquipmentCopyDto extends HeldEquipmentCopyDto {
   weightOverrideLbs?: number;
   /** One unit's price in copper its file states; Sell lists the copy at it. */
   costOverrideCopper?: number;
+  /** Saved in a slot not of its kind (`"in the Shield slot, a Head item"`); absent when it is not. */
+  slotWarning?: string;
 }
 
 /** What the Market can buy back: a custom item is the GM's, and has no price. */

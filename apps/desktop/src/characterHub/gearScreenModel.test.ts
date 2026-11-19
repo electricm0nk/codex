@@ -1,6 +1,6 @@
 import { createElement } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
-import type { CopyKeyDto, LocationDto, PlacedEquipmentCopyDto } from '../boundary/listHeldEquipment';
+import type { BodySlotDto, CopyKeyDto, LocationDto, PlacedEquipmentCopyDto } from '../boundary/listHeldEquipment';
 import type { ContainerLoadDto } from '../boundary/loadSavedCharacterDetail';
 import { assert, assertEqual } from '../testSupport/asserts';
 import { GearPanels } from './GearScreen';
@@ -13,6 +13,7 @@ import {
   menuKeyStep,
   moveTargets,
   parseQuantity,
+  slotKindsAllowed,
   quantityPrompt,
   stackLabel,
   type GearRow,
@@ -23,13 +24,14 @@ function key(itemId: string, ordinal = 0, bonus = 0): CopyKeyDto {
   return { itemId, bonus, ordinal };
 }
 
-function held(name: string, location: LocationDto, options: { itemId?: string; bonus?: number; copies?: CopyKeyDto[]; quantity?: number; baseQuantity?: number } = {}): PlacedEquipmentCopyDto {
+function held(name: string, location: LocationDto, options: { itemId?: string; bonus?: number; copies?: CopyKeyDto[]; quantity?: number; baseQuantity?: number; slot?: BodySlotDto; slotWarning?: string } = {}): PlacedEquipmentCopyDto {
   const itemId = options.itemId ?? `item:${name.toLowerCase().replace(/[^a-z]+/g, '_')}`;
   const bonus = options.bonus ?? 0;
   const copies = options.copies ?? [key(itemId, 0, bonus)];
   const activeState = location.kind === 'slot' || location.kind === 'equipped' ? 'EquippedActive' : location.kind === 'notCarried' ? 'Absent' : 'SelectedInactive';
-  const slot = location.kind === 'slot' ? location.slot : 'none';
-  return { itemId, name, bonus, activeState, slot, location, ordinal: copies[0].ordinal, quantity: options.quantity ?? copies.length, copies, baseQuantity: options.baseQuantity ?? 1 };
+  const slot = options.slot ?? (location.kind === 'slot' ? location.slot : 'none');
+  const row: PlacedEquipmentCopyDto = { itemId, name, bonus, activeState, slot, location, ordinal: copies[0].ordinal, quantity: options.quantity ?? copies.length, copies, baseQuantity: options.baseQuantity ?? 1 };
+  return options.slotWarning ? { ...row, slotWarning: options.slotWarning } : row;
 }
 
 const BACKPACK = key('item:backpack');
@@ -43,8 +45,8 @@ const HELD: PlacedEquipmentCopyDto[] = [
   held('Belt Pouch', { kind: 'inside', container: BACKPACK }),
   held('Trail Rations', { kind: 'inside', container: POUCH }, { copies: [key('item:trail_rations', 0), key('item:trail_rations', 1)], quantity: 2 }),
   held('Arrows (20)', { kind: 'inside', container: BACKPACK }, { itemId: 'item:arrows', quantity: 40, baseQuantity: 20 }),
-  held('Dagger', { kind: 'carried' }),
-  held('Shield', { kind: 'notCarried' }, { itemId: 'item:heavy_steel_shield' }),
+  held('Dagger', { kind: 'carried' }, { slot: 'wield_main' }),
+  held('Shield', { kind: 'notCarried' }, { itemId: 'item:heavy_steel_shield', slot: 'shield' }),
 ];
 
 const LOADS: ContainerLoadDto[] = [
@@ -105,7 +107,8 @@ assert(pouchTargets.includes('carried'), 'targets: out of the container to Carri
 assert(!daggerTargets.includes('slot-wield_main'), 'targets: a full slot is not offered');
 assert(daggerTargets.includes('slot-wield_off'), 'targets: a free slot is');
 assertEqual(section('slot-ring').places, '1 of 2', 'ring: two places, one taken');
-assert(daggerTargets.includes('slot-ring'), 'ring: one ring in, the second place is offered');
+const spareRing = gearScreenModel([...HELD, held('Ring of Sustenance', { kind: 'carried' }, { slot: 'ring' })], { perItem: [], containerLoads: [] });
+assert(moveTargets(spareRing, spareRing.rows.find((candidate) => candidate.held.name === 'Ring of Sustenance')!).some((target) => target.id === 'slot-ring'), 'ring: one ring in, the second place is offered');
 const twoRings = gearScreenModel([...HELD, held('Ring of Sustenance', { kind: 'slot', slot: 'ring' })], { perItem: [], containerLoads: [] });
 assertEqual(twoRings.tree.find((candidate) => candidate.id === 'slot-ring')!.places, '2 of 2', 'ring: two rings fill it');
 assert(!moveTargets(twoRings, twoRings.rows.find((candidate) => candidate.held.name === 'Dagger')!).some((target) => target.id === 'slot-ring'), 'ring: full at two');
@@ -301,4 +304,22 @@ assert(nestHtml.includes('>Empty<'), 'view: an empty container reads Empty');
 const topLevel = nestHtml.slice(0, nestHtml.indexOf('data-testid="gear-container-'));
 assert(topLevel.includes('gear-row-item:dagger-0-0') && !topLevel.includes('gear-row-item:chalk-0-0'), 'view: the top level keeps only rows not inside a container');
 
-console.log('gearScreenModel.test.ts: 17 cases passed');
+// 18. Slot kinds (SD-42 E4.8, operator SLOT-1, `decisions.md §27.2`): a copy is offered only a slot of its own kind.
+const slotIds = (targets: { id: string }[]) => targets.map((target) => target.id).filter((id) => id.startsWith('slot-'));
+assertEqual(slotIds(moveTargets(model, row('Backpack'))).join(', '), '', 'slot kinds: a backpack is offered no slot section');
+const shieldTargets = slotIds(moveTargets(model, row('Shield')));
+assert(shieldTargets.includes('slot-shield') && !shieldTargets.includes('slot-head'), 'slot kinds: a shield is offered the Shield slot and not the Head');
+assertEqual(shieldTargets.join(', '), 'slot-shield', 'slot kinds: a shield is offered only the Shield slot');
+assertEqual(daggerTargets.filter((id) => id.startsWith('slot-')).join(', '), 'slot-wield_off, slot-wield_two_handed', 'slot kinds: a dagger is offered the free hands of the wield family');
+assertEqual(slotKindsAllowed('wield_off').join(', '), 'wield_main, wield_off, wield_two_handed', 'slot kinds: the hands are one family');
+const freeSlots = overridden.tree.filter((candidate) => candidate.location.kind === 'slot').map((candidate) => candidate.id);
+assertEqual(slotIds(moveTargets(overridden, overridden.rows.find((candidate) => candidate.held.name === 'Backpack')!)).join(', '), freeSlots.join(', '), 'slot kinds: under the slot override every slot is offered');
+assertEqual(dropTarget(dragging('item:backpack-0-0'), 'slot-shield', model), null, 'slot kinds: drop is null where the menu offers nothing');
+assertEqual(dropTarget(dragging('item:heavy_steel_shield-0-0'), 'slot-head', model), null, 'slot kinds: a shield dropped on Head goes nowhere');
+
+// 19. A copy saved in a wrong slot loads where it is and its row carries the engine's warning.
+const saved = gearScreenModel([held('Hat of Disguise', { kind: 'slot', slot: 'shield' }, { slot: 'head', slotWarning: 'in the Shield slot, a Head item' })], { perItem: [], containerLoads: [], ignoreContainerCapacity: true });
+assertEqual(names(saved.tree.find((candidate) => candidate.id === 'slot-shield')!.items), 'Hat of Disguise', 'saved wrong slot: it stays in the Shield slot');
+assertEqual(saved.warnings.map((warning) => warning.text).join(' | '), 'Hat of Disguise is in the Shield slot, a Head item.', 'saved wrong slot: the row carries the warning');
+
+console.log('gearScreenModel.test.ts: 19 cases passed');

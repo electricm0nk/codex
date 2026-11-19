@@ -5623,6 +5623,10 @@ pub struct HeldEquipmentCopyDto {
     /// One unit's price in copper the copy's file states; Sell lists the copy at it.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub cost_override_copper: Option<u64>,
+    /// A copy saved in a slot not of its kind (`"in the Shield slot, a Head item"`, SD-42
+    /// `decisions.md §27.2`): it loads where it is, and the row says so until it is moved.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub slot_warning: Option<String>,
 }
 
 #[derive(Debug, Clone, Deserialize)]
@@ -5810,6 +5814,11 @@ fn placed_in(mut rows: Vec<HeldEquipmentCopyDto>, sets: &EquipmentSets) -> Vec<H
             row.weight_override_lbs = facts.weight_override_lbs;
             row.cost_override_copper = facts.cost_override_copper;
         }
+        if let Location::Slot { slot } = row.location {
+            if row.override_flag != Some(OverrideFlag::IgnoreSlotLimits) {
+                row.slot_warning = codex::rules_core::body_slots::wrong_slot_warning(row.slot, slot);
+            }
+        }
     }
     rows
 }
@@ -5858,6 +5867,7 @@ fn held_copy_rows(root: &Path, input: &CharacterInput) -> Result<Vec<HeldEquipme
                 damage_override: None,
                 weight_override_lbs: None,
                 cost_override_copper: None,
+                slot_warning: None,
             }
         })
         .collect();
@@ -5888,6 +5898,7 @@ fn held_copy_rows(root: &Path, input: &CharacterInput) -> Result<Vec<HeldEquipme
             damage_override: None,
             weight_override_lbs: None,
             cost_override_copper: None,
+            slot_warning: None,
         }
     }));
     tag_admitted_copies(&mut rows, &admitted_records_at_root(root, input));
@@ -6406,6 +6417,15 @@ fn move_copies_at_root(
         }
     }
     let mut wear_flags = Vec::new();
+    // Any slot target, worn or carried, stock or created: only a slot of the copy's own kind (§27.2).
+    if let Location::Slot { slot } = location {
+        if let Some(message) = codex::rules_core::body_slots::wrong_slot_refusal(&source.name, source.slot, slot) {
+            if !custom_or_empty(root).overrides.ignore_slot_limits {
+                return Ok(refusal("equipment.wrong_slot", message));
+            }
+            wear_flags.push(OverrideFlag::IgnoreSlotLimits);
+        }
+    }
     let putting_on = matches!(location, Location::Slot { .. } | Location::Equipped) && source.active_state != ActiveStateDto::EquippedActive;
     if putting_on && !source.item_id.starts_with(CUSTOM_ITEM_PREFIX) {
         let slot = match location {
@@ -6414,7 +6434,13 @@ fn move_copies_at_root(
         };
         match wear_check_in(root, input, &source.item_id, slot)? {
             Err((id, message)) => return Ok(refusal(id, message)),
-            Ok(flags) => wear_flags = flags,
+            Ok(flags) => {
+                for flag in flags {
+                    if !wear_flags.contains(&flag) {
+                        wear_flags.push(flag);
+                    }
+                }
+            }
         }
     }
 
@@ -22230,6 +22256,94 @@ mod tests {
         assert!(message.contains("is taken by Chain Shirt"), "{message}");
         assert_eq!(held_selections(&root), before);
         std::fs::remove_dir_all(&dir).ok();
+    }
+
+    // ----- SD-42 E4.8: slot kinds (operator SLOT-1, `decisions.md §27.2`) -----
+
+    fn slot_kind_row(root: &Path, item_id: &str) -> HeldEquipmentCopyDto {
+        list_held_equipment_at_root(root).unwrap().into_iter().find(|row| row.item_id == item_id).expect("the held row")
+    }
+
+    /// A carried Backpack moved to the Shield slot is refused with a reason a player reads, and
+    /// nothing is saved.
+    #[test]
+    fn slot_kind_backpack_refused_the_shield_slot_with_a_readable_reason() {
+        let root = sets_root("slot-kind-backpack", &[("Backpack", ActiveState::SelectedInactive)]);
+        list_held_equipment_at_root(&root).unwrap();
+        let file = root.join(equipment_sets::EQUIPMENT_SETS_FILE);
+        let before = (std::fs::read(&file).unwrap(), held_selections(&root));
+        let (id, message) = move_refused(&root, &sets_key("Backpack", 0), Location::Slot { slot: BodySlot::Shield });
+        assert_eq!((id.as_str(), message.as_str()), ("equipment.wrong_slot", "Backpack cannot go in the Shield slot: it is worn in no slot"));
+        assert_eq!((std::fs::read(&file).unwrap(), held_selections(&root)), before, "a refusal writes nothing");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// A Heavy Steel Shield still takes the Shield slot, and the AC row moves (the SD-41 shape).
+    #[test]
+    fn slot_kind_shield_takes_the_shield_slot() {
+        const SHIELD: &str = "Heavy Steel Shield (Base)";
+        let (dir, root) = enhancement_rows_aldric("slot-kind-shield");
+        worn_vs_carried_hold(&root, SHIELD, ActiveState::SelectedInactive);
+        let (ac, _) = ac_and_shield(&root);
+        let copy = sets_key(SHIELD, 0);
+        move_saved(&root, &copy, Location::Slot { slot: BodySlot::Shield }, None);
+        assert_eq!(ac_and_shield(&root), (ac + 2, 2));
+        assert_eq!(active_location(&root, &copy), Location::Slot { slot: BodySlot::Shield });
+        assert_eq!(slot_kind_row(&root, SHIELD).slot_warning, None);
+        std::fs::remove_dir_all(&dir).ok();
+    }
+
+    /// A worn Cloak of Resistance moved from Shoulders to Head is refused: a worn copy changing slot
+    /// is checked too, and stays where it was.
+    #[test]
+    fn slot_kind_worn_copy_moved_to_a_wrong_slot_is_refused() {
+        const CLOAK: &str = "Cloak of Resistance +1";
+        let root = sets_root("slot-kind-cloak", &[(CLOAK, ActiveState::EquippedActive)]);
+        let copy = sets_key(CLOAK, 0);
+        assert_eq!(slot_kind_row(&root, CLOAK).location, Location::Slot { slot: BodySlot::Shoulders });
+        let (id, message) = move_refused(&root, &copy, Location::Slot { slot: BodySlot::Head });
+        assert_eq!(id, "equipment.wrong_slot");
+        assert!(message.ends_with("cannot go in the Head slot: it is a Shoulders item"), "{message}");
+        assert_eq!(slot_kind_row(&root, CLOAK).location, Location::Slot { slot: BodySlot::Shoulders });
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// With "Ignore body slot limits" the Backpack goes in the Shield slot, the flag is recorded on
+    /// the copy, and the row carries no warning.
+    #[test]
+    fn slot_kind_override_admits_anything_and_records_the_flag() {
+        let root = sets_root("slot-kind-override", &[("Backpack", ActiveState::SelectedInactive)]);
+        overrides_set(&root, |flags| flags.ignore_slot_limits = true);
+        let copy = sets_key("Backpack", 0);
+        move_saved(&root, &copy, Location::Slot { slot: BodySlot::Shield }, None);
+        assert_eq!(active_location(&root, &copy), Location::Slot { slot: BodySlot::Shield });
+        assert_eq!(admitted_tag_on_copy(&root, "Backpack"), [Some(OverrideFlag::IgnoreSlotLimits)]);
+        assert_eq!(slot_kind_row(&root, "Backpack").slot_warning, None);
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// A hand-written `equipment_sets.json` with a Backpack in the Shield slot (an older save, or a
+    /// PCGen file that put it there) loads unchanged: the held list shows it worn there, the row
+    /// carries the warning, and the load rewrites nothing.
+    #[test]
+    fn slot_kind_saved_wrong_slot_loads_with_a_warning_and_moves_nothing() {
+        let root = sets_root("slot-kind-saved", &[("Backpack", ActiveState::EquippedActive)]);
+        list_held_equipment_at_root(&root).unwrap();
+        let copy = sets_key("Backpack", 0);
+        let mut sets = equipment_sets::load(&root).unwrap().expect("a sets file");
+        place(active_set_mut(&mut sets), &copy, Location::Slot { slot: BodySlot::Shield });
+        save_sets(&root, &sets).unwrap();
+        let file = root.join(equipment_sets::EQUIPMENT_SETS_FILE);
+        let before = (std::fs::read(&file).unwrap(), held_selections(&root));
+        load_saved_character_at_root(&root).expect("the save loads");
+        let row = list_held_equipment_stacks_at_root(&root).unwrap().into_iter().find(|row| row.item_id == "Backpack").unwrap();
+        assert_eq!(row.location, Location::Slot { slot: BodySlot::Shield });
+        assert_eq!(row.slot_warning.as_deref(), Some("in the Shield slot, worn in no slot"));
+        assert_eq!(serde_json::to_value(&row).unwrap()["slotWarning"], "in the Shield slot, worn in no slot");
+        assert_eq!((std::fs::read(&file).unwrap(), held_selections(&root)), before, "nothing moves on load");
+        move_saved(&root, &copy, Location::Carried, None);
+        assert_eq!(slot_kind_row(&root, "Backpack").slot_warning, None, "moved, the warning goes");
+        std::fs::remove_dir_all(&root).ok();
     }
 
     /// Create (a copy of the active set), rename, activate (projects), delete; the last set stays.
