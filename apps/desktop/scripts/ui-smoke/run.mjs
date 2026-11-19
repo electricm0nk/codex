@@ -24,6 +24,7 @@
 // agent; never 'default').
 import { spawnSync } from 'node:child_process';
 import { existsSync, mkdirSync, readFileSync, renameSync, rmSync, writeFileSync } from 'node:fs';
+import { homedir } from 'node:os';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -38,6 +39,8 @@ import {
   fingerprintStore,
   isolatedXdg,
   launchEnv,
+  oracleSkipReason,
+  pcgenRepoDirFor,
   readProcessEnv,
   removeDataRoot,
 } from './lib/appDataIsolation.mjs';
@@ -74,7 +77,9 @@ const GLOBAL_FORBID = [
 // Names that, when clicked in sequence, are expected to walk any screen back
 // to the landing page. Reset-to-landing tries each, in order, against
 // whatever is currently on screen, re-reading the probe between clicks.
-const RESET_CLICK_NAMES = ['Back', 'Cancel', 'Close', '✕', '×', 'Close settings', 'Close character'];
+// 'Back to console' leaves the DM toolkit's Encounter builder (no plain Back there), whose console's
+// Back reaches the landing page.
+const RESET_CLICK_NAMES = ['Back', 'Cancel', 'Close', '✕', '×', 'Close settings', 'Close character', 'Back to console'];
 // The candidates reset-to-landing clicks specifically to dismiss an OPEN
 // dialog/modal (see resetToLanding's own comment) -- same idea as
 // RESET_CLICK_NAMES but tried only after Escape, and only while the probe
@@ -325,6 +330,37 @@ function clickByNameXdotool(name) {
   }
 }
 
+/**
+ * An OS-level click at `offset` ({x, y}, CSS px) from the top-left of the named target's rect: for a
+ * spot no control names, such as a point on a map image below its "Add map…" button (a map pin).
+ */
+function clickAtOffset(name, offset) {
+  const deadline = Date.now() + CLICK_TARGET_WAIT_MS;
+  let target;
+  for (;;) {
+    target = findTarget(latestSnapshot().snapshot, name);
+    if (target || Date.now() >= deadline) {
+      break;
+    }
+    sleepMs(150);
+  }
+  if (!target) {
+    throw new TargetNotFoundError(name);
+  }
+  const x = Math.round(target.rect.x + offset.x);
+  const y = Math.round(target.rect.y + offset.y);
+  const before = latestSnapshot().snapshot?.bodyText ?? '';
+  driver.click(x, y);
+  // The swallowed-first-click clickByNameXdotool documents: both spots this serves change the screen's
+  // text when the click lands (a pin dialog, a detail panel), so the text unchanged after 2 s means
+  // the click was swallowed, and it is sent once more. (A fresh probe timestamp is no proof here: a
+  // report from any other mutation would hide a swallowed click.)
+  sleepMs(2000);
+  if ((latestSnapshot().snapshot?.bodyText ?? '') === before) {
+    driver.click(x, y);
+  }
+}
+
 // `by: 'label'` matches the aria-label or the enclosing <label> (uiProbe.ts's labelOf), the
 // channel only: xdotool reads the probe's names.
 function clickByName(name, index, by) {
@@ -419,13 +455,16 @@ function pressKey(key) {
 // channel only reaches the webview. `relativePath` is from the repo root (an absolute path is kept
 // as given). GTK's chooser takes a typed path after ctrl+L. An open dialog's title starts "Open"; a
 // save dialog's starts "Save", and its target is removed first so GTK asks no overwrite question.
+// The campaign folder pickers ("Create the campaign folder in…", "Open a campaign folder") and the map
+// picker ("Add a map image") are the app's other titles. A folder picker opened on "Recent" ignores a
+// typed folder, so every non-save dialog first goes Home (alt+Home), where the typed path selects.
 function chooseInNativeFileDialog(relativePath) {
   const env = { ...process.env, DISPLAY: `:${driver.displayNum()}` };
   const xdotool = (...args) => spawnSync('xdotool', args, { encoding: 'utf8', env });
   const deadline = Date.now() + 10000;
   let dialog = '';
   while (!dialog && Date.now() < deadline) {
-    dialog = xdotool('search', '--onlyvisible', '--name', '^(Open|Save)').stdout.trim().split(/\s+/)[0] ?? '';
+    dialog = xdotool('search', '--onlyvisible', '--name', '^(Open|Save|Create the campaign folder|Add a map)').stdout.trim().split(/\s+/)[0] ?? '';
     if (!dialog) {
       sleepMs(250);
     }
@@ -438,18 +477,40 @@ function chooseInNativeFileDialog(relativePath) {
   if (saving) {
     rmSync(target, { force: true });
   }
-  xdotool('windowfocus', '--sync', dialog);
-  xdotool('key', '--window', dialog, 'ctrl+l');
-  sleepMs(300);
-  if (saving) {
-    // A save dialog selects the offered name up to its extension; select all of it, so the typed
-    // path replaces "name.pdf" whole rather than becoming "path.pdf.pdf".
+  // A dialog found the moment it maps can drop keys typed before it paints, so it settles first, and
+  // the path is typed again (at most 3 times) while the dialog is still open after Return.
+  sleepMs(700);
+  const stillOpen = () => xdotool('search', '--onlyvisible', '--name', '.').stdout.split(/\s+/).includes(dialog);
+  for (let attempt = 0; attempt < 3; attempt += 1) {
+    xdotool('windowfocus', '--sync', dialog);
+    if (!saving) {
+      xdotool('key', '--window', dialog, 'alt+Home');
+      sleepMs(500);
+    }
+    xdotool('key', '--window', dialog, 'ctrl+l');
+    sleepMs(300);
+    // A save dialog selects the offered name up to its extension, and a retry finds the last typed
+    // path: select all of it, so the typed path replaces it whole rather than becoming "path.pdf.pdf".
     xdotool('key', '--window', dialog, 'ctrl+a');
     sleepMs(200);
+    xdotool('type', '--delay', '30', '--', target);
+    sleepMs(300);
+    if (!saving) {
+      // GTK completes a typed folder inline with its only subfolder, selected; Delete drops it, so
+      // `<dir>/` picks <dir> itself.
+      xdotool('key', '--window', dialog, 'Delete');
+      sleepMs(200);
+    }
+    xdotool('key', 'Return');
+    const closeBy = Date.now() + 3000;
+    while (stillOpen() && Date.now() < closeBy) {
+      sleepMs(250);
+    }
+    if (!stillOpen()) {
+      return;
+    }
   }
-  xdotool('type', '--delay', '30', '--', target);
-  sleepMs(300);
-  xdotool('key', 'Return');
+  throw new Error(`the native dialog stayed open after typing ${target} three times`);
 }
 
 // A row with `sidecar: true` runs the app's `pcg_import`: built into the target directory the app
@@ -470,13 +531,17 @@ function buildSidecar() {
 function runStep(step) {
   switch (step.op) {
     case 'nativeFile':
-      chooseInNativeFileDialog(step.text);
+      chooseInNativeFileDialog(expandRunPaths(step.text, isolatedAppDataDir && dirname(isolatedAppDataDir), PCGEN_REPO_DIR));
       break;
     case 'click':
-      clickByName(step.target, step.index, step.by);
+      if (step.offset) {
+        clickAtOffset(step.target, step.offset);
+      } else {
+        clickByName(step.target, step.index, step.by);
+      }
       break;
     case 'type':
-      typeText(expandRunPaths(step.text, isolatedAppDataDir && dirname(isolatedAppDataDir)));
+      typeText(expandRunPaths(step.text, isolatedAppDataDir && dirname(isolatedAppDataDir), PCGEN_REPO_DIR));
       break;
     case 'select':
       selectByName(step.target, step.text, step.index, step.by);
@@ -497,6 +562,17 @@ function runStep(step) {
   // reads the probe.
   sleepMs(220);
 }
+
+// The PCGen checkout `{PCGEN_REPO_DIR}` names, and the commit it must be at (scripts/pcgen-oracle-pin.env).
+const PCGEN_REPO_DIR = pcgenRepoDirFor(process.env, homedir());
+const PCGEN_ORACLE_SHA = (() => {
+  try {
+    const pin = readFileSync(resolve(driver.APP_ROOT, '..', '..', 'scripts', 'pcgen-oracle-pin.env'), 'utf8');
+    return /^PCGEN_ORACLE_SHA=([0-9a-f]+)/m.exec(pin)?.[1] ?? '';
+  } catch {
+    return '';
+  }
+})();
 
 // The step a TargetNotFoundError came from, for the red row's reason (SD-37 E6.6: a 200-step row that
 // says only "target not found: 'X'" cannot be diagnosed; the step number and screen can).
@@ -727,6 +803,15 @@ function assertRow(row, snapshot) {
   if (row.noHeadingMarkers === true && (snapshot?.headingMarkers ?? []).length > 0) {
     problems.push(`heading ::before text drawn: ${JSON.stringify(snapshot.headingMarkers)}`);
   }
+  // `targetMinWidth`: {name: px} -- the named control renders at least this wide (the probe's rect).
+  for (const [name, minWidth] of Object.entries(row.targetMinWidth ?? {})) {
+    const target = findTarget(snapshot, name);
+    if (!target) {
+      problems.push(`target not found for targetMinWidth: '${name}'`);
+    } else if (target.rect.w < minWidth) {
+      problems.push(`'${name}' is ${target.rect.w}px wide, under ${minWidth}px`);
+    }
+  }
   for (const selectName of row.selectsNonEmpty ?? []) {
     const select = findSelect(snapshot, selectName);
     if (!select) {
@@ -749,6 +834,14 @@ function runRow(row, spec, outDir) {
 
   if (row.manual) {
     return { id: row.id, status: 'manual', screenshot: null, rendered_excerpt: null, reason: row.manual };
+  }
+
+  // A row reading the PCGen oracle's samples skips loudly (never red, never silently) without it.
+  const namesOracle = [row, ...(row.setup ?? []).map((id) => spec.byId.get(id))].some((r) => JSON.stringify(r ?? {}).includes('{PCGEN_REPO_DIR}'));
+  const oracleSkip = namesOracle ? oracleSkipReason(PCGEN_REPO_DIR, PCGEN_ORACLE_SHA) : null;
+  if (oracleSkip) {
+    console.warn(`${row.id}: ${oracleSkip}`);
+    return { id: row.id, status: 'manual', screenshot: null, rendered_excerpt: null, reason: oracleSkip };
   }
 
   const landed = resetToLanding();

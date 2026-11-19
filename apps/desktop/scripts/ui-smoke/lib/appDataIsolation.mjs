@@ -18,6 +18,7 @@
 // driver.sh, which derives the same three from `RUN_DESKTOP_DATA_ROOT`; the
 // test asks driver.sh itself (`_data_env`) rather than trusting this file's
 // copy of the layout.
+import { spawnSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
 import { existsSync, lstatSync, mkdirSync, mkdtempSync, readdirSync, readFileSync, readlinkSync, rmSync } from 'node:fs';
 import { tmpdir } from 'node:os';
@@ -91,17 +92,45 @@ export function isolatedXdg(root) {
 }
 
 /**
- * A `type` step's text with `{XDG_DATA_HOME}` replaced by the run's isolated XDG_DATA_HOME, so a row
- * can name a folder (a campaign's Drive folder) that lives and dies with the run's own root.
+ * A `type` or `nativeFile` step's text with `{XDG_DATA_HOME}` replaced by the run's isolated
+ * XDG_DATA_HOME (a campaign folder that lives and dies with the run's own root) and
+ * `{PCGEN_REPO_DIR}` by the pinned PCGen checkout (its sample `.pcg` files, SD-42 E4.4).
  */
-export function expandRunPaths(text, xdgDataHome) {
-  if (!text.includes('{XDG_DATA_HOME}')) {
-    return text;
+export function expandRunPaths(text, xdgDataHome, pcgenRepoDir = null) {
+  let out = text;
+  if (out.includes('{XDG_DATA_HOME}')) {
+    if (!xdgDataHome) {
+      throw new Error(`'${text}' names {XDG_DATA_HOME}, but this run has no isolated XDG_DATA_HOME`);
+    }
+    out = out.replaceAll('{XDG_DATA_HOME}', xdgDataHome);
   }
-  if (!xdgDataHome) {
-    throw new Error(`'${text}' names {XDG_DATA_HOME}, but this run has no isolated XDG_DATA_HOME`);
+  if (out.includes('{PCGEN_REPO_DIR}')) {
+    if (!pcgenRepoDir) {
+      throw new Error(`'${text}' names {PCGEN_REPO_DIR}, but this run has no PCGen checkout`);
+    }
+    out = out.replaceAll('{PCGEN_REPO_DIR}', pcgenRepoDir);
   }
-  return text.replaceAll('{XDG_DATA_HOME}', xdgDataHome);
+  return out;
+}
+
+/** The PCGen checkout: `$PCGEN_REPO_DIR`, else the bootstrap default (scripts/fetch-pcgen-oracle.sh). */
+export function pcgenRepoDirFor(env, home) {
+  return env.PCGEN_REPO_DIR || join(home, 'workspace', 'repos', 'pcgen');
+}
+
+/**
+ * Why a row naming `{PCGEN_REPO_DIR}` cannot run -- the checkout is absent, or not at `pinnedSha`
+ * (scripts/pcgen-oracle-pin.env) -- as a loud `SKIPPED:` line, or null when it can.
+ */
+export function oracleSkipReason(dir, pinnedSha) {
+  if (!existsSync(join(dir, '.git'))) {
+    return `SKIPPED: PCGen oracle absent at ${dir} (set PCGEN_REPO_DIR or run scripts/fetch-pcgen-oracle.sh)`;
+  }
+  const head = spawnSync('git', ['-C', dir, 'rev-parse', 'HEAD'], { encoding: 'utf8' }).stdout?.trim();
+  if (head !== pinnedSha) {
+    return `SKIPPED: PCGen oracle at ${dir} is off the pin (HEAD ${head || '<unreadable>'}, pin ${pinnedSha})`;
+  }
+  return null;
 }
 
 /** The environment run.mjs hands driver.sh: `baseEnv` plus the run's data root. */

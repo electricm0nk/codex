@@ -26,6 +26,8 @@ import {
   createIsolatedDataRoot,
   expandRunPaths,
   fingerprintStore,
+  oracleSkipReason,
+  pcgenRepoDirFor,
   isolatedXdg,
   launchEnv,
   removeDataRoot,
@@ -193,5 +195,32 @@ try {
 assert.equal(expandRunPaths('{XDG_DATA_HOME}/drive', '/tmp/r/data'), '/tmp/r/data/drive', 'the token becomes the isolated XDG_DATA_HOME');
 assert.equal(expandRunPaths('Smoke Campaign', '/tmp/r/data'), 'Smoke Campaign', 'text without the token is unchanged');
 assert.throws(() => expandRunPaths('{XDG_DATA_HOME}/drive', null), /isolated XDG_DATA_HOME/, 'no isolated root: refused, never the real one');
+
+// --- a native-dialog path under the pinned PCGen checkout (SD-42 E4.4: the sample .pcg files) ---
+assert.equal(
+  expandRunPaths('{PCGEN_REPO_DIR}/code/testsuite/PCGfiles/pf_Paladin.pcg', '/tmp/r/data', '/o/pcgen'),
+  '/o/pcgen/code/testsuite/PCGfiles/pf_Paladin.pcg',
+  'the token becomes the oracle checkout',
+);
+assert.equal(expandRunPaths('{XDG_DATA_HOME}/c', '/tmp/r/data', null), '/tmp/r/data/c', 'no oracle needed for a path that does not name it');
+assert.throws(() => expandRunPaths('{PCGEN_REPO_DIR}/x.pcg', '/tmp/r/data', null), /PCGEN_REPO_DIR/, 'no oracle: refused');
+assert.equal(pcgenRepoDirFor({ PCGEN_REPO_DIR: '/o/pcgen' }, '/home/u'), '/o/pcgen', '$PCGEN_REPO_DIR wins');
+assert.equal(pcgenRepoDirFor({}, '/home/u'), '/home/u/workspace/repos/pcgen', 'else the default checkout');
+{
+  const oracleScratch = mkdtempSync(join(tmpdir(), 'oracle-test-'));
+  try {
+    assert.match(oracleSkipReason(join(oracleScratch, 'absent'), 'abc'), /^SKIPPED: PCGen oracle absent at /, 'an absent checkout skips loudly');
+    const repo = join(oracleScratch, 'pcgen');
+    mkdirSync(repo);
+    const git = (...args) => spawnSync('git', ['-C', repo, ...args], { encoding: 'utf8' });
+    git('init', '-q');
+    git('-c', 'user.email=t@t', '-c', 'user.name=t', 'commit', '-q', '--allow-empty', '-m', 'pin');
+    const head = git('rev-parse', 'HEAD').stdout.trim();
+    assert.equal(oracleSkipReason(repo, head), null, 'the checkout at the pin runs');
+    assert.match(oracleSkipReason(repo, 'f'.repeat(40)), /^SKIPPED: PCGen oracle at .* is off the pin/, 'an off-pin checkout skips loudly');
+  } finally {
+    rmSync(oracleScratch, { recursive: true, force: true });
+  }
+}
 
 console.log('appDataIsolation.test.mjs: all assertions passed');
