@@ -5555,7 +5555,7 @@ fn take_pieces_at_root(root: &Path, copy: &CopyKey, quantity: Option<u32>, line_
     };
     let cost_override_copper = sets.copies.get(&copy.map_key()).and_then(|facts| facts.cost_override_copper);
     let stack: Vec<&HeldEquipmentCopyDto> =
-        std::iter::once(source).chain(rows.iter().filter(|row| !line_only && &row.copies[0] != copy && same_stack(row, source))).collect();
+        std::iter::once(source).chain(rows.iter().filter(|row| !line_only && &row.copies[0] != copy && same_stack(&rows, row, source))).collect();
     let total: u32 = stack.iter().map(|row| row.quantity).sum();
     let wanted = quantity.unwrap_or(total);
     if wanted == 0 || wanted > total {
@@ -5695,25 +5695,35 @@ pub(crate) fn list_held_equipment_at_root(root: &Path) -> Result<Vec<HeldEquipme
 
 /// The held copies with identical copies stacked (`decisions.md §28`): copies with one `item_id`,
 /// `bonus`, name, location, override flag, abilities, size and modifiers are one row, its
-/// `quantity` their pieces summed.
+/// `quantity` their pieces summed. A container copy that holds anything is its own row (SD-42
+/// `decisions.md §27.5`, [`holds_anything`]).
 pub(crate) fn list_held_equipment_stacks_at_root(root: &Path) -> Result<Vec<HeldEquipmentCopyDto>, String> {
+    let rows = list_held_equipment_at_root(root)?;
     let mut stacks: Vec<HeldEquipmentCopyDto> = Vec::new();
-    for row in list_held_equipment_at_root(root)? {
+    for row in &rows {
         let same = |stack: &&mut HeldEquipmentCopyDto| {
             (&stack.item_id, stack.bonus, &stack.name, &stack.location, stack.override_flag, &stack.abilities, stack.size)
                 == (&row.item_id, row.bonus, &row.name, &row.location, row.override_flag, &row.abilities, row.size)
                 && (&stack.properties, &stack.damage_override, stack.weight_override_lbs, stack.cost_override_copper, &stack.applied_modifiers)
                     == (&row.properties, &row.damage_override, row.weight_override_lbs, row.cost_override_copper, &row.applied_modifiers)
+                && !holds_anything(&rows, &stack.copies[0])
+                && !holds_anything(&rows, &row.copies[0])
         };
         match stacks.iter_mut().find(same) {
             Some(stack) => {
                 stack.quantity += row.quantity;
-                stack.copies.extend(row.copies);
+                stack.copies.extend(row.copies.iter().cloned());
             }
-            None => stacks.push(row),
+            None => stacks.push(row.clone()),
         }
     }
     Ok(stacks)
+}
+
+/// Whether a held copy sits directly inside `copy`: such a container copy never folds into a stack
+/// (SD-42 `decisions.md §27.5`), so "Sack" with its contents and "Sack ×3" are two rows and two moves.
+fn holds_anything(rows: &[HeldEquipmentCopyDto], copy: &CopyKey) -> bool {
+    rows.iter().any(|row| matches!(&row.location, Location::Inside { container } if container == copy))
 }
 
 /// The highest `+N` armor, shield or weapon modifier a selection holds: its `bonus` as
@@ -6341,9 +6351,12 @@ fn is_container_item(item_id: &str) -> bool {
     codex::rules_core::equipment_resolver::equipment_converted_resolve(item_id, corpus_fixture_bundle()).is_some_and(|record| record.is_container())
 }
 
-/// Whether two held rows are one stack (`decisions.md §28`).
-fn same_stack(a: &HeldEquipmentCopyDto, b: &HeldEquipmentCopyDto) -> bool {
+/// Whether two of `rows` are one stack (`decisions.md §28`); a container copy holding anything is
+/// a stack of its own ([`holds_anything`]).
+fn same_stack(rows: &[HeldEquipmentCopyDto], a: &HeldEquipmentCopyDto, b: &HeldEquipmentCopyDto) -> bool {
     (&a.item_id, a.bonus, &a.name, &a.location, a.override_flag) == (&b.item_id, b.bonus, &b.name, &b.location, b.override_flag)
+        && !holds_anything(rows, &a.copies[0])
+        && !holds_anything(rows, &b.copies[0])
 }
 
 /// The root's held rows and sets, the active set first brought into line with the saved input: a
@@ -6437,7 +6450,7 @@ fn move_copies_at_root(
         return Err(format!("'{}' cannot move: this character does not hold that copy", copy.map_key()));
     };
     let stack: Vec<&HeldEquipmentCopyDto> =
-        std::iter::once(source).chain(rows.iter().filter(|row| !line_only && &row.copies[0] != copy && same_stack(row, source))).collect();
+        std::iter::once(source).chain(rows.iter().filter(|row| !line_only && &row.copies[0] != copy && same_stack(&rows, row, source))).collect();
     let total: u32 = stack.iter().map(|row| row.quantity).sum();
     let wanted = quantity.unwrap_or(total);
     if wanted == 0 || wanted > total {
@@ -23164,6 +23177,107 @@ mod tests {
         rename_equipment_copy_at_root(&root, &sack, "Camping Gear").unwrap();
         assert_eq!(stacks_of(&root, "Sack")[0].name, "Camping Gear");
         assert_eq!(picture(&root), before, "the name is the only change");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    // ----- SD-42 E4.11: one row per stack, split by moving (operator STK-1, `decisions.md §27.5`) -----
+
+    /// `(pieces, copies, location)` of each held row of `item_id`, in row order.
+    fn stack_rows(root: &Path, item_id: &str) -> Vec<(u32, usize, Location)> {
+        stacks_of(root, item_id).into_iter().map(|row| (row.quantity, row.copies.len(), row.location)).collect()
+    }
+
+    /// The carried total and every container's load: what regrouping must never move.
+    fn stack_rows_weights(root: &Path) -> (f64, Vec<ContainerLoadDto>) {
+        let loaded = load_saved_character_at_root(root).unwrap();
+        (loaded.corpus_derived.encumbrance.total_carried_weight_lbs, loaded.container_loads)
+    }
+
+    /// Four Sacks bought are four saved lines and one held row: `quantity 4`, four copies.
+    #[test]
+    fn stack_rows_four_sacks_are_one_row_of_four() {
+        let root = fund_and_seed("stack-rows-four-sacks", 1_000_000);
+        for _ in 0..4 {
+            assert!(matches!(market_buy(&root, "Sack", None, PriceMode::Standard), PurchaseEquipmentResponse::Purchased { .. }));
+        }
+        assert_eq!(held_selections(&root).iter().filter(|s| s.item_id == "Sack").count(), 4, "one line per copy bought");
+        assert_eq!(stack_rows(&root, "Sack"), [(4, 4, Location::Carried)]);
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// A Dagger put in one of four Sacks: that Sack is its own row (first, in saved order) and the
+    /// other three stay one; moving the three moves none of the filled one.
+    #[test]
+    fn stack_rows_a_filled_container_copy_is_its_own_row() {
+        let mut items = vec![("Backpack", ActiveState::SelectedInactive), ("item:dagger", ActiveState::SelectedInactive)];
+        items.extend([("Sack", ActiveState::SelectedInactive); 4]);
+        let root = sets_root("stack-rows-filled-sack", &items);
+        move_saved(&root, &sets_key("item:dagger", 0), Location::Inside { container: sets_key("Sack", 0) }, None);
+        assert_eq!(stack_rows(&root, "Sack"), [(1, 1, Location::Carried), (3, 3, Location::Carried)]);
+        let rows = stacks_of(&root, "Sack");
+        assert_eq!((rows[0].copies[0].ordinal, rows[1].copies[0].ordinal), (0, 1), "the filled sack first");
+        let pack = Location::Inside { container: sets_key("Backpack", 0) };
+        move_saved(&root, &sets_key("Sack", 1), pack.clone(), None);
+        assert_eq!(stack_rows(&root, "Sack"), [(1, 1, Location::Carried), (3, 3, pack)], "the three move, the filled one stays");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// 100 arrows (five bundles of 20): 50 moved into a Backpack is two rows of 50 at two places;
+    /// the Backpack's 50 moved back to Carried rejoin the rest as one row of 100.
+    #[test]
+    fn stack_rows_split_by_move_then_rejoin_on_return() {
+        let mut items = vec![("Backpack", ActiveState::SelectedInactive)];
+        items.extend([("Arrows (20)", ActiveState::SelectedInactive); 5]);
+        let root = sets_root("stack-rows-split", &items);
+        assert_eq!(stack_rows(&root, "Arrows (20)"), [(100, 5, Location::Carried)]);
+        let pack = Location::Inside { container: sets_key("Backpack", 0) };
+        move_saved(&root, &sets_key("Arrows (20)", 0), pack.clone(), Some(50));
+        let mut split = stack_rows(&root, "Arrows (20)").into_iter().map(|(pieces, _, location)| (pieces, location)).collect::<Vec<_>>();
+        split.sort_by_key(|(_, location)| *location == Location::Carried);
+        assert_eq!(split, [(50, pack.clone()), (50, Location::Carried)]);
+        let in_pack = stacks_of(&root, "Arrows (20)").into_iter().find(|row| row.location == pack).unwrap();
+        move_saved(&root, &in_pack.copies[0], Location::Carried, None);
+        let back = stack_rows(&root, "Arrows (20)");
+        assert_eq!((back.len(), back[0].0, &back[0].2), (1, 100, &Location::Carried), "{back:?}");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// Regrouping moves no weight: the carried total and every container's load read the same
+    /// after a Dagger splits four Sacks into two rows and taken out again, and across a 50/50 split
+    /// of 100 arrows into a Backpack and the rejoin.
+    #[test]
+    fn stack_rows_regrouping_moves_no_weight_or_load() {
+        let mut items = vec![("Backpack", ActiveState::SelectedInactive), ("item:dagger", ActiveState::SelectedInactive)];
+        items.extend([("Sack", ActiveState::SelectedInactive); 4]);
+        items.extend([("Arrows (20)", ActiveState::SelectedInactive); 5]);
+        let root = sets_root("stack-rows-weights", &items);
+        let (total, loads) = stack_rows_weights(&root);
+        assert_eq!(loads.len(), 5, "a Backpack and four Sacks: {loads:?}");
+        let dagger = sets_key("item:dagger", 0);
+        move_saved(&root, &dagger, Location::Inside { container: sets_key("Sack", 0) }, None);
+        assert_eq!(stack_rows_weights(&root).0, total, "the dagger weighs as much in a sack");
+        move_saved(&root, &dagger, Location::Carried, None);
+        assert_eq!(stack_rows_weights(&root), (total, loads.clone()), "out again, every load as it was");
+        let pack = Location::Inside { container: sets_key("Backpack", 0) };
+        move_saved(&root, &sets_key("Arrows (20)", 0), pack.clone(), Some(50));
+        let (split_total, split_loads) = stack_rows_weights(&root);
+        assert_eq!(split_total, total, "a split moves no weight");
+        let bundle = codex::rules_core::equipment_resolver::equipment_converted_resolve("Arrows (20)", corpus_fixture_bundle()).unwrap().weight_lbs.unwrap();
+        let pack_load = split_loads.iter().find(|load| load.copy == sets_key("Backpack", 0)).unwrap();
+        assert_eq!(pack_load.contents_lbs, bundle * 2.5, "50 arrows are two and a half bundles");
+        let in_pack = stacks_of(&root, "Arrows (20)").into_iter().find(|row| row.location == pack).unwrap();
+        move_saved(&root, &in_pack.copies[0], Location::Carried, None);
+        assert_eq!(stack_rows_weights(&root), (total, loads), "the rejoin moves none either");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// A renamed Sack of four is its own row; the other three stay one.
+    #[test]
+    fn stack_rows_renamed_copy_is_its_own_row() {
+        let root = sets_root("stack-rows-renamed", &[("Sack", ActiveState::SelectedInactive); 4]);
+        let rows = rename_equipment_copy_at_root(&root, &sets_key("Sack", 2), "Camping Gear").unwrap();
+        let sacks: Vec<(&str, u32)> = rows.iter().filter(|row| row.item_id == "Sack").map(|row| (row.name.as_str(), row.quantity)).collect();
+        assert_eq!(sacks, [("Sack", 3), ("Camping Gear", 1)]);
         std::fs::remove_dir_all(&root).ok();
     }
 

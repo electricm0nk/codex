@@ -6,6 +6,7 @@ import { assert, assertEqual } from '../testSupport/asserts';
 import { GearPanels } from './GearScreen';
 import {
   containerTables,
+  copyId,
   DRAG_FORMAT,
   dropTarget,
   filterGearRows,
@@ -256,12 +257,14 @@ assert(overriddenTargets.includes('slot-armor'), 'override: every full slot is o
 assert(!moveTargets(overridden, overridden.rows.find((candidate) => candidate.held.name === 'Longsword')!).some((target) => target.id === 'slot-wield_main'), 'override: still not its own slot');
 assertEqual(JSON.stringify(dropTarget(dragging('item:dagger-0-0'), 'slot-wield_main', overridden)), JSON.stringify({ kind: 'slot', slot: 'wield_main' }), 'override: a drop onto a full slot moves there');
 
-// 15. One table per container copy (`decisions.md §38`): a backpack holding 4 belt pouches and chalk, pouch #1 a whetstone → 5 tables.
+// 15. One table per container row (`decisions.md §38`; SD-42 §27.5): a backpack holding 4 belt pouches and chalk, one pouch a whetstone —
+// the engine makes the filled pouch its own row and the other three one stack → 3 tables.
 const PACK = key('item:backpack');
 const POUCHES = [0, 1, 2, 3].map((ordinal) => key('item:pouch_belt', ordinal));
 const NEST: PlacedEquipmentCopyDto[] = [
   held('Backpack', { kind: 'carried' }),
-  held('Pouch, Belt', { kind: 'inside', container: PACK }, { itemId: 'item:pouch_belt', copies: POUCHES }),
+  held('Pouch, Belt', { kind: 'inside', container: PACK }, { itemId: 'item:pouch_belt', copies: [POUCHES[0]] }),
+  held('Pouch, Belt', { kind: 'inside', container: PACK }, { itemId: 'item:pouch_belt', copies: POUCHES.slice(1) }),
   held('Chalk', { kind: 'inside', container: PACK }),
   held('Whetstone', { kind: 'inside', container: POUCHES[0] }),
   held('Dagger', { kind: 'carried' }),
@@ -272,12 +275,12 @@ const NEST_LOADS: ContainerLoadDto[] = [
 ];
 const nest = gearScreenModel(NEST, { perItem: [], containerLoads: NEST_LOADS });
 const tables = containerTables(nest);
-assertEqual(tables.length, 5, 'tables: backpack + 4 pouches');
-assertEqual(tables.map((table) => table.title).join(' | '), 'Backpack | Pouch, Belt #1 | Pouch, Belt #2 | Pouch, Belt #3 | Pouch, Belt #4', 'tables: titled as Move to titles them');
-assertEqual(tables.map((table) => table.rows.length).join(','), '2,1,0,0,0', 'tables: direct contents per copy');
-assertEqual(tables[0].rows.map((candidate) => candidate.label).join(', '), 'Pouch, Belt ×4, Chalk', 'tables: the backpack holds the pouch stack and the chalk');
+assertEqual(tables.length, 3, 'tables: backpack + the filled pouch + the stack of three');
+assertEqual(tables.map((table) => table.title).join(' | '), 'Backpack | Pouch, Belt #1 | Pouch, Belt #2', 'tables: titled as Move to titles them');
+assertEqual(tables.map((table) => table.rows.length).join(','), '3,1,0', 'tables: direct contents per row');
+assertEqual(tables[0].rows.map((candidate) => candidate.label).join(', '), 'Pouch, Belt, Pouch, Belt ×3, Chalk', 'tables: the backpack holds the filled pouch, the pouch stack and the chalk');
 assertEqual(tables[1].rows[0].label, 'Whetstone', 'tables: pouch #1 holds the whetstone');
-assertEqual(tables.map((table) => table.loadLabel).join(' | '), '3 of 60 lb | 1 lb, no limit | 0 lb, no limit | 0 lb, no limit | 0 lb, no limit', 'tables: the load labels as containerLoads gives them');
+assertEqual(tables.map((table) => table.loadLabel).join(' | '), '3 of 60 lb | 1 lb, no limit | 0 lb, no limit', 'tables: the load labels as containerLoads gives them');
 assertEqual(nest.rows.length, NEST.length, 'tables: GearModel.rows unchanged');
 
 // 16. A nested container is a row in its parent's table and has its own table; one level deep only.
@@ -303,8 +306,8 @@ const nestHtml = renderToStaticMarkup(
     onCustomizeModifier: noop,
   }),
 );
-assertEqual(nestHtml.split('<table').length - 1, 5, 'view: one table per container copy');
-assertEqual(nestHtml.split('data-testid="gear-container-customize-').length - 1, 5, 'view: a Customize button on every container table title (E4.9)');
+assertEqual(nestHtml.split('<table').length - 1, 3, 'view: one table per container row');
+assertEqual(nestHtml.split('data-testid="gear-container-customize-').length - 1, 3, 'view: a Customize button on every container table title (E4.9)');
 assert(nestHtml.includes('data-testid="gear-container-customize-item:pouch_belt-0-1"'), 'view: the table title customizes its own copy (E4.9)');
 const pouchTable = nestHtml.slice(nestHtml.indexOf('data-testid="gear-container-item:pouch_belt-0-0"'), nestHtml.indexOf('data-testid="gear-container-item:pouch_belt-0-1"'));
 assert(pouchTable.includes('Pouch, Belt #1 · 1 lb, no limit'), 'view: the caption reads title · load');
@@ -331,4 +334,25 @@ const saved = gearScreenModel([held('Hat of Disguise', { kind: 'slot', slot: 'sh
 assertEqual(names(saved.tree.find((candidate) => candidate.id === 'slot-shield')!.items), 'Hat of Disguise', 'saved wrong slot: it stays in the Shield slot');
 assertEqual(saved.warnings.map((warning) => warning.text).join(' | '), 'Hat of Disguise is in the Shield slot, a Head item.', 'saved wrong slot: the row carries the warning');
 
-console.log('gearScreenModel.test.ts: 19 cases passed');
+// 20. Stacks (SD-42 E4.11, operator STK-1, `decisions.md §27.5`): identical copies at one place are one row, one tree node,
+// one container table and one Into target; a copy holding anything is its own row (the engine's stack builder splits it).
+const SACKS = [0, 1, 2, 3].map((ordinal) => key('item:sack', ordinal));
+const sackLoads = (filled: number | null): ContainerLoadDto[] =>
+  SACKS.map((copy, index) => ({ copy, contentsLbs: index === filled ? 1 : 0, capacity: { kind: 'pounds', lbs: 30 }, over: false }));
+const fourSacks = gearScreenModel([held('Sack', { kind: 'carried' }, { copies: SACKS }), held('Dagger', { kind: 'carried' })], { perItem: [], containerLoads: sackLoads(null) });
+const fourSackNodes = fourSacks.tree.find((candidate) => candidate.id === 'carried')!.items;
+assertEqual(names(fourSackNodes), 'Sack ×4, Dagger', 'stacks: a container stack is one tree node');
+assertEqual(copyId(fourSackNodes[0].copy), 'item:sack-0-0', 'stacks: the node stands for the stack\'s first copy');
+assertEqual(containerTables(fourSacks).map((table) => `${table.title} ${copyId(table.copy)}`).join(' | '), 'Sack item:sack-0-0', 'stacks: one container table titled Sack');
+const daggerInto = moveTargets(fourSacks, fourSacks.rows.find((candidate) => candidate.held.name === 'Dagger')!).filter((target) => target.id.startsWith('inside-'));
+assertEqual(daggerInto.map((target) => `${target.id} ${target.label}`).join(' | '), 'inside-item:sack-0-0 Into Sack', 'stacks: one Into target for identical empty containers');
+const oneFilled = gearScreenModel(
+  [held('Sack', { kind: 'carried' }, { copies: [SACKS[0]] }), held('Sack', { kind: 'carried' }, { copies: SACKS.slice(1) }), held('Dagger', { kind: 'inside', container: SACKS[0] })],
+  { perItem: [], containerLoads: sackLoads(0) },
+);
+const filledNodes = oneFilled.tree.find((candidate) => candidate.id === 'carried')!.items;
+assertEqual(names(filledNodes), 'Sack, Sack ×3', 'stacks: a filled copy is its own node');
+assertEqual(names(filledNodes[0].children), 'Dagger', 'stacks: the filled node holds the dagger');
+assertEqual(containerTables(oneFilled).map((table) => table.title).join(' | '), 'Sack #1 | Sack #2', 'stacks: two container rows of one name are told apart');
+
+console.log('gearScreenModel.test.ts: 20 cases passed');

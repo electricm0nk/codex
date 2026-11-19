@@ -273,8 +273,7 @@ impl<'a> Lines<'a> {
         let (held, loads): (&'a [HeldEquipmentCopyDto], &'a [ContainerLoadDto]) = (self.held, self.loads);
         let row = &held[index];
         let kind = NESTING[depth.min(NESTING.len() - 1)];
-        let containers: Vec<(usize, &ContainerLoadDto)> =
-            row.copies.iter().enumerate().filter_map(|(at, copy)| loads.iter().find(|load| &load.copy == copy).map(|load| (at, load))).collect();
+        let containers: Vec<&ContainerLoadDto> = row.copies.iter().filter_map(|copy| loads.iter().find(|load| &load.copy == copy)).collect();
         // The copy's properties print under it as text (SD-42 `decisions.md §6`), weighed or not.
         let properties = row.properties.iter().cloned();
         if containers.is_empty() {
@@ -286,17 +285,19 @@ impl<'a> Lines<'a> {
             out.push(line.of_kind(kind));
             return;
         }
-        // A container prints one line per copy, so each holds its own contents (`decisions.md §38`).
-        for (at, load) in containers {
-            let name = stack_label(row, 1);
-            let label = if row.copies.len() > 1 { format!("{name} #{}", at + 1) } else { name };
-            let line = if weighed {
-                let weight = self.weights[index].get(at).filter(|_| self.weights[index].len() == row.copies.len()).map_or_else(|| NO_VALUE.to_owned(), |lbs| pounds(*lbs));
-                SheetRow::new(label, [slot.clone(), weight]).with_notes(row.override_flag.map(override_tag).into_iter().chain([load_note(load, self.ignore_capacity)]).chain(properties.clone()))
-            } else {
-                SheetRow::new(label, Vec::<String>::new()).with_notes(properties.clone())
-            };
-            out.push(line.of_kind(kind));
+        // A container stack is one line, `Sack ×4` (SD-42 `decisions.md §27.5`): the stack builder
+        // never stacks a copy that holds anything, so the first copy's load stands for each.
+        for (at, load) in containers.into_iter().enumerate() {
+            if at == 0 {
+                let label = stack_label(row, row.quantity);
+                let line = if weighed {
+                    SheetRow::new(label, [slot.clone(), weight_words(&self.weights[index], row.copies.len())])
+                        .with_notes(row.override_flag.map(override_tag).into_iter().chain([load_note(load, self.ignore_capacity)]).chain(properties.clone()))
+                } else {
+                    SheetRow::new(label, Vec::<String>::new()).with_notes(properties.clone())
+                };
+                out.push(line.of_kind(kind));
+            }
             let contents: Vec<usize> = (0..self.held.len())
                 .filter(|other| !self.placed[*other] && matches!(&self.held[*other].location, Location::Inside { container } if *container == load.copy))
                 .collect();

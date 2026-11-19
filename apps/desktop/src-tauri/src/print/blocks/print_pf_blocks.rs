@@ -2537,6 +2537,44 @@ fn print_pf_blocks_gear_renamed_copy_prints_its_base_name() {
     assert!(bare.contains("CampingGear(Sack)"), "{bare}");
 }
 
+/// SD-42 E4.11 (operator STK-1, `decisions.md §27.5`): a Backpack holding four empty Sacks prints
+/// them as one line, `Sack ×4`, not one line per sack. Aldric carries the Backpack and the Sacks.
+#[test]
+fn print_pf_blocks_gear_stacks_empty_containers_print_one_line() {
+    let root = seeded("gear-stacks-sacks", ALDRIC_ID);
+    for item in ["Backpack", "Sack", "Sack", "Sack", "Sack"] {
+        hold(&root, item, ActiveState::SelectedInactive);
+    }
+    move_to(&root, "Sack", 0, inside("Backpack"));
+    let document = sheet_document_at_root(&root, &request(false, false, false)).expect("the document builds");
+    let sections = gear_sections(gear_block(&document));
+    let carried = &sections.iter().find(|(title, _)| *title == "Carried").expect("Carried").1;
+    let sacks: Vec<(&str, &str)> = carried.iter().filter(|row| row.label.starts_with("Sack")).map(|row| (row.label.as_str(), row.kind)).collect();
+    assert_eq!(sacks, [("Sack ×4", "in-1")], "one line for the four: {carried:?}");
+    let bare: String = text_between(&pdf_text(&render(&root, &request(false, false, false))), "Gear Item", "Money PP").split_whitespace().collect();
+    assert!(bare.contains("Sack×4") && !bare.contains("Sack#"), "{bare}");
+}
+
+/// SD-42 E4.11: with a Rope (50 ft.) in one of the four Sacks, that Sack prints as its own line
+/// with the rope under it, then `Sack ×3`.
+#[test]
+fn print_pf_blocks_gear_stacks_a_filled_container_prints_apart() {
+    let root = seeded("gear-stacks-filled", ALDRIC_ID);
+    for item in ["Backpack", "Sack", "Sack", "Sack", "Sack", "Rope (50 ft.)"] {
+        hold(&root, item, ActiveState::SelectedInactive);
+    }
+    move_to(&root, "Sack", 0, inside("Backpack"));
+    move_to(&root, "Rope (50 ft.)", 0, inside("Sack"));
+    let document = sheet_document_at_root(&root, &request(false, false, false)).expect("the document builds");
+    let sections = gear_sections(gear_block(&document));
+    let carried = &sections.iter().find(|(title, _)| *title == "Carried").expect("Carried").1;
+    let lines: Vec<(&str, &str)> = carried.iter().map(|row| (row.label.as_str(), row.kind)).collect();
+    let from = lines.iter().position(|(label, _)| *label == "Backpack").unwrap_or_else(|| panic!("{lines:?}"));
+    assert_eq!(lines[from..from + 4], [("Backpack", "item"), ("Sack", "in-1"), ("Rope (50 ft.)", "in-2"), ("Sack ×3", "in-1")], "{lines:?}");
+    let bare: String = text_between(&pdf_text(&render(&root, &request(false, false, false))), "Gear Item", "Money PP").split_whitespace().collect();
+    assert_in_order(&bare, &["Backpack", "Sack", "Rope(50ft.)", "Sack×3"]);
+}
+
 /// SD-41 E4.1 (`decisions.md §9, §22, §33`): the Weapons block prints the weapons in hand first,
 /// then the carried ones marked "(carried)", then the Unarmed strike last, marked "(nonlethal)"
 /// when it is; a Not Carried weapon is not on it. Aldric (longsword in hand) carrying a Dagger,

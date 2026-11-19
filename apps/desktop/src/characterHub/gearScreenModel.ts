@@ -65,7 +65,7 @@ export interface GearRow {
 
 export interface GearTreeItem {
   row: GearRow;
-  /** The copy this node stands for: a container stack is one node per copy. */
+  /** The copy this node stands for: the row's first copy (a stack of identical copies is one node, SD-42 E4.11). */
   copy: CopyKeyDto;
   capacityLabel: string | null;
   /** The container is over its pounds but the character ignores container capacity limits. */
@@ -120,6 +120,12 @@ export function copyId(copy: CopyKeyDto): string {
 
 function sameCopy(a: CopyKeyDto, b: CopyKeyDto): boolean {
   return a.itemId === b.itemId && a.bonus === b.bonus && a.ordinal === b.ordinal;
+}
+
+/** Whether `candidate` sits directly inside any copy of `container`. */
+function insideRow(candidate: GearRow, container: GearRow): boolean {
+  const location = candidate.held.location;
+  return location.kind === 'inside' && container.held.copies.some((copy) => sameCopy(location.container, copy));
 }
 
 /** A figure as the engine gave it, without invented precision. */
@@ -222,23 +228,16 @@ export function gearScreenModel(held: PlacedEquipmentCopyDto[], context: GearCon
 
   const ignore = context.ignoreContainerCapacity === true;
   const placed = new Set<GearRow>();
+  // One node per row (`decisions.md §27.5`): the engine stacks only copies that hold nothing, so a
+  // stack's contents (none from the engine) are read under any of its copies.
   const nodesOf = (row: GearRow, seen: Set<string>): GearTreeItem[] => {
     placed.add(row);
-    const keys = row.isContainer ? row.held.copies : [row.held.copies[0]];
-    return keys.map((copy) => {
-      const load = loadOf(copy);
-      const inside = seen.has(copyId(copy))
-        ? []
-        : rows.filter((candidate) => candidate.held.location.kind === 'inside' && sameCopy(candidate.held.location.container, copy) && !placed.has(candidate));
-      const deeper = new Set([...seen, copyId(copy)]);
-      return {
-        row,
-        copy,
-        capacityLabel: capacityLabel(load),
-        overrideTag: ignore && load?.over === true,
-        children: inside.flatMap((child) => nodesOf(child, deeper)),
-      };
-    });
+    const copy = row.held.copies[0];
+    const load = loadOf(copy);
+    const ids = row.held.copies.map(copyId);
+    const inside = ids.some((id) => seen.has(id)) ? [] : rows.filter((candidate) => !placed.has(candidate) && insideRow(candidate, row));
+    const deeper = new Set([...seen, ...ids]);
+    return [{ row, copy, capacityLabel: capacityLabel(load), overrideTag: ignore && load?.over === true, children: inside.flatMap((child) => nodesOf(child, deeper)) }];
   };
   const at = (test: (location: LocationDto) => boolean) => rows.filter((row) => test(row.held.location)).flatMap((row) => nodesOf(row, new Set()));
 
@@ -269,7 +268,7 @@ export function gearScreenModel(held: PlacedEquipmentCopyDto[], context: GearCon
   return { rows, tree, warnings, capacityOverride: ignore, slotOverride: context.ignoreSlotLimits === true, containerLoads: context.containerLoads };
 }
 
-/** Copies in a slot: a count of what is there, one per copy of each row (a container row is one node per copy). */
+/** Copies in a slot: a count of what is there, one per copy of each row. */
 function copiesIn(items: GearTreeItem[]): number {
   return [...new Set(items.map((item) => item.row))].flatMap((row) => row.held.copies).length;
 }
@@ -310,22 +309,23 @@ export function moveTargets(model: GearModel, row: GearRow): MoveTarget[] {
     }
     targets.push({ id: section.id, label: section.label, location });
   }
+  // One target per container row, bound to its first copy: identical empty containers are interchangeable (§27.5).
   for (const candidate of model.rows.filter((other) => other.isContainer)) {
-    candidate.held.copies.forEach((copy, index) => {
-      const here = own.kind === 'inside' && sameCopy(own.container, copy);
-      if (inside.has(copyId(copy)) || here) {
-        return;
-      }
-      targets.push({ id: `inside-${copyId(copy)}`, label: `Into ${copyTitle(candidate, index)}`, location: { kind: 'inside', container: copy } });
-    });
+    const copy = candidate.held.copies[0];
+    const here = own.kind === 'inside' && candidate.held.copies.some((held) => sameCopy(own.container, held));
+    if (candidate.held.copies.some((held) => inside.has(copyId(held))) || here) {
+      continue;
+    }
+    targets.push({ id: `inside-${copyId(copy)}`, label: `Into ${copyTitle(model, candidate)}`, location: { kind: 'inside', container: copy } });
   }
   return targets;
 }
 
-/** A container copy's name: `Pouch, Belt #2` in a stack, the plain name for one copy. */
-function copyTitle(row: GearRow, index: number): string {
-  const name = stackLabel({ ...row.held, quantity: 1 });
-  return row.held.copies.length > 1 ? `${name} #${index + 1}` : name;
+/** A container row's name, without its count: `Sack #2` when another container row has the same name. */
+function copyTitle(model: GearModel, row: GearRow): string {
+  const name = (candidate: GearRow) => stackLabel({ ...candidate.held, quantity: 1 });
+  const namesakes = model.rows.filter((candidate) => candidate.isContainer && name(candidate) === name(row));
+  return namesakes.length > 1 ? `${name(row)} #${namesakes.indexOf(row) + 1}` : name(row);
 }
 
 export interface ContainerTable {
@@ -339,19 +339,17 @@ export interface ContainerTable {
   rows: GearRow[];
 }
 
-/** One table per container copy, in row then copy order (`decisions.md §38`); no weight is summed here. */
+/** One table per container row, bound to its first copy (`decisions.md §38`; SD-42 §27.5); no weight is summed here. */
 export function containerTables(model: GearModel): ContainerTable[] {
   return model.rows
     .filter((row) => row.isContainer)
-    .flatMap((row) =>
-      row.held.copies.map((copy, index) => ({
-        copy,
-        row,
-        title: copyTitle(row, index),
-        loadLabel: capacityLabel(model.containerLoads.find((load) => sameCopy(load.copy, copy))),
-        rows: model.rows.filter((candidate) => candidate.held.location.kind === 'inside' && sameCopy(candidate.held.location.container, copy)),
-      })),
-    );
+    .map((row) => ({
+      copy: row.held.copies[0],
+      row,
+      title: copyTitle(model, row),
+      loadLabel: capacityLabel(model.containerLoads.find((load) => sameCopy(load.copy, row.held.copies[0]))),
+      rows: model.rows.filter((candidate) => insideRow(candidate, row)),
+    }));
 }
 
 /** The drag data's format: the dragged row's id (`GearRow.id`). */
