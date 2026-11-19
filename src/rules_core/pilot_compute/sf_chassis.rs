@@ -31,6 +31,7 @@
 //! terms are kept beside the total so a sheet line can explain itself. A term this reader
 //! cannot resolve is a named [`SfChassisRefusal`], never a 0.
 
+use super::sf_defense::{fold, held_rows, SfHeld, SfNotFolded};
 use crate::rules_core::sheet_rule::{
     evaluate_expr_from_facts, Ability, Applies, BonusTarget, CharacterFacts, Cmp, Effect, Expr, ProseFamily,
     ProsePiece, Save, SheetRule, SheetRulePackage, SheetValue,
@@ -336,6 +337,24 @@ pub fn compute(package: &SheetRulePackage, build: &SfChassisBuild) -> Result<SfC
     })
 }
 
+/// Stamina and Resolve rows the character holds beyond the class and race rows [`compute`]
+/// reads -- a feat's (Toughness +1 Stamina per level, `scr_feats.lst:97` `BONUS:HP|ALTHP|TL`;
+/// Extra Resolve +2 Resolve, `scr_feats.lst:28` `BONUS:VAR|Resolve|2`) -- folded into `chassis`
+/// by bonus type. A row `compute` already added (the class's own Stamina row) is not added twice.
+/// Returns the held rows that target either total but are not a number.
+pub fn fold_held(package: &SheetRulePackage, chassis: &mut SfChassis, sf: &SfHeld) -> Vec<SfNotFolded> {
+    let mut not_folded = Vec::new();
+    for (target, total) in [(BonusTarget::Stamina, &mut chassis.stamina), (BonusTarget::Resolve, &mut chassis.resolve)] {
+        let rows = held_rows(package, sf, &|t| *t == target, &mut not_folded);
+        let fresh = rows.into_iter().filter(|c| !total.terms.iter().any(|t| t.source == c.term.source)).collect();
+        total.terms.extend(fold(fresh));
+        total.total = total.terms.iter().map(|t| t.value).sum();
+    }
+    // Stamina Points never go below 0 (SRD Calculating Stamina Points).
+    chassis.stamina.total = chassis.stamina.total.max(0);
+    not_folded
+}
+
 #[cfg(test)]
 mod sf_seed {
     //! The four SD-37 Starfinder seeds against the SRD hand values (`decisions.md §9`, §18).
@@ -465,5 +484,26 @@ mod sf_seed {
             n += 1;
         }
         assert_eq!(n, 7);
+    }
+
+    /// A held feat adds to Stamina and Resolve beyond the class and race rows `compute` reads:
+    /// Toughness +1 Stamina per level (`scr_feats.lst:97`, `BONUS:HP|ALTHP|TL`), Extra Resolve +2
+    /// Resolve (`scr_feats.lst:28`, `BONUS:VAR|Resolve|2`); the class's own Stamina row is not
+    /// added twice.
+    #[test]
+    fn held_toughness_and_extra_resolve_reach_stamina_and_resolve() {
+        use super::super::sf_defense::{held, seed_support};
+        let (_, mut build) = seed_support::seeds().remove(1);
+        assert_eq!(build.chassis.classes, [("core:class:mystic".to_owned(), 5)]);
+        let base = compute(package(), &build.chassis).unwrap();
+        let mut without = base.clone();
+        fold_held(package(), &mut without, &held(package(), &build).unwrap());
+        assert_eq!((without.stamina.total, without.resolve.total), (base.stamina.total, base.resolve.total), "no feat, no change");
+        build.picks.extend(["core:feat:toughness".to_owned(), "core:feat:extra_resolve".to_owned()]);
+        let mut with = base.clone();
+        fold_held(package(), &mut with, &held(package(), &build).unwrap());
+        assert_eq!(with.stamina.total, base.stamina.total + 5, "{:?}", with.stamina);
+        assert_eq!(with.resolve.total, base.resolve.total + 2, "{:?}", with.resolve);
+        assert!(with.stamina.terms.iter().any(|t| t.source == "core:feat:toughness"), "{:?}", with.stamina);
     }
 }

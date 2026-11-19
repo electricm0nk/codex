@@ -347,14 +347,17 @@ mod tests {
     /// Pinned here so the gap stays visible and any change to it is a
     /// deliberate edit rather than a silent drift.
     ///
-    /// The union checked here is all FOUR ingested books; ARG joined it in
+    /// The union checked here is all FIVE ingested books; ARG joined it in
     /// SD-27 alongside the ARG per-class supplement, and the two landed
-    /// together precisely so the supplement's keys resolve.
+    /// together precisely so the supplement's keys resolve. Ultimate Combat
+    /// joined it with the paladin's UC spells (SD-42 E4.14): 20 of the
+    /// bloodrager's grafts are UC records, so its gap is 30, not 50.
     #[test]
     fn the_dispatched_keys_with_no_ingested_record_are_the_known_documented_gap() {
         use crate::rules_core::rules_catalog::acg::spell_list as acg_spell_list;
         use crate::rules_core::rules_catalog::advanced_race_guide::spell_list as arg_spell_list;
         use crate::rules_core::rules_catalog::apg::spell_list as apg_spell_list;
+        use crate::rules_core::rules_catalog::ultimate_combat::spell_list as uc_spell_list;
 
         let mut gaps: Vec<(&str, usize)> = Vec::new();
         for class_id in classes_with_spell_lists() {
@@ -365,14 +368,15 @@ mod tests {
                     !(SPELL_LIST.iter().any(|entry| entry.key == *key)
                         || apg_spell_list::SPELL_LIST.iter().any(|entry| entry.key == *key)
                         || acg_spell_list::SPELL_LIST.iter().any(|entry| entry.key == *key)
-                        || arg_spell_list::SPELL_LIST.iter().any(|entry| entry.key == *key))
+                        || arg_spell_list::SPELL_LIST.iter().any(|entry| entry.key == *key)
+                        || uc_spell_list::SPELL_LIST.iter().any(|entry| entry.key == *key))
                 })
                 .count();
             if missing > 0 {
                 gaps.push((class_id, missing));
             }
         }
-        assert_eq!(gaps, vec![("class:bloodrager", 50), ("class:shaman", 15)]);
+        assert_eq!(gaps, vec![("class:bloodrager", 30), ("class:shaman", 15)]);
     }
 
     #[test]

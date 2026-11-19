@@ -1877,6 +1877,7 @@
       "name": "Spathinae",
       "book": "alien_archive_3",
       "tags": [
+        "Monstrous Humanoid",
         "Vermin"
       ],
       "description": "Speed: Walk 30 ft., Fly 20 ft.",
@@ -1885,22 +1886,22 @@
         {
           "id": "alien_archive_3:race:spathinae",
           "label": "Spathinae (Dex)",
-          "summary": "Value: 2; Adds to Dexterity; Tags: Vermin; Offers a choice of the higher of 0 and Intelligence modifier from languages: Spoken; Declares BaseSize as M; Grants the Common language; Grants Spathinae"
+          "summary": "Value: 2; Adds to Dexterity; Tags: Monstrous Humanoid, Vermin; Offers a choice of the higher of 0 and Intelligence modifier from languages: Spoken; Declares BaseSize as M; Grants the Common language; Grants Spathinae"
         },
         {
           "id": "alien_archive_3:race:spathinae#bonus1",
           "label": "Spathinae (Wis)",
-          "summary": "Value: 2; Adds to Wisdom; Tags: Vermin"
+          "summary": "Value: 2; Adds to Wisdom; Tags: Monstrous Humanoid, Vermin"
         },
         {
           "id": "alien_archive_3:race:spathinae#bonus2",
           "label": "Spathinae (Con)",
-          "summary": "Value: -2; Adds to Constitution; Tags: Vermin"
+          "summary": "Value: -2; Adds to Constitution; Tags: Monstrous Humanoid, Vermin"
         },
         {
           "id": "alien_archive_3:race:spathinae#race_hp",
           "label": "Spathinae (racial Hit Points)",
-          "summary": "Value: 3; Adds to hit points; Tags: Vermin"
+          "summary": "Value: 3; Adds to hit points; Tags: Monstrous Humanoid, Vermin"
         }
       ]
     },

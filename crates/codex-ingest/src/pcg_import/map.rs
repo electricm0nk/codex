@@ -1428,8 +1428,10 @@ pub fn starfinder_build(package: &SheetRulePackage, input: &CharacterInput) -> (
 pub fn starfinder_verdict(package: &SheetRulePackage, input: &CharacterInput) -> Result<(), String> {
     let refused = |refusal: sf_chassis::SfChassisRefusal| format!("{}: {}", refusal.id, refusal.message);
     let (build, loadout) = starfinder_build(package, input);
-    let chassis = sf_chassis::compute(package, &build.chassis).map_err(refused)?;
+    let (build, _) = sf_abilities::with_item_bonuses(package, &build);
+    let mut chassis = sf_chassis::compute(package, &build.chassis).map_err(refused)?;
     let held = sf_defense::held(package, &build).map_err(refused)?;
+    sf_chassis::fold_held(package, &mut chassis, &held);
     sf_defense::compute_with(package, &build, &held).map_err(refused)?;
     sf_skills::compute_with(package, &build, &held).map_err(refused)?;
     sf_spells::compute_with(package, &build, &held).map_err(refused)?;

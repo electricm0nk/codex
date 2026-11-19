@@ -394,6 +394,20 @@ fn scan_internal_pool_members(
                 {
                     picked.insert(slug(name));
                 }
+                // SD-42 E4.14: a pool an automatic `ABILITY:Internal|...` hop of pool picks only
+                // hands out is the record's pick too (the `Personal Upgrade Mk 3` item's
+                // `Personal Upgrade 3`; `convert::internal_hop_grants`).
+                if k == "ABILITY"
+                    && let [category, nature, targets @ ..] = split_gates(v).0.as_slice()
+                    && category.trim().eq_ignore_ascii_case("Internal")
+                    && nature.trim().eq_ignore_ascii_case("AUTOMATIC")
+                {
+                    for target in targets.iter().filter(|t| super::convert::internal_hop_grants(tree, t).is_some_and(|g| g.is_empty())) {
+                        for (pool, _, _) in super::convert::internal_hop_ability_pools(tree, target).unwrap_or_default() {
+                            picked.insert(slug(&pool));
+                        }
+                    }
+                }
             }
         }
     }

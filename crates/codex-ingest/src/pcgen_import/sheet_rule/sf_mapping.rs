@@ -236,6 +236,19 @@ pub fn hp_pool_row<'t>(table: &'t SfMappingTable, carrier: &str, pool: &str, val
     None
 }
 
+/// The sheet total a `BONUS:VAR|<var>|<value>` token on `carrier` feeds, when the table claims
+/// it as a flat bonus on a held record ([`TermShape::FeatFlatBonus`]: Extra Resolve's
+/// `BONUS:VAR|Resolve|2` -> `resolve`). `None` for every token no such term names -- the
+/// `Default` record's own Resolve formula is the chassis's ([`TermShape::ResolveLevelAndKey`]).
+pub fn var_flat_bonus_row<'t>(table: &'t SfMappingTable, carrier: &str, var: &str, value: &str) -> Option<&'t str> {
+    let token = format!("BONUS:VAR|{}|{}", var.trim(), value.trim());
+    table
+        .rows
+        .iter()
+        .find(|row| row.terms.iter().any(|t| t.shape == TermShape::FeatFlatBonus && t.record.eq_ignore_ascii_case(carrier) && t.token.eq_ignore_ascii_case(&token)))
+        .map(|row| row.id.as_str())
+}
+
 /// `<k>*<Class>LVL` (spaces allowed around `*`, class name compared without spaces and
 /// case-insensitively) -> k.
 fn class_level_coefficient(value: &str, class: &str) -> Option<i64> {
@@ -582,6 +595,15 @@ mod tests {
         // A coefficient naming another class, or a carrier that is not the term's record.
         assert_eq!(hp_pool_row(table, "CLASS:Soldier", "CURRENTMAX", "6*EnvoyLVL"), None);
         assert_eq!(hp_pool_row(table, "Weapon Focus", "ALTHP", "TL"), None);
+    }
+
+    #[test]
+    fn var_flat_bonus_row_routes_extra_resolve_only() {
+        let table = converter_table().expect("the committed SF mapping table loads");
+        assert_eq!(var_flat_bonus_row(table, "Extra Resolve", "Resolve", "2"), Some("resolve"));
+        assert_eq!(var_flat_bonus_row(table, "Default", "Resolve", "max(1,Resolve_PCLvl+KeyAbilityBonus)"), None);
+        assert_eq!(var_flat_bonus_row(table, "Extra Resolve", "Resolve", "3"), None);
+        assert_eq!(var_flat_bonus_row(table, "Weapon Focus", "Resolve", "2"), None);
     }
 
     #[test]

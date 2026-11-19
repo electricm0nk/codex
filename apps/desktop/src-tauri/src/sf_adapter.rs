@@ -42,6 +42,7 @@ use codex::rules_core::character_input::{ActiveState, CharacterInput, EquipmentS
 use codex::rules_core::encumbrance::BulkCondition;
 use codex::rules_core::game_system::GameSystem;
 use codex::rules_core::level_up::LevelUpPlan;
+use codex::rules_core::pilot_compute::sf_abilities;
 use codex::rules_core::pilot_compute::sf_attack::{self, SfAttacks};
 use codex::rules_core::pilot_compute::sf_chassis::{
     self, ability_modifier, SfChassis, SfChassisBuild, SfChassisRefusal, SfTerm, SfTotal,
@@ -253,6 +254,8 @@ pub fn build_from_input(
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct SfSheet {
     pub ability_scores: [i64; 6],
+    /// The worn items' bonuses added to each saved score (a personal upgrade), Str Dex Con Int Wis Cha.
+    pub item_bonuses: [Vec<SfTerm>; 6],
     /// Each class rule id and its level (the build's classes).
     pub classes: Vec<(String, u8)>,
     pub chassis: SfChassis,
@@ -271,8 +274,11 @@ pub struct SfSheet {
 /// The sheet totals of `input`, read from `package` (the Starfinder package).
 pub fn compute_sheet(package: &SheetRulePackage, input: &CharacterInput) -> Result<SfSheet, SfChassisRefusal> {
     let (build, loadout) = build_from_input(package, input)?;
-    let chassis = sf_chassis::compute(package, &build.chassis)?;
+    // A worn item's bonus to a score (a personal upgrade) is not in the saved score.
+    let (build, item_bonuses) = sf_abilities::with_item_bonuses(package, &build);
+    let mut chassis = sf_chassis::compute(package, &build.chassis)?;
     let held = sf_defense::held(package, &build)?;
+    sf_chassis::fold_held(package, &mut chassis, &held);
     let mut defense = sf_defense::compute_with(package, &build, &held)?;
     let mut skills = sf_skills::compute_with(package, &build, &held)?;
     let spells = sf_spells::compute_with(package, &build, &held)?;
@@ -284,6 +290,7 @@ pub fn compute_sheet(package: &SheetRulePackage, input: &CharacterInput) -> Resu
     apply_bulk_condition(&mut defense, &mut skills, carried.condition);
     Ok(SfSheet {
         ability_scores: build.chassis.ability_scores,
+        item_bonuses,
         classes: build.chassis.classes.clone(),
         chassis,
         defense,
@@ -378,7 +385,10 @@ impl SfSheet {
             rows.push(ComputationExplanation {
                 id: format!("sf.ability_score.{name}"),
                 value: to_i16(self.ability_scores[i]),
-                detail: "the saved score: race, theme, point buy and ability increases applied".to_owned(),
+                detail: std::iter::once("the saved score: race, theme, point buy and ability increases applied".to_owned())
+                    .chain(self.item_bonuses[i].iter().map(|t| format!("{} {:+}", t.label, t.value)))
+                    .collect::<Vec<_>>()
+                    .join("; "),
             });
         }
         for (class, level) in &self.classes {
@@ -1515,6 +1525,32 @@ pub(crate) mod tests {
         assert_eq!(after.credits_spent.total, before.credits_spent.total + 750 + 125, "{:?}", after.credits_spent);
         assert_eq!(after.credits_remaining.total, before.credits_remaining.total - 875);
         assert_eq!(after.bulk.total, before.bulk.total + 1, "{:?}", after.bulk);
+    }
+
+    /// A worn personal upgrade raises its chosen score on the sheet (the score row says so, the
+    /// saved score is unchanged), and Toughness and Extra Resolve reach Stamina and Resolve.
+    #[test]
+    fn worn_upgrade_and_held_feats_reach_the_score_stamina_and_resolve() {
+        let package = package().expect("the Starfinder package loads");
+        let mut input = crate::rule_system_adapter::tests::sf_soldier_3_input();
+        input.chosen.class_levels[0].level = 5;
+        let row = |input: &CharacterInput, id: &str| {
+            let rows = compute_sheet(package, input).unwrap_or_else(|r| panic!("{r:?}")).explanations();
+            rows.into_iter().find(|r| r.id == id).unwrap_or_else(|| panic!("no {id} row"))
+        };
+        let (int, stamina, resolve) = (row(&input, "sf.ability_score.intelligence"), row(&input, "sf.stamina"), row(&input, "sf.resolve"));
+        input.chosen.equipment_selections.push(item("personal_upgrade_mk_1", ActiveState::EquippedActive));
+        input.chosen.selected_choices.push(choice(
+            "core:equipment:personal_upgrade_mk_1#pool_personal_upgrade_lvl_03",
+            "core:pool_option:personal_upgrade_lvl_03_personal_upgrade_mk_1_int",
+        ));
+        input.chosen.selected_feats.extend(["core:feat:toughness".to_owned(), "core:feat:extra_resolve".to_owned()]);
+        let upgraded = row(&input, "sf.ability_score.intelligence");
+        assert_eq!(upgraded.value, int.value + 2, "{upgraded:?}");
+        assert!(upgraded.detail.contains("Personal Upgrade Mk 1 (INT) +2"), "{upgraded:?}");
+        assert_eq!(input.chosen.ability_scores.intelligence, int.value, "the saved score is unchanged");
+        assert_eq!(row(&input, "sf.stamina").value, stamina.value + 5);
+        assert_eq!(row(&input, "sf.resolve").value, resolve.value + 2);
     }
 
     /// A Starfinder Soldier holding nothing, or holding it all stowed, computes: armour and weapons

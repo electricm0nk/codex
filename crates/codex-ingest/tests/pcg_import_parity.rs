@@ -36,7 +36,7 @@ use std::sync::OnceLock;
 
 use codex::rules_core::character_input::CharacterInput;
 use codex::rules_core::pilot_compute::apply_human_ability_bonus;
-use codex::rules_core::pilot_compute::{sf_attack, sf_chassis, sf_defense, sf_loadout, sf_skills, sf_spells};
+use codex::rules_core::pilot_compute::{sf_abilities, sf_attack, sf_chassis, sf_defense, sf_loadout, sf_skills, sf_spells};
 use codex::saved_character::equipment_sets::{CopyKey, Location, location_of};
 use codex_ingest::pcg_import::catalog::{Catalog, fold};
 use codex_ingest::pcg_import::map::{character_input_of, convert, record_base_quantity, starfinder_build};
@@ -317,8 +317,10 @@ fn codex_view(file: &ImportFile) -> BTreeMap<String, String> {
 fn starfinder_totals(input: &CharacterInput, named: &BTreeMap<String, String>, out: &mut BTreeMap<String, String>) {
     let package = catalog().for_game_mode("Starfinder").unwrap().starfinder_package().unwrap();
     let (build, loadout) = starfinder_build(package, input);
-    let chassis = sf_chassis::compute(package, &build.chassis).expect("the chassis computes");
+    let (build, _) = sf_abilities::with_item_bonuses(package, &build);
+    let mut chassis = sf_chassis::compute(package, &build.chassis).expect("the chassis computes");
     let held = sf_defense::held(package, &build).expect("held");
+    sf_chassis::fold_held(package, &mut chassis, &held);
     let defense = sf_defense::compute_with(package, &build, &held).expect("defense");
     let skills = sf_skills::compute_with(package, &build, &held).expect("skills");
     let spells = sf_spells::compute_with(package, &build, &held).expect("spells");

@@ -337,10 +337,10 @@ fn pcg_import_fixtures_paladin_reads_what_the_file_says() {
     let pieces: Vec<Option<u32>> = ["Javelin|0|0", "Javelin|0|1"].iter().map(|key| file.equipment_sets.copies.get(*key).and_then(|facts| facts.quantity)).collect();
     assert_eq!(pieces, [Some(3), Some(2)]);
 
-    // Ultimate Combat's Compel Hostility is on the file's list and not on the engine's paladin list,
-    // and one refused spell would refuse the character.
-    assert!(file.custom.spells.iter().any(|record| record.name == "Compel Hostility"), "{:?}", file.custom.spells);
-    assert!(file.report.lines.iter().any(|line| line.key == "SPELLNAME" && line.from == "Compel Hostility" && line.outcome == Outcome::Custom));
+    // Ultimate Combat's Compel Hostility is on the engine's paladin list (its `uc_spells.lst` row
+    // names Paladin at 1st level), so it is a held spell, not a custom one.
+    assert!(!file.custom.spells.iter().any(|record| record.name == "Compel Hostility"), "{:?}", file.custom.spells);
+    assert!(file.report.lines.iter().any(|line| line.key == "SPELLNAME" && line.from == "Compel Hostility" && line.outcome == Outcome::Mapped));
 
     assert_eq!(file.money.total_copper, 48_800, "MONEY:488");
     assert_eq!(file.bio.alignment, "Lawful Good");

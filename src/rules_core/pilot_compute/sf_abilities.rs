@@ -30,7 +30,7 @@ use std::collections::BTreeMap;
 
 use super::sf_chassis::{ability_modifier, SfChassisRefusal, SfTerm, SfTotal};
 use super::sf_defense::{fold, held, held_rows, SfBuild, SfNotFolded};
-use crate::rules_core::sheet_rule::{Ability, BonusTarget, SheetRulePackage};
+use crate::rules_core::sheet_rule::{split_rule_id, Ability, BonusTarget, HeldSet, SheetRulePackage};
 
 /// The ability-score choices of one Starfinder character (the race, theme and picks are the
 /// [`SfBuild`]'s).
@@ -210,6 +210,40 @@ pub fn apply(package: &SheetRulePackage, build: &SfBuild, abilities: &SfAbilityB
     let mut out = build.clone();
     out.chassis.ability_scores = scores.finals();
     Ok(out)
+}
+
+/// Whether held rule `id` is an item's: an equipment record, its `#` line, or a rule held through
+/// one (a personal upgrade's chosen option, held `via` the item's pick line).
+fn item_borne(held: &HeldSet, id: &str) -> bool {
+    let mut at = Some(id.to_owned());
+    for _ in 0..8 {
+        let Some(id) = at else { return false };
+        if split_rule_id(id.split('#').next().unwrap_or(&id)).1 == "equipment" {
+            return true;
+        }
+        at = held.rules.get(&id).and_then(|r| r.via.clone());
+    }
+    false
+}
+
+/// `build` with each ability score raised by the bonuses the items it wears grant (a personal
+/// upgrade's +2/+4/+6 to the chosen score, `scr_abilities.lst:579-599`), and those terms per
+/// score, Str Dex Con Int Wis Cha. The saved score is the score at creation plus the increases
+/// ([`compute`]: race, theme and racial picks applied); an item's bonus is not saved in it, so
+/// the totals read it here; the caller holds the returned build again for every other total. A
+/// build the held set refuses is returned unchanged: the caller's own `held` names the refusal
+/// after the chassis's, in the order the sheet reports them.
+pub fn with_item_bonuses(package: &SheetRulePackage, build: &SfBuild) -> (SfBuild, [Vec<SfTerm>; 6]) {
+    let mut terms: [Vec<SfTerm>; 6] = Default::default();
+    let Ok(sf) = held(package, build) else { return (build.clone(), terms) };
+    let mut not_folded = Vec::new();
+    let mut out = build.clone();
+    for (i, a) in ABILITIES.into_iter().enumerate() {
+        let rows = held_rows(package, &sf, &|t| *t == BonusTarget::Ability(a), &mut not_folded);
+        terms[i] = fold(rows.into_iter().filter(|c| item_borne(&sf.held, &c.term.source)).collect());
+        out.chassis.ability_scores[i] += terms[i].iter().map(|t| t.value).sum::<i64>();
+    }
+    (out, terms)
 }
 
 #[cfg(test)]
@@ -417,5 +451,24 @@ mod sf_seed {
         soldier.chassis.classes[0].1 = 9;
         early.increases.retain(|at, _| *at <= 10);
         assert_eq!(compute(package(), &soldier, &early).unwrap_err().id, REFUSED_INCREASE_LEVEL);
+    }
+
+    /// A worn personal upgrade raises the score its owner chose (`scr_abilities.lst:579-599`,
+    /// `Personal Upgrade Mk 1 (INT)`: `BONUS:STAT|INT|2|TYPE=PersonalUpgrade`); the saved score
+    /// already holds the race's and the racial pick's rows, which are not added again.
+    #[test]
+    fn a_worn_personal_upgrade_raises_the_chosen_score_once() {
+        let (_, mut soldier) = seeds().remove(0);
+        let saved = soldier.chassis.ability_scores;
+        let (unchanged, terms) = with_item_bonuses(package(), &soldier);
+        assert_eq!(unchanged.chassis.ability_scores, saved, "the human +2 STR is in the saved score: {terms:?}");
+        let chooser = "core:equipment:personal_upgrade_mk_1#pool_personal_upgrade_lvl_03";
+        soldier.picks.push("core:equipment:personal_upgrade_mk_1".to_owned());
+        soldier.choices.insert(chooser.to_owned(), vec!["core:pool_option:personal_upgrade_lvl_03_personal_upgrade_mk_1_int".to_owned()]);
+        let (raised, terms) = with_item_bonuses(package(), &soldier);
+        let mut want = saved;
+        want[3] += 2;
+        assert_eq!(raised.chassis.ability_scores, want, "{terms:?}");
+        assert_eq!(terms[3].iter().map(|t| t.source.as_str()).collect::<Vec<_>>(), ["core:pool_option:personal_upgrade_lvl_03_personal_upgrade_mk_1_int"]);
     }
 }

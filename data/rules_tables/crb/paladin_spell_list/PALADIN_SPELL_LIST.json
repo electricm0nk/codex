@@ -26,6 +26,10 @@
       2
     ],
     [
+      "Bestow Weapon Proficiency",
+      2
+    ],
+    [
       "Blaze of Glory",
       4
     ],
@@ -50,6 +54,10 @@
       2
     ],
     [
+      "Bowstaff",
+      1
+    ],
+    [
       "Break Enchantment",
       4
     ],
@@ -62,7 +70,15 @@
       2
     ],
     [
+      "Burst of Speed",
+      3
+    ],
+    [
       "Challenge Evil",
+      1
+    ],
+    [
+      "Compel Hostility",
       1
     ],
     [
@@ -86,7 +102,15 @@
       4
     ],
     [
+      "Daybreak Arrow",
+      3
+    ],
+    [
       "Daylight",
+      3
+    ],
+    [
+      "Deadly Juggernaut",
       3
     ],
     [
@@ -96,6 +120,10 @@
     [
       "Delay Poison",
       2
+    ],
+    [
+      "Delay Poison (Communal)",
+      3
     ],
     [
       "Detect Poison",
@@ -122,6 +150,10 @@
       3
     ],
     [
+      "Divine Arrow",
+      2
+    ],
+    [
       "Divine Favor",
       1
     ],
@@ -134,8 +166,16 @@
       2
     ],
     [
+      "Effortless Armor",
+      2
+    ],
+    [
       "Endure Elements",
       1
+    ],
+    [
+      "Endure Elements (Communal)",
+      2
     ],
     [
       "Fire of Entanglement",
@@ -206,8 +246,56 @@
       1
     ],
     [
+      "Liberating Command",
+      1
+    ],
+    [
       "Light Lance",
       2
+    ],
+    [
+      "Litany of Defense",
+      2
+    ],
+    [
+      "Litany of Eloquence",
+      2
+    ],
+    [
+      "Litany of Entanglement",
+      2
+    ],
+    [
+      "Litany of Escape",
+      3
+    ],
+    [
+      "Litany of Righteousness",
+      2
+    ],
+    [
+      "Litany of Sight",
+      3
+    ],
+    [
+      "Litany of Sloth",
+      1
+    ],
+    [
+      "Litany of Thunder",
+      4
+    ],
+    [
+      "Litany of Vengeance",
+      4
+    ],
+    [
+      "Litany of Warding",
+      2
+    ],
+    [
+      "Longshot",
+      1
     ],
     [
       "Magic Circle against Chaos",
@@ -216,6 +304,14 @@
     [
       "Magic Circle against Evil",
       3
+    ],
+    [
+      "Magic Siege Engine",
+      2
+    ],
+    [
+      "Magic Siege Engine (Greater)",
+      4
     ],
     [
       "Magic Weapon",
@@ -266,8 +362,16 @@
       1
     ],
     [
+      "Protection from Chaos (Communal)",
+      2
+    ],
+    [
       "Protection from Evil",
       1
+    ],
+    [
+      "Protection from Evil (Communal)",
+      2
     ],
     [
       "Rally Point",
@@ -292,6 +396,10 @@
     [
       "Resist Energy",
       2
+    ],
+    [
+      "Resist Energy (Communal)",
+      3
     ],
     [
       "Resistance",
@@ -356,6 +464,14 @@
     [
       "Stunning Barrier (Greater)",
       3
+    ],
+    [
+      "Sun Metal",
+      1
+    ],
+    [
+      "Tactical Acumen",
+      1
     ],
     [
       "Undetectable Alignment",
