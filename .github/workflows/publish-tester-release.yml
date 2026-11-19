@@ -238,6 +238,14 @@ jobs:
   publish-tester-release:
     name: Publish tester release (${{ github.ref_name }}, linux)
     runs-on: ubuntu-latest
+    # The Linux ELFs link against the container's glibc, not the runner's: ubuntu-latest moved to
+    # 26.04 and 0.21.153 needed GLIBC_2.43 (issue #409). The floor lives in
+    # tools/release/check_glibc_floor.py; linux-build-check.yml builds in this same image.
+    container:
+      image: ubuntu:22.04
+    env:
+      # Tauri's linuxdeploy is itself an AppImage; a container has no FUSE.
+      APPIMAGE_EXTRACT_AND_RUN: 1
     needs: [test, stamp]
 
     # SD16-F-WINDOWS: the `stage` step's outputs are surfaced as job
@@ -253,6 +261,29 @@ jobs:
       manifest_tag: ${{ steps.generate_manifest.outputs.manifest-tag }}
       release_tag: ${{ steps.release_meta.outputs.tag }}
     steps:
+      # Before checkout so actions/checkout finds git; the container runs as root (no sudo).
+      - name: Install Linux build dependencies
+        env:
+          DEBIAN_FRONTEND: noninteractive
+        run: |
+          apt-get update -y
+          apt-get install -y \
+            libwebkit2gtk-4.1-dev \
+            libappindicator3-dev \
+            librsvg2-dev \
+            patchelf \
+            libdbus-1-dev \
+            build-essential \
+            pkg-config \
+            curl \
+            ca-certificates \
+            git \
+            file \
+            xdg-utils \
+            python3 \
+            python3-pip \
+            python-is-python3
+
       - uses: actions/checkout@v7
 
       - name: Resolve publication channel
@@ -282,21 +313,14 @@ jobs:
       - name: Assert version stamp reached the build tree
         run: python3 tools/release/assert_version_stamp.py --repo-root . --version "${{ needs.stamp.outputs.version }}"
 
-      - name: Install Linux build dependencies
-        run: |
-          sudo apt-get update -y
-          sudo apt-get install -y \
-            libwebkit2gtk-4.1-dev \
-            libappindicator3-dev \
-            librsvg2-dev \
-            patchelf
-
       - uses: dtolnay/rust-toolchain@stable
 
       - name: Cache Rust build artifacts
         uses: Swatinem/rust-cache@v2
         with:
           workspaces: apps/desktop/src-tauri -> target
+          # A new key: nothing linked on the old ubuntu-latest host is restored into the container build.
+          key: ubuntu-22.04-container
 
       - uses: actions/setup-node@v6
         with:
@@ -350,6 +374,13 @@ jobs:
 
           echo "deb_name=$DEB_NAME" >> "$GITHUB_OUTPUT"
           echo "appimage_name=$APPIMAGE_NAME" >> "$GITHUB_OUTPUT"
+
+      # A red gate stops the release before anything is uploaded.
+      - name: Gate Linux glibc floor
+        run: |
+          python3 tools/release/check_glibc_floor.py \
+            --deb "release-staging/${{ steps.stage.outputs.deb_name }}" \
+            --appimage "release-staging/${{ steps.stage.outputs.appimage_name }}"
 
       - name: Write provenance receipt
         working-directory: release-staging
