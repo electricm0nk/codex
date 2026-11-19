@@ -1172,7 +1172,12 @@ impl<'a> Importer<'a> {
                 self.report.warnings.push(format!("the file states no {ability}; it reads as 10"));
             }
         }
-        let floating = self.floating.clone();
+        let mut floating = self.floating.clone();
+        // A Human's first +2 is saved as `choice:human_ability_bonus` (`add_engine_rows`), which the
+        // engine adds itself, so the score is saved before it, as Create saves it.
+        if race.is_some_and(|race| race.id == "race:human") && !floating.is_empty() {
+            floating.remove(0);
+        }
         let score = |ability: &str| -> i16 {
             let base = self.scores.get(ability).copied().unwrap_or(10);
             let adjustment = race.and_then(|race| race.adjustments.get(ability).copied()).unwrap_or(0);
@@ -1187,7 +1192,7 @@ impl<'a> Importer<'a> {
             wisdom: score("wisdom"),
             charisma: score("charisma"),
         };
-        if race.is_some_and(|race| race.floating_bonus_points > 0) && floating.is_empty() {
+        if race.is_some_and(|race| race.floating_bonus_points > 0) && self.floating.is_empty() {
             self.report.warnings.push(format!("{}'s +2 to one ability is not stated in the file, so it is not applied", self.race_name));
         }
         scores

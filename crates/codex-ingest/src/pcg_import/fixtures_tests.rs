@@ -303,8 +303,9 @@ fn pcg_import_fixtures_paladin_reads_what_the_file_says() {
     assert_eq!(file.display_label, "Florian Syrkov");
     assert_eq!(chosen.race_id, "race:human");
     assert_eq!((chosen.class_levels[0].class_id.as_str(), chosen.class_levels[0].level), ("class:paladin", 6));
-    // STAT:STR|SCORE:16 + ABILITY KEY:+2 Strength; DEX has neither.
-    assert_eq!(chosen.ability_scores.strength, 18);
+    // STAT:STR|SCORE:16 + ABILITY KEY:+2 Strength; DEX has neither. A Human's +2 is the choice, which
+    // the engine adds (`apply_human_ability_bonus`), so the saved score is before it, as Create saves it.
+    assert_eq!(chosen.ability_scores.strength, 16);
     assert_eq!(chosen.ability_scores.dexterity, 12);
     assert_eq!(chosen.ability_scores.charisma, 14);
     assert!(chosen.selected_choices.iter().any(|c| c.choice_set_id == "choice:human_ability_bonus" && c.selection_id == "ability:strength"));
@@ -361,7 +362,8 @@ fn pcg_import_fixtures_paladin_reads_what_the_file_says() {
 /// A race's adjustment lands on the saved score, and these are PCGen's own totals: run through the
 /// real engine (`scripts/pcgen-run-character.sh`, `STAT.n`), `pf_Rogue.pcg` prints Str 12, Dex 22,
 /// Int 15, Cha 14, where Dex and Int each carry a worn +2 item the sheet adds for itself, and
-/// `pf_Cleric.pcg` prints Cha 17 (15, plus the Human's +2 the file sends to Charisma).
+/// `pf_Cleric.pcg` prints Cha 17: the saved 15, plus the Human's +2 the file sends to Charisma, which
+/// is the `choice:human_ability_bonus` the engine adds (`apply_human_ability_bonus`), as Create saves it.
 #[test]
 fn pcg_import_fixtures_a_race_adjustment_lands_on_the_score() {
     let file = oracle_fixture("pf_Rogue.pcg");
@@ -369,7 +371,8 @@ fn pcg_import_fixtures_a_race_adjustment_lands_on_the_score() {
     assert_eq!(file.character_input.chosen.race_id, "race:halfling");
     assert_eq!((scores.strength, scores.dexterity, scores.intelligence, scores.charisma), (12, 20, 13, 14));
     let cleric = oracle_fixture("pf_Cleric.pcg");
-    assert_eq!(cleric.character_input.chosen.ability_scores.charisma, 17);
+    assert_eq!(cleric.character_input.chosen.ability_scores.charisma, 15);
+    assert!(cleric.character_input.chosen.selected_choices.iter().any(|c| c.choice_set_id == "choice:human_ability_bonus" && c.selection_id == "ability:charisma"));
 }
 
 #[test]

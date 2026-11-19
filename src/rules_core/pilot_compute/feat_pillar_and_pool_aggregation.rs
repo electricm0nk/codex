@@ -802,10 +802,21 @@ pub(super) fn compute_total_saves(
     // race can take), all-zero for every character who selected neither.
     let character_trait_saves =
         crate::rules_core::trait_effects::save_bonuses_from_traits(&input.chosen.selected_traits);
+    // SD-42 E4.13: Paladin Divine Grace (CRB, 2nd level): the Charisma bonus, never a penalty, on
+    // all three saves -- the magnitude `class_chassis.paladin.divine_grace_save_bonus` explains.
+    let paladin_level: u8 = input.chosen.class_levels.iter().filter(|c| c.class_id == "class:paladin").map(|c| c.level).sum();
+    let divine_grace_save_bonus = if paladin_level >= class_paladin_ranger::PALADIN_LAY_ON_HANDS_DIVINE_GRACE_LEVEL {
+        ability_modifiers.charisma.max(0)
+    } else {
+        0
+    };
+    // Named in each save's derivation only when it applies, so no other character's text moves.
+    let divine_grace_words = if divine_grace_save_bonus > 0 { format!(" + Paladin Divine Grace (+{divine_grace_save_bonus})") } else { String::new() };
     let total_saves = BaseSaves {
         fortitude: base_saves.fortitude
             + ability_modifiers.constitution
             + feat_save_bonuses.fortitude
+            + divine_grace_save_bonus
             + touch_of_good_save_bonus
             + purity_judgment_save_bonus
             + alternate_trait_saves.fortitude
@@ -813,6 +824,7 @@ pub(super) fn compute_total_saves(
         reflex: base_saves.reflex
             + ability_modifiers.dexterity
             + feat_save_bonuses.reflex
+            + divine_grace_save_bonus
             + touch_of_good_save_bonus
             + purity_judgment_save_bonus
             + sidestep_secret_reflex_bonus
@@ -821,6 +833,7 @@ pub(super) fn compute_total_saves(
         will: base_saves.will
             + ability_modifiers.wisdom
             + feat_save_bonuses.will
+            + divine_grace_save_bonus
             + rage_will_bonus
             + inspired_rage_will_bonus
             + bloodrage_will_bonus
@@ -840,7 +853,7 @@ pub(super) fn compute_total_saves(
              bonus (+{}, self-applied) + Inquisitor Purity judgment sacred/profane bonus (+{}, \
              only while actively, validly judging Purity) + alternate racial trait (+{}, only \
              for a character who took one that declares a Fortitude bonus) + character trait \
-             (+{}, Life of Toil if selected) = {}",
+             (+{}, Life of Toil if selected){divine_grace_words} = {}",
             base_saves.fortitude, ability_modifiers.constitution, feat_save_bonuses.fortitude,
             touch_of_good_save_bonus, purity_judgment_save_bonus,
             alternate_trait_saves.fortitude, character_trait_saves.fortitude, total_saves.fortitude
@@ -858,8 +871,8 @@ pub(super) fn compute_total_saves(
              Oracle who took that revelation) + alternate racial trait ({:+}, only for a \
              character who took one that declares a Reflex modifier -- this one can be \
              NEGATIVE, e.g. Horror Adventures' Half-Elf Mismatched at -2) + character trait \
-             (+{}, no ultimate_campaign trait currently declares a Reflex bonus, so always 0) \
-             = {}",
+             (+{}, no ultimate_campaign trait currently declares a Reflex bonus, so always 0)\
+             {divine_grace_words} = {}",
             base_saves.reflex, ability_modifiers.dexterity, feat_save_bonuses.reflex,
             touch_of_good_save_bonus, purity_judgment_save_bonus,
             alternate_trait_saves.reflex, character_trait_saves.reflex, total_saves.reflex
@@ -878,7 +891,7 @@ pub(super) fn compute_total_saves(
              actively, validly judging Purity) + alternate racial trait (+{}, only for a \
              character who took one that declares a Will bonus -- ARG p.42's Half-Elf Dual \
              Minded is the one such trait in the corpus today) + character trait (+{}, \
-             Indomitable Faith if selected) = {}",
+             Indomitable Faith if selected){divine_grace_words} = {}",
             base_saves.will,
             ability_modifiers.wisdom,
             feat_save_bonuses.will,

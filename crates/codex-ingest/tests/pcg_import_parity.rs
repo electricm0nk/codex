@@ -20,10 +20,11 @@
 //! Every Pathfinder total (HP, AC, base and melee/ranged attack, initiative, saves, skills, weapons,
 //! spells per day and DC) is assembled in the desktop crate (`character_hub.rs`, `pf1_adapter.rs`,
 //! over the desktop's own corpus), which this crate cannot link (SD-36 D1): it reads `not-computed`
-//! here and its ledger row names E4.13, which compares it there. A Pathfinder ability score here is
-//! the import's (after the race, as Create saves it).
+//! here and its ledger rows name the desktop's gate (`pcg_import_parity_desktop.rs`, E4.13), which
+//! compares it there. A Pathfinder ability score here is the import's (after the race, as Create saves
+//! it, with a Human's chosen +2 the engine adds).
 //!
-//! **Does not cover:** the Pathfinder totals above (E4.13); a `.pcg` outside the 8 files; the
+//! **Does not cover:** the Pathfinder totals above (the desktop's gate, E4.13); a `.pcg` outside the 8 files; the
 //! drone's totals (Codex refuses the file, `§21` Q-A); a parameterised feat's parameter (`Spell
 //! Focus (Enchantment)` compares as Spell Focus); a prepared caster's class list (only spells it
 //! chose or prepared); the Starfinder bulk condition the desktop folds in (`sf_adapter.rs`
@@ -34,6 +35,7 @@ use std::path::{Path, PathBuf};
 use std::sync::OnceLock;
 
 use codex::rules_core::character_input::CharacterInput;
+use codex::rules_core::pilot_compute::apply_human_ability_bonus;
 use codex::rules_core::pilot_compute::{sf_attack, sf_chassis, sf_defense, sf_loadout, sf_skills, sf_spells};
 use codex::saved_character::equipment_sets::{CopyKey, Location, location_of};
 use codex_ingest::pcg_import::catalog::{Catalog, fold};
@@ -364,9 +366,10 @@ fn starfinder_totals(input: &CharacterInput, named: &BTreeMap<String, String>, o
 }
 
 /// A Pathfinder character's ability scores are the import's (the score after the race, as Create
-/// saves it); every Pathfinder total is the desktop's (module doc) and reads [`NOT_COMPUTED`].
+/// saves it, and a Human's chosen +2 the engine adds); every Pathfinder total is the desktop's
+/// (module doc) and reads [`NOT_COMPUTED`].
 fn pathfinder_totals(input: &CharacterInput, out: &mut BTreeMap<String, String>) {
-    let s = &input.chosen.ability_scores;
+    let s = &apply_human_ability_bonus(input, &mut Vec::new());
     for (name, score) in [("STR", s.strength), ("DEX", s.dexterity), ("CON", s.constitution), ("INT", s.intelligence), ("WIS", s.wisdom), ("CHA", s.charisma)] {
         out.insert(format!("stat.{name}"), score.to_string());
     }

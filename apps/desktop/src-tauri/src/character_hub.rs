@@ -24766,3 +24766,8 @@ mod mirror_two_master;
 #[cfg(test)]
 #[path = "import_operator_file.rs"]
 mod import_operator_file;
+
+/// Pathfinder whole-character parity at the desktop (SD-42 E4.13).
+#[cfg(test)]
+#[path = "pcg_import_parity_desktop.rs"]
+mod pcg_import_parity_desktop;
