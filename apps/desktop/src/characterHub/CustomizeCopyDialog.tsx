@@ -73,7 +73,6 @@ export function CustomizeCopyPanel(props: CustomizeCopyPanelProps) {
           <input
             data-testid="gear-customize-name"
             value={props.name}
-            placeholder={props.held.baseName}
             maxLength={80}
             onChange={(event) => props.onNameChange(event.target.value)}
             style={{ fontSize: '0.8rem', padding: '0.2rem 0.35rem', width: '14rem' }}

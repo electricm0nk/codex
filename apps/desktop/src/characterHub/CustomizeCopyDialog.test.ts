@@ -60,7 +60,6 @@ function saveCallsRenameEquipmentCopyWithTheCopyAndTheTrimmedName() {
 function blankNameRestoresTheBaseName() {
   assertEqual(renameRequest('char-1', sack, '   ').name, '', 'blank clears the custom name (the backend restores the record name)');
   const html = renderToStaticMarkup(createElement(CustomizeCopyPanel, panelProps({ held: held({ name: 'Camping Gear' }), name: 'Camping Gear' })));
-  assert(html.includes('placeholder="Sack"'), 'the base name is the placeholder');
   assert(html.includes('Leave blank for Sack.'), 'and the words say so');
   assert(html.includes('value="Camping Gear"'), 'prefilled with the current name');
 }
