@@ -4658,6 +4658,7 @@ pub(crate) fn attach_equipment_modifier_priced_at_root(
         });
     };
 
+    let keys_before = selection_copy_keys(selections);
     let offers = copy_offers(item_id);
     let cost_copper = if mode == PriceMode::Cashless {
         0
@@ -4697,6 +4698,14 @@ pub(crate) fn attach_equipment_modifier_priced_at_root(
             Ok(AttachEquipmentModifierResponse::Blocked { diagnostics })
         }
         CreateCharacterResponse::Saved { summary, snapshot, corpus_derived, .. } => {
+            // A `+N` moves the copy to a new key and renumbers its item's others (E4.16): the
+            // sets file follows, by saved line (an attach reorders no line).
+            let saved = SavedCharacterStore::load(root).map_err(|err| err.message)?;
+            let keys_after = selection_copy_keys(&saved.character_input.chosen.equipment_selections);
+            if keys_after != keys_before {
+                let moved: std::collections::BTreeMap<CopyKey, CopyKey> = keys_before.into_iter().zip(keys_after).collect();
+                rekey_copies_in_sets(root, |copy| Some(moved.get(copy).unwrap_or(copy).clone()))?;
+            }
             let money = if cost_copper > 0 {
                 let cost_signed = i64::try_from(cost_copper)
                     .map_err(|_| "attach cost overflows a signed 64-bit total".to_owned())?;
@@ -6603,32 +6612,46 @@ fn switch_sets_at_root(root: &Path, saved_at: &str, edit: impl FnOnce(&mut Equip
 /// and from the copies map, and numbers the later copies of its item and bonus down by one, the
 /// way their lines moved up (`decisions.md §5.2`). A root with no sets file has nothing to change.
 fn forget_copy_in_sets(root: &Path, removed: &CopyKey) -> Result<(), String> {
+    rekey_copies_in_sets(root, |copy| {
+        (copy != removed).then(|| {
+            let mut copy = copy.clone();
+            if copy.item_id == removed.item_id && copy.bonus == removed.bonus && copy.ordinal > removed.ordinal {
+                copy.ordinal -= 1;
+            }
+            copy
+        })
+    })
+}
+
+/// Moves every copy key in the sets file through `rekey` at once: each set entry's copy and
+/// container, and the copies map. `None` forgets the copy: its entries go (what it held becomes
+/// Carried) and so do its facts. The one renumbering a removal and a `+N` (E4.16) share; a root
+/// with no sets file has nothing to change.
+fn rekey_copies_in_sets(root: &Path, rekey: impl Fn(&CopyKey) -> Option<CopyKey>) -> Result<(), String> {
     let Some(mut sets) = equipment_sets::load(root).map_err(|err| err.message)? else {
         return Ok(());
     };
-    let renumber = |copy: &mut CopyKey| {
-        if copy.item_id == removed.item_id && copy.bonus == removed.bonus && copy.ordinal > removed.ordinal {
-            copy.ordinal -= 1;
-        }
-    };
     for set in &mut sets.sets {
-        set.locations.retain(|entry| &entry.copy != removed && !matches!(&entry.location, Location::Inside { container } if container == removed));
-        for entry in &mut set.locations {
-            renumber(&mut entry.copy);
-            if let Location::Inside { container } = &mut entry.location {
-                renumber(container);
-            }
-        }
+        set.locations = std::mem::take(&mut set.locations)
+            .into_iter()
+            .filter_map(|entry| {
+                let location = match entry.location {
+                    Location::Inside { container } => Location::Inside { container: rekey(&container)? },
+                    location => location,
+                };
+                Some(equipment_sets::SetEntry { copy: rekey(&entry.copy)?, location })
+            })
+            .collect();
     }
     let mut copies = std::collections::BTreeMap::new();
     for (key, facts) in std::mem::take(&mut sets.copies) {
         let mut parts = key.rsplitn(3, '|');
         let parsed = (|| Some(CopyKey { ordinal: parts.next()?.parse().ok()?, bonus: parts.next()?.parse().ok()?, item_id: parts.next()?.to_owned() }))();
         match parsed {
-            Some(copy) if &copy == removed => {}
-            Some(mut copy) => {
-                renumber(&mut copy);
-                copies.insert(copy.map_key(), facts);
+            Some(copy) => {
+                if let Some(copy) = rekey(&copy) {
+                    copies.insert(copy.map_key(), facts);
+                }
             }
             None => {
                 copies.insert(key, facts);
@@ -23344,6 +23367,79 @@ mod tests {
         assert!(matches!(response, AttachEquipmentModifierResponse::Attached { .. }), "{response:?}");
         let modifiers: Vec<Vec<String>> = held_selections(&root).into_iter().filter(|selection| selection.item_id == "Net (Base)").map(|selection| selection.applied_modifiers).collect();
         assert_eq!(modifiers, [vec![PLUS_ONE_KEY.to_owned()], vec![]], "the first copy carries it");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    // ----- SD-42 E4.16: a `+N` re-keys the copy's facts and set places (`decisions.md §27.3`) -----
+
+    fn attach_plus_one(root: &Path, copy: &CopyKey) {
+        let response = attach_equipment_modifier_priced_at_root(root, &copy.item_id, Some(copy), PLUS_ONE_KEY, "2026-11-19T00:00:00Z", PriceMode::Cashless).unwrap();
+        assert!(matches!(response, AttachEquipmentModifierResponse::Attached { .. }), "{response:?}");
+    }
+
+    /// (bonus, name, location) of every row of `item_id`, sorted.
+    fn bonus_names(root: &Path, item_id: &str) -> Vec<(u8, String, Location)> {
+        let mut rows: Vec<_> = stacks_of(root, item_id).into_iter().map(|row| (row.bonus, row.name, row.location)).collect();
+        rows.sort_by(|a, b| (a.0, &a.1).cmp(&(b.0, &b.1)));
+        rows
+    }
+
+    /// E4.9's probe: copy 0 of two Daggers renamed "Grandpa", then a `+1` on copy 0 — the name
+    /// rides with the `+1` copy and the plain one reads the record's name.
+    #[test]
+    fn rekey_on_bonus_rename_stays_on_the_plus_one_copy() {
+        const DAGGER: &str = "Dagger (Base)";
+        let root = sets_root("rekey-rename", &[(DAGGER, ActiveState::SelectedInactive), (DAGGER, ActiveState::SelectedInactive)]);
+        let plain = stacks_of(&root, DAGGER)[0].base_name.clone();
+        rename_equipment_copy_at_root(&root, &sets_key(DAGGER, 0), "Grandpa").unwrap();
+        attach_plus_one(&root, &sets_key(DAGGER, 0));
+        assert_eq!(bonus_names(&root, DAGGER), [(0, plain, Location::Carried), (1, "Grandpa".to_owned(), Location::Carried)]);
+        let facts = equipment_sets::load(&root).unwrap().unwrap().copies;
+        assert!(!facts.contains_key(&sets_key(DAGGER, 0).map_key()), "the old key is forgotten: {facts:?}");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// A Dagger in a Sack takes a `+1` and is still in the Sack.
+    #[test]
+    fn rekey_on_bonus_sack_held_dagger_stays_inside() {
+        const DAGGER: &str = "Dagger (Base)";
+        let root = sets_root("rekey-sack", &[("Sack", ActiveState::SelectedInactive), (DAGGER, ActiveState::SelectedInactive)]);
+        let sack = Location::Inside { container: sets_key("Sack", 0) };
+        move_saved(&root, &sets_key(DAGGER, 0), sack.clone(), None);
+        attach_plus_one(&root, &sets_key(DAGGER, 0));
+        let rows = bonus_names(&root, DAGGER);
+        assert_eq!((rows.len(), rows[0].0, &rows[0].2), (1, 1, &sack), "{rows:?}");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// Three Daggers named First, Second, Third: a `+1` on copy 0 leaves Second and Third on the
+    /// copies that were 1 and 2, now plain copies 0 and 1.
+    #[test]
+    fn rekey_on_bonus_copy_zero_of_three_leaves_the_others_names() {
+        const DAGGER: &str = "Dagger (Base)";
+        let root = sets_root("rekey-three", &[(DAGGER, ActiveState::SelectedInactive); 3]);
+        for (ordinal, name) in ["First", "Second", "Third"].into_iter().enumerate() {
+            rename_equipment_copy_at_root(&root, &sets_key(DAGGER, ordinal as u32), name).unwrap();
+        }
+        attach_plus_one(&root, &sets_key(DAGGER, 0));
+        let named = |rows: Vec<(u8, String, Location)>| rows.into_iter().map(|(bonus, name, _)| (bonus, name)).collect::<Vec<_>>();
+        assert_eq!(named(bonus_names(&root, DAGGER)), [(0, "Second".to_owned()), (0, "Third".to_owned()), (1, "First".to_owned())]);
+        let facts = equipment_sets::load(&root).unwrap().unwrap().copies;
+        assert_eq!(facts.get(&sets_key(DAGGER, 0).map_key()).and_then(|facts| facts.name.as_deref()), Some("Second"), "{facts:?}");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// The Market's buy-a-`+1` adds a new copy; the renamed plain Dagger keeps its name.
+    #[test]
+    fn rekey_on_bonus_market_buy_leaves_held_names() {
+        const DAGGER: &str = "Dagger (Base)";
+        let root = sets_root("rekey-market", &[(DAGGER, ActiveState::SelectedInactive), (DAGGER, ActiveState::SelectedInactive)]);
+        let plain = stacks_of(&root, DAGGER)[0].base_name.clone();
+        rename_equipment_copy_at_root(&root, &sets_key(DAGGER, 0), "Grandpa").unwrap();
+        let response = purchase_equipment_offer_at_root(&root, DAGGER, ActiveState::SelectedInactive, "2026-11-19T00:00:00Z", PriceMode::Cashless, Some(1)).unwrap();
+        assert!(matches!(response, PurchaseEquipmentResponse::Purchased { .. }), "{response:?}");
+        let named: Vec<(u8, String)> = bonus_names(&root, DAGGER).into_iter().map(|(bonus, name, _)| (bonus, name)).collect();
+        assert_eq!(named, [(0, plain), (0, "Grandpa".to_owned()), (1, "+1 Dagger".to_owned())]);
         std::fs::remove_dir_all(&root).ok();
     }
 
