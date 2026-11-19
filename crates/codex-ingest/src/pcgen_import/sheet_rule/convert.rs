@@ -1469,9 +1469,8 @@ pub fn convert_record(tree: &PinnedTree, index: &CorpusIndex, record: &RecordRef
             ctx.current_seq_degraded = false;
             // PCGen reads every `TYPE:` token of a line: a second one adds its types (an Armory
             // melee weapon's `TYPE:RESIZABLE.Weapon.Melee...` then `TYPE:Cold.CRYO`), as a `.MOD`
-            // row's does, never replacing the first. shortcut: Starfinder only -- the Pathfinder
-            // package's 553 such records regenerate under discovered card E4.18.
-            let kind = if key == "TYPE" && ctx.tree.system == GameSystem::Starfinder1e && std::mem::replace(&mut typed, true) {
+            // row's does, never replacing the first.
+            let kind = if key == "TYPE" && std::mem::replace(&mut typed, true) {
                 ClosureRowKind::Mod
             } else {
                 row.kind
@@ -3441,6 +3440,17 @@ mod sf_engine_row_tests {
             }
         }
         assert!(record("armory/equipment/cryospike_residential.json")[0].tags.iter().any(|t| t == "CRYO"));
+    }
+
+    /// The same union in Pathfinder: `ghoran_abilities_race.lst`'s Seed line carries
+    /// `TYPE:RacialTraits.Ghoran Racial Trait...Extraordinary` then `TYPE:BuilderOtherTrait`.
+    #[test]
+    fn a_pathfinder_line_with_two_type_tokens_keeps_both() {
+        let path = std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join("../../data/sheet_rules/ultimate_wilderness/race_trait/ghoran_seed.json");
+        let rules: Vec<SheetRule> = serde_json::from_str(&std::fs::read_to_string(&path).expect("reads")).expect("parses");
+        for want in ["Ghoran Racial Trait", "Extraordinary", "BuilderOtherTrait"] {
+            assert!(rules[0].tags.iter().any(|t| t == want), "{want} missing from {:?}", rules[0].tags);
+        }
     }
 
     /// `scr_feats.lst:28` `BONUS:VAR|Resolve|2`, the mapping table's `extra_resolve` term: a +2
