@@ -28,6 +28,13 @@ fn weapon_row_key(record: &str) -> String {
     record.strip_suffix(" (Base)").unwrap_or(record).chars().filter(char::is_ascii_alphanumeric).map(|c| c.to_ascii_lowercase()).collect()
 }
 
+/// A weapon's row under `prefix`: its own copy's (`combat.weapon_damage_total.longsword.1`, SD-42
+/// E4.15) when the engine filed one for it, else its kind's (`kind`, [`weapon_row_key`]).
+fn weapon_row<'a>(sources: &'a SheetSources, prefix: &str, weapon: &WeaponDamageDto, kind: &str) -> Option<&'a crate::character_hub::ExplanationDto> {
+    let find = |key: &str| sources.loaded.explanations.iter().find(|row| row.id.strip_prefix(prefix) == Some(key));
+    weapon.copy_row.as_deref().and_then(find).or_else(|| find(kind))
+}
+
 /// A per-weapon row as its cell prints it: the damage total as the engine prints it (its detail
 /// opens with `1d8+4:`), the threat range's first number as is, a bonus signed.
 fn weapon_cell(prefix: &str, row: Option<&crate::character_hub::ExplanationDto>) -> String {
@@ -100,7 +107,7 @@ pub fn weapons(sources: &SheetSources) -> SheetBlock {
         let key = weapon_row_key(weapon.weapon_record_key.as_deref().unwrap_or(&name));
         let found: Vec<(&str, Option<&crate::character_hub::ExplanationDto>)> = WEAPON_ROWS
             .iter()
-            .map(|(prefix, _)| (*prefix, sources.loaded.explanations.iter().find(|row| row.id.strip_prefix(prefix) == Some(key.as_str()))))
+            .map(|(prefix, _)| (*prefix, weapon_row(sources, prefix, weapon, &key)))
             .collect();
         placed.extend(found.iter().filter_map(|(_, row)| row.map(|row| row.id.as_str())));
         let range = weapon.range_increment.map_or_else(|| NO_VALUE.to_owned(), |feet| format!("{feet} ft."));
@@ -138,7 +145,7 @@ pub(super) fn weapons_breakdown(sources: &SheetSources) -> SheetBlock {
     for weapon in &sources.loaded.weapon_damage {
         let name = item_name(sources, &weapon.weapon_item_id, weapon.weapon_record_key.as_deref());
         let key = weapon_row_key(weapon.weapon_record_key.as_deref().unwrap_or(&name));
-        let cell = |prefix: &str| weapon_cell(prefix, sources.loaded.explanations.iter().find(|row| row.id.strip_prefix(prefix) == Some(key.as_str())));
+        let cell = |prefix: &str| weapon_cell(prefix, weapon_row(sources, prefix, weapon, &key));
         let dice = weapon.base_dice.as_ref().map_or_else(|| NO_VALUE.to_owned(), |dice| format!("{}d{}", dice.count, dice.die_size));
         let wield = weapon.wield_category.as_deref().map_or_else(|| NO_VALUE.to_owned(), spaced_words);
         let notes = weapon.feat_effects.iter().map(|effect| format!("{}: {} damage", effect.feat_key, signed(effect.damage_bonus)));

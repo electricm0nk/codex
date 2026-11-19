@@ -2675,6 +2675,62 @@ fn print_pf_blocks_gear_properties() {
     assert!(weapons_text.contains("2d4"), "{weapons_text}");
 }
 
+/// SD-42 E4.15 (`decisions.md §6, §24`): two copies of one weapon kind, one written with its own die
+/// (an imported "Mourn", base Longsword, `_DAMAGE|2d4`) beside a plain Longsword: each line of the
+/// Weapons block prints its own copy's damage total, read off the engine's per-copy row.
+#[test]
+fn per_copy_weapon_rows_two_longswords_print_their_own_dice() {
+    use codex::saved_character::equipment_sets::{self, CopyKey};
+    const SWORD: &str = "Longsword (Base)";
+    let root = seeded("per-copy-weapon-rows", ALDRIC_ID);
+    // Aldric wields his own Longsword; Mourn is carried beside it.
+    hold(&root, SWORD, ActiveState::SelectedInactive);
+    load_saved_character_at_root(&root).expect("the first load writes the sets");
+    let mut sets = equipment_sets::load(&root).unwrap().expect("the sets file");
+    sets.copies.entry(CopyKey { item_id: SWORD.to_owned(), bonus: 0, ordinal: 0 }.map_key()).or_default().damage_override = Some("2d4".to_owned());
+    equipment_sets::save(&root, &sets).unwrap();
+
+    let loaded = load_saved_character_at_root(&root).expect("Aldric loads");
+    let dice: Vec<_> = loaded.weapon_damage.iter().filter(|w| w.weapon_record_key.as_deref() == Some(SWORD)).map(|w| w.base_dice.map(|d| (d.count, d.die_size))).collect();
+    assert_eq!(dice, [Some((1, 8)), Some((2, 4))], "the plain sword and Mourn: {:?}", loaded.weapon_damage);
+    let totals: Vec<_> = loaded.explanations.iter().filter(|row| row.id.starts_with("combat.weapon_damage_total.longsword")).map(|row| row.id.as_str()).collect();
+    assert_eq!(totals, ["combat.weapon_damage_total.longsword", "combat.weapon_damage_total.longsword.1"], "a row per copy whose total differs");
+    let document = sheet_document_at_root(&root, &request(false, false, false)).expect("the document builds");
+    let weapons = document.blocks.iter().find(|block| block.id == "weapons").expect("the Weapons block");
+    let damage: Vec<&str> = weapons.rows.iter().filter(|row| row.label.starts_with("Longsword")).map(|row| row.values[1].as_str()).collect();
+    assert_eq!(damage.len(), 2, "one line per sword: {:?}", weapons.rows);
+    assert!(damage[0].starts_with("1d8") && damage[1].starts_with("2d4"), "each sword its own die: {damage:?}");
+    assert!(!weapons.rows.iter().any(|row| row.label.starts_with("Damage (")), "the per-copy row is behind its line, not a line of its own: {:?}", weapons.rows);
+    let math = sheet_document_at_root(&root, &request(false, true, false)).expect("the document builds");
+    let breakdown = math.blocks.iter().find(|block| block.id == "weaponsMath").expect("the Weapon Breakdown block");
+    let dice: Vec<&str> = breakdown.rows.iter().filter(|row| row.label.starts_with("Longsword")).map(|row| row.values[1].as_str()).collect();
+    assert_eq!(dice, ["1d8", "2d4"], "Show the math's Dice cell per copy");
+    let text: String = text_between(&pdf_text(&render(&root, &request(false, false, false))), "Weapons Weapon", "Saving Throws").split_whitespace().collect();
+    assert!(text.contains("1d8") && text.contains("2d4"), "{text}");
+}
+
+/// SD-42 E4.15: a character with one weapon per kind, or two copies that total the same, gets no
+/// per-copy row and no copy key on the wire: every seed, and Aldric holding two plain Daggers.
+#[test]
+fn per_copy_weapon_rows_one_per_kind_unchanged() {
+    let per_copy = |loaded: &crate::character_hub::LoadSavedCharacterResponse| -> Vec<String> {
+        let ids = loaded.explanations.iter().filter_map(|row| row.id.strip_prefix("combat.weapon_damage_total.")).filter(|key| key.contains('.')).map(str::to_owned);
+        let keys = loaded.weapon_damage.iter().filter_map(|w| serde_json::to_value(w).unwrap().get("copyRow").map(|value| value.to_string()));
+        ids.chain(keys).collect()
+    };
+    for id in [ALDRIC_ID, ELOWEN_ID, TOMAS_ID] {
+        let root = seeded(&format!("per-copy-unchanged-{id}"), id);
+        let loaded = load_saved_character_at_root(&root).expect("the seed loads");
+        assert_eq!(per_copy(&loaded), Vec::<String>::new(), "{id}");
+    }
+    let root = seeded("per-copy-two-daggers", ALDRIC_ID);
+    hold(&root, "Dagger (Base)", ActiveState::SelectedInactive);
+    hold(&root, "Dagger (Base)", ActiveState::SelectedInactive);
+    let loaded = load_saved_character_at_root(&root).expect("Aldric loads");
+    assert_eq!(loaded.weapon_damage.iter().filter(|w| w.weapon_record_key.as_deref() == Some("Dagger (Base)")).count(), 2);
+    assert_eq!(per_copy(&loaded), Vec::<String>::new(), "two plain daggers share the kind's row");
+}
+
 /// SD-41 E4.1 (`decisions.md §25, §28`): identical copies print as one stack, `<name> ×<pieces>`
 /// (a bundle's `(20)` dropped once bought), with the engine's weight per copy (`3 × 3 lb`); a
 /// created item prints with the weight it states. Aldric carrying three Arrows (20) and a created

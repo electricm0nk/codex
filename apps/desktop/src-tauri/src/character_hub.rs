@@ -1193,6 +1193,10 @@ pub struct WeaponDamageDto {
     /// The copy's properties (a `.pcg` line's `SPROP`), printed as text; left out when it has none.
     #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub properties: Vec<String>,
+    /// The key of this copy's own `combat.weapon_damage_total.<key>` row (`longsword.1`) when its total
+    /// differs from the first of its kind's (SD-42 E4.15); left out when it reads its kind's rows.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub copy_row: Option<String>,
 }
 
 /// Projects the engine's per-weapon damage breakdown onto the wire.
@@ -1264,6 +1268,7 @@ pub(crate) fn map_weapon_damage_dto(
             ammunition_family: breakdown.ammunition_family.clone(),
             damage_override: breakdown.damage_override.clone(),
             properties: Vec::new(),
+            copy_row: None,
         })
         .collect()
 }
@@ -3135,12 +3140,15 @@ fn load_saved_character_and_weapon_copies_at_root(root: &Path) -> Result<(LoadSa
 /// SD-40 E2.14: one `combat.weapon_damage_total.<weapon>` row per weapon in hand with dice, summed
 /// in `damage_total::weapon_damage_total_row` from what this response already holds for it: its
 /// `weapon_damage` facets once the worn custom items' damage bonuses are in them, and its
-/// `combat.weapon_damage_bonus.<weapon>` feat row. A second weapon of the same kind shares the
-/// first's row id and adds none.
+/// `combat.weapon_damage_bonus.<weapon>` feat row. A second weapon of the same kind that prints the
+/// same total shares the first's row; one whose die or sum differs (a copy's own `_DAMAGE`, its `+N`)
+/// gets a row of its own, `<kind>.<n>` for the kind's n-th weapon, named in its `copy_row` (SD-42 E4.15).
 fn push_weapon_damage_total_rows(sheet: &mut LoadSavedCharacterResponse) {
     use codex::rules_core::damage_total::{weapon_damage_total_row, weapon_feat_damage_row_id, DiceExpression};
+    let printed = |detail: &str| detail.split_once(':').map_or(detail, |(printed, _)| printed).to_owned();
     let mut rows: Vec<ExplanationDto> = Vec::new();
-    for weapon in &sheet.weapon_damage {
+    let mut kinds: Vec<String> = Vec::new();
+    for weapon in &mut sheet.weapon_damage {
         let key = weapon.weapon_record_key.as_deref().unwrap_or(&weapon.weapon_item_id);
         let feat_id = weapon_feat_damage_row_id(key);
         let feat_row = sheet.explanations.iter().find(|row| row.id == feat_id).map(|row| row.value);
@@ -3153,9 +3161,19 @@ fn push_weapon_damage_total_rows(sheet: &mut LoadSavedCharacterResponse) {
             feat_row,
             &bonuses,
         );
-        if let Some(row) = row.filter(|row| !rows.iter().chain(&sheet.explanations).any(|existing| existing.id == row.id)) {
-            rows.push(ExplanationDto { id: row.id, value: row.value, detail: row.detail });
-        }
+        let Some(row) = row else { continue };
+        let nth = kinds.iter().filter(|id| **id == row.id).count();
+        kinds.push(row.id.clone());
+        let id = match rows.iter().chain(&sheet.explanations).find(|existing| existing.id == row.id) {
+            None => row.id,
+            Some(first) if printed(&first.detail) == printed(&row.detail) => continue,
+            Some(_) => {
+                let id = format!("{}.{nth}", row.id);
+                weapon.copy_row = id.strip_prefix("combat.weapon_damage_total.").map(str::to_owned);
+                id
+            }
+        };
+        rows.push(ExplanationDto { id, value: row.value, detail: row.detail });
     }
     sheet.explanations.extend(rows);
 }
