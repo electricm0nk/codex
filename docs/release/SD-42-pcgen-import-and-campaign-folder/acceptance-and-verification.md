@@ -140,7 +140,7 @@ recorded in E5.1's receipt.
 |---|---|---|
 | Intake 1 (gear wrong: weapons, armor) | E1.1, E1.2, E1.3, E4.1, E4.2 | G-4; E1.1's `summary.json` marks H1, H2 proved/refuted; E5.G line 1 |
 | Intake 2 (stacks repeated) | E1.2, E4.1 | G-4 `ONE_COPY_PER_LINE 7`; E4.5 `quantity == 84` |
-| Q2 custom name + every property | E1.3, E4.2 | G-4 `pcg_import_custom` ≥ 6 passed; G-1 `NEW_KEYS`; E4.5: 36 names, 17 property sets |
+| Q2 custom name + every property | E1.3, E4.2 | G-4 `pcg_import_custom` ≥ 6 passed; G-1 `NEW_KEYS`; E4.5: 36 `NAME` fields (29 custom names shown, 7 PCGen record keys held as the record or a Create item), 17 property sets (`decisions.md §20` 2026-11-19 E4.5) |
 | Q3 proof set = operator file + 7 samples | E1.1, E1.7, E4.5 | G-5 parity per build; G-9 `copies_emitted` in E4.5's receipt; P-6 → 7 files |
 | Q4 whole character vs PCGen | E1.7 | G-5 `pcg_import_parity` 1 passed; `explained.tsv` 6 fields per row |
 | Q5 unmappable kept + Notes | E1.4, E1.5, E4.1 | G-4 `pcg_import_unmapped` ≥ 3, `pcg_import_notes` ≥ 2; `import_notes_land_in_bio` |
