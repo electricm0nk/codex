@@ -435,6 +435,67 @@ class TestCfgTestRegionsAreNotLiveCode(_TreeCase):
         self.assertNotIn("src/rules_core/cmtbrace.rs", res.files)
 
 
+class TestCfgTestPathChildrenAreNotLiveCode(_TreeCase):
+    """B15 one file over (SD-42 E4.19): a module a parent declares as
+    `#[cfg(test)] #[path = "x.rs"] mod x;` is compiled only into the test
+    binary, so every line of `x.rs` is a `#[cfg(test)]` region. The exemption
+    is DERIVED from the parent's declaration, never a path list: the same file
+    declared without `#[cfg(test)]`, or not declared at all, still counts, and
+    so does one declared inside an inline block (its path resolves elsewhere).
+    """
+
+    CHILD = "apps/desktop/src-tauri/src/child.rs"
+    PARENT = "apps/desktop/src-tauri/src/parent.rs"
+
+    def setUp(self):
+        super().setUp()
+        _write(self.root, self.CHILD,
+               "use codex_ingest::pcg_import::import;\n"
+               "fn t() { let _ = codex_ingest::pcg_import::run; }\n")
+
+    def test_a_cfg_test_path_child_is_test_code(self):
+        _write(self.root, self.PARENT,
+               "pub fn ships() {}\n"
+               "\n"
+               "/// the child's tests\n"
+               "#[cfg(test)]\n"
+               '#[path = "child.rs"]\n'
+               "mod child;\n")
+        res = prg.scan(self.root)
+        self.assertNotIn(self.CHILD, res.files)
+        self.assertEqual(res.hits_by_pattern["codex_ingest"], 0)
+
+    def test_an_undeclared_child_still_counts(self):
+        self.assertIn(self.CHILD, prg.scan(self.root).files)
+
+    def test_a_path_child_without_cfg_test_still_counts(self):
+        _write(self.root, self.PARENT,
+               '#[path = "child.rs"]\n'
+               "mod child;\n")
+        res = prg.scan(self.root)
+        self.assertIn(self.CHILD, res.files)
+        self.assertEqual(res.hits_by_pattern["codex_ingest"], 2)
+
+    def test_a_declaration_inside_an_inline_block_still_counts(self):
+        _write(self.root, self.PARENT,
+               "mod outer {\n"
+               "    #[cfg(test)]\n"
+               '    #[path = "child.rs"]\n'
+               "    mod child;\n"
+               "}\n")
+        self.assertIn(self.CHILD, prg.scan(self.root).files)
+
+    def test_shipping_code_after_the_declaration_still_counts(self):
+        _write(self.root, self.PARENT,
+               "#[cfg(test)]\n"
+               '#[path = "child.rs"]\n'
+               "mod child;\n"
+               "pub fn ships() { let _ = codex_ingest::x; }\n")
+        res = prg.scan(self.root)
+        self.assertNotIn(self.CHILD, res.files)
+        self.assertIn(self.PARENT, res.files)
+
+
 class TestRuntimeConverterImportsAreCounted(_TreeCase):
     """Operator ruling B16 (2026-09-12): the gate's blind spot IS the residue.
 

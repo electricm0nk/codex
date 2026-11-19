@@ -90,6 +90,13 @@ module or function, or the `;` of a braceless item such as
 file's shipping code. Pinned by
 `scripts/tests/test_pcgen_residue_gate.py::TestCfgTestRegionsAreNotLiveCode`.
 
+The same holds one file over (SD-42 E4.19): a child module a parent declares
+at top level as `#[cfg(test)] #[path = "x.rs"] mod x;` is compiled only into
+the test binary, so the whole of `x.rs` is a `#[cfg(test)]` region. The skip
+is DERIVED from that declaration, never a path list; a child declared without
+`#[cfg(test)]`, not declared, or declared inside an inline block still counts.
+Pinned by `TestCfgTestPathChildrenAreNotLiveCode`.
+
 Like B14 this is an INSTRUMENT CORRECTION, not closure. At the ruling it
 removed all 300 then-counted hits across 45 files
 (`AT-35-E6-003-FINISH_cycle3_receipt.md`: `class_A_in_cfg_test_hits=300
@@ -631,6 +638,36 @@ def cfg_test_ranges(lines):
     return out
 
 
+_PATH_ATTR = re.compile(r'#\[\s*path\s*=\s*"([^"]+)"\s*\]')
+_MOD_DECL = re.compile(r"\bmod\s+\w+\s*;")
+
+
+def cfg_test_path_children(rel, text):
+    """Files a top-level `#[cfg(test)] #[path = "x.rs"] mod x;` in `rel` declares.
+
+    B15 one file over (SD-42 E4.19): such a module is compiled only into the
+    test binary, so the whole child file is a `#[cfg(test)]` region. Derived
+    from the declaration, never a path list. Only a declaration at brace depth
+    0 counts: inside an inline block `#[path]` resolves elsewhere, so that
+    child stays live (over-counting is the safe direction).
+    """
+    lines = text.splitlines()
+    masked = mask_non_code(text).splitlines()
+    depth, depth_at = 0, []
+    for line in masked:
+        depth_at.append(depth)
+        depth += line.count("{") - line.count("}")
+    out = set()
+    for a, b in cfg_test_ranges(lines):
+        if depth_at[a] != 0 or any("{" in m for m in masked[a:b + 1]):
+            continue
+        attr = _PATH_ATTR.search("\n".join(lines[a:b + 1]))
+        if attr and _MOD_DECL.search(masked[b]):
+            child = os.path.join(os.path.dirname(rel), attr.group(1))
+            out.add(os.path.normpath(child).replace(os.sep, "/"))
+    return out
+
+
 def _live_lines(text):
     """The shipping lines of one source file: comments dropped (B14),
     `#[cfg(test)]` regions dropped (B15), everything else scanned whole."""
@@ -753,13 +790,22 @@ def scan(root):
     res.data_files_by_pattern = {n: 0 for n in DATA_CLASS_NAMES}
     res.data_hits_by_pattern = {n: 0 for n in DATA_CLASS_NAMES}
     source_rels = set()
+    sources = []
     for live_root, rel, abs_path in _iter_live_source_files(root):
         try:
             with open(abs_path, encoding="utf-8", errors="replace") as fh:
-                text = "\n".join(_live_lines(fh.read()))
+                sources.append((live_root, rel, fh.read()))
         except OSError:
             continue
+    test_children = set()
+    for _, rel, raw in sources:
+        if rel.endswith(".rs"):
+            test_children |= cfg_test_path_children(rel, raw)
+    for live_root, rel, raw in sources:
         source_rels.add(rel)
+        if rel in test_children:
+            continue
+        text = "\n".join(_live_lines(raw))
         file_hits = 0
         ident_hits = 0
         for name, rx in _COMPILED.items():
