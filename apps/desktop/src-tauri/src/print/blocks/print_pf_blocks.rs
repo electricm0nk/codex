@@ -2512,6 +2512,31 @@ fn print_pf_blocks_gear_nests_container_contents() {
     assert_in_order(&bare, &["Carried", "Backpack", "Holds", "Sack", "Holds", "Rope(50ft.)", "NotCarried"]);
 }
 
+/// SD-42 E4.9 (operator REN-1, `decisions.md §27.3`): a renamed copy prints its name with its
+/// record's beside it, `Camping Gear (Sack)`, its contents still under it; the other Sack prints
+/// as it did. Aldric carries a Backpack and two Sacks, one renamed and holding a Rope (50 ft.).
+#[test]
+fn print_pf_blocks_gear_renamed_copy_prints_its_base_name() {
+    use codex::saved_character::equipment_sets::CopyKey;
+    let root = seeded("gear-renamed", ALDRIC_ID);
+    for item in ["Backpack", "Sack", "Sack", "Rope (50 ft.)"] {
+        hold(&root, item, ActiveState::SelectedInactive);
+    }
+    let sack = CopyKey { item_id: "Sack".to_owned(), bonus: 0, ordinal: 1 };
+    move_to(&root, "Rope (50 ft.)", 0, codex::saved_character::equipment_sets::Location::Inside { container: sack.clone() });
+    crate::character_hub::rename_equipment_copy_at_root(&root, &sack, "Camping Gear").expect("the rename saves");
+    let document = sheet_document_at_root(&root, &request(false, false, false)).expect("the document builds");
+    let sections = gear_sections(gear_block(&document));
+    let carried = &sections.iter().find(|(title, _)| *title == "Carried").expect("Carried").1;
+    let at = |label: &str| carried.iter().position(|row| row.label == label).unwrap_or_else(|| panic!("`{label}` under Carried: {carried:?}"));
+    let (named, rope) = (at("Camping Gear (Sack)"), at("Rope (50 ft.)"));
+    assert_eq!(rope, named + 1, "the rope prints under the renamed sack: {carried:?}");
+    assert_eq!(carried.iter().filter(|row| row.label == "Sack").count(), 1, "the other sack prints as it did: {carried:?}");
+    let text = pdf_text(&render(&root, &request(false, false, false)));
+    let bare: String = text_between(&text, "Gear Item", "Money PP").split_whitespace().collect();
+    assert!(bare.contains("CampingGear(Sack)"), "{bare}");
+}
+
 /// SD-41 E4.1 (`decisions.md §9, §22, §33`): the Weapons block prints the weapons in hand first,
 /// then the carried ones marked "(carried)", then the Unarmed strike last, marked "(nonlethal)"
 /// when it is; a Not Carried weapon is not on it. Aldric (longsword in hand) carrying a Dagger,

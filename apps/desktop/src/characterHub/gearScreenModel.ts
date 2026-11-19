@@ -330,6 +330,8 @@ function copyTitle(row: GearRow, index: number): string {
 
 export interface ContainerTable {
   copy: CopyKeyDto;
+  /** The container's own row: Customize names and modifies `copy` of it. */
+  row: GearRow;
   title: string;
   /** The copy's `containerLoads` figure as the engine gave it; null when the engine sent none. */
   loadLabel: string | null;
@@ -344,6 +346,7 @@ export function containerTables(model: GearModel): ContainerTable[] {
     .flatMap((row) =>
       row.held.copies.map((copy, index) => ({
         copy,
+        row,
         title: copyTitle(row, index),
         loadLabel: capacityLabel(model.containerLoads.find((load) => sameCopy(load.copy, copy))),
         rows: model.rows.filter((candidate) => candidate.held.location.kind === 'inside' && sameCopy(candidate.held.location.container, copy)),

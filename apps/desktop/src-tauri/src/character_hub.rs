@@ -4578,13 +4578,16 @@ pub(crate) fn attach_equipment_modifier_at_root(
     modifier_item_id: &str,
     saved_at: &str,
 ) -> Result<AttachEquipmentModifierResponse, String> {
-    attach_equipment_modifier_priced_at_root(root, item_id, modifier_item_id, saved_at, PriceMode::Standard)
+    attach_equipment_modifier_priced_at_root(root, item_id, None, modifier_item_id, saved_at, PriceMode::Standard)
 }
 
-/// [`attach_equipment_modifier_at_root`] under an explicit [`PriceMode`].
+/// [`attach_equipment_modifier_at_root`] under an explicit [`PriceMode`], to `copy` when one is
+/// named (the gear screen's Customize, SD-42 `decisions.md §27.3`), else to the first copy of
+/// `item_id` in hand.
 pub(crate) fn attach_equipment_modifier_priced_at_root(
     root: &Path,
     item_id: &str,
+    copy: Option<&CopyKey>,
     modifier_item_id: &str,
     saved_at: &str,
     mode: PriceMode,
@@ -4606,10 +4609,13 @@ pub(crate) fn attach_equipment_modifier_priced_at_root(
 
     let envelope = codex::saved_character::local_store::SavedCharacterStore::load(root)
         .map_err(|err| err.message)?;
-    // The copy `apply_attach_equipment_modifier` takes.
+    // The named copy's line, else the copy `apply_attach_equipment_modifier` takes.
     let selections = &envelope.character_input.chosen.equipment_selections;
-    let target = crate::pf1_adapter::first_copy_in_hand(selections, |selection| selection.item_id == item_id).map(|index| &selections[index]);
-    let Some(target) = target else {
+    let index = match copy {
+        Some(copy) => selection_copy_keys(selections).iter().position(|key| key == copy && key.item_id == item_id),
+        None => crate::pf1_adapter::first_copy_in_hand(selections, |selection| selection.item_id == item_id),
+    };
+    let Some(target) = index.map(|index| &selections[index]) else {
         return Ok(AttachEquipmentModifierResponse::Blocked {
             diagnostics: vec![DiagnosticDto {
                 id: "equipment.attach_modifier.target_not_found".to_owned(),
@@ -4651,8 +4657,11 @@ pub(crate) fn attach_equipment_modifier_priced_at_root(
         }
     }
 
-    match mutate_saved_character_at_root(root, saved_at, |character_input| {
-        apply_attach_equipment_modifier(character_input, item_id, modifier_item_id);
+    match mutate_saved_character_at_root(root, saved_at, |character_input| match (copy, index) {
+        (Some(_), Some(index)) => character_input.chosen.equipment_selections[index].applied_modifiers.push(modifier_item_id.to_owned()),
+        _ => {
+            apply_attach_equipment_modifier(character_input, item_id, modifier_item_id);
+        }
     })? {
         CreateCharacterResponse::Blocked { diagnostics } => {
             Ok(AttachEquipmentModifierResponse::Blocked { diagnostics })
@@ -4675,6 +4684,9 @@ pub(crate) fn attach_equipment_modifier_priced_at_root(
 pub struct AttachEquipmentModifierRequest {
     pub character_id: String,
     pub item_id: String,
+    /// The copy to attach to (the gear screen's Customize); absent, the first copy of `item_id` in hand.
+    #[serde(default)]
+    pub copy: Option<CopyKey>,
     pub modifier_item_id: String,
     pub saved_at: String,
     /// Absent means `Standard`, as on a purchase.
@@ -4694,6 +4706,7 @@ pub fn attach_equipment_modifier(
     attach_equipment_modifier_priced_at_root(
         &root,
         &request.item_id,
+        request.copy.as_ref(),
         &request.modifier_item_id,
         &request.saved_at,
         request.price_mode,
@@ -5588,6 +5601,9 @@ pub(crate) fn rename_equipment_copy_at_root(root: &Path, copy: &CopyKey, name: &
 pub struct HeldEquipmentCopyDto {
     pub item_id: String,
     pub name: String,
+    /// The record's name, what `name` reads when the copy has none of its own (SD-42
+    /// `decisions.md §27.3`); the print shows it beside a custom name.
+    pub base_name: String,
     pub bonus: u8,
     pub active_state: ActiveStateDto,
     pub slot: BodySlot,
@@ -5627,6 +5643,9 @@ pub struct HeldEquipmentCopyDto {
     /// `decisions.md §27.2`): it loads where it is, and the row says so until it is moved.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub slot_warning: Option<String>,
+    /// The modifiers attached to the copy, each by its catalog name (SD-42 `decisions.md §27.3`).
+    #[serde(skip_serializing_if = "Vec::is_empty")]
+    pub applied_modifiers: Vec<String>,
 }
 
 #[derive(Debug, Clone, Deserialize)]
@@ -5663,16 +5682,16 @@ pub(crate) fn list_held_equipment_at_root(root: &Path) -> Result<Vec<HeldEquipme
 }
 
 /// The held copies with identical copies stacked (`decisions.md §28`): copies with one `item_id`,
-/// `bonus`, name, location, override flag, abilities and size are one row, its `quantity` their
-/// pieces summed.
+/// `bonus`, name, location, override flag, abilities, size and modifiers are one row, its
+/// `quantity` their pieces summed.
 pub(crate) fn list_held_equipment_stacks_at_root(root: &Path) -> Result<Vec<HeldEquipmentCopyDto>, String> {
     let mut stacks: Vec<HeldEquipmentCopyDto> = Vec::new();
     for row in list_held_equipment_at_root(root)? {
         let same = |stack: &&mut HeldEquipmentCopyDto| {
             (&stack.item_id, stack.bonus, &stack.name, &stack.location, stack.override_flag, &stack.abilities, stack.size)
                 == (&row.item_id, row.bonus, &row.name, &row.location, row.override_flag, &row.abilities, row.size)
-                && (&stack.properties, &stack.damage_override, stack.weight_override_lbs, stack.cost_override_copper)
-                    == (&row.properties, &row.damage_override, row.weight_override_lbs, row.cost_override_copper)
+                && (&stack.properties, &stack.damage_override, stack.weight_override_lbs, stack.cost_override_copper, &stack.applied_modifiers)
+                    == (&row.properties, &row.damage_override, row.weight_override_lbs, row.cost_override_copper, &row.applied_modifiers)
         };
         match stacks.iter_mut().find(same) {
             Some(stack) => {
@@ -5851,6 +5870,7 @@ fn held_copy_rows(root: &Path, input: &CharacterInput) -> Result<Vec<HeldEquipme
             let pieces = bundle_pieces(&selection.item_id);
             HeldEquipmentCopyDto {
                 item_id: selection.item_id.clone(),
+                base_name: name.clone(),
                 name,
                 bonus,
                 active_state: selection.active_state.into(),
@@ -5868,6 +5888,11 @@ fn held_copy_rows(root: &Path, input: &CharacterInput) -> Result<Vec<HeldEquipme
                 weight_override_lbs: None,
                 cost_override_copper: None,
                 slot_warning: None,
+                applied_modifiers: selection
+                    .applied_modifiers
+                    .iter()
+                    .map(|key| codex::rules_core::equipment_resolver::equipment_catalog_row_by_key(key).map_or_else(|| key.clone(), |row| row.name.to_owned()))
+                    .collect(),
             }
         })
         .collect();
@@ -5883,6 +5908,7 @@ fn held_copy_rows(root: &Path, input: &CharacterInput) -> Result<Vec<HeldEquipme
         HeldEquipmentCopyDto {
             item_id: copy.item_id.clone(),
             name: record.name.clone(),
+            base_name: record.name.clone(),
             bonus: 0,
             active_state: active_state.into(),
             slot,
@@ -5899,6 +5925,7 @@ fn held_copy_rows(root: &Path, input: &CharacterInput) -> Result<Vec<HeldEquipme
             weight_override_lbs: None,
             cost_override_copper: None,
             slot_warning: None,
+            applied_modifiers: Vec::new(),
         }
     }));
     tag_admitted_copies(&mut rows, &admitted_records_at_root(root, input));
@@ -15128,7 +15155,7 @@ mod tests {
     const PLUS_THREE_SWORD_CP: i64 = 1_831_500;
 
     fn market_attach(root: &Path, item_id: &str, modifier: &str, mode: PriceMode) -> AttachEquipmentModifierResponse {
-        attach_equipment_modifier_priced_at_root(root, item_id, modifier, "2026-11-02T00:00:02Z", mode)
+        attach_equipment_modifier_priced_at_root(root, item_id, None, modifier, "2026-11-02T00:00:02Z", mode)
             .expect("attach call should not error")
     }
 
@@ -22956,6 +22983,125 @@ mod tests {
         rename_equipment_copy_at_root(&root, &dagger, " ").unwrap();
         assert_eq!(stacks_of(&root, "item:dagger").len(), 1, "unnamed, the two stack again");
         assert!(rename_equipment_copy_at_root(&root, &sets_key("item:dagger", 5), "x").is_err());
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    // ----- SD-42 E4.9: Customize a held copy (operator REN-1 + CUS-1, `decisions.md §27.3`) -----
+
+    /// A renamed Sack reads "Camping Gear" and keeps "Sack" on the wire as `baseName`; an unnamed
+    /// copy's `baseName` is its name.
+    #[test]
+    fn rename_copy_base_name_stays_on_the_wire() {
+        let root = sets_root("rename-copy-base-name", &[("Sack", ActiveState::SelectedInactive), ("item:dagger", ActiveState::SelectedInactive)]);
+        let rows = rename_equipment_copy_at_root(&root, &sets_key("Sack", 0), "Camping Gear").unwrap();
+        let sack = rows.iter().find(|row| row.item_id == "Sack").expect("the sack");
+        assert_eq!((sack.name.as_str(), sack.base_name.as_str()), ("Camping Gear", "Sack"));
+        let value = serde_json::to_value(sack).unwrap();
+        assert_eq!((value["name"].as_str(), value["baseName"].as_str()), (Some("Camping Gear"), Some("Sack")));
+        let dagger = rows.iter().find(|row| row.item_id == "item:dagger").expect("the dagger");
+        assert_eq!(dagger.base_name, dagger.name, "unnamed, the base name is the name");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// Renaming one of two Sacks makes it its own row and leaves "Sack" for the other.
+    #[test]
+    fn rename_copy_one_of_two_sacks_splits_the_row_and_keeps_the_other() {
+        let root = sets_root("rename-copy-split", &[("Sack", ActiveState::SelectedInactive), ("Sack", ActiveState::SelectedInactive)]);
+        let before = stacks_of(&root, "Sack");
+        assert_eq!(before.iter().map(|row| (row.name.as_str(), row.quantity)).collect::<Vec<_>>(), [("Sack", 2)]);
+        rename_equipment_copy_at_root(&root, &sets_key("Sack", 1), "Camping Gear").unwrap();
+        let rows: Vec<(String, String, u32, Vec<CopyKey>)> =
+            stacks_of(&root, "Sack").into_iter().map(|row| (row.name, row.base_name, row.quantity, row.copies)).collect();
+        assert_eq!(
+            rows,
+            [
+                ("Sack".to_owned(), "Sack".to_owned(), 1, vec![sets_key("Sack", 0)]),
+                ("Camping Gear".to_owned(), "Sack".to_owned(), 1, vec![sets_key("Sack", 1)]),
+            ]
+        );
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// A blank name restores the base name: the two Sacks stack again.
+    #[test]
+    fn rename_copy_blank_restores_the_base_name() {
+        let root = sets_root("rename-copy-blank", &[("Sack", ActiveState::SelectedInactive), ("Sack", ActiveState::SelectedInactive)]);
+        rename_equipment_copy_at_root(&root, &sets_key("Sack", 0), "Camping Gear").unwrap();
+        let rows = rename_equipment_copy_at_root(&root, &sets_key("Sack", 0), "   ").unwrap();
+        let sacks: Vec<(&str, &str, u32)> = rows.iter().filter(|row| row.item_id == "Sack").map(|row| (row.name.as_str(), row.base_name.as_str(), row.quantity)).collect();
+        assert_eq!(sacks, [("Sack", "Sack", 2)]);
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// Nothing but the name changes with a rename: the slot, the carried total and every
+    /// container's load read the same before and after. A Dagger in a Sack in a Backpack.
+    #[test]
+    fn rename_copy_changes_no_weight_capacity_or_slot() {
+        let root = sets_root(
+            "rename-copy-nothing-else",
+            &[("Backpack", ActiveState::SelectedInactive), ("Sack", ActiveState::SelectedInactive), ("item:dagger", ActiveState::SelectedInactive)],
+        );
+        let (pack, sack) = (sets_key("Backpack", 0), sets_key("Sack", 0));
+        move_saved(&root, &sack, Location::Inside { container: pack.clone() }, None);
+        move_saved(&root, &sets_key("item:dagger", 0), Location::Inside { container: sack.clone() }, None);
+        let picture = |root: &Path| {
+            let loaded = load_saved_character_at_root(root).unwrap();
+            let sack_row = stacks_of(root, "Sack").into_iter().next().expect("the sack");
+            (loaded.corpus_derived.encumbrance.total_carried_weight_lbs, loaded.container_loads, sack_row.slot, sack_row.location, sack_row.quantity)
+        };
+        let before = picture(&root);
+        assert_eq!(before.1.len(), 2, "two containers: {:?}", before.1);
+        rename_equipment_copy_at_root(&root, &sack, "Camping Gear").unwrap();
+        assert_eq!(stacks_of(&root, "Sack")[0].name, "Camping Gear");
+        assert_eq!(picture(&root), before, "the name is the only change");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// Two Daggers: a `+1` attached to the second copy lands on the second selection, not the
+    /// first one `first_copy_in_hand` would find, and the Weapons rows read it (Cashless: no money).
+    #[test]
+    fn attach_modifier_to_copy_targets_that_copy_not_the_first_selection() {
+        const DAGGER: &str = "Dagger (Base)";
+        let root = sets_root("attach-modifier-to-copy", &[(DAGGER, ActiveState::SelectedInactive), (DAGGER, ActiveState::SelectedInactive)]);
+        let second = sets_key(DAGGER, 1);
+        let response = attach_equipment_modifier_priced_at_root(&root, DAGGER, Some(&second), PLUS_ONE_KEY, "2026-11-18T00:00:00Z", PriceMode::Cashless).unwrap();
+        assert!(matches!(response, AttachEquipmentModifierResponse::Attached { .. }), "{response:?}");
+        let modifiers: Vec<Vec<String>> = held_selections(&root).into_iter().filter(|selection| selection.item_id == DAGGER).map(|selection| selection.applied_modifiers).collect();
+        assert_eq!(modifiers, [vec![], vec![PLUS_ONE_KEY.to_owned()]], "the second copy carries it");
+        let rows = stacks_of(&root, DAGGER);
+        assert_eq!(rows.len(), 2, "the +1 copy is its own row: {rows:?}");
+        let plus_one = rows.iter().find(|row| row.bonus == 1).unwrap_or_else(|| panic!("the +1 dagger: {rows:?}"));
+        assert_eq!((plus_one.applied_modifiers.len(), plus_one.copies.len()), (1, 1), "{plus_one:?}");
+        let loaded = load_saved_character_at_root(&root).unwrap();
+        assert!(
+            loaded.weapon_damage.iter().any(|row| row.weapon_record_key.as_deref() == Some(DAGGER) && row.enhancement_attack_bonus == Some(1)),
+            "the Weapons rows read the +1: {:?}",
+            loaded.weapon_damage.iter().map(|row| (&row.weapon_record_key, row.enhancement_attack_bonus)).collect::<Vec<_>>()
+        );
+        let unknown = attach_equipment_modifier_priced_at_root(&root, DAGGER, Some(&sets_key(DAGGER, 7)), PLUS_ONE_KEY, "2026-11-18T00:00:01Z", PriceMode::Cashless).unwrap();
+        assert!(matches!(unknown, AttachEquipmentModifierResponse::Blocked { .. }), "an unknown copy attaches nothing: {unknown:?}");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// A request with no `copy` reads as today's: the first copy in hand takes the modifier.
+    #[test]
+    fn attach_modifier_to_copy_absent_keeps_todays_behaviour() {
+        let request: AttachEquipmentModifierRequest = serde_json::from_value(
+            serde_json::json!({"characterId": "c", "itemId": "Net (Base)", "modifierItemId": PLUS_ONE_KEY, "savedAt": "t"}),
+        )
+        .unwrap();
+        assert_eq!(request.copy, None);
+        let with_copy: AttachEquipmentModifierRequest = serde_json::from_value(serde_json::json!({
+            "characterId": "c", "itemId": "Net (Base)", "modifierItemId": PLUS_ONE_KEY, "savedAt": "t",
+            "copy": { "itemId": "Net (Base)", "bonus": 0, "ordinal": 1 }
+        }))
+        .unwrap();
+        assert_eq!(with_copy.copy, Some(sets_key("Net (Base)", 1)));
+        let root = sets_root("attach-modifier-no-copy", &[("Net (Base)", ActiveState::SelectedInactive), ("Net (Base)", ActiveState::SelectedInactive)]);
+        let response = attach_equipment_modifier_priced_at_root(&root, "Net (Base)", None, PLUS_ONE_KEY, "2026-11-18T00:00:00Z", PriceMode::Standard).unwrap();
+        assert!(matches!(response, AttachEquipmentModifierResponse::Attached { .. }), "{response:?}");
+        let modifiers: Vec<Vec<String>> = held_selections(&root).into_iter().filter(|selection| selection.item_id == "Net (Base)").map(|selection| selection.applied_modifiers).collect();
+        assert_eq!(modifiers, [vec![PLUS_ONE_KEY.to_owned()], vec![]], "the first copy carries it");
         std::fs::remove_dir_all(&root).ok();
     }
 

@@ -36,7 +36,6 @@ import type {
   CorpusDerivedDto,
   EncumbranceDto,
   EquipmentEffectsDto,
-  ResolvedEquipmentDto,
 } from '../boundary/loadCreateCharacter';
 import { buildAcBySourceRows, describeEncumbrance, effectiveMaxDexCap } from './encumbranceTabModel';
 import { levelUpCharacter } from '../boundary/levelUpCharacter';
@@ -108,6 +107,7 @@ import type { CreateItemFields } from './CreateItemDialog';
 import { purchaseCustomEquipment, type CustomEquipmentBuild } from '../boundary/purchaseCustomEquipment';
 import { createCustomItem } from '../boundary/createCustomItem';
 import { GearScreen } from './GearScreen';
+import type { CustomizeTarget } from './CustomizeCopyDialog';
 import { OverrideTag, classLevelsAdmitted, flagsOf } from './OverrideTag';
 import { listHeldEquipment, sellableCopies, type HeldEquipmentCopyDto, type PlacedEquipmentCopyDto } from '../boundary/listHeldEquipment';
 import { listMarket, type MarketCategory } from '../boundary/listMarket';
@@ -1580,18 +1580,16 @@ function EncumbrancePanel(props: { encumbrance: EncumbranceDto | undefined }) {
 }
 
 /**
- * Equipped-item reachability, sourced from `compute_pilot_with_corpus` via
- * the real IPC boundary — not mock data. Per-item weight and price are the
- * records' own real corpus `WT:`/`COST:` tokens; an item with no price
- * shown is a genuine corpus absence (an unpriced base template, or a
- * formula-priced modifier), not a lookup failure.
+ * The Gear tab: money, the engine's load, the price mode, the Market, and the gear screen, whose
+ * Customize dialog renames a held copy and attaches modifiers to it (SD-42 `decisions.md §27.3`).
  */
 function GearTab(props: {
   corpusDerived: CorpusDerivedDto | undefined;
   onOpenMarket: () => void;
   priceMode: PriceMode;
   onPriceModeChange: (mode: PriceMode) => void;
-  onAttachModifier: (item: ResolvedEquipmentDto) => void;
+  /** Customize's Attach modifier: the Equipmods picker for this copy. */
+  onPickModifier: (target: CustomizeTarget) => void;
   characterId: string;
   loadHeldEquipment: () => Promise<PlacedEquipmentCopyDto[]>;
   /** A new value re-reads the gear screen: any saved change arrives as a new detail. */
@@ -1607,20 +1605,12 @@ function GearTab(props: {
   /** The Custom tab's "Ignore body slot limits": Move to and drag offer a full slot. */
   ignoreSlotLimits: boolean;
 }) {
-  const items = props.corpusDerived?.equippedItems ?? [];
   const unresolved = props.corpusDerived?.unresolvedEquipmentItemIds ?? [];
   const encumbrance = props.corpusDerived?.encumbrance;
-  // Per-item weight/price, keyed by the same `itemId` the equipped-items
-  // list is keyed on, so each row can show what it actually contributes.
-  const carriedById = new Map((encumbrance?.perItem ?? []).map((entry) => [entry.itemId, entry]));
   return (
     <div>
       <MoneyPanel money={props.money} busy={props.moneyBusy} error={props.moneyError} onAdjust={props.onAdjustMoney} />
       <EncumbrancePanel encumbrance={encumbrance} />
-      <p style={{ color: 'var(--color-text-muted)', fontSize: '0.72rem', margin: '0 0 1rem', textAlign: 'center' }}>
-        Corpus-derived equipment — each item resolves against the real PF1 corpus, and its weight
-        and price are that record's own corpus values.
-      </p>
       <PriceModeControl value={props.priceMode} onChange={props.onPriceModeChange} />
       <div style={{ display: 'flex', gap: '0.6rem', justifyContent: 'center', marginBottom: '1.25rem' }}>
         <button type="button" onClick={props.onOpenMarket} style={addItemButtonStyle}>
@@ -1642,61 +1632,9 @@ function GearTab(props: {
         sets={props.detail?.equipmentSets}
         onChange={props.onGearChange}
         onSell={props.onGearSell}
+        onPickModifier={props.onPickModifier}
       />
       {unresolved.length > 0 ? <UnresolvedNotice ids={unresolved} kind="item" /> : null}
-      {items.length === 0 ? (
-        <p style={{ color: 'var(--color-text-faint)', margin: 0, textAlign: 'center' }}>
-          No corpus-reachable equipment selected yet.
-        </p>
-      ) : (
-        items.map((item, index) => (
-          <div key={`${item.itemId}::${index}`} style={{ borderBottom: '1px solid var(--color-border)', padding: '0.5rem 0' }}>
-            <div style={{ alignItems: 'center', display: 'flex', justifyContent: 'space-between' }}>
-              <div>
-                <span style={{ fontWeight: 700 }}>{item.equipmentRecordName}</span>
-                <span style={{ color: 'var(--color-text-muted)', fontSize: '0.7rem', marginLeft: '0.5rem' }}>
-                  ({item.itemId})
-                </span>
-                {item.grounded ? (
-                  <span style={{ color: 'var(--color-accent)', fontSize: '0.7rem', marginLeft: '0.5rem' }}>✓ grounded</span>
-                ) : null}
-                {/* Real corpus WT:/COST: values. A row with no price is a
-                    genuine corpus absence, so nothing is rendered for it
-                    rather than a fabricated 0 gp. */}
-                {carriedById.has(item.itemId) ? (
-                  <span style={{ color: 'var(--color-text-secondary)', fontSize: '0.7rem', marginLeft: '0.5rem' }}>
-                    {carriedById.get(item.itemId)!.weightLbs} lb
-                    {carriedById.get(item.itemId)!.costGp !== undefined
-                      ? ` · ${carriedById.get(item.itemId)!.costGp} gp`
-                      : ''}
-                  </span>
-                ) : null}
-              </div>
-              <span style={{ display: 'flex', gap: '0.4rem' }}>
-                <button
-                  type="button"
-                  onClick={() => props.onAttachModifier(item)}
-                  style={{ ...addItemButtonStyle, fontSize: '0.7rem', padding: '0.3rem 0.6rem' }}
-                >
-                  Attach Modifier
-                </button>
-              </span>
-            </div>
-            {item.appliedModifiers.length > 0 ? (
-              <ul style={{ margin: '0.35rem 0 0', paddingLeft: '1.25rem' }}>
-                {item.appliedModifiers.map((modifier) => (
-                  <li key={modifier.itemId} style={{ color: 'var(--color-text-secondary)', fontSize: '0.78rem' }}>
-                    {modifier.equipmentRecordName}
-                    {modifier.grounded ? (
-                      <span style={{ color: 'var(--color-accent)', fontSize: '0.7rem', marginLeft: '0.4rem' }}>✓ grounded</span>
-                    ) : null}
-                  </li>
-                ))}
-              </ul>
-            ) : null}
-          </div>
-        ))
-      )}
     </div>
   );
 }
@@ -2848,12 +2786,9 @@ export function CharacterSheet(props: {
   // `handleLevelUpFeatPick`) — null the rest of the time, including for a
   // plain Feats-tab "Add Feat" pick, which stays routed to `handleAddFeat`.
   const [pendingFeatLevelUp, setPendingFeatLevelUp] = useState<{ classId: string; newClassLevel: number } | null>(null);
-  // Set only while the Gear tab's "Attach Modifier" flow is waiting on the
-  // user to pick a modifier via the reused Equipmods `ItemPickerModal` —
-  // identifies which already-equipped selection the pick attaches to (the
-  // button lives on that specific row, so there is no separate "which
-  // weapon" step). items-1-and-27-scoping.md sub-task 6.
-  const [pendingModifierAttachment, setPendingModifierAttachment] = useState<ResolvedEquipmentDto | null>(null);
+  // Set only while the gear screen's Customize dialog waits on a pick from the reused Equipmods
+  // `ItemPickerModal`: the held copy the pick attaches to (SD-42 `decisions.md §27.3`).
+  const [pendingModifierAttachment, setPendingModifierAttachment] = useState<CustomizeTarget | null>(null);
   const [bio, setBio] = useState<BioFields>({ ...BLANK_BIO_FIELDS });
   const sheetDeity = useRef('');
   // Loads the real persisted bio (or the all-empty default for a character
@@ -3281,17 +3216,17 @@ export function CharacterSheet(props: {
     }
   }
 
-  /** Opens the reused Equipmods `ItemPickerModal`, remembering which equipped selection the pick will attach to. */
-  function handleAttachModifier(item: ResolvedEquipmentDto) {
-    setPendingModifierAttachment(item);
+  /** Opens the reused Equipmods `ItemPickerModal`, remembering which held copy the pick will attach to. */
+  function handlePickModifier(target: CustomizeTarget) {
+    setPendingModifierAttachment(target);
     setItemPickerOpen('modifier');
   }
 
   /**
    * `attach_equipment_modifier` mirrors `purchase_equipment`'s atomic
    * resolve-cost/charge sequencing, so the refresh shape here matches
-   * `handleAddEquipment`'s exactly — the one difference is `itemId` names
-   * the *target* selection to attach to (from `pendingModifierAttachment`),
+   * `handleAddEquipment`'s exactly — the one difference is `copy` names
+   * the *target* held copy to attach to (from `pendingModifierAttachment`),
    * not a new top-level selection.
    */
   async function handleModifierPicked(entry: ItemPickerEntry) {
@@ -3304,7 +3239,8 @@ export function CharacterSheet(props: {
     try {
       const outcome = await attachEquipmentModifier({
         characterId: props.row.characterId,
-        itemId: target.itemId,
+        itemId: target.copy.itemId,
+        copy: target.copy,
         modifierItemId: entry.key,
         savedAt: new Date().toISOString(),
         priceMode,
@@ -4257,7 +4193,7 @@ export function CharacterSheet(props: {
     : pendingFeatLevelUp
     ? `Pick a feat — level ${pendingFeatLevelUp.newClassLevel}`
     : pendingModifierAttachment
-      ? `Attach Modifier — ${pendingModifierAttachment.equipmentRecordName}`
+      ? `Attach modifier — ${pendingModifierAttachment.title}`
       : itemPickerConfig?.title ?? '';
 
   /** The content of one sheet tab; used by the on-screen tab panel and by every printed tab section. */
@@ -4561,7 +4497,7 @@ export function CharacterSheet(props: {
                     onOpenMarket={() => setMarketCategory('gear')}
                     priceMode={priceMode}
                     onPriceModeChange={setPriceMode}
-                    onAttachModifier={handleAttachModifier}
+                    onPickModifier={handlePickModifier}
                     characterId={props.row.characterId}
                     loadHeldEquipment={() => listHeldEquipment(props.row.characterId)}
                     detail={props.detail}

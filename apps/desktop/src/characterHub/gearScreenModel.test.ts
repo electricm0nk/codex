@@ -30,7 +30,7 @@ function held(name: string, location: LocationDto, options: { itemId?: string; b
   const copies = options.copies ?? [key(itemId, 0, bonus)];
   const activeState = location.kind === 'slot' || location.kind === 'equipped' ? 'EquippedActive' : location.kind === 'notCarried' ? 'Absent' : 'SelectedInactive';
   const slot = options.slot ?? (location.kind === 'slot' ? location.slot : 'none');
-  const row: PlacedEquipmentCopyDto = { itemId, name, bonus, activeState, slot, location, ordinal: copies[0].ordinal, quantity: options.quantity ?? copies.length, copies, baseQuantity: options.baseQuantity ?? 1 };
+  const row: PlacedEquipmentCopyDto = { itemId, name, baseName: name, bonus, activeState, slot, location, ordinal: copies[0].ordinal, quantity: options.quantity ?? copies.length, copies, baseQuantity: options.baseQuantity ?? 1 };
   return options.slotWarning ? { ...row, slotWarning: options.slotWarning } : row;
 }
 
@@ -198,10 +198,13 @@ const html = renderToStaticMarkup(
     onSell: noop,
     onDiscard: noop,
     onSets: { activate: noop, create: noop, rename: noop, remove: noop },
+    onCustomizeName: noop,
+    onCustomizeModifier: noop,
   }),
 );
 assert(html.includes('data-testid="gear-row-item:longsword-0-0"'), 'view: row testid');
 assert(html.includes('data-testid="gear-move-to"'), 'view: Move to button');
+assert(html.includes('data-testid="gear-row-customize-item:longsword-0-0"'), 'view: a Customize button on the row (E4.9)');
 assert(html.includes('data-testid="gear-location-slot-ring"') && html.includes('data-testid="gear-location-notCarried"'), 'view: tree location testids');
 assert(html.includes('data-testid="gear-set-select"') && html.includes('>Travel<'), 'view: the set picker lists the sets');
 assert(html.includes('data-testid="gear-filter"'), 'view: filter');
@@ -223,6 +226,8 @@ const tagged = renderToStaticMarkup(
     onSell: noop,
     onDiscard: noop,
     onSets: { activate: noop, create: noop, rename: noop, remove: noop },
+    onCustomizeName: noop,
+    onCustomizeModifier: noop,
   }),
 );
 assert(tagged.includes('Override: Ignore container capacity limits'), 'view: the override tag');
@@ -294,9 +299,13 @@ const nestHtml = renderToStaticMarkup(
     onSell: noop,
     onDiscard: noop,
     onSets: { activate: noop, create: noop, rename: noop, remove: noop },
+    onCustomizeName: noop,
+    onCustomizeModifier: noop,
   }),
 );
-assertEqual(nestHtml.split('data-testid="gear-container-').length - 1, 5, 'view: one table per container copy');
+assertEqual(nestHtml.split('<table').length - 1, 5, 'view: one table per container copy');
+assertEqual(nestHtml.split('data-testid="gear-container-customize-').length - 1, 5, 'view: a Customize button on every container table title (E4.9)');
+assert(nestHtml.includes('data-testid="gear-container-customize-item:pouch_belt-0-1"'), 'view: the table title customizes its own copy (E4.9)');
 const pouchTable = nestHtml.slice(nestHtml.indexOf('data-testid="gear-container-item:pouch_belt-0-0"'), nestHtml.indexOf('data-testid="gear-container-item:pouch_belt-0-1"'));
 assert(pouchTable.includes('Pouch, Belt #1 · 1 lb, no limit'), 'view: the caption reads title · load');
 assert(pouchTable.includes('Whetstone') && pouchTable.includes('data-testid="gear-discard"') && pouchTable.includes('data-testid="gear-sell"') && pouchTable.includes('data-testid="gear-move-to"'), 'view: a content row keeps its buttons inside the table');

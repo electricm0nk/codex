@@ -60,6 +60,8 @@ export type LocationDto =
  * one row. The Sell list needs only {@link HeldEquipmentCopyDto}.
  */
 export interface PlacedEquipmentCopyDto extends HeldEquipmentCopyDto {
+  /** The record's name: `name` when the copy has no name of its own (`decisions.md §27.3`). */
+  baseName: string;
   activeState: ActiveStateDto;
   /** Where a worn copy sits, and what a carried one would take. */
   slot: BodySlotDto;
@@ -85,6 +87,8 @@ export interface PlacedEquipmentCopyDto extends HeldEquipmentCopyDto {
   costOverrideCopper?: number;
   /** Saved in a slot not of its kind (`"in the Shield slot, a Head item"`); absent when it is not. */
   slotWarning?: string;
+  /** The modifiers attached to the copy, by catalog name; absent when it has none. */
+  appliedModifiers?: string[];
 }
 
 /** What the Market can buy back: a custom item is the GM's, and has no price. */

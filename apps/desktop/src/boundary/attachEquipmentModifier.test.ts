@@ -13,6 +13,7 @@ async function testNoRuntimeThrowsDescriptiveError() {
     await attachEquipmentModifier({
       characterId: 'char-test',
       itemId: 'item:longsword',
+      copy: { itemId: 'item:longsword', bonus: 0, ordinal: 1 },
       modifierItemId: 'Special Ability ~ +1 ~ Weapon',
       savedAt: '2026-07-24T00:00:00Z',
       priceMode: 'standard',

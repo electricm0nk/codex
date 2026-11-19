@@ -220,13 +220,15 @@ pub fn armor(sources: &SheetSources) -> SheetBlock {
 const NESTING: [&str; 6] = ["item", "in-1", "in-2", "in-3", "in-4", "in-5"];
 
 /// `"<name> ×<n>"` in pieces; a bundle's `(20)` is dropped once bought (`gearScreenModel.ts`'s
-/// `stackLabel`, SD-41 `decisions.md §28, §30`).
+/// `stackLabel`, SD-41 `decisions.md §28, §30`). A renamed copy prints its record's name beside
+/// its own, `Camping Gear (Sack)` (SD-42 `decisions.md §27.3`).
 fn stack_label(copy: &HeldEquipmentCopyDto, quantity: u32) -> String {
-    let name = match copy.name.trim_end().strip_suffix(')').and_then(|rest| rest.rsplit_once('(')) {
+    let base = match copy.base_name.trim_end().strip_suffix(')').and_then(|rest| rest.rsplit_once('(')) {
         Some((name, count)) if copy.base_quantity > 1 && !count.is_empty() && count.chars().all(|c| c.is_ascii_digit()) => name.trim_end(),
-        _ => copy.name.as_str(),
+        _ => copy.base_name.as_str(),
     };
-    if quantity > 1 { format!("{name} ×{quantity}") } else { name.to_owned() }
+    let name = if copy.name == copy.base_name { base.to_owned() } else { format!("{} ({base})", copy.name) };
+    if quantity > 1 { format!("{name} ×{quantity}") } else { name }
 }
 
 /// A row's weight as the engine weighs each copy: `3 lb`, `3 × 3 lb` for a stack of like copies,
