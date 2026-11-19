@@ -24761,3 +24761,8 @@ mod import_writes_equipment_sets;
 #[cfg(test)]
 #[path = "mirror_two_master.rs"]
 mod mirror_two_master;
+
+/// The local proof run's app path on the operator's file (SD-42 E4.5); skips loudly when absent.
+#[cfg(test)]
+#[path = "import_operator_file.rs"]
+mod import_operator_file;
