@@ -95,11 +95,11 @@ cargo run --locked -p codex-ingest --bin gen_settled_corpus -- --check          
 cd apps/desktop/src-tauri && cargo test --locked -j 8 slot_kind -- --test-threads=8     # E4.8: ≥ 5 passed; equipment.wrong_slot refused with words
 cd apps/desktop/src-tauri && cargo test --locked -j 8 rename_copy_ -- --test-threads=8  # E4.9: ≥ 4 passed; print block reads "Camping Gear (Sack)"
 cd apps/desktop/src-tauri && cargo test --locked -j 8 attach_modifier_to_copy -- --test-threads=8   # E4.9: ≥ 2 passed; the pick lands on the chosen copy
-grep -c 'Attach Modifier' apps/desktop/src/characterHub/CharacterSheet.tsx                 # 0: the redundant list is gone (E4.9)
+grep -c 'Attach Modifier' apps/desktop/src/characterHub/CharacterSheet.tsx                 # 2 (was 5): the redundant list is gone; the 2 left are buildItemPickerConfig's doc line and picker title (E4.9, decisions.md §20)
 cd apps/desktop/src-tauri && cargo test --locked -j 8 describe_held_ -- --test-threads=8 # E4.10: ≥ 5 passed; unstated values null
 grep -cE '(weightLbs|costGp|quantity|acBonus|maxDex) *[-+*/]' apps/desktop/src/characterHub/GearDetail.tsx   # 0: the panel derives nothing (NR-2)
 cd apps/desktop/src-tauri && cargo test --locked -j 8 stack_rows_ -- --test-threads=8     # E4.11: ≥ 5 passed; four sacks one row; a filled one its own; split 50/50 and rejoin; no weight moves
-cd apps/desktop && npx tsx src/characterHub/gearScreenModel.test.ts && npx tsx src/characterHub/CustomizeCopyDialog.test.tsx && npx tsx src/characterHub/GearDetail.test.tsx   # E4.8 ≥ 5, E4.9 ≥ 4, E4.10 ≥ 3 new cases
+cd apps/desktop && npx tsx src/characterHub/gearScreenModel.test.ts && npx tsx src/characterHub/CustomizeCopyDialog.test.ts && npx tsx src/characterHub/GearDetail.test.ts   # E4.8 ≥ 5, E4.9 ≥ 4, E4.10 ≥ 3 new cases
 python3 -I -c "import json;ids={x['id'] for x in json.load(open('apps/desktop/scripts/ui-smoke/spec.json'))['rows']};print(sum(i in ids for i in ['sheet-gear-bag-of-holding-weightless','sheet-gear-move-to-slot-kinds','sheet-gear-customize','sheet-gear-detail-panel','sheet-gear-sacks-one-row','sheet-gear-arrows-split-quiver-backpack']))"   # 6 (E4.4)
 ```
 
@@ -119,7 +119,7 @@ gh run list -w linux-build-check.yml -b tranche-22 -L 1 --json conclusion,url   
 ```bash
 cd docs/release/SD-42-pcgen-import-and-campaign-folder
 test -s kanban.md || { echo NO_KANBAN; exit 2; }
-awk -F'|' '$2 ~ /^ (C|E)[0-9]/ { n++ } END { if (n != 54) print "ROW_COUNT " n }' kanban.md   # 54: 37 + E1.8 + E1.9 + E2.14 + E2.12, E2.13, E4.6 (decisions.md §26) + E4.7–E4.11 (decisions.md §27) + E4.12 (decisions.md §28) + E1.10, E4.13 (discovered by E1.7) + E4.14 (discovered by E1.10) + E2.15 (discovered by E2.10) + E4.15 (discovered by E4.2)
+awk -F'|' '$2 ~ /^ (C|E)[0-9]/ { n++ } END { if (n != 55) print "ROW_COUNT " n }' kanban.md   # 55: 37 + E1.8 + E1.9 + E2.14 + E2.12, E2.13, E4.6 (decisions.md §26) + E4.7–E4.11 (decisions.md §27) + E4.12 (decisions.md §28) + E1.10, E4.13 (discovered by E1.7) + E4.14 (discovered by E1.10) + E2.15 (discovered by E2.10) + E4.15 (discovered by E4.2) + E4.16 (discovered by E4.9)
 awk -F'|' '$2 ~ /^ (C|E)[0-9]/ && $2 !~ /^ E5\.[2-4] / && $5 !~ /^ complete *$/ { print $2 "|" $5 }' kanban.md
 grep -c '^- \(Import ([^)]*)\|Campaign Manager ([^)]*)\|Editor\) — usable: yes' artifacts/epic_5/E5.G_cycle_receipt.md   # 3 (anchored; the receipt's own instructions must not match)
 test -s artifacts/epic_4/E4.5_cycle_receipt.md && grep -c 'copies_emitted' artifacts/epic_4/E4.5_cycle_receipt.md   # ≥ 1: the local proof run's counts are in the receipt (Q9)
@@ -168,8 +168,8 @@ recorded in E5.1's receipt.
 | BAG-1 / HVS-1 (2026-11-17) a bag of holding's (and a handy haversack's) contents are weightless, not cumulative | E4.7, E4.4 | G-10 `weightless_` ≥ 5 (bag + haversack + nested backpack + flag parse + plain sack); `gen_settled_corpus --check` 0; ui-smoke `sheet-gear-bag-of-holding-weightless` |
 | SLOT-1 (2026-11-17) anything can go in any slot (a backpack in Shield) | E4.8, E4.4 | G-10 `slot_kind` ≥ 5 (menu, drag, backend refusal with words, override, saved wrong slot loads with a warning); ui-smoke `sheet-gear-move-to-slot-kinds` |
 | REN-1 (2026-11-17) rename an object in inventory (Sack #1 → Camping Gear) | E4.9, E4.4 | G-10 `rename_copy_` ≥ 4; print `Camping Gear (Sack)`; ui-smoke `sheet-gear-customize` |
-| CUS-1 (2026-11-17) a Customize button on the equip rows (naming + modifiers); the redundant list with the modifier buttons dropped | E4.9, E4.4 | G-10 `attach_modifier_to_copy` ≥ 2; `CustomizeCopyDialog.test.tsx` ≥ 4; `grep -c 'Attach Modifier' CharacterSheet.tsx` → 0; ui-smoke `sheet-gear-customize` |
-| DET-1 (2026-11-17) selecting gear shows all its information (weight / cost / stats / description / slots) | E4.10, E4.4 | G-10 `describe_held_` ≥ 5; `GearDetail.test.tsx` ≥ 3; the no-arithmetic grep → 0; ui-smoke `sheet-gear-detail-panel` |
+| CUS-1 (2026-11-17) a Customize button on the equip rows (naming + modifiers); the redundant list with the modifier buttons dropped | E4.9, E4.4 | G-10 `attach_modifier_to_copy` ≥ 2; `CustomizeCopyDialog.test.ts` ≥ 4; `grep -c 'Attach Modifier' CharacterSheet.tsx` → 2 (the picker config's own; §20); ui-smoke `sheet-gear-customize` |
+| DET-1 (2026-11-17) selecting gear shows all its information (weight / cost / stats / description / slots) | E4.10, E4.4 | G-10 `describe_held_` ≥ 5; `GearDetail.test.ts` ≥ 3; the no-arithmetic grep → 0; ui-smoke `sheet-gear-detail-panel` |
 | LNX-2 / #409 (2026-11-17) "Requires glibc-2.43 on Ubuntu 24" — "add an SD-42 card. post now that this has been assigned to relase v0.22.x." | E4.12, E5.3, E5.4 | G-11: the self-test ≥ 5; the gate exits 1 on the 0.21.153 `.deb`; `linux-build-check.yml` green on `tranche-22` with the gate's `OK` lines; `grep -c '#409' release-notes.md` ≥ 1; `Fixes #409` in the PR body |
 | STK-1 (2026-11-17) four sacks read as one `Sack ×4`, a filled one as its own row; stacks split (50/50 into quiver and backpack) and rejoin | E4.11, E4.4 | G-10 `stack_rows_` ≥ 5; `print_pf_blocks_gear_stacks` ≥ 2; model test one node per stack; ui-smoke `sheet-gear-sacks-one-row`, `sheet-gear-arrows-split-quiver-backpack` |
 
