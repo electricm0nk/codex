@@ -19,7 +19,7 @@ status: planning-ready
 | E2 campaign folder (lane `campaign`) | 16 | 16 (E2.1–E2.15, E2.MC) | E2 complete; campaign lane ended |
 | E3 editor (lane `editor`) | 4 | 4 (E3.1–E3.3, E3.MC) | E3 complete; editor lane ended |
 | E4 desktop wiring (Phase 2) | 22 | 22 (E4.1–E4.21, E4.MC) | E4.MC complete 2026-11-20; discovered E4.21 complete 2026-11-20 (code 8f876cc754); E5.G next |
-| E5 gate + closure | 6 | 6 (E5.G, E5.5, E5.1, E5.2, E5.3, E5.4) | E5 complete 2026-11-20; PR tranche-22 to develop open, the operator merges |
+| E5 gate + closure | 7 | 5 (E5.G, E5.5, E5.1, E5.2, E5.3) | E5.4 blocked-escalated (PR #413 red on a CI-only test, E5.6 discovered); E5.6 waiting |
 
 Re-derive: `awk -F'|' '$2 ~ /^ (C|E)[0-9]/ {gsub(/ /,"",$2); split($2,a,"."); n[a[1]]++; if ($5 ~ /complete/) c[a[1]]++} END {for (e in n) print e, n[e], c[e]+0}' kanban.md`.
 
@@ -105,7 +105,7 @@ the post-gate run. A run with parallel lanes is never resumed, R9.)
 | 2026-11-20 | E5.5 | complete | the commit adding the E5.5 receipt (code f91d505955) | `artifacts/epic_5/E5.5_cycle_receipt.md` | Skill Focus facts move onto `FeatDerivedPillarContributions` (`skill_focus`, read in `feat_derived_pillar_contributions`; accessor `skill_focus_bonus`); the struct drops `Copy`; `pilot_compute_corpus.rs` names no `feat_effects` producer; `sd27_feat_effects_reach_both_compute_paths` 2/3 → 3/3; root lib 3211/0; desktop `pcg_import_parity` 6/6; G-1 SAME (sha256 = E4.21's); clippy + sd24 audit PASS |
 | 2026-11-20 | E5.2 | complete | the commit adding the E5.2 receipt | `artifacts/epic_5/E5.2_cycle_receipt.md` | G-8: residue gate PASS, `-S` char/player → 0/0; G-9 (`artifacts/epic_5/E5.2/g9-scan.txt`): all clean except INTERIM NOTES 1 (E5.3's); fixed the `SKIPPED` line (2 → 0, it counted E4.5's absent-path proofs; `decisions.md §20`) and back-filled R15 rows on E5.1/E5.G; DEF/FSR revisits: none met; retrospective `docs/retro/sd42-retrospective.md` (141 sd42 events, 66 corrections, 57 against our own docs); sweep: 2 cargo target dirs removed (270 G → 189 G used), 0 side trees, 0 `sd42/*` branches |
 | 2026-11-20 | E5.3 | complete | the commit adding the E5.3 receipt | `artifacts/epic_5/E5.3_cycle_receipt.md` | final notes (R-1..R-8); `receipts.md` created; truth-up over 11 architecture docs, one-liners pass; claims critic 15 fixed |
-| 2026-11-20 | E5.4 | complete | the commit adding the E5.4 receipt | `artifacts/epic_5/E5.4_cycle_receipt.md` | graphify exit 1 (`no graph found` in this worktree; failure receipt in `receipts.md`, no force flag); G-9 re-run with E5.4 exempt clean; PR `tranche-22` to `develop` with `Fixes #409`; the operator merges |
+| 2026-11-20 | E5.4 | blocked-escalated | the commit adding the E5.4 blocked row | `artifacts/epic_5/E5.4_cycle_receipt.md` | graphify exit 1 (`no graph found` in this worktree; failure receipt in `receipts.md`, no force flag); G-9 re-run with E5.4 exempt clean; PR #413 `tranche-22` to `develop` with `Fixes #409`; red job `Test (PR into develop)`: `default_output_dir_is_outside_the_repo` inside the CI repo; E5.6 discovered |
 
 ## Epic reports
 
