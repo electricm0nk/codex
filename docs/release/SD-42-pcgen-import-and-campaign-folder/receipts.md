@@ -58,3 +58,17 @@ before the run.
   relative_link_check: pass
   release_notes_changes: "Known-sync-tool examples (Syncthing, cloud, git) removed: nothing in the code names them"
   receipt_note: "Opus claims critic over every line the truth-up added (git diff -U0 fc465cddd1..cc6980eefc -- docs/architecture | awk '/^\\+[^+]/', 207 lines) and over release-notes.md; each claim checked against the code or a command. 15 refuted and fixed, listed in artifacts/epic_5/E5.3_cycle_receipt.md 'Claims critic'."
+
+- cycle_id: 2026-11-20T22:54:49Z
+  row_or_kind: graphify:update
+  bundle: SD-42
+  branch: 022faed18e9754f24d2e696062ed9fecf5b40268
+  integration_target: develop
+  branch_tip: 022faed1
+  graphify_exit_code: 1
+  outcome: failed
+  wall_clock_seconds: 0.2
+  log_path: graphify-out/.truth-up-run-2026-11-20T22:54:49Z.log
+  evidence_tier_before: (recorded by operator at receipt read time)
+  evidence_tier_after: (recorded by operator at receipt read time)
+  receipt_note: graphify exited 1; operator to decide retry-vs-proceed (see log)
