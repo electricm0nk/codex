@@ -150,6 +150,13 @@ define the full procedure; condensed:
   together, see below). The retro write-up and
   worktree sweep happen **before** the PR opens — finding either one missing after the PR is
   already open means the closure needs a correction cycle, not a clean pass.
+- **Merge and watch (operator ruling 2026-11-20).** The lead owns `develop`: once the PR's checks
+  are green, the lead merges `tranche-N -> develop` itself, then watches the `develop` push
+  pipeline (`publish-tester-release.yml`, the alpha tester release on all three OSes) to green. A
+  red pipeline is a blocker on the bundle, not a follow-up. There is **no operator gate before
+  `develop`**: do not author an `E<n>.G`-style hands-on sign-off card; the operator reviews the
+  alpha release. The operator is the gate for `develop -> test` and `test -> main`; never open or
+  merge those without the operator. Never commit directly on `develop`.
 
 ### Release-artifact closure (version, notes, installable)
 
