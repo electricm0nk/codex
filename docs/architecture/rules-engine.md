@@ -1,7 +1,7 @@
 # Rules engine
 
 > Scope: The headless rules-computation spine for Pathfinder 1e, Starfinder 1e and Cyberpunk RED — from chosen character input through the deterministic chassis engine to the boundary contract the GUI consumes.
-> Last verified: **2026-11-16 against `tranche-21` (`be27ecc83d`, SD-41 E5.3)** for `damage_total.rs`'s carried entry point and Unarmed row, `containers.rs`, the encumbrance arguments (pieces, created items, sizes, modifier divisors), the settled equipment fields and `climb_ft`. Earlier pass: **2026-11-07 against `tranche-19` (`e5c7415d7f`)** for `body_slots.rs` and `feat_budget.rs`. Earlier pass: **2026-10-15 against `tranche-18` (`9d23977679`, SD-38 closure truth-up)** for §3f (the Cyberpunk RED `cpr`
+> Last verified: **2026-11-20 against `tranche-22` (`fc465cddd1`, SD-42 E5.3)** for weightless containers (`contents_weight_factors`), `slot_kinds_allowed`, the armor-quality fold in `equipment_effects.rs` and the skill helpers `skill_focus_bonus` / `size_skill_modifier`. Earlier pass: **2026-11-16 against `tranche-21` (`be27ecc83d`, SD-41 E5.3)** for `damage_total.rs`'s carried entry point and Unarmed row, `containers.rs`, the encumbrance arguments (pieces, created items, sizes, modifier divisors), the settled equipment fields and `climb_ft`. Earlier pass: **2026-11-07 against `tranche-19` (`e5c7415d7f`)** for `body_slots.rs` and `feat_budget.rs`. Earlier pass: **2026-10-15 against `tranche-18` (`9d23977679`, SD-38 closure truth-up)** for §3f (the Cyberpunk RED `cpr`
 > engine), the `GameSystem` description and the module-map note. Earlier: **2026-10-07 against `tranche/17` (`b99c3d4b02`, SD-37 closure truth-up)** for §3e (the Starfinder 1e
 > generic chassis: the `sf_*` readers, `game_system.rs`, the engine master link) and for every reference to the
 > Pathfinder rules tables, now a data package read through `src/rules_core/rules_catalog/` (the compiled `rules_tables`
@@ -1072,14 +1072,17 @@ Ingesting those records does **not** ground their
 mechanical effects: `src/rules_core/feat_effects.rs` still grounds computed effects for a small
 subset of CRB feats only.
 
-**`src/rules_core/body_slots.rs`** — which body slot an equipment record occupies, whether the worn set conflicts, and whether the record takes a `+N` enhancement (`slot_of`, `worn_slot`, `slot_conflict`, `enhanceable`). The record's `Slot:` line wins, then barding and ammunition (no slot), then a slot tag, then the tag-to-slot table in `data/equipment_types.json` under `slots` (written by `gen_equipment_types` from the pinned oracle's slot list), so a table change is one data row.
+**`src/rules_core/body_slots.rs`** — which body slot an equipment record occupies, whether the worn set conflicts, and whether the record takes a `+N` enhancement (`slot_of`, `worn_slot`, `slot_conflict`, `enhanceable`), and which slots a copy may sit in (`slot_kinds_allowed`: its own slot; a wielded copy any hand; a slotless copy none — the gear screen's menu, its drag and the move command all ask it, and the per-character slot override lifts it). The record's `Slot:` line wins, then barding and ammunition (no slot), then a slot tag, then the tag-to-slot table in `data/equipment_types.json` under `slots` (written by `gen_equipment_types` from the pinned oracle's slot list), so a table change is one data row.
 
 **`src/rules_core/feat_budget.rs`** — how many feats a Pathfinder 1e character may hold, pool by pool, and which pool each held feat is charged to (`feat_budget`, `FeatBudget::pools`, `over_by`, `refusal`, `explanation_rows`; `level_grants_feat` and `levels_granting_a_feat` for the odd-level `level` pool). The pools come from the rules the character holds, never a per-class table: every held rule whose `target` is `Pool(<feat pool>)` adds its evaluated value, and a class feature with no `Pool` target whose offer hands out feats is a pool sized by its offer's count (a Swashbuckler's `swashbuckler_bonus_feats`, E1.6); a line the converter repeats counts once.
 
 **`src/rules_core/equipment_effects.rs`** (Epic 5) + submodules + `src/rules_core/equipment_resolver.rs` + `src/rules_core/spell_resolver.rs` —
 `compute_equipment_effects(equipped: &[EquipmentSelection], corpus) -> EquipmentEffects` dispatches
 across category submodules under `src/rules_core/equipment_effects/`: `src/rules_core/equipment_effects/arms_armor.rs`
-(AC/max-dex/spell-failure — the fields `EquipmentStatEffect` is shaped to carry),
+(AC/max-dex/spell-failure — the fields `EquipmentStatEffect` is shaped to carry; a worn armor's or shield's own
+applied modifiers then lessen its armor check penalty, raise its max Dexterity and lower its spell failure from each
+modifier record's stated effect — masterwork or a `+N` by 1, mithral by 3 / +2 / −10%, the largest of each kind only,
+in `apply_attached_armor_qualities`),
 `src/rules_core/equipment_effects/general.rs` (per-item skill-check circumstance bonuses, via
 `ResolvedEquipmentEffect::skill_bonus`), `src/rules_core/equipment_effects/magic_items.rs` (per-item ability-score enhancement
 bonuses, via `ResolvedEquipmentEffect::ability_bonus`), `src/rules_core/equipment_effects/equipmods.rs` (per-item weapon
@@ -1173,6 +1176,11 @@ piece count of the carried ammunition stacks that match the weapon's family). Th
 weapon taken as wielded in the main hand). `weapon_damage_for_size` moves a weapon die one size step (Small and
 Large only).
 
+**Skill-total helpers in `src/rules_core/pilot_compute_corpus.rs`** — `size_skill_modifier` (Stealth's size
+modifier, and half of it on Fly), `skill_focus_bonus` (+3, +6 from 10 ranks, on the skill Skill Focus names, read
+through the shared feat seam `FeatDerivedPillarContributions::skill_focus_bonus` so both compute paths agree) and `weapon_size_attack_penalty` (an
+inappropriately sized weapon's −2 per size step on attack; a copy with no size is Medium).
+
 **`src/rules_core/containers.rs`** (SD-41) — `container_loads(set, held, corpus, created, weighed, quantities,
 item_sizes) -> Vec<ContainerLoad>`: for each container copy in an equipment set, the weight of what is inside it,
 summed recursively over `Inside` locations (a pouch in a backpack adds to both), against its settled
@@ -1181,7 +1189,12 @@ a warning, never a block. Each copy weighs what `encumbrance::compute_encumbranc
 `encumbrance::copy_bundles` (pieces over the record's `base_quantity`), `modifier_weight_divisor` (e.g. mithral)
 and `copy_size_multipliers`, so a container load and the carried total cannot disagree. `compute_encumbrance`
 itself takes the created items (`extra: &[WeighedCopy]`) and the piece `quantities`;
-`compute_encumbrance_sized` also takes the copies' sizes.
+`compute_encumbrance_sized` also takes the copies' sizes and the contents weight factors.
+`contents_weight_factors(set, held, corpus)` gives each copy below 1 the product of its enclosing containers'
+`CorpusEquipmentRecord::contents_weight_factor` (the settled `contents_weight_pct` over 100, from PCGen's
+`CONTAINS:*N` / `N%`), so what sits in a Bag of Holding or a Handy Haversack (or a Backpack inside one) adds
+nothing to the carried total, while `container_loads` still counts it against the bag's capacity. A Create
+item container is 1.
 
 **`src/rules_core/level_up.rs`** (Epic 7) + 11 per-class submodules — `compute_level_up_grants(character:
 &CharacterInput, from_level: u8, to_level: u8) -> LevelUpPlan`, with one submodule per core class

@@ -3,7 +3,7 @@
 > Scope: naming standards and cross-cutting code conventions — the rules a new contributor
 > follows to name a file, a function, a test, a branch, or a commit the way this repo already
 > does, plus the structural idioms every plane converges on independently.
-> Last verified: **2026-11-14 against `tranche-20` (`2fd74a5c15`, SD-40 E5.4)** for the boundary-wrapper file count only (`ls apps/desktop/src/boundary/*.ts | wc -l` = 108); earlier: **2026-10-07 against `tranche/17` (`b99c3d4b02`)** for the two paragraphs that cited the removed
+> Last verified: **2026-11-14 against `tranche-20` (`2fd74a5c15`, SD-40 E5.4)** for the boundary-wrapper file count only (`ls apps/desktop/src/boundary/*.ts | wc -l` = 120 on `tranche-22`, `fc465cddd1`, SD-42 E5.3; 108 at SD-40 E5.4); earlier: **2026-10-07 against `tranche/17` (`b99c3d4b02`)** for the two paragraphs that cited the removed
 > `rules_tables` module (the book-id convention and the guard-then-dispatch resolver shape, now under
 > `src/rules_core/rules_catalog/`); the rest was last verified 2026-09-20 against `tranche/16` and not re-derived.
 > Maintenance: updated at SD closure — see [README.md](./README.md) §Maintenance contract
@@ -356,8 +356,8 @@ Full worked example in [desktop-app.md](./desktop-app.md) §"The surface/runtime
 ### Boundary wrapper rule
 
 Components never call `invoke()` inline; each Tauri command family gets one wrapper under
-`apps/desktop/src/boundary/` (108 files as of this verification, SD-40 E5.4 —
-`ls apps/desktop/src/boundary/*.ts | wc -l`, wrapper + test pairs), gated on `boundary/runtime.ts`'s
+`apps/desktop/src/boundary/` (120 files directly under it as of this verification, SD-42 E5.3 —
+`ls apps/desktop/src/boundary/*.ts | wc -l`, wrapper + test pairs; the campaign-folder wrappers sit in `boundary/campaignFolder/`), gated on `boundary/runtime.ts`'s
 `hasTauriRuntime()`. **When adding a new Tauri command**: add a `boundary/<command>.ts` wrapper
 unless you have a testability seam like one of the three verified direct-`invoke()` exceptions, in
 which case say so in a comment. Full accounting of the three named exceptions and exactly what

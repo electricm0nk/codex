@@ -2,7 +2,7 @@
 
 > Scope: index and maintenance contract for the `docs/architecture/` living-documentation set,
 > plus reading paths into it by intent.
-> Last verified: **2026-11-07 against `tranche-19` (`e5c7415d7f`)**: `pcg-import.md` added to the index. Earlier pass: **2026-10-15 against `tranche-18` (`9d23977679`, SD-38 closure truth-up)**. Index rows for
+> Last verified: **2026-11-20 against `tranche-22` (`fc465cddd1`, SD-42 E5.3)**: `persistence.md`'s source dirs name `campaign_folder.rs` (`campaign_drive.rs` is gone). Earlier pass: **2026-11-07 against `tranche-19` (`e5c7415d7f`)**: `pcg-import.md` added to the index. Earlier pass: **2026-10-15 against `tranche-18` (`9d23977679`, SD-38 closure truth-up)**. Index rows for
 > `rules-engine.md`, `rules-data-tables.md`, `corpus-ingest.md` and `desktop-app.md` name the Starfinder 1e, Cyberpunk RED and
 > data-package paths (`src/rules_core/rules_catalog/`, `src/rules_core/cpr/`, `data/rules_tables/`, `data/starfinder-1e/`,
 > `data/cyberpunk-red/`); the
@@ -51,7 +51,7 @@ doc's coverage shifts.
 | [corpus-ingest.md](./corpus-ingest.md) | PCGen `.pcc`/`.lst` parsing into canonical source-IR, the sheet-rule converter for the two PCGen-backed game systems, and the hand-transcribed Cyberpunk RED corpus with its manifest check | `crates/codex-ingest/src/pcgen_import/`, `data/starfinder-1e/`, `data/cyberpunk-red/`, `scripts/cpr_manifest_check.py` |
 | [rules-engine.md](./rules-engine.md) | The headless compute spine (PF1 per-domain engines, the Starfinder 1e `sf_*` readers and the Cyberpunk RED `cpr` module) | `src/rules_core/` (excluding `rules_catalog/`) |
 | [rules-data-tables.md](./rules-data-tables.md) | The Pathfinder rule-data tables as a JSON data package, and the package-backed catalog that reads it | `data/rules_tables/`, `src/rules_core/rules_catalog/` |
-| [persistence.md](./persistence.md) | Saved-character and campaign local on-disk storage | `src/saved_character/`, `src/campaign/`, `apps/desktop/src-tauri/src/character_hub.rs`, `apps/desktop/src-tauri/src/campaign_drive.rs` |
+| [persistence.md](./persistence.md) | Saved-character and campaign local on-disk storage | `src/saved_character/`, `src/campaign/`, `apps/desktop/src-tauri/src/character_hub.rs`, `apps/desktop/src-tauri/src/campaign_folder.rs` |
 | [homebrew-and-oracle.md](./homebrew-and-oracle.md) | Homebrew package authoring; oracle-parity fixture schema | `src/homebrew_authoring/`, `crates/codex-ingest/src/oracle_validation/` |
 | [desktop-app.md](./desktop-app.md) | Tauri shell build, command inventory, boundary layer, frontend map, rule-system adapter seam (Pathfinder, Starfinder and Cyberpunk adapters) | `apps/desktop/` |
 | [update-and-feedback.md](./update-and-feedback.md) | Self-update chain and feedback/defect-report submission chain | `apps/desktop/src/feedback/`, `apps/desktop/src/update/`, `apps/desktop/src/testerWorkbench/feedback/`, `apps/desktop/src/testerWorkbench/update/`, `apps/desktop/src-tauri/src/update/`, `apps/desktop/src-tauri/src/browser_handoff.rs`, `schemas/update/` |

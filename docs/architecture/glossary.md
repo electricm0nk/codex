@@ -3,7 +3,7 @@
 > Scope: every project-specific term a newcomer meets in this codebase or its docs, each with a
 > short definition and a link to the doc that treats it in full.
 > Merge pass: **2026-10-07, `tranche/17` merged with `develop` @ `fd68740f60`** (SD-37 E7.9a): both term sets kept; the Data root entry now names the per-system roots.
-> Last verified: **2026-11-16 against `tranche-21` (`be27ecc83d`, SD-41 E5.3)** for the SD-41 terms (campaign write-through, container, copy key, equipment set, location, projection, stack) and the corpus-literal sweep's settled-price re-derivation. Earlier: **2026-11-14 against `tranche-20` (`2fd74a5c15`, SD-40 E5.4)** for the SD-40 terms (look, print layout, print section). Earlier: **2026-10-15 against `tranche-18` (`9d23977679`, SD-38 closure truth-up)** for the SD-38 terms (the
+> Last verified: **2026-11-20 against `tranche-22` (`fc465cddd1`, SD-42 E5.3)** for the SD-42 terms (campaign folder, campaign write-through, master and stand-in, slot kind, weightless container) and the stack key. Earlier: **2026-11-16 against `tranche-21` (`be27ecc83d`, SD-41 E5.3)** for the SD-41 terms (campaign write-through, container, copy key, equipment set, location, projection, stack) and the corpus-literal sweep's settled-price re-derivation. Earlier: **2026-11-14 against `tranche-20` (`2fd74a5c15`, SD-40 E5.4)** for the SD-40 terms (look, print layout, print section). Earlier: **2026-10-15 against `tranche-18` (`9d23977679`, SD-38 closure truth-up)** for the SD-38 terms (the
 > `cpr.` row, printed rule, the Game system entry). Earlier: **2026-10-07 against `tranche/17` (`b99c3d4b02`)** for the SD-37 terms (game system, held set,
 > data package, rules catalog, golden digests, Starfinder chassis).
 > Also verified: **2026-10-07 against branch `tranche-16-ui`** for the four terms it added (data root, installed state, release-notes pointer, version stamp). Earlier: **2026-09-26 against `tranche/16` (`e70a8745ed`)** for the SD-36 Epic F terms (carrier mix,
@@ -43,12 +43,20 @@ Components never call `invoke()` inline; they call a boundary wrapper, which is 
 `hasTauriRuntime()` and falls back to a preview value outside a real Tauri runtime. See
 [conventions.md](./conventions.md) §"Boundary wrapper rule" and [desktop-app.md](./desktop-app.md).
 
+## Campaign folder
+
+A campaign as a plain folder the player chooses and syncs themselves: `campaign.json` (schema 2), Party
+Resources, `Adventure Log/`, `Maps/`, `Wiki/`, `Characters/`, `Attachments/` and `.codex/nonce`
+(`src/campaign/folder.rs`, `LAYOUT_DIRS`). The app remembers the folders it knows in
+`campaign-folders.json`. See [persistence.md](./persistence.md).
+
 ## Campaign write-through
 
-The one-way copy of a whole character folder into each campaign folder it belongs to
-(`<campaignDir>/characters/<slug>-<characterId>/`), after every write under the character root
-(`campaign_mirror::mirror`, called by the desktop's `after_write`). Membership lives in the character's
-own `campaigns.json`; the copy is never read back, and a failed copy is a warning, not an error. See
+The copy of a whole character folder into each campaign folder it belongs to
+(`<campaignDir>/Characters/<slug>-<characterId>/`, the character's backup), after every write under the
+character root (`campaign_mirror::mirror`, called by the desktop's `after_write`), with a `master.json`
+naming the writing device and its save counter. Membership lives in the character's own `campaigns.json`;
+a failed copy is a warning, not an error. See [master and stand-in](#master-and-stand-in) and
 [persistence.md](./persistence.md).
 
 ## Carrier mix
@@ -257,6 +265,14 @@ One Typst template for one kind of printed block, `apps/desktop/src-tauri/resour
 `print::model::Look`. A look formats the strings its block carries and never computes a number; `looks/table.typ`
 is the generic table look. See [desktop-app.md](./desktop-app.md) §"Print: blocks, looks, layouts".
 
+## Master and stand-in
+
+The one device whose local copy of a character writes its campaign backup is that character's master; a
+backup whose `master.json` counter is not the one this install last wrote is never overwritten. Another
+device may import a backup as a stand-in (`standIn: true` in its `campaigns.json`: it never writes the
+backup) or as the moved master; the difference between a local copy and a backup is shown, never merged
+(`campaign::characters`).
+
 ## Mechanism (unresolved-reference)
 
 A letter naming WHY a converted reference did not resolve, so a remainder is named by cause, never
@@ -384,6 +400,12 @@ The SD-35 output of the corpus converter: one `SheetRule` JSON record per corpus
 carrying no PCGen token or formula string — only our own resolved schema, read at run time by
 `src/rules_core/sheet_rule.rs`. See [corpus-ingest.md](./corpus-ingest.md).
 
+## Slot kind
+
+The body slots an equipment copy may sit in: its own slot, any hand for a wielded copy, none for a slotless
+one (`body_slots::slot_kinds_allowed`); the gear screen's menu, its drag and the move command refuse the
+rest unless the character's slot override is on.
+
 ## Slug
 
 A lowercase, punctuation-normalized identifier segment used as (part of) a record key, e.g. the
@@ -408,7 +430,7 @@ Regenerate-and-diff (`gen_settled_corpus --check`) is its own idempotency proof.
 
 A view, not a stored thing: held copies with the same item, bonus, custom name, location, size,
 special abilities and override flag are one row with a piece `quantity`
-(`list_held_equipment_stacks_at_root`). Bought bundles become pieces
+(`list_held_equipment_stacks_at_root`), except that a container copy holding anything is always its own row. Bought bundles become pieces
 (3 × "Arrows (20)" = 60); the piece count lives in `equipment_sets.json`'s `copies` map.
 
 ## Status parity
@@ -452,6 +474,13 @@ incremental repair passes. See [getting-started.md](./getting-started.md).
 ## Version stamp
 
 The `<major>.<tranche>.<build>` version minted by the publish workflow's `stamp` job (`0.19.${GITHUB_RUN_NUMBER}`) and written into `apps/desktop/package.json` and `src-tauri/tauri.conf.json` before every build. The committed files stay at `0.<tranche>.0`. `Cargo.toml` is not stamped, so display code uses Tauri's `package_info().version`, never `CARGO_PKG_VERSION`. See [release-pipeline.md](./release-pipeline.md) §Stamp delivery.
+
+## Weightless container
+
+A container whose settled `contents_weight_pct` is below 100 (PCGen's `CONTAINS:*N` / `N%`): a Bag of Holding
+or Handy Haversack (0 %). What sits inside it, nested containers included, adds nothing (or its percentage) to
+the carried total, while the container's own capacity check still counts it
+(`containers::contents_weight_factors`). See [rules-engine.md](./rules-engine.md).
 
 ## Wiring class
 
