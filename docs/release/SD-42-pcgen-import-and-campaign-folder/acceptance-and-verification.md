@@ -123,7 +123,7 @@ awk -F'|' '$2 ~ /^ (C|E)[0-9]/ { n++ } END { if (n != 61) print "ROW_COUNT " n }
 awk -F'|' '$2 ~ /^ (C|E)[0-9]/ && $2 !~ /^ E5\.[2-4] / && $5 !~ /^ complete *$/ { print $2 "|" $5 }' kanban.md
 grep -c '^- \(Import ([^)]*)\|Campaign Manager ([^)]*)\|Editor\) — usable: yes' artifacts/epic_5/E5.G_cycle_receipt.md   # 3 (anchored; the receipt's own instructions must not match)
 test -s artifacts/epic_4/E4.5_cycle_receipt.md && grep -c 'copies_emitted' artifacts/epic_4/E4.5_cycle_receipt.md   # ≥ 1: the local proof run's counts are in the receipt (Q9)
-grep -c 'SKIPPED: operator .pcg absent' artifacts/epic_4/E4.5_cycle_receipt.md   # 0 (the local run actually ran)
+grep 'SKIPPED: operator .pcg absent' artifacts/epic_4/E4.5_cycle_receipt.md | grep -vc 'absent at /nonexistent'   # 0 (the local run actually ran; E4.5 quotes its own CODEX_SD42_PCG=/nonexistent absent-path proof, which is not a skipped local run — decisions.md §20, E5.2)
 grep -c 'SD-42 INTERIM NOTES' release-notes.md                        # 0 at E5.3+
 python3 ../../../tools/release/resolve_release_notes.py --repo-root ../../..
 grep -L 'Looked at' artifacts/epic_[24]/*_cycle_receipt.md | grep -v 'E2.1_\|E2.2_\|E2.3_\|E2.4_\|E2.5_\|E2.7_\|E2.10_\|E2.11_\|E4.1_\|E4.3_\|E4.4_\|E4.5_'   # prints nothing (E2.6, E2.8, E2.9, E2.MC, E4.2, E4.MC looked)
