@@ -81,7 +81,7 @@ The lead sets two shell variables **locally, never in a doc**: `SD42_CHAR` = the
 `SD42_PII` = the player's name as the file's `PLAYERNAME:` line holds it (`awk -F: '/^PLAYERNAME:/{print $2}' "$CODEX_SD42_PCG"`).
 
 ```bash
-git diff --name-only <C1 sha>..HEAD -- apps src crates data resources scripts | grep -v 'scripts/oracle_harness/pcg_import_parity/' | xargs -r grep -lis 'pcgen' | awk 'END{print NR}'   # 0 outside the parity exports (a doc-comment citing the pinned oracle's docs is allowed only in this package)
+git diff --name-only <C1 sha>..HEAD -- apps src crates data resources scripts | grep -v 'scripts/oracle_harness/pcg_import_parity/' | xargs -r grep -lis 'pcgen' | awk 'END{print NR}'   # informational, not 0: the word names the converter (crates/codex-ingest/src/pcg_import/**, a PCGen reader by design, §22), test modules, comments and ui-smoke's {PCGEN_REPO_DIR}; 39 files at E4.MC. The gate is the next line (decisions.md §20, E4.MC)
 bash scripts/verify.sh --only pcgen-residue-gate -j 8   # PASS
 git log <C1 sha>..HEAD -p -S"$SD42_CHAR" -- . ':!docs/release/SD-42-pcgen-import-and-campaign-folder' | awk 'END{print NR}'   # 0 (NR-4: the character name appears only in this package's docs)
 git log <C1 sha>..HEAD -p -S"$SD42_PII" -- . | awk 'END{print NR}'   # 0 (the player name appears nowhere, this package included)
@@ -119,7 +119,7 @@ gh run list -w linux-build-check.yml -b tranche-22 -L 1 --json conclusion,url   
 ```bash
 cd docs/release/SD-42-pcgen-import-and-campaign-folder
 test -s kanban.md || { echo NO_KANBAN; exit 2; }
-awk -F'|' '$2 ~ /^ (C|E)[0-9]/ { n++ } END { if (n != 59) print "ROW_COUNT " n }' kanban.md   # 59: 37 + E1.8 + E1.9 + E2.14 + E2.12, E2.13, E4.6 (decisions.md §26) + the later discovered and operator cards (kanban.md's count line) + E4.7–E4.11 (decisions.md §27) + E4.12 (decisions.md §28) + E1.10, E4.13 (discovered by E1.7) + E4.14 (discovered by E1.10) + E2.15 (discovered by E2.10) + E4.15 (discovered by E4.2) + E4.16 (discovered by E4.9) + E4.18, E4.19 (discovered by E4.14) + E4.20 (discovered by E4.17)
+awk -F'|' '$2 ~ /^ (C|E)[0-9]/ { n++ } END { if (n != 60) print "ROW_COUNT " n }' kanban.md   # 60: 37 + E1.8 + E1.9 + E2.14 + E2.12, E2.13, E4.6 (decisions.md §26) + the later discovered and operator cards (kanban.md's count line) + E4.7–E4.11 (decisions.md §27) + E4.12 (decisions.md §28) + E1.10, E4.13 (discovered by E1.7) + E4.14 (discovered by E1.10) + E2.15 (discovered by E2.10) + E4.15 (discovered by E4.2) + E4.16 (discovered by E4.9) + E4.18, E4.19 (discovered by E4.14) + E4.20 (discovered by E4.17) + E4.21 (discovered by E4.MC)
 awk -F'|' '$2 ~ /^ (C|E)[0-9]/ && $2 !~ /^ E5\.[2-4] / && $5 !~ /^ complete *$/ { print $2 "|" $5 }' kanban.md
 grep -c '^- \(Import ([^)]*)\|Campaign Manager ([^)]*)\|Editor\) — usable: yes' artifacts/epic_5/E5.G_cycle_receipt.md   # 3 (anchored; the receipt's own instructions must not match)
 test -s artifacts/epic_4/E4.5_cycle_receipt.md && grep -c 'copies_emitted' artifacts/epic_4/E4.5_cycle_receipt.md   # ≥ 1: the local proof run's counts are in the receipt (Q9)
