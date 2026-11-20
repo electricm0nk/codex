@@ -679,7 +679,7 @@ pub fn compute_combat_baseline_from_corpus(
         &effects,
         (dexterity_modifier, effective_max_dex, dexterity_contribution),
         (format!("{size:?}"), size_armor_class_modifier),
-        feat_contributions,
+        &feat_contributions,
     );
     let armor_class = armor_class_parts.total();
     debug_assert_eq!(
@@ -772,7 +772,7 @@ pub fn armor_class_parts_from_corpus(
     effects: &EquipmentEffects,
     (dexterity_modifier, effective_max_dex, dexterity_contribution): (i16, Option<i16>, i16),
     (size_words, size_modifier): (String, i16),
-    feats: FeatDerivedPillarContributions,
+    feats: &FeatDerivedPillarContributions,
 ) -> ArmorClassParts {
     let mut parts = ArmorClassParts::default();
     for item in &effects.per_item {
@@ -908,17 +908,10 @@ pub fn weapon_size_attack_penalty(input: &CharacterInput, weapon_size: Option<cr
 /// SD-42 E4.17 (b): Skill Focus on the skill (`skill:knowledge_planes`'s `knowledge_planes`): +3,
 /// +6 from 10 ranks (CRB Skill Focus), when the feat's chosen skill (`choice:skill_focus_target`)
 /// names it; 0 otherwise.
+/// Read through the shared feat seam (`FeatDerivedPillarContributions::skill_focus_bonus`); the
+/// Strength modifier it threads moves only Intimidate, which this does not read.
 pub fn skill_focus_bonus(input: &CharacterInput, skill: &str, ranks: i16) -> i16 {
-    let letters = |name: &str| name.chars().filter(char::is_ascii_alphanumeric).map(|c| c.to_ascii_lowercase()).collect::<String>();
-    let wanted = letters(skill);
-    let chosen = crate::rules_core::feat_effects::skill_focus_facts_from_choices(&input.chosen.selected_feats, &input.chosen.selected_choices)
-        .iter()
-        .any(|fact| letters(&fact.skill_name) == wanted);
-    match (chosen, ranks >= 10) {
-        (false, _) => 0,
-        (true, false) => 3,
-        (true, true) => 6,
-    }
+    feat_derived_pillar_contributions(input, 0).skill_focus_bonus(skill, ranks)
 }
 
 /// A weapon's Focus bonus: the feat's chosen weapon read by the record's own name (`Flail (Heavy)`),

@@ -1130,7 +1130,7 @@ pub(super) fn active_rage_powers_level(input: &CharacterInput, ability_modifiers
 /// Adding the next feat: give it a field here, fold it into the accessor for
 /// the pillar it belongs to, and both paths move together. Nothing else needs
 /// touching.
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Default)]
+#[derive(Debug, Clone, PartialEq, Eq, Default)]
 pub struct FeatDerivedPillarContributions {
     /// Natural armor from feats (`armor_of_the_pit_natural_armor_bonus_from_feats`).
     /// Kept as its own field, not merged into the Armor Class total, because a
@@ -1148,17 +1148,21 @@ pub struct FeatDerivedPillarContributions {
     /// racial +2 Climb. Separate from `skill_bonuses` because the explanation
     /// strings on the hardcoded path name the two sources independently.
     pub arg_climb_bonus: i16,
+    /// `feat_effects::skill_focus_facts_from_choices` -- the skills Skill Focus
+    /// was taken for (`choice:skill_focus_target`). A runtime pick, hence a
+    /// `Vec`, and why this struct is `Clone` but not `Copy`.
+    pub skill_focus: Vec<crate::rules_core::feat_effects::SkillFocusFact>,
 }
 
 impl FeatDerivedPillarContributions {
     /// Everything feats add to Armor Class, natural armor included.
-    pub fn armor_class_bonus(self) -> i16 {
+    pub fn armor_class_bonus(&self) -> i16 {
         self.natural_armor_bonus + self.dodge_armor_class_bonus
     }
 
     /// The part of [`Self::armor_class_bonus`] a touch attack ignores. PF1
     /// touch AC drops natural armor and keeps dodge bonuses.
-    pub fn excluded_from_touch_armor_class(self) -> i16 {
+    pub fn excluded_from_touch_armor_class(&self) -> i16 {
         self.natural_armor_bonus
     }
 
@@ -1174,23 +1178,36 @@ impl FeatDerivedPillarContributions {
     /// as much as it moves Armor Class, and one added to
     /// [`Self::dodge_armor_class_bonus`] must move it not at all. Reading this
     /// accessor from both twins is what makes that true on both at once.
-    pub fn denied_to_flat_footed_armor_class(self) -> i16 {
+    pub fn denied_to_flat_footed_armor_class(&self) -> i16 {
         self.dodge_armor_class_bonus
     }
 
     /// Everything feats add to the Climb total.
-    pub fn climb_skill_bonus(self) -> i16 {
+    pub fn climb_skill_bonus(&self) -> i16 {
         self.skill_bonuses.climb + self.arg_climb_bonus
     }
 
     /// Everything feats add to the Intimidate total.
-    pub fn intimidate_skill_bonus(self) -> i16 {
+    pub fn intimidate_skill_bonus(&self) -> i16 {
         self.skill_bonuses.intimidate
     }
 
     /// Everything feats add to the Swim total.
-    pub fn swim_skill_bonus(self) -> i16 {
+    pub fn swim_skill_bonus(&self) -> i16 {
         self.skill_bonuses.swim
+    }
+
+    /// Skill Focus on `skill` (`knowledge_planes`): +3, +6 from 10 ranks (CRB
+    /// Skill Focus), when the feat's chosen skill names it, compared on letters
+    /// and digits only; 0 otherwise.
+    pub fn skill_focus_bonus(&self, skill: &str, ranks: i16) -> i16 {
+        let letters = |name: &str| name.chars().filter(char::is_ascii_alphanumeric).map(|c| c.to_ascii_lowercase()).collect::<String>();
+        let wanted = letters(skill);
+        match (self.skill_focus.iter().any(|fact| letters(&fact.skill_name) == wanted), ranks >= 10) {
+            (false, _) => 0,
+            (true, false) => 3,
+            (true, true) => 6,
+        }
     }
 }
 
@@ -1262,6 +1279,10 @@ pub fn feat_derived_pillar_contributions(
         // `feat_effects::ARG_SKILL_FEAT_FACTS`' own doc comment.
         arg_climb_bonus: crate::rules_core::feat_effects::arg_computed_climb_bonus_from_feats(
             &feats,
+        ),
+        skill_focus: crate::rules_core::feat_effects::skill_focus_facts_from_choices(
+            &input.chosen.selected_feats,
+            &input.chosen.selected_choices,
         ),
     }
 }
