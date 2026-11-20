@@ -721,6 +721,8 @@ fn print_pf_blocks_the_split_combat_blocks_print_the_same_values() {
             ("saves", "Saving Throws", "saves", "Will", vec![signed(snapshot.total_saves.will)], Some("defense.total_save.will")),
             ("attack", "Attack", "attack", "Base Attack Bonus", vec![signed(snapshot.base_attack_bonus)], Some("class_chassis.base_attack_bonus")),
             ("attack", "Attack", "attack", "Melee", vec![signed(snapshot.baseline_melee_attack_bonus)], Some("combat.baseline_melee_attack_bonus")),
+            // SD-42 E4.20: the ranged attack beside the melee one, the engine's row (E4.17 (d)).
+            ("attack", "Attack", "attack", "Ranged", vec![signed(row("combat.baseline_ranged_attack_bonus").value)], Some("combat.baseline_ranged_attack_bonus")),
             ("attack", "Attack", "attack", "CMB", vec![signed(row("combat.combat_maneuver_bonus").value)], Some("combat.combat_maneuver_bonus")),
             ("attack", "Attack", "attack", "CMD", vec![row("defense.combat_maneuver_defense").value.to_string()], Some("defense.combat_maneuver_defense")),
             ("speed", "Speed", "speed", "Land", vec![format!("{} ft.", row("speed.land").value)], Some("speed.land")),
@@ -742,7 +744,7 @@ fn print_pf_blocks_the_split_combat_blocks_print_the_same_values() {
             assert_eq!(line.derivation, source.map(behind), "{tag}: {id} `{label}` has the same engine row behind it");
             numbers += usize::from(source.is_some());
         }
-        assert_eq!(numbers, 13 + 7, "{tag}: the 13 numbers the Combat block printed and the AC's seven parts (E2.12)");
+        assert_eq!(numbers, 13 + 7 + 1, "{tag}: the 13 numbers the Combat block printed, the AC's seven parts (E2.12) and the ranged attack (E4.20)");
         for id in ["armorClass", "saves", "attack", "speed"] {
             let rows = expected.iter().filter(|line| line.0 == id).count();
             assert_eq!(block(id).rows.len(), rows, "{tag}: {id} prints exactly its rows");
@@ -756,6 +758,7 @@ fn print_pf_blocks_the_split_combat_blocks_print_the_same_values() {
             format!("Max {}", row("hit_points.max").value),
             format!("Touch {}", row("defense.touch_armor_class").value),
             format!("CMD {}", row("defense.combat_maneuver_defense").value),
+            format!("Ranged {}", signed(row("combat.baseline_ranged_attack_bonus").value)),
             format!("Land {} ft.", row("speed.land").value),
         ] {
             assert!(text.contains(&line), "{tag}: the PDF prints `{line}`: {text}");

@@ -4087,6 +4087,8 @@ export function CharacterSheet(props: {
   // special size modifier, so every Small character read a point high on both.
   const cmb = engineValue(engineRecords.explanations, 'combat.combat_maneuver_bonus');
   const cmd = engineValue(engineRecords.explanations, 'defense.combat_maneuver_defense');
+  // SD-42 E4.20: the engine's ranged attack row (E4.17 (d)), beside Melee.
+  const rangedAttackBonus = engineValue(engineRecords.explanations, 'combat.baseline_ranged_attack_bonus');
 
   /**
    * This character's racial traits, resolved by `RaceCorpus::resolve` and
@@ -4435,7 +4437,7 @@ export function CharacterSheet(props: {
       case 'armorClass':
         return <ArmorClassPanel ac={ac} touch={touch} flatFooted={flatFooted} boxStyle={boxStyle} />;
       case 'attack':
-        return <AttackPanel baseAttackBonus={baseAttackBonus} melee={meleeAttackBonus} cmb={cmb} cmd={cmd} boxStyle={boxStyle} />;
+        return <AttackPanel baseAttackBonus={baseAttackBonus} melee={meleeAttackBonus} ranged={rangedAttackBonus} cmb={cmb} cmd={cmd} boxStyle={boxStyle} />;
       case 'speed':
         return (
           <SpeedPanel

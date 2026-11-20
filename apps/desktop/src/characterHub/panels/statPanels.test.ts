@@ -55,8 +55,9 @@ function verifiesCombatPanelsAreOwnTitledBoxes() {
   assertEqual(ac.props.title, 'Armor Class', 'AC box title');
   assertEqual(tileLabels(ac).join('|'), 'AC|Touch|Flat-Footed', 'AC tiles unchanged');
 
-  const attack = AttackPanel({ baseAttackBonus: 1, melee: 4, cmb: 4, cmd: 15 }) as Element;
+  const attack = AttackPanel({ baseAttackBonus: 1, melee: 4, ranged: 3, cmb: 4, cmd: 15 }) as Element;
   assertEqual(attack.props.title, 'Attack', 'Attack box title');
+  assertEqual(tileLabels(attack).join('|'), 'BAB|Melee|Ranged|CMB|CMD', 'Attack tiles: Ranged beside Melee (SD-42 E4.20)');
 
   const speed = SpeedPanel({ land: '30 ft.', swim: '—', fly: '60 ft. (average)' }) as Element;
   assertEqual(speed.props.title, 'Speed', 'Speed box title');

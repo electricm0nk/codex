@@ -83,13 +83,13 @@ export function SpeedPanel(props: { land: string; swim: string; fly: string; box
  * React component, neither aware of creature size, so every Small character's
  * CMB and CMD were a point too high. See SD-27 `decisions.md §28`.
  */
-export function AttackPanel(props: { baseAttackBonus: number; melee: number; cmb: number | null; cmd: number | null; boxStyle?: CSSProperties }) {
+export function AttackPanel(props: { baseAttackBonus: number; melee: number; ranged: number | null; cmb: number | null; cmd: number | null; boxStyle?: CSSProperties }) {
   // v0.8 F-9: `melee` is the engine's `baselineMeleeAttackBonus`, which was
   // loaded on every sheet and never rendered. v0.8 F-13: the old "Spell
   // Res." tile here was a hard-coded "—" nothing could populate; the real
   // spell resistance renders on the Defense tab from
   // `equipmentEffects.spellResistanceTotal` when a build has one.
-  const tiles = buildAttackTiles({ baseAttackBonus: props.baseAttackBonus, melee: props.melee, cmb: props.cmb, cmd: props.cmd });
+  const tiles = buildAttackTiles({ baseAttackBonus: props.baseAttackBonus, melee: props.melee, ranged: props.ranged, cmb: props.cmb, cmd: props.cmd });
   return (
     <StatBox title="Attack">
       <div style={props.boxStyle ?? layoutBox(SHEET_LAYOUT, 'attack').boxStyle}>
