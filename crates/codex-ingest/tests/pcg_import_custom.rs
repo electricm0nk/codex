@@ -4,7 +4,8 @@
 //! by hand in the samples' syntax (no operator line): "Mourn" (a Longsword with a name, the short masterwork
 //! code, `_DAMAGE|2d4` and two `SPROP` lines), a Darkwood Buckler (the long material key newer
 //! PCGen writes), a Small dagger, a traveler's outfit whose `COSTMOD` brings its `COST` to 0, a
-//! heavy flail with an eqmod Buy Custom does not offer and an unknown `DATA` key, and a
+//! heavy flail with an eqmod its base record already holds (`DISARM`), one Buy Custom does not offer
+//! (`GLAMERED`) and an unknown `DATA` key, and a
 //! quarterstaff whose second head (`ALTEQMOD`) deals `1d8`.
 //!
 //! **Does not cover:** pricing or weighing the eqmods in the app (E4.1) and the engine reading the
@@ -26,12 +27,16 @@ fn repo_root() -> PathBuf {
     Path::new(env!("CARGO_MANIFEST_DIR")).join("../..")
 }
 
+fn catalog() -> &'static Catalog {
+    static CATALOG: OnceLock<Catalog> = OnceLock::new();
+    CATALOG.get_or_init(|| Catalog::load(&repo_root()).expect("the checkout holds converted rules"))
+}
+
 fn fixture() -> &'static ImportFile {
     static FILE: OnceLock<ImportFile> = OnceLock::new();
     FILE.get_or_init(|| {
-        let catalog = Catalog::load(&repo_root()).expect("the checkout holds converted rules");
         let text = std::fs::read_to_string(Path::new(env!("CARGO_MANIFEST_DIR")).join("tests/fixtures/pcg_custom.pcg")).expect("fixture");
-        convert(&text, "pcg_custom.pcg", &catalog).expect("converts")
+        convert(&text, "pcg_custom.pcg", catalog()).expect("converts")
     })
 }
 
@@ -82,10 +87,11 @@ fn custom_eqmods_map_to_option_keys() {
 #[test]
 fn custom_unknown_eqmod_is_a_property_and_a_warning() {
     let flail = facts("Flail (Heavy)");
-    assert_eq!(flail.properties, vec!["EQMOD DISARM".to_owned(), "CRITRANGE 19".to_owned()]);
+    assert_eq!(flail.properties, vec!["EQMOD GLAMERED".to_owned(), "CRITRANGE 19".to_owned()]);
     assert!(row("Flail (Heavy)").eqmods.is_empty());
     let warnings = &fixture().report.warnings;
-    assert!(warnings.iter().any(|warning| warning == "Heavy Flail: EQMOD DISARM kept as text"), "{warnings:?}");
+    assert!(warnings.iter().any(|warning| warning == "Heavy Flail: EQMOD GLAMERED kept as text"), "{warnings:?}");
+    assert!(!warnings.iter().any(|warning| warning.contains("DISARM")), "the base record holds Disarm: {warnings:?}");
     assert!(warnings.iter().any(|warning| warning == "Heavy Flail: CRITRANGE kept as text"), "{warnings:?}");
 }
 
@@ -108,4 +114,27 @@ fn custom_sprop_lines_are_properties() {
     let json = serde_json::to_value(fixture()).expect("serialises");
     let back: ImportFile = serde_json::from_value(json).expect("the wire reads back");
     assert_eq!(&back, fixture());
+}
+
+/// SD-42 E4.21: PCGen's `pf_Paladin.pcg` flail (`EQMOD=DISARM.STEEL.TRIP.PLUS1W`) is a `Flail (Heavy)`,
+/// whose base record already holds `Special Quality ~ Disarm` and `~ Trip`: neither is a property
+/// line or a "kept as text" warning. Skips loudly when the pinned oracle's sample is absent.
+#[test]
+fn custom_eqmod_the_base_record_holds_is_no_property_on_pf_paladins_flail() {
+    let oracle = match std::env::var("PCGEN_REPO_DIR") {
+        Ok(dir) if !dir.is_empty() => PathBuf::from(dir),
+        _ => PathBuf::from(std::env::var("HOME").expect("HOME")).join("workspace/repos/pcgen"),
+    };
+    let path = oracle.join("code/testsuite/PCGfiles/pf_Paladin.pcg");
+    let Ok(bytes) = std::fs::read(&path) else {
+        println!("SKIPPED: the oracle's pf_Paladin.pcg is absent at {} (decisions.md §22)", path.display());
+        return;
+    };
+    let file = convert(&String::from_utf8_lossy(&bytes), "pf_Paladin.pcg", catalog()).expect("converts");
+    let flails: Vec<&CopyFacts> = file.equipment_sets.copies.iter().filter(|(key, _)| key.starts_with("Flail (Heavy)|")).map(|(_, facts)| facts).collect();
+    assert_eq!(flails.len(), 1, "{:?}", file.equipment_sets.copies.keys().collect::<Vec<_>>());
+    assert_eq!(flails[0].name.as_deref(), Some("Flail +1 (Heavy)"));
+    assert!(!flails[0].properties.iter().any(|line| line.contains("DISARM") || line.contains("TRIP")), "{:?}", flails[0].properties);
+    let warnings = &file.report.warnings;
+    assert!(!warnings.iter().any(|warning| warning.contains("EQMOD DISARM") || warning.contains("EQMOD TRIP")), "{warnings:?}");
 }

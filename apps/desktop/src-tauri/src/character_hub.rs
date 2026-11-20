@@ -1197,6 +1197,12 @@ pub struct WeaponDamageDto {
     /// differs from the first of its kind's (SD-42 E4.15); left out when it reads its kind's rows.
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub copy_row: Option<String>,
+    /// The name the Weapons tab and the print give this row (SD-42 E4.21, `decisions.md §6`): the
+    /// copy's custom name (`CopyFacts.name`), else, for a `BASEITEM:` alias whose record name is its
+    /// base's key (`Flail (Heavy)` → `Heavy Flail (Base)`), the base record's name (`Heavy Flail`).
+    /// Left out when the record's own name serves.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub name: Option<String>,
 }
 
 /// Projects the engine's per-weapon damage breakdown onto the wire.
@@ -1269,8 +1275,19 @@ pub(crate) fn map_weapon_damage_dto(
             damage_override: breakdown.damage_override.clone(),
             properties: Vec::new(),
             copy_row: None,
+            name: alias_base_name(&breakdown.weapon_item_id),
         })
         .collect()
+}
+
+/// A `BASEITEM:` alias's player-facing name (SD-42 E4.21): an alias whose record name is its base's
+/// key (`Flail (Heavy)` names itself `Heavy Flail (Base)`) takes its base record's name (`Heavy Flail`).
+/// `None` for any other record.
+fn alias_base_name(item_id: &str) -> Option<String> {
+    let corpus = corpus_fixture_bundle();
+    let record = codex::rules_core::equipment_resolver::equipment_converted_resolve(item_id, corpus)?;
+    let base_key = record.base_item.as_deref().filter(|base| *base == record.name)?;
+    codex::rules_core::equipment_resolver::equipment_converted_resolve(base_key, corpus).map(|base| base.name.clone())
 }
 
 /// Wire form of `feat_effects::ChosenFeatTargets`.
@@ -3084,6 +3101,9 @@ fn load_saved_character_and_weapon_copies_at_root(root: &Path) -> Result<(LoadSa
     for (row, breakdown) in weapon_damage.iter_mut().zip(&breakdowns) {
         if let Some(facts) = breakdown.copy.as_ref().and_then(|copy| sets.copies.get(&copy.map_key())) {
             row.properties = facts.properties.clone();
+            if facts.name.is_some() {
+                row.name = facts.name.clone();
+            }
         }
     }
     let (sheet_lines, sheet_rules_unavailable_reason, feat_skill_bonuses, conditional_notes) =
@@ -22435,6 +22455,73 @@ mod tests {
         sell_held_pieces_at_root(&root, "item:dagger", "2026-11-18T00:00:00Z", PriceMode::Standard, named, Deal::default()).expect("the sale runs");
         assert_eq!(load_character_money_at_root(&root).unwrap().total_copper, start + 500, "half the file's 10 gp");
         std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// The printed Weapons block's line labels (page 1), as `sheet_document_at_root` builds them.
+    fn weapon_copy_name_print_labels(root: &Path) -> Vec<String> {
+        let request = crate::print::PrintRequest { paper: crate::print::Paper::A4, sections: Some(crate::print::PrintSections::FIRST_TIME), campaigns: Vec::new() };
+        let document = crate::print::sheet_document_at_root(root, &request).expect("the document builds");
+        let weapons = document.blocks.iter().find(|block| block.id == "weapons").expect("the Weapons block");
+        weapons.rows.iter().map(|row| row.label.clone()).collect()
+    }
+
+    /// SD-42 E4.21 (`decisions.md §6`): a Market `Flail (Heavy)` is a `BASEITEM:` alias whose record
+    /// name is its base's key (`Heavy Flail (Base)`); its Weapons row and printed line read the base
+    /// record's name, `Heavy Flail`. Given a custom name, the copy prints under that instead.
+    #[test]
+    fn weapon_copy_name_market_alias_reads_its_base_records_name() {
+        let root = sets_root("weapon-copy-name-market", &[("Flail (Heavy)", ActiveState::SelectedInactive)]);
+        let loaded = load_saved_character_at_root(&root).unwrap();
+        let flail = loaded.weapon_damage.iter().find(|row| row.weapon_item_id == "Flail (Heavy)").expect("the flail's row");
+        assert_eq!(flail.name.as_deref(), Some("Heavy Flail"));
+        let labels = weapon_copy_name_print_labels(&root);
+        assert!(labels.iter().any(|label| label == "Heavy Flail (carried)"), "{labels:?}");
+        assert!(!labels.iter().any(|label| label.contains("(Base)")), "{labels:?}");
+
+        copy_overrides_write(&root, &sets_key("Flail (Heavy)", 0), |facts| facts.name = Some("Flail +1 (Heavy)".to_owned()));
+        let loaded = load_saved_character_at_root(&root).unwrap();
+        let flail = loaded.weapon_damage.iter().find(|row| row.weapon_item_id == "Flail (Heavy)").expect("the flail's row");
+        assert_eq!(flail.name.as_deref(), Some("Flail +1 (Heavy)"));
+        assert_eq!(serde_json::to_value(flail).unwrap()["name"], serde_json::json!("Flail +1 (Heavy)"));
+        let labels = weapon_copy_name_print_labels(&root);
+        assert!(labels.iter().any(|label| label == "Flail +1 (Heavy) (carried)"), "{labels:?}");
+        // A record whose own name is the player's (`Longsword`) states no name on the wire.
+        let plain = loaded.weapon_damage.iter().find(|row| row.unarmed).expect("the Unarmed row");
+        assert!(serde_json::to_value(plain).unwrap().get("name").is_none(), "{plain:?}");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// SD-42 E4.21: PCGen's `pf_Paladin.pcg` imports `Flail +1 (Heavy)` (a custom `NAME=`) and
+    /// `Gauntlet, Spiked` (a `NAME=` the converter folds to its record's key, so no custom name: it
+    /// reads its alias's base name, `Spiked Gauntlet`); the Weapons rows and the printed Weapons block
+    /// name them so, never `Heavy Flail (Base)`. Skips loudly when the pinned oracle's sample is absent.
+    #[test]
+    fn weapon_copy_name_imported_paladin_names_its_rows_and_print() {
+        let oracle = match std::env::var("PCGEN_REPO_DIR") {
+            Ok(dir) if !dir.is_empty() => PathBuf::from(dir),
+            _ => PathBuf::from(std::env::var("HOME").expect("HOME")).join("workspace/repos/pcgen"),
+        };
+        let pcg = oracle.join("code/testsuite/PCGfiles/pf_Paladin.pcg");
+        if !pcg.is_file() {
+            println!("SKIPPED: the oracle's pf_Paladin.pcg is absent at {} (decisions.md §22)", pcg.display());
+            return;
+        }
+        let scratch = tempdir("weapon-copy-name-paladin");
+        let out = scratch.join("out.json");
+        codex_ingest::pcg_import::run(&pcg, &out, &Path::new(env!("CARGO_MANIFEST_DIR")).join("../../..")).expect("the converter reads the file");
+        let root = scratch.join("characters").join("pf_Paladin");
+        let response = import_pcg_json(&std::fs::read_to_string(&out).unwrap(), &root, "pf_Paladin", "2026-11-20T00:00:00Z", "0.0.0-test").expect("the import runs");
+        assert!(matches!(response.outcome, CreateCharacterResponse::Saved { .. }), "{:?}", response.outcome);
+        let loaded = load_saved_character_at_root(&root).unwrap();
+        let names: Vec<Option<&str>> = loaded.weapon_damage.iter().map(|row| row.name.as_deref()).collect();
+        for name in ["Flail +1 (Heavy)", "Spiked Gauntlet"] {
+            assert!(names.contains(&Some(name)), "{name}: {names:?}");
+        }
+        let labels = weapon_copy_name_print_labels(&root);
+        assert!(labels.iter().any(|label| label == "Flail +1 (Heavy)"), "{labels:?}");
+        assert!(labels.iter().any(|label| label.starts_with("Spiked Gauntlet")), "{labels:?}");
+        assert!(!labels.iter().any(|label| label.contains("(Base)")), "{labels:?}");
+        std::fs::remove_dir_all(&scratch).ok();
     }
 
     // ----- SD-41 E2.2: moves, sets, purchases (`decisions.md §6, §7, §10, §27, §28, §30`) -----

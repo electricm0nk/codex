@@ -393,6 +393,8 @@ export interface WeaponDamageDto {
   damageOverride?: string;
   /** The copy's properties (a `.pcg` line's `SPROP`), printed as text; absent when it has none. */
   properties?: string[];
+  /** The name the row prints under: the copy's custom name, else an alias's base record name (`Heavy Flail`); absent when the record's own name serves. */
+  name?: string;
 }
 
 export interface ChosenFeatTargetsDto {

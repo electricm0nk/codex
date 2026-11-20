@@ -2,7 +2,8 @@
 //! directly is listed once in `bio.notes`, under a sub-heading per kind, in file order.
 //!
 //! The synthetic `fixtures/pcg_notes.pcg` holds one line of each kind: an item with no record, a
-//! `QUANTITY:0` line, a property and an eqmod kept as text, an unknown key (twice, plus a second key),
+//! `QUANTITY:0` line, a property and an eqmod kept as text (beside `DISARM`, which the flail's base
+//! record holds, so it is no line, E4.21), an unknown key (twice, plus a second key),
 //! a class and a race Codex lacks, a spell Codex has no record of, and a location word with no slot.
 //!
 //! **Does not cover:** a spell the engine's class list refuses (the same kind, written by
@@ -65,7 +66,7 @@ fn notes_block_lists_every_unmapped_line_once() {
 - Starfall Lance (Paladin): no Codex record; kept as a custom spell
 
 ### Eqmods kept as text
-- Heavy Flail: EQMOD DISARM kept as text
+- Heavy Flail: EQMOD GLAMERED kept as text
 
 ### Locations read as Equipped
 - Tail: a PCGen location Codex has no slot for; read as Equipped

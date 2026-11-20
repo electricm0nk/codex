@@ -118,11 +118,15 @@ function formatCritical(weapon: WeaponDamageDto): string {
 }
 
 /**
- * Resolves a weapon's display name from the corpus-resolved equipment the
- * same response already carries, falling back to the engine's own record
+ * Resolves a weapon's display name: the engine's own name for the row (a
+ * copy's custom name, an alias's base name, SD-42 E4.21), else the
+ * corpus-resolved equipment the same response already carries, falling back to the engine's own record
  * key and then to the raw item id. Nothing here fabricates a name.
  */
 function displayName(weapon: WeaponDamageDto, corpusDerived: CorpusDerivedDto | null): string {
+  if (weapon.name) {
+    return weapon.name;
+  }
   const resolved = corpusDerived?.equippedItems?.find((item) => item.itemId === weapon.weaponItemId);
   return resolved?.equipmentRecordName ?? weapon.weaponRecordKey ?? weapon.weaponItemId;
 }

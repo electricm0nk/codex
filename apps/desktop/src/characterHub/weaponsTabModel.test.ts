@@ -121,6 +121,16 @@ function verifiesTheDisplayNameFallsBackRatherThanBeingInvented() {
   assertEqual(unresolved.name, 'item:longsword', 'falls back to the raw id, never a guessed name');
 }
 
+/** SD-42 E4.21 (`decisions.md §6`): a copy's own name, or an alias's base name, as the engine names the row. */
+function verifiesAWeaponPrintsUnderTheNameTheEngineGivesIt() {
+  const flail = longsword({ weaponItemId: 'Flail (Heavy)', weaponRecordKey: 'Heavy Flail (Base)', name: 'Flail +1 (Heavy)' });
+  const corpus = {
+    equippedItems: [{ itemId: 'Flail (Heavy)', equipmentRecordName: 'Heavy Flail (Base)', equipmentRecordKey: 'Flail (Heavy)', grounded: true, appliedModifiers: [] }],
+  } as unknown as CorpusDerivedDto;
+  assertEqual(buildWeaponsTabSurface([flail], corpus).rows[0].name, 'Flail +1 (Heavy)', "the row's name wins over the record's");
+  assertEqual(buildWeaponsTabSurface([longsword()], CORPUS_DERIVED).rows[0].name, 'Longsword', 'no name: the record name, as before');
+}
+
 function verifiesAnHonestEmptyStateWhenNothingEquippedIsAWeapon() {
   const surface = buildWeaponsTabSurface([], CORPUS_DERIVED);
 
@@ -186,6 +196,7 @@ async function main() {
   verifiesASingleNumberThreatRangeCollapses();
   verifiesTheDisplayNameFallsBackRatherThanBeingInvented();
   verifiesAnHonestEmptyStateWhenNothingEquippedIsAWeapon();
+  verifiesAWeaponPrintsUnderTheNameTheEngineGivesIt();
 }
 
 main().catch((error: unknown) => {

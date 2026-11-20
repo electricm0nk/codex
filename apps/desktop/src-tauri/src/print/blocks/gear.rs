@@ -103,8 +103,10 @@ pub fn weapons(sources: &SheetSources) -> SheetBlock {
     let mut rows = vec![SheetRow::new("Weapon", ["Attack", "Damage", "Critical", "Range"].map(str::to_owned))];
     let mut placed: Vec<&str> = Vec::new();
     for weapon in &sources.loaded.weapon_damage {
-        let name = item_name(sources, &weapon.weapon_item_id, weapon.weapon_record_key.as_deref());
-        let key = weapon_row_key(weapon.weapon_record_key.as_deref().unwrap_or(&name));
+        let record_name = item_name(sources, &weapon.weapon_item_id, weapon.weapon_record_key.as_deref());
+        let key = weapon_row_key(weapon.weapon_record_key.as_deref().unwrap_or(&record_name));
+        // The copy's own name, else an alias's base name (E4.21); the row keys stay the record's.
+        let name = weapon.name.clone().unwrap_or(record_name);
         let found: Vec<(&str, Option<&crate::character_hub::ExplanationDto>)> = WEAPON_ROWS
             .iter()
             .map(|(prefix, _)| (*prefix, weapon_row(sources, prefix, weapon, &key)))
@@ -143,8 +145,10 @@ pub fn weapons(sources: &SheetSources) -> SheetBlock {
 pub(super) fn weapons_breakdown(sources: &SheetSources) -> SheetBlock {
     let mut rows = vec![super::core::captions(&["Attack", "Dice", "Str", "Enh.", "Damage", "Threat", "Critical", "Wield"])];
     for weapon in &sources.loaded.weapon_damage {
-        let name = item_name(sources, &weapon.weapon_item_id, weapon.weapon_record_key.as_deref());
-        let key = weapon_row_key(weapon.weapon_record_key.as_deref().unwrap_or(&name));
+        let record_name = item_name(sources, &weapon.weapon_item_id, weapon.weapon_record_key.as_deref());
+        let key = weapon_row_key(weapon.weapon_record_key.as_deref().unwrap_or(&record_name));
+        // The copy's own name, else an alias's base name (E4.21); the row keys stay the record's.
+        let name = weapon.name.clone().unwrap_or(record_name);
         let cell = |prefix: &str| weapon_cell(prefix, weapon_row(sources, prefix, weapon, &key));
         let dice = weapon.base_dice.as_ref().map_or_else(|| NO_VALUE.to_owned(), |dice| format!("{}d{}", dice.count, dice.die_size));
         let wield = weapon.wield_category.as_deref().map_or_else(|| NO_VALUE.to_owned(), spaced_words);

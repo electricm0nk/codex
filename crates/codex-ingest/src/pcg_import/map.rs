@@ -908,6 +908,7 @@ impl<'a> Importer<'a> {
             out.facts.name = Some(custom_name.to_owned());
         }
         let eqmods = ["EQMOD", "ALTEQMOD"].into_iter().filter_map(|field| data.get(field)).flat_map(|mods| mods.split('.'));
+        let held = held_qualities(item_key);
         for eqmod in eqmods.map(|eqmod| eqmod.trim().replace("&pipe;", "|")).filter(|eqmod| !eqmod.is_empty()) {
             if let Some(die) = eqmod.strip_prefix("_DAMAGE|") {
                 out.facts.damage_override.get_or_insert_with(|| die.trim().to_owned());
@@ -923,7 +924,8 @@ impl<'a> Importer<'a> {
                 if eqmod.contains('|') {
                     out.facts.properties.push(eqmod);
                 }
-            } else {
+            } else if !held.contains(&fold(eqmod.rsplit(" ~ ").next().unwrap_or(&eqmod))) {
+                // A quality the record already holds (`DISARM` on a heavy flail) is no line of its own (E4.21).
                 kept_as_text.push(format!("EQMOD {eqmod}"));
             }
         }
@@ -1736,6 +1738,21 @@ fn record_weight_and_cost(item_key: &str) -> Option<(Option<f64>, Option<f64>)> 
     let base = stand_in_record(record, corpus);
     let (weight, cost) = record.weight_and_cost();
     Some((weight.or_else(|| base.and_then(|base| base.weight_lbs)), cost.or_else(|| base.and_then(|base| base.cost_gp))))
+}
+
+/// The qualities a record, or the record it is made from, already holds, folded by their last
+/// word: `Special Quality ~ Disarm` → `disarm` (the eqmod code PCGen writes, `DISARM`).
+fn held_qualities(item_key: &str) -> Vec<String> {
+    let corpus = equipment_corpus();
+    let Some(record) = equipment_converted_resolve(item_key, corpus) else {
+        return Vec::new();
+    };
+    [Some(record), stand_in_record(record, corpus)]
+        .into_iter()
+        .flatten()
+        .flat_map(|record| &record.eqmod_references)
+        .map(|reference| fold(reference.rsplit(" ~ ").next().unwrap_or(reference)))
+        .collect()
 }
 
 /// A line's `CUSTOMIZATION`: its `BASEITEM` and its `DATA` fields.
