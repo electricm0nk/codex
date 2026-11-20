@@ -688,7 +688,7 @@ The window opens maximized (`tauri.conf.json`) and the Create screen uses the wh
   webview receives HTML drag events); Drop moves it to Not Carried, Sell and Discard are separate. The set bar creates,
   renames, deletes and activates sets. A copy is offered and accepted only in a slot of its kind
   (`slot_kinds_allowed`; the slot override lifts it). Identical copies at one place are one row with a count; a
-  container copy that holds anything, or a renamed copy, is its own row; Move to asks "how many?" to split a stack.
+  container copy that holds anything is its own row, and copies with different names never share one; Move to asks "how many?" to split a stack.
   One Customize button per row (`CustomizeCopyDialog.tsx`) renames that copy or attaches a modifier to it; selecting a
   row opens `GearDetail.tsx` (`describe_held_equipment`). The screen sums nothing: every weight and load is the load
   response's.

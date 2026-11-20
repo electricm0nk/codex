@@ -74,7 +74,7 @@ and the first hands-on look is the alpha built after the merge.
 - **The campaign is a folder (E2.1–E2.3).** Create a campaign by choosing a folder, or open one you
   already have. The folder holds `campaign.json`, `Party Resources.md`, `Adventure Log/`, `Maps/`,
   `Wiki/` (with `NPCs/`, `Places/`, `Factions/`, `Items/`), `Characters/` and `Attachments/`. You sync it
-  yourself (Syncthing, a cloud folder, git). The creator is member #1; members are names. The Google
+  yourself, with any sync tool. The creator is member #1; members are names. The Google
   Drive settings tab and the Drive commands are gone.
 - **Migration (E2.4).** A campaign from an earlier version (browser storage, or an old Drive-folder
   mirror) is moved into a new folder on first open. The old data is written first to

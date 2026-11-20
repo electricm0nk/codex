@@ -187,8 +187,8 @@ the rest of the listing.
 
 A campaign is a folder the player chooses and syncs however they like (`src/campaign/folder.rs`'s module
 comment). Campaigns are not rules-computation, so `src/campaign/` is a sibling of `saved_character`, not
-under `rules_core`. Everything in it is plain file IO, and the desktop's `campaign_folder.rs` commands are
-its only callers; every path a command takes inside a campaign goes through `folder::relative`, so no
+under `rules_core`. Everything in it is plain file IO, called from the desktop's `campaign_folder.rs` commands;
+every path a command takes inside a campaign goes through `folder::relative`, so no
 command reads or writes outside the folder.
 
 ```text
@@ -212,7 +212,7 @@ unreadable is listed by filename and never rewritten), `maps` (`list`, `add_map`
 `wiki` (`folders`, `add_folder`, `rename_folder`, `delete_folder`, `pages`, `new_page`, `resolve_link` by
 `title` then filename stem across the whole folder, `backlinks`, `search` by title then text),
 `frontmatter` (the YAML subset Obsidian writes; anything else is kept as raw text), and `characters` (the
-backups, above). Writes go through `folder::write_atomic`.
+backups, above).
 
 **Known folders.** The app remembers the campaign folders it has created or opened in
 `<app data>/campaign-folders.json` (`KNOWN_FOLDERS_FILE`, `campaign_folder.rs`): `list_known_campaigns`,

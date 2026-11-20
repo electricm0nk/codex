@@ -47,3 +47,14 @@ before the run.
   evidence_tier_before: the touched docs last verified at tranche-21 (128 commands, a Drive-folder mirror, localStorage campaigns, 0.21, no glibc gate)
   evidence_tier_after: verified at tranche-22 for the rows each touched doc's new Last verified line names; corpus-ingest.md, getting-started.md, homebrew-and-oracle.md, pcg-import.md (updated by E4 cards), rules-data-tables.md not re-read (E5.3 receipt, Does not cover)
   receipt_note: "Hand-mapped as in SD-39 E9.9, SD-40 E5.4 and SD-41 E5.3: the script's index parser reads 0 rows of the single-pipe README table. Edits mapped from git diff --name-status origin/develop...HEAD over apps/desktop/src, apps/desktop/src-tauri, src, crates/codex-ingest/src, .github, tools, scripts and from the code. Its two one-liners pass on the edited tree (--dry-run --force, rc 0)."
+
+- cycle_id: 2026-11-20T-claims-critic
+  row_or_kind: architecture:claims_critic
+  bundle: SD-42
+  branch: tranche-22
+  branch_tip_before: cc6980eefc
+  docs_touched: [desktop-app.md, persistence.md]
+  cited_path_check: pass
+  relative_link_check: pass
+  release_notes_changes: "Known-sync-tool examples (Syncthing, cloud, git) removed: nothing in the code names them"
+  receipt_note: "Opus claims critic over every line the truth-up added (git diff -U0 fc465cddd1..cc6980eefc -- docs/architecture | awk '/^\\+[^+]/', 207 lines) and over release-notes.md; each claim checked against the code or a command. 15 refuted and fixed, listed in artifacts/epic_5/E5.3_cycle_receipt.md 'Claims critic'."
