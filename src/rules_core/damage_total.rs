@@ -222,8 +222,14 @@ fn base_item_damage_dice(
     record: &CorpusEquipmentRecord,
     corpus: &SourcePackageContent,
 ) -> Option<DiceExpression> {
-    let base_item_key = record.base_item.as_deref()?;
-    equipment_converted_resolve(base_item_key, corpus)?.base_damage_dice
+    base_item_record(record, corpus)?.base_damage_dice
+}
+
+/// The record a `BASEITEM:` alias row names, one hop, through the same resolver (see
+/// [`base_item_damage_dice`]): its wield, threat range and multiplier are the alias's too (SD-42
+/// E4.MC: `Flail (Heavy)`, the record a PCGen import holds, printed `—` for all three).
+fn base_item_record<'a>(record: &CorpusEquipmentRecord, corpus: &SourcePackageContent<'a>) -> Option<&'a CorpusEquipmentRecord> {
+    equipment_converted_resolve(record.base_item.as_deref()?, corpus)
 }
 
 /// The Pathfinder RPG single-die weapon-damage-size progression table
@@ -387,7 +393,7 @@ pub fn resolve_str_damage_modifier(
 ) -> Option<DamageRollStrModifier> {
     let (record, table_cell) =
         equipment_id_resolve(weapon_item_id, RuleSetId::Crb, corpus)?;
-    let wield_category = record.wield_category?;
+    let wield_category = record.wield_category.or_else(|| base_item_record(record, corpus)?.wield_category)?;
     let weapon_record_key = record.identity.clone();
     let str_damage_modifier = str_damage_modifier_for(str_modifier, wield_category, hand);
 
@@ -559,7 +565,9 @@ pub fn resolve_critical_threat_range(
 ) -> Option<DamageRollCriticalThreatRange> {
     let (record, table_cell) =
         equipment_id_resolve(weapon_item_id, RuleSetId::Crb, corpus)?;
-    let critical_threat_range = record.critical_threat_range?;
+    let critical_threat_range = record
+        .critical_threat_range
+        .or_else(|| base_item_record(record, corpus)?.critical_threat_range)?;
     let weapon_record_key = record.identity.clone();
 
     Some(DamageRollCriticalThreatRange {
@@ -605,7 +613,9 @@ pub fn resolve_critical_multiplier(
 ) -> Option<DamageRollCriticalMultiplier> {
     let (record, table_cell) =
         equipment_id_resolve(weapon_item_id, RuleSetId::Crb, corpus)?;
-    let critical_multiplier = record.critical_multiplier?;
+    let critical_multiplier = record
+        .critical_multiplier
+        .or_else(|| base_item_record(record, corpus)?.critical_multiplier)?;
     let weapon_record_key = record.identity.clone();
 
     Some(DamageRollCriticalMultiplier {
@@ -1869,6 +1879,26 @@ mod ammunition_tests {
             input.chosen.equipment_selections.iter().filter(|s| s.active_state == ActiveState::EquippedActive).cloned().collect();
         let effects = compute_equipment_effects(&held, &corpus);
         resolve_weapon_damage_breakdown_with_carried(&input, &corpus, &effects, 4, quantities, &[])
+    }
+
+    /// A record that only names its `BASEITEM:` (`Flail (Heavy)` -> `Heavy Flail (Base)`, the record a
+    /// PCGen import holds) wields, threatens and multiplies as its base, as its dice already do:
+    /// the Weapons tab and the print read these facets, and Strength on damage follows the wield.
+    #[test]
+    fn variant_weapon_facets_follow_the_base_item() {
+        let corpus = corpus();
+        for (variant, base) in [("Flail (Heavy)", "Heavy Flail (Base)"), ("Battleaxe", "Battleaxe (Base)"), ("Gauntlet (Spiked)", "Spiked Gauntlet (Base)")] {
+            let wield = |item: &str| resolve_str_damage_modifier(item, &corpus, 4, WeaponHandSlot::Primary).map(|row| (row.wield_category, row.str_damage_modifier));
+            let range = |item: &str| resolve_critical_threat_range(item, &corpus).map(|row| row.critical_threat_range);
+            let multiplier = |item: &str| resolve_critical_multiplier(item, &corpus).map(|row| row.critical_multiplier);
+            assert!(wield(base).is_some() && range(base).is_some() && multiplier(base).is_some(), "{base} states every facet");
+            assert_eq!(wield(variant), wield(base), "{variant} wields as {base}");
+            assert_eq!(range(variant), range(base), "{variant} threatens as {base}");
+            assert_eq!(multiplier(variant), multiplier(base), "{variant} multiplies as {base}");
+        }
+        assert_eq!(resolve_str_damage_modifier("Flail (Heavy)", &corpus, 4, WeaponHandSlot::Primary).map(|row| row.str_damage_modifier), Some(6), "two-handed: 1.5 x Str");
+        // A ranged base states no wield (no Strength on its damage); its alias still threatens and multiplies as it.
+        assert_eq!(resolve_critical_multiplier("Crossbow (Light)", &corpus).map(|row| row.critical_multiplier), Some(2));
     }
 
     fn row<'a>(rows: &'a [WeaponDamageBreakdown], item: &str) -> &'a WeaponDamageBreakdown {

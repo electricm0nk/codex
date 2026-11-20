@@ -18,7 +18,7 @@ use codex::rules_core::pilot_compute_corpus::{compute_combat_baseline_from_corpu
 use codex::rules_core::source_content::SourcePackageContent;
 
 use super::catalog::Catalog;
-use super::map::{KeyRule, MAPPING, SF_SOURCE_PACKAGE_ID, character_input_of, convert, starfinder_verdict};
+use super::map::{CUSTOM_PROPERTIES, KeyRule, MAPPING, SF_SOURCE_PACKAGE_ID, character_input_of, convert, starfinder_verdict};
 use super::parse::parse;
 use super::wire::{ImportFile, Outcome};
 
@@ -449,13 +449,32 @@ fn pcg_import_fixtures_a_starfinder_soldier_computes() {
     sf_verdict(&file).expect("the Starfinder engine computes the imported soldier");
 }
 
-/// The mapping table doc prints every row of the table it documents.
+/// The mapping table doc prints every row of the tables it documents, word for word: [`MAPPING`] and
+/// [`CUSTOM_PROPERTIES`] (SD-42 `decisions.md §6`), so a row the code changes cannot go stale in the doc.
 #[test]
 fn pcg_import_fixtures_the_mapping_doc_lists_every_key() {
     let doc = std::fs::read_to_string(repo_root().join("docs/architecture/pcg-import.md")).expect("the mapping table doc");
     let missing: Vec<&str> = MAPPING.iter().map(|(key, _)| *key).filter(|key| !doc.contains(&format!("`{key}`"))).collect();
     assert!(missing.is_empty(), "docs/architecture/pcg-import.md does not list: {missing:?}");
     assert!(MAPPING.iter().any(|(_, rule)| matches!(rule, KeyRule::Setting)));
+    let mut keys = String::from("| `.pcg` key | Outcome | Goes to |\n|---|---|---|\n");
+    for (key, rule) in MAPPING {
+        let (outcome, goes_to) = match rule {
+            KeyRule::Field(what) => ("mapped", *what),
+            KeyRule::Record(what) => ("custom", *what),
+            KeyRule::Derived(what) => ("derived", *what),
+            KeyRule::Setting => ("setting", "PCGen's own setup; reported only"),
+        };
+        keys.push_str(&format!("| `{key}` | {outcome} | {goes_to} |\n"));
+    }
+    let mut properties = String::from("| `EQUIPNAME` property | Goes to |\n|---|---|\n");
+    for (property, goes_to) in CUSTOM_PROPERTIES {
+        // A `|` inside a cell is Markdown's `\|`.
+        properties.push_str(&format!("| `{}` | {} |\n", property.replace('|', "\\|"), goes_to.replace('|', "\\|")));
+    }
+    for (name, table) in [("MAPPING", keys), ("CUSTOM_PROPERTIES", properties)] {
+        assert!(doc.contains(&table), "docs/architecture/pcg-import.md does not print {name} as the code holds it; print:\n{table}");
+    }
 }
 
 /// The file's rank is the row the engine reads, on all three, with nothing held back. A file with no
