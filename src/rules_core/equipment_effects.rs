@@ -493,7 +493,9 @@ pub fn compute_equipment_effects(
         else {
             continue;
         };
-        let to_hit_bonus = is_weapon_record(converted).then(|| {
+        // A variant that states no die of its own (`Flail (Heavy)`) is its stand-in's weapon (SD-42 E4.17 (e)).
+        let is_weapon = is_weapon_record(converted) || stand_in_record(converted, corpus).is_some_and(is_weapon_record);
+        let to_hit_bonus = is_weapon.then(|| {
             let bonus = attached_weapon_enhancement(converted, &selection.applied_modifiers, corpus).tohit;
             weapon_count += 1;
             single_weapon_to_hit_bonus = bonus;
@@ -513,7 +515,8 @@ pub fn compute_equipment_effects(
         // derived from which resolver(s) actually matched (confirmed unused
         // for branching anywhere downstream -- `apps/desktop`'s own wire
         // type treats it as a plain string) rather than the gate itself.
-        let effect = resolve_category_effect(converted, corpus);
+        let mut effect = resolve_category_effect(converted, corpus);
+        apply_attached_armor_qualities(&mut effect, &selection.applied_modifiers, corpus);
         let skill_bonus = general::compute_general_effect(converted);
         // SD-35 `AT-35-E6-003-RULED` cycle 10: the ability-score enhancement is
         // a settled value on the converted record, resolved by the same
@@ -683,6 +686,28 @@ pub(crate) fn attached_weapon_enhancement(
         tohit: bonus.tohit_bonus.unwrap_or(0),
         damage: bonus.damage_bonus.unwrap_or(0),
     })
+}
+
+/// SD-42 E4.17 (a): what a worn armor or shield's own `applied_modifiers` change of its armor
+/// check penalty, max Dexterity and spell failure, read from each modifier record's stated effect:
+/// masterwork and a `+N` (a magic armor is masterwork) lessen the penalty by 1, mithral by 3, raise
+/// max Dexterity by 2 and lower spell failure by 10%. One improvement of each kind counts, the
+/// largest (mithral is masterwork; the two do not stack); the penalty stops at 0. An item that
+/// states no penalty, max Dexterity or spell failure is not armor and is left as it is.
+fn apply_attached_armor_qualities(effect: &mut EquipmentStatEffect, applied_modifiers: &[String], corpus: &SourcePackageContent) {
+    let stated: Vec<EquipmentStatEffect> =
+        applied_modifiers.iter().filter_map(|id| equipment_converted_resolve(id, corpus)).map(|record| record.stat_effect).collect();
+    let best = |field: fn(&EquipmentStatEffect) -> Option<i16>| stated.iter().filter_map(field).filter(|value| *value > 0).max();
+    if let (Some(penalty), Some(lessened)) = (effect.armor_check_penalty, best(|e| e.armor_check_penalty)) {
+        effect.armor_check_penalty = Some((penalty + lessened).min(0));
+    }
+    if let (Some(cap), Some(raised)) = (effect.max_dex, best(|e| e.max_dex)) {
+        effect.max_dex = Some(cap + raised);
+    }
+    let lowered = stated.iter().filter_map(|e| e.spell_failure).filter(|value| *value < 0.0).fold(0.0_f32, f32::min);
+    if let Some(failure) = effect.spell_failure.filter(|_| lowered < 0.0) {
+        effect.spell_failure = Some((failure + lowered).max(0.0));
+    }
 }
 
 /// What one weapon selection's own `applied_modifiers` add to its two rolls.

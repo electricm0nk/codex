@@ -61,7 +61,7 @@ not in the table becomes a custom feat and is named in `report.unknownKeys`.
 | `CLASS` | mapped | classLevels |
 | `RACE` | mapped | raceId |
 | `STAT` | mapped | abilityScores, plus the race's adjustments |
-| `ABILITY` | mapped | CATEGORY:FEAT to selectedFeats + a target choice; other categories to a custom feat |
+| `ABILITY` | mapped | CATEGORY:FEAT to selectedFeats + a target choice; a Favored Class Bonus taken as hit points or skill ranks to `custom.grants` (`hit_points`, `skill_points`) and the ranks to skillAllocations; other categories to a custom feat |
 | `FEAT` | mapped | selectedFeats + a target choice (the older form of ABILITY) |
 | `SKILL` | mapped | skillAllocations, ranks summed over CLASSBOUGHT |
 | `SPELLNAME` | mapped | spellsSelected |
@@ -111,7 +111,7 @@ not in the table becomes a custom feat and is named in `report.unknownKeys`.
 | `FOLLOWER` | custom | a custom feat |
 | `CHRONICLEENTRY` | custom | a custom feat |
 | `TEMPBONUS` | custom | a custom feat |
-| `CLASSABILITIESLEVEL` | derived | hit points and skill points per level |
+| `CLASSABILITIESLEVEL` | mapped | hitPoints: each level's HITPOINTS, when the file states every level's (the character's `hit_points.json`); skill points per level are derived |
 | `WEAPONPROF` | derived | proficiencies |
 | `FEATPOOL` | derived | feat budget |
 | `USERPOOL` | derived | ability pools |

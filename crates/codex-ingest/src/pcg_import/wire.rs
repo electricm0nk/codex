@@ -17,7 +17,25 @@ pub struct ImportFile {
     pub money: MoneyWire,
     pub custom: CustomWire,
     pub equipment_sets: codex::saved_character::equipment_sets::EquipmentSets,
+    /// The character's `hit_points.json`: each level's hit die result as the file states it
+    /// (`CLASSABILITIESLEVEL` `HITPOINTS`), when it states one for every level of every class.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub hit_points: Option<HitPointsWire>,
     pub report: Report,
+}
+
+/// `hit_points.json` (`CharacterHitPointsDto`).
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct HitPointsWire {
+    pub levels: Vec<HitPointLevelWire>,
+}
+
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct HitPointLevelWire {
+    pub class_id: String,
+    pub value: u8,
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
@@ -122,9 +140,24 @@ pub struct MoneyWire {
 #[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct CustomWire {
+    /// `custom.json`'s grants (`CustomGrantDto`): the favored class bonus's hit points and skill
+    /// points, which the sheet adds to its hit point total and its skill point pool.
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    pub grants: Vec<GrantWire>,
     pub feats: Vec<CustomRecord>,
     pub equipment: Vec<CustomRecord>,
     pub spells: Vec<CustomRecord>,
+}
+
+/// `custom.json`'s grant (`CustomGrantDto`): `target` is `hit_points` or `skill_points`.
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct GrantWire {
+    pub id: String,
+    pub label: String,
+    pub target: String,
+    pub value: i32,
+    pub reason: String,
 }
 
 /// `custom.json`'s record (`CustomRecordDto`). An equipment record is a Create item (SD-41 §25): the

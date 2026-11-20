@@ -812,11 +812,21 @@ pub(super) fn compute_total_saves(
     };
     // Named in each save's derivation only when it applies, so no other character's text moves.
     let divine_grace_words = if divine_grace_save_bonus > 0 { format!(" + Paladin Divine Grace (+{divine_grace_save_bonus})") } else { String::new() };
+    // SD-42 E4.17 (b): Halfling Luck (CRB): +1 on all saves, unless an alternate racial trait
+    // replaced it -- the magnitude `race.halfling.trait_bundle.halfling_luck` explains.
+    let halfling_luck = if input.chosen.race_id == "race:halfling" && !replaced_by_alternate_trait(input, "Halfling_ReplaceHalflingLuck") {
+        HALFLING_LUCK_ALL_SAVES_BONUS
+    } else {
+        0
+    };
+    // Named in each save's derivation only when they apply, as Divine Grace is.
+    let divine_grace_words = if halfling_luck > 0 { format!("{divine_grace_words} + Halfling Luck (+{halfling_luck})") } else { divine_grace_words };
+    let all_saves_bonus = divine_grace_save_bonus + halfling_luck;
     let total_saves = BaseSaves {
         fortitude: base_saves.fortitude
             + ability_modifiers.constitution
             + feat_save_bonuses.fortitude
-            + divine_grace_save_bonus
+            + all_saves_bonus
             + touch_of_good_save_bonus
             + purity_judgment_save_bonus
             + alternate_trait_saves.fortitude
@@ -824,7 +834,7 @@ pub(super) fn compute_total_saves(
         reflex: base_saves.reflex
             + ability_modifiers.dexterity
             + feat_save_bonuses.reflex
-            + divine_grace_save_bonus
+            + all_saves_bonus
             + touch_of_good_save_bonus
             + purity_judgment_save_bonus
             + sidestep_secret_reflex_bonus
@@ -833,7 +843,7 @@ pub(super) fn compute_total_saves(
         will: base_saves.will
             + ability_modifiers.wisdom
             + feat_save_bonuses.will
-            + divine_grace_save_bonus
+            + all_saves_bonus
             + rage_will_bonus
             + inspired_rage_will_bonus
             + bloodrage_will_bonus
@@ -2412,8 +2422,8 @@ pub(super) fn ground_standalone_feat_skill_facts(
             value: fact.bonus,
             detail: format!(
                 "Skill Focus grants a +{} bonus on {} checks (the player-chosen target, \
-                 recorded via choice:skill_focus_target). This grounds as a standalone flat \
-                 record; it is not wired into any skill total this codebase computes",
+                 recorded via choice:skill_focus_target); +6 from 10 ranks. The sheet's skill \
+                 total adds it (pilot_compute_corpus::skill_focus_bonus)",
                 fact.bonus, fact.skill_name
             ),
         });
@@ -3110,7 +3120,6 @@ pub(super) fn ground_per_weapon_combat_totals(
 /// Return the list of unmet conditions for the exact deterministic combat
 /// posture. An empty list means the posture is fully supported.
 pub(super) fn unmet_combat_posture_conditions(input: &CharacterInput) -> Vec<String> {
-    let chosen = &input.chosen;
     let mut unmet = Vec::new();
 
     // SD-21 E6b.1: widened from a Fighter-only gate to the same dispatch-supported
@@ -3147,24 +3156,11 @@ pub(super) fn unmet_combat_posture_conditions(input: &CharacterInput) -> Vec<Str
     // claimed on thinner evidence; a claim that used to be *fabricated at
     // creation time* simply is not made any more.
     //
-    // Weapon Focus IS still required, and that is not an oversight: this
-    // baseline's whole attack formula is Longsword-specific (Fighter
-    // Weapon Training is hardcoded to the Longsword's "Heavy Blades"
-    // group), and for the one class whose slot actually grants it
-    // (`choice:fighter_bonus_feat`, a real Fighter class feature) the
-    // claim is backed. Seeding it for non-Fighters is the same class of
-    // unbacked claim Dodge was, and closing that one needs the weapon
-    // loadout widened first -- a separate increment, not this fix.
-    //
-    // Matched through the shared identity fold, not by string equality: the
-    // feat picker sends the catalog key ("Weapon Focus"), character creation
-    // seeds the engine token ("feat:weapon_focus"), and both name the same
-    // feat. Comparing verbatim here meant a player who picked it from the
-    // catalog left this posture unmet, so the whole combat baseline came back
-    // unsupported -- no armor class, no melee attack bonus.
-    if !feat_identity::holds(&chosen.selected_feats, WEAPON_FOCUS_FEAT_ID) {
-        unmet.push(format!("missing selected feat {WEAPON_FOCUS_FEAT_ID}"));
-    }
+    // SD-42 E4.17 (h): Weapon Focus is not required either, for the same reason. The requirement
+    // made Create seed `feat:weapon_focus` on every character and the PCGen import add it to every
+    // Pathfinder file that held none; the feat's +1 is a conditional contribution
+    // (`weapon_focus_bonus_for`), so a character without it computes one point lower on the
+    // weapon its Focus would name, and on nothing else.
 
     // The Fighter bonus-feat choice mechanism (`choice:fighter_bonus_feat`) is a
     // Fighter-only class feature (how a Fighter's own 1st-level bonus feat was
@@ -3270,7 +3266,10 @@ pub(crate) fn weapon_focus_bonus_for(input: &CharacterInput, weapon_name: &str) 
     let wanted = normalize_weapon_identity(weapon_name);
     match facts.iter().find(|fact| normalize_weapon_identity(&fact.weapon_name) == wanted) {
         Some(fact) => fact.attack_bonus,
-        None if facts.is_empty() && wanted == normalize_weapon_identity(LONGSWORD_ITEM_ID) => {
+        None if facts.is_empty()
+            && feat_identity::holds(&effective_character_feats(input), WEAPON_FOCUS_FEAT_ID)
+            && wanted == normalize_weapon_identity(LONGSWORD_ITEM_ID) =>
+        {
             WEAPON_FOCUS_TO_HIT_BONUS
         }
         None => 0,

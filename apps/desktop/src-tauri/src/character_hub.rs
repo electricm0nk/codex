@@ -3126,8 +3126,19 @@ fn load_saved_character_and_weapon_copies_at_root(root: &Path) -> Result<(LoadSa
         mirror_warnings,
         ignore_container_capacity: custom.overrides.ignore_container_capacity,
     };
+    push_racial_and_class_skill_rows(&mut sheet);
     worn_custom_items.apply_to_sheet(&mut sheet);
     push_weapon_damage_total_rows(&mut sheet);
+    let size_penalties: Vec<i16> = breakdowns
+        .iter()
+        .map(|breakdown| {
+            breakdown.copy.as_ref().map_or(0, |copy| {
+                let size = sets.copies.get(&copy.map_key()).and_then(|facts| facts.size);
+                codex::rules_core::pilot_compute_corpus::weapon_size_attack_penalty(&envelope.character_input, size)
+            })
+        })
+        .collect();
+    push_weapon_attack_enhancement(&mut sheet, &size_penalties);
     push_hit_points_and_speed_rows(root, &envelope.character_input, constitution_modifier, &mut sheet.explanations);
     sheet.fly_maneuverability = push_swim_and_fly_rows(&envelope.character_input, &mut sheet.explanations);
     sheet.resistances = resistances_for(&envelope.character_input, &sheet);
@@ -3178,6 +3189,91 @@ fn push_weapon_damage_total_rows(sheet: &mut LoadSavedCharacterResponse) {
     sheet.explanations.extend(rows);
 }
 
+/// SD-42 E4.17 (b): what the held racial traits and class features add to a skill (Keen Senses' +2
+/// Perception, Trapfinding on Disable Device), the engine's fold of their sheet lines
+/// (`FeatSkillBonuses::racial_and_class`), goes in the skill's `skill.trait_modifier` row, which its
+/// `skill.total` adds. Runs before the worn items add to the same rows.
+fn push_racial_and_class_skill_rows(sheet: &mut LoadSavedCharacterResponse) {
+    let Some(folded) = sheet.feat_skill_bonuses.racial_and_class.clone() else { return };
+    for skill_id in sheet_skill_row_ids() {
+        let skill = skill_id.trim_start_matches("skill:");
+        let value = folded_feat_skill_bonus(&folded, skill);
+        if value == 0 {
+            continue;
+        }
+        let sources: Vec<String> = folded
+            .contributions
+            .iter()
+            .filter(|c| c.skill == skill || (c.group && skill.strip_prefix(c.skill.as_str()).is_some_and(|rest| rest.starts_with('_'))))
+            .map(|c| format!("{} {:+}", c.label, c.value))
+            .collect();
+        let id = format!("skill.trait_modifier.{skill}");
+        let words = format!("racial traits and class features: {}", sources.join(", "));
+        match sheet.explanations.iter_mut().find(|row| row.id == id) {
+            Some(row) => {
+                row.value += value;
+                row.detail = format!("{}; {words}", row.detail);
+            }
+            None => sheet.explanations.push(ExplanationDto { id, value, detail: format!("{value:+} on {skill} from the {words}") }),
+        }
+    }
+}
+
+/// SD-42 E4.17 (e): a weapon's `+N` or masterwork bonus to attack (its Weapons row's
+/// `enhancement_attack_bonus`, what the engine resolved for that copy) and an inappropriately sized
+/// copy's penalty (`size_penalties`, one per `weapon_damage` row) are in its attack row
+/// (`combat.weapon_attack_bonus.<weapon>`), the total the sheet and the print read. A later copy of
+/// the kind with its own `copy_row` (E4.15) gets `combat.weapon_attack_bonus.<copy_row>`, from the
+/// kind's row before any copy's terms. Runs after [`push_weapon_damage_total_rows`] names the copies.
+fn push_weapon_attack_enhancement(sheet: &mut LoadSavedCharacterResponse, size_penalties: &[i16]) {
+    use codex::rules_core::damage_total::weapon_feat_damage_row_id;
+    const ATTACK: &str = "combat.weapon_attack_bonus.";
+    // Each kind's row before any bonus, and the bonus its row took.
+    let mut kinds: Vec<(String, i16, String, i16)> = Vec::new();
+    let mut extra: Vec<ExplanationDto> = Vec::new();
+    for (index, weapon) in sheet.weapon_damage.iter().enumerate() {
+        let Some(key) = weapon.weapon_record_key.as_deref() else { continue };
+        let enhancement = weapon.enhancement_attack_bonus.unwrap_or(0);
+        let size = size_penalties.get(index).copied().unwrap_or(0);
+        let bonus = enhancement + size;
+        let mut words = String::new();
+        if enhancement != 0 {
+            words.push_str(&format!("; {key} {enhancement:+} enhancement or masterwork"));
+        }
+        if size != 0 {
+            words.push_str(&format!("; {size:+} a weapon not sized for its wielder"));
+        }
+        let id = weapon_feat_damage_row_id(key).replacen("combat.weapon_damage_bonus.", ATTACK, 1);
+        match kinds.iter().find(|(kind, ..)| *kind == id) {
+            None => {
+                let Some(row) = sheet.explanations.iter_mut().find(|row| row.id == id) else { continue };
+                kinds.push((id, row.value, row.detail.clone(), bonus));
+                if bonus != 0 {
+                    row.value += bonus;
+                    row.detail = with_attack_terms(&row.detail, &words);
+                }
+            }
+            Some((_, base, detail, taken)) if *taken != bonus => {
+                if let Some(copy_row) = &weapon.copy_row {
+                    extra.push(ExplanationDto { id: format!("{ATTACK}{copy_row}"), value: base + bonus, detail: with_attack_terms(detail, &words) });
+                }
+            }
+            Some(_) => {}
+        }
+    }
+    sheet.explanations.extend(extra);
+}
+
+/// An attack row's words with `terms` added, before the carried row's closing note when it has one
+/// (`CARRIED_WEAPON_ROW_NOTE` closes every carried weapon's row).
+fn with_attack_terms(detail: &str, terms: &str) -> String {
+    use codex::rules_core::pilot_compute_corpus::CARRIED_WEAPON_ROW_NOTE;
+    match detail.strip_suffix(CARRIED_WEAPON_ROW_NOTE) {
+        Some(head) => format!("{head}{terms}{CARRIED_WEAPON_ROW_NOTE}"),
+        None => format!("{detail}{terms}"),
+    }
+}
+
 /// The Skills panel's rows, as `skill:<name>` (`skillsModel.ts`'s `SKILLS`): the book's skills, each
 /// Knowledge on its own row, Craft, Perform and Profession one row each.
 fn sheet_skill_row_ids() -> Vec<String> {
@@ -3206,12 +3302,14 @@ struct SkillTotalTerms {
     ranks: i16,
     class_skill: bool,
     feat_bonus: i16,
+    /// The worn armor's and shield's penalty, on a Strength or Dexterity skill (0 on any other).
+    armor_check_penalty: i16,
 }
 
 /// PF1 (CRB Chapter 4): ranks, the key ability's modifier, +3 for a class skill once it has a
-/// rank, and the feat bonus the engine folded for it.
+/// rank, the feat bonus the engine folded for it and the armor check penalty.
 fn skill_total(terms: SkillTotalTerms) -> i16 {
-    terms.ability_modifier + terms.ranks + if terms.class_skill && terms.ranks > 0 { 3 } else { 0 } + terms.feat_bonus
+    terms.ability_modifier + terms.ranks + if terms.class_skill && terms.ranks > 0 { 3 } else { 0 } + terms.feat_bonus + terms.armor_check_penalty
 }
 
 /// The feat bonus the engine folded for a skill (`knowledge_local`): its own total plus every family
@@ -3239,6 +3337,7 @@ fn push_skill_total_rows(
     selected: Option<codex::rules_core::pilot_compute::SelectedSkillModifiers>,
     sheet: &mut LoadSavedCharacterResponse,
 ) {
+    let armor_check_penalty = codex::rules_core::pilot_compute_corpus::armor_check_penalty_from_corpus(input, corpus_fixture_bundle());
     use codex::rules_core::pilot_compute::class_skill_sheet_rules::{class_skill_view, ClassSkillAnswer};
     let class_views: Vec<(String, ClassSkillAnswer)> = input
         .chosen
@@ -3256,7 +3355,16 @@ fn push_skill_total_rows(
             .filter(|(_, answer)| matches!(answer, ClassSkillAnswer::Known(view) if view.contains(skill)))
             .map(|(class_id, _)| class_id.as_str())
             .collect();
-        let terms = SkillTotalTerms { ability_modifier, ranks, class_skill: !granted_by.is_empty(), feat_bonus: folded_feat_skill_bonus(&sheet.feat_skill_bonuses, skill) };
+        let armor_check_penalty = if matches!(ability, "Strength" | "Dexterity") { armor_check_penalty } else { 0 };
+        let size = codex::rules_core::pilot_compute_corpus::size_skill_modifier(input, skill);
+        let focus = codex::rules_core::pilot_compute_corpus::skill_focus_bonus(input, skill, ranks);
+        let terms = SkillTotalTerms {
+            ability_modifier,
+            ranks,
+            class_skill: !granted_by.is_empty(),
+            feat_bonus: folded_feat_skill_bonus(&sheet.feat_skill_bonuses, skill),
+            armor_check_penalty,
+        };
         let engine_total = selected.and_then(|modifiers| match skill {
             "climb" => Some(modifiers.climb),
             "intimidate" => Some(modifiers.intimidate),
@@ -3275,13 +3383,22 @@ fn push_skill_total_rows(
                 if terms.feat_bonus != 0 {
                     words.push_str(&format!("; feats {:+}", terms.feat_bonus));
                 }
+                if armor_check_penalty != 0 {
+                    words.push_str(&format!("; armor check penalty {armor_check_penalty:+}"));
+                }
                 words
             }
         };
+        if size != 0 {
+            detail.push_str(&format!("; size {size:+}"));
+        }
+        if focus != 0 {
+            detail.push_str(&format!("; Skill Focus {focus:+}"));
+        }
         if trait_modifier != 0 {
             detail.push_str(&format!("; {trait_row} {trait_modifier:+}"));
         }
-        let value = engine_total.unwrap_or_else(|| skill_total(terms)) + trait_modifier;
+        let value = engine_total.unwrap_or_else(|| skill_total(terms)) + trait_modifier + size + focus;
         rows.push(ExplanationDto { id: format!("skill.total.{skill}"), value, detail });
     }
     sheet.explanations.extend(rows);
@@ -8334,8 +8451,13 @@ fn apply_pcg_custom_builds(file: &mut serde_json::Value) -> Vec<String> {
         for key in &eqmods {
             if key.starts_with("Special Quality ~ Masterwork ~ ") {
                 build.masterwork = true;
-            } else if key.starts_with("Material ~ ") && build.material.is_none() {
-                build.material = Some(key.clone());
+            } else if key.starts_with("Material ~ ") {
+                // PCGen names the base material beside a special one (`STEEL.MITHRAL_ARMR_LT`): the
+                // special one is the copy's material (SD-42 E4.17 (a)); a base one only when alone.
+                let base = |key: &str| PCG_BASE_MATERIALS.contains(&key);
+                if build.material.as_deref().is_none_or(base) && !(base(key) && build.material.is_some()) {
+                    build.material = Some(key.clone());
+                }
             } else {
                 build.special_abilities.push(key.clone());
             }
@@ -8354,6 +8476,10 @@ fn apply_pcg_custom_builds(file: &mut serde_json::Value) -> Vec<String> {
     }
     refused
 }
+
+/// The materials PCGen states as an item's default (`TYPE:BaseMaterial`, `cr_equipmods.lst`):
+/// named beside a special material, they are not the copy's material.
+const PCG_BASE_MATERIALS: [&str; 5] = ["Material ~ Steel", "Material ~ Wood", "Material ~ Leather", "Material ~ Cloth", "Material ~ Rope"];
 
 /// Each Create item takes the state its place in the imported set projects to (worn in its slot,
 /// carried, or left behind), since `custom.json`, not the sets file, holds a custom item's state.
@@ -11939,7 +12065,7 @@ mod tests {
     /// `skillModifier` and `featSkillBonusFor` tests.
     #[test]
     fn skill_total_adds_ranks_ability_class_skill_and_feats() {
-        let terms = |ability_modifier: i16, ranks: i16, class_skill: bool, feat_bonus: i16| SkillTotalTerms { ability_modifier, ranks, class_skill, feat_bonus };
+        let terms = |ability_modifier: i16, ranks: i16, class_skill: bool, feat_bonus: i16| SkillTotalTerms { ability_modifier, ranks, class_skill, feat_bonus, armor_check_penalty: 0 };
         assert_eq!(skill_total(terms(4, 5, true, 0)), 12, "Spellcraft: 5 ranks + Int +4 + class skill 3");
         assert_eq!(skill_total(terms(4, 0, true, 0)), 4, "a class skill with no rank takes no +3");
         assert_eq!(skill_total(terms(-1, 2, false, 0)), 1, "a cross-class skill adds no +3");
@@ -14238,7 +14364,8 @@ mod tests {
         let snapshot = loaded.snapshot.as_ref().unwrap_or_else(|| panic!("a blocked sheet: {:?}", loaded.diagnostics));
         assert_eq!(snapshot.baseline_melee_attack_bonus, 8, "base attack +3, Strength +4, its +1");
         assert_eq!(no_required_gear_attack_rows(&loaded), ["combat.weapon_attack_bonus.greatsword"]);
-        assert_eq!(no_required_gear_row(&loaded, "combat.weapon_attack_bonus.greatsword"), Some(7));
+        // The row holds its `+1` too (SD-42 E4.17 (e)), as the melee figure does.
+        assert_eq!(no_required_gear_row(&loaded, "combat.weapon_attack_bonus.greatsword"), Some(8));
         assert_eq!(in_hand_weapons(&loaded).len(), 1, "{:?}", loaded.weapon_damage);
         assert_eq!(in_hand_weapons(&loaded)[0].weapon_record_key.as_deref(), Some(greatsword));
         assert_eq!(in_hand_weapons(&loaded)[0].enhancement_attack_bonus, Some(1));
@@ -14410,8 +14537,10 @@ mod tests {
             let loaded = load_saved_character_at_root(&root).unwrap();
             std::fs::remove_dir_all(&dir).ok();
             assert_eq!(no_required_gear_attack_rows(&loaded), [row], "{weapon}");
-            assert_eq!(no_required_gear_row(&loaded, row), Some(value), "{weapon}");
             assert_eq!(in_hand_weapons(&loaded).len(), 1, "{weapon}: {:?}", loaded.weapon_damage);
+            // Its own `+N` is in the row (SD-42 E4.17 (e)): Blackaxe's enhancement, the Dagger's none.
+            let enhancement = in_hand_weapons(&loaded)[0].enhancement_attack_bonus.unwrap_or(0);
+            assert_eq!(no_required_gear_row(&loaded, row), Some(value + enhancement), "{weapon}");
         }
     }
 
@@ -14918,9 +15047,10 @@ mod tests {
     #[test]
     fn market_buy_sell_a_buy_the_engine_refuses_charges_nothing() {
         let root = fund_and_seed("market-engine-refused", 300_000);
-        // Weapon Focus gone: the sheet cannot compute, whatever the save adds.
+        // The Power Attack row gone: the sheet cannot compute, whatever the save adds (Weapon Focus
+        // is no longer required, SD-42 E4.17 (h)).
         let mut unsupported = SavedCharacterStore::load(&root).unwrap();
-        unsupported.character_input.chosen.selected_feats.retain(|feat| feat != "feat:weapon_focus");
+        unsupported.character_input.chosen.equipment_selections.retain(|selection| selection.item_id != "power_attack");
         SavedCharacterStore::save(&unsupported, &root).unwrap();
         let before = SavedCharacterStore::load(&root).unwrap();
         let response = purchase_equipment_offer_at_root(
@@ -21615,11 +21745,13 @@ mod tests {
 
         // The load appends the feat budget's rows, the sheet's Hit Points and Speed (E8.6), one
         // total per Skills panel row (E8.7) and one damage total per weapon in hand (SD-40 E2.14),
-        // which are not the chassis's records.
-        let sheet_totals = ["hit_points.max", "speed.land"];
+        // the ranged attack and a skill's trait/racial/class-feature row (SD-42 E4.17: this Rogue's
+        // Trapfinding), which are not the chassis's records.
+        let sheet_totals = ["hit_points.max", "speed.land", "combat.baseline_ranged_attack_bonus"];
         let (appended, chassis): (Vec<_>, Vec<_>) = response.explanations.iter().partition(|row| {
             row.id.starts_with("feats.budget.")
                 || row.id.starts_with("skill.total.")
+                || row.id.starts_with("skill.trait_modifier.")
                 || row.id.starts_with("combat.weapon_damage_total.")
                 || (row.id.starts_with("combat.weapon_") && row.id.ends_with(".unarmedstrike"))
                 || sheet_totals.contains(&row.id.as_str())

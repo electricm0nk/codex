@@ -232,14 +232,15 @@ fn print_pf_blocks_every_ranked_skill_prints_the_load_responses_total() {
     let signed = |n: i16| if n >= 0 { format!("+{n}") } else { n.to_string() };
     let book = [
         // Aldric, Human Fighter 3: Str +4, Dex +1, Int +2, Wis +1; Ride, Survival and Knowledge
-        // (Dungeoneering) are Fighter class skills.
-        (ALDRIC_ID, "ride", 3 + 1 + 3),
+        // (Dungeoneering) are Fighter class skills. Ride is a Dexterity skill: his worn Chain Shirt's
+        // -2 armor check penalty, less Armor Training's 1 (SD-42 E4.17 (a)).
+        (ALDRIC_ID, "ride", 3 + 1 + 3 - 1),
         (ALDRIC_ID, "survival", 3 + 1 + 3),
         (ALDRIC_ID, "knowledge_dungeoneering", 3 + 2 + 3),
         // Elowen, Human Wizard 5: Int +4, Dex +2; Spellcraft, Fly and Knowledge (Arcana) are Wizard
-        // class skills.
+        // class skills. Fly is a Dexterity skill: her worn Chain Shirt's -2 (SD-42 E4.17 (a)).
         (ELOWEN_ID, "spellcraft", 5 + 4 + 3),
-        (ELOWEN_ID, "fly", 5 + 2 + 3),
+        (ELOWEN_ID, "fly", 5 + 2 + 3 - 2),
         (ELOWEN_ID, "knowledge_arcana", 5 + 4 + 3),
     ];
     for (tag, id) in [("skills-aldric", ALDRIC_ID), ("skills-elowen", ELOWEN_ID)] {

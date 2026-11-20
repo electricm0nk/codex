@@ -317,7 +317,8 @@ fn pcg_import_fixtures_paladin_reads_what_the_file_says() {
     assert!(chosen.selected_choices.iter().any(|c| c.choice_set_id == "choice:skill_focus_target" && c.selection_id == "skill:Diplomacy"));
 
     let ranks = |id: &str| chosen.skill_allocations.iter().find(|skill| skill.skill_id == id).map(|skill| skill.ranks);
-    assert_eq!(ranks("skill:diplomacy"), Some(2));
+    // CLASSBOUGHT RANKS:2.0, and the favored class bonus's four ranks (`APPLIEDTO:Diplomacy` x4).
+    assert_eq!(ranks("skill:diplomacy"), Some(6));
     assert_eq!(ranks("skill:knowledge_religion"), Some(1));
     assert_eq!(ranks("skill:acrobatics"), None, "a SKILL line with no CLASSBOUGHT buys nothing");
 
@@ -357,6 +358,39 @@ fn pcg_import_fixtures_paladin_reads_what_the_file_says() {
     assert!(!added.iter().any(|to| to.contains("item:longsword")), "no gear is required: {added:?}");
     assert!(!added.iter().any(|to| to.contains("weapon_focus") && to.contains("selectedFeats")), "the file holds Weapon Focus: {added:?}");
     assert_eq!(engine_verdict(&character_input(&file)), Ok(()));
+}
+
+/// SD-42 E4.17 (c), (h): `pf_Cleric.pcg`'s own hit points per level (`CLASSABILITIESLEVEL`
+/// `HITPOINTS:8` x3) are the character's `hit_points.json`; its favored class bonus (one hit point,
+/// a rank each in Knowledge (Religion) and (Planes)) is the ranks and the two grants that pay for
+/// them; and it holds no Weapon Focus, so none is added. PCGen's own total is 25: 24 + the bonus point.
+#[test]
+fn pcg_import_fixtures_cleric_hit_points_and_favored_class_bonus() {
+    let file = oracle_fixture("pf_Cleric.pcg");
+    let levels: Vec<(&str, u8)> =
+        file.hit_points.as_ref().expect("the file states every level's hit points").levels.iter().map(|level| (level.class_id.as_str(), level.value)).collect();
+    assert_eq!(levels, [("class:cleric", 8), ("class:cleric", 8), ("class:cleric", 8)]);
+    let grants: Vec<(&str, i32)> = file.custom.grants.iter().map(|grant| (grant.target.as_str(), grant.value)).collect();
+    assert_eq!(grants, [("hit_points", 1), ("skill_points", 2)]);
+    let chosen = &file.character_input.chosen;
+    let ranks = |id: &str| chosen.skill_allocations.iter().find(|skill| skill.skill_id == id).map(|skill| skill.ranks);
+    assert_eq!((ranks("skill:knowledge_religion"), ranks("skill:knowledge_planes")), (Some(1), Some(1)));
+    assert!(!file.custom.feats.iter().any(|record| record.name.contains("Bonus Hit Point") || record.name.contains("Bonus Skill Point")), "{:?}", file.custom.feats);
+    assert!(!chosen.selected_feats.iter().any(|feat| feat.contains("weapon_focus") || feat == "Weapon Focus"), "{:?}", chosen.selected_feats);
+    assert_eq!(engine_verdict(&character_input(&file)), Ok(()), "a character without Weapon Focus computes");
+}
+
+/// A larger bonus is several grants of at most 12 (`custom.json`'s limit), and a file that does not
+/// state every level's hit points keeps the sheet's default rule.
+#[test]
+fn pcg_import_fixtures_favored_class_bonus_splits_into_grants_of_twelve() {
+    let mut text = String::from("PCGVERSION:2.0\nCHARACTERNAME:Test\nGAMEMODE:Pathfinder_RPG\nRACE:Human\nCLASS:Fighter|LEVEL:14\n");
+    text.push_str(&format!("ABILITY:Favored Class Bonus|TYPE:NORMAL|CATEGORY:Special Ability|KEY:Favored Class Bonus ~ Hit Point|APPLIEDTO:{}|TYPE:FavoredClassBonus\n", ",".repeat(13)));
+    text.push_str("CLASSABILITIESLEVEL:Fighter=1|HITPOINTS:10\n");
+    let file = convert(&text, "inline.pcg", catalog()).unwrap();
+    let grants: Vec<(&str, i32)> = file.custom.grants.iter().map(|grant| (grant.target.as_str(), grant.value)).collect();
+    assert_eq!(grants, [("hit_points", 12), ("hit_points", 2)]);
+    assert_eq!(file.hit_points, None, "one level of fourteen stated");
 }
 
 /// A race's adjustment lands on the saved score, and these are PCGen's own totals: run through the

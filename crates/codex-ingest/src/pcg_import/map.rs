@@ -62,7 +62,7 @@ pub const MAPPING: &[(&str, KeyRule)] = &[
     ("CLASS", KeyRule::Field("classLevels")),
     ("RACE", KeyRule::Field("raceId")),
     ("STAT", KeyRule::Field("abilityScores, plus the race's adjustments")),
-    ("ABILITY", KeyRule::Field("CATEGORY:FEAT to selectedFeats + a target choice; other categories to a custom feat")),
+    ("ABILITY", KeyRule::Field("CATEGORY:FEAT to selectedFeats + a target choice; a Favored Class Bonus taken as hit points or skill ranks to custom.grants and skillAllocations; other categories to a custom feat")),
     ("FEAT", KeyRule::Field("selectedFeats + a target choice (the older form of ABILITY)")),
     ("SKILL", KeyRule::Field("skillAllocations, ranks summed over CLASSBOUGHT")),
     ("SPELLNAME", KeyRule::Field("spellsSelected")),
@@ -112,7 +112,7 @@ pub const MAPPING: &[(&str, KeyRule)] = &[
     ("FOLLOWER", KeyRule::Record("a custom feat")),
     ("CHRONICLEENTRY", KeyRule::Record("a custom feat")),
     ("TEMPBONUS", KeyRule::Record("a custom feat")),
-    ("CLASSABILITIESLEVEL", KeyRule::Derived("hit points and skill points per level")),
+    ("CLASSABILITIESLEVEL", KeyRule::Field("hitPoints: each level's HITPOINTS, when the file states every level's; skill points per level are derived")),
     ("WEAPONPROF", KeyRule::Derived("proficiencies")),
     ("FEATPOOL", KeyRule::Derived("feat budget")),
     ("USERPOOL", KeyRule::Derived("ability pools")),
@@ -172,6 +172,8 @@ const ABILITY_NAMES: [(&str, &str); 6] = [
     ("CHA", "charisma"),
 ];
 
+/// `custom.json`'s largest grant (`character_custom.rs` `MAX_GRANT_VALUE`).
+const MAX_GRANT_VALUE: i32 = 12;
 /// `custom.json`'s limits (`character_custom.rs`): a record past them refuses the whole file.
 const MAX_RECORDS: usize = 200;
 const MAX_NAME: usize = 120;
@@ -368,6 +370,12 @@ struct Importer<'a> {
     /// Starfinder picks read from selection lines, until the engine has had its say: the pick, its
     /// line and the report line it wrote.
     picks: Vec<(ChoiceWire, Line, usize)>,
+    /// Each `CLASSABILITIESLEVEL` line's class name, level and `HITPOINTS`, in file order.
+    level_hit_points: Vec<(String, u8, Option<u8>)>,
+    /// The favored class bonus taken as hit points: one per level so spent.
+    favored_hit_points: i32,
+    /// The favored class bonus taken as skill ranks: one skill name per rank.
+    favored_skill_ranks: Vec<String>,
 }
 
 impl<'a> Importer<'a> {
@@ -397,6 +405,9 @@ impl<'a> Importer<'a> {
             notes: Vec::new(),
             increases: Vec::new(),
             picks: Vec::new(),
+            level_hit_points: Vec::new(),
+            favored_hit_points: 0,
+            favored_skill_ranks: Vec::new(),
         }
     }
 
@@ -517,6 +528,7 @@ impl<'a> Importer<'a> {
             "HAIRCOLOR" => self.bio_field(line, "bio.hair", |bio| &mut bio.hair),
             "EYECOLOR" => self.bio_field(line, "bio.eyes", |bio| &mut bio.eyes),
             "EQUIPSET" | "CALCEQUIPSET" => self.mapped(line, "activeState"),
+            "CLASSABILITIESLEVEL" => self.read_level_hit_points(line),
             _ => self.read_by_rule(line, &key),
         }
     }
@@ -592,9 +604,50 @@ impl<'a> Importer<'a> {
         }
     }
 
+    /// `CLASSABILITIESLEVEL:Cleric=2|HITPOINTS:8|…`: the level's hit die result (before Constitution).
+    fn read_level_hit_points(&mut self, line: &Line) {
+        let (class, level) = line.value().rsplit_once('=').unwrap_or((line.value(), ""));
+        let level = level.trim().parse::<u8>().unwrap_or(0);
+        let rolled = line.get("HITPOINTS").and_then(|value| value.trim().parse::<u8>().ok());
+        self.level_hit_points.push((class.trim().to_owned(), level, rolled));
+        self.mapped(line, if rolled.is_some() { "hitPoints.levels" } else { "skill points per level (derived)" });
+    }
+
+    /// `ABILITY:Favored Class Bonus|…|KEY:Bonus Hit Point|APPLIEDTO:,,` (one entry per level spent
+    /// so) or `KEY:Bonus Skill Point|APPLIEDTO:Diplomacy,Diplomacy` (one skill per rank), PCGen's
+    /// `BONUS:HP|CURRENTMAX|1` and `BONUS:SKILLRANK|LIST|1` per entry. True when
+    /// the line is one of the two; any other favored class bonus is a custom feat, as before.
+    fn read_favored_class_bonus(&mut self, line: &Line, name: &str) -> bool {
+        if line.value() != "Favored Class Bonus" {
+            return false;
+        }
+        let entries: Vec<String> = line.get("APPLIEDTO").unwrap_or_default().split(',').map(|entry| entry.trim().to_owned()).collect();
+        // The older saves key them `Bonus Hit Point` / `Bonus Skill Point`, the current data
+        // `Favored Class Bonus ~ Hit Point` / `~ Skill Rank`.
+        match name {
+            "Bonus Hit Point" | "Favored Class Bonus ~ Hit Point" => {
+                let levels = i32::try_from(entries.len()).unwrap_or(0);
+                self.favored_hit_points += levels;
+                self.mapped(line, &format!("custom.grants hit_points +{levels} (favored class bonus)"));
+                true
+            }
+            "Bonus Skill Point" | "Favored Class Bonus ~ Skill Rank" => {
+                let ranks: Vec<String> = entries.into_iter().filter(|skill| !skill.is_empty()).collect();
+                let to = format!("skillAllocations +1 rank each: {} (favored class bonus)", ranks.join(", "));
+                self.favored_skill_ranks.extend(ranks);
+                self.mapped(line, &to);
+                true
+            }
+            _ => false,
+        }
+    }
+
     fn read_ability(&mut self, line: &Line) {
         let name = line.get("KEY").unwrap_or(line.value()).to_owned();
         let category = line.get("CATEGORY").unwrap_or_default().to_owned();
+        if self.catalog.starfinder_package().is_none() && self.read_favored_class_bonus(line, &name) {
+            return;
+        }
         if category == "FEAT" {
             let targets = applied_to(line);
             self.read_feat(line, &name, &targets);
@@ -1127,11 +1180,13 @@ impl<'a> Importer<'a> {
                 (SF_SOURCE_PACKAGE_ID, SF_SOURCE_PACKAGE_ID)
             }
             None => {
+                self.add_favored_class_bonus();
                 self.add_engine_rows(&class_levels, &race_id);
                 self.keep_the_spells_the_engine_takes(&race_id, &class_levels, &ability_scores);
                 (SOURCE_PACKAGE_ID, PF_GAME_SYSTEM)
             }
         };
+        let hit_points = if starfinder.is_none() { self.hit_points(&class_levels) } else { None };
         self.close_biography();
         self.bio.notes = self.notes_block();
 
@@ -1157,12 +1212,74 @@ impl<'a> Importer<'a> {
             money: self.money,
             custom: self.custom,
             equipment_sets,
+            hit_points,
             report: self.report,
         };
         if let Some(package) = starfinder {
             hold_the_files_credits(package, &mut file);
         }
         file
+    }
+
+    /// Each level's hit die result as the file states it, in file order, when it states one for every
+    /// level of every held class; else none (the sheet's default: the full die, then the average).
+    fn hit_points(&mut self, class_levels: &[ClassLevelWire]) -> Option<HitPointsWire> {
+        let levels: Vec<HitPointLevelWire> = self
+            .level_hit_points
+            .iter()
+            .filter_map(|(class, _, rolled)| Some(HitPointLevelWire { class_id: self.catalog.class_id(class)?.to_owned(), value: (*rolled)? }))
+            .collect();
+        let whole = class_levels
+            .iter()
+            .all(|held| levels.iter().filter(|level| level.class_id == held.class_id).count() == usize::from(held.level));
+        if levels.is_empty() {
+            return None;
+        }
+        if !whole || levels.len() != class_levels.iter().map(|held| usize::from(held.level)).sum::<usize>() {
+            self.report.warnings.push("the file's hit points per level do not cover every level held, so the sheet uses the default rule".to_owned());
+            return None;
+        }
+        Some(HitPointsWire { levels })
+    }
+
+    /// The favored class bonus (Pathfinder CRB Chapter 2): each level's +1 hit point is a
+    /// `hit_points` grant, each +1 skill rank is the rank (added to the skill) and a `skill_points`
+    /// grant that pays for it, so the skill point pool still balances. A grant holds at most 12
+    /// (`custom.json`'s limit), so a larger bonus is several grants.
+    fn add_favored_class_bonus(&mut self) {
+        let ranks = std::mem::take(&mut self.favored_skill_ranks);
+        let mut paid = 0;
+        for name in &ranks {
+            match self.catalog.skill_id(name) {
+                Some(skill_id) => {
+                    match self.skills.iter_mut().find(|skill| skill.skill_id == skill_id) {
+                        Some(skill) => skill.ranks = skill.ranks.saturating_add(1),
+                        None => self.skills.push(SkillWire { skill_id, ranks: 1 }),
+                    }
+                    paid += 1;
+                }
+                None => self.report.warnings.push(format!("favored class bonus: {name} is a skill Codex has no record of; its rank is not added")),
+            }
+        }
+        let grants = [
+            ("hit_points", self.favored_hit_points, "hit point"),
+            ("skill_points", paid, "skill rank"),
+        ];
+        for (target, total, what) in grants {
+            let mut left = total;
+            while left > 0 {
+                let value = left.min(MAX_GRANT_VALUE);
+                left -= value;
+                let id = format!("favored-class-{}-{}", target.replace('_', "-"), self.custom.grants.len());
+                self.custom.grants.push(GrantWire {
+                    id,
+                    label: "Favored class bonus".to_owned(),
+                    target: target.to_owned(),
+                    value,
+                    reason: format!("PCGen's favored class bonus: +1 {what} per level spent so ({total} in all)"),
+                });
+            }
+        }
     }
 
     /// PCGen saves the score before the race's adjustment; Codex saves it after, as Create does.
@@ -1280,13 +1397,14 @@ impl<'a> Importer<'a> {
             self.choices.retain(|choice| choice.choice_set_id != FIGHTER_BONUS_CHOICE);
             self.choices.push(ChoiceWire { choice_set_id: FIGHTER_BONUS_CHOICE.to_owned(), selection_id: FIGHTER_BONUS_SELECTION.to_owned() });
             self.added(&format!("{FIGHTER_BONUS_CHOICE} {FIGHTER_BONUS_SELECTION}"), WHY);
+            // The bonus feat that slot picks is Weapon Focus; a non-Fighter is given none (E4.17 (h)).
+            if !feat_identity::holds(&self.feats, WEAPON_FOCUS_FEAT) {
+                self.feats.push(WEAPON_FOCUS_FEAT.to_owned());
+                self.added(&format!("selectedFeats {WEAPON_FOCUS_FEAT}"), WHY);
+            }
         }
         if let (true, Some(ability)) = (race_id == "race:human", self.floating.first().copied()) {
             self.choices.push(ChoiceWire { choice_set_id: "choice:human_ability_bonus".to_owned(), selection_id: format!("ability:{ability}") });
-        }
-        if !feat_identity::holds(&self.feats, WEAPON_FOCUS_FEAT) {
-            self.feats.push(WEAPON_FOCUS_FEAT.to_owned());
-            self.added(&format!("selectedFeats {WEAPON_FOCUS_FEAT}"), WHY);
         }
         self.equipment.push(EquipmentWire { item_id: POWER_ATTACK_ROW.to_owned(), active_state: CARRIED.to_owned(), applied_modifiers: Vec::new(), eqmods: Vec::new() });
         self.added(&format!("equipmentSelections {POWER_ATTACK_ROW}"), WHY);

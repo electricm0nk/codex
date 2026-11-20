@@ -681,7 +681,11 @@ pub fn compose_character_input(request: &CreateCharacterRequest) -> CharacterInp
     if dodge_is_granted_by_a_seeded_slot {
         selected_feats.push(DODGE_FEAT_SELECTION.to_owned());
     }
-    selected_feats.push("feat:weapon_focus".to_owned());
+    // The Fighter's bonus-feat slot picks Weapon Focus; no other class is given it (SD-42 E4.17 (h):
+    // the engine no longer requires it of every character).
+    if selected_choices.iter().any(|choice| choice.selection_id.starts_with("feat:weapon_focus:")) {
+        selected_feats.push("feat:weapon_focus".to_owned());
+    }
 
     CharacterInput {
         case_id: Some(request.character_id.clone()),
@@ -894,6 +898,15 @@ pub(crate) fn resolve_unified_pilot_snapshot(
             upsert_corpus_aware_combat_explanations(&mut corpus_receipt, &combat);
             let weapon_rows = corpus_weapon_attack_rows(&corpus_receipt.base, character_input, corpus);
             corpus_receipt.base.explanations.extend(weapon_rows);
+            // SD-42 E4.17 (d): the ranged attack beside the melee one; what a worn item states on
+            // every attack is on it too.
+            if let Some(mut ranged) = codex::rules_core::pilot_compute_corpus::ranged_attack_baseline_row(&corpus_receipt.base, character_input) {
+                if !worn_items.attack_sources().is_empty() {
+                    ranged.value += worn_items.attack();
+                    ranged.detail = format!("{}; worn items: {}", ranged.detail, worn_items.attack_sources());
+                }
+                corpus_receipt.base.explanations.push(ranged);
+            }
             for (id, save) in [
                 ("defense.total_save.fortitude", "fortitude"),
                 ("defense.total_save.reflex", "reflex"),
