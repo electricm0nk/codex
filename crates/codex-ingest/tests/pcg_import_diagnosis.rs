@@ -45,7 +45,7 @@ fn committed_dir() -> PathBuf {
 }
 
 /// E1.1's committed tables are frozen evidence: a run writes them only when `PCG_DIAGNOSIS_REFRESH=1`,
-/// otherwise under the cargo target tmp dir (outside the repo).
+/// otherwise under the cargo target tmp dir (never under `docs/`).
 fn out_dir_for(refresh: bool) -> PathBuf {
     if refresh { committed_dir() } else { Path::new(env!("CARGO_TARGET_TMPDIR")).join("pcg-diagnosis-e1.1") }
 }
@@ -56,9 +56,13 @@ fn out_dir() -> PathBuf {
 
 #[test]
 fn default_output_dir_is_outside_the_repo() {
+    // What the default protects is the committed evidence, not "outside the repo": CI's target dir is `<repo>/target`.
     let repo = repo_root().canonicalize().expect("repo root");
     let default = out_dir_for(false);
-    assert!(!default.starts_with(&repo) && !default.starts_with(repo_root()), "default {default:?} is inside the repo");
+    for docs in [repo.join("docs"), repo_root().join("docs")] {
+        assert!(!default.starts_with(&docs), "default {default:?} is under the committed docs/ tree");
+    }
+    assert_ne!(default, committed_dir());
     assert_eq!(out_dir_for(true), committed_dir());
 }
 
