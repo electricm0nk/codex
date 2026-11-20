@@ -1,0 +1,10 @@
+units=49450 non_done=0 census_records=49450 token_types=233 unmapped_token_types=2
+refused=0 refused_non_done=0 shapes=0 token_less_non_done=0
+check population: census_entries=49450 inventory_units=49450 report_records=49450 ok=True
+check double_count: duplicate_records=0 ok=True
+check coverage: non_done=0 tokened=0 token_less=0 uncovered=0 ok=True
+check refused_set: census_refused=0 refused_json=0 union_over_token_types=0 ok=True
+check shape_totals: shapes=0 ok=True
+check partition: token_types=233 ok=True
+check rule_files: checked=49450 ok=True
+non_done=0 tokened=0 token_less=0 refused=0 refused_non_done=0 token_types=233 shapes=0 verdict=PASS

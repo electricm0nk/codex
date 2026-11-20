@@ -19,7 +19,7 @@ status: planning-ready
 | E2 campaign folder (lane `campaign`) | 16 | 16 (E2.1–E2.15, E2.MC) | E2 complete; campaign lane ended |
 | E3 editor (lane `editor`) | 4 | 4 (E3.1–E3.3, E3.MC) | E3 complete; editor lane ended |
 | E4 desktop wiring (Phase 2) | 22 | 22 (E4.1–E4.21, E4.MC) | E4.MC complete 2026-11-20; discovered E4.21 complete 2026-11-20 (code 8f876cc754); E5.G next |
-| E5 gate + closure | 5 | 0 | E5.G waiting on E4.21 |
+| E5 gate + closure | 6 | 1 (E5.G) | E5.1 partial (discovered E5.5 ready; root-full 1 red test); E5.2-E5.4 waiting |
 
 Re-derive: `awk -F'|' '$2 ~ /^ (C|E)[0-9]/ {gsub(/ /,"",$2); split($2,a,"."); n[a[1]]++; if ($5 ~ /complete/) c[a[1]]++} END {for (e in n) print e, n[e], c[e]+0}' kanban.md`.
 

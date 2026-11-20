@@ -1,0 +1,4 @@
+
+> codex@0.22.0 typecheck
+> tsc --noEmit
+

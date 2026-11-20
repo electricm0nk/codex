@@ -1,0 +1,12 @@
+test_book_denominator_gap_is_a_violation (scripts.tests.test_check_frozen_status.FrozenStatusCheckTests.test_book_denominator_gap_is_a_violation) ... ok
+test_committed_book_denominators_sum_to_overall (scripts.tests.test_check_frozen_status.FrozenStatusCheckTests.test_committed_book_denominators_sum_to_overall)
+SD-36 Epic B round-5: a book with real units counted in the frozen ... ok
+test_committed_snapshot_is_frozen_at_100_percent (scripts.tests.test_check_frozen_status.FrozenStatusCheckTests.test_committed_snapshot_is_frozen_at_100_percent) ... ok
+test_frozen_denominator_matches_the_work_inventory_total_at_freeze_time (scripts.tests.test_check_frozen_status.FrozenStatusCheckTests.test_frozen_denominator_matches_the_work_inventory_total_at_freeze_time) ... ok
+test_missing_book_detail_file_is_reported (scripts.tests.test_check_frozen_status.FrozenStatusCheckTests.test_missing_book_detail_file_is_reported) ... ok
+test_missing_status_data_file_is_a_violation_not_a_crash (scripts.tests.test_check_frozen_status.FrozenStatusCheckTests.test_missing_status_data_file_is_a_violation_not_a_crash) ... ok
+
+----------------------------------------------------------------------
+Ran 6 tests in 1.240s
+
+OK

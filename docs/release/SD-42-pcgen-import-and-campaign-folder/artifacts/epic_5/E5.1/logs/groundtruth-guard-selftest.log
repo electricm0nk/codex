@@ -1,0 +1,27 @@
+test_absent_evidence_is_caught (scripts.tests.test_ground_truth_evidence_guard.GroundTruthEvidenceGuardTest.test_absent_evidence_is_caught) ... ok
+test_corpus_path_verified_is_not_a_whole_file_grounding_shortcut (scripts.tests.test_ground_truth_evidence_guard.GroundTruthEvidenceGuardTest.test_corpus_path_verified_is_not_a_whole_file_grounding_shortcut)
+Repair guard (`SD31-W2-INTEGRATE-001`, Finding 13). Before the ... ok
+test_fabricated_canned_duplicate_is_caught (scripts.tests.test_ground_truth_evidence_guard.GroundTruthEvidenceGuardTest.test_fabricated_canned_duplicate_is_caught)
+Feeds the guard a FABRICATED canned record: two units sharing ... ok
+test_fabricated_ungrounded_quote_is_caught (scripts.tests.test_ground_truth_evidence_guard.GroundTruthEvidenceGuardTest.test_fabricated_ungrounded_quote_is_caught)
+A quote that simply does not appear in the corpus row anywhere ... ok
+test_freeform_genuinely_evidenced_record_passes (scripts.tests.test_ground_truth_evidence_guard.GroundTruthEvidenceGuardTest.test_freeform_genuinely_evidenced_record_passes) ... ok
+test_genuinely_evidenced_record_passes (scripts.tests.test_ground_truth_evidence_guard.GroundTruthEvidenceGuardTest.test_genuinely_evidenced_record_passes) ... ok
+test_nested_path_resolves_via_recursive_search (scripts.tests.test_ground_truth_evidence_guard.GroundTruthEvidenceGuardTest.test_nested_path_resolves_via_recursive_search)
+A record whose row lives two directories below the book root ... ok
+test_ungrounded_freeform_evidence_is_caught (scripts.tests.test_ground_truth_evidence_guard.GroundTruthEvidenceGuardTest.test_ungrounded_freeform_evidence_is_caught)
+Free-form (non-marker) evidence with no real corpus overlap at ... ok
+test_unknown_book_is_reported_not_silently_skipped (scripts.tests.test_ground_truth_evidence_guard.GroundTruthEvidenceGuardTest.test_unknown_book_is_reported_not_silently_skipped) ... ok
+test_deterministic_given_same_seed (scripts.tests.test_sample_ground_truth_units.SampleGroundTruthUnitsTest.test_deterministic_given_same_seed) ... ok
+test_different_seed_can_differ (scripts.tests.test_sample_ground_truth_units.SampleGroundTruthUnitsTest.test_different_seed_can_differ) ... ok
+test_excluded_ids_never_drawn (scripts.tests.test_sample_ground_truth_units.SampleGroundTruthUnitsTest.test_excluded_ids_never_drawn) ... ok
+test_output_carries_magnitude_token_count (scripts.tests.test_sample_ground_truth_units.SampleGroundTruthUnitsTest.test_output_carries_magnitude_token_count) ... ok
+test_output_carries_no_verdict_fields (scripts.tests.test_sample_ground_truth_units.SampleGroundTruthUnitsTest.test_output_carries_no_verdict_fields) ... ok
+test_stratifies_and_respects_target_and_gap (scripts.tests.test_sample_ground_truth_units.SampleGroundTruthUnitsTest.test_stratifies_and_respects_target_and_gap) ... ok
+test_zero_magnitude_only_excludes_nonzero_units (scripts.tests.test_sample_ground_truth_units.SampleGroundTruthUnitsTest.test_zero_magnitude_only_excludes_nonzero_units) ... ok
+test_zero_magnitude_only_false_is_unfiltered_default (scripts.tests.test_sample_ground_truth_units.SampleGroundTruthUnitsTest.test_zero_magnitude_only_false_is_unfiltered_default) ... ok
+
+----------------------------------------------------------------------
+Ran 17 tests in 0.026s
+
+OK
