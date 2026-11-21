@@ -290,6 +290,10 @@ jobs:
 
       - uses: actions/checkout@v7
 
+      # Root in the container does not own the runner-owned workspace, and checkout's safe.directory lives in a temporary HOME; without this every git call fails "dubious ownership".
+      - name: Mark the workspace git-safe
+        run: git config --global --add safe.directory "$GITHUB_WORKSPACE"
+
       - name: Resolve publication channel
         id: channel
         run: |
