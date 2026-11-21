@@ -265,3 +265,36 @@ Run in this order, after SD-42 is merged:
   - A container sold while its contents are "Not Carried": they stay Not Carried (they were not in Carried to begin with). My reading; confirm.
 - **Proof width, stated up front:** one RED/GREEN case proves one shape. Acceptance must cover: empty container, container with loose items, container with a nested container, a container inside a Bag of Holding, a worn container (a belt pouch on the Belt slot) and its encumbrance after the sale.
 - **Open questions for the operator:** (1) Should Drop and Discard of a container also move its contents to Carried? (my pick: yes for Drop, since Drop keeps the item; for Discard, ask: "removes it for nothing" may mean the contents go too); (2) Cashless shows `0` or `—` (my pick: `—`); (3) contents of a sold container that were Not Carried stay Not Carried (my pick: yes).
+
+## 13. ENHANCEMENT: send bug reports and enhancement requests through the codex-web report API
+
+- **Reported:** 2026-11-21 (operator).
+- **Ask:** the app sends bug reports and enhancement requests to GitHub through the codex-web API, which
+  acts as a proxy. The user never needs a GitHub account or token.
+- **Endpoint (operator):** `POST https://campaign-codex.org/api/report`
+  - Header `x-codex-key: <key>`. The operator placed the key at `~/workspace/.report_key`, outside the
+    repo. The key is never written into this repo or its docs. How it reaches the build (CI secret
+    stamped in at build time, like `UPDATE_SIGNING_KEY`) is settled at planning.
+  - Header `Content-Type: application/json`.
+  - Body: `{"type":"bug","title":"...","body":"...","version":"0.22"}`. `type` is `bug` or
+    `enhancement`. `title` and `body` must not be empty. `body` must stay under 8 KB.
+    `version` comes from the running build's own version, not a literal.
+- **Replies the app must handle without crashing:**
+  - `201` `{"ok":true,"id":"..."}`: report saved.
+  - `403`: wrong key. `400`: a field is missing or the JSON is bad. `413`: body too large.
+  - Also: no network, timeout, any other status. Each one shows a clear message; nothing is lost silently.
+- **Wording (operator):** on success the app says the report was **sent for review**. It must NOT
+  say that an issue was created.
+- **Today (read from the code, not yet traced):** a feedback flow already exists in
+  `apps/desktop/src/feedback/` (`submissionState.ts`, `controlledDefectPayload.ts`, browser handoff to
+  GitHub). Planning decides whether this API replaces the browser handoff or sits beside it.
+- **Check before building:**
+  - Enforce the 8 KB limit before sending (count bytes, not characters) and tell the user, rather than
+    relying on a `413`.
+  - Whether the report should carry diagnostics (OS, install kind, channel) and how that fits in 8 KB.
+- **Risk to state:** a key built into a shipped desktop app can be pulled out by anyone who has the
+  app. It stops casual misuse, not a determined one. Rate limits on the codex-web side are the real
+  protection. Note this in the plan.
+- **Open questions for the operator:** (1) replace the browser handoff, or keep both? (2) how the key
+  gets into release builds, and what dev builds do without it (my pick: the Send button is disabled
+  with a stated reason, not a fake success); (3) attach diagnostics, and which.
