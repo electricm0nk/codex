@@ -65,7 +65,6 @@ function landing(selectedRuleSet: RuleSetId): string {
         onBrowseCyberpunk: noop,
         onCorpusIngestDiagnostic: noop,
         onCampaignManager: noop,
-        campaignManagerGate: { enabled: true, disabledHint: '' },
         onDmToolkit: noop,
       })
     )

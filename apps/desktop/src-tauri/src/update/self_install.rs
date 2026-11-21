@@ -3,7 +3,9 @@
 //! A downloaded AppImage runs from wherever the browser saved it. When it is started from anywhere
 //! but `~/Codex/Codex.AppImage`, the app offers once to copy itself there, add a menu entry and
 //! icon, and point `installed-state.json` at the copy, so in-app updates replace a file at a fixed
-//! path. The decision and the file work are plain functions over paths; `run_at_startup` is the
+//! path. Every AppImage start, installed or not, writes the menu entry and icon naming the file
+//! that is running (before any dialog), so a moved or updated file re-points them on its next start.
+//! The decision and the file work are plain functions over paths; `run_at_startup` is the
 //! Tauri glue (dialog, relaunch, exit). Not an AppImage (`$APPIMAGE` unset): nothing happens.
 
 use std::ffi::OsString;
@@ -34,7 +36,7 @@ pub enum SelfInstallCase {
     /// Running from `~/Codex/Codex.AppImage`: keep the menu entry and icon current, ask nothing.
     AlreadyInstalled { installed: PathBuf },
     /// The user chose "Just run this time" for this file before.
-    Declined,
+    Declined { running: PathBuf },
     /// No install yet: offer Install.
     Fresh { running: PathBuf, target: PathBuf },
     /// `~/Codex/Codex.AppImage` exists and this is a different file: offer Replace.
@@ -63,7 +65,7 @@ pub fn decide(appimage_env: Option<PathBuf>, home: Option<&Path>, declined: &[Pa
         return SelfInstallCase::AlreadyInstalled { installed: target };
     }
     if declined.iter().any(|path| canonical(path) == running_real) {
-        return SelfInstallCase::Declined;
+        return SelfInstallCase::Declined { running };
     }
     if target.exists() {
         SelfInstallCase::ReplaceExisting { running, target }
@@ -95,7 +97,7 @@ pub fn prompt_text(case: &SelfInstallCase) -> Option<(String, String, String)> {
             ),
             "Replace",
         ),
-        SelfInstallCase::NotAppImage | SelfInstallCase::AlreadyInstalled { .. } | SelfInstallCase::Declined => return None,
+        SelfInstallCase::NotAppImage | SelfInstallCase::AlreadyInstalled { .. } | SelfInstallCase::Declined { .. } => return None,
     };
     Some((title.to_string(), message, accept.to_string()))
 }
@@ -182,6 +184,26 @@ pub fn ensure_desktop_integration(data_home: &Path, appimage: &Path) -> Result<b
     let entry = write_if_different(&desktop_entry_path(data_home), desktop_entry_text(appimage).as_bytes())?;
     let icon = write_if_different(&icon_path(data_home), ICON_PNG)?;
     Ok(entry || icon)
+}
+
+/// The AppImage the menu entry launches for this start: the file that is running (the path the
+/// updater replaces in place), or none when this is not an AppImage.
+pub fn integration_target(case: &SelfInstallCase) -> Option<PathBuf> {
+    match case {
+        SelfInstallCase::NotAppImage => None,
+        SelfInstallCase::AlreadyInstalled { installed } => Some(installed.clone()),
+        SelfInstallCase::Declined { running }
+        | SelfInstallCase::Fresh { running, .. }
+        | SelfInstallCase::ReplaceExisting { running, .. } => Some(running.clone()),
+    }
+}
+
+/// Write the menu entry and icon for this start. Returns whether anything changed.
+fn integrate(case: &SelfInstallCase, data_home: &Path) -> Result<bool, String> {
+    match integration_target(case) {
+        Some(appimage) => ensure_desktop_integration(data_home, &appimage),
+        None => Ok(false),
+    }
 }
 
 fn write_if_different(path: &Path, bytes: &[u8]) -> Result<bool, String> {
@@ -284,13 +306,10 @@ pub fn run_at_startup(app: &tauri::AppHandle, version: &str) {
     let Some(home) = home else { return };
     let data = data_home(std::env::var_os("XDG_DATA_HOME"), &home);
 
-    if let SelfInstallCase::AlreadyInstalled { installed } = &case {
-        match ensure_desktop_integration(&data, installed) {
-            Ok(true) => refresh_desktop_caches(&data),
-            Ok(false) => {}
-            Err(err) => eprintln!("Cannot update the Codex menu entry: {err}"),
-        }
-        return;
+    match integrate(&case, &data) {
+        Ok(true) => refresh_desktop_caches(&data),
+        Ok(false) => {}
+        Err(err) => eprintln!("Cannot update the Codex menu entry: {err}"),
     }
     let (Some((title, message, accept)), SelfInstallCase::Fresh { running, .. } | SelfInstallCase::ReplaceExisting { running, .. }) =
         (prompt_text(&case), &case)
@@ -394,7 +413,7 @@ mod tests {
         let running = download(&home, b"x");
         remember_declined(&config, &running).unwrap();
         let declined = read_declined(&config);
-        assert_eq!(decide(Some(running.clone()), Some(&home), &declined), SelfInstallCase::Declined);
+        assert_eq!(decide(Some(running.clone()), Some(&home), &declined), SelfInstallCase::Declined { running: running.clone() });
         let other = running.with_file_name("Codex_0.16.142_amd64.AppImage");
         fs::write(&other, b"y").unwrap();
         assert!(matches!(decide(Some(other), Some(&home), &declined), SelfInstallCase::Fresh { .. }));
@@ -446,7 +465,7 @@ mod tests {
 
         for quiet in [
             SelfInstallCase::NotAppImage,
-            SelfInstallCase::Declined,
+            SelfInstallCase::Declined { running: PathBuf::from("/home/u/Downloads/a.AppImage") },
             SelfInstallCase::AlreadyInstalled { installed: PathBuf::from("/home/u/Codex/Codex.AppImage") },
         ] {
             assert_eq!(prompt_text(&quiet), None, "{quiet:?}");
@@ -505,6 +524,87 @@ mod tests {
         fs::remove_file(icon_path(&data)).unwrap();
         assert!(ensure_desktop_integration(&data, appimage).unwrap());
         assert_eq!(fs::read(icon_path(&data)).unwrap(), ICON_PNG);
+    }
+
+    fn is_empty_dir_tree(dir: &Path) -> bool {
+        !dir.exists() || fs::read_dir(dir).unwrap().next().is_none()
+    }
+
+    #[test]
+    fn a_declined_appimage_still_gets_its_menu_entry_and_icon() {
+        let home = temp_dir("integrate-declined");
+        let data = home.join(".local/share");
+        let config = home.join("config");
+        let running = download(&home, b"x");
+        remember_declined(&config, &running).unwrap();
+        let case = decide(Some(running.clone()), Some(&home), &read_declined(&config));
+        assert_eq!(prompt_text(&case), None, "a declined file is not asked again");
+        assert_eq!(integration_target(&case), Some(running.clone()));
+        assert!(integrate(&case, &data).unwrap(), "first start writes");
+        assert_eq!(fs::read_to_string(desktop_entry_path(&data)).unwrap(), desktop_entry_text(&running));
+        assert_eq!(fs::read(icon_path(&data)).unwrap(), ICON_PNG);
+        assert!(!integrate(&case, &data).unwrap(), "the next start changes nothing");
+    }
+
+    #[test]
+    fn a_fresh_download_gets_an_entry_naming_the_download_before_any_dialog() {
+        let home = temp_dir("integrate-fresh");
+        let data = home.join(".local/share");
+        let running = download(&home, b"x");
+        let case = decide(Some(running.clone()), Some(&home), &[]);
+        assert!(matches!(case, SelfInstallCase::Fresh { .. }), "{case:?}");
+        assert!(integrate(&case, &data).unwrap());
+        let entry = fs::read_to_string(desktop_entry_path(&data)).unwrap();
+        assert!(entry.contains(&format!("\nExec={}\n", running.display())), "{entry}");
+        assert!(entry.contains(&format!("\nTryExec={}\n", running.display())), "{entry}");
+        assert!(icon_path(&data).is_file());
+        assert!(prompt_text(&case).is_some(), "the install offer still follows");
+
+        // An existing install from another file: the entry names the file that is running now.
+        let target = install_target(&home);
+        fs::create_dir_all(target.parent().unwrap()).unwrap();
+        fs::write(&target, b"old").unwrap();
+        let case = decide(Some(running.clone()), Some(&home), &[]);
+        assert!(matches!(case, SelfInstallCase::ReplaceExisting { .. }), "{case:?}");
+        assert_eq!(integration_target(&case), Some(running));
+        // Running the install itself names the install.
+        let case = decide(Some(target.clone()), Some(&home), &[]);
+        assert_eq!(integration_target(&case), Some(target.clone()));
+        assert!(integrate(&case, &data).unwrap());
+        assert_eq!(fs::read_to_string(desktop_entry_path(&data)).unwrap(), desktop_entry_text(&target));
+    }
+
+    #[test]
+    fn a_moved_appimage_repoints_exec_and_tryexec_on_its_next_start() {
+        let home = temp_dir("integrate-moved");
+        let data = home.join(".local/share");
+        let config = home.join("config");
+        let first = download(&home, b"x");
+        remember_declined(&config, &first).unwrap();
+        let case = decide(Some(first.clone()), Some(&home), &read_declined(&config));
+        integrate(&case, &data).unwrap();
+
+        let moved = home.join("Apps").join("Codex.AppImage");
+        fs::create_dir_all(moved.parent().unwrap()).unwrap();
+        fs::rename(&first, &moved).unwrap();
+        let case = decide(Some(moved.clone()), Some(&home), &read_declined(&config));
+        assert!(integrate(&case, &data).unwrap(), "the moved file rewrites the entry");
+        let entry = fs::read_to_string(desktop_entry_path(&data)).unwrap();
+        assert!(entry.contains(&format!("\nExec={}\n", moved.display())), "{entry}");
+        assert!(entry.contains(&format!("\nTryExec={}\n", moved.display())), "{entry}");
+        assert!(!entry.contains(&first.display().to_string()), "{entry}");
+    }
+
+    #[test]
+    fn a_deb_or_windows_build_writes_no_entry_and_no_icon() {
+        let home = temp_dir("integrate-none");
+        let data = home.join(".local/share");
+        for case in [decide(None, Some(&home), &[]), decide(Some(PathBuf::new()), Some(&home), &[]), decide(Some(download(&home, b"x")), None, &[])] {
+            assert_eq!(case, SelfInstallCase::NotAppImage);
+            assert_eq!(integration_target(&case), None);
+            assert!(!integrate(&case, &data).unwrap());
+        }
+        assert!(is_empty_dir_tree(&data), "the data home stays empty");
     }
 
     #[test]

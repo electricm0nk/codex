@@ -13,8 +13,6 @@
 
 #[path = "../src/browser_handoff.rs"]
 mod browser_handoff;
-#[path = "../src/campaign_drive.rs"]
-mod campaign_drive;
 #[path = "../src/character_custom.rs"]
 mod character_custom;
 #[path = "../src/character_hub.rs"]

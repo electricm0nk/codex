@@ -22,8 +22,9 @@
 //! [`FeatSkillBonuses::situational`]. Neither is added.
 //!
 //! Not in this fold (named remainder): `BonusTarget::Chosen` feats whose target is the
-//! character's pick (Skill Focus), `SkillSituation` targets (printed with their situation), and
-//! skill bonuses from non-feat records (traits, racial traits, class features).
+//! character's pick (Skill Focus: `pilot_compute_corpus::skill_focus_bonus`), `SkillSituation`
+//! targets (printed with their situation), and character traits (`skill_allocation`'s trait rows).
+//! Racial traits and class features fold the same way, apart ([`FeatSkillBonuses::racial_and_class`]).
 
 use std::collections::BTreeMap;
 
@@ -72,6 +73,12 @@ pub struct FeatSkillBonuses {
     pub situational: Vec<FeatSkillNotFolded>,
     /// Lines whose value the evaluator left as words: Unknown, not added.
     pub unknown: Vec<FeatSkillNotFolded>,
+    /// The same fold over the held racial traits' and class features' lines (Keen Senses' +2
+    /// Perception, Trapfinding's Disable Device), which the sheet's skill totals add as their
+    /// `skill.trait_modifier` rows (SD-42 E4.17 (b)). Not on the wire: the sheet prints those lines
+    /// itself.
+    #[serde(skip)]
+    pub racial_and_class: Option<Box<FeatSkillBonuses>>,
 }
 
 /// The skill (or family) a feat rule targets, if it targets one.
@@ -100,10 +107,18 @@ fn fold(contributions: &[&FeatSkillContribution]) -> i32 {
     summed + typed_max.values().sum::<i32>()
 }
 
-/// The feat skill-bonus fold over a character's rendered `lines`.
+/// The feat skill-bonus fold over a character's rendered `lines`, and beside it
+/// ([`FeatSkillBonuses::racial_and_class`]) the same fold over its racial traits and class features.
 pub fn feat_skill_bonuses(package: &SheetRulePackage, lines: &[SheetLine]) -> FeatSkillBonuses {
+    let mut out = skill_bonuses_of(package, lines, &["feat"]);
+    out.racial_and_class = Some(Box::new(skill_bonuses_of(package, lines, &["race_trait", "class_feature"])));
+    out
+}
+
+/// The skill-bonus fold over the `lines` of the named kinds.
+fn skill_bonuses_of(package: &SheetRulePackage, lines: &[SheetLine], kinds: &[&str]) -> FeatSkillBonuses {
     let mut out = FeatSkillBonuses::default();
-    for line in lines.iter().filter(|l| l.kind == "feat") {
+    for line in lines.iter().filter(|l| kinds.contains(&l.kind.as_str())) {
         let Some(rule) = package.rule(&line.id) else { continue };
         let Some((skill, group)) = skill_target(rule.target.as_ref()) else { continue };
         if let Some(condition) = &line.condition {
@@ -128,7 +143,7 @@ pub fn feat_skill_bonuses(package: &SheetRulePackage, lines: &[SheetLine]) -> Fe
                 skill,
                 rule_id: line.id.clone(),
                 label: line.label.clone(),
-                reason: format!("the feat line's value did not resolve to a number ({other:?})"),
+                reason: format!("the {} line's value did not resolve to a number ({other:?})", line.kind),
             }),
         }
     }

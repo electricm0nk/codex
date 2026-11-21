@@ -802,10 +802,31 @@ pub(super) fn compute_total_saves(
     // race can take), all-zero for every character who selected neither.
     let character_trait_saves =
         crate::rules_core::trait_effects::save_bonuses_from_traits(&input.chosen.selected_traits);
+    // SD-42 E4.13: Paladin Divine Grace (CRB, 2nd level): the Charisma bonus, never a penalty, on
+    // all three saves -- the magnitude `class_chassis.paladin.divine_grace_save_bonus` explains.
+    let paladin_level: u8 = input.chosen.class_levels.iter().filter(|c| c.class_id == "class:paladin").map(|c| c.level).sum();
+    let divine_grace_save_bonus = if paladin_level >= class_paladin_ranger::PALADIN_LAY_ON_HANDS_DIVINE_GRACE_LEVEL {
+        ability_modifiers.charisma.max(0)
+    } else {
+        0
+    };
+    // Named in each save's derivation only when it applies, so no other character's text moves.
+    let divine_grace_words = if divine_grace_save_bonus > 0 { format!(" + Paladin Divine Grace (+{divine_grace_save_bonus})") } else { String::new() };
+    // SD-42 E4.17 (b): Halfling Luck (CRB): +1 on all saves, unless an alternate racial trait
+    // replaced it -- the magnitude `race.halfling.trait_bundle.halfling_luck` explains.
+    let halfling_luck = if input.chosen.race_id == "race:halfling" && !replaced_by_alternate_trait(input, "Halfling_ReplaceHalflingLuck") {
+        HALFLING_LUCK_ALL_SAVES_BONUS
+    } else {
+        0
+    };
+    // Named in each save's derivation only when they apply, as Divine Grace is.
+    let divine_grace_words = if halfling_luck > 0 { format!("{divine_grace_words} + Halfling Luck (+{halfling_luck})") } else { divine_grace_words };
+    let all_saves_bonus = divine_grace_save_bonus + halfling_luck;
     let total_saves = BaseSaves {
         fortitude: base_saves.fortitude
             + ability_modifiers.constitution
             + feat_save_bonuses.fortitude
+            + all_saves_bonus
             + touch_of_good_save_bonus
             + purity_judgment_save_bonus
             + alternate_trait_saves.fortitude
@@ -813,6 +834,7 @@ pub(super) fn compute_total_saves(
         reflex: base_saves.reflex
             + ability_modifiers.dexterity
             + feat_save_bonuses.reflex
+            + all_saves_bonus
             + touch_of_good_save_bonus
             + purity_judgment_save_bonus
             + sidestep_secret_reflex_bonus
@@ -821,6 +843,7 @@ pub(super) fn compute_total_saves(
         will: base_saves.will
             + ability_modifiers.wisdom
             + feat_save_bonuses.will
+            + all_saves_bonus
             + rage_will_bonus
             + inspired_rage_will_bonus
             + bloodrage_will_bonus
@@ -840,7 +863,7 @@ pub(super) fn compute_total_saves(
              bonus (+{}, self-applied) + Inquisitor Purity judgment sacred/profane bonus (+{}, \
              only while actively, validly judging Purity) + alternate racial trait (+{}, only \
              for a character who took one that declares a Fortitude bonus) + character trait \
-             (+{}, Life of Toil if selected) = {}",
+             (+{}, Life of Toil if selected){divine_grace_words} = {}",
             base_saves.fortitude, ability_modifiers.constitution, feat_save_bonuses.fortitude,
             touch_of_good_save_bonus, purity_judgment_save_bonus,
             alternate_trait_saves.fortitude, character_trait_saves.fortitude, total_saves.fortitude
@@ -858,8 +881,8 @@ pub(super) fn compute_total_saves(
              Oracle who took that revelation) + alternate racial trait ({:+}, only for a \
              character who took one that declares a Reflex modifier -- this one can be \
              NEGATIVE, e.g. Horror Adventures' Half-Elf Mismatched at -2) + character trait \
-             (+{}, no ultimate_campaign trait currently declares a Reflex bonus, so always 0) \
-             = {}",
+             (+{}, no ultimate_campaign trait currently declares a Reflex bonus, so always 0)\
+             {divine_grace_words} = {}",
             base_saves.reflex, ability_modifiers.dexterity, feat_save_bonuses.reflex,
             touch_of_good_save_bonus, purity_judgment_save_bonus,
             alternate_trait_saves.reflex, character_trait_saves.reflex, total_saves.reflex
@@ -878,7 +901,7 @@ pub(super) fn compute_total_saves(
              actively, validly judging Purity) + alternate racial trait (+{}, only for a \
              character who took one that declares a Will bonus -- ARG p.42's Half-Elf Dual \
              Minded is the one such trait in the corpus today) + character trait (+{}, \
-             Indomitable Faith if selected) = {}",
+             Indomitable Faith if selected){divine_grace_words} = {}",
             base_saves.will,
             ability_modifiers.wisdom,
             feat_save_bonuses.will,
@@ -1107,7 +1130,7 @@ pub(super) fn active_rage_powers_level(input: &CharacterInput, ability_modifiers
 /// Adding the next feat: give it a field here, fold it into the accessor for
 /// the pillar it belongs to, and both paths move together. Nothing else needs
 /// touching.
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Default)]
+#[derive(Debug, Clone, PartialEq, Eq, Default)]
 pub struct FeatDerivedPillarContributions {
     /// Natural armor from feats (`armor_of_the_pit_natural_armor_bonus_from_feats`).
     /// Kept as its own field, not merged into the Armor Class total, because a
@@ -1125,17 +1148,21 @@ pub struct FeatDerivedPillarContributions {
     /// racial +2 Climb. Separate from `skill_bonuses` because the explanation
     /// strings on the hardcoded path name the two sources independently.
     pub arg_climb_bonus: i16,
+    /// `feat_effects::skill_focus_facts_from_choices` -- the skills Skill Focus
+    /// was taken for (`choice:skill_focus_target`). A runtime pick, hence a
+    /// `Vec`, and why this struct is `Clone` but not `Copy`.
+    pub skill_focus: Vec<crate::rules_core::feat_effects::SkillFocusFact>,
 }
 
 impl FeatDerivedPillarContributions {
     /// Everything feats add to Armor Class, natural armor included.
-    pub fn armor_class_bonus(self) -> i16 {
+    pub fn armor_class_bonus(&self) -> i16 {
         self.natural_armor_bonus + self.dodge_armor_class_bonus
     }
 
     /// The part of [`Self::armor_class_bonus`] a touch attack ignores. PF1
     /// touch AC drops natural armor and keeps dodge bonuses.
-    pub fn excluded_from_touch_armor_class(self) -> i16 {
+    pub fn excluded_from_touch_armor_class(&self) -> i16 {
         self.natural_armor_bonus
     }
 
@@ -1151,23 +1178,36 @@ impl FeatDerivedPillarContributions {
     /// as much as it moves Armor Class, and one added to
     /// [`Self::dodge_armor_class_bonus`] must move it not at all. Reading this
     /// accessor from both twins is what makes that true on both at once.
-    pub fn denied_to_flat_footed_armor_class(self) -> i16 {
+    pub fn denied_to_flat_footed_armor_class(&self) -> i16 {
         self.dodge_armor_class_bonus
     }
 
     /// Everything feats add to the Climb total.
-    pub fn climb_skill_bonus(self) -> i16 {
+    pub fn climb_skill_bonus(&self) -> i16 {
         self.skill_bonuses.climb + self.arg_climb_bonus
     }
 
     /// Everything feats add to the Intimidate total.
-    pub fn intimidate_skill_bonus(self) -> i16 {
+    pub fn intimidate_skill_bonus(&self) -> i16 {
         self.skill_bonuses.intimidate
     }
 
     /// Everything feats add to the Swim total.
-    pub fn swim_skill_bonus(self) -> i16 {
+    pub fn swim_skill_bonus(&self) -> i16 {
         self.skill_bonuses.swim
+    }
+
+    /// Skill Focus on `skill` (`knowledge_planes`): +3, +6 from 10 ranks (CRB
+    /// Skill Focus), when the feat's chosen skill names it, compared on letters
+    /// and digits only; 0 otherwise.
+    pub fn skill_focus_bonus(&self, skill: &str, ranks: i16) -> i16 {
+        let letters = |name: &str| name.chars().filter(char::is_ascii_alphanumeric).map(|c| c.to_ascii_lowercase()).collect::<String>();
+        let wanted = letters(skill);
+        match (self.skill_focus.iter().any(|fact| letters(&fact.skill_name) == wanted), ranks >= 10) {
+            (false, _) => 0,
+            (true, false) => 3,
+            (true, true) => 6,
+        }
     }
 }
 
@@ -1239,6 +1279,10 @@ pub fn feat_derived_pillar_contributions(
         // `feat_effects::ARG_SKILL_FEAT_FACTS`' own doc comment.
         arg_climb_bonus: crate::rules_core::feat_effects::arg_computed_climb_bonus_from_feats(
             &feats,
+        ),
+        skill_focus: crate::rules_core::feat_effects::skill_focus_facts_from_choices(
+            &input.chosen.selected_feats,
+            &input.chosen.selected_choices,
         ),
     }
 }
@@ -2399,8 +2443,8 @@ pub(super) fn ground_standalone_feat_skill_facts(
             value: fact.bonus,
             detail: format!(
                 "Skill Focus grants a +{} bonus on {} checks (the player-chosen target, \
-                 recorded via choice:skill_focus_target). This grounds as a standalone flat \
-                 record; it is not wired into any skill total this codebase computes",
+                 recorded via choice:skill_focus_target); +6 from 10 ranks. The sheet's skill \
+                 total adds it (pilot_compute_corpus::skill_focus_bonus)",
                 fact.bonus, fact.skill_name
             ),
         });
@@ -3097,7 +3141,6 @@ pub(super) fn ground_per_weapon_combat_totals(
 /// Return the list of unmet conditions for the exact deterministic combat
 /// posture. An empty list means the posture is fully supported.
 pub(super) fn unmet_combat_posture_conditions(input: &CharacterInput) -> Vec<String> {
-    let chosen = &input.chosen;
     let mut unmet = Vec::new();
 
     // SD-21 E6b.1: widened from a Fighter-only gate to the same dispatch-supported
@@ -3134,24 +3177,11 @@ pub(super) fn unmet_combat_posture_conditions(input: &CharacterInput) -> Vec<Str
     // claimed on thinner evidence; a claim that used to be *fabricated at
     // creation time* simply is not made any more.
     //
-    // Weapon Focus IS still required, and that is not an oversight: this
-    // baseline's whole attack formula is Longsword-specific (Fighter
-    // Weapon Training is hardcoded to the Longsword's "Heavy Blades"
-    // group), and for the one class whose slot actually grants it
-    // (`choice:fighter_bonus_feat`, a real Fighter class feature) the
-    // claim is backed. Seeding it for non-Fighters is the same class of
-    // unbacked claim Dodge was, and closing that one needs the weapon
-    // loadout widened first -- a separate increment, not this fix.
-    //
-    // Matched through the shared identity fold, not by string equality: the
-    // feat picker sends the catalog key ("Weapon Focus"), character creation
-    // seeds the engine token ("feat:weapon_focus"), and both name the same
-    // feat. Comparing verbatim here meant a player who picked it from the
-    // catalog left this posture unmet, so the whole combat baseline came back
-    // unsupported -- no armor class, no melee attack bonus.
-    if !feat_identity::holds(&chosen.selected_feats, WEAPON_FOCUS_FEAT_ID) {
-        unmet.push(format!("missing selected feat {WEAPON_FOCUS_FEAT_ID}"));
-    }
+    // SD-42 E4.17 (h): Weapon Focus is not required either, for the same reason. The requirement
+    // made Create seed `feat:weapon_focus` on every character and the PCGen import add it to every
+    // Pathfinder file that held none; the feat's +1 is a conditional contribution
+    // (`weapon_focus_bonus_for`), so a character without it computes one point lower on the
+    // weapon its Focus would name, and on nothing else.
 
     // The Fighter bonus-feat choice mechanism (`choice:fighter_bonus_feat`) is a
     // Fighter-only class feature (how a Fighter's own 1st-level bonus feat was
@@ -3257,7 +3287,10 @@ pub(crate) fn weapon_focus_bonus_for(input: &CharacterInput, weapon_name: &str) 
     let wanted = normalize_weapon_identity(weapon_name);
     match facts.iter().find(|fact| normalize_weapon_identity(&fact.weapon_name) == wanted) {
         Some(fact) => fact.attack_bonus,
-        None if facts.is_empty() && wanted == normalize_weapon_identity(LONGSWORD_ITEM_ID) => {
+        None if facts.is_empty()
+            && feat_identity::holds(&effective_character_feats(input), WEAPON_FOCUS_FEAT_ID)
+            && wanted == normalize_weapon_identity(LONGSWORD_ITEM_ID) =>
+        {
             WEAPON_FOCUS_TO_HIT_BONUS
         }
         None => 0,

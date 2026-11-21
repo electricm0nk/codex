@@ -295,12 +295,12 @@ flowchart TD
     PCC2 --> CH
     CH --> BND --> UI
 
-    subgraph persist["side surfaces (headless, called from character_hub.rs / campaign_drive.rs)"]
+    subgraph persist["side surfaces (headless, called from character_hub.rs / campaign_folder.rs)"]
         SAVED["saved_character/: SavedCharacterStore"]
-        CAMP["campaign/: CampaignStore"]
+        CAMP["campaign/: the campaign folder"]
     end
     CH -.persists CharacterInput.-> SAVED
-    UI -.campaign screens (localStorage-first).-> CAMP
+    UI -.campaign screens (campaign_folder.rs).-> CAMP
 
     subgraph side["other side surfaces, not on the hot compute path"]
         COMP["composed_input.rs: compose() -> ComposedCharacterInput\n(no production caller; exercised by its own tests\nand codex-ingest's sd18_preloop_consumer_compose.rs)"]

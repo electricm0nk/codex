@@ -1,4 +1,4 @@
-import { addMonster, addSavedMember, addTypedMember, emptyBuilder, removeMember, removeMonster, setMonsterCount, toRequest } from './encounterBuilderModel';
+import { addCampaignMember, addMonster, addSavedMember, addTypedMember, emptyBuilder, removeMember, removeMonster, setMonsterCount, toRequest } from './encounterBuilderModel';
 import { assertEqual } from '../testSupport/asserts';
 
 /**
@@ -40,5 +40,15 @@ assertEqual(addTypedMember(b, 0).party.length, 1, 'level 0 is refused (engine ta
 assertEqual(addTypedMember(b, 21).party.length, 1, 'level above 20 is refused');
 assertEqual(addSavedMember(b, 'x').party.length, 2, 'saved id is accepted');
 assertEqual(addSavedMember(addSavedMember(b, 'x'), 'x').party.length, 3, 'the same saved character can appear twice (twins) — the engine rates what it is given');
+
+// decisions.md §17: a campaign folder's Characters/ backup goes by folder, never by a level the UI read.
+let c = addMonster(emptyBuilder(), 'b1:monster:ogre');
+c = addCampaignMember(c, '/games/Runelords', 'aldric-char-1', 'Aldric');
+assertEqual(c.party[0].kind === 'campaign' ? c.party[0].label : null, 'Aldric', 'a campaign member keeps its label for the party list');
+assertEqual(
+  JSON.stringify(toRequest(c)?.party),
+  '[{"campaignCharacter":{"campaignDir":"/games/Runelords","folder":"aldric-char-1"}}]',
+  'a campaign member sends its campaign folder and backup folder only — the engine reads the level from the backup',
+);
 
 console.log('encounterBuilderModel tests passed');

@@ -1,9 +1,6 @@
 /**
- * Friends list — a lightweight local address book of gaming contacts, meant
- * to make campaign invites easier to fill in later (campaign members today
- * are bare email strings, see campaign/campaignModel.ts's `CampaignMember`).
- * Purely local (localStorage), same persistence pattern as campaignModel.ts
- * and settings/googleDrive.ts — no backend/Tauri layer needed for this data.
+ * Friends list — a lightweight local address book of gaming contacts (Options → Friends).
+ * Purely local (localStorage) — no backend/Tauri layer needed for this data.
  */
 
 export interface Friend {

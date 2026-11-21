@@ -1,0 +1,578 @@
+[
+  {
+    "id": "settings-tab-google-drive-disconnect",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/a7402d70-3d8d-427c-820e-a54d598e3dda/scratchpad/e44/final/settings-tab-google-drive-disconnect.png",
+    "rendered_excerpt": "☰ Menu\n\nP1\nPathfinder 1e\nFantasy d20\n\nSA\nSolarus Arcanum\nComing soon\n\nTM\nTraveller MGT 2e\nComing soon\n\nCR\nCyberpunk Red\nNeon dystopia\n\nS1\nStarfinder 1e\nSci-fi fantasy\n\nWOD\nWorld of Darkness\nComing soon\n\nNEW CHARACTER\n\nLOAD CHARACTER\n\nCAMPAIGN MANAGER\n\nDM TOOLKIT\nBrowse Equipment Catalog\nBrowse Spell Catalog\nBrowse Class Progression\nBrowse Race Traits\nBrowse Monster Catalog\nBrowse Companion Catalog",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd42-E4_4-r2-Yg5oNG/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "landing-campaign-gate",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/a7402d70-3d8d-427c-820e-a54d598e3dda/scratchpad/e44/final/landing-campaign-gate.png",
+    "rendered_excerpt": "☰ Menu\nCampaign Manager\n\nNo campaign folders yet. Press New campaign… to make one, or Open folder… to add one you already have.\n\n\nOPEN CAMPAIGN\nSelect a campaign to open it\nSelect a campaign to preview it, then press Open or Edit.\nNew campaign…\nOpen folder…\nEdit\nHelp\nCancel",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd42-E4_4-r2-Yg5oNG/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "campaign-manager-empty",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/a7402d70-3d8d-427c-820e-a54d598e3dda/scratchpad/e44/final/campaign-manager-empty.png",
+    "rendered_excerpt": "☰ Menu\nCampaign Manager\n\nNo campaign folders yet. Press New campaign… to make one, or Open folder… to add one you already have.\n\n\nOPEN CAMPAIGN\nSelect a campaign to open it\nSelect a campaign to preview it, then press Open or Edit.\nNew campaign…\nOpen folder…\nEdit\nHelp\nCancel",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd42-E4_4-r2-Yg5oNG/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "settings-open",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/a7402d70-3d8d-427c-820e-a54d598e3dda/scratchpad/e44/final/settings-open.png",
+    "rendered_excerpt": "☰ Menu\n\nP1\nPathfinder 1e\nFantasy d20\n\nSA\nSolarus Arcanum\nComing soon\n\nTM\nTraveller MGT 2e\nComing soon\n\nCR\nCyberpunk Red\nNeon dystopia\n\nS1\nStarfinder 1e\nSci-fi fantasy\n\nWOD\nWorld of Darkness\nComing soon\n\nNEW CHARACTER\n\nLOAD CHARACTER\n\nCAMPAIGN MANAGER\n\nDM TOOLKIT\nBrowse Equipment Catalog\nBrowse Spell Catalog\nBrowse Class Progression\nBrowse Race Traits\nBrowse Monster Catalog\nBrowse Companion Catalog",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd42-E4_4-r2-Yg5oNG/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "settings-tab-google-drive",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/a7402d70-3d8d-427c-820e-a54d598e3dda/scratchpad/e44/final/settings-tab-google-drive.png",
+    "rendered_excerpt": "☰ Menu\n\nP1\nPathfinder 1e\nFantasy d20\n\nSA\nSolarus Arcanum\nComing soon\n\nTM\nTraveller MGT 2e\nComing soon\n\nCR\nCyberpunk Red\nNeon dystopia\n\nS1\nStarfinder 1e\nSci-fi fantasy\n\nWOD\nWorld of Darkness\nComing soon\n\nNEW CHARACTER\n\nLOAD CHARACTER\n\nCAMPAIGN MANAGER\n\nDM TOOLKIT\nBrowse Equipment Catalog\nBrowse Spell Catalog\nBrowse Class Progression\nBrowse Race Traits\nBrowse Monster Catalog\nBrowse Companion Catalog",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd42-E4_4-r2-Yg5oNG/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "settings-tab-google-drive-save",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/a7402d70-3d8d-427c-820e-a54d598e3dda/scratchpad/e44/final/settings-tab-google-drive-save.png",
+    "rendered_excerpt": "☰ Menu\n\nP1\nPathfinder 1e\nFantasy d20\n\nSA\nSolarus Arcanum\nComing soon\n\nTM\nTraveller MGT 2e\nComing soon\n\nCR\nCyberpunk Red\nNeon dystopia\n\nS1\nStarfinder 1e\nSci-fi fantasy\n\nWOD\nWorld of Darkness\nComing soon\n\nNEW CHARACTER\n\nLOAD CHARACTER\n\nCAMPAIGN MANAGER\n\nDM TOOLKIT\nBrowse Equipment Catalog\nBrowse Spell Catalog\nBrowse Class Progression\nBrowse Race Traits\nBrowse Monster Catalog\nBrowse Companion Catalog",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd42-E4_4-r2-Yg5oNG/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "dm-toolkit-open-and-kind-tabs",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/a7402d70-3d8d-427c-820e-a54d598e3dda/scratchpad/e44/final/dm-toolkit-open-and-kind-tabs.png",
+    "rendered_excerpt": "☰ Menu\nDMCAMPAIGN CONSOLE\nWorld\nTimeline\nPlaces\nPeople\nClues\nScenes\nRules\nDM Campaign\nExport GM copy\nExport player handout\nEncounter builder\nBack\nWORLD\n0 WORLD NOTES\n+ New world note\n\nNo world notes yet.\n\nNo world notes yet.",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd42-E4_4-r2-Yg5oNG/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "dm-toolkit-create-record",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/a7402d70-3d8d-427c-820e-a54d598e3dda/scratchpad/e44/final/dm-toolkit-create-record.png",
+    "rendered_excerpt": "☰ Menu\nDMCAMPAIGN CONSOLE\nWorld\nTimeline\nPlaces\nPeople\nClues\nScenes\nRules\nDM Campaign\nExport GM copy\nExport player handout\nEncounter builder\nBack\nWORLD\n1 WORLD NOTES\n+ New world note\n\n\nWORLD NOTE\nGM ONLY\nSmoke Test World Record\nWORLD NOTE\nGM ONLY\nEdit\nDelete\nSmoke Test World Record\nLINKS\n\nNo links yet.\n\nCreate another record to link to.",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd42-E4_4-r2-Yg5oNG/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "dm-toolkit-edit-record",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/a7402d70-3d8d-427c-820e-a54d598e3dda/scratchpad/e44/final/dm-toolkit-edit-record.png",
+    "rendered_excerpt": "☰ Menu\nDMCAMPAIGN CONSOLE\nWorld\nTimeline\nPlaces\nPeople\nClues\nScenes\nRules\nDM Campaign\nExport GM copy\nExport player handout\nEncounter builder\nBack\nWORLD\n2 WORLD NOTES\n+ New world note\n\n\nWORLD NOTE\nGM ONLY\nSmoke Test World Record Edited\n\nWORLD NOTE\nGM ONLY\nSmoke Test World Record\nWORLD NOTE\nGM ONLY\nEdit\nDelete\nSmoke Test World Record Edited\nLINKS\n\nNo links yet.\n\n\n\nAdd link",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd42-E4_4-r2-Yg5oNG/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "dm-toolkit-delete-record",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/a7402d70-3d8d-427c-820e-a54d598e3dda/scratchpad/e44/final/dm-toolkit-delete-record.png",
+    "rendered_excerpt": "☰ Menu\nDMCAMPAIGN CONSOLE\nWorld\nTimeline\nPlaces\nPeople\nClues\nScenes\nRules\nDM Campaign\nExport GM copy\nExport player handout\nEncounter builder\nBack\nWORLD\n2 WORLD NOTES\n+ New world note\n\n\nWORLD NOTE\nGM ONLY\nSmoke Test World Record Edited\n\nWORLD NOTE\nGM ONLY\nSmoke Test World Record\nWORLD NOTE\nGM ONLY\nEdit\nDelete\nSmoke Test World Record Edited\nLINKS\n\nNo links yet.\n\n\n\nAdd link",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd42-E4_4-r2-Yg5oNG/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "dm-toolkit-export",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/a7402d70-3d8d-427c-820e-a54d598e3dda/scratchpad/e44/final/dm-toolkit-export.png",
+    "rendered_excerpt": "☰ Menu\nDMCAMPAIGN CONSOLE\nWorld\nTimeline\nPlaces\nPeople\nClues\nScenes\nRules\nDM Campaign\nExport GM copy\nExport player handout\nEncounter builder\nBack\nWORLD\n2 WORLD NOTES\n+ New world note\n\n\nWORLD NOTE\nGM ONLY\nSmoke Test World Record Edited\n\nWORLD NOTE\nGM ONLY\nSmoke Test World Record\nSelect a record on the left.",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd42-E4_4-r2-Yg5oNG/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "encounter-builder-add-monster-and-rating",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/a7402d70-3d8d-427c-820e-a54d598e3dda/scratchpad/e44/final/encounter-builder-add-monster-and-rating.png",
+    "rendered_excerpt": "☰ Menu\nDM\nEncounter builder\nstrawman — party-strength rating only; no XP budget, treasure or saving yet\nBack to console\nPARTY\n\nSmoke Test PC\nLevel 1 — read from the saved build by the engine\n×\nADD A SAVED CHARACTER\n\nAldric Ironhand\nElowen Ashgrave\nBrother Tomas Vane\nSmoke Test PC\nADD FROM A CAMPAIGN FOLDER\n\nAdd from campaign…\nADD A TYPED LEVEL\n\nAdd\nMONSTERS\n\n\nAnkheg\nCR 3\n×\n\nAnkheg\nCR 3\nRATING\n\nHar",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd42-E4_4-r2-Yg5oNG/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [
+        "c7df223b-e47b-44d7-8e89-c317b400d583"
+      ],
+      "deleted": [
+        "c7df223b-e47b-44d7-8e89-c317b400d583"
+      ],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "campaign-manager-list",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/a7402d70-3d8d-427c-820e-a54d598e3dda/scratchpad/e44/final/campaign-manager-list.png",
+    "rendered_excerpt": "☰ Menu\nCampaign Manager\n\n\nDM Campaign\n/tmp/codex-ui-smoke-sd42-E4_4-r2-Yg5oNG/data/DM Campaign\nForget\n\nOPEN CAMPAIGN\nSelect a campaign to open it\nSelect a campaign to preview it, then press Open or Edit.\nNew campaign…\nOpen folder…\nEdit\nHelp\nCancel",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd42-E4_4-r2-Yg5oNG/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "campaign-create",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/a7402d70-3d8d-427c-820e-a54d598e3dda/scratchpad/e44/final/campaign-create.png",
+    "rendered_excerpt": "☰ Menu\nEdit campaign\nHelp\nBack\n/tmp/codex-ui-smoke-sd42-E4_4-r2-Yg5oNG/data/Smoke Campaign\n\nCampaign name\n\nCampaign rule set\n\nCampaign description\n\nCampaign members (1)\n×\n+ Add member\nSave",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd42-E4_4-r2-Yg5oNG/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "campaign-create-member-one",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/a7402d70-3d8d-427c-820e-a54d598e3dda/scratchpad/e44/final/campaign-create-member-one.png",
+    "rendered_excerpt": "☰ Menu\nCampaign Manager\n\n\nMember One Campaign\n/tmp/codex-ui-smoke-sd42-E4_4-r2-Yg5oNG/data/Member One Campaign\nForget\n\nSmoke Campaign\n/tmp/codex-ui-smoke-sd42-E4_4-r2-Yg5oNG/data/Smoke Campaign\nForget\n\nDM Campaign\n/tmp/codex-ui-smoke-sd42-E4_4-r2-Yg5oNG/data/DM Campaign\nForget\n\nOPEN MEMBER ONE CAMPAIGN\nMember One Campaign\nPathfinder 1e\nCreated Nov 19, 2026 · Updated Nov 19, 2026\n\n/tmp/codex-ui-smo",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd42-E4_4-r2-Yg5oNG/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "campaign-edit",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/a7402d70-3d8d-427c-820e-a54d598e3dda/scratchpad/e44/final/campaign-edit.png",
+    "rendered_excerpt": "☰ Menu\nCampaign Manager\n\n\nEdit Campaign\n/tmp/codex-ui-smoke-sd42-E4_4-r2-Yg5oNG/data/Edit Campaign\nForget\n\nMember One Campaign\n/tmp/codex-ui-smoke-sd42-E4_4-r2-Yg5oNG/data/Member One Campaign\nForget\n\nSmoke Campaign\n/tmp/codex-ui-smoke-sd42-E4_4-r2-Yg5oNG/data/Smoke Campaign\nForget\n\nDM Campaign\n/tmp/codex-ui-smoke-sd42-E4_4-r2-Yg5oNG/data/DM Campaign\nForget\n\nOPEN EDIT CAMPAIGN\nEdit Campaign\nPathfin",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd42-E4_4-r2-Yg5oNG/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "campaign-sheet-tabs",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/a7402d70-3d8d-427c-820e-a54d598e3dda/scratchpad/e44/final/campaign-sheet-tabs.png",
+    "rendered_excerpt": "☰ Menu\n✕\nTabs Campaign — Pathfinder 1e\nHelp\nCHARACTERS (0)\n\nNo characters yet. A character joins from its sheet's Campaign dialog, which copies it into this folder's Characters/.\n\nParty Resources\nAdventure Log\nMaps\nWiki\nBIH•LinkTableReading\n# Party Resources\n\nWhat the party holds in common. Edit this file freely; Codex never moves anything from it to a character.\n\n| Item | Qty | Value (gp) | Held ",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd42-E4_4-r2-Yg5oNG/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "campaign-open-button",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/a7402d70-3d8d-427c-820e-a54d598e3dda/scratchpad/e44/final/campaign-open-button.png",
+    "rendered_excerpt": "☰ Menu\nCampaign Manager\n\n\nBanner Campaign\n/tmp/codex-ui-smoke-sd42-E4_4-r2-Yg5oNG/data/Banner Campaign\nForget\n\nTabs Campaign\n/tmp/codex-ui-smoke-sd42-E4_4-r2-Yg5oNG/data/Tabs Campaign\nForget\n\nEdit Campaign\n/tmp/codex-ui-smoke-sd42-E4_4-r2-Yg5oNG/data/Edit Campaign\nForget\n\nMember One Campaign\n/tmp/codex-ui-smoke-sd42-E4_4-r2-Yg5oNG/data/Member One Campaign\nForget\n\nSmoke Campaign\n/tmp/codex-ui-smoke",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd42-E4_4-r2-Yg5oNG/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "campaign-help-screen",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/a7402d70-3d8d-427c-820e-a54d598e3dda/scratchpad/e44/final/campaign-help-screen.png",
+    "rendered_excerpt": "☰ Menu\nCampaign Manager\n\n\nBanner Campaign\n/tmp/codex-ui-smoke-sd42-E4_4-r2-Yg5oNG/data/Banner Campaign\nForget\n\nTabs Campaign\n/tmp/codex-ui-smoke-sd42-E4_4-r2-Yg5oNG/data/Tabs Campaign\nForget\n\nEdit Campaign\n/tmp/codex-ui-smoke-sd42-E4_4-r2-Yg5oNG/data/Edit Campaign\nForget\n\nMember One Campaign\n/tmp/codex-ui-smoke-sd42-E4_4-r2-Yg5oNG/data/Member One Campaign\nForget\n\nSmoke Campaign\n/tmp/codex-ui-smoke",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd42-E4_4-r2-Yg5oNG/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "campaign-party-resources-edit",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/a7402d70-3d8d-427c-820e-a54d598e3dda/scratchpad/e44/final/campaign-party-resources-edit.png",
+    "rendered_excerpt": "☰ Menu\n✕\nResources Campaign — Pathfinder 1e\nHelp\nCHARACTERS (0)\n\nNo characters yet. A character joins from its sheet's Campaign dialog, which copies it into this folder's Characters/.\n\nParty Resources\nAdventure Log\nMaps\nWiki\nBIH•LinkTableReadingSaved\n## Party Resources\n\nWhat the party holds in common. Edit this file freely; Codex never moves anything from it to a character.\n\n| Item | Qty | Value (",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd42-E4_4-r2-Yg5oNG/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "campaign-adventure-log-plus",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/a7402d70-3d8d-427c-820e-a54d598e3dda/scratchpad/e44/final/campaign-adventure-log-plus.png",
+    "rendered_excerpt": "☰ Menu\n✕\nLog Campaign — Pathfinder 1e\nHelp\nCHARACTERS (0)\n\nNo characters yet. A character joins from its sheet's Campaign dialog, which copies it into this folder's Characters/.\n\nParty Resources\nAdventure Log\nMaps\nWiki\n+\nSession\tIn-game date\tAuthor\tTitle\n2026-11-19\t\tSmoke DM\tThe Sunken Road\nBIH•LinkTableReading\n---\ncampaign: \"Log Campaign\"\nauthor: \"Smoke DM\"\nposted: 2026-11-19\nsession: 2026-11-19\n",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd42-E4_4-r2-Yg5oNG/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "campaign-map-pin",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/a7402d70-3d8d-427c-820e-a54d598e3dda/scratchpad/e44/final/campaign-map-pin.png",
+    "rendered_excerpt": "☰ Menu\n✕\nMap Campaign — Pathfinder 1e\nHelp\nCHARACTERS (0)\n\nNo characters yet. A character joins from its sheet's Campaign dialog, which copies it into this folder's Characters/.\n\nParty Resources\nAdventure Log\nMaps\nWiki\nAdd map…\n128x128@2x1 pin\n1\nIronforge → [[Ironforge]] Open Delete\nBIH•LinkTableReading\n---\ntitle: \"128x128@2x\"\npins: [{ x: 0.5, y: 0.5089, label: \"Ironforge\", page: \"[[Ironforge]]\" }",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd42-E4_4-r2-Yg5oNG/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "campaign-wiki-page-and-backlink",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/a7402d70-3d8d-427c-820e-a54d598e3dda/scratchpad/e44/final/campaign-wiki-page-and-backlink.png",
+    "rendered_excerpt": "☰ Menu\n✕\nWiki Campaign — Pathfinder 1e\nHelp\nCHARACTERS (0)\n\nNo characters yet. A character joins from its sheet's Campaign dialog, which copies it into this folder's Characters/.\n\nParty Resources\nAdventure Log\nMaps\nWiki\nSearch\n+ Page\n+ Folder\nRename\nDelete\n▸ Wiki/ (0)\n▸ Factions/ (0)\n▸ Items/ (0)\n▸ NPCs/ (0)\n▸ Places/ (1)\nHarbor District\nWiki/Places/Harbor District.md\n\nBIH•LinkTableReading\n---\ntit",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd42-E4_4-r2-Yg5oNG/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "campaign-wiki-search",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/a7402d70-3d8d-427c-820e-a54d598e3dda/scratchpad/e44/final/campaign-wiki-search.png",
+    "rendered_excerpt": "☰ Menu\n✕\nSearch Campaign — Pathfinder 1e\nHelp\nCHARACTERS (0)\n\nNo characters yet. A character joins from its sheet's Campaign dialog, which copies it into this folder's Characters/.\n\nParty Resources\nAdventure Log\nMaps\nWiki\nSearch\nMoonwell ShrineWiki/Moonwell Shrine.md — title\n--- title: \"Moonwell Shrine\" type: \"Wiki\" tags: [] --- # Moonwell Shrine\n+ Page\n+ Folder\nRename\nDelete\n▸ Wiki/ (1)\nMoonwell ",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd42-E4_4-r2-Yg5oNG/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "campaign-characters-list",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/a7402d70-3d8d-427c-820e-a54d598e3dda/scratchpad/e44/final/campaign-characters-list.png",
+    "rendered_excerpt": "☰ Menu\n✕\nParty Campaign — Pathfinder 1e\nHelp\nCHARACTERS (1)\n\n\nBrother Tomas Vane (Copy)\nHuman Cleric 3 / Fighter 2\nMaster: hermes · saved 2026-11-19\nBrother Tomas Vane (Copy)\nView full sheet →\nHuman Cleric 3 / Fighter 2\n\nAC\n15\nFORT\n+8\nREF\n+1\nWILL\n+8\nBAB\n+4\nThis device holds a copy of this character. Compare it with the campaign copy (nothing is merged).\n\nCompare with the campaign copy\nParty Resour",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd42-E4_4-r2-Yg5oNG/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [
+        "3e5adc00-61df-41fd-982f-c56d996fa855"
+      ],
+      "deleted": [
+        "3e5adc00-61df-41fd-982f-c56d996fa855"
+      ],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "campaign-import-stand-in",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/a7402d70-3d8d-427c-820e-a54d598e3dda/scratchpad/e44/final/campaign-import-stand-in.png",
+    "rendered_excerpt": "☰ Menu\n✕\nStand-in Campaign — Pathfinder 1e\nHelp\nCHARACTERS (1)\n\n\nBrother Tomas Vane (Copy)\nHuman Cleric 3 / Fighter 2\nMaster: hermes · saved 2026-11-19\nBrother Tomas Vane (Copy)\nView full sheet →\nHuman Cleric 3 / Fighter 2\n\nAC\n15\nFORT\n+8\nREF\n+1\nWILL\n+8\nBAB\n+4\nThis device holds a copy of this character. Compare it with the campaign copy (nothing is merged).\n\nCompare with the campaign copy\nBrother T",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd42-E4_4-r2-Yg5oNG/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [
+        "c9b51990-0d41-4a38-97c7-e19c1a6e4111"
+      ],
+      "deleted": [
+        "c9b51990-0d41-4a38-97c7-e19c1a6e4111"
+      ],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "import-pcg-sample-report",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/a7402d70-3d8d-427c-820e-a54d598e3dda/scratchpad/e44/final/import-pcg-sample-report.png",
+    "rendered_excerpt": "☰ Menu\n✕\nFlorian Syrkov — Paladin 6\nCHARACTER DETAILS\n«\n\nLevel\n6\n+\nCaster Level\n3\nRACE\nHuman\nCLASS\nPaladin 6\nCHARACTER DETAILS\n\nALIGNMENT\n\nDEITY\n\nSEX\n\nAGE\n\nHEIGHT\n\nWEIGHT\n\nHAIR\n\nEYES\n\nVISION\nNormal\nSIZE\nMedium\nVision and Size are calculated from race and aren't editable — a race this build has no profile for reads \"Unknown\" rather than a guessed value. The other fields save automatically when you ",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd42-E4_4-r2-Yg5oNG/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [
+        "05988bf8-de92-4f8b-a76e-ac5033fc6cdb"
+      ],
+      "deleted": [
+        "05988bf8-de92-4f8b-a76e-ac5033fc6cdb"
+      ],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "import-pcg-sf-sample",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/a7402d70-3d8d-427c-820e-a54d598e3dda/scratchpad/e44/final/import-pcg-sf-sample.png",
+    "rendered_excerpt": "☰ Menu\nLoad Character\n\n\nQ-186\nCore:race:android Class Soldier 10\nLast modified: Nov 19, 2026\n\nAldric Ironhand\nHuman Fighter 3\nLast modified: Dec 31, 2025\n\nElowen Ashgrave\nHuman Wizard 5\nLast modified: Dec 31, 2025\n\nBrother Tomas Vane\nHuman Cleric 3 / Fighter 2\nLast modified: Dec 31, 2025\nQ-186\nClass Soldier 10\nCore:race:android\nStarfinder 1st Edition\nLast modified: Nov 19, 2026\nPress Load to compu",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd42-E4_4-r2-Yg5oNG/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [
+        "2e5d6a3e-f7ff-4b9d-91a7-134e349ab234"
+      ],
+      "deleted": [
+        "2e5d6a3e-f7ff-4b9d-91a7-134e349ab234"
+      ],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "sheet-campaign-add-from-identity",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/a7402d70-3d8d-427c-820e-a54d598e3dda/scratchpad/e44/final/sheet-campaign-add-from-identity.png",
+    "rendered_excerpt": "☰ Menu\n✕\nAldric Ironhand — Fighter 3\nCHARACTER DETAILS\n«\n\nLevel\n3\n+\nCaster Level\n—\nRACE\nHuman\nCLASS\nFighter 3\nCHARACTER DETAILS\n\nALIGNMENT\n\nDEITY\n\nSEX\n\nAGE\n\nHEIGHT\n\nWEIGHT\n\nHAIR\n\nEYES\n\nVISION\nNormal\nSIZE\nMedium\nVision and Size are calculated from race and aren't editable — a race this build has no profile for reads \"Unknown\" rather than a guessed value. The other fields save automatically when you",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd42-E4_4-r2-Yg5oNG/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "sheet-campaign-button-under-skills",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/a7402d70-3d8d-427c-820e-a54d598e3dda/scratchpad/e44/final/sheet-campaign-button-under-skills.png",
+    "rendered_excerpt": "☰ Menu\n✕\nGear Campaign — Pathfinder 1e\nHelp\nCHARACTERS (1)\n\n\nAldric Ironhand\nHuman Fighter 3\nMaster: hermes · saved 2026-11-19\nAldric Ironhand\nView full sheet →\nHuman Fighter 3\n\nAC\n16\nFORT\n+5\nREF\n+2\nWILL\n+2\nBAB\n+3\nThis device holds a copy of this character. Compare it with the campaign copy (nothing is merged).\n\nCompare with the campaign copy\nParty Resources\nAdventure Log\nMaps\nWiki\nBIH•LinkTableRe",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd42-E4_4-r2-Yg5oNG/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "sheet-campaign-remove-keeps-folder",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/a7402d70-3d8d-427c-820e-a54d598e3dda/scratchpad/e44/final/sheet-campaign-remove-keeps-folder.png",
+    "rendered_excerpt": "☰ Menu\n✕\nAldric Ironhand — Fighter 3\nCHARACTER DETAILS\n«\n\nLevel\n3\n+\nCaster Level\n—\nRACE\nHuman\nCLASS\nFighter 3\nCHARACTER DETAILS\n\nALIGNMENT\n\nDEITY\n\nSEX\n\nAGE\n\nHEIGHT\n\nWEIGHT\n\nHAIR\n\nEYES\n\nVISION\nNormal\nSIZE\nMedium\nVision and Size are calculated from race and aren't editable — a race this build has no profile for reads \"Unknown\" rather than a guessed value. The other fields save automatically when you",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd42-E4_4-r2-Yg5oNG/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "main-menu-first",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/a7402d70-3d8d-427c-820e-a54d598e3dda/scratchpad/e44/final/main-menu-first.png",
+    "rendered_excerpt": "☰ Menu\nOptions\n\nP1\nPathfinder 1e\nFantasy d20\n\nSA\nSolarus Arcanum\nComing soon\n\nTM\nTraveller MGT 2e\nComing soon\n\nCR\nCyberpunk Red\nNeon dystopia\n\nS1\nStarfinder 1e\nSci-fi fantasy\n\nWOD\nWorld of Darkness\nComing soon\n\nNEW CHARACTER\n\nLOAD CHARACTER\n\nCAMPAIGN MANAGER\n\nDM TOOLKIT\nBrowse Equipment Catalog\nBrowse Spell Catalog\nBrowse Class Progression\nBrowse Race Traits\nBrowse Monster Catalog\nBrowse Companion",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd42-E4_4-r2-Yg5oNG/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "sheet-gear-bag-of-holding-weightless",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/a7402d70-3d8d-427c-820e-a54d598e3dda/scratchpad/e44/final/sheet-gear-bag-of-holding-weightless.png",
+    "rendered_excerpt": "☰ Menu\n✕\nBrother Tomas Vane (Copy) — Cleric 3 / Fighter 2\nCHARACTER DETAILS\n«\n\nLevel\n5\n+\nCaster Level\n3\nRACE\nHuman\nCLASS\nCleric 3 / Fighter 2\nCHARACTER DETAILS\n\nALIGNMENT\n\nDEITY\n\nSEX\n\nAGE\n\nHEIGHT\n\nWEIGHT\n\nHAIR\n\nEYES\n\nVISION\nNormal\nSIZE\nMedium\nVision and Size are calculated from race and aren't editable — a race this build has no profile for reads \"Unknown\" rather than a guessed value. The other fi",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd42-E4_4-r2-Yg5oNG/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [
+        "2c96722d-8023-473e-821d-3652a26e8cd0"
+      ],
+      "deleted": [
+        "2c96722d-8023-473e-821d-3652a26e8cd0"
+      ],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "sheet-gear-move-to-slot-kinds",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/a7402d70-3d8d-427c-820e-a54d598e3dda/scratchpad/e44/final/sheet-gear-move-to-slot-kinds.png",
+    "rendered_excerpt": "☰ Menu\n✕\nBrother Tomas Vane (Copy) — Cleric 3 / Fighter 2\nCHARACTER DETAILS\n«\n\nLevel\n5\n+\nCaster Level\n3\nRACE\nHuman\nCLASS\nCleric 3 / Fighter 2\nCHARACTER DETAILS\n\nALIGNMENT\n\nDEITY\n\nSEX\n\nAGE\n\nHEIGHT\n\nWEIGHT\n\nHAIR\n\nEYES\n\nVISION\nNormal\nSIZE\nMedium\nVision and Size are calculated from race and aren't editable — a race this build has no profile for reads \"Unknown\" rather than a guessed value. The other fi",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd42-E4_4-r2-Yg5oNG/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [
+        "636e2722-4224-43aa-8fd6-8787d133c683"
+      ],
+      "deleted": [
+        "636e2722-4224-43aa-8fd6-8787d133c683"
+      ],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "sheet-gear-customize",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/a7402d70-3d8d-427c-820e-a54d598e3dda/scratchpad/e44/final/sheet-gear-customize.png",
+    "rendered_excerpt": "☰ Menu\n✕\nBrother Tomas Vane (Copy) — Cleric 3 / Fighter 2\nCHARACTER DETAILS\n«\n\nLevel\n5\n+\nCaster Level\n3\nRACE\nHuman\nCLASS\nCleric 3 / Fighter 2\nCHARACTER DETAILS\n\nALIGNMENT\n\nDEITY\n\nSEX\n\nAGE\n\nHEIGHT\n\nWEIGHT\n\nHAIR\n\nEYES\n\nVISION\nNormal\nSIZE\nMedium\nVision and Size are calculated from race and aren't editable — a race this build has no profile for reads \"Unknown\" rather than a guessed value. The other fi",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd42-E4_4-r2-Yg5oNG/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [
+        "ecb9c8c6-8b3e-4629-a193-6b04d95cb4d3"
+      ],
+      "deleted": [
+        "ecb9c8c6-8b3e-4629-a193-6b04d95cb4d3"
+      ],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "sheet-gear-detail-panel",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/a7402d70-3d8d-427c-820e-a54d598e3dda/scratchpad/e44/final/sheet-gear-detail-panel.png",
+    "rendered_excerpt": "☰ Menu\n✕\nBrother Tomas Vane (Copy) — Cleric 3 / Fighter 2\nCHARACTER DETAILS\n«\n\nLevel\n5\n+\nCaster Level\n3\nRACE\nHuman\nCLASS\nCleric 3 / Fighter 2\nCHARACTER DETAILS\n\nALIGNMENT\n\nDEITY\n\nSEX\n\nAGE\n\nHEIGHT\n\nWEIGHT\n\nHAIR\n\nEYES\n\nVISION\nNormal\nSIZE\nMedium\nVision and Size are calculated from race and aren't editable — a race this build has no profile for reads \"Unknown\" rather than a guessed value. The other fi",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd42-E4_4-r2-Yg5oNG/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [
+        "c09e6bfa-866b-4c00-b4ba-82447cb5e1c7"
+      ],
+      "deleted": [
+        "c09e6bfa-866b-4c00-b4ba-82447cb5e1c7"
+      ],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "sheet-gear-sacks-one-row",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/a7402d70-3d8d-427c-820e-a54d598e3dda/scratchpad/e44/final/sheet-gear-sacks-one-row.png",
+    "rendered_excerpt": "☰ Menu\n✕\nBrother Tomas Vane (Copy) — Cleric 3 / Fighter 2\nCHARACTER DETAILS\n«\n\nLevel\n5\n+\nCaster Level\n3\nRACE\nHuman\nCLASS\nCleric 3 / Fighter 2\nCHARACTER DETAILS\n\nALIGNMENT\n\nDEITY\n\nSEX\n\nAGE\n\nHEIGHT\n\nWEIGHT\n\nHAIR\n\nEYES\n\nVISION\nNormal\nSIZE\nMedium\nVision and Size are calculated from race and aren't editable — a race this build has no profile for reads \"Unknown\" rather than a guessed value. The other fi",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd42-E4_4-r2-Yg5oNG/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [
+        "bcb65010-b049-4b27-bfb6-b205e51c1216"
+      ],
+      "deleted": [
+        "bcb65010-b049-4b27-bfb6-b205e51c1216"
+      ],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "sheet-gear-arrows-split-quiver-backpack",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/a7402d70-3d8d-427c-820e-a54d598e3dda/scratchpad/e44/final/sheet-gear-arrows-split-quiver-backpack.png",
+    "rendered_excerpt": "☰ Menu\n✕\nBrother Tomas Vane (Copy) — Cleric 3 / Fighter 2\nCHARACTER DETAILS\n«\n\nLevel\n5\n+\nCaster Level\n3\nRACE\nHuman\nCLASS\nCleric 3 / Fighter 2\nCHARACTER DETAILS\n\nALIGNMENT\n\nDEITY\n\nSEX\n\nAGE\n\nHEIGHT\n\nWEIGHT\n\nHAIR\n\nEYES\n\nVISION\nNormal\nSIZE\nMedium\nVision and Size are calculated from race and aren't editable — a race this build has no profile for reads \"Unknown\" rather than a guessed value. The other fi",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd42-E4_4-r2-Yg5oNG/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [
+        "92570765-d0ff-415b-81d1-88c330a78801"
+      ],
+      "deleted": [
+        "92570765-d0ff-415b-81d1-88c330a78801"
+      ],
+      "leftover": [],
+      "errors": {}
+    }
+  }
+]

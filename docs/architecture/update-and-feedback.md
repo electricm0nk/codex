@@ -1,7 +1,7 @@
 # Update & Feedback
 
 > Scope: The desktop app's self-update chain and its feedback/defect-report submission chain, including exactly what is real vs. stubbed today.
-> Last verified: **2026-11-07 against `tranche-19` (`e5c7415d7f`)** for the `perform_install` wire shape and its three install kinds. Earlier pass: **2026-10-07 against branch `tranche-16-ui` (base `develop` @ `157873a67e`)** — the
+> Last verified: **2026-11-20 against `tranche-22` (`fc465cddd1`, SD-42 E5.3)** for §"AppImage first-run install and menu entry" (new). Earlier pass: **2026-11-07 against `tranche-19` (`e5c7415d7f`)** for the `perform_install` wire shape and its three install kinds. Earlier pass: **2026-10-07 against branch `tranche-16-ui` (base `develop` @ `157873a67e`)** — the
 > self-update sections were re-derived against `update/transaction.rs`, `update/seed.rs`,
 > `update/deb_install.rs` and `apps/desktop/src/update/`; `perform_retention_sweep` is still real,
 > tested and unregistered.
@@ -61,6 +61,17 @@ The four native commands live in `apps/desktop/src-tauri/src/update/` (`transact
 **A fifth command, `perform_retention_sweep`, exists with a real, tested body** (`perform_retention_sweep_impl`, enforcing the two-slot backup cap, post-success staging cleanup, and the never-auto-delete-pending-while-unresolved rule) but is still not imported or registered in `main.rs`'s `generate_handler![...]` — it is unreachable from the frontend via `invoke()` today. Both `perform_restore_previous` and `perform_retention_sweep` in `transaction.rs` now carry `#[allow(dead_code)]` with a comment noting the real coverage runs through their `_impl` functions directly rather than through the `#[tauri::command]` shim in `cargo test` — this is a `cargo`-lint annotation, not a change to what is reachable from the frontend (`perform_restore_previous` remains registered in `generate_handler!`; `perform_retention_sweep` remains unregistered).
 
 **Where the update data comes from at runtime**: the channel index and the manifest it points at both live on the `update-index` branch of the `codex` GitHub repo, published by the release lane — see [release-pipeline.md](./release-pipeline.md).
+
+### AppImage first-run install and menu entry
+
+`update/self_install.rs`, called from `main.rs`'s setup (`self_install::run_at_startup`), runs only for an
+AppImage (`$APPIMAGE` set). Every start first writes the menu entry
+(`<data home>/applications/codex-desktop.desktop`) and the icon naming the file that is running
+(`ensure_desktop_integration`), so a moved or updated AppImage re-points them on its next start. Started
+from anywhere but `~/Codex/Codex.AppImage`, it then offers once to copy itself there and point
+`installed-state.json` at the copy, so in-app updates replace a file at a fixed path; "Just run this time"
+is remembered per path in `self-install-declined.txt`. A `.deb`, `.rpm`, Windows or macOS install writes
+nothing here.
 
 ### The UI panels
 

@@ -1,0 +1,247 @@
+{
+  "pf_Cleric": {
+    "added_rows_naming_longsword": 0,
+    "class_ids": [
+      "class:cleric"
+    ],
+    "copies_emitted": 47,
+    "copies_emitted_from_quantity_0_lines": 0,
+    "custom": 0,
+    "custom_equipment_records": 0,
+    "custom_named_lines": 1,
+    "custom_named_lines_mapped_to_another_key": 1,
+    "data_fields_not_read": {
+      "NAME": 1
+    },
+    "equipment_selection_rows": 48,
+    "game_mode": "Pathfinder_RPG",
+    "lines": 20,
+    "lines_capped_below_file_quantity": 0,
+    "lines_emitting_more_than_one_row": 6,
+    "lines_with_eqmods_not_applied": 5,
+    "lines_worn_in_codex": 5,
+    "lines_worn_in_pcgen": 5,
+    "mapped": 20,
+    "mapped_keys_without_sheet_record": 0,
+    "max_copies_from_one_line": 10,
+    "quantity_0_lines": 0,
+    "quantity_in_file": 47,
+    "unmapped_classes": 0,
+    "unmapped_race": false,
+    "verdict": "computes",
+    "warnings_by_kind": {
+      "eqmods_not_applied": 5
+    },
+    "worn_copies_in_slot_conflict": 0
+  },
+  "pf_Paladin": {
+    "added_rows_naming_longsword": 0,
+    "class_ids": [
+      "class:paladin"
+    ],
+    "copies_emitted": 41,
+    "copies_emitted_from_quantity_0_lines": 0,
+    "custom": 0,
+    "custom_equipment_records": 0,
+    "custom_named_lines": 7,
+    "custom_named_lines_mapped_to_another_key": 7,
+    "data_fields_not_read": {
+      "COSTMOD": 1,
+      "NAME": 10
+    },
+    "equipment_selection_rows": 42,
+    "game_mode": "Pathfinder_RPG",
+    "lines": 29,
+    "lines_capped_below_file_quantity": 0,
+    "lines_emitting_more_than_one_row": 6,
+    "lines_with_eqmods_not_applied": 10,
+    "lines_worn_in_codex": 6,
+    "lines_worn_in_pcgen": 6,
+    "mapped": 29,
+    "mapped_keys_without_sheet_record": 0,
+    "max_copies_from_one_line": 5,
+    "quantity_0_lines": 0,
+    "quantity_in_file": 41,
+    "unmapped_classes": 0,
+    "unmapped_race": false,
+    "verdict": "computes",
+    "warnings_by_kind": {
+      "eqmods_not_applied": 10,
+      "spell_made_custom": 1
+    },
+    "worn_copies_in_slot_conflict": 1
+  },
+  "pf_Rogue": {
+    "added_rows_naming_longsword": 0,
+    "class_ids": [
+      "class:rogue"
+    ],
+    "copies_emitted": 56,
+    "copies_emitted_from_quantity_0_lines": 0,
+    "custom": 0,
+    "custom_equipment_records": 0,
+    "custom_named_lines": 13,
+    "custom_named_lines_mapped_to_another_key": 13,
+    "data_fields_not_read": {
+      "COSTMOD": 1,
+      "NAME": 14,
+      "SIZE": 10,
+      "SPROP": 1
+    },
+    "equipment_selection_rows": 57,
+    "game_mode": "Pathfinder_RPG",
+    "lines": 41,
+    "lines_capped_below_file_quantity": 0,
+    "lines_emitting_more_than_one_row": 6,
+    "lines_with_eqmods_not_applied": 11,
+    "lines_worn_in_codex": 14,
+    "lines_worn_in_pcgen": 14,
+    "mapped": 41,
+    "mapped_keys_without_sheet_record": 0,
+    "max_copies_from_one_line": 6,
+    "quantity_0_lines": 0,
+    "quantity_in_file": 56,
+    "unmapped_classes": 0,
+    "unmapped_race": false,
+    "verdict": "computes",
+    "warnings_by_kind": {
+      "eqmods_not_applied": 11
+    },
+    "worn_copies_in_slot_conflict": 0
+  },
+  "pf_goldielocks": {
+    "added_rows_naming_longsword": 0,
+    "class_ids": [
+      "class:dragon"
+    ],
+    "copies_emitted": 0,
+    "copies_emitted_from_quantity_0_lines": 0,
+    "custom": 4,
+    "custom_equipment_records": 4,
+    "custom_named_lines": 4,
+    "custom_named_lines_mapped_to_another_key": 0,
+    "data_fields_not_read": {},
+    "equipment_selection_rows": 1,
+    "game_mode": "Pathfinder_RPG",
+    "lines": 4,
+    "lines_capped_below_file_quantity": 0,
+    "lines_emitting_more_than_one_row": 0,
+    "lines_with_eqmods_not_applied": 0,
+    "lines_worn_in_codex": 4,
+    "lines_worn_in_pcgen": 4,
+    "mapped": 0,
+    "mapped_keys_without_sheet_record": 0,
+    "max_copies_from_one_line": 0,
+    "quantity_0_lines": 0,
+    "quantity_in_file": 4,
+    "unmapped_classes": 1,
+    "unmapped_race": true,
+    "verdict": "refused: class_chassis.unsupported, defense.size_modifier.unknown_race, defense.total_save.unsupported",
+    "warnings_by_kind": {},
+    "worn_copies_in_slot_conflict": 0
+  },
+  "sf_mechanic": {
+    "added_rows_naming_longsword": 0,
+    "class_ids": [
+      "class:mechanic"
+    ],
+    "copies_emitted": 0,
+    "copies_emitted_from_quantity_0_lines": 0,
+    "custom": 22,
+    "custom_equipment_records": 22,
+    "custom_named_lines": 6,
+    "custom_named_lines_mapped_to_another_key": 0,
+    "data_fields_not_read": {
+      "NAME": 6,
+      "SIZE": 2
+    },
+    "equipment_selection_rows": 1,
+    "game_mode": "Starfinder",
+    "lines": 22,
+    "lines_capped_below_file_quantity": 0,
+    "lines_emitting_more_than_one_row": 0,
+    "lines_with_eqmods_not_applied": 1,
+    "lines_worn_in_codex": 16,
+    "lines_worn_in_pcgen": 16,
+    "mapped": 0,
+    "mapped_keys_without_sheet_record": 0,
+    "max_copies_from_one_line": 0,
+    "quantity_0_lines": 0,
+    "quantity_in_file": 100072,
+    "unmapped_classes": 1,
+    "unmapped_race": true,
+    "verdict": "refused: class_chassis.unsupported, defense.size_modifier.unknown_race, defense.total_save.unsupported",
+    "warnings_by_kind": {
+      "game_mode": 1
+    },
+    "worn_copies_in_slot_conflict": 0
+  },
+  "sf_mechanic_drone": {
+    "added_rows_naming_longsword": 0,
+    "class_ids": [
+      "class:drone"
+    ],
+    "copies_emitted": 0,
+    "copies_emitted_from_quantity_0_lines": 0,
+    "custom": 0,
+    "custom_equipment_records": 0,
+    "custom_named_lines": 0,
+    "custom_named_lines_mapped_to_another_key": 0,
+    "data_fields_not_read": {},
+    "equipment_selection_rows": 1,
+    "game_mode": "Starfinder",
+    "lines": 0,
+    "lines_capped_below_file_quantity": 0,
+    "lines_emitting_more_than_one_row": 0,
+    "lines_with_eqmods_not_applied": 0,
+    "lines_worn_in_codex": 0,
+    "lines_worn_in_pcgen": 0,
+    "mapped": 0,
+    "mapped_keys_without_sheet_record": 0,
+    "max_copies_from_one_line": 0,
+    "quantity_0_lines": 0,
+    "quantity_in_file": 0,
+    "unmapped_classes": 1,
+    "unmapped_race": true,
+    "verdict": "refused: class_chassis.unsupported, defense.size_modifier.unknown_race, defense.total_save.unsupported",
+    "warnings_by_kind": {
+      "game_mode": 1
+    },
+    "worn_copies_in_slot_conflict": 0
+  },
+  "sf_soldier": {
+    "added_rows_naming_longsword": 0,
+    "class_ids": [
+      "class:soldier"
+    ],
+    "copies_emitted": 0,
+    "copies_emitted_from_quantity_0_lines": 0,
+    "custom": 4,
+    "custom_equipment_records": 4,
+    "custom_named_lines": 0,
+    "custom_named_lines_mapped_to_another_key": 0,
+    "data_fields_not_read": {
+      "NAME": 4
+    },
+    "equipment_selection_rows": 1,
+    "game_mode": "Starfinder",
+    "lines": 4,
+    "lines_capped_below_file_quantity": 0,
+    "lines_emitting_more_than_one_row": 0,
+    "lines_with_eqmods_not_applied": 0,
+    "lines_worn_in_codex": 2,
+    "lines_worn_in_pcgen": 2,
+    "mapped": 0,
+    "mapped_keys_without_sheet_record": 0,
+    "max_copies_from_one_line": 0,
+    "quantity_0_lines": 0,
+    "quantity_in_file": 4,
+    "unmapped_classes": 1,
+    "unmapped_race": true,
+    "verdict": "refused: class_chassis.unsupported, defense.size_modifier.unknown_race, defense.total_save.unsupported",
+    "warnings_by_kind": {
+      "game_mode": 1
+    },
+    "worn_copies_in_slot_conflict": 0
+  }
+}

@@ -7,7 +7,14 @@
 //! `CampaignAssets` types 1:1, plus a `schema_version` added from day one
 //! (per the `saved_character` precedent).
 
+pub mod adventure_log;
+pub mod characters;
+pub mod folder;
+pub mod frontmatter;
 pub mod local_store;
+pub mod maps;
+pub mod migrate;
+pub mod wiki;
 
 use serde::{Deserialize, Serialize};
 
@@ -85,6 +92,42 @@ pub struct CampaignSnapshot {
     pub updated_at: String,
     #[serde(default)]
     pub assets: CampaignAssets,
+}
+
+/// `campaign.json`'s schema in a campaign folder (SD-42 `decisions.md §11`). Schema 1 is the
+/// `.config/<name>.json` `CampaignSnapshot` above, read only by migration.
+pub const CAMPAIGN_FOLDER_SCHEMA_VERSION: u16 = 2;
+
+/// One campaign member by name (`decisions.md §13.1`): no email, no invite, no role.
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct FolderMember {
+    pub name: String,
+    pub added_at: String,
+}
+
+/// `campaign.json` at a campaign folder's root (schema 2). The files are the assets and
+/// `Characters/` is the party, so neither is a field here.
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct CampaignFolderSnapshot {
+    pub schema_version: u16,
+    pub name: String,
+    pub rule_set_id: String,
+    pub rule_set_label: String,
+    #[serde(default)]
+    pub description: String,
+    #[serde(default)]
+    pub members: Vec<FolderMember>,
+    pub created_at: String,
+    pub updated_at: String,
+}
+
+/// A schema-2 `campaign.json` plus the `.codex/nonce` it was read at.
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct LoadedCampaignFolder {
+    pub snapshot: CampaignFolderSnapshot,
+    pub nonce: u64,
 }
 
 /// Flat error type for the campaign store, mirroring

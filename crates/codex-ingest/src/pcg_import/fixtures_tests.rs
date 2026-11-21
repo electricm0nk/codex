@@ -18,7 +18,7 @@ use codex::rules_core::pilot_compute_corpus::{compute_combat_baseline_from_corpu
 use codex::rules_core::source_content::SourcePackageContent;
 
 use super::catalog::Catalog;
-use super::map::{KeyRule, MAPPING, convert};
+use super::map::{CUSTOM_PROPERTIES, KeyRule, MAPPING, SF_SOURCE_PACKAGE_ID, character_input_of, convert, starfinder_verdict};
 use super::parse::parse;
 use super::wire::{ImportFile, Outcome};
 
@@ -68,6 +68,18 @@ fn fixtures() -> Vec<PathBuf> {
 fn is_older_than_the_format(path: &Path) -> bool {
     let text = String::from_utf8_lossy(&std::fs::read(path).expect("fixture")).into_owned();
     !text.lines().any(|line| line.starts_with("PCGVERSION:") || line.starts_with("CHARACTERNAME:"))
+}
+
+/// A Starfinder companion file (`sf_mechanic_drone`): refused by name (`decisions.md §21` Q-A).
+fn is_a_starfinder_companion(path: &Path) -> bool {
+    let text = String::from_utf8_lossy(&std::fs::read(path).expect("fixture")).into_owned();
+    text.lines().any(|line| line == "GAMEMODE:Starfinder") && text.lines().any(|line| line.starts_with("MASTER:"))
+}
+
+/// The Starfinder engine's verdict through the import's own catalog (`map::starfinder_verdict`).
+fn sf_verdict(file: &ImportFile) -> Result<(), Vec<String>> {
+    let package = catalog().for_game_mode("Starfinder").expect("the Starfinder catalog").starfinder_package().expect("its package");
+    starfinder_verdict(package, &character_input_of(file)).map_err(|reason| vec![reason])
 }
 
 fn converted(path: &Path) -> ImportFile {
@@ -198,6 +210,12 @@ fn pcg_import_fixtures_every_file_converts_and_every_line_is_reported() {
             refused += 1;
             continue;
         }
+        if is_a_starfinder_companion(path) {
+            let err = convert(&text, "companion.pcg", catalog()).unwrap_err();
+            assert!(err.contains("companion.pcg is a Drone file, a companion of"), "{err}");
+            refused += 1;
+            continue;
+        }
         let file = converted(path);
         let data_lines = parse(&text).len();
         lines_total += data_lines;
@@ -206,7 +224,8 @@ fn pcg_import_fixtures_every_file_converts_and_every_line_is_reported() {
         assert!(!file.display_label.trim().is_empty(), "{}", path.display());
         assert!(!file.character_input.chosen.class_levels.is_empty(), "{}", path.display());
         let input = character_input(&file);
-        assert_eq!(input.source_package_id, "pf1.core_rulebook");
+        let expected = if file.report.game_mode == "Starfinder" { SF_SOURCE_PACKAGE_ID } else { "pf1.core_rulebook" };
+        assert_eq!(input.source_package_id, expected, "{}", path.display());
         let custom = [&file.custom.feats, &file.custom.equipment, &file.custom.spells];
         let mut ids = std::collections::BTreeSet::new();
         for record in custom.iter().flat_map(|records| records.iter()) {
@@ -231,10 +250,10 @@ fn pcg_import_fixtures_a_file_of_held_classes_computes() {
     let mut computed = 0usize;
     let mut refused_by_class = Vec::new();
     let mut wrong = Vec::new();
-    for path in fixtures().into_iter().filter(|path| !is_older_than_the_format(path)) {
+    for path in fixtures().into_iter().filter(|path| !is_older_than_the_format(path) && !is_a_starfinder_companion(path)) {
         let file = converted(&path);
         let name = path.file_name().unwrap().to_string_lossy().into_owned();
-        let verdict = engine_verdict(&character_input(&file));
+        let verdict = if file.game_system == SF_SOURCE_PACKAGE_ID { sf_verdict(&file) } else { engine_verdict(&character_input(&file)) };
         println!("{name}: mode={} classes={:?} race={:?} verdict={:?}", file.report.game_mode, file.report.unmapped_classes, file.report.unmapped_race, verdict);
         match (file.report.unmapped_classes.is_empty() && file.report.unmapped_race.is_none(), verdict) {
             (true, Ok(())) => computed += 1,
@@ -252,7 +271,7 @@ fn pcg_import_fixtures_a_file_of_held_classes_computes() {
 #[test]
 fn pcg_import_fixtures_a_spell_is_kept_or_custom_and_most_are_kept() {
     let (mut kept, mut custom) = (0usize, 0usize);
-    for path in fixtures().into_iter().filter(|path| !is_older_than_the_format(path)) {
+    for path in fixtures().into_iter().filter(|path| !is_older_than_the_format(path) && !is_a_starfinder_companion(path)) {
         let file = converted(&path);
         for line in file.report.lines.iter().filter(|line| line.key == "SPELLNAME") {
             match line.outcome {
@@ -284,8 +303,9 @@ fn pcg_import_fixtures_paladin_reads_what_the_file_says() {
     assert_eq!(file.display_label, "Florian Syrkov");
     assert_eq!(chosen.race_id, "race:human");
     assert_eq!((chosen.class_levels[0].class_id.as_str(), chosen.class_levels[0].level), ("class:paladin", 6));
-    // STAT:STR|SCORE:16 + ABILITY KEY:+2 Strength; DEX has neither.
-    assert_eq!(chosen.ability_scores.strength, 18);
+    // STAT:STR|SCORE:16 + ABILITY KEY:+2 Strength; DEX has neither. A Human's +2 is the choice, which
+    // the engine adds (`apply_human_ability_bonus`), so the saved score is before it, as Create saves it.
+    assert_eq!(chosen.ability_scores.strength, 16);
     assert_eq!(chosen.ability_scores.dexterity, 12);
     assert_eq!(chosen.ability_scores.charisma, 14);
     assert!(chosen.selected_choices.iter().any(|c| c.choice_set_id == "choice:human_ability_bonus" && c.selection_id == "ability:strength"));
@@ -297,7 +317,8 @@ fn pcg_import_fixtures_paladin_reads_what_the_file_says() {
     assert!(chosen.selected_choices.iter().any(|c| c.choice_set_id == "choice:skill_focus_target" && c.selection_id == "skill:Diplomacy"));
 
     let ranks = |id: &str| chosen.skill_allocations.iter().find(|skill| skill.skill_id == id).map(|skill| skill.ranks);
-    assert_eq!(ranks("skill:diplomacy"), Some(2));
+    // CLASSBOUGHT RANKS:2.0, and the favored class bonus's four ranks (`APPLIEDTO:Diplomacy` x4).
+    assert_eq!(ranks("skill:diplomacy"), Some(6));
     assert_eq!(ranks("skill:knowledge_religion"), Some(1));
     assert_eq!(ranks("skill:acrobatics"), None, "a SKILL line with no CLASSBOUGHT buys nothing");
 
@@ -310,14 +331,17 @@ fn pcg_import_fixtures_paladin_reads_what_the_file_says() {
     assert_eq!(flail[0].active_state, "EquippedActive", "EQUIPSET:Both Hands");
     assert_eq!(flail[0].applied_modifiers, ["Special Ability ~ +1 ~ Weapon"]);
     assert_eq!(rows("Dagger")[0].active_state, "SelectedInactive", "EQUIPSET:Carried");
-    assert_eq!(rows("Bedroll")[0].active_state, "SelectedInactive", "inside the saddlebags on the horse");
-    assert_eq!(rows("Javelin").len(), 5, "QUANTITY:5.0");
-    assert!(rows("Javelin").iter().all(|row| row.active_state == "SelectedInactive"));
+    assert_eq!(rows("Bedroll")[0].active_state, "Absent", "inside the saddlebags on the Not Carried horse");
+    // QUANTITY:5.0 in two places: 3 Carried, 2 on the horse, so two stacks, one row each (SD-42 §5).
+    let javelins: Vec<&str> = rows("Javelin").iter().map(|row| row.active_state.as_str()).collect();
+    assert_eq!(javelins, ["SelectedInactive", "Absent"]);
+    let pieces: Vec<Option<u32>> = ["Javelin|0|0", "Javelin|0|1"].iter().map(|key| file.equipment_sets.copies.get(*key).and_then(|facts| facts.quantity)).collect();
+    assert_eq!(pieces, [Some(3), Some(2)]);
 
-    // Ultimate Combat's Compel Hostility is on the file's list and not on the engine's paladin list,
-    // and one refused spell would refuse the character.
-    assert!(file.custom.spells.iter().any(|record| record.name == "Compel Hostility"), "{:?}", file.custom.spells);
-    assert!(file.report.lines.iter().any(|line| line.key == "SPELLNAME" && line.from == "Compel Hostility" && line.outcome == Outcome::Custom));
+    // Ultimate Combat's Compel Hostility is on the engine's paladin list (its `uc_spells.lst` row
+    // names Paladin at 1st level), so it is a held spell, not a custom one.
+    assert!(!file.custom.spells.iter().any(|record| record.name == "Compel Hostility"), "{:?}", file.custom.spells);
+    assert!(file.report.lines.iter().any(|line| line.key == "SPELLNAME" && line.from == "Compel Hostility" && line.outcome == Outcome::Mapped));
 
     assert_eq!(file.money.total_copper, 48_800, "MONEY:488");
     assert_eq!(file.bio.alignment, "Lawful Good");
@@ -336,10 +360,44 @@ fn pcg_import_fixtures_paladin_reads_what_the_file_says() {
     assert_eq!(engine_verdict(&character_input(&file)), Ok(()));
 }
 
+/// SD-42 E4.17 (c), (h): `pf_Cleric.pcg`'s own hit points per level (`CLASSABILITIESLEVEL`
+/// `HITPOINTS:8` x3) are the character's `hit_points.json`; its favored class bonus (one hit point,
+/// a rank each in Knowledge (Religion) and (Planes)) is the ranks and the two grants that pay for
+/// them; and it holds no Weapon Focus, so none is added. PCGen's own total is 25: 24 + the bonus point.
+#[test]
+fn pcg_import_fixtures_cleric_hit_points_and_favored_class_bonus() {
+    let file = oracle_fixture("pf_Cleric.pcg");
+    let levels: Vec<(&str, u8)> =
+        file.hit_points.as_ref().expect("the file states every level's hit points").levels.iter().map(|level| (level.class_id.as_str(), level.value)).collect();
+    assert_eq!(levels, [("class:cleric", 8), ("class:cleric", 8), ("class:cleric", 8)]);
+    let grants: Vec<(&str, i32)> = file.custom.grants.iter().map(|grant| (grant.target.as_str(), grant.value)).collect();
+    assert_eq!(grants, [("hit_points", 1), ("skill_points", 2)]);
+    let chosen = &file.character_input.chosen;
+    let ranks = |id: &str| chosen.skill_allocations.iter().find(|skill| skill.skill_id == id).map(|skill| skill.ranks);
+    assert_eq!((ranks("skill:knowledge_religion"), ranks("skill:knowledge_planes")), (Some(1), Some(1)));
+    assert!(!file.custom.feats.iter().any(|record| record.name.contains("Bonus Hit Point") || record.name.contains("Bonus Skill Point")), "{:?}", file.custom.feats);
+    assert!(!chosen.selected_feats.iter().any(|feat| feat.contains("weapon_focus") || feat == "Weapon Focus"), "{:?}", chosen.selected_feats);
+    assert_eq!(engine_verdict(&character_input(&file)), Ok(()), "a character without Weapon Focus computes");
+}
+
+/// A larger bonus is several grants of at most 12 (`custom.json`'s limit), and a file that does not
+/// state every level's hit points keeps the sheet's default rule.
+#[test]
+fn pcg_import_fixtures_favored_class_bonus_splits_into_grants_of_twelve() {
+    let mut text = String::from("PCGVERSION:2.0\nCHARACTERNAME:Test\nGAMEMODE:Pathfinder_RPG\nRACE:Human\nCLASS:Fighter|LEVEL:14\n");
+    text.push_str(&format!("ABILITY:Favored Class Bonus|TYPE:NORMAL|CATEGORY:Special Ability|KEY:Favored Class Bonus ~ Hit Point|APPLIEDTO:{}|TYPE:FavoredClassBonus\n", ",".repeat(13)));
+    text.push_str("CLASSABILITIESLEVEL:Fighter=1|HITPOINTS:10\n");
+    let file = convert(&text, "inline.pcg", catalog()).unwrap();
+    let grants: Vec<(&str, i32)> = file.custom.grants.iter().map(|grant| (grant.target.as_str(), grant.value)).collect();
+    assert_eq!(grants, [("hit_points", 12), ("hit_points", 2)]);
+    assert_eq!(file.hit_points, None, "one level of fourteen stated");
+}
+
 /// A race's adjustment lands on the saved score, and these are PCGen's own totals: run through the
 /// real engine (`scripts/pcgen-run-character.sh`, `STAT.n`), `pf_Rogue.pcg` prints Str 12, Dex 22,
 /// Int 15, Cha 14, where Dex and Int each carry a worn +2 item the sheet adds for itself, and
-/// `pf_Cleric.pcg` prints Cha 17 (15, plus the Human's +2 the file sends to Charisma).
+/// `pf_Cleric.pcg` prints Cha 17: the saved 15, plus the Human's +2 the file sends to Charisma, which
+/// is the `choice:human_ability_bonus` the engine adds (`apply_human_ability_bonus`), as Create saves it.
 #[test]
 fn pcg_import_fixtures_a_race_adjustment_lands_on_the_score() {
     let file = oracle_fixture("pf_Rogue.pcg");
@@ -347,7 +405,8 @@ fn pcg_import_fixtures_a_race_adjustment_lands_on_the_score() {
     assert_eq!(file.character_input.chosen.race_id, "race:halfling");
     assert_eq!((scores.strength, scores.dexterity, scores.intelligence, scores.charisma), (12, 20, 13, 14));
     let cleric = oracle_fixture("pf_Cleric.pcg");
-    assert_eq!(cleric.character_input.chosen.ability_scores.charisma, 17);
+    assert_eq!(cleric.character_input.chosen.ability_scores.charisma, 15);
+    assert!(cleric.character_input.chosen.selected_choices.iter().any(|c| c.choice_set_id == "choice:human_ability_bonus" && c.selection_id == "ability:charisma"));
 }
 
 #[test]
@@ -355,7 +414,10 @@ fn pcg_import_fixtures_an_item_codex_does_not_hold_is_custom_with_its_place() {
     let dir = repo_root().join("scripts/oracle_harness/eqm-fixtures");
     let file = converted(&dir.join("sd33r6_eqm_combo.pcg"));
     let leather = file.custom.equipment.iter().find(|record| record.name == "SD33R6 ~ Leather Dragonhide").expect("custom item");
-    assert!(leather.stats.iter().any(|stat| stat.label == "Worn" && stat.value == "1"), "{leather:?}");
+    // A Create item (`decisions.md §7`): weighed and priced from the line, held where the set puts it.
+    assert_eq!((leather.weight_lbs, leather.price_gp, leather.container_capacity_lbs), (Some(0.0), Some(0.0), None), "{leather:?}");
+    let copy = codex::saved_character::equipment_sets::CopyKey { item_id: format!("custom:{}", leather.id), bonus: 0, ordinal: 0 };
+    assert_eq!(codex::saved_character::equipment_sets::location_of(file.equipment_sets.active_set(), &copy), codex::saved_character::equipment_sets::Location::Equipped);
     assert!(file.report.lines.iter().any(|line| line.outcome == Outcome::Custom && line.to == "SD33R6 ~ Leather Dragonhide"));
 }
 
@@ -375,24 +437,44 @@ fn pcg_import_fixtures_a_file_that_is_no_character_is_refused_by_name() {
     assert!(err.contains("notes.txt is not a PCGen 6 character"), "{err}");
 }
 
-/// A class Codex does not hold stays visible twice: a custom record, and in the report's own list.
+/// `decisions.md §8`: a Starfinder file reads Starfinder records, and the Starfinder engine computes it.
 #[test]
-fn pcg_import_fixtures_a_class_codex_does_not_hold_is_named() {
+fn pcg_import_fixtures_a_starfinder_soldier_computes() {
     let file = oracle_fixture("sf_soldier.pcg");
     assert_eq!(file.report.game_mode, "Starfinder");
-    assert_eq!(file.report.unmapped_classes, ["Soldier 10"]);
-    assert!(file.custom.feats.iter().any(|record| record.name == "Soldier"));
-    assert_eq!(file.character_input.chosen.class_levels[0].class_id, "class:soldier");
-    assert!(engine_verdict(&character_input(&file)).is_err(), "no Pathfinder engine row can compute a Starfinder soldier");
+    assert_eq!(file.game_system, "starfinder-1e");
+    assert!(file.report.unmapped_classes.is_empty(), "{:?}", file.report.unmapped_classes);
+    assert!(!file.custom.feats.iter().any(|record| record.name == "Soldier"));
+    assert_eq!(file.character_input.chosen.class_levels[0].class_id, "core:class:soldier");
+    sf_verdict(&file).expect("the Starfinder engine computes the imported soldier");
 }
 
-/// The mapping table doc prints every row of the table it documents.
+/// The mapping table doc prints every row of the tables it documents, word for word: [`MAPPING`] and
+/// [`CUSTOM_PROPERTIES`] (SD-42 `decisions.md §6`), so a row the code changes cannot go stale in the doc.
 #[test]
 fn pcg_import_fixtures_the_mapping_doc_lists_every_key() {
     let doc = std::fs::read_to_string(repo_root().join("docs/architecture/pcg-import.md")).expect("the mapping table doc");
     let missing: Vec<&str> = MAPPING.iter().map(|(key, _)| *key).filter(|key| !doc.contains(&format!("`{key}`"))).collect();
     assert!(missing.is_empty(), "docs/architecture/pcg-import.md does not list: {missing:?}");
     assert!(MAPPING.iter().any(|(_, rule)| matches!(rule, KeyRule::Setting)));
+    let mut keys = String::from("| `.pcg` key | Outcome | Goes to |\n|---|---|---|\n");
+    for (key, rule) in MAPPING {
+        let (outcome, goes_to) = match rule {
+            KeyRule::Field(what) => ("mapped", *what),
+            KeyRule::Record(what) => ("custom", *what),
+            KeyRule::Derived(what) => ("derived", *what),
+            KeyRule::Setting => ("setting", "PCGen's own setup; reported only"),
+        };
+        keys.push_str(&format!("| `{key}` | {outcome} | {goes_to} |\n"));
+    }
+    let mut properties = String::from("| `EQUIPNAME` property | Goes to |\n|---|---|\n");
+    for (property, goes_to) in CUSTOM_PROPERTIES {
+        // A `|` inside a cell is Markdown's `\|`.
+        properties.push_str(&format!("| `{}` | {} |\n", property.replace('|', "\\|"), goes_to.replace('|', "\\|")));
+    }
+    for (name, table) in [("MAPPING", keys), ("CUSTOM_PROPERTIES", properties)] {
+        assert!(doc.contains(&table), "docs/architecture/pcg-import.md does not print {name} as the code holds it; print:\n{table}");
+    }
 }
 
 /// The file's rank is the row the engine reads, on all three, with nothing held back. A file with no

@@ -11,8 +11,18 @@
 //! the engine's class list refuses would refuse the whole character, so it becomes a custom spell.
 
 use std::collections::BTreeMap;
+use std::sync::OnceLock;
 
+use codex::rules_core::body_slots::{BodySlot, Enhanceable};
 use codex::rules_core::class_seeds::canonical_seeds_for;
+use codex::rules_core::corpus_loader::{BookCorpusRoot, load_equipment_corpus};
+use codex::rules_core::equipment_effects::stand_in_record;
+use codex::rules_core::equipment_resolver::equipment_converted_resolve;
+use codex::rules_core::game_system::{GameSystem, runtime_repo_root};
+use codex::rules_core::money::gp_to_copper;
+use codex::rules_core::settled_corpus::corpus_book_dirs;
+use codex::rules_core::size::SizeCategory;
+use codex::rules_core::source_content::SourcePackageContent;
 use codex::rules_core::character_input::{
     AbilityScores, AcquisitionMode, ActiveState, CharacterClassLevel, CharacterInput, ChosenCharacterState, EquipmentSelection,
     SelectedChoice, SkillAllocation, SpellSelection,
@@ -20,8 +30,17 @@ use codex::rules_core::character_input::{
 use codex::rules_core::feat_effects::chooser_contract_for_feat;
 use codex::rules_core::feat_identity;
 use codex::rules_core::pilot_compute::build_pilot_headless_receipt;
+use codex::rules_core::pilot_compute::sf_abilities::{self, SfAbilityBuild};
+use codex::rules_core::pilot_compute::sf_chassis::{self, SfChassisBuild};
+use codex::rules_core::pilot_compute::sf_defense::{self, SfBuild};
+use codex::rules_core::pilot_compute::sf_loadout::{self, SfLoadout};
+use codex::rules_core::pilot_compute::{sf_attack, sf_skills, sf_spells};
+use codex::rules_core::sheet_rule::{Ability, SheetRulePackage, offer_selects, split_rule_id};
+use codex::saved_character::equipment_sets::{
+    CopyFacts, CopyKey, DEFAULT_SET_NAME, EquipmentSet, EquipmentSets, Location, SetEntry, copy_keys, eqmod_option_key, project,
+};
 
-use super::catalog::{Catalog, fold};
+use super::catalog::{Catalog, fold, slug};
 use super::parse::{Line, Tag, looks_like_a_character, parse};
 use super::wire::*;
 
@@ -43,13 +62,13 @@ pub const MAPPING: &[(&str, KeyRule)] = &[
     ("CLASS", KeyRule::Field("classLevels")),
     ("RACE", KeyRule::Field("raceId")),
     ("STAT", KeyRule::Field("abilityScores, plus the race's adjustments")),
-    ("ABILITY", KeyRule::Field("CATEGORY:FEAT to selectedFeats + a target choice; other categories to a custom feat")),
+    ("ABILITY", KeyRule::Field("CATEGORY:FEAT to selectedFeats + a target choice; a Favored Class Bonus taken as hit points or skill ranks to custom.grants and skillAllocations; other categories to a custom feat")),
     ("FEAT", KeyRule::Field("selectedFeats + a target choice (the older form of ABILITY)")),
     ("SKILL", KeyRule::Field("skillAllocations, ranks summed over CLASSBOUGHT")),
     ("SPELLNAME", KeyRule::Field("spellsSelected")),
-    ("EQUIPNAME", KeyRule::Field("equipmentSelections, BASEITEM first, PLUSnW/A/S to an applied +n modifier")),
-    ("EQUIPSET", KeyRule::Field("activeState: a location at the set's top level is worn; Carried, Not Carried and anything inside a container are carried")),
-    ("CALCEQUIPSET", KeyRule::Field("which EQUIPSET is the worn one")),
+    ("EQUIPNAME", KeyRule::Field("one equipmentSelections row and one equipmentSets stack per place the line is in, its QUANTITY the stack's pieces; BASEITEM first, PLUSnW/A/S to an applied +n modifier; the custom name and every DATA property per CUSTOM_PROPERTIES")),
+    ("EQUIPSET", KeyRule::Field("equipmentSets: a slot word to a Slot (PCGEN_SLOTS), Equipped, Carried, Not Carried, or inside the entry above it; activeState is the set's projection")),
+    ("CALCEQUIPSET", KeyRule::Field("which EQUIPSET is the set imported, and its name")),
     ("MONEY", KeyRule::Field("money.totalCopper, gp x 100")),
     ("LANGUAGE", KeyRule::Field("the Languages custom feat (the Pathfinder sheet has no language list to fill)")),
     ("ALIGN", KeyRule::Field("bio.alignment")),
@@ -93,7 +112,7 @@ pub const MAPPING: &[(&str, KeyRule)] = &[
     ("FOLLOWER", KeyRule::Record("a custom feat")),
     ("CHRONICLEENTRY", KeyRule::Record("a custom feat")),
     ("TEMPBONUS", KeyRule::Record("a custom feat")),
-    ("CLASSABILITIESLEVEL", KeyRule::Derived("hit points and skill points per level")),
+    ("CLASSABILITIESLEVEL", KeyRule::Field("hitPoints: each level's HITPOINTS, when the file states every level's; skill points per level are derived")),
     ("WEAPONPROF", KeyRule::Derived("proficiencies")),
     ("FEATPOOL", KeyRule::Derived("feat budget")),
     ("USERPOOL", KeyRule::Derived("ability pools")),
@@ -131,6 +150,13 @@ pub const MAPPING: &[(&str, KeyRule)] = &[
 ];
 
 const SOURCE_PACKAGE_ID: &str = "pf1.core_rulebook";
+/// A Starfinder character's `sourcePackageId` and `gameSystem`: the id the app's Starfinder
+/// adapter is routed by (`rule_system_adapter.rs`).
+pub const SF_SOURCE_PACKAGE_ID: &str = GameSystem::Starfinder1e.id();
+const PF_GAME_SYSTEM: &str = "pf1";
+/// The app's Starfinder credits row (`sf_adapter.rs` `MARKET_CREDITS_CHOICE`): credits beyond what
+/// the held items' prices explain.
+const SF_CREDITS_CHOICE: &str = "market.credits_adjustment";
 const WORN: &str = "EquippedActive";
 const CARRIED: &str = "SelectedInactive";
 const POWER_ATTACK_ROW: &str = "power_attack";
@@ -146,14 +172,69 @@ const ABILITY_NAMES: [(&str, &str); 6] = [
     ("CHA", "charisma"),
 ];
 
+/// `custom.json`'s largest grant (`character_custom.rs` `MAX_GRANT_VALUE`).
+const MAX_GRANT_VALUE: i32 = 12;
 /// `custom.json`'s limits (`character_custom.rs`): a record past them refuses the whole file.
 const MAX_RECORDS: usize = 200;
 const MAX_NAME: usize = 120;
 const MAX_DESCRIPTION: usize = 10_000;
 const MAX_STATS: usize = 40;
 const MAX_STAT_TEXT: usize = 400;
-/// One selection row per copy, so a stack of ammunition stays a bounded list.
-const MAX_COPIES: u32 = 99;
+
+/// PCGen's location words with a place on the body: the 26 `EQSLOT` names of the pinned oracle's
+/// `system/gameModes/Pathfinder/equipmentslots.lst` (as `data/equipment_types.json` maps them), then
+/// the hand and natural-weapon words of PCGen's `Constants.java`. `BodySlot::None` reads as
+/// Equipped; a word in no row reads as Equipped with one warning per import (`decisions.md` SD-a).
+pub const PCGEN_SLOTS: &[(&str, BodySlot)] = &[
+    ("Armor", BodySlot::Armor),
+    ("Belt", BodySlot::Belt),
+    ("Body", BodySlot::Body),
+    ("Chest", BodySlot::Chest),
+    ("Eyes", BodySlot::Eyes),
+    ("Feet", BodySlot::Feet),
+    ("Hands", BodySlot::Hands),
+    ("Head", BodySlot::Head),
+    ("Headband", BodySlot::Headband),
+    ("Neck", BodySlot::Neck),
+    ("Ring", BodySlot::Ring),
+    ("Shield", BodySlot::Shield),
+    ("Shoulders", BodySlot::Shoulders),
+    ("Wrist", BodySlot::Wrist),
+    ("Torso", BodySlot::None),
+    ("Weapon", BodySlot::WieldMain),
+    ("Tattoo Head", BodySlot::None),
+    ("Tattoo Shoulders", BodySlot::None),
+    ("Tattoo Neck", BodySlot::None),
+    ("Tattoo Chest", BodySlot::None),
+    ("Tattoo Body", BodySlot::None),
+    ("Tattoo Belt", BodySlot::None),
+    ("Tattoo Wrist", BodySlot::None),
+    ("Tattoo Hands", BodySlot::None),
+    ("Tattoo Ring", BodySlot::None),
+    ("Tattoo Feet", BodySlot::None),
+    ("Primary Hand", BodySlot::WieldMain),
+    ("Secondary Hand", BodySlot::WieldOff),
+    ("Both Hands", BodySlot::WieldTwoHanded),
+    ("Double Weapon", BodySlot::WieldTwoHanded),
+    ("Two Weapons", BodySlot::WieldMain),
+    ("Unarmed", BodySlot::None),
+    ("Natural-Primary", BodySlot::None),
+    ("Natural-Secondary", BodySlot::None),
+];
+
+/// What an `EQUIPNAME` line's customisation becomes (`decisions.md` §6). A `DATA` key in no row, and
+/// an eqmod Buy Custom has no option for, is a property line and a warning (SD-e).
+pub const CUSTOM_PROPERTIES: &[(&str, &str)] = &[
+    ("NAME", "CopyFacts.name, when it is not the record's own name"),
+    ("EQMOD PLUSnW/A/S", "applied_modifiers, the copy's +n"),
+    ("EQMOD material, masterwork, special ability", "eqmods: the Buy Custom option key (equipment_sets::eqmod_option_key)"),
+    ("EQMOD / ALTEQMOD _DAMAGE|<die>", "CopyFacts.damage_override, the die as written"),
+    ("SIZE", "CopyFacts.size (Medium is no size)"),
+    ("SPROP", "CopyFacts.properties, one line per '; '-separated part"),
+    ("COST (line)", "CopyFacts.cost_override_copper, when it differs from the record's price; COSTMOD is already in it"),
+    ("WT (line)", "CopyFacts.weight_override_lbs, when it differs from the record's weight"),
+    ("KEY", "a lookup candidate for the record"),
+];
 
 /// Converts the text of one `.pcg`. Refuses only a file that is not a PCGen character.
 pub fn convert(text: &str, source_file: &str, catalog: &Catalog) -> Result<ImportFile, String> {
@@ -163,12 +244,91 @@ pub fn convert(text: &str, source_file: &str, catalog: &Catalog) -> Result<Impor
             "{source_file} is not a PCGen 6 character: it has no PCGVERSION or CHARACTERNAME line (PCGen 5 and older wrote another format)"
         ));
     }
+    // `decisions.md §8`: the game mode picks the catalog, so a Starfinder file reads Starfinder records.
+    let game_mode = lines.iter().find(|line| line.key() == "GAMEMODE").map(|line| line.value().to_owned()).unwrap_or_default();
+    let catalog = catalog.for_game_mode(&game_mode)?;
     let mut importer = Importer::new(source_file, catalog);
     importer.read_equipment_sets(&lines);
     for line in &lines {
         importer.read(line);
     }
-    Ok(importer.finish(&lines))
+    let file = importer.finish(&lines);
+    // `decisions.md §21` Q-A: a companion file (a `MASTER` line: `sf_mechanic_drone`'s drone) imports
+    // as its own character only when the Starfinder engine computes it as one; Codex computes a drone
+    // on its master's sheet (`sf_drone_print`), so otherwise the file is refused by name.
+    if let (Some(package), Some(master)) = (catalog.starfinder_package(), lines.iter().find(|line| line.key() == "MASTER"))
+        && let Err(reason) = starfinder_verdict(package, &character_input_of(&file))
+    {
+        let kind = master.get("TYPE").unwrap_or("companion");
+        let master_file = master.get("FILE").unwrap_or("its master's file");
+        return Err(format!(
+            "{source_file} is a {kind} file, a companion of {}: Codex computes a {kind} on its master's sheet, so import the master ({master_file}). The Starfinder engine does not compute it alone: {reason}",
+            master.value()
+        ));
+    }
+    Ok(file)
+}
+
+/// Some of an `EQUIPNAME` line's pieces in one place of the imported set: one stack.
+struct Placement {
+    /// The `EQUIPSET` entry's `ID`; `None` for pieces no entry places (Not Carried).
+    entry: Option<String>,
+    /// The top-level location word (`Armor`, `Carried`, …); empty inside a container.
+    word: String,
+    /// The entry this one is inside.
+    parent: Option<String>,
+    pieces: u32,
+    /// One piece's weight, the line's `WT`; what a Create item container holds is summed from it.
+    weight_lbs: f64,
+    /// The stack once the line is read: a row of `equipment`, or a custom record's id.
+    held: Option<Held>,
+    /// The line's custom name and properties, the same in every place it is in.
+    facts: CopyFacts,
+}
+
+enum Held {
+    Row(usize),
+    Custom(String),
+}
+
+/// What [`Importer::customised`] reads from one mapped line.
+#[derive(Default)]
+struct Customised {
+    facts: CopyFacts,
+    modifiers: Vec<String>,
+    eqmods: Vec<String>,
+}
+
+/// The Notes block's sub-headings, in the order the block prints them (`decisions.md §7`).
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
+enum NoteKind {
+    Item,
+    Property,
+    NoCopies,
+    UnknownKey,
+    Class,
+    Race,
+    Spell,
+    Eqmod,
+    Location,
+    CustomFeat,
+}
+
+impl NoteKind {
+    fn heading(self) -> &'static str {
+        match self {
+            NoteKind::Item => "Items with no Codex record",
+            NoteKind::Property => "Properties kept as text",
+            NoteKind::NoCopies => "Lines with 0 copies",
+            NoteKind::UnknownKey => "PCGen keys with no mapping",
+            NoteKind::Class => "Classes with no Codex record",
+            NoteKind::Race => "Race with no Codex record",
+            NoteKind::Spell => "Spells not kept",
+            NoteKind::Eqmod => "Eqmods kept as text",
+            NoteKind::Location => "Locations read as Equipped",
+            NoteKind::CustomFeat => "Lines kept as custom feats",
+        }
+    }
 }
 
 /// A spell the file names and Codex holds, until the engine has had its say.
@@ -199,9 +359,23 @@ struct Importer<'a> {
     money: MoneyWire,
     biography: Vec<(String, String)>,
     custom: CustomWire,
-    /// Worn and carried counts left to hand out, by the folded EQUIPSET value.
-    worn: BTreeMap<String, u32>,
-    carried: BTreeMap<String, u32>,
+    /// Each `EQUIPNAME` line's places, in file order, and the next line's index.
+    placements: Vec<Vec<Placement>>,
+    next_item: usize,
+    set_name: String,
+    /// The Notes block's lines: kind, the report line they come from (file order), text.
+    notes: Vec<(NoteKind, usize, String)>,
+    /// Starfinder's ability increases as the file states them: (ability, the +n PCGen applied).
+    increases: Vec<(&'static str, i16)>,
+    /// Starfinder picks read from selection lines, until the engine has had its say: the pick, its
+    /// line and the report line it wrote.
+    picks: Vec<(ChoiceWire, Line, usize)>,
+    /// Each `CLASSABILITIESLEVEL` line's class name, level and `HITPOINTS`, in file order.
+    level_hit_points: Vec<(String, u8, Option<u8>)>,
+    /// The favored class bonus taken as hit points: one per level so spent.
+    favored_hit_points: i32,
+    /// The favored class bonus taken as skill ranks: one skill name per rank.
+    favored_skill_ranks: Vec<String>,
 }
 
 impl<'a> Importer<'a> {
@@ -225,14 +399,22 @@ impl<'a> Importer<'a> {
             money: MoneyWire::default(),
             biography: Vec::new(),
             custom: CustomWire::default(),
-            worn: BTreeMap::new(),
-            carried: BTreeMap::new(),
+            placements: Vec::new(),
+            next_item: 0,
+            set_name: DEFAULT_SET_NAME.to_owned(),
+            notes: Vec::new(),
+            increases: Vec::new(),
+            picks: Vec::new(),
+            level_hit_points: Vec::new(),
+            favored_hit_points: 0,
+            favored_skill_ranks: Vec::new(),
         }
     }
 
-    /// EQUIPSET lines may sit before or after what they name, so they are read first. A location at
-    /// the top level of the worn set is worn; `Carried` and `Not Carried` are not, and an item in a
-    /// container is in the container.
+    /// EQUIPSET lines may sit before or after what they name, so they are read first. Each entry of
+    /// the imported set (`CALCEQUIPSET`) is matched to the `EQUIPNAME` line it names (by name, then
+    /// by the line's `KEY` or `BASEITEM`) and takes up to that line's pieces; what no entry places
+    /// is Not Carried (Carried in a file with no set). One line in two places is two stacks (`decisions.md` SD-c).
     fn read_equipment_sets(&mut self, lines: &[Line]) {
         let worn_set = lines
             .iter()
@@ -248,16 +430,60 @@ impl<'a> Importer<'a> {
                     .map(str::to_owned)
             })
             .unwrap_or_default();
+        if let Some(name) = lines
+            .iter()
+            .filter(|line| line.key() == "EQUIPSET" && line.get("ID") == Some(worn_set.as_str()))
+            .map(|line| line.value().trim())
+            .find(|name| !name.is_empty())
+        {
+            self.set_name = name.chars().take(codex::saved_character::equipment_sets::SET_NAME_MAX_CHARS).collect();
+        }
+        let items: Vec<(String, Vec<String>)> = lines
+            .iter()
+            .filter(|line| line.key() == "EQUIPNAME")
+            .map(|line| {
+                let (base_item, data) = customization(line);
+                let others = [data.get("KEY").cloned(), base_item].into_iter().flatten().map(|name| fold(&name)).collect();
+                (fold(line.value()), others)
+            })
+            .collect();
+        let mut left: Vec<u32> = lines.iter().filter(|line| line.key() == "EQUIPNAME").map(|line| quantity(line.get("QUANTITY"))).collect();
+        let weights: Vec<f64> = lines.iter().filter(|line| line.key() == "EQUIPNAME").map(|line| amount(line.get("WT")).unwrap_or(0.0)).collect();
+        self.placements = items.iter().map(|_| Vec::new()).collect();
         let top_level = worn_set.split('.').count() + 1;
         for line in lines.iter().filter(|line| line.key() == "EQUIPSET") {
             let (Some(id), Some(value)) = (line.get("ID"), line.get("VALUE")) else { continue };
             if !id.starts_with(&format!("{worn_set}.")) {
                 continue;
             }
-            let copies = quantity(line.get("QUANTITY"));
-            let is_worn = id.split('.').count() == top_level && !matches!(line.value(), "Carried" | "Not Carried");
-            let target = if is_worn { &mut self.worn } else { &mut self.carried };
-            *target.entry(fold(value)).or_default() += copies;
+            let value = fold(value);
+            let by_name = items.iter().enumerate().position(|(at, (name, _))| *name == value && left[at] > 0);
+            let by_key = || items.iter().enumerate().position(|(at, (_, others))| others.contains(&value) && left[at] > 0);
+            let Some(at) = by_name.or_else(by_key) else {
+                self.report.warnings.push(format!("EQUIPSET {id} ({}) names no line with pieces left; not read", line.get("VALUE").unwrap_or_default()));
+                continue;
+            };
+            let pieces = quantity(line.get("QUANTITY")).min(left[at]);
+            left[at] -= pieces;
+            let depth = id.split('.').count();
+            self.placements[at].push(Placement {
+                entry: Some(id.to_owned()),
+                word: if depth == top_level { line.value().trim().to_owned() } else { String::new() },
+                parent: (depth > top_level).then(|| id.rsplit_once('.').map_or_else(String::new, |(parent, _)| parent.to_owned())),
+                pieces,
+                weight_lbs: weights[at],
+                held: None,
+                facts: CopyFacts::default(),
+            });
+        }
+        // PCGen counts only the set's entries as carried (its export lists nothing else): pieces no
+        // entry places are Not Carried, unless the file states no set at all.
+        let has_set = lines.iter().any(|line| line.key() == "EQUIPSET" && line.get("ID").is_some_and(|id| id.starts_with(&format!("{worn_set}."))));
+        let unplaced = if has_set { "Not Carried" } else { "Carried" };
+        for ((places, rest), weight_lbs) in self.placements.iter_mut().zip(left).zip(weights) {
+            if rest > 0 {
+                places.push(Placement { entry: None, word: unplaced.to_owned(), parent: None, pieces: rest, weight_lbs, held: None, facts: CopyFacts::default() });
+            }
         }
     }
 
@@ -302,6 +528,7 @@ impl<'a> Importer<'a> {
             "HAIRCOLOR" => self.bio_field(line, "bio.hair", |bio| &mut bio.hair),
             "EYECOLOR" => self.bio_field(line, "bio.eyes", |bio| &mut bio.eyes),
             "EQUIPSET" | "CALCEQUIPSET" => self.mapped(line, "activeState"),
+            "CLASSABILITIESLEVEL" => self.read_level_hit_points(line),
             _ => self.read_by_rule(line, &key),
         }
     }
@@ -321,6 +548,7 @@ impl<'a> Importer<'a> {
                 if !self.report.unknown_keys.iter().any(|known| known == key) {
                     self.report.unknown_keys.push(key.to_owned());
                 }
+                self.unmapped(NoteKind::UnknownKey, format!("{key}: kept as a custom feat"));
                 self.custom_feat(line, "A PCGen line Codex has no mapping for.");
             }
         }
@@ -346,6 +574,7 @@ impl<'a> Importer<'a> {
             }
             None => {
                 self.report.unmapped_classes.push(format!("{name} {level}"));
+                self.unmapped(NoteKind::Class, format!("{name} {level}: kept as a custom feat"));
                 self.custom_feat(line, "A class Codex has no record of.");
             }
         }
@@ -357,6 +586,7 @@ impl<'a> Importer<'a> {
             Some(id) => self.mapped(line, &id),
             None => {
                 self.report.unmapped_race = Some(self.race_name.clone());
+                self.unmapped(NoteKind::Race, format!("{}: kept as a custom feat; no racial ability adjustment applied", self.race_name));
                 self.custom_feat(line, "A race Codex has no record of; no racial ability adjustment was applied.");
             }
         }
@@ -374,12 +604,56 @@ impl<'a> Importer<'a> {
         }
     }
 
+    /// `CLASSABILITIESLEVEL:Cleric=2|HITPOINTS:8|…`: the level's hit die result (before Constitution).
+    fn read_level_hit_points(&mut self, line: &Line) {
+        let (class, level) = line.value().rsplit_once('=').unwrap_or((line.value(), ""));
+        let level = level.trim().parse::<u8>().unwrap_or(0);
+        let rolled = line.get("HITPOINTS").and_then(|value| value.trim().parse::<u8>().ok());
+        self.level_hit_points.push((class.trim().to_owned(), level, rolled));
+        self.mapped(line, if rolled.is_some() { "hitPoints.levels" } else { "skill points per level (derived)" });
+    }
+
+    /// `ABILITY:Favored Class Bonus|…|KEY:Bonus Hit Point|APPLIEDTO:,,` (one entry per level spent
+    /// so) or `KEY:Bonus Skill Point|APPLIEDTO:Diplomacy,Diplomacy` (one skill per rank), PCGen's
+    /// `BONUS:HP|CURRENTMAX|1` and `BONUS:SKILLRANK|LIST|1` per entry. True when
+    /// the line is one of the two; any other favored class bonus is a custom feat, as before.
+    fn read_favored_class_bonus(&mut self, line: &Line, name: &str) -> bool {
+        if line.value() != "Favored Class Bonus" {
+            return false;
+        }
+        let entries: Vec<String> = line.get("APPLIEDTO").unwrap_or_default().split(',').map(|entry| entry.trim().to_owned()).collect();
+        // The older saves key them `Bonus Hit Point` / `Bonus Skill Point`, the current data
+        // `Favored Class Bonus ~ Hit Point` / `~ Skill Rank`.
+        match name {
+            "Bonus Hit Point" | "Favored Class Bonus ~ Hit Point" => {
+                let levels = i32::try_from(entries.len()).unwrap_or(0);
+                self.favored_hit_points += levels;
+                self.mapped(line, &format!("custom.grants hit_points +{levels} (favored class bonus)"));
+                true
+            }
+            "Bonus Skill Point" | "Favored Class Bonus ~ Skill Rank" => {
+                let ranks: Vec<String> = entries.into_iter().filter(|skill| !skill.is_empty()).collect();
+                let to = format!("skillAllocations +1 rank each: {} (favored class bonus)", ranks.join(", "));
+                self.favored_skill_ranks.extend(ranks);
+                self.mapped(line, &to);
+                true
+            }
+            _ => false,
+        }
+    }
+
     fn read_ability(&mut self, line: &Line) {
         let name = line.get("KEY").unwrap_or(line.value()).to_owned();
         let category = line.get("CATEGORY").unwrap_or_default().to_owned();
+        if self.catalog.starfinder_package().is_none() && self.read_favored_class_bonus(line, &name) {
+            return;
+        }
         if category == "FEAT" {
             let targets = applied_to(line);
             self.read_feat(line, &name, &targets);
+            return;
+        }
+        if self.catalog.starfinder_package().is_some() && (self.read_starfinder_ability(line, &name, &category) || self.read_starfinder_pick(line, &name)) {
             return;
         }
         if let Some(ability) = floating_bonus_ability(&name) {
@@ -393,6 +667,82 @@ impl<'a> Importer<'a> {
         }
         let description = line.get("DESC").unwrap_or("Imported from PCGen.").to_owned();
         self.custom_named_feat(line, &name, &description);
+    }
+
+    /// A Starfinder theme, a class's key-ability choice (`Soldier Key Ability ~ DEX`) or an ability
+    /// increase (`PC Level 5 Stat Boost ~ CON +2`). False for any other line.
+    fn read_starfinder_ability(&mut self, line: &Line, name: &str, category: &str) -> bool {
+        if category == "Theme" {
+            let Some(id) = self.catalog.theme_id(name).map(str::to_owned) else { return false };
+            self.feats.push(id.clone());
+            self.mapped(line, &format!("selectedFeats {id} (theme)"));
+            return true;
+        }
+        let Some((left, right)) = name.split_once(" ~ ") else { return false };
+        let ability = |word: &str| ABILITY_NAMES.iter().find(|(short, _)| short.eq_ignore_ascii_case(word)).map(|(short, long)| (*short, *long));
+        if let Some(class) = left.strip_suffix(" Key Ability") {
+            let (Some(class_id), Some((short, _))) = (self.catalog.class_id(class).map(str::to_owned), ability(right.trim())) else { return false };
+            self.choices.push(ChoiceWire { choice_set_id: class_id.clone(), selection_id: short.to_owned() });
+            self.mapped(line, &format!("selectedChoices {class_id} {short}"));
+            return true;
+        }
+        if left.starts_with("PC Level ") && left.ends_with(" Stat Boost") {
+            let mut words = right.split_whitespace();
+            let (Some((_, long)), Some(Ok(plus))) = (words.next().and_then(ability), words.next().map(|n| n.trim_start_matches('+').parse::<i16>())) else {
+                return false;
+            };
+            self.increases.push((long, plus));
+            self.mapped(line, &format!("abilityScores.{long} +{plus}"));
+            return true;
+        }
+        false
+    }
+
+    /// A Starfinder selection line (`PRIMARY FIGHTING STYLE ~ Blitz`; `Opening Volley Choice` keyed
+    /// `Choose Combat Feat`) is the pick the app's choices dialog makes: the option record the key
+    /// names (alone, or after the line's own name) under the first rule that offers it. False when
+    /// no record or no offer matches.
+    fn read_starfinder_pick(&mut self, line: &Line, key: &str) -> bool {
+        let Some(package) = self.catalog.starfinder_package() else { return false };
+        let wanted = [slug(key), slug(&format!("{} {key}", line.value()))];
+        let Some(option) = package
+            .rules
+            .values()
+            .filter(|rule| !rule.id.contains('#') && wanted.iter().any(|w| split_rule_id(&rule.id).2 == w))
+            .min_by_key(|rule| !rule.id.starts_with("core:"))
+        else {
+            return false;
+        };
+        let Some(slot) = package.rules.values().find(|rule| rule.offers.as_ref().is_some_and(|offer| offer_selects(offer, option))) else {
+            return false;
+        };
+        let pick = ChoiceWire { choice_set_id: slot.id.clone(), selection_id: option.id.clone() };
+        self.mapped(line, &format!("selectedChoices {} {}", pick.choice_set_id, pick.selection_id));
+        self.picks.push((pick.clone(), line.clone(), self.report.lines.len() - 1));
+        self.choices.push(pick);
+        true
+    }
+
+    /// A pick the Starfinder engine refuses would refuse the whole character, so picks are undone,
+    /// last first, until its verdict is the one it gives without them (the credits the file states
+    /// are held after this); each undone line is a custom feat, as before picks were read.
+    fn keep_the_picks_the_engine_takes(&mut self, package: &SheetRulePackage, race_id: &str, class_levels: &[ClassLevelWire], scores: &AbilitiesWire) {
+        let verdict = |this: &Self| starfinder_verdict(package, &engine_input(&this.chosen_so_far(race_id, class_levels, scores)));
+        let mut without = self.chosen_so_far(race_id, class_levels, scores);
+        without.selected_choices.retain(|choice| !self.picks.iter().any(|(pick, _, _)| pick == choice));
+        let unpicked = starfinder_verdict(package, &engine_input(&without));
+        for (pick, line, report_line) in std::mem::take(&mut self.picks).into_iter().rev() {
+            if verdict(self) == unpicked {
+                break;
+            }
+            self.choices.retain(|choice| *choice != pick);
+            let name = line.get("KEY").unwrap_or(line.value()).to_owned();
+            self.custom_named_feat(&line, &name, line.get("DESC").unwrap_or("Imported from PCGen."));
+            // The custom feat wrote a new report line; it replaces the pick's own.
+            let written = self.report.lines.pop().expect("the custom feat's report line");
+            self.report.lines[report_line] = written;
+            self.report.warnings.push(format!("{name}: the Starfinder engine refuses the pick, so it is a custom feat"));
+        }
     }
 
     /// The older form: `FEAT:Weapon Focus (Longsword)|...`, or a separate `APPLIEDTO`.
@@ -470,6 +820,8 @@ impl<'a> Importer<'a> {
         let class = line.get("CLASS").unwrap_or_default();
         let class_id = self.catalog.class_id(class).map(str::to_owned);
         let (true, Some(source_class_id)) = (self.catalog.holds_spell(&name), class_id) else {
+            let why = if self.catalog.holds_spell(&name) { "no Codex class to cast it" } else { "no Codex record" };
+            self.unmapped(NoteKind::Spell, format!("{name} ({class}): {why}; kept as a custom spell"));
             self.custom_spell(line, &name, class);
             return;
         };
@@ -498,56 +850,220 @@ impl<'a> Importer<'a> {
     }
 
     fn read_item(&mut self, line: &Line) {
+        let index = self.next_item;
+        self.next_item += 1;
         let name = line.value().to_owned();
-        let customization = line.tags.iter().find(|tag| tag.key == "CUSTOMIZATION").map(Tag::nested).unwrap_or_default();
-        let base_item = customization.iter().find(|tag| tag.key == "BASEITEM").map(|tag| tag.value.clone());
-        let data = customization.iter().find(|tag| tag.key == "DATA").map(|tag| data_fields(&tag.value)).unwrap_or_default();
-        let data_key = data.get("KEY").cloned();
-        let copies = quantity(line.get("QUANTITY"));
-        let names_it = [Some(name.clone()), data_key, base_item.clone()];
-
-        let (worn, carried) = self.split_copies(&names_it, copies);
+        if quantity(line.get("QUANTITY")) == 0 {
+            // `decisions.md` SD-d: nothing is held, and the player is told.
+            self.report.warnings.push(format!("{name}: 0 copies in the file"));
+            self.unmapped(NoteKind::NoCopies, format!("{name}: 0 copies in the file"));
+            self.mapped(line, "not held: 0 copies in the file");
+            return;
+        }
+        let (base_item, data) = customization(line);
+        // Worn: a top-level place that is neither Carried nor Not Carried.
+        let places = self.placements.get(index).map_or(&[][..], Vec::as_slice);
+        let worn: u32 = places.iter().filter(|place| !matches!(place.word.as_str(), "" | "Carried" | "Not Carried")).map(|place| place.pieces).sum();
+        let carried = places.iter().map(|place| place.pieces).sum::<u32>() - worn;
         let item_key = [base_item.as_deref(), data.get("KEY").map(String::as_str), Some(name.as_str())]
             .into_iter()
             .flatten()
             .find_map(|candidate| self.catalog.equipment_key(candidate))
             .map(str::to_owned);
         let Some(item_key) = item_key else {
-            self.custom_item(line, &name, worn, carried);
+            let before = self.custom.equipment.len();
+            self.custom_item(line, &name, base_item.as_deref().unwrap_or(&name), &data);
+            if self.custom.equipment.len() > before {
+                let id = self.custom.equipment[before].id.clone();
+                for place in self.placements.get_mut(index).into_iter().flatten() {
+                    place.held = Some(Held::Custom(id.clone()));
+                }
+            }
             return;
         };
 
-        let (modifiers, other_mods) = equipment_modifiers(data.get("EQMOD").map_or("", String::as_str));
-        if !other_mods.is_empty() {
-            self.report.warnings.push(format!("{name}: its modifiers {} are not applied", other_mods.join(", ")));
+        let custom = self.customised(line, &name, base_item.as_deref(), &data, &item_key);
+        for place in self.placements.get_mut(index).into_iter().flatten() {
+            place.held = Some(Held::Row(self.equipment.len()));
+            place.facts = custom.facts.clone();
+            // The state is the set's projection, set in `place_copies`.
+            self.equipment.push(EquipmentWire {
+                item_id: item_key.clone(),
+                active_state: CARRIED.to_owned(),
+                applied_modifiers: custom.modifiers.clone(),
+                eqmods: custom.eqmods.clone(),
+            });
         }
-        if worn + carried > MAX_COPIES {
-            self.report.warnings.push(format!("{name}: {} copies listed as {MAX_COPIES}", worn + carried));
-        }
-        let worn = worn.min(MAX_COPIES);
-        let carried = carried.min(MAX_COPIES - worn);
-        let row = |active_state: &str| EquipmentWire {
-            item_id: item_key.clone(),
-            active_state: active_state.to_owned(),
-            applied_modifiers: modifiers.clone(),
-        };
-        self.equipment.extend((0..worn).map(|_| row(WORN)));
-        self.equipment.extend((0..carried).map(|_| row(CARRIED)));
         self.mapped(line, &format!("equipmentSelections {item_key}: {worn} worn, {carried} carried"));
     }
 
-    /// Hands out this line's copies from what the sets say. Whatever no set names is carried.
-    fn split_copies(&mut self, names: &[Option<String>], copies: u32) -> (u32, u32) {
-        let keys: Vec<String> = names.iter().flatten().map(|name| fold(name)).collect();
-        let mut worn = 0;
-        for key in &keys {
-            if let Some(left) = self.worn.get_mut(key) {
-                let taken = (*left).min(copies - worn);
-                *left -= taken;
-                worn += taken;
+    /// A mapped line's customisation under [`CUSTOM_PROPERTIES`]; a property Codex has no field
+    /// for is kept as a property line, with a warning naming it (SD-e).
+    fn customised(&mut self, line: &Line, name: &str, base_item: Option<&str>, data: &BTreeMap<String, String>, item_key: &str) -> Customised {
+        let mut out = Customised::default();
+        let mut kept_as_text: Vec<String> = Vec::new();
+        let custom_name = data.get("NAME").map_or(name, String::as_str).trim();
+        let record_names = [Some(item_key), base_item].into_iter().flatten().map(fold).collect::<Vec<_>>();
+        if !custom_name.is_empty() && !record_names.contains(&fold(custom_name)) {
+            out.facts.name = Some(custom_name.to_owned());
+        }
+        let eqmods = ["EQMOD", "ALTEQMOD"].into_iter().filter_map(|field| data.get(field)).flat_map(|mods| mods.split('.'));
+        let held = held_qualities(item_key);
+        for eqmod in eqmods.map(|eqmod| eqmod.trim().replace("&pipe;", "|")).filter(|eqmod| !eqmod.is_empty()) {
+            if let Some(die) = eqmod.strip_prefix("_DAMAGE|") {
+                out.facts.damage_override.get_or_insert_with(|| die.trim().to_owned());
+            } else if let Some(modifier) = enhancement_key(&eqmod) {
+                if !out.modifiers.contains(&modifier) {
+                    out.modifiers.push(modifier);
+                }
+            } else if let Some(option) = eqmod_option_key(&eqmod) {
+                if !out.eqmods.contains(&option) {
+                    out.eqmods.push(option);
+                }
+                // The option key drops a parameter (`|SPELLNAME[...]`); the line keeps it as text.
+                if eqmod.contains('|') {
+                    out.facts.properties.push(eqmod);
+                }
+            } else if !held.contains(&fold(eqmod.rsplit(" ~ ").next().unwrap_or(&eqmod))) {
+                // A quality the record already holds (`DISARM` on a heavy flail) is no line of its own (E4.21).
+                kept_as_text.push(format!("EQMOD {eqmod}"));
             }
         }
-        (worn, copies - worn)
+        out.facts.properties.extend(kept_as_text.iter().cloned());
+        if let Some(sprop) = data.get("SPROP") {
+            out.facts.properties.extend(sprop.split("; ").map(str::trim).filter(|part| !part.is_empty()).map(str::to_owned));
+        }
+        if let Some(code) = data.get("SIZE") {
+            match SizeCategory::from_base_size_code(code) {
+                Some(SizeCategory::Medium) => {}
+                Some(size) => out.facts.size = Some(size),
+                None => {
+                    out.facts.properties.push(format!("SIZE {code}"));
+                    kept_as_text.push("SIZE".to_owned());
+                }
+            }
+        }
+        for (key, value) in data.iter().filter(|(key, _)| !matches!(key.as_str(), "NAME" | "EQMOD" | "ALTEQMOD" | "SPROP" | "SIZE" | "COSTMOD" | "KEY")) {
+            out.facts.properties.push(format!("{key} {value}"));
+            kept_as_text.push(key.clone());
+        }
+        for field in kept_as_text {
+            let kind = if field.starts_with("EQMOD ") { NoteKind::Eqmod } else { NoteKind::Property };
+            self.unmapped(kind, format!("{name}: {field} kept as text"));
+            self.report.warnings.push(format!("{name}: {field} kept as text"));
+        }
+        // A record the converter cannot resolve states nothing to differ from.
+        if let Some((weight, cost)) = record_weight_and_cost(item_key) {
+            let differs = |line_value: f64, record: Option<f64>| record.is_none_or(|record| (record - line_value).abs() > 1e-6);
+            if let Some(wt) = line.get("WT").and_then(|wt| wt.trim().parse::<f64>().ok()).filter(|wt| differs(*wt, weight)) {
+                out.facts.weight_override_lbs = Some(wt);
+            }
+            if let Some(gp) = line.get("COST").and_then(|gp| gp.trim().parse::<f64>().ok()).filter(|gp| differs(*gp, cost)) {
+                out.facts.cost_override_copper = Some(gp_to_copper(gp));
+            }
+        }
+        out
+    }
+
+    /// The imported set and each stack's pieces, from the places the lines were read into. Every
+    /// row's `activeState` becomes the set's projection, the state the app's load keeps.
+    fn place_copies(&mut self) -> EquipmentSets {
+        let row_keys = copy_keys(self.equipment.iter().map(|row| (row.item_id.as_str(), copy_bonus(&row.applied_modifiers))));
+        let mut custom_ordinals: BTreeMap<String, u32> = BTreeMap::new();
+        let mut keyed: Vec<(&Placement, CopyKey)> = Vec::new();
+        for place in self.placements.iter().flatten() {
+            let key = match &place.held {
+                Some(Held::Row(row)) => row_keys[*row].clone(),
+                Some(Held::Custom(id)) => {
+                    let ordinal = custom_ordinals.entry(id.clone()).or_insert(0);
+                    *ordinal += 1;
+                    CopyKey { item_id: format!("custom:{id}"), bonus: 0, ordinal: *ordinal - 1 }
+                }
+                None => continue,
+            };
+            keyed.push((place, key));
+        }
+        let by_entry: BTreeMap<&str, &CopyKey> = keyed.iter().filter_map(|(place, key)| Some((place.entry.as_deref()?, key))).collect();
+        // What each entry holds, in lb, over every entry nested below it.
+        let mut contents: BTreeMap<&str, f64> = BTreeMap::new();
+        for (place, _) in &keyed {
+            let mut parent = place.parent.as_deref();
+            while let Some(entry) = parent {
+                *contents.entry(entry).or_insert(0.0) += f64::from(place.pieces) * place.weight_lbs;
+                parent = keyed.iter().find(|(above, _)| above.entry.as_deref() == Some(entry)).and_then(|(above, _)| above.parent.as_deref());
+            }
+        }
+        // The file states no capacity, so a Create item container holds what the file puts in it.
+        for (place, _) in &keyed {
+            let (Some(Held::Custom(id)), Some(lbs)) = (&place.held, place.entry.as_deref().and_then(|entry| contents.get(entry))) else { continue };
+            if let Some(record) = self.custom.equipment.iter_mut().find(|record| record.id == *id) {
+                record.container_capacity_lbs = Some(record.container_capacity_lbs.unwrap_or(0.0).max(*lbs));
+            }
+        }
+        let starfinder = self.catalog.starfinder_package().is_some();
+        let mut unknown_words: Vec<String> = Vec::new();
+        let mut locations = Vec::new();
+        let mut copies = BTreeMap::new();
+        for (place, key) in &keyed {
+            let location = match &place.parent {
+                Some(parent) => by_entry.get(parent.as_str()).map_or(Location::Carried, |container| Location::Inside { container: (*container).clone() }),
+                // Starfinder has no Pathfinder body slots: a worn line is Equipped (`decisions.md §8`).
+                None if starfinder && !matches!(place.word.as_str(), "Carried" | "Not Carried") => Location::Equipped,
+                None => location_word(&place.word).unwrap_or_else(|| {
+                    if !unknown_words.contains(&place.word) {
+                        unknown_words.push(place.word.clone());
+                    }
+                    Location::Equipped
+                }),
+            };
+            if location != Location::Carried {
+                locations.push(SetEntry { copy: key.clone(), location });
+            }
+            // PCGen's `QUANTITY` counts bundles; a stack counts pieces (`decisions.md §20`, E1.8).
+            let pieces = match place.held {
+                Some(Held::Row(_)) => place.pieces.saturating_mul(record_base_quantity(&key.item_id)),
+                _ => place.pieces,
+            };
+            copies.insert(key.map_key(), CopyFacts { quantity: Some(pieces), ..place.facts.clone() });
+        }
+        for (at, word) in unknown_words.into_iter().enumerate() {
+            let text = format!("{word}: a PCGen location Codex has no slot for; read as Equipped");
+            self.notes.push((NoteKind::Location, at, text.clone()));
+            self.report.warnings.push(text);
+        }
+        let set = EquipmentSet { name: self.set_name.clone(), locations };
+        let states = project(&set, &row_keys);
+        for (row, state) in self.equipment.iter_mut().zip(states) {
+            row.active_state = format!("{state:?}");
+        }
+        EquipmentSets { copies, ..EquipmentSets::new(set) }
+    }
+
+    /// Records a line the import could not map directly, at the report line being written (file order).
+    fn unmapped(&mut self, kind: NoteKind, text: String) {
+        self.notes.push((kind, self.report.lines.len(), text));
+    }
+
+    /// `## Imported from PCGen (<file>, <date>)`, then each kind's lines once, in file order.
+    fn notes_block(&mut self) -> String {
+        let days = std::time::SystemTime::now().duration_since(std::time::UNIX_EPOCH).map_or(0, |since| since.as_secs() / 86_400);
+        let mut block = format!("## Imported from PCGen ({}, {})\n", self.report.source_file, iso_date(days));
+        self.notes.sort_by_key(|(kind, at, _)| (*kind, *at));
+        let mut written: Vec<(NoteKind, &str)> = Vec::new();
+        for (kind, _, text) in &self.notes {
+            if written.contains(&(*kind, text.as_str())) {
+                continue;
+            }
+            if !written.iter().any(|(seen, _)| seen == kind) {
+                block.push_str(&format!("\n### {}\n", kind.heading()));
+            }
+            block.push_str(&format!("- {text}\n"));
+            written.push((*kind, text));
+        }
+        if written.is_empty() {
+            block.push_str("\nEverything in the file was mapped.\n");
+        }
+        block
     }
 
     fn read_money(&mut self, line: &Line) {
@@ -589,6 +1105,10 @@ impl<'a> Importer<'a> {
     }
 
     fn custom_named_feat(&mut self, line: &Line, name: &str, description: &str) {
+        // Q5: every line kept as a custom feat is a Notes line, unless its caller already wrote one.
+        if self.notes.last().is_none_or(|(_, at, _)| *at != self.report.lines.len()) {
+            self.unmapped(NoteKind::CustomFeat, format!("{name} ({}): kept as a custom feat", line.key()));
+        }
         let stats = vec![CustomStat { label: "PCGen key".to_owned(), value: line.key().to_owned() }];
         let record = custom_record("feat", self.custom.feats.len(), name, description, stats);
         self.push_custom(line, record, |custom| &mut custom.feats);
@@ -600,17 +1120,28 @@ impl<'a> Importer<'a> {
         self.push_custom(line, record, |custom| &mut custom.spells);
     }
 
-    fn custom_item(&mut self, line: &Line, name: &str, worn: u32, carried: u32) {
-        let mut stats = vec![
-            CustomStat { label: "Worn".to_owned(), value: worn.to_string() },
-            CustomStat { label: "Carried".to_owned(), value: carried.to_string() },
-        ];
-        for (label, key) in [("Cost (gp)", "COST"), ("Weight (lb.)", "WT"), ("Note", "NOTE")] {
-            if let Some(value) = line.get(key).filter(|value| !value.trim().is_empty()) {
-                stats.push(CustomStat { label: label.to_owned(), value: value.to_owned() });
-            }
+    /// A line no record maps is a Create item (`decisions.md §7`): weighed and priced per piece from
+    /// the line, held at its places by `place_copies`, which also makes it a container when the set
+    /// puts anything inside it.
+    fn custom_item(&mut self, line: &Line, name: &str, base: &str, data: &BTreeMap<String, String>) {
+        let mut stats: Vec<CustomStat> = line
+            .get("NOTE")
+            .filter(|value| !value.trim().is_empty())
+            .map(|value| CustomStat { label: "Note".to_owned(), value: value.to_owned() })
+            .into_iter()
+            .collect();
+        // Q2, Q5: the line's customization stays on the Create item as text, and each field is a Notes line.
+        for (key, value) in data.iter().filter(|(key, _)| !matches!(key.as_str(), "KEY" | "NAME")).take(MAX_STATS - stats.len()) {
+            stats.push(CustomStat { label: key.clone(), value: value.clone() });
+            let kind = if key.ends_with("EQMOD") { NoteKind::Eqmod } else { NoteKind::Property };
+            self.unmapped(kind, format!("{name}: {key} {value} kept as text"));
         }
-        let record = custom_record("equipment", self.custom.equipment.len(), name, "An item Codex has no record of.", stats);
+        let reason = format!("no Codex record for {base}");
+        let mut record = custom_record("equipment", self.custom.equipment.len(), name, &format!("Imported from PCGen: {reason}."), stats);
+        record.weight_lbs = amount(line.get("WT"));
+        record.price_gp = amount(line.get("COST"));
+        self.report.warnings.push(format!("{name}: {reason}"));
+        self.unmapped(NoteKind::Item, format!("{name}: {reason}"));
         self.push_custom(line, record, |custom| &mut custom.equipment);
     }
 
@@ -627,30 +1158,46 @@ impl<'a> Importer<'a> {
     }
 
     fn finish(mut self, lines: &[Line]) -> ImportFile {
+        let equipment_sets = self.place_copies();
         self.report.game_mode = lines
             .iter()
             .find(|line| line.key() == "GAMEMODE")
             .map(|line| line.value().to_owned())
             .unwrap_or_default();
-        if self.report.game_mode != "Pathfinder_RPG" {
+        let starfinder = self.catalog.starfinder_package();
+        if self.report.game_mode != "Pathfinder_RPG" && starfinder.is_none() {
             self.report.warnings.push(format!(
                 "This character was made in PCGen's {} game mode. Codex reads it against its Pathfinder 1e records.",
                 if self.report.game_mode.is_empty() { "(unnamed)" } else { &self.report.game_mode }
             ));
         }
         let race = self.catalog.race(&self.race_name).cloned();
-        let ability_scores = self.final_scores(race.as_ref());
+        let mut ability_scores = self.final_scores(race.as_ref());
         let race_id = race.as_ref().map_or_else(|| format!("race:{}", self.race_name.to_lowercase()), |race| race.id.clone());
         let class_levels = self.class_levels();
-        self.add_engine_rows(&class_levels, &race_id);
-        self.keep_the_spells_the_engine_takes(&race_id, &class_levels, &ability_scores);
+        let (source_package_id, game_system) = match starfinder {
+            Some(package) => {
+                ability_scores = self.starfinder_scores(package, &race_id, &class_levels, ability_scores);
+                self.keep_the_picks_the_engine_takes(package, &race_id, &class_levels, &ability_scores);
+                (SF_SOURCE_PACKAGE_ID, SF_SOURCE_PACKAGE_ID)
+            }
+            None => {
+                self.add_favored_class_bonus();
+                self.add_engine_rows(&class_levels, &race_id);
+                self.keep_the_spells_the_engine_takes(&race_id, &class_levels, &ability_scores);
+                (SOURCE_PACKAGE_ID, PF_GAME_SYSTEM)
+            }
+        };
+        let hit_points = if starfinder.is_none() { self.hit_points(&class_levels) } else { None };
         self.close_biography();
+        self.bio.notes = self.notes_block();
 
         let display_label = if self.label.trim().is_empty() { "Imported character".to_owned() } else { self.label.trim().to_owned() };
-        ImportFile {
+        let mut file = ImportFile {
             display_label,
+            game_system: game_system.to_owned(),
             character_input: CharacterInputWire {
-                source_package_id: SOURCE_PACKAGE_ID.to_owned(),
+                source_package_id: source_package_id.to_owned(),
                 chosen: ChosenWire {
                     race_id,
                     class_levels,
@@ -666,7 +1213,74 @@ impl<'a> Importer<'a> {
             bio: self.bio,
             money: self.money,
             custom: self.custom,
+            equipment_sets,
+            hit_points,
             report: self.report,
+        };
+        if let Some(package) = starfinder {
+            hold_the_files_credits(package, &mut file);
+        }
+        file
+    }
+
+    /// Each level's hit die result as the file states it, in file order, when it states one for every
+    /// level of every held class; else none (the sheet's default: the full die, then the average).
+    fn hit_points(&mut self, class_levels: &[ClassLevelWire]) -> Option<HitPointsWire> {
+        let levels: Vec<HitPointLevelWire> = self
+            .level_hit_points
+            .iter()
+            .filter_map(|(class, _, rolled)| Some(HitPointLevelWire { class_id: self.catalog.class_id(class)?.to_owned(), value: (*rolled)? }))
+            .collect();
+        let whole = class_levels
+            .iter()
+            .all(|held| levels.iter().filter(|level| level.class_id == held.class_id).count() == usize::from(held.level));
+        if levels.is_empty() {
+            return None;
+        }
+        if !whole || levels.len() != class_levels.iter().map(|held| usize::from(held.level)).sum::<usize>() {
+            self.report.warnings.push("the file's hit points per level do not cover every level held, so the sheet uses the default rule".to_owned());
+            return None;
+        }
+        Some(HitPointsWire { levels })
+    }
+
+    /// The favored class bonus (Pathfinder CRB Chapter 2): each level's +1 hit point is a
+    /// `hit_points` grant, each +1 skill rank is the rank (added to the skill) and a `skill_points`
+    /// grant that pays for it, so the skill point pool still balances. A grant holds at most 12
+    /// (`custom.json`'s limit), so a larger bonus is several grants.
+    fn add_favored_class_bonus(&mut self) {
+        let ranks = std::mem::take(&mut self.favored_skill_ranks);
+        let mut paid = 0;
+        for name in &ranks {
+            match self.catalog.skill_id(name) {
+                Some(skill_id) => {
+                    match self.skills.iter_mut().find(|skill| skill.skill_id == skill_id) {
+                        Some(skill) => skill.ranks = skill.ranks.saturating_add(1),
+                        None => self.skills.push(SkillWire { skill_id, ranks: 1 }),
+                    }
+                    paid += 1;
+                }
+                None => self.report.warnings.push(format!("favored class bonus: {name} is a skill Codex has no record of; its rank is not added")),
+            }
+        }
+        let grants = [
+            ("hit_points", self.favored_hit_points, "hit point"),
+            ("skill_points", paid, "skill rank"),
+        ];
+        for (target, total, what) in grants {
+            let mut left = total;
+            while left > 0 {
+                let value = left.min(MAX_GRANT_VALUE);
+                left -= value;
+                let id = format!("favored-class-{}-{}", target.replace('_', "-"), self.custom.grants.len());
+                self.custom.grants.push(GrantWire {
+                    id,
+                    label: "Favored class bonus".to_owned(),
+                    target: target.to_owned(),
+                    value,
+                    reason: format!("PCGen's favored class bonus: +1 {what} per level spent so ({total} in all)"),
+                });
+            }
         }
     }
 
@@ -677,7 +1291,12 @@ impl<'a> Importer<'a> {
                 self.report.warnings.push(format!("the file states no {ability}; it reads as 10"));
             }
         }
-        let floating = self.floating.clone();
+        let mut floating = self.floating.clone();
+        // A Human's first +2 is saved as `choice:human_ability_bonus` (`add_engine_rows`), which the
+        // engine adds itself, so the score is saved before it, as Create saves it.
+        if race.is_some_and(|race| race.id == "race:human") && !floating.is_empty() {
+            floating.remove(0);
+        }
         let score = |ability: &str| -> i16 {
             let base = self.scores.get(ability).copied().unwrap_or(10);
             let adjustment = race.and_then(|race| race.adjustments.get(ability).copied()).unwrap_or(0);
@@ -692,10 +1311,43 @@ impl<'a> Importer<'a> {
             wisdom: score("wisdom"),
             charisma: score("charisma"),
         };
-        if race.is_some_and(|race| race.floating_bonus_points > 0) && floating.is_empty() {
+        if race.is_some_and(|race| race.floating_bonus_points > 0) && self.floating.is_empty() {
             self.report.warnings.push(format!("{}'s +2 to one ability is not stated in the file, so it is not applied", self.race_name));
         }
         scores
+    }
+
+    /// Starfinder's final scores (`decisions.md §8`): PCGen's `STAT` score is the score before the
+    /// race and the theme, so the engine's own race and theme rows (`sf_abilities`, over a level-1
+    /// build with no point buy) are added to it, then each increase the file states, as PCGen applied it.
+    fn starfinder_scores(&mut self, package: &SheetRulePackage, race_id: &str, class_levels: &[ClassLevelWire], file: AbilitiesWire) -> AbilitiesWire {
+        let theme = self.feats.iter().find(|id| package.rule(id).is_some_and(|rule| rule.pool == "theme")).cloned();
+        let build = SfBuild {
+            chassis: SfChassisBuild {
+                classes: class_levels.first().map(|class| (class.class_id.clone(), 1)).into_iter().collect(),
+                race: race_id.to_owned(),
+                ability_scores: [10; 6],
+                key_ability_choice: None,
+            },
+            theme,
+            armor: None,
+            picks: Vec::new(),
+            skill_ranks: BTreeMap::new(),
+            choices: BTreeMap::new(),
+        };
+        let adjustment = match sf_abilities::compute(package, &build, &SfAbilityBuild::default()) {
+            Ok(scores) => scores.finals().map(|score| (score - 10) as i16),
+            Err(refusal) => {
+                self.report.warnings.push(format!("the race and theme ability adjustments are not applied: {}", refusal.message));
+                [0; 6]
+            }
+        };
+        let mut scores = [file.strength, file.dexterity, file.constitution, file.intelligence, file.wisdom, file.charisma];
+        for (index, (_, long)) in ABILITY_NAMES.iter().enumerate() {
+            scores[index] += adjustment[index] + self.increases.iter().filter(|(ability, _)| ability == long).map(|(_, plus)| plus).sum::<i16>();
+        }
+        let [strength, dexterity, constitution, intelligence, wisdom, charisma] = scores;
+        AbilitiesWire { strength, dexterity, constitution, intelligence, wisdom, charisma }
     }
 
     /// A class Codex holds is the class; a file with none keeps its first class's name, so the
@@ -747,15 +1399,16 @@ impl<'a> Importer<'a> {
             self.choices.retain(|choice| choice.choice_set_id != FIGHTER_BONUS_CHOICE);
             self.choices.push(ChoiceWire { choice_set_id: FIGHTER_BONUS_CHOICE.to_owned(), selection_id: FIGHTER_BONUS_SELECTION.to_owned() });
             self.added(&format!("{FIGHTER_BONUS_CHOICE} {FIGHTER_BONUS_SELECTION}"), WHY);
+            // The bonus feat that slot picks is Weapon Focus; a non-Fighter is given none (E4.17 (h)).
+            if !feat_identity::holds(&self.feats, WEAPON_FOCUS_FEAT) {
+                self.feats.push(WEAPON_FOCUS_FEAT.to_owned());
+                self.added(&format!("selectedFeats {WEAPON_FOCUS_FEAT}"), WHY);
+            }
         }
         if let (true, Some(ability)) = (race_id == "race:human", self.floating.first().copied()) {
             self.choices.push(ChoiceWire { choice_set_id: "choice:human_ability_bonus".to_owned(), selection_id: format!("ability:{ability}") });
         }
-        if !feat_identity::holds(&self.feats, WEAPON_FOCUS_FEAT) {
-            self.feats.push(WEAPON_FOCUS_FEAT.to_owned());
-            self.added(&format!("selectedFeats {WEAPON_FOCUS_FEAT}"), WHY);
-        }
-        self.equipment.push(EquipmentWire { item_id: POWER_ATTACK_ROW.to_owned(), active_state: CARRIED.to_owned(), applied_modifiers: Vec::new() });
+        self.equipment.push(EquipmentWire { item_id: POWER_ATTACK_ROW.to_owned(), active_state: CARRIED.to_owned(), applied_modifiers: Vec::new(), eqmods: Vec::new() });
         self.added(&format!("equipmentSelections {POWER_ATTACK_ROW}"), WHY);
     }
 
@@ -785,7 +1438,9 @@ impl<'a> Importer<'a> {
             }
             self.spells.pop();
             let name = spell.wire.spell_id.clone();
-            self.report.warnings.push(format!("{name}: Codex's {} spell list does not take it, so it is a custom spell", spell.class));
+            let text = format!("{name}: Codex's {} spell list does not take it, so it is a custom spell", spell.class);
+            self.notes.push((NoteKind::Spell, spell.report_line, text.clone()));
+            self.report.warnings.push(text);
             let stats = spell_stats(&spell.class, spell.level.as_deref(), spell.book.as_deref());
             let record = custom_record("spell", self.custom.spells.len(), &name, "A spell Codex's class list does not take yet.", stats);
             if self.custom.spells.len() < MAX_RECORDS {
@@ -828,6 +1483,111 @@ impl<'a> Importer<'a> {
     }
 }
 
+/// The Starfinder build and carried loadout of `input`: the table of the app's Starfinder adapter
+/// (`sf_adapter.rs` `build_from_input`, retyped here because the sidecar does not link the app).
+pub fn starfinder_build(package: &SheetRulePackage, input: &CharacterInput) -> (SfBuild, SfLoadout) {
+    let chosen = &input.chosen;
+    let classes: Vec<(String, u8)> = chosen.class_levels.iter().map(|class| (class.class_id.clone(), class.level)).collect();
+    let scores = &chosen.ability_scores;
+    let ability_scores = [scores.strength, scores.dexterity, scores.constitution, scores.intelligence, scores.wisdom, scores.charisma].map(i64::from);
+    let mut key_ability_choice = None;
+    let mut choices: BTreeMap<String, Vec<String>> = BTreeMap::new();
+    let mut credits_adjustment = 0_i64;
+    for choice in &chosen.selected_choices {
+        if choice.choice_set_id == SF_CREDITS_CHOICE {
+            credits_adjustment += choice.selection_id.parse::<i64>().unwrap_or(0);
+        } else if classes.iter().any(|(class, _)| *class == choice.choice_set_id) {
+            key_ability_choice = match choice.selection_id.as_str() {
+                "STR" => Some(Ability::Str),
+                "DEX" => Some(Ability::Dex),
+                "CON" => Some(Ability::Con),
+                "INT" => Some(Ability::Int),
+                "WIS" => Some(Ability::Wis),
+                "CHA" => Some(Ability::Cha),
+                _ => key_ability_choice,
+            };
+        } else {
+            choices.entry(choice.choice_set_id.clone()).or_default().push(choice.selection_id.clone());
+        }
+    }
+    let (themes, mut picks): (Vec<String>, Vec<String>) =
+        chosen.selected_feats.iter().cloned().partition(|id| package.rule(id).is_some_and(|rule| rule.pool == "theme"));
+    let is_armor = |id: &str| package.rule(id).is_some_and(|rule| rule.tags.iter().any(|tag| tag == "ARMOR"));
+    let mut armor = None;
+    let mut carried: Vec<(String, u32)> = Vec::new();
+    let mut applied = Vec::new();
+    for selection in chosen.equipment_selections.iter().filter(|selection| selection.active_state != ActiveState::Absent) {
+        applied.extend(selection.applied_modifiers.iter().cloned());
+        let worn = selection.active_state == ActiveState::EquippedActive;
+        if worn && armor.is_none() && is_armor(&selection.item_id) {
+            armor = Some(selection.item_id.clone());
+            continue;
+        }
+        if worn && !picks.contains(&selection.item_id) {
+            picks.push(selection.item_id.clone());
+        }
+        match carried.iter_mut().find(|(id, _)| *id == selection.item_id) {
+            Some((_, quantity)) => *quantity += 1,
+            None => carried.push((selection.item_id.clone(), 1)),
+        }
+    }
+    let build = SfBuild {
+        chassis: SfChassisBuild { classes, race: chosen.race_id.clone(), ability_scores, key_ability_choice },
+        theme: themes.into_iter().next(),
+        armor,
+        picks,
+        skill_ranks: chosen.skill_allocations.iter().map(|skill| (skill.skill_id.clone(), i64::from(skill.ranks))).collect(),
+        choices,
+    };
+    (build, SfLoadout { starting_credits: None, carried, applied, credits_adjustment })
+}
+
+/// The Starfinder engine's verdict on `input`: every total the app's Starfinder sheet computes
+/// (`sf_adapter.rs` `compute_sheet`: chassis, defense, skills, spells, carried, attacks), or the
+/// first refusal by its id and message. The sheet's printed lines are the app's and not run here.
+pub fn starfinder_verdict(package: &SheetRulePackage, input: &CharacterInput) -> Result<(), String> {
+    let refused = |refusal: sf_chassis::SfChassisRefusal| format!("{}: {}", refusal.id, refusal.message);
+    let (build, loadout) = starfinder_build(package, input);
+    let (build, _) = sf_abilities::with_item_bonuses(package, &build);
+    let mut chassis = sf_chassis::compute(package, &build.chassis).map_err(refused)?;
+    let held = sf_defense::held(package, &build).map_err(refused)?;
+    sf_chassis::fold_held(package, &mut chassis, &held);
+    sf_defense::compute_with(package, &build, &held).map_err(refused)?;
+    sf_skills::compute_with(package, &build, &held).map_err(refused)?;
+    sf_spells::compute_with(package, &build, &held).map_err(refused)?;
+    sf_loadout::compute(package, &build, &loadout).map_err(refused)?;
+    sf_attack::compute_with(package, &held, &chassis.base_attack_bonus, &loadout.carried);
+    Ok(())
+}
+
+/// A Starfinder character's credits are what its file says it has left (`MONEY`), not the level's
+/// wealth less the gear's prices (`sf_loadout`): the difference is the app's credits row, the one
+/// the Market writes ([`SF_CREDITS_CHOICE`]).
+fn hold_the_files_credits(package: &SheetRulePackage, file: &mut ImportFile) {
+    let left = i64::try_from(file.money.total_copper / 100).unwrap_or(i64::MAX);
+    let (build, mut loadout) = starfinder_build(package, &character_input_of(file));
+    // Any amount that clears the budget check; the row is then what makes the remainder `left`.
+    loadout.credits_adjustment = i64::MAX / 4;
+    let Ok(carried) = sf_loadout::compute(package, &build, &loadout) else { return };
+    let adjustment = left - (carried.starting_credits.total - carried.credits_spent.total);
+    if adjustment != 0 {
+        file.character_input.chosen.selected_choices.push(ChoiceWire { choice_set_id: SF_CREDITS_CHOICE.to_owned(), selection_id: adjustment.to_string() });
+        file.report.lines.push(ReportLine {
+            key: String::new(),
+            from: format!("the file's {left} credits left"),
+            outcome: Outcome::Added,
+            to: format!("selectedChoices {SF_CREDITS_CHOICE} {adjustment}"),
+        });
+    }
+}
+
+/// The engine's input for an import, as the app's `character_input_from_dto` reads the wire.
+pub fn character_input_of(file: &ImportFile) -> CharacterInput {
+    let mut input = engine_input(&file.character_input.chosen);
+    input.source_package_id = file.character_input.source_package_id.clone();
+    input
+}
+
 fn spell_stats(class: &str, level: Option<&str>, book: Option<&str>) -> Vec<CustomStat> {
     [("Class", Some(class)), ("Level", level), ("Book", book)]
         .into_iter()
@@ -860,7 +1620,11 @@ fn engine_input(chosen: &ChosenWire) -> CharacterInput {
                 .equipment_selections
                 .iter()
                 .map(|row| {
-                    let active_state = if row.active_state == WORN { ActiveState::EquippedActive } else { ActiveState::SelectedInactive };
+                    let active_state = match row.active_state.as_str() {
+                        WORN => ActiveState::EquippedActive,
+                        "Absent" => ActiveState::Absent,
+                        _ => ActiveState::SelectedInactive,
+                    };
                     EquipmentSelection {
                         item_id: row.item_id.clone(),
                         equipped_or_active: active_state == ActiveState::EquippedActive,
@@ -903,6 +1667,9 @@ fn custom_record(kind: &str, index: usize, name: &str, description: &str, stats:
             .into_iter()
             .map(|stat| CustomStat { label: clipped(&stat.label, MAX_STAT_TEXT), value: clipped(&stat.value, MAX_STAT_TEXT) })
             .collect(),
+        weight_lbs: None,
+        price_gp: None,
+        container_capacity_lbs: None,
     }
 }
 
@@ -917,10 +1684,104 @@ fn short(text: &str) -> String {
     clipped(text.trim(), 200)
 }
 
+/// Days since 1970-01-01 as `YYYY-MM-DD` (the proleptic Gregorian calendar, Hinnant's civil_from_days).
+fn iso_date(days: u64) -> String {
+    let z = days as i64 + 719_468;
+    let era = z.div_euclid(146_097);
+    let doe = z.rem_euclid(146_097);
+    let yoe = (doe - doe / 1460 + doe / 36_524 - doe / 146_096) / 365;
+    let doy = doe - (365 * yoe + yoe / 4 - yoe / 100);
+    let mp = (5 * doy + 2) / 153;
+    let day = doy - (153 * mp + 2) / 5 + 1;
+    let month = if mp < 10 { mp + 3 } else { mp - 9 };
+    let year = yoe + era * 400 + i64::from(month <= 2);
+    format!("{year:04}-{month:02}-{day:02}")
+}
+
+/// A `QUANTITY` as whole pieces; `0` is zero (SD-d), an absent or unreadable one is 1.
 fn quantity(value: Option<&str>) -> u32 {
     value
         .and_then(|value| value.trim().parse::<f64>().ok())
-        .map_or(1, |value| value.round().max(1.0).min(f64::from(u32::MAX)) as u32)
+        .map_or(1, |value| value.round().clamp(0.0, f64::from(u32::MAX)) as u32)
+}
+
+/// A line's `WT` or `COST`: a number, 0 or more (`custom.json` refuses any other).
+fn amount(value: Option<&str>) -> Option<f64> {
+    value.and_then(|value| value.trim().parse::<f64>().ok()).filter(|value| value.is_finite() && *value >= 0.0)
+}
+
+/// The record's own weight (lb) and price (gp) for one piece, from the settled record the engine
+/// resolves `item_key` to; `None` when no record resolves.
+/// The settled equipment corpus the engine weighs a copy by, read once.
+pub fn equipment_corpus() -> &'static SourcePackageContent<'static> {
+    static CORPUS: OnceLock<SourcePackageContent<'static>> = OnceLock::new();
+    CORPUS.get_or_init(|| {
+        let dirs = corpus_book_dirs(&runtime_repo_root().join("data/corpus"));
+        let ids: Vec<String> = dirs.iter().map(|dir| dir.file_name().map(|name| name.to_string_lossy().into_owned()).unwrap_or_default()).collect();
+        let roots: Vec<BookCorpusRoot<'_>> = ids.iter().zip(&dirs).map(|(book_id, dir)| BookCorpusRoot { book_id, dir: dir.as_path() }).collect();
+        load_equipment_corpus(&roots)
+    })
+}
+
+/// The pieces one bundle of `item_key` holds, as the engine divides by (`encumbrance::copy_bundles`):
+/// the record's `base_quantity`, else its stand-in's, else 1 (also for a key the corpus lacks).
+pub fn record_base_quantity(item_key: &str) -> u32 {
+    let corpus = equipment_corpus();
+    let Some(record) = equipment_converted_resolve(item_key, corpus) else { return 1 };
+    record.base_quantity.or_else(|| stand_in_record(record, corpus).and_then(|base| base.base_quantity)).unwrap_or(1).max(1)
+}
+
+fn record_weight_and_cost(item_key: &str) -> Option<(Option<f64>, Option<f64>)> {
+    let corpus = equipment_corpus();
+    let record = equipment_converted_resolve(item_key, corpus)?;
+    // A derived record stating neither reads the record it is made from, as the engine weighs it.
+    let base = stand_in_record(record, corpus);
+    let (weight, cost) = record.weight_and_cost();
+    Some((weight.or_else(|| base.and_then(|base| base.weight_lbs)), cost.or_else(|| base.and_then(|base| base.cost_gp))))
+}
+
+/// The qualities a record, or the record it is made from, already holds, folded by their last
+/// word: `Special Quality ~ Disarm` → `disarm` (the eqmod code PCGen writes, `DISARM`).
+fn held_qualities(item_key: &str) -> Vec<String> {
+    let corpus = equipment_corpus();
+    let Some(record) = equipment_converted_resolve(item_key, corpus) else {
+        return Vec::new();
+    };
+    [Some(record), stand_in_record(record, corpus)]
+        .into_iter()
+        .flatten()
+        .flat_map(|record| &record.eqmod_references)
+        .map(|reference| fold(reference.rsplit(" ~ ").next().unwrap_or(reference)))
+        .collect()
+}
+
+/// A line's `CUSTOMIZATION`: its `BASEITEM` and its `DATA` fields.
+fn customization(line: &Line) -> (Option<String>, BTreeMap<String, String>) {
+    let customization = line.tags.iter().find(|tag| tag.key == "CUSTOMIZATION").map(Tag::nested).unwrap_or_default();
+    let base_item = customization.iter().find(|tag| tag.key == "BASEITEM").map(|tag| tag.value.clone());
+    let data = customization.iter().find(|tag| tag.key == "DATA").map(|tag| data_fields(&tag.value)).unwrap_or_default();
+    (base_item, data)
+}
+
+/// The `+N` a row's modifiers give its copy key, as the engine reads it (`encumbrance::copy_bonus`).
+fn copy_bonus(modifiers: &[String]) -> u8 {
+    (1..=10u8)
+        .filter(|n| [Enhanceable::Armor, Enhanceable::Shield, Enhanceable::Weapon].iter().any(|kind| modifiers.contains(&kind.modifier_key(*n))))
+        .max()
+        .unwrap_or(0)
+}
+
+/// A top-level location word: Carried, Not Carried, Equipped, or a [`PCGEN_SLOTS`] row.
+fn location_word(word: &str) -> Option<Location> {
+    match word {
+        "Carried" => Some(Location::Carried),
+        "Not Carried" => Some(Location::NotCarried),
+        "Equipped" => Some(Location::Equipped),
+        _ => PCGEN_SLOTS.iter().find(|(name, _)| name.eq_ignore_ascii_case(word)).map(|(_, slot)| match slot {
+            BodySlot::None => Location::Equipped,
+            slot => Location::Slot { slot: *slot },
+        }),
+    }
 }
 
 fn applied_to(line: &Line) -> Vec<String> {
@@ -955,21 +1816,13 @@ fn data_fields(data: &str) -> BTreeMap<String, String> {
         .collect()
 }
 
-/// The `+N` eqmods as the keys `attach_equipment_modifier` takes, and every other eqmod apart.
-/// Materials and special abilities are later work (`decisions.md` R14), so they are reported.
-fn equipment_modifiers(eqmods: &str) -> (Vec<String>, Vec<String>) {
-    let mut modifiers = Vec::new();
-    let mut others = Vec::new();
-    for eqmod in eqmods.split('.').map(str::trim).filter(|eqmod| !eqmod.is_empty()) {
-        match enhancement_key(eqmod) {
-            Some(key) => modifiers.push(key),
-            None => others.push(eqmod.to_owned()),
-        }
-    }
-    (modifiers, others)
-}
-
+/// A `+N` eqmod as the key `attach_equipment_modifier` takes: PCGen's `PLUS1W`, or the key itself
+/// as newer files write it (`Special Ability ~ +1 ~ Weapon`).
 fn enhancement_key(eqmod: &str) -> Option<String> {
+    let is_key = (1..=5u8).any(|n| [Enhanceable::Armor, Enhanceable::Shield, Enhanceable::Weapon].iter().any(|kind| kind.modifier_key(n) == eqmod));
+    if is_key {
+        return Some(eqmod.to_owned());
+    }
     let rest = eqmod.strip_prefix("PLUS")?;
     let mut chars = rest.chars();
     let bonus = chars.next()?.to_digit(10).filter(|bonus| (1..=5).contains(bonus))?;
@@ -1029,5 +1882,15 @@ fn bio_label(key: &str) -> &'static str {
         "CATCHPHRASE" => "Catch phrase",
         "REGION" => "Region",
         _ => "Note",
+    }
+}
+
+#[cfg(test)]
+mod iso_date_tests {
+    #[test]
+    fn iso_date_reads_known_days() {
+        assert_eq!(super::iso_date(0), "1970-01-01");
+        assert_eq!(super::iso_date(11_016), "2000-02-29");
+        assert_eq!(super::iso_date(20_774), "2026-11-17");
     }
 }

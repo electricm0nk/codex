@@ -1,0 +1,11 @@
+@codemirror/state 6.7.6 MIT
+@codemirror/view 6.43.15 MIT
+@codemirror/language 6.13.1 MIT
+@codemirror/commands 6.11.1 MIT
+@codemirror/autocomplete 6.20.4 MIT
+@codemirror/search 6.7.2 MIT
+@codemirror/lang-markdown 6.5.2 MIT
+@lezer/markdown 1.8.1 MIT
+@lezer/highlight 1.2.5 MIT
+@lezer/common 1.5.5 MIT
+marked 18.2.1 MIT

@@ -1309,13 +1309,12 @@ pub(super) fn explain_cleric_level1_spell_baseline(
     }
 
     // Grounded: the base spell-save-DC arithmetic, one record per ACCESSIBLE
-    // spell level 1+ (0th-level orisons have no save-DC record, mirroring
-    // the Sorcerer/Wizard/Ranger/Paladin precedent of DC records starting
-    // at 1st level). Verified against both primary sources, which state the
+    // spell level from 0 (an orison that allows a save has a DC too, 10 + 0 + Wisdom: SD-42 E4.17
+    // (f), PCGen's sheet states it). Verified against both primary sources, which state the
     // rule identically: "The Difficulty Class for a saving throw against a
     // cleric's spell is 10 + the spell level + the cleric's Wisdom modifier."
     let cleric_spell_level_access = cleric_spell_level_access(level);
-    for spell_level in 1..=cleric_spell_level_access {
+    for spell_level in 0..=cleric_spell_level_access {
         let spell_save_dc = 10 + spell_level + ability_modifiers.wisdom;
         explanations.push(ComputationExplanation {
             id: format!("class_chassis.cleric.spell_save_dc.spell_level_{spell_level}"),

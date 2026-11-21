@@ -10,7 +10,11 @@ import {
   type SaveSheetPdfRequest,
   type SavedSheetPdf,
 } from '../boundary/saveSheetPdf';
-import { getCampaigns, type Campaign } from '../campaign/campaignModel';
+import { loadCharacterCampaigns } from '../boundary/campaignFolder/characters';
+import { openCampaignFolder } from '../boundary/campaignFolder/knownCampaigns';
+import type { OpenedCampaign } from '../boundary/campaignFolder/types';
+import type { CampaignMembershipDto } from '../boundary/setCharacterCampaigns';
+import { activeCampaigns } from './campaignMembershipModel';
 import { PRINT_PAPERS, getPrintPaper, isPrintPaper, type PrintPaper } from '../settings/printPaper';
 import { getPrintSections, setPrintSections } from '../settings/printSections';
 
@@ -81,8 +85,10 @@ export interface PrintDialogDeps {
   save: (defaultFileName: string) => Promise<string | null>;
   saveSheetPdf: (request: SaveSheetPdfRequest) => Promise<SavedSheetPdf>;
   printSheetPdf: (request: PrintSheetPdfRequest) => Promise<SavedSheetPdf>;
-  /** The campaign store; only the campaigns whose party lists the character are sent. */
-  campaigns: () => ReadonlyArray<Pick<Campaign, 'name' | 'description' | 'partyCharacterIds'>>;
+  /** The character's campaign memberships (`campaigns.json`). */
+  memberships: (characterId: string) => Promise<CampaignMembershipDto[]>;
+  /** Reads a campaign folder's `campaign.json` (`open_campaign_folder`). */
+  openCampaign: (campaignDir: string) => Promise<OpenedCampaign>;
 }
 
 export type PrintOutcome =
@@ -97,14 +103,23 @@ export function printFileName(displayLabel: string): string {
   return `${safeName}.pdf`;
 }
 
-/** The campaigns whose party holds the character, as page 1's Campaign cell and the Bio section take them (R17). */
-export function campaignNotesFor(
-  characterId: string,
-  campaigns: ReadonlyArray<Pick<Campaign, 'name' | 'description' | 'partyCharacterIds'>>,
-): CampaignNoteDto[] {
-  return campaigns
-    .filter((campaign) => campaign.partyCharacterIds.includes(characterId))
-    .map((campaign) => ({ name: campaign.name, description: campaign.description }));
+/**
+ * The character's active campaigns, as page 1's Campaign cell and the Bio section take them (R17): each
+ * folder's `campaign.json` name and description. A folder that does not open (moved, offline) still
+ * prints the membership's name, with no notes.
+ */
+export async function campaignNotesFor(
+  memberships: readonly CampaignMembershipDto[],
+  openCampaign: (campaignDir: string) => Promise<OpenedCampaign>,
+): Promise<CampaignNoteDto[]> {
+  return Promise.all(
+    activeCampaigns(memberships).map((membership) =>
+      openCampaign(membership.campaignDir).then(
+        ({ campaign }) => ({ name: campaign.name, description: campaign.description }),
+        () => ({ name: membership.campaignName, description: '' }),
+      ),
+    ),
+  );
 }
 
 function warningsSuffix(saved: SavedSheetPdf): string {
@@ -126,7 +141,7 @@ export async function runPrintAction(
       paper: options.paper,
       sections: options.sections,
       // Always sent: page 1's Campaign cell prints their names; the Bio section, when ticked, their notes.
-      campaigns: campaignNotesFor(target.characterId, deps.campaigns()),
+      campaigns: await campaignNotesFor(await deps.memberships(target.characterId), deps.openCampaign),
     };
     if (action === 'print') {
       const printed = await deps.printSheetPdf(request);
@@ -143,13 +158,14 @@ export async function runPrintAction(
   }
 }
 
-/** Production wiring: the real save-as dialog, runtime check, both commands and the campaign store. */
+/** Production wiring: the real save-as dialog, runtime check, both commands and the campaign folders. */
 export const DESKTOP_PRINT_DEPS: PrintDialogDeps = {
   hasRuntime: hasTauriRuntime,
   save: (defaultFileName) => save({ title: 'Save PDF', defaultPath: defaultFileName, filters: [{ name: 'PDF', extensions: ['pdf'] }] }),
   saveSheetPdf,
   printSheetPdf,
-  campaigns: getCampaigns,
+  memberships: loadCharacterCampaigns,
+  openCampaign: openCampaignFolder,
 };
 
 const buttonStyle: CSSProperties = {

@@ -4,6 +4,7 @@ import type { CharacterSummaryDto } from './loadListSavedCharacters';
 import type { PilotSnapshotDto, CorpusDerivedDto, DiagnosticDto } from './loadCreateCharacter';
 import type { CharacterMoneyDto } from './characterMoney';
 import type { PriceMode } from '../characterHub/priceMode';
+import type { CopyKeyDto } from './listHeldEquipment';
 
 /**
  * Write desktop boundary for atomically attaching an Equipmods-category
@@ -30,6 +31,8 @@ export interface AttachEquipmentModifierRequest {
   characterId: string;
   /** The target equipment selection to attach to, e.g. an equipped Longsword's item_id. */
   itemId: string;
+  /** The copy to attach to (the gear screen's Customize); absent, the first copy of `itemId` in hand. */
+  copy?: CopyKeyDto;
   /** The Equipmods-category item being attached. */
   modifierItemId: string;
   savedAt: string;

@@ -1,7 +1,7 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
 mod browser_handoff;
-mod campaign_drive;
+mod campaign_folder;
 mod character_custom;
 mod character_hub;
 mod character_ledger;
@@ -62,9 +62,13 @@ mod update;
 
 use serde::Serialize;
 
-use campaign_drive::{
-    drive_delete_campaign, drive_list_campaigns, drive_load_campaign, drive_save_campaign,
-    write_campaign_drive_artifacts,
+use campaign_folder::{
+    add_known_campaign_folder, add_map, create_campaign_folder, create_party_resources_starter, forget_known_campaign_folder, list_adventure_log, list_campaign_tree,
+    list_known_campaigns, list_maps, migrate_campaign, new_adventure_log_entry, open_campaign_folder, read_campaign_file, save_attachment, save_campaign_json,
+    set_map_pins, stat_campaign_file, write_campaign_file,
+    add_wiki_folder, delete_wiki_folder, list_wiki_folders, list_wiki_pages, new_wiki_page, rename_wiki_folder, resolve_wiki_link, search_campaign, wiki_backlinks,
+    diff_campaign_character, get_device_identity, set_device_name, import_campaign_character, list_campaign_characters, load_campaign_character,
+    load_character_campaigns,
 };
 use character_hub::{
     add_equipment_selection, add_feat_selection, add_spell_selection,
@@ -77,7 +81,7 @@ use character_hub::{
     list_class_creation_roster, draft_level_up_preview, draft_sheet_preview, draft_spell_options, list_feats_for_draft, list_feat_levels, starting_wealth_for_class, list_level_up_class_options, list_race_creation_roster, load_saved_character, preview_level_up, purchase_equipment,
     list_held_equipment, list_progression_ledger, record_and_prepare_spell_selection, remove_equipment_selection, remove_feat_selection,
     add_trait_selection, remove_trait_selection, set_equipment_active_state,
-    move_equipment_copy, discard_equipment_copy, rename_equipment_copy, purchase_custom_equipment, quote_custom_equipment, list_custom_equipment_options, create_equipment_set, rename_equipment_set, delete_equipment_set, activate_equipment_set,
+    move_equipment_copy, discard_equipment_copy, rename_equipment_copy, describe_held_equipment, purchase_custom_equipment, quote_custom_equipment, list_custom_equipment_options, create_equipment_set, rename_equipment_set, delete_equipment_set, activate_equipment_set,
     remove_spell_selection,
     save_character_portrait, set_skill_allocations, update_character_bio,
 };
@@ -193,8 +197,9 @@ fn main() {
         .plugin(tauri_plugin_opener::init())
         .plugin(tauri_plugin_dialog::init())
         .setup(|app| {
-            // A Linux AppImage started from anywhere but ~/Codex/Codex.AppImage offers to install
-            // itself there (once per file); an installed one refreshes its menu entry and icon.
+            // A Linux AppImage writes its menu entry and icon (naming the running file) on every
+            // start, then, started from anywhere but ~/Codex/Codex.AppImage, offers to install
+            // itself there (once per file).
             // Runs before the installed-state seed below. Not an AppImage: does nothing.
             update::self_install::run_at_startup(app.handle(), &app.package_info().version.to_string());
 
@@ -299,6 +304,7 @@ fn main() {
             move_equipment_copy,
             discard_equipment_copy,
             rename_equipment_copy,
+            describe_held_equipment,
             purchase_custom_equipment,
             quote_custom_equipment,
             list_custom_equipment_options,
@@ -333,11 +339,40 @@ fn main() {
             export_character,
             import_character,
             import_pcg,
-            write_campaign_drive_artifacts,
-            drive_list_campaigns,
-            drive_load_campaign,
-            drive_save_campaign,
-            drive_delete_campaign,
+            list_known_campaigns,
+            get_device_identity,
+            set_device_name,
+            add_known_campaign_folder,
+            forget_known_campaign_folder,
+            create_campaign_folder,
+            open_campaign_folder,
+            save_campaign_json,
+            migrate_campaign,
+            read_campaign_file,
+            write_campaign_file,
+            stat_campaign_file,
+            create_party_resources_starter,
+            list_campaign_tree,
+            list_adventure_log,
+            new_adventure_log_entry,
+            list_maps,
+            set_map_pins,
+            add_map,
+            list_wiki_folders,
+            list_wiki_pages,
+            list_campaign_characters,
+            load_character_campaigns,
+            import_campaign_character,
+            diff_campaign_character,
+            load_campaign_character,
+            add_wiki_folder,
+            rename_wiki_folder,
+            delete_wiki_folder,
+            new_wiki_page,
+            resolve_wiki_link,
+            wiki_backlinks,
+            search_campaign,
+            save_attachment,
             list_equipment_catalog,
             list_spell_catalog,
             list_feat_catalog,

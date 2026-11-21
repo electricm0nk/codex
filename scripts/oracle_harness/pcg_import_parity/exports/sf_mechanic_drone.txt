@@ -1,0 +1,45 @@
+name=R2-D2
+race=Drone
+class=Drone
+level=1
+stat.STR=12
+stat.DEX=14
+stat.CON=*
+stat.INT=6
+stat.WIS=10
+stat.CHA=6
+hp=0
+stamina=0
+resolve=1
+eac=12
+kac=14
+initiative=+2
+bab=+0
+save.Fortitude=+0
+save.Reflex=+4
+save.Will=+2
+attack.melee=+1
+attack.ranged=+2
+skill.Acrobatics=2|ranks=0.0|untrained=Y
+skill.Athletics=1|ranks=0.0|untrained=Y
+skill.Bluff=-2|ranks=0.0|untrained=Y
+skill.Diplomacy=-2|ranks=0.0|untrained=Y
+skill.Disguise=-2|ranks=0.0|untrained=Y
+skill.Intimidate=-2|ranks=0.0|untrained=Y
+skill.Perception=0|ranks=0.0|untrained=Y
+skill.Piloting=2|ranks=0.0|untrained=Y
+skill.Sense Motive=0|ranks=0.0|untrained=Y
+skill.Stealth=2|ranks=0.0|untrained=Y
+skill.Survival=0|ranks=0.0|untrained=Y
+bulk=0 lbs.
+credits=0
+credits.spent=0 cr
+acp=+0
+abilities.feat=Far Shot, Iron Will, Skill Focus (Computers), Suppressive Fire
+abilities.theme=
+abilities.class_feature=Climbing Claws, Excavator, Flight System, Invisibility Field, Manipulator Arms, Melee Weapon Arm, Reactive Camouflage, Small Arms, Weapon Mount
+abilities.racial_trait=
+pcg.classes=1
+pcg.class.Drone=1
+pcg.gold=0
+pcg.gear=0

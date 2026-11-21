@@ -1,11 +1,12 @@
 import { createElement } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
-import type { CopyKeyDto, LocationDto, PlacedEquipmentCopyDto } from '../boundary/listHeldEquipment';
+import type { BodySlotDto, CopyKeyDto, LocationDto, PlacedEquipmentCopyDto } from '../boundary/listHeldEquipment';
 import type { ContainerLoadDto } from '../boundary/loadSavedCharacterDetail';
 import { assert, assertEqual } from '../testSupport/asserts';
 import { GearPanels } from './GearScreen';
 import {
   containerTables,
+  copyId,
   DRAG_FORMAT,
   dropTarget,
   filterGearRows,
@@ -13,6 +14,7 @@ import {
   menuKeyStep,
   moveTargets,
   parseQuantity,
+  slotKindsAllowed,
   quantityPrompt,
   stackLabel,
   type GearRow,
@@ -23,13 +25,14 @@ function key(itemId: string, ordinal = 0, bonus = 0): CopyKeyDto {
   return { itemId, bonus, ordinal };
 }
 
-function held(name: string, location: LocationDto, options: { itemId?: string; bonus?: number; copies?: CopyKeyDto[]; quantity?: number; baseQuantity?: number } = {}): PlacedEquipmentCopyDto {
+function held(name: string, location: LocationDto, options: { itemId?: string; bonus?: number; copies?: CopyKeyDto[]; quantity?: number; baseQuantity?: number; slot?: BodySlotDto; slotWarning?: string } = {}): PlacedEquipmentCopyDto {
   const itemId = options.itemId ?? `item:${name.toLowerCase().replace(/[^a-z]+/g, '_')}`;
   const bonus = options.bonus ?? 0;
   const copies = options.copies ?? [key(itemId, 0, bonus)];
   const activeState = location.kind === 'slot' || location.kind === 'equipped' ? 'EquippedActive' : location.kind === 'notCarried' ? 'Absent' : 'SelectedInactive';
-  const slot = location.kind === 'slot' ? location.slot : 'none';
-  return { itemId, name, bonus, activeState, slot, location, ordinal: copies[0].ordinal, quantity: options.quantity ?? copies.length, copies, baseQuantity: options.baseQuantity ?? 1 };
+  const slot = options.slot ?? (location.kind === 'slot' ? location.slot : 'none');
+  const row: PlacedEquipmentCopyDto = { itemId, name, baseName: name, bonus, activeState, slot, location, ordinal: copies[0].ordinal, quantity: options.quantity ?? copies.length, copies, baseQuantity: options.baseQuantity ?? 1 };
+  return options.slotWarning ? { ...row, slotWarning: options.slotWarning } : row;
 }
 
 const BACKPACK = key('item:backpack');
@@ -43,8 +46,8 @@ const HELD: PlacedEquipmentCopyDto[] = [
   held('Belt Pouch', { kind: 'inside', container: BACKPACK }),
   held('Trail Rations', { kind: 'inside', container: POUCH }, { copies: [key('item:trail_rations', 0), key('item:trail_rations', 1)], quantity: 2 }),
   held('Arrows (20)', { kind: 'inside', container: BACKPACK }, { itemId: 'item:arrows', quantity: 40, baseQuantity: 20 }),
-  held('Dagger', { kind: 'carried' }),
-  held('Shield', { kind: 'notCarried' }, { itemId: 'item:heavy_steel_shield' }),
+  held('Dagger', { kind: 'carried' }, { slot: 'wield_main' }),
+  held('Shield', { kind: 'notCarried' }, { itemId: 'item:heavy_steel_shield', slot: 'shield' }),
 ];
 
 const LOADS: ContainerLoadDto[] = [
@@ -105,7 +108,8 @@ assert(pouchTargets.includes('carried'), 'targets: out of the container to Carri
 assert(!daggerTargets.includes('slot-wield_main'), 'targets: a full slot is not offered');
 assert(daggerTargets.includes('slot-wield_off'), 'targets: a free slot is');
 assertEqual(section('slot-ring').places, '1 of 2', 'ring: two places, one taken');
-assert(daggerTargets.includes('slot-ring'), 'ring: one ring in, the second place is offered');
+const spareRing = gearScreenModel([...HELD, held('Ring of Sustenance', { kind: 'carried' }, { slot: 'ring' })], { perItem: [], containerLoads: [] });
+assert(moveTargets(spareRing, spareRing.rows.find((candidate) => candidate.held.name === 'Ring of Sustenance')!).some((target) => target.id === 'slot-ring'), 'ring: one ring in, the second place is offered');
 const twoRings = gearScreenModel([...HELD, held('Ring of Sustenance', { kind: 'slot', slot: 'ring' })], { perItem: [], containerLoads: [] });
 assertEqual(twoRings.tree.find((candidate) => candidate.id === 'slot-ring')!.places, '2 of 2', 'ring: two rings fill it');
 assert(!moveTargets(twoRings, twoRings.rows.find((candidate) => candidate.held.name === 'Dagger')!).some((target) => target.id === 'slot-ring'), 'ring: full at two');
@@ -113,6 +117,17 @@ assert(!moveTargets(twoRings, twoRings.rows.find((candidate) => candidate.held.n
 // 5. Over capacity: a warning row per over container, the "x of y lb" from the engine's load.
 assertEqual(row('Backpack').capacityLabel, '61 of 60 lb', 'capacity: x of y lb from containerLoads');
 assertEqual(row('Belt Pouch').capacityLabel, '1 lb', 'capacity: an unstated limit shows the contents only');
+// SD-42 E4.7: a weightless container's title says so; a plain one's is unchanged.
+const weightless = gearScreenModel([held('Bag of Holding', { kind: 'carried' }), held('Sack', { kind: 'carried' })], {
+  perItem: [],
+  containerLoads: [
+    { copy: key('item:bag_of_holding'), contentsLbs: 300, capacity: { kind: 'pounds', lbs: 250 }, over: true, contentsWeightPct: 0 },
+    { copy: key('item:sack'), contentsLbs: 2, capacity: { kind: 'unlimited' }, over: false, contentsWeightPct: 60 },
+  ],
+});
+const weightlessRow = (name: string) => weightless.rows.find((candidate) => candidate.held.name === name)!;
+assertEqual(weightlessRow('Bag of Holding').capacityLabel, '300 of 250 lb, contents weigh nothing', 'weightless: the bag says its contents weigh nothing');
+assertEqual(weightlessRow('Sack').capacityLabel, '2 lb, no limit, contents weigh 40 % less', 'weightless: a reducing container says how much less');
 assertEqual(model.warnings.length, 1, 'warning: one over-capacity container');
 assertEqual(model.warnings[0].text, 'Backpack holds 61 lb, over its 60 lb.', 'warning: words');
 assertEqual(model.capacityOverride, false, 'no override, no tag');
@@ -184,10 +199,13 @@ const html = renderToStaticMarkup(
     onSell: noop,
     onDiscard: noop,
     onSets: { activate: noop, create: noop, rename: noop, remove: noop },
+    onCustomizeName: noop,
+    onCustomizeModifier: noop,
   }),
 );
 assert(html.includes('data-testid="gear-row-item:longsword-0-0"'), 'view: row testid');
 assert(html.includes('data-testid="gear-move-to"'), 'view: Move to button');
+assert(html.includes('data-testid="gear-row-customize-item:longsword-0-0"'), 'view: a Customize button on the row (E4.9)');
 assert(html.includes('data-testid="gear-location-slot-ring"') && html.includes('data-testid="gear-location-notCarried"'), 'view: tree location testids');
 assert(html.includes('data-testid="gear-set-select"') && html.includes('>Travel<'), 'view: the set picker lists the sets');
 assert(html.includes('data-testid="gear-filter"'), 'view: filter');
@@ -209,6 +227,8 @@ const tagged = renderToStaticMarkup(
     onSell: noop,
     onDiscard: noop,
     onSets: { activate: noop, create: noop, rename: noop, remove: noop },
+    onCustomizeName: noop,
+    onCustomizeModifier: noop,
   }),
 );
 assert(tagged.includes('Override: Ignore container capacity limits'), 'view: the override tag');
@@ -237,12 +257,14 @@ assert(overriddenTargets.includes('slot-armor'), 'override: every full slot is o
 assert(!moveTargets(overridden, overridden.rows.find((candidate) => candidate.held.name === 'Longsword')!).some((target) => target.id === 'slot-wield_main'), 'override: still not its own slot');
 assertEqual(JSON.stringify(dropTarget(dragging('item:dagger-0-0'), 'slot-wield_main', overridden)), JSON.stringify({ kind: 'slot', slot: 'wield_main' }), 'override: a drop onto a full slot moves there');
 
-// 15. One table per container copy (`decisions.md §38`): a backpack holding 4 belt pouches and chalk, pouch #1 a whetstone → 5 tables.
+// 15. One table per container row (`decisions.md §38`; SD-42 §27.5): a backpack holding 4 belt pouches and chalk, one pouch a whetstone —
+// the engine makes the filled pouch its own row and the other three one stack → 3 tables.
 const PACK = key('item:backpack');
 const POUCHES = [0, 1, 2, 3].map((ordinal) => key('item:pouch_belt', ordinal));
 const NEST: PlacedEquipmentCopyDto[] = [
   held('Backpack', { kind: 'carried' }),
-  held('Pouch, Belt', { kind: 'inside', container: PACK }, { itemId: 'item:pouch_belt', copies: POUCHES }),
+  held('Pouch, Belt', { kind: 'inside', container: PACK }, { itemId: 'item:pouch_belt', copies: [POUCHES[0]] }),
+  held('Pouch, Belt', { kind: 'inside', container: PACK }, { itemId: 'item:pouch_belt', copies: POUCHES.slice(1) }),
   held('Chalk', { kind: 'inside', container: PACK }),
   held('Whetstone', { kind: 'inside', container: POUCHES[0] }),
   held('Dagger', { kind: 'carried' }),
@@ -253,12 +275,12 @@ const NEST_LOADS: ContainerLoadDto[] = [
 ];
 const nest = gearScreenModel(NEST, { perItem: [], containerLoads: NEST_LOADS });
 const tables = containerTables(nest);
-assertEqual(tables.length, 5, 'tables: backpack + 4 pouches');
-assertEqual(tables.map((table) => table.title).join(' | '), 'Backpack | Pouch, Belt #1 | Pouch, Belt #2 | Pouch, Belt #3 | Pouch, Belt #4', 'tables: titled as Move to titles them');
-assertEqual(tables.map((table) => table.rows.length).join(','), '2,1,0,0,0', 'tables: direct contents per copy');
-assertEqual(tables[0].rows.map((candidate) => candidate.label).join(', '), 'Pouch, Belt ×4, Chalk', 'tables: the backpack holds the pouch stack and the chalk');
+assertEqual(tables.length, 3, 'tables: backpack + the filled pouch + the stack of three');
+assertEqual(tables.map((table) => table.title).join(' | '), 'Backpack | Pouch, Belt #1 | Pouch, Belt #2', 'tables: titled as Move to titles them');
+assertEqual(tables.map((table) => table.rows.length).join(','), '3,1,0', 'tables: direct contents per row');
+assertEqual(tables[0].rows.map((candidate) => candidate.label).join(', '), 'Pouch, Belt, Pouch, Belt ×3, Chalk', 'tables: the backpack holds the filled pouch, the pouch stack and the chalk');
 assertEqual(tables[1].rows[0].label, 'Whetstone', 'tables: pouch #1 holds the whetstone');
-assertEqual(tables.map((table) => table.loadLabel).join(' | '), '3 of 60 lb | 1 lb, no limit | 0 lb, no limit | 0 lb, no limit | 0 lb, no limit', 'tables: the load labels as containerLoads gives them');
+assertEqual(tables.map((table) => table.loadLabel).join(' | '), '3 of 60 lb | 1 lb, no limit | 0 lb, no limit', 'tables: the load labels as containerLoads gives them');
 assertEqual(nest.rows.length, NEST.length, 'tables: GearModel.rows unchanged');
 
 // 16. A nested container is a row in its parent's table and has its own table; one level deep only.
@@ -280,9 +302,13 @@ const nestHtml = renderToStaticMarkup(
     onSell: noop,
     onDiscard: noop,
     onSets: { activate: noop, create: noop, rename: noop, remove: noop },
+    onCustomizeName: noop,
+    onCustomizeModifier: noop,
   }),
 );
-assertEqual(nestHtml.split('data-testid="gear-container-').length - 1, 5, 'view: one table per container copy');
+assertEqual(nestHtml.split('<table').length - 1, 3, 'view: one table per container row');
+assertEqual(nestHtml.split('data-testid="gear-container-customize-').length - 1, 3, 'view: a Customize button on every container table title (E4.9)');
+assert(nestHtml.includes('data-testid="gear-container-customize-item:pouch_belt-0-1"'), 'view: the table title customizes its own copy (E4.9)');
 const pouchTable = nestHtml.slice(nestHtml.indexOf('data-testid="gear-container-item:pouch_belt-0-0"'), nestHtml.indexOf('data-testid="gear-container-item:pouch_belt-0-1"'));
 assert(pouchTable.includes('Pouch, Belt #1 · 1 lb, no limit'), 'view: the caption reads title · load');
 assert(pouchTable.includes('Whetstone') && pouchTable.includes('data-testid="gear-discard"') && pouchTable.includes('data-testid="gear-sell"') && pouchTable.includes('data-testid="gear-move-to"'), 'view: a content row keeps its buttons inside the table');
@@ -290,4 +316,43 @@ assert(nestHtml.includes('>Empty<'), 'view: an empty container reads Empty');
 const topLevel = nestHtml.slice(0, nestHtml.indexOf('data-testid="gear-container-'));
 assert(topLevel.includes('gear-row-item:dagger-0-0') && !topLevel.includes('gear-row-item:chalk-0-0'), 'view: the top level keeps only rows not inside a container');
 
-console.log('gearScreenModel.test.ts: 17 cases passed');
+// 18. Slot kinds (SD-42 E4.8, operator SLOT-1, `decisions.md §27.2`): a copy is offered only a slot of its own kind.
+const slotIds = (targets: { id: string }[]) => targets.map((target) => target.id).filter((id) => id.startsWith('slot-'));
+assertEqual(slotIds(moveTargets(model, row('Backpack'))).join(', '), '', 'slot kinds: a backpack is offered no slot section');
+const shieldTargets = slotIds(moveTargets(model, row('Shield')));
+assert(shieldTargets.includes('slot-shield') && !shieldTargets.includes('slot-head'), 'slot kinds: a shield is offered the Shield slot and not the Head');
+assertEqual(shieldTargets.join(', '), 'slot-shield', 'slot kinds: a shield is offered only the Shield slot');
+assertEqual(daggerTargets.filter((id) => id.startsWith('slot-')).join(', '), 'slot-wield_off, slot-wield_two_handed', 'slot kinds: a dagger is offered the free hands of the wield family');
+assertEqual(slotKindsAllowed('wield_off').join(', '), 'wield_main, wield_off, wield_two_handed', 'slot kinds: the hands are one family');
+const freeSlots = overridden.tree.filter((candidate) => candidate.location.kind === 'slot').map((candidate) => candidate.id);
+assertEqual(slotIds(moveTargets(overridden, overridden.rows.find((candidate) => candidate.held.name === 'Backpack')!)).join(', '), freeSlots.join(', '), 'slot kinds: under the slot override every slot is offered');
+assertEqual(dropTarget(dragging('item:backpack-0-0'), 'slot-shield', model), null, 'slot kinds: drop is null where the menu offers nothing');
+assertEqual(dropTarget(dragging('item:heavy_steel_shield-0-0'), 'slot-head', model), null, 'slot kinds: a shield dropped on Head goes nowhere');
+
+// 19. A copy saved in a wrong slot loads where it is and its row carries the engine's warning.
+const saved = gearScreenModel([held('Hat of Disguise', { kind: 'slot', slot: 'shield' }, { slot: 'head', slotWarning: 'in the Shield slot, a Head item' })], { perItem: [], containerLoads: [], ignoreContainerCapacity: true });
+assertEqual(names(saved.tree.find((candidate) => candidate.id === 'slot-shield')!.items), 'Hat of Disguise', 'saved wrong slot: it stays in the Shield slot');
+assertEqual(saved.warnings.map((warning) => warning.text).join(' | '), 'Hat of Disguise is in the Shield slot, a Head item.', 'saved wrong slot: the row carries the warning');
+
+// 20. Stacks (SD-42 E4.11, operator STK-1, `decisions.md §27.5`): identical copies at one place are one row, one tree node,
+// one container table and one Into target; a copy holding anything is its own row (the engine's stack builder splits it).
+const SACKS = [0, 1, 2, 3].map((ordinal) => key('item:sack', ordinal));
+const sackLoads = (filled: number | null): ContainerLoadDto[] =>
+  SACKS.map((copy, index) => ({ copy, contentsLbs: index === filled ? 1 : 0, capacity: { kind: 'pounds', lbs: 30 }, over: false }));
+const fourSacks = gearScreenModel([held('Sack', { kind: 'carried' }, { copies: SACKS }), held('Dagger', { kind: 'carried' })], { perItem: [], containerLoads: sackLoads(null) });
+const fourSackNodes = fourSacks.tree.find((candidate) => candidate.id === 'carried')!.items;
+assertEqual(names(fourSackNodes), 'Sack ×4, Dagger', 'stacks: a container stack is one tree node');
+assertEqual(copyId(fourSackNodes[0].copy), 'item:sack-0-0', 'stacks: the node stands for the stack\'s first copy');
+assertEqual(containerTables(fourSacks).map((table) => `${table.title} ${copyId(table.copy)}`).join(' | '), 'Sack item:sack-0-0', 'stacks: one container table titled Sack');
+const daggerInto = moveTargets(fourSacks, fourSacks.rows.find((candidate) => candidate.held.name === 'Dagger')!).filter((target) => target.id.startsWith('inside-'));
+assertEqual(daggerInto.map((target) => `${target.id} ${target.label}`).join(' | '), 'inside-item:sack-0-0 Into Sack', 'stacks: one Into target for identical empty containers');
+const oneFilled = gearScreenModel(
+  [held('Sack', { kind: 'carried' }, { copies: [SACKS[0]] }), held('Sack', { kind: 'carried' }, { copies: SACKS.slice(1) }), held('Dagger', { kind: 'inside', container: SACKS[0] })],
+  { perItem: [], containerLoads: sackLoads(0) },
+);
+const filledNodes = oneFilled.tree.find((candidate) => candidate.id === 'carried')!.items;
+assertEqual(names(filledNodes), 'Sack, Sack ×3', 'stacks: a filled copy is its own node');
+assertEqual(names(filledNodes[0].children), 'Dagger', 'stacks: the filled node holds the dagger');
+assertEqual(containerTables(oneFilled).map((table) => table.title).join(' | '), 'Sack #1 | Sack #2', 'stacks: two container rows of one name are told apart');
+
+console.log('gearScreenModel.test.ts: 20 cases passed');

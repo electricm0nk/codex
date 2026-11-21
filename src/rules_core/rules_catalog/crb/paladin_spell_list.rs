@@ -23,10 +23,11 @@ mod tests {
     use crate::rules_core::rules_catalog::acg::spell_list as acg_spell_list;
     use crate::rules_core::rules_catalog::apg::spell_list as apg_spell_list;
     use crate::rules_core::rules_catalog::crb::spell_list::SPELL_LIST;
+    use crate::rules_core::rules_catalog::ultimate_combat::spell_list as uc_spell_list;
 
     #[test]
     fn paladin_spell_list_has_the_real_corpus_verified_count() {
-        assert_eq!(PALADIN_SPELL_LIST.len(), 95);
+        assert_eq!(PALADIN_SPELL_LIST.len(), 124);
     }
 
     /// Guards the book-scope widening (task #27), one anchor per ingested
@@ -79,9 +80,20 @@ mod tests {
         for (key, _) in &*PALADIN_SPELL_LIST {
             let known = SPELL_LIST.iter().any(|entry| entry.key == *key)
                 || apg_spell_list::SPELL_LIST.iter().any(|entry| entry.key == *key)
-                || acg_spell_list::SPELL_LIST.iter().any(|entry| entry.key == *key);
+                || acg_spell_list::SPELL_LIST.iter().any(|entry| entry.key == *key)
+                || uc_spell_list::SPELL_LIST.iter().any(|entry| entry.key == *key);
             assert!(known, "{key} is not a real spell key in any ingested book");
         }
+    }
+
+    /// Ultimate Combat's 29 paladin spells (`uc_spells.lst`, every `CLASSES:` group naming
+    /// Paladin): `Compel Hostility` (`CLASSES:Bard,Cleric,Inquisitor,Paladin,Ranger,Witch=1`),
+    /// `Litany of Thunder` (`CLASSES:Antipaladin,Paladin=4|Inquisitor=5`).
+    #[test]
+    fn ultimate_combat_paladin_spells_are_on_the_list() {
+        assert_eq!(paladin_spell_level("Compel Hostility"), Some(1));
+        assert_eq!(paladin_spell_level("Divine Arrow"), Some(2));
+        assert_eq!(paladin_spell_level("Litany of Thunder"), Some(4));
     }
 
     #[test]
@@ -96,9 +108,9 @@ mod tests {
     fn level_distribution_matches_the_real_corpus_parse() {
         let count_at =
             |level: u8| PALADIN_SPELL_LIST.iter().filter(|(_, l)| *l == level).count();
-        assert_eq!(count_at(1), 28);
-        assert_eq!(count_at(2), 25);
-        assert_eq!(count_at(3), 23);
-        assert_eq!(count_at(4), 19);
+        assert_eq!(count_at(1), 35);
+        assert_eq!(count_at(2), 37);
+        assert_eq!(count_at(3), 30);
+        assert_eq!(count_at(4), 22);
     }
 }

@@ -45,8 +45,10 @@ export interface WeaponRow {
    * otherwise the raw `item_id`. Never a prettified guess.
    */
   name: string;
-  /** e.g. `'1d8'`. */
+  /** e.g. `'1d8'`; the copy's own die when its file writes one (as written when it is not plain dice). */
   baseDice: string;
+  /** The copy's properties, printed under the row as text. */
+  properties: string[];
   /** e.g. `'+4'` — the Strength modifier's contribution alone. */
   strDamage: string;
   /** e.g. `'+1'` — weapon enhancement damage. Attack side is separate. */
@@ -116,11 +118,15 @@ function formatCritical(weapon: WeaponDamageDto): string {
 }
 
 /**
- * Resolves a weapon's display name from the corpus-resolved equipment the
- * same response already carries, falling back to the engine's own record
+ * Resolves a weapon's display name: the engine's own name for the row (a
+ * copy's custom name, an alias's base name, SD-42 E4.21), else the
+ * corpus-resolved equipment the same response already carries, falling back to the engine's own record
  * key and then to the raw item id. Nothing here fabricates a name.
  */
 function displayName(weapon: WeaponDamageDto, corpusDerived: CorpusDerivedDto | null): string {
+  if (weapon.name) {
+    return weapon.name;
+  }
   const resolved = corpusDerived?.equippedItems?.find((item) => item.itemId === weapon.weaponItemId);
   return resolved?.equipmentRecordName ?? weapon.weaponRecordKey ?? weapon.weaponItemId;
 }
@@ -155,7 +161,8 @@ export function buildWeaponsTabSurface(
     itemId: weapon.weaponItemId,
     name: displayName(weapon, corpusDerived),
     baseDice:
-      weapon.baseDice === null ? ABSENT : `${weapon.baseDice.count}d${weapon.baseDice.dieSize}`,
+      weapon.baseDice === null ? weapon.damageOverride ?? ABSENT : `${weapon.baseDice.count}d${weapon.baseDice.dieSize}`,
+    properties: weapon.properties ?? [],
     strDamage: signed(weapon.strDamageModifier),
     enhancementDamage: signed(weapon.enhancementDamageBonus),
     enhancementAttack: signed(weapon.enhancementAttackBonus),

@@ -453,6 +453,21 @@ fn is_dice_literal(s: &str) -> bool {
     ok_dice && plus.is_none_or(|p| !p.is_empty() && p.bytes().all(|b| b.is_ascii_digit()))
 }
 
+/// The record a Starfinder mapping-table term names as its carrier: its own row's declaration
+/// in the pinned tree (`KEY:` else the name field), never the corpus record's key, which a
+/// product-identity record replaces with its coordinate's Codex-neutral name; `CLASS:<key>` for a
+/// class.
+fn sf_mapping_carrier(ctx: &RecordCtx) -> String {
+    let own_key = ctx
+        .tree
+        .file_index(&ctx.record.rel_path)
+        .filter(|f| ctx.record.line > 0 && ctx.record.line <= ctx.tree.files[*f].lines.len())
+        .map(|file| super::closure::row_identity(ctx.tree.row_text(super::closure::RowRef { file, line: ctx.record.line })).key)
+        .filter(|k| !k.is_empty())
+        .unwrap_or_else(|| ctx.record.key.to_ascii_uppercase());
+    if ctx.record.kind == "class" { format!("CLASS:{own_key}") } else { own_key }
+}
+
 /// SD-37 E3.4: the Starfinder reading of the two overloaded bonus heads (`decisions.md §8`).
 /// `None` for every other head and for every Pathfinder record, which keep [`bonus_targets`].
 ///
@@ -474,14 +489,7 @@ fn sf_bonus_targets(ctx: &mut RecordCtx, sub: &str, target: &str, value: &str, b
             // The carrier is named by its own row's declaration in the pinned tree (`KEY:` else
             // the name field), never by the corpus record's key, which a product-identity record
             // replaces with its coordinate's Codex-neutral name.
-            let own_key = ctx
-                .tree
-                .file_index(&ctx.record.rel_path)
-                .filter(|f| ctx.record.line > 0 && ctx.record.line <= ctx.tree.files[*f].lines.len())
-                .map(|file| super::closure::row_identity(ctx.tree.row_text(super::closure::RowRef { file, line: ctx.record.line })).key)
-                .filter(|k| !k.is_empty())
-                .unwrap_or_else(|| ctx.record.key.to_ascii_uppercase());
-            let carrier = if ctx.record.kind == "class" { format!("CLASS:{own_key}") } else { own_key };
+            let carrier = sf_mapping_carrier(ctx);
             let pool = target.trim();
             match super::sf_mapping::hp_pool_row(table, &carrier, pool, value) {
                 Some("hit_points") => Ok(Some(vec![(BonusTarget::Hp, "hit points".into())])),
@@ -768,7 +776,7 @@ fn sf_spell_progression(closure: &Closure, class: &str) -> Result<Vec<SfSpellPro
 /// grants the hop, and its ability pools are the same kind of edge: the human's `+2 Racial Stat
 /// Bonus` pick is stated only here (`Human Race Selection ~ Default`, `scr_abilities.lst:809`).
 /// `Err`: a count that is not a whole number -- a named defect, never a guessed count.
-fn internal_hop_ability_pools(tree: &PinnedTree, key: &str) -> Result<Vec<(String, i32, Vec<String>)>, String> {
+pub(super) fn internal_hop_ability_pools(tree: &PinnedTree, key: &str) -> Result<Vec<(String, i32, Vec<String>)>, String> {
     use super::closure::{tokenize_row, FileFamily};
     let key = key.trim().to_ascii_uppercase();
     let mut rows: Vec<_> = tree.keyed_index.get(&(FileFamily::Ability, "INTERNAL".to_string(), key.clone())).copied().into_iter().collect();
@@ -788,13 +796,23 @@ fn internal_hop_ability_pools(tree: &PinnedTree, key: &str) -> Result<Vec<(Strin
     Ok(out)
 }
 
-fn internal_hop_grants(tree: &PinnedTree, key: &str) -> Option<Vec<String>> {
+pub(super) fn internal_hop_grants(tree: &PinnedTree, key: &str) -> Option<Vec<String>> {
     use super::closure::{tokenize_row, FileFamily};
     let key = key.trim().to_ascii_uppercase();
     let mut rows: Vec<_> = tree.keyed_index.get(&(FileFamily::Ability, "INTERNAL".to_string(), key.clone())).copied().into_iter().collect();
     rows.extend(tree.mods_for(FileFamily::Ability, "INTERNAL", &key).iter().copied());
-    let grants: Vec<String> =
-        rows.into_iter().flat_map(|r| tokenize_row(tree.row_text(r)).1).filter(|(k, _)| k.trim() == "ABILITY").map(|(_, v)| v).collect();
+    let tokens: Vec<(String, String)> = rows.into_iter().flat_map(|r| tokenize_row(tree.row_text(r)).1).collect();
+    let grants: Vec<String> = tokens.iter().filter(|(k, _)| k.trim() == "ABILITY").map(|(_, v)| v.clone()).collect();
+    // SD-42 E4.14: a row whose only tokens are ability-pool picks is a hop too (`Personal
+    // Upgrade 3`, `scr_abilities.lst:572`, which the `Personal Upgrade Mk 3` item grants:
+    // `CATEGORY:Internal BONUS:ABILITYPOOL|Personal Upgrade LVL 14|1`); its pools are the
+    // granting record's ([`internal_hop_ability_pools`]). A row carrying anything else
+    // (`Playable Race Selected`'s variables and proficiency) is not.
+    if grants.is_empty() {
+        let pool = |k: &str, v: &str| k == "BONUS" && v.trim_start().to_ascii_uppercase().starts_with("ABILITYPOOL|");
+        let pool_only = tokens.iter().any(|(k, v)| pool(k.trim(), v)) && tokens.iter().all(|(k, v)| k.trim() == "CATEGORY" || pool(k.trim(), v));
+        return pool_only.then(Vec::new);
+    }
     let plain = |v: &String| {
         let (fields, _) = split_gates(v);
         fields.len() >= 3
@@ -1379,6 +1397,7 @@ pub fn convert_record(tree: &PinnedTree, index: &CorpusIndex, record: &RecordRef
     let mut failed_seqs: BTreeSet<usize> = BTreeSet::new();
     for row in &closure.rows {
         let level_gate = row.level_gate;
+        let mut typed = false;
         let unglued = sf_unglued(ctx.tree.system, &row.tokens);
         for (key, value) in sf_text_repaired(ctx.tree.system, &unglued).iter() {
             let key = key.trim();
@@ -1448,7 +1467,15 @@ pub fn convert_record(tree: &PinnedTree, index: &CorpusIndex, record: &RecordRef
             ctx.current_under = Some(under.clone());
             ctx.current_seq = Some(seq);
             ctx.current_seq_degraded = false;
-            if let Err(tt) = convert_token(&mut ctx, &mut acc, &mut out, key, value, level_gate, row.kind) {
+            // PCGen reads every `TYPE:` token of a line: a second one adds its types (an Armory
+            // melee weapon's `TYPE:RESIZABLE.Weapon.Melee...` then `TYPE:Cold.CRYO`), as a `.MOD`
+            // row's does, never replacing the first.
+            let kind = if key == "TYPE" && std::mem::replace(&mut typed, true) {
+                ClosureRowKind::Mod
+            } else {
+                row.kind
+            };
+            if let Err(tt) = convert_token(&mut ctx, &mut acc, &mut out, key, value, level_gate, kind) {
                 ctx.refuse_under(&under, tt);
             }
             if ctx.current_seq_degraded {
@@ -2557,6 +2584,15 @@ fn convert_token(ctx: &mut RecordCtx, acc: &mut Acc, out: &mut Converted, key: &
                         {
                             acc.pool_picks.push(name.trim().to_string());
                         }
+                        // A flat bonus the Starfinder mapping table routes to a sheet total
+                        // (Extra Resolve's `BONUS:VAR|Resolve|2` -> Resolve) is a line on that
+                        // total, as `BONUS:HP|ALTHP` is (`sf_bonus_targets`).
+                        if ctx.tree.system == GameSystem::Starfinder1e {
+                            let table = super::sf_mapping::converter_table().map_err(|e| format!("BONUS:VAR (the Starfinder mapping table does not load: {e})"))?;
+                            if super::sf_mapping::var_flat_bonus_row(table, &sf_mapping_carrier(ctx), name, &formula) == Some("resolve") {
+                                acc.lines.push(Line { seq: ctx.current_seq, suffix: Some(format!("bonus{}", acc.lines.len())), label: format!("{} (Resolve Points)", ctx.record.name), value: SheetValue::Number(expr.clone()), also: Vec::new(), target: Some(BonusTarget::Resolve), bonus_type: bonus_type.clone(), applies: when.clone(), prose: Vec::new() });
+                            }
+                        }
                         let id = super::ctx::var_id(name);
                         out.var_labels.entry(id.clone()).or_insert_with(|| name.trim().to_string());
                         out.var_contribs.push((id, name.trim().to_ascii_uppercase(), VarContribution { rule_id: ctx.record.id.clone(), expr: expr.clone(), bonus_type: bonus_type.clone(), when: when.clone() }));
@@ -3379,5 +3415,51 @@ mod sf_modifier_stat_tests {
         assert_eq!(sf_modifier_stat(sf, "equipment_modifier", "ItemLevel=varies"), None);
         assert_eq!(sf_modifier_stat(sf, "equipment", "ItemLevel=1"), None);
         assert_eq!(sf_modifier_stat(GameSystem::Pathfinder1e, "equipment_modifier", "Bulk=L"), None);
+    }
+}
+
+/// SD-42 E4.14: the converted Starfinder package (`data/starfinder-1e/sheet_rules`, kept fresh by
+/// `sheet_rule_convert --system starfinder-1e --check`) carries the rows the import ledger named.
+#[cfg(test)]
+mod sf_engine_row_tests {
+    use codex::rules_core::sheet_rule::{BonusTarget, SheetRule};
+
+    fn record(rel: &str) -> Vec<SheetRule> {
+        let path = std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join("../../data/starfinder-1e/sheet_rules").join(rel);
+        serde_json::from_str(&std::fs::read_to_string(&path).unwrap_or_else(|e| panic!("{}: {e}", path.display()))).expect("parses")
+    }
+
+    /// `sa_equip.lst:89`: `TYPE:RESIZABLE.Weapon.Melee...` then `TYPE:Cold.CRYO` on one line;
+    /// PCGen holds both, so the record is a melee weapon and a cold one.
+    #[test]
+    fn a_line_with_two_type_tokens_keeps_both() {
+        for rel in ["armory/equipment/cryospike_residential.json", "armory/equipment/core_hammer_fusion.json"] {
+            let tags = &record(rel)[0].tags;
+            for want in ["Weapon", "Melee", "Advanced Melee"] {
+                assert!(tags.iter().any(|t| t == want), "{rel}: {want} missing from {tags:?}");
+            }
+        }
+        assert!(record("armory/equipment/cryospike_residential.json")[0].tags.iter().any(|t| t == "CRYO"));
+    }
+
+    /// The same union in Pathfinder: `ghoran_abilities_race.lst`'s Seed line carries
+    /// `TYPE:RacialTraits.Ghoran Racial Trait...Extraordinary` then `TYPE:BuilderOtherTrait`.
+    #[test]
+    fn a_pathfinder_line_with_two_type_tokens_keeps_both() {
+        let path = std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join("../../data/sheet_rules/ultimate_wilderness/race_trait/ghoran_seed.json");
+        let rules: Vec<SheetRule> = serde_json::from_str(&std::fs::read_to_string(&path).expect("reads")).expect("parses");
+        for want in ["Ghoran Racial Trait", "Extraordinary", "BuilderOtherTrait"] {
+            assert!(rules[0].tags.iter().any(|t| t == want), "{want} missing from {:?}", rules[0].tags);
+        }
+    }
+
+    /// `scr_feats.lst:28` `BONUS:VAR|Resolve|2`, the mapping table's `extra_resolve` term: a +2
+    /// line on Resolve.
+    #[test]
+    fn extra_resolve_is_a_resolve_line() {
+        let rules = record("core/feat/extra_resolve.json");
+        let lines: Vec<&SheetRule> = rules.iter().filter(|r| r.target == Some(BonusTarget::Resolve)).collect();
+        assert_eq!(lines.len(), 1, "{rules:?}");
+        assert_eq!(serde_json::to_value(&lines[0].value).unwrap(), serde_json::json!({"Number": {"Const": 2}}));
     }
 }

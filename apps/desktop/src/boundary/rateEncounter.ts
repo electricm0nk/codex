@@ -5,12 +5,14 @@ import { formatError, hasTauriRuntime } from './runtime';
  * Read boundary over `rate_encounter` (v0.8 E-1, `encounter_rating.rs`),
  * the only source of every number the encounter builder shows. A party
  * member is a saved character (level resolved engine-side from the
- * on-disk build; an unresolvable id fails the whole rating) or a bare
- * level; a monster is a catalog key (resolved to its corpus CR; an unknown
+ * on-disk build; an unresolvable id fails the whole rating), a campaign
+ * folder's `Characters/` backup (read the same way) or a bare level; a monster is a catalog key (resolved to its corpus CR; an unknown
  * key is an error) or a bare CR.
  */
 export interface PartyMemberInput {
   characterId?: string;
+  /** `<campaignDir>/Characters/<folder>/`: the engine reads the level from the backup. */
+  campaignCharacter?: { campaignDir: string; folder: string };
   level?: number;
 }
 export interface EncounterMonsterInput {
@@ -22,6 +24,7 @@ export interface RateEncounterRequest {
   monsters: EncounterMonsterInput[];
 }
 export interface RatedPartyMemberDto {
+  /** The saved character's id, or the campaign backup's. */
   characterId?: string;
   /** The level the engine rated this member at. */
   level: number;

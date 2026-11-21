@@ -1,0 +1,10 @@
+EQUAL e1dfc9bb11e5 src/editor/fixtures/adventure-log.md
+EQUAL 6aad63e904a7 src/editor/fixtures/bom.md
+EQUAL 788fac3e59ed src/editor/fixtures/crlf.md
+EQUAL e3b0c44298fc src/editor/fixtures/empty.md
+EQUAL e6182a103f61 src/editor/fixtures/map-notes.md
+DIFF 20bce803c30b src/editor/fixtures/mixed-eol.md
+EQUAL 89c2f9af38bf src/editor/fixtures/no-trailing-newline.md
+EQUAL 031157c64617 src/editor/fixtures/party-resources.md
+EQUAL 06af974fbd72 src/editor/fixtures/wiki-page.md
+8 of 9 files byte-stable

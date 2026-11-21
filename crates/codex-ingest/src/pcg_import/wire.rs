@@ -1,18 +1,41 @@
 //! The JSON `pcg_import` writes. `displayLabel` and `characterInput` are the file `import_character`
 //! reads, field for field; serde ignores the rest there. `bio`, `money` and `custom` are the shapes of
-//! the character's own `bio.json`, `money.json` and `custom.json`, and `report` is shown to the player.
+//! the character's own `bio.json`, `money.json` and `custom.json`, `equipmentSets` is the character's
+//! `equipment_sets.json` (one stack per placement of an `EQUIPNAME` line), and `report` is shown to the player.
 
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct ImportFile {
     pub display_label: String,
+    /// The rule system the character is saved under: `"pf1"`, or `GameSystem::Starfinder1e.id()`
+    /// for a file of PCGen's `Starfinder` game mode (`decisions.md §8`).
+    pub game_system: String,
     pub character_input: CharacterInputWire,
     pub bio: BioWire,
     pub money: MoneyWire,
     pub custom: CustomWire,
+    pub equipment_sets: codex::saved_character::equipment_sets::EquipmentSets,
+    /// The character's `hit_points.json`: each level's hit die result as the file states it
+    /// (`CLASSABILITIESLEVEL` `HITPOINTS`), when it states one for every level of every class.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub hit_points: Option<HitPointsWire>,
     pub report: Report,
+}
+
+/// `hit_points.json` (`CharacterHitPointsDto`).
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct HitPointsWire {
+    pub levels: Vec<HitPointLevelWire>,
+}
+
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct HitPointLevelWire {
+    pub class_id: String,
+    pub value: u8,
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
@@ -69,6 +92,10 @@ pub struct EquipmentWire {
     pub active_state: String,
     #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub applied_modifiers: Vec<String>,
+    /// The Buy Custom option keys (materials, masterwork, special abilities) the line's eqmods
+    /// are (`equipment_sets::eqmod_option_key`); applying them to the copy is the app's (E4.1).
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    pub eqmods: Vec<String>,
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
@@ -99,6 +126,9 @@ pub struct BioWire {
     pub weight: String,
     pub hair: String,
     pub eyes: String,
+    /// The Notes block (`decisions.md §7`): every line the import could not map directly, once.
+    #[serde(default)]
+    pub notes: String,
 }
 
 #[derive(Debug, Clone, Default, PartialEq, Eq, Serialize, Deserialize)]
@@ -107,21 +137,44 @@ pub struct MoneyWire {
     pub total_copper: u64,
 }
 
-#[derive(Debug, Clone, Default, PartialEq, Eq, Serialize, Deserialize)]
+#[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct CustomWire {
+    /// `custom.json`'s grants (`CustomGrantDto`): the favored class bonus's hit points and skill
+    /// points, which the sheet adds to its hit point total and its skill point pool.
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    pub grants: Vec<GrantWire>,
     pub feats: Vec<CustomRecord>,
     pub equipment: Vec<CustomRecord>,
     pub spells: Vec<CustomRecord>,
 }
 
+/// `custom.json`'s grant (`CustomGrantDto`): `target` is `hit_points` or `skill_points`.
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct GrantWire {
+    pub id: String,
+    pub label: String,
+    pub target: String,
+    pub value: i32,
+    pub reason: String,
+}
+
+/// `custom.json`'s record (`CustomRecordDto`). An equipment record is a Create item (SD-41 §25): the
+/// three amounts are the line's `WT` and `COST` per piece and, for a container, its capacity.
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct CustomRecord {
     pub id: String,
     pub name: String,
     pub description: String,
     pub stats: Vec<CustomStat>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub weight_lbs: Option<f64>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub price_gp: Option<f64>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub container_capacity_lbs: Option<f64>,
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]

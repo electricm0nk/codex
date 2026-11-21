@@ -1,0 +1,42 @@
+line	name	base	custom_name	outcome	codex_key	sheet_record	worn	carried	copies_emitted	file_quantity	pcgen_location	codex_slot	slot_collision	eqmods_not_applied	data_fields_not_read
+1	Saddle (Riding)		no	mapped	Saddle (Riding)	yes	0	1	1	1.0	in Dog (Riding) x1.0				
+2	Dog (Riding)		no	mapped	Dog (Riding)	yes	0	1	1	1.0	Not Carried x1.0				
+3	Bedroll		no	mapped	Bedroll	yes	0	1	1	1.0	in Dog (Riding) x1.0				
+4	Amulet of Natural Armor +2		no	mapped	Amulet of Natural Armor +2	yes	1	0	1	1.0	Neck x1.0	Neck			
+5	Cloak of Resistance +3		no	mapped	Cloak of Resistance +3	yes	1	0	1	1.0	Shoulders x1.0	Shoulders			
+6	Inkpen		no	mapped	Inkpen	yes	0	2	2	2.0	in Backpack (Masterwork) (Small) x2.0				
+7	Bullets, Sling (10)	Bullets (Sling/10)	no	mapped	Bullets (Sling/10)	yes	0	2	2	2.0	Carried x2.0			STEEL	NAME
+8	Rope of Climbing		no	mapped	Rope of Climbing	yes	0	1	1	1.0	in Backpack (Masterwork) (Small) x1.0				
+9	Headband of Vast Intelligence +2 ( Maximize Knowledge SkillKnowledge (Geography))	Headband of Vast Intelligence +2	yes	mapped	Headband of Vast Intelligence +2	yes	1	0	1	1.0	Headband x1.0	Headband		MAX_KNW|Knowledge (Geography)	NAME
+10	Dagger (Small)	Dagger	yes	mapped	Dagger	yes	0	1	1	1.0	in Dog (Riding) x1.0			STEEL	NAME,SIZE
+11	Coin (Gold Piece)		no	mapped	Coin (Gold Piece)	yes	0	1	1	1.0	in Pouch (Belt) x1.0				
+12	Ring of Protection +2		no	mapped	Ring of Protection +2	yes	1	0	1	1.0	Ring x1.0	Ring			
+13	Sealing Wax		no	mapped	Sealing Wax	yes	0	1	1	1.0	in Backpack (Masterwork) (Small) x1.0				
+14	Parchment (Sheet)		no	mapped	Parchment (Sheet)	yes	0	4	4	4.0	in Map Case x4.0				
+15	Masterwork Sap (Small)	Sap	yes	mapped	Sap	yes	0	1	1	1.0	Carried x1.0			NONLETHAL.MWORKW	NAME,SIZE
+16	Sling (Small)	Sling	yes	mapped	Sling	yes	0	1	1	1.0	Carried x1.0			LEATHER	NAME,SIZE
+17	Lantern (Bullseye)		no	mapped	Lantern (Bullseye)	yes	0	1	1	1.0	in Backpack (Masterwork) (Small) x1.0				
+18	Ring of Swimming		no	mapped	Ring of Swimming	yes	1	0	1	1.0	Ring x1.0	Ring			
+19	Rapier +1 (Small)	Rapier	yes	mapped	Rapier	yes	1	0	1	1.0	Primary Hand x1.0	WieldMain		STEEL	NAME,SIZE
+20	Map of Inner Daggermark	Parchment (Sheet)	yes	mapped	Parchment (Sheet)	yes	0	1	1	1.0	in Map Case x1.0				NAME,SPROP
+21	Rations (Trail/Per Day)		no	mapped	Rations (Trail/Per Day)	yes	0	5	5	5.0	in Backpack (Masterwork) (Small) x1.0; in Saddlebags x4.0				
+22	Chain Shirt +1 (Small/Mithral)	Chain Shirt	yes	mapped	Chain Shirt	yes	1	0	1	1.0	Armor x1.0	Armor		STEEL.MITHRAL_ARMR_LT	NAME,SIZE
+23	Outfit (Explorer's/Small)	Outfit (Explorer's)	yes	mapped	Outfit (Explorer's)	yes	1	0	1	1.0	Torso x1.0	None			COSTMOD,NAME,SIZE
+24	Flint and Steel		no	mapped	Flint and Steel	yes	0	1	1	1.0	in Backpack (Masterwork) (Small) x1.0				
+25	Map Maker's Kit		no	mapped	Map Maker's Kit	yes	0	1	1	1.0	in Saddlebags x1.0				
+26	Masterwork Morningstar (Small/Alchemical Silver)	Morningstar	yes	mapped	Morningstar	yes	0	1	1	1.0	in Dog (Riding) x1.0			STEEL.ALCHM.MWORKW	NAME,SIZE
+27	Grappling Hook		no	mapped	Grappling Hook	yes	0	1	1	1.0	in Saddlebags x1.0				
+28	Coin (Silver Piece)		no	mapped	Coin (Silver Piece)	yes	0	6	6	6.0	in Pouch (Belt) x6.0				
+29	Map Case		no	mapped	Map Case	yes	0	1	1	1.0	in Backpack (Masterwork) (Small) x1.0				
+30	Masterwork Thieves' Tools	Thieves' Tools	yes	mapped	Thieves' Tools	yes	1	0	1	1.0	Equipped x1.0	None		MWORKT	NAME
+31	Waterskin		no	mapped	Waterskin	yes	0	1	1	1.0	in Dog (Riding) x1.0				
+32	Saddlebags		no	mapped	Saddlebags	yes	0	1	1	1.0	in Dog (Riding) x1.0				
+33	Backpack (Masterwork) (Small)	Backpack (Masterwork)	yes	mapped	Backpack (Masterwork)	yes	1	0	1	1.0	Equipped x1.0	None			NAME,SIZE
+34	Masterwork Rapier (Small/Cold Iron)	Rapier	yes	mapped	Rapier	yes	0	1	1	1.0	in Dog (Riding) x1.0			STEEL.MWORKW.C_IRON	NAME,SIZE
+35	Boots of Elvenkind		no	mapped	Boots of Elvenkind	yes	1	0	1	1.0	Feet x1.0	Feet			
+36	Pouch (Belt)		no	mapped	Pouch (Belt)	yes	1	0	1	1.0	Equipped x1.0	None			
+37	Oil (1 Pint Flask)		no	mapped	Oil (1 Pint Flask)	yes	0	2	2	2.0	in Backpack (Masterwork) (Small) x1.0; in Saddlebags x1.0				
+38	Tent		no	mapped	Tent (Small)	yes	0	1	1	1.0	in Saddlebags x1.0				
+39	Potion of Cure Light Wounds		no	mapped	Potion of Cure Light Wounds	yes	0	1	1	1.0	in Backpack (Masterwork) (Small) x1.0				
+40	Dagger +1 (Small)	Dagger	yes	mapped	Dagger	yes	1	0	1	1.0	Secondary Hand x1.0	WieldMain		STEEL	NAME,SIZE
+41	Belt of Incredible Dexterity +2		no	mapped	Belt of Incredible Dexterity +2	yes	1	0	1	1.0	Belt x1.0	Belt			

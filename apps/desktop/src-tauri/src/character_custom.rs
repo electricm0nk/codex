@@ -467,6 +467,7 @@ impl WornItemBonuses {
             ("defense.combat_maneuver_defense", "cmd", self.total("cmd")),
             ("initiative.total", "initiative", self.total("initiative")),
             ("combat.baseline_melee_attack_bonus", "attack", self.total("attack")),
+            ("combat.baseline_ranged_attack_bonus", "attack", self.total("attack")),
         ];
         for (id, target, moved) in rows {
             if !self.0.iter().any(|bonus| bonus.target == target) {

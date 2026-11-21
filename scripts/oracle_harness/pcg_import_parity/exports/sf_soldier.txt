@@ -1,0 +1,54 @@
+name=Q-186
+race=Android
+class=Soldier
+level=10
+stat.STR=18
+stat.DEX=21
+stat.CON=14
+stat.INT=14
+stat.WIS=12
+stat.CHA=8
+hp=74
+stamina=90
+resolve=12
+eac=30
+kac=32
+initiative=+9
+bab=+10
+save.Fortitude=+9
+save.Reflex=+8
+save.Will=+8
+attack.melee=+14
+attack.ranged=+15
+skill.Acrobatics=18|ranks=10.0|untrained=Y
+skill.Athletics=17|ranks=10.0|untrained=Y
+skill.Bluff=-1|ranks=0.0|untrained=Y
+skill.Diplomacy=-1|ranks=0.0|untrained=Y
+skill.Disguise=-1|ranks=0.0|untrained=Y
+skill.Engineering=15|ranks=10.0|untrained=NO
+skill.Intimidate=3|ranks=1.0|untrained=Y
+skill.Medicine=15|ranks=10.0|untrained=NO
+skill.Perception=1|ranks=0.0|untrained=Y
+skill.Piloting=19|ranks=10.0|untrained=Y
+skill.Sense Motive=-1|ranks=0.0|untrained=Y
+skill.Stealth=5|ranks=0.0|untrained=Y
+skill.Survival=13|ranks=9.0|untrained=Y
+weapon.*Cryospike, residential=+14|damage=3d4+14|category=ADVANCED MELEE-Melee
+weapon.Freeze ray, glacial=+15|damage=5d4+10|category=Non-Standard-Ranged
+weapon.Core hammer, fusion=+14|damage=6d6+14|category=ADVANCED MELEE-Melee
+bulk=7.1 lbs.
+credits=1,000
+credits.spent=131900 cr
+acp=-5
+abilities.feat=Barricade, Bodyguard, Deadly Aim, Deflect Projectiles, Dive for Cover, Extra Resolve, Fleet, In Harm's Way, Mobility, Opening Volley, Quick Draw, Shot on the Run
+abilities.theme=Ace Pilot, THEME KNOWLEDGE, LONE WOLF
+abilities.class_feature=Primary Fighting Style, Blitz, Primary Style Technique, Charge Attack, Keep Fighting, Rapid Response, Opening Volley, Combat Feat, Gear Boost, Brutal Blast, Flash Freeze, Weapon Specialization, Secondary Fighting Style, Hit-and-Run, Secondary Style Technique
+abilities.racial_trait=SIZE AND TYPE, CONSTRUCTED, EXCEPTIONAL VISION, FLAT AFFECT, UPGRADE SLOT, Filtered rebreather
+pcg.classes=1
+pcg.class.Soldier=10
+pcg.gold=1,000
+pcg.gear=4
+pcg.gear.0=Cryospike, residential|long=Cryospike, residential|qty=1|location=Equipped
+pcg.gear.1=Aegis Series, Squad|long=Aegis Series, Squad|qty=1|location=Equipped
+pcg.gear.2=Freeze ray, glacial|long=Freeze ray, glacial|qty=1|location=Carried
+pcg.gear.3=Core hammer, fusion|long=Core hammer, fusion|qty=1|location=Carried

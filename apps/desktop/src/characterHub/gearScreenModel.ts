@@ -38,6 +38,17 @@ function placesOf(slot: BodySlotDto): number {
   return slot === 'ring' ? 2 : 1;
 }
 
+const HANDS: ReadonlyArray<BodySlotDto> = ['wield_main', 'wield_off', 'wield_two_handed'];
+
+/**
+ * The slots a copy whose own slot is `own` may go in: the engine's `body_slots::slot_kinds_allowed`
+ * (SD-42 `decisions.md §27.2`), which refuses the same moves at the write. Its own slot; a wielded
+ * copy any hand; a slotless copy none.
+ */
+export function slotKindsAllowed(own: BodySlotDto): ReadonlyArray<BodySlotDto> {
+  return HANDS.includes(own) ? HANDS : own === 'none' ? [] : [own];
+}
+
 export type GearFilter = 'all' | 'equipped' | 'notEquipped';
 
 export interface GearRow {
@@ -54,7 +65,7 @@ export interface GearRow {
 
 export interface GearTreeItem {
   row: GearRow;
-  /** The copy this node stands for: a container stack is one node per copy. */
+  /** The copy this node stands for: the row's first copy (a stack of identical copies is one node, SD-42 E4.11). */
   copy: CopyKeyDto;
   capacityLabel: string | null;
   /** The container is over its pounds but the character ignores container capacity limits. */
@@ -111,6 +122,12 @@ function sameCopy(a: CopyKeyDto, b: CopyKeyDto): boolean {
   return a.itemId === b.itemId && a.bonus === b.bonus && a.ordinal === b.ordinal;
 }
 
+/** Whether `candidate` sits directly inside any copy of `container`. */
+function insideRow(candidate: GearRow, container: GearRow): boolean {
+  const location = candidate.held.location;
+  return location.kind === 'inside' && container.held.copies.some((copy) => sameCopy(location.container, copy));
+}
+
 /** A figure as the engine gave it, without invented precision. */
 function lb(value: number): string {
   return Number.isInteger(value) ? String(value) : String(Number(value.toFixed(2)));
@@ -122,17 +139,26 @@ export function stackLabel(held: PlacedEquipmentCopyDto): string {
   return held.quantity > 1 ? `${name} ×${held.quantity}` : name;
 }
 
+/** The engine's `contentsWeightPct` in words (SD-42 E4.7); nothing for a plain container. */
+function contentsWeightWords(pct: number | undefined): string {
+  if (pct === undefined || pct >= 100) {
+    return '';
+  }
+  return pct === 0 ? ', contents weigh nothing' : `, contents weigh ${100 - pct} % less`;
+}
+
 function capacityLabel(load: ContainerLoadDto | undefined): string | null {
   if (!load) {
     return null;
   }
+  const weighs = contentsWeightWords(load.contentsWeightPct);
   switch (load.capacity.kind) {
     case 'pounds':
-      return `${lb(load.contentsLbs)} of ${lb(load.capacity.lbs)} lb`;
+      return `${lb(load.contentsLbs)} of ${lb(load.capacity.lbs)} lb${weighs}`;
     case 'unlimited':
-      return `${lb(load.contentsLbs)} lb, no limit`;
+      return `${lb(load.contentsLbs)} lb, no limit${weighs}`;
     case 'unstated':
-      return `${lb(load.contentsLbs)} lb`;
+      return `${lb(load.contentsLbs)} lb${weighs}`;
   }
 }
 
@@ -202,23 +228,16 @@ export function gearScreenModel(held: PlacedEquipmentCopyDto[], context: GearCon
 
   const ignore = context.ignoreContainerCapacity === true;
   const placed = new Set<GearRow>();
+  // One node per row (`decisions.md §27.5`): the engine stacks only copies that hold nothing, so a
+  // stack's contents (none from the engine) are read under any of its copies.
   const nodesOf = (row: GearRow, seen: Set<string>): GearTreeItem[] => {
     placed.add(row);
-    const keys = row.isContainer ? row.held.copies : [row.held.copies[0]];
-    return keys.map((copy) => {
-      const load = loadOf(copy);
-      const inside = seen.has(copyId(copy))
-        ? []
-        : rows.filter((candidate) => candidate.held.location.kind === 'inside' && sameCopy(candidate.held.location.container, copy) && !placed.has(candidate));
-      const deeper = new Set([...seen, copyId(copy)]);
-      return {
-        row,
-        copy,
-        capacityLabel: capacityLabel(load),
-        overrideTag: ignore && load?.over === true,
-        children: inside.flatMap((child) => nodesOf(child, deeper)),
-      };
-    });
+    const copy = row.held.copies[0];
+    const load = loadOf(copy);
+    const ids = row.held.copies.map(copyId);
+    const inside = ids.some((id) => seen.has(id)) ? [] : rows.filter((candidate) => !placed.has(candidate) && insideRow(candidate, row));
+    const deeper = new Set([...seen, ...ids]);
+    return [{ row, copy, capacityLabel: capacityLabel(load), overrideTag: ignore && load?.over === true, children: inside.flatMap((child) => nodesOf(child, deeper)) }];
   };
   const at = (test: (location: LocationDto) => boolean) => rows.filter((row) => test(row.held.location)).flatMap((row) => nodesOf(row, new Set()));
 
@@ -234,7 +253,7 @@ export function gearScreenModel(held: PlacedEquipmentCopyDto[], context: GearCon
   carried.items.push(...rows.filter((row) => !placed.has(row)).flatMap((row) => nodesOf(row, new Set())));
   tree.push(carried, notCarried);
 
-  const warnings = ignore
+  const capacityWarnings = ignore
     ? []
     : context.containerLoads
         .filter((load) => load.over && load.capacity.kind === 'pounds')
@@ -242,11 +261,14 @@ export function gearScreenModel(held: PlacedEquipmentCopyDto[], context: GearCon
           copy: load.copy,
           text: `${containerName(load.copy)} holds ${lb(load.contentsLbs)} lb, over its ${lb(load.capacity.kind === 'pounds' ? load.capacity.lbs : 0)} lb.`,
         }));
+  // A copy saved in a slot not of its kind stays there; the engine words the warning (§27.2).
+  const slotWarnings = rows.flatMap((row) => (row.held.slotWarning ? [{ copy: row.held.copies[0], text: `${row.label} is ${row.held.slotWarning}.` }] : []));
+  const warnings = [...capacityWarnings, ...slotWarnings];
 
   return { rows, tree, warnings, capacityOverride: ignore, slotOverride: context.ignoreSlotLimits === true, containerLoads: context.containerLoads };
 }
 
-/** Copies in a slot: a count of what is there, one per copy of each row (a container row is one node per copy). */
+/** Copies in a slot: a count of what is there, one per copy of each row. */
 function copiesIn(items: GearTreeItem[]): number {
   return [...new Set(items.map((item) => item.row))].flatMap((row) => row.held.copies).length;
 }
@@ -256,7 +278,7 @@ export function filterGearRows(rows: GearRow[], filter: GearFilter): GearRow[] {
   return filter === 'all' ? rows : rows.filter((row) => equipped(row) === (filter === 'equipped'));
 }
 
-/** Every place a row can go: free slots (any slot under the slot override), Equipped, Carried, Not Carried, every container not it or in it. */
+/** Every place a row can go: free slots of the row's own kind (any slot under the slot override), Equipped, Carried, Not Carried, every container not it or in it. */
 export function moveTargets(model: GearModel, row: GearRow): MoveTarget[] {
   const own = row.held.location;
   const inside = new Set(row.held.copies.map(copyId));
@@ -282,31 +304,34 @@ export function moveTargets(model: GearModel, row: GearRow): MoveTarget[] {
     if (isOwn) {
       continue;
     }
-    if (location.kind === 'slot' && !model.slotOverride && copiesIn(section.items) >= placesOf(location.slot)) {
+    if (location.kind === 'slot' && !model.slotOverride && (copiesIn(section.items) >= placesOf(location.slot) || !slotKindsAllowed(row.held.slot).includes(location.slot))) {
       continue;
     }
     targets.push({ id: section.id, label: section.label, location });
   }
+  // One target per container row, bound to its first copy: identical empty containers are interchangeable (§27.5).
   for (const candidate of model.rows.filter((other) => other.isContainer)) {
-    candidate.held.copies.forEach((copy, index) => {
-      const here = own.kind === 'inside' && sameCopy(own.container, copy);
-      if (inside.has(copyId(copy)) || here) {
-        return;
-      }
-      targets.push({ id: `inside-${copyId(copy)}`, label: `Into ${copyTitle(candidate, index)}`, location: { kind: 'inside', container: copy } });
-    });
+    const copy = candidate.held.copies[0];
+    const here = own.kind === 'inside' && candidate.held.copies.some((held) => sameCopy(own.container, held));
+    if (candidate.held.copies.some((held) => inside.has(copyId(held))) || here) {
+      continue;
+    }
+    targets.push({ id: `inside-${copyId(copy)}`, label: `Into ${copyTitle(model, candidate)}`, location: { kind: 'inside', container: copy } });
   }
   return targets;
 }
 
-/** A container copy's name: `Pouch, Belt #2` in a stack, the plain name for one copy. */
-function copyTitle(row: GearRow, index: number): string {
-  const name = stackLabel({ ...row.held, quantity: 1 });
-  return row.held.copies.length > 1 ? `${name} #${index + 1}` : name;
+/** A container row's name, without its count: `Sack #2` when another container row has the same name. */
+function copyTitle(model: GearModel, row: GearRow): string {
+  const name = (candidate: GearRow) => stackLabel({ ...candidate.held, quantity: 1 });
+  const namesakes = model.rows.filter((candidate) => candidate.isContainer && name(candidate) === name(row));
+  return namesakes.length > 1 ? `${name(row)} #${namesakes.indexOf(row) + 1}` : name(row);
 }
 
 export interface ContainerTable {
   copy: CopyKeyDto;
+  /** The container's own row: Customize names and modifies `copy` of it. */
+  row: GearRow;
   title: string;
   /** The copy's `containerLoads` figure as the engine gave it; null when the engine sent none. */
   loadLabel: string | null;
@@ -314,18 +339,17 @@ export interface ContainerTable {
   rows: GearRow[];
 }
 
-/** One table per container copy, in row then copy order (`decisions.md §38`); no weight is summed here. */
+/** One table per container row, bound to its first copy (`decisions.md §38`; SD-42 §27.5); no weight is summed here. */
 export function containerTables(model: GearModel): ContainerTable[] {
   return model.rows
     .filter((row) => row.isContainer)
-    .flatMap((row) =>
-      row.held.copies.map((copy, index) => ({
-        copy,
-        title: copyTitle(row, index),
-        loadLabel: capacityLabel(model.containerLoads.find((load) => sameCopy(load.copy, copy))),
-        rows: model.rows.filter((candidate) => candidate.held.location.kind === 'inside' && sameCopy(candidate.held.location.container, copy)),
-      })),
-    );
+    .map((row) => ({
+      copy: row.held.copies[0],
+      row,
+      title: copyTitle(model, row),
+      loadLabel: capacityLabel(model.containerLoads.find((load) => sameCopy(load.copy, row.held.copies[0]))),
+      rows: model.rows.filter((candidate) => insideRow(candidate, row)),
+    }));
 }
 
 /** The drag data's format: the dragged row's id (`GearRow.id`). */
@@ -334,7 +358,7 @@ export const DRAG_FORMAT = 'application/x-codex-gear-row';
 /**
  * Where a drop of the dragged row onto `targetId` (a tree section's id or a Move to target's
  * `inside-<copy>`) moves it: the same location the Move to menu would, or null where the menu offers
- * nothing (itself, inside itself, a full slot without the slot override, a non-container, its own place) (`decisions.md §14`).
+ * nothing (itself, inside itself, a full slot or one not of its kind without the slot override, a non-container, its own place) (`decisions.md §14`).
  */
 export function dropTarget(dataTransfer: Pick<DataTransfer, 'getData'>, targetId: string, model: GearModel): LocationDto | null {
   const row = model.rows.find((candidate) => candidate.id === dataTransfer.getData(DRAG_FORMAT));

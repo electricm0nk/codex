@@ -1,0 +1,56 @@
+test_declared_pi_name_is_withheld_but_the_row_survives (scripts.tests.test_pf1e_dashboard_producer.BuildUnitShardsPiRedactionTest.test_declared_pi_name_is_withheld_but_the_row_survives) ... ok
+test_word_boundary_embed_and_type_facet_substring_are_both_redacted (scripts.tests.test_pf1e_dashboard_producer.BuildUnitShardsWordBoundaryAndTypeFacetTest.test_word_boundary_embed_and_type_facet_substring_are_both_redacted) ... ok
+test_doneness_verdict_itself_is_unchanged (scripts.tests.test_pf1e_dashboard_producer.ClassifierReclassifiedUnitsTest.test_doneness_verdict_itself_is_unchanged)
+This fix reclassifies `wiring_class` at tally-time -- it must NOT ... ok
+test_empty_case_is_a_real_zero_not_an_absent_field (scripts.tests.test_pf1e_dashboard_producer.ClassifierReclassifiedUnitsTest.test_empty_case_is_a_real_zero_not_an_absent_field)
+Decision 1a's anti-gaming doctrine: the empty case must fail ... ok
+test_only_evidence_corroborated_display_grounded_class_features_reclassify (scripts.tests.test_pf1e_dashboard_producer.ClassifierReclassifiedUnitsTest.test_only_evidence_corroborated_display_grounded_class_features_reclassify) ... ok
+test_reaches_work_inventory_panel (scripts.tests.test_pf1e_dashboard_producer.ClassifierReclassifiedUnitsTest.test_reaches_work_inventory_panel)
+The published panel (`work_inventory_panel()`) must carry the ... ok
+test_ambiguous_fixture_verified_is_held (scripts.tests.test_pf1e_dashboard_producer.DonenessVerdictGridTest.test_ambiguous_fixture_verified_is_held) ... ok
+test_ambiguous_literal_verified_is_held (scripts.tests.test_pf1e_dashboard_producer.DonenessVerdictGridTest.test_ambiguous_literal_verified_is_held) ... ok
+test_ambiguous_unmeasurable_is_unmeasurable (scripts.tests.test_pf1e_dashboard_producer.DonenessVerdictGridTest.test_ambiguous_unmeasurable_is_unmeasurable)
+`AT-33-E6-001` (2026-08-25): the real, live cell -- 11 of the 49,438 ... ok
+test_full_grid_yields_no_unmapped_cells (scripts.tests.test_pf1e_dashboard_producer.DonenessVerdictGridTest.test_full_grid_yields_no_unmapped_cells)
+The whole 5 wiring_class x 10 status grid (50 cells) must map to a ... ok
+test_sheet_complete_is_done_for_every_wiring_class (scripts.tests.test_pf1e_dashboard_producer.DonenessVerdictGridTest.test_sheet_complete_is_done_for_every_wiring_class) ... ok
+test_static_literal_verified_is_done (scripts.tests.test_pf1e_dashboard_producer.DonenessVerdictGridTest.test_static_literal_verified_is_done)
+Control: the ORIGINAL done rung (SD-32 decisions.md §2) still ... ok
+test_unknown_is_still_accepted_as_unmeasurables_legacy_spelling (scripts.tests.test_pf1e_dashboard_producer.DonenessVerdictGridTest.test_unknown_is_still_accepted_as_unmeasurables_legacy_spelling)
+`unknown` is `unmeasurable`'s pre-`AT-33-E4-002` name. No live ... ok
+test_unmapped_cell_raises (scripts.tests.test_pf1e_dashboard_producer.DonenessVerdictGridTest.test_unmapped_cell_raises)
+Negative case: a status word with genuinely no rule anywhere ... ok
+test_cache_computed_from_other_content_at_same_path_is_rejected (scripts.tests.test_pf1e_dashboard_producer.ForeignContentCacheIsRejectedTest.test_cache_computed_from_other_content_at_same_path_is_rejected) ... ok
+test_summary_records_the_sha256_of_the_document_it_read (scripts.tests.test_pf1e_dashboard_producer.ForeignContentCacheIsRejectedTest.test_summary_records_the_sha256_of_the_document_it_read)
+The recorded hash must be the real digest of the bytes on disk — ... ok
+test_warm_cache_is_still_served_when_the_content_matches (scripts.tests.test_pf1e_dashboard_producer.ForeignContentCacheIsRejectedTest.test_warm_cache_is_still_served_when_the_content_matches)
+The guard must not defeat caching outright: an untouched document ... ok
+test_declared_pi_row_is_redacted_but_still_present (scripts.tests.test_pf1e_dashboard_producer.ParseLstFirstFieldPiRedactionTest.test_declared_pi_row_is_redacted_but_still_present) ... ok
+test_a_document_outside_any_checkout_keeps_its_absolute_path (scripts.tests.test_pf1e_dashboard_producer.PublishableDocumentPathTests.test_a_document_outside_any_checkout_keeps_its_absolute_path)
+Degrade VISIBLY, not silently: a doc that is not in a checkout has ... ok
+test_no_published_index_field_carries_an_absolute_path (scripts.tests.test_pf1e_dashboard_producer.PublishableDocumentPathTests.test_no_published_index_field_carries_an_absolute_path)
+End-to-end over the real emitter, not just the helper. ... ok
+test_path_inside_a_linked_worktree_is_repo_relative (scripts.tests.test_pf1e_dashboard_producer.PublishableDocumentPathTests.test_path_inside_a_linked_worktree_is_repo_relative)
+A linked worktree's `.git` is a FILE, not a directory. This is the ... ok
+test_path_inside_a_normal_clone_is_repo_relative (scripts.tests.test_pf1e_dashboard_producer.PublishableDocumentPathTests.test_path_inside_a_normal_clone_is_repo_relative) ... ok
+test_two_different_checkouts_yield_the_SAME_published_value (scripts.tests.test_pf1e_dashboard_producer.PublishableDocumentPathTests.test_two_different_checkouts_yield_the_SAME_published_value)
+The whole point: the value must not encode which checkout ran. ... ok
+test_pre_t8_schema_cache_is_rejected_and_reclassification_fires (scripts.tests.test_pf1e_dashboard_producer.StaleSchemaCacheIsRejectedTest.test_pre_t8_schema_cache_is_rejected_and_reclassification_fires) ... ok
+test_load_cached_dump_falls_back_to_cache_on_timeout_when_not_strict (scripts.tests.test_pf1e_dashboard_producer.StateDumpTimeoutIsLoudUnderStrictModeTest.test_load_cached_dump_falls_back_to_cache_on_timeout_when_not_strict)
+The live-regen path: a stale panel, never a blank one. ... pf1e-producer: v06_work_inventory timed out after 600s
+ok
+test_load_cached_dump_raises_under_strict_mode_on_timeout (scripts.tests.test_pf1e_dashboard_producer.StateDumpTimeoutIsLoudUnderStrictModeTest.test_load_cached_dump_raises_under_strict_mode_on_timeout)
+The defect this cycle fixes: --check must NOT silently serve the ... ok
+test_load_work_inventory_uses_its_own_wider_timeout (scripts.tests.test_pf1e_dashboard_producer.StateDumpTimeoutIsLoudUnderStrictModeTest.test_load_work_inventory_uses_its_own_wider_timeout)
+The mechanical control wave-26's receipt named: v06_work_inventory ... pf1e-producer: v06_work_inventory timed out after 950s
+ok
+test_run_state_dump_raises_state_dump_timeout_when_strict (scripts.tests.test_pf1e_dashboard_producer.StateDumpTimeoutIsLoudUnderStrictModeTest.test_run_state_dump_raises_state_dump_timeout_when_strict) ... ok
+test_run_state_dump_returns_none_on_timeout_when_not_strict (scripts.tests.test_pf1e_dashboard_producer.StateDumpTimeoutIsLoudUnderStrictModeTest.test_run_state_dump_returns_none_on_timeout_when_not_strict)
+Unchanged pre-existing behavior: no strict mode, no raise. ... pf1e-producer: v06_work_inventory timed out after 600s
+ok
+test_top_level_keys_match_pinned_set_for_current_schema (scripts.tests.test_pf1e_dashboard_producer.WiringSummaryTopLevelKeysCanaryTest.test_top_level_keys_match_pinned_set_for_current_schema) ... ok
+
+----------------------------------------------------------------------
+Ran 30 tests in 15.028s
+
+OK

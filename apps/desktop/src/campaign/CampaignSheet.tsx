@@ -1,14 +1,9 @@
 import { useEffect, useMemo, useState, type CSSProperties } from 'react';
-import {
-  addCampaignAsset,
-  deleteCampaignAsset,
-  getCampaign,
-  getCampaignAssets,
-  updateCampaignAsset,
-  type Campaign,
-  type CampaignAssetKind,
-  type MarkdownAsset,
-} from './campaignModel';
+import { openCampaignFolder } from '../boundary/campaignFolder/knownCampaigns';
+import type { CampaignFolderSnapshot, CampaignTreeEntry } from '../boundary/campaignFolder/types';
+import { CAMPAIGN_TABS, type CampaignTab } from './campaignFolderModel';
+import { characterRows, diffLines, IMPORT_CHOICES, type CharacterRow } from './charactersModel';
+import { diffCampaignCharacter, importCampaignCharacter, listCampaignCharacters, loadCampaignCharacter, type CampaignCharacterBackup, type ImportMode } from '../boundary/campaignFolder/characters';
 import { loadCharacterHubListSurfaceRuntime } from '../characterHub/characterHubRuntime';
 import type { CharacterHubListRowSurface } from '../characterHub/buildCharacterHubListSurface';
 import { loadSavedCharacterDetail, type LoadSavedCharacterResponse } from '../boundary/loadSavedCharacterDetail';
@@ -16,17 +11,21 @@ import { hasTauriRuntime } from '../boundary/runtime';
 import { buildPreviewDetail } from '../characterHub/previewData';
 import { formatHeldClasses } from '../characterHub/characterProgression';
 import { AppMenu } from '../layout/AppMenu';
+import { CampaignHelpButton } from './CampaignHelpScreen';
+import { AdventureLogTab } from './tabs/AdventureLogTab';
+import { MapsTab } from './tabs/MapsTab';
+import { listCampaignTree } from '../boundary/campaignFolder/campaignFiles';
+import { PartyResourcesTab } from './tabs/PartyResourcesTab';
+import { WikiTab } from './tabs/WikiTab';
 
 /**
- * Post-load campaign screen, styled like the Character Sheet: a full-bleed
- * header, a left party-member list, and a tabbed bottom panel for the
- * campaign's shared assets (Party Resources / Adventure Log / Maps / Wiki).
- *
- * These tabs hold markdown assets. localStorage (campaignModel.ts) is the
- * source of truth — every change here also gets mirrored to real `.md`
- * files under the campaign's local folder (see `writeCampaignLocalFolderArtifacts`)
- * so the campaign stays inspectable/shareable as plain files, but there is
- * no network sync: by design, this app never talks to a cloud API.
+ * Post-load campaign screen, styled like the Character Sheet: a full-bleed header, a left Characters
+ * list (the folder's `Characters/` backups, E2.10: open one read-only, import it as a stand-in or as
+ * the moved master, compare this device's copy with it), and a tabbed panel for the campaign folder's files (Party Resources / Adventure Log / Maps /
+ * Wiki). Everything is read from the folder (SD-42 `decisions.md §11`): `campaign.json`, and the
+ * tree for the tabs, and `list_campaign_characters` for the Characters list. Party Resources opens its file in the editor (E2.6); the Adventure Log lists its sessions
+ * and opens one in the editor (E2.7); Maps shows each map with its pins (E2.8), and a pin opens its
+ * page on the Wiki tab (E2.9): folders, pages, links, backlinks and search.
  */
 
 const panel: CSSProperties = {
@@ -35,18 +34,11 @@ const panel: CSSProperties = {
   borderRadius: 10,
 };
 
-const ASSET_TABS: ReadonlyArray<{ kind: CampaignAssetKind; label: string }> = [
-  { kind: 'resources', label: 'Party Resources' },
-  { kind: 'adventureLog', label: 'Adventure Log' },
-  { kind: 'maps', label: 'Maps' },
-  { kind: 'wiki', label: 'Wiki' },
-];
-
 function fmt(value: number): string {
   return value >= 0 ? `+${value}` : `${value}`;
 }
 
-function MemberDetailPanel(props: { row: CharacterHubListRowSurface; onOpenFullSheet: () => void }) {
+function MemberDetailPanel(props: { row: CharacterHubListRowSurface; loadKey: string; load: () => Promise<LoadSavedCharacterResponse>; onOpenFullSheet?: () => void }) {
   const [detail, setDetail] = useState<LoadSavedCharacterResponse | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -54,10 +46,8 @@ function MemberDetailPanel(props: { row: CharacterHubListRowSurface; onOpenFullS
     let cancelled = false;
     setLoading(true);
     setDetail(null);
-    const loader = hasTauriRuntime()
-      ? loadSavedCharacterDetail({ characterId: props.row.characterId })
-      : Promise.resolve(buildPreviewDetail());
-    loader
+    props
+      .load()
       .then((loaded) => {
         if (!cancelled) {
           setDetail(loaded);
@@ -76,7 +66,8 @@ function MemberDetailPanel(props: { row: CharacterHubListRowSurface; onOpenFullS
     return () => {
       cancelled = true;
     };
-  }, [props.row.characterId]);
+    // `loadKey` names what `load` reads.
+  }, [props.loadKey]);
 
   const snapshot = detail?.snapshot;
 
@@ -84,13 +75,17 @@ function MemberDetailPanel(props: { row: CharacterHubListRowSurface; onOpenFullS
     <div style={{ ...panel, padding: '1.1rem 1.25rem' }}>
       <div style={{ alignItems: 'baseline', display: 'flex', justifyContent: 'space-between' }}>
         <h3 style={{ margin: 0 }}>{props.row.displayLabel}</h3>
-        <button
-          type="button"
-          onClick={props.onOpenFullSheet}
-          style={{ background: 'none', border: '1px solid var(--color-border)', borderRadius: 6, color: 'var(--color-accent)', cursor: 'pointer', fontSize: '0.8rem', padding: '0.3rem 0.7rem' }}
-        >
-          View full sheet →
-        </button>
+        {props.onOpenFullSheet ? (
+          <button
+            type="button"
+            onClick={props.onOpenFullSheet}
+            style={{ background: 'none', border: '1px solid var(--color-border)', borderRadius: 6, color: 'var(--color-accent)', cursor: 'pointer', fontSize: '0.8rem', padding: '0.3rem 0.7rem' }}
+          >
+            View full sheet →
+          </button>
+        ) : (
+          <span style={{ color: 'var(--color-text-muted)', fontSize: '0.75rem' }}>Campaign copy · read-only</span>
+        )}
       </div>
       <p style={{ color: 'var(--color-text-secondary)', fontSize: '0.85rem', margin: '0.3rem 0 0.9rem' }}>
         {props.row.raceLabel} {formatHeldClasses(props.row.classSummary)}
@@ -119,159 +114,149 @@ function MemberDetailPanel(props: { row: CharacterHubListRowSurface; onOpenFullS
   );
 }
 
-function AssetList(props: {
-  assets: MarkdownAsset[];
-  onAdd: (title: string) => void;
-  onSave: (assetId: string, title: string, body: string) => void;
-  onDelete: (assetId: string) => void;
-  emptyLabel: string;
-  addLabel: string;
-}) {
-  const [selectedId, setSelectedId] = useState<string | null>(null);
-  const [draftTitle, setDraftTitle] = useState('');
-  const [draftBody, setDraftBody] = useState('');
-  const [newTitle, setNewTitle] = useState('');
+/** Import a backup onto this device, or compare this device's copy with it (decisions.md §16). */
+function CharacterActions(props: { campaignDir: string; row: CharacterRow; onImported: () => void }) {
+  const [mode, setMode] = useState<ImportMode>(IMPORT_CHOICES.find((choice) => choice.isDefault)!.mode);
+  const [message, setMessage] = useState<string | null>(null);
+  const [diff, setDiff] = useState<string[] | null>(null);
+  const [busy, setBusy] = useState(false);
 
-  const selected = props.assets.find((asset) => asset.id === selectedId) ?? null;
+  useEffect(() => {
+    setMessage(null);
+    setDiff(null);
+  }, [props.row.folder]);
 
-  function select(asset: MarkdownAsset) {
-    setSelectedId(asset.id);
-    setDraftTitle(asset.title);
-    setDraftBody(asset.body);
-  }
-
-  function handleAdd() {
-    if (!newTitle.trim()) {
-      return;
-    }
-    props.onAdd(newTitle.trim());
-    setNewTitle('');
-  }
+  const fail = (cause: unknown) => setMessage(cause instanceof Error ? cause.message : String(cause));
+  const button: CSSProperties = { background: 'var(--color-accent)', border: 'none', borderRadius: 6, color: 'var(--color-on-accent)', cursor: 'pointer', fontWeight: 600, padding: '0.4rem 0.9rem' };
 
   return (
-    <div style={{ display: 'flex', gap: '1rem', minHeight: 220 }}>
-      <div style={{ borderRight: '1px solid var(--color-border)', display: 'flex', flex: '0 0 220px', flexDirection: 'column', paddingRight: '1rem' }}>
-        <div style={{ display: 'flex', gap: '0.4rem', marginBottom: '0.6rem' }}>
-          <input
-            type="text"
-            placeholder={props.addLabel}
-            value={newTitle}
-            onChange={(event) => setNewTitle(event.target.value)}
-            style={{ backgroundColor: 'var(--color-surface-2)', border: '1px solid var(--color-border)', borderRadius: 6, boxSizing: 'border-box', color: 'var(--color-text)', flex: 1, fontSize: '0.82rem', padding: '0.35rem 0.5rem' }}
-          />
+    <div style={{ ...panel, padding: '0.9rem 1.25rem' }}>
+      {props.row.onThisDevice ? (
+        <>
+          <p style={{ color: 'var(--color-text-secondary)', fontSize: '0.85rem', margin: '0 0 0.6rem' }}>This device holds a copy of this character. Compare it with the campaign copy (nothing is merged).</p>
           <button
             type="button"
-            onClick={handleAdd}
-            disabled={!newTitle.trim()}
-            style={{ backgroundColor: 'var(--color-accent)', border: 'none', borderRadius: 6, color: 'var(--color-on-accent)', cursor: newTitle.trim() ? 'pointer' : 'not-allowed', flexShrink: 0, fontSize: '0.8rem', fontWeight: 700, opacity: newTitle.trim() ? 1 : 0.5, padding: '0.35rem 0.6rem' }}
+            disabled={busy}
+            style={button}
+            onClick={() => {
+              setBusy(true);
+              diffCampaignCharacter(props.campaignDir, props.row.folder)
+                .then((diffs) => setDiff(diffLines(diffs)))
+                .catch(fail)
+                .finally(() => setBusy(false));
+            }}
           >
-            +
+            Compare with the campaign copy
           </button>
-        </div>
-        {props.assets.length === 0 ? (
-          <p style={{ color: 'var(--color-text-muted)', fontSize: '0.82rem' }}>{props.emptyLabel}</p>
-        ) : (
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
-            {props.assets.map((asset) => (
-              <button
-                key={asset.id}
-                type="button"
-                onClick={() => select(asset)}
-                style={{
-                  background: selectedId === asset.id ? 'var(--color-surface-2)' : 'none',
-                  border: 'none',
-                  borderRadius: 6,
-                  color: selectedId === asset.id ? 'var(--color-accent)' : 'var(--color-text)',
-                  cursor: 'pointer',
-                  fontSize: '0.85rem',
-                  fontWeight: selectedId === asset.id ? 700 : 500,
-                  padding: '0.4rem 0.5rem',
-                  textAlign: 'left',
-                }}
-              >
-                {asset.title}
-              </button>
-            ))}
-          </div>
-        )}
-      </div>
-
-      <div style={{ flex: 1, minWidth: 0 }}>
-        {!selected ? (
-          <p style={{ color: 'var(--color-text-muted)' }}>Select an entry on the left, or add a new one.</p>
-        ) : (
-          <div>
-            <input
-              type="text"
-              value={draftTitle}
-              onChange={(event) => setDraftTitle(event.target.value)}
-              style={{ backgroundColor: 'var(--color-surface-2)', border: '1px solid var(--color-border)', borderRadius: 6, boxSizing: 'border-box', color: 'var(--color-text)', fontSize: '0.95rem', fontWeight: 700, marginBottom: '0.6rem', padding: '0.4rem 0.6rem', width: '100%' }}
-            />
-            <textarea
-              value={draftBody}
-              onChange={(event) => setDraftBody(event.target.value)}
-              placeholder="Markdown content…"
-              rows={8}
-              style={{ backgroundColor: 'var(--color-surface-2)', border: '1px solid var(--color-border)', borderRadius: 6, boxSizing: 'border-box', color: 'var(--color-text)', fontFamily: 'inherit', fontSize: '0.85rem', padding: '0.6rem', resize: 'vertical', width: '100%' }}
-            />
-            <div style={{ display: 'flex', gap: '0.5rem', marginTop: '0.6rem' }}>
-              <button
-                type="button"
-                onClick={() => props.onSave(selected.id, draftTitle.trim() || selected.title, draftBody)}
-                style={{ backgroundColor: 'var(--color-accent)', border: 'none', borderRadius: 6, color: 'var(--color-on-accent)', cursor: 'pointer', fontSize: '0.82rem', fontWeight: 700, padding: '0.4rem 0.9rem' }}
-              >
-                Save
-              </button>
-              <button
-                type="button"
-                onClick={() => {
-                  props.onDelete(selected.id);
-                  setSelectedId(null);
-                }}
-                style={{ backgroundColor: 'var(--color-surface-2)', border: '1px solid var(--color-error-border)', borderRadius: 6, color: 'var(--color-error)', cursor: 'pointer', fontSize: '0.82rem', fontWeight: 700, padding: '0.4rem 0.9rem' }}
-              >
-                Delete
-              </button>
-            </div>
-          </div>
-        )}
-      </div>
+          {diff ? (
+            <ul style={{ fontSize: '0.85rem', margin: '0.7rem 0 0', paddingLeft: '1.2rem' }}>
+              {diff.map((line) => (
+                <li key={line}>{line}</li>
+              ))}
+            </ul>
+          ) : null}
+        </>
+      ) : (
+        <fieldset style={{ border: 'none', margin: 0, padding: 0 }}>
+          <legend style={{ fontWeight: 700, marginBottom: '0.5rem' }}>Import to this device…</legend>
+          {IMPORT_CHOICES.map((choice) => (
+            <label key={choice.mode} style={{ display: 'flex', gap: '0.5rem', marginBottom: '0.45rem' }}>
+              <input type="radio" name="import-mode" checked={mode === choice.mode} onChange={() => setMode(choice.mode)} />
+              <span>
+                <strong>{choice.label}</strong>
+                {choice.isDefault ? ' (default)' : ''}
+                <br />
+                <span style={{ color: 'var(--color-text-muted)', fontSize: '0.8rem' }}>{choice.help}</span>
+              </span>
+            </label>
+          ))}
+          <button
+            type="button"
+            disabled={busy}
+            style={button}
+            onClick={() => {
+              setBusy(true);
+              importCampaignCharacter(props.campaignDir, props.row.folder, mode)
+                .then(() => {
+                  setMessage(`${props.row.title} is on this device now, in your character list.`);
+                  props.onImported();
+                })
+                .catch(fail)
+                .finally(() => setBusy(false));
+            }}
+          >
+            Import
+          </button>
+        </fieldset>
+      )}
+      {message ? (
+        <p role="status" style={{ color: 'var(--color-text-secondary)', fontSize: '0.85rem', margin: '0.6rem 0 0' }}>
+          {message}
+        </p>
+      ) : null}
     </div>
   );
 }
 
+type Loaded = { kind: 'loading' } | { kind: 'failed'; message: string } | { kind: 'open'; campaign: CampaignFolderSnapshot; tree: CampaignTreeEntry[] };
+
 export function CampaignSheet(props: {
-  campaignId: string;
+  campaignDir: string;
   onClose: () => void;
   onOpenCharacterSheet: (row: CharacterHubListRowSurface, detail: LoadSavedCharacterResponse | null) => void;
+  /** An imported backup is now a character on this device: the hub re-lists its characters. */
+  onCharacterImported: () => void;
 }) {
-  const [campaign] = useState<Campaign | null>(() => getCampaign(props.campaignId));
+  const [loaded, setLoaded] = useState<Loaded>({ kind: 'loading' });
   const [savedCharacters, setSavedCharacters] = useState<CharacterHubListRowSurface[]>([]);
-  const [selectedMemberId, setSelectedMemberId] = useState<string | null>(null);
-  const [tab, setTab] = useState<CampaignAssetKind>('resources');
-  const [assets, setAssets] = useState(() => (campaign ? getCampaignAssets(campaign.id) : null));
+  const [backups, setBackups] = useState<CampaignCharacterBackup[]>([]);
+  const [selectedFolder, setSelectedFolder] = useState<string | null>(null);
+  const [tab, setTab] = useState<CampaignTab>('resources');
+  // The page open on the Wiki tab (a map pin opens one there too).
+  const [wikiPage, setWikiPage] = useState<string | null>(null);
 
-  useEffect(() => {
+  const reloadCharacters = () => {
     loadCharacterHubListSurfaceRuntime()
       .then((surface) => setSavedCharacters(surface.rows))
       .catch(() => setSavedCharacters([]));
-  }, []);
+    listCampaignCharacters(props.campaignDir)
+      .then(setBackups)
+      .catch(() => setBackups([]));
+  };
 
-  const partyRows = useMemo(
-    () => (campaign ? savedCharacters.filter((row) => campaign.partyCharacterIds.includes(row.characterId)) : []),
-    [savedCharacters, campaign]
-  );
+  // Reload when the folder changes.
+  useEffect(reloadCharacters, [props.campaignDir]);
 
   useEffect(() => {
-    if (!selectedMemberId && partyRows.length > 0) {
-      setSelectedMemberId(partyRows[0].characterId);
-    }
-  }, [partyRows, selectedMemberId]);
+    let live = true;
+    Promise.all([openCampaignFolder(props.campaignDir), listCampaignTree(props.campaignDir)])
+      .then(([opened, tree]) => live && setLoaded({ kind: 'open', campaign: opened.campaign, tree }))
+      .catch((cause: unknown) => live && setLoaded({ kind: 'failed', message: cause instanceof Error ? cause.message : String(cause) }));
+    return () => {
+      live = false;
+    };
+  }, [props.campaignDir]);
 
-  if (!campaign) {
+  const reloadTree = () => {
+    listCampaignTree(props.campaignDir)
+      .then((fresh) => setLoaded((prev) => (prev.kind === 'open' ? { ...prev, tree: fresh } : prev)))
+      .catch((cause: unknown) => setLoaded({ kind: 'failed', message: cause instanceof Error ? cause.message : String(cause) }));
+  };
+
+  const rows = useMemo(() => characterRows(backups, savedCharacters.map((row) => row.characterId)), [backups, savedCharacters]);
+
+  useEffect(() => {
+    if (!selectedFolder && rows.length > 0) {
+      setSelectedFolder(rows[0].folder);
+    }
+  }, [rows, selectedFolder]);
+
+  if (loaded.kind !== 'open') {
     return (
       <div style={{ marginTop: '2rem' }}>
-        <p style={{ color: 'var(--color-error)' }}>Campaign not found.</p>
+        <p role={loaded.kind === 'failed' ? 'alert' : undefined} style={{ color: loaded.kind === 'failed' ? 'var(--color-error)' : 'var(--color-text-muted)' }}>
+          {loaded.kind === 'failed' ? loaded.message : 'Opening the campaign folder…'}
+        </p>
         <button type="button" onClick={props.onClose} style={{ background: 'none', border: '1px solid var(--color-border)', borderRadius: 8, cursor: 'pointer', padding: '0.5rem 1rem' }}>
           Back
         </button>
@@ -279,11 +264,9 @@ export function CampaignSheet(props: {
     );
   }
 
-  function refreshAssets() {
-    setAssets(getCampaignAssets(campaign!.id));
-  }
-
-  const selectedMember = partyRows.find((row) => row.characterId === selectedMemberId) ?? null;
+  const { campaign } = loaded;
+  const selected = rows.find((row) => row.folder === selectedFolder) ?? null;
+  const localRow = selected?.onThisDevice ? (savedCharacters.find((row) => row.characterId === selected.characterId) ?? null) : null;
 
   return (
     <div style={{ marginLeft: 'calc(50% - 50vw)', marginTop: '-3rem', width: '100vw' }}>
@@ -309,25 +292,29 @@ export function CampaignSheet(props: {
         <span style={{ fontWeight: 600 }}>
           {campaign.name} — {campaign.ruleSetLabel}
         </span>
+        <div style={{ flex: 1 }} />
+        <CampaignHelpButton campaignDir={props.campaignDir} />
       </div>
 
       <div style={{ display: 'flex', gap: '0.75rem', padding: '1rem 1.5rem' }}>
-        {/* Left: party member list */}
+        {/* Left: the folder's Characters/ backups */}
         <div style={{ borderRight: '1px solid var(--color-border)', flex: '0 0 240px', paddingRight: '0.75rem' }}>
           <p style={{ color: 'var(--color-text-muted)', fontSize: '0.7rem', fontWeight: 700, letterSpacing: '0.06em', marginBottom: '0.6rem', textTransform: 'uppercase' }}>
-            Party ({partyRows.length})
+            Characters ({rows.length})
           </p>
-          {partyRows.length === 0 ? (
-            <p style={{ color: 'var(--color-text-secondary)', fontSize: '0.85rem' }}>No party members yet — add some from Edit Campaign.</p>
+          {rows.length === 0 ? (
+            <p style={{ color: 'var(--color-text-secondary)', fontSize: '0.85rem' }}>
+              No characters yet. A character joins from its sheet&apos;s Campaign dialog, which copies it into this folder&apos;s Characters/.
+            </p>
           ) : (
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
-              {partyRows.map((row) => {
-                const active = row.characterId === selectedMemberId;
+              {rows.map((row) => {
+                const active = row.folder === selectedFolder;
                 return (
                   <button
-                    key={row.characterId}
+                    key={row.folder}
                     type="button"
-                    onClick={() => setSelectedMemberId(row.characterId)}
+                    onClick={() => setSelectedFolder(row.folder)}
                     style={{
                       ...panel,
                       backgroundColor: active ? 'var(--color-accent)' : 'var(--color-surface)',
@@ -336,9 +323,12 @@ export function CampaignSheet(props: {
                       textAlign: 'left',
                     }}
                   >
-                    <p style={{ color: active ? 'var(--color-on-accent)' : 'var(--color-text)', fontWeight: 700, margin: 0 }}>{row.displayLabel}</p>
+                    <p style={{ color: active ? 'var(--color-on-accent)' : 'var(--color-text)', fontWeight: 700, margin: 0 }}>{row.title}</p>
                     <p style={{ color: active ? 'var(--color-on-accent-muted)' : 'var(--color-text-muted)', fontSize: '0.75rem', margin: '0.1rem 0 0' }}>
-                      {row.raceLabel}
+                      {row.subtitle}
+                    </p>
+                    <p style={{ color: active ? 'var(--color-on-accent-muted)' : 'var(--color-text-faint)', fontSize: '0.7rem', margin: '0.1rem 0 0' }}>
+                      {row.master}
                     </p>
                   </button>
                 );
@@ -349,30 +339,42 @@ export function CampaignSheet(props: {
 
         {/* Right: selected member + campaign assets */}
         <div style={{ display: 'flex', flex: 1, flexDirection: 'column', gap: '1rem', minWidth: 0 }}>
-          {selectedMember ? (
+          {selected?.readable ? (
             <MemberDetailPanel
-              row={selectedMember}
-              onOpenFullSheet={() => {
-                if (hasTauriRuntime()) {
-                  loadSavedCharacterDetail({ characterId: selectedMember.characterId })
-                    .then((detail) => props.onOpenCharacterSheet(selectedMember, detail))
-                    .catch(() => props.onOpenCharacterSheet(selectedMember, null));
-                } else {
-                  props.onOpenCharacterSheet(selectedMember, buildPreviewDetail());
-                }
-              }}
+              row={selected.surface}
+              loadKey={`${props.campaignDir}/${selected.folder}`}
+              load={() => (hasTauriRuntime() ? loadCampaignCharacter(props.campaignDir, selected.folder) : Promise.resolve(buildPreviewDetail()))}
+              onOpenFullSheet={
+                localRow
+                  ? () => {
+                      // This device's own copy, as the hub opens it.
+                      if (hasTauriRuntime()) {
+                        loadSavedCharacterDetail({ characterId: localRow.characterId })
+                          .then((detail) => props.onOpenCharacterSheet(localRow, detail))
+                          .catch(() => props.onOpenCharacterSheet(localRow, null));
+                      } else {
+                        props.onOpenCharacterSheet(localRow, buildPreviewDetail());
+                      }
+                    }
+                  : undefined
+              }
             />
           ) : null}
+          {selected?.readable ? <CharacterActions campaignDir={props.campaignDir} row={selected} onImported={() => {
+                reloadCharacters();
+                props.onCharacterImported();
+              }}
+            /> : null}
 
           <div>
             <div style={{ borderBottom: '1px solid var(--color-border)', display: 'flex', flexWrap: 'wrap', gap: '1.25rem', marginBottom: '1rem' }}>
-              {ASSET_TABS.map((assetTab) => {
-                const active = assetTab.kind === tab;
+              {CAMPAIGN_TABS.map((assetTab) => {
+                const active = assetTab.tab === tab;
                 return (
                   <button
-                    key={assetTab.kind}
+                    key={assetTab.tab}
                     type="button"
-                    onClick={() => setTab(assetTab.kind)}
+                    onClick={() => setTab(assetTab.tab)}
                     style={{
                       background: 'none',
                       border: 'none',
@@ -391,29 +393,26 @@ export function CampaignSheet(props: {
             </div>
 
             <div style={{ ...panel, padding: '1.25rem' }}>
-              {assets ? (
-                <AssetList
-                  assets={assets[tab]}
-                  emptyLabel="Nothing here yet."
-                  addLabel={`New ${ASSET_TABS.find((assetTab) => assetTab.kind === tab)?.label.toLowerCase()} entry…`}
-                  onAdd={(title) => {
-                    addCampaignAsset(campaign.id, tab, title);
-                    refreshAssets();
-                  }}
-                  onSave={(assetId, title, body) => {
-                    updateCampaignAsset(campaign.id, tab, assetId, { title, body });
-                    refreshAssets();
-                  }}
-                  onDelete={(assetId) => {
-                    deleteCampaignAsset(campaign.id, tab, assetId);
-                    refreshAssets();
+              {tab === 'resources' ? (
+                <PartyResourcesTab campaignDir={props.campaignDir} tree={loaded.tree} onTreeChanged={reloadTree} />
+              ) : tab === 'adventureLog' ? (
+                <AdventureLogTab campaignDir={props.campaignDir} tree={loaded.tree} onTreeChanged={reloadTree} />
+              ) : tab === 'maps' ? (
+                <MapsTab
+                  campaignDir={props.campaignDir}
+                  tree={loaded.tree}
+                  onTreeChanged={reloadTree}
+                  onOpenPage={(path) => {
+                    setWikiPage(path);
+                    setTab('wiki');
                   }}
                 />
-              ) : null}
+              ) : (
+                <WikiTab campaignDir={props.campaignDir} tree={loaded.tree} onTreeChanged={reloadTree} page={wikiPage} onOpenPage={setWikiPage} />
+              )}
             </div>
-            <p style={{ color: 'var(--color-text-faint)', fontSize: '0.72rem', margin: '0.6rem 0 0' }}>
-              Entries are saved locally for now; syncing them as markdown files to the campaign's Drive folder is not
-              yet wired.
+            <p style={{ color: 'var(--color-text-faint)', fontSize: '0.72rem', margin: '0.6rem 0 0', overflowWrap: 'anywhere' }}>
+              The files in {props.campaignDir}. Open the folder in Obsidian or any Markdown editor to edit them.
             </p>
           </div>
         </div>

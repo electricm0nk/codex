@@ -30,7 +30,6 @@ use crate::rules_core::encumbrance::{compute_encumbrance, EncumbranceComputation
 use crate::rules_core::contract::encumbrance_size_for_race;
 use crate::rules_core::equipment_effects::{compute_equipment_effects, stand_in_record, EquipmentEffects};
 use crate::rules_core::equipment_resolver::{equipment_converted_resolve, equipment_id_resolve};
-use crate::rules_core::feat_identity;
 use crate::rules_core::race_resolver::race_size_for_race_token;
 use crate::rules_core::pilot_compute::{
     apply_human_ability_bonus, character_is_proficient_with, choice_selection,
@@ -46,7 +45,7 @@ use crate::rules_core::pilot_compute::{
     supported_fighter_level, PilotBaseChassisComputation, ARMOR_CLASS_BASE, CLASS_SKILL_BONUS,
     CLIMB_SKILL_ID, FIGHTER_BONUS_FEAT_CHOICE_ID, FIGHTER_CLASS_ID,
     INTIMIDATE_SKILL_ID, MAX_SUPPORTED_FIGHTER_LEVEL, MAX_SUPPORTED_WIZARD_LEVEL,
-    POWER_ATTACK_ITEM_ID, SWIM_SKILL_ID, WEAPON_FOCUS_FEAT_ID,
+    POWER_ATTACK_ITEM_ID, SWIM_SKILL_ID,
     WEAPON_FOCUS_LONGSWORD_SELECTION,
     WEAPON_NONPROFICIENCY_ATTACK_PENALTY, WIZARD_CLASS_ID,
 };
@@ -501,11 +500,7 @@ pub fn compute_combat_baseline_from_corpus(
     // (`resolve_unified_pilot_snapshot`), so leaving the requirement here
     // would keep every non-Human, non-Monk character uncreatable.
     //
-    // Folded, not compared verbatim -- the same seam, and the same reason, as
-    // `pilot_compute::unmet_combat_posture_conditions`'s own gate.
-    if !feat_identity::holds(&chosen.selected_feats, WEAPON_FOCUS_FEAT_ID) {
-        unmet.push(format!("missing selected feat {WEAPON_FOCUS_FEAT_ID}"));
-    }
+    // SD-42 E4.17 (h): nor is Weapon Focus, mirroring the same function.
     if fighter_level_in_mix(input).is_some() {
         let fighter_bonus_selection = choice_selection(input, FIGHTER_BONUS_FEAT_CHOICE_ID);
         if fighter_bonus_selection != Some(WEAPON_FOCUS_LONGSWORD_SELECTION) {
@@ -619,7 +614,7 @@ pub fn compute_combat_baseline_from_corpus(
         .as_ref()
         .map_or(strength_modifier, |weapon| melee_attack_ability_modifier(input, weapon, &base.ability_modifiers));
     let focus_bonus = main_hand.map_or(0, |main| {
-        weapon_focus_bonus_for(input, weapon.as_ref().map_or(main.equipment_record_key.as_str(), |weapon| weapon.key))
+        weapon_focus_bonus_by_record(input, &main.equipment_record_key, weapon.as_ref().map(|weapon| weapon.key))
     });
     // The size modifier is applied HERE TOO, not only in
     // `pilot_compute::compute_combat_baseline`, for exactly the reason the
@@ -684,7 +679,7 @@ pub fn compute_combat_baseline_from_corpus(
         &effects,
         (dexterity_modifier, effective_max_dex, dexterity_contribution),
         (format!("{size:?}"), size_armor_class_modifier),
-        feat_contributions,
+        &feat_contributions,
     );
     let armor_class = armor_class_parts.total();
     debug_assert_eq!(
@@ -777,7 +772,7 @@ pub fn armor_class_parts_from_corpus(
     effects: &EquipmentEffects,
     (dexterity_modifier, effective_max_dex, dexterity_contribution): (i16, Option<i16>, i16),
     (size_words, size_modifier): (String, i16),
-    feats: FeatDerivedPillarContributions,
+    feats: &FeatDerivedPillarContributions,
 ) -> ArmorClassParts {
     let mut parts = ArmorClassParts::default();
     for item in &effects.per_item {
@@ -840,7 +835,7 @@ pub fn corpus_weapon_attack_rows(
         let ability = weapon.as_ref().map_or(base.ability_modifiers.strength, |weapon| {
             attack_ability_modifier_for(input, weapon, &base.ability_modifiers)
         });
-        let focus = weapon_focus_bonus_for(input, weapon.as_ref().map_or(key, |weapon| weapon.key));
+        let focus = weapon_focus_bonus_by_record(input, key, weapon.as_ref().map(|weapon| weapon.key));
         let (penalty, proficiency_detail) = match weapon.as_ref().and_then(|weapon| held_weapon_proficiency(input, key, weapon, corpus)) {
             Some(false) => (WEAPON_NONPROFICIENCY_ATTACK_PENALTY, ""),
             Some(true) => (0, ""),
@@ -869,6 +864,61 @@ pub fn corpus_weapon_attack_rows(
         });
     }
     rows
+}
+
+/// SD-42 E4.17 (d): the sheet's ranged attack, `combat.baseline_ranged_attack_bonus`: base attack,
+/// Dexterity and the size modifier (PF1 Chapter 8, "Attack Bonus": ranged is base attack +
+/// Dexterity + size), as the melee row is base attack, the governing ability and size with no
+/// weapon. A weapon's own ranged row (its Focus, its `+N`) is `combat.weapon_attack_bonus.<weapon>`.
+/// `None` for a race whose size is unknown, the melee baseline's refusal.
+pub fn ranged_attack_baseline_row(base: &PilotBaseChassisComputation, input: &CharacterInput) -> Option<ComputationExplanation> {
+    let size = race_size_for_race_token(&input.chosen.race_id)?.armor_class_size_modifier();
+    let dexterity = base.ability_modifiers.dexterity;
+    let value = base.base_attack_bonus + dexterity + size;
+    Some(ComputationExplanation {
+        id: "combat.baseline_ranged_attack_bonus".to_owned(),
+        value,
+        detail: format!(
+            "Ranged attack: base attack bonus ({:+}) + Dexterity modifier ({dexterity:+}) + size modifier ({size:+}) = {value}",
+            base.base_attack_bonus
+        ),
+    })
+}
+
+/// SD-42 E4.17 (b): the size modifier a skill takes (PF1 Table 8-1): Stealth's (Small +4, Large -4)
+/// and Fly's, half of it (Small +2, Large -2). 0 for any other skill or an unknown race.
+pub fn size_skill_modifier(input: &CharacterInput, skill: &str) -> i16 {
+    let Some(size) = race_size_for_race_token(&input.chosen.race_id) else { return 0 };
+    match skill {
+        "stealth" => size.stealth_size_modifier(),
+        "fly" => size.stealth_size_modifier() / 2,
+        _ => 0,
+    }
+}
+
+/// SD-42 E4.17 (e): an inappropriately sized weapon's attack penalty (CRB Chapter 6, "Weapon Size"):
+/// -2 per size category between the weapon and its wielder. A copy with no size of its own is
+/// Medium, as its damage die is (`CopyFacts.size`). 0 when the wielder's size is unknown.
+pub fn weapon_size_attack_penalty(input: &CharacterInput, weapon_size: Option<crate::rules_core::size::SizeCategory>) -> i16 {
+    let Some(wielder) = race_size_for_race_token(&input.chosen.race_id) else { return 0 };
+    let weapon = weapon_size.unwrap_or(crate::rules_core::size::SizeCategory::Medium);
+    -2 * ((wielder as i16) - (weapon as i16)).abs()
+}
+
+/// SD-42 E4.17 (b): Skill Focus on the skill (`skill:knowledge_planes`'s `knowledge_planes`): +3,
+/// +6 from 10 ranks (CRB Skill Focus), when the feat's chosen skill (`choice:skill_focus_target`)
+/// names it; 0 otherwise.
+/// Read through the shared feat seam (`FeatDerivedPillarContributions::skill_focus_bonus`); the
+/// Strength modifier it threads moves only Intimidate, which this does not read.
+pub fn skill_focus_bonus(input: &CharacterInput, skill: &str, ranks: i16) -> i16 {
+    feat_derived_pillar_contributions(input, 0).skill_focus_bonus(skill, ranks)
+}
+
+/// A weapon's Focus bonus: the feat's chosen weapon read by the record's own name (`Flail (Heavy)`),
+/// else by the table's or the tags' name for it.
+fn weapon_focus_bonus_by_record(input: &CharacterInput, record_key: &str, weapon_key: Option<&str>) -> i16 {
+    let by_record = weapon_focus_bonus_for(input, record_key);
+    if by_record != 0 { by_record } else { weapon_key.map_or(0, |key| weapon_focus_bonus_for(input, key)) }
 }
 
 /// The words closing every row of [`carried_weapon_combat_rows`].
@@ -922,6 +972,23 @@ pub struct CorpusAwareSelectedSkillModifiers {
     pub swim: i16,
 }
 
+/// The armor check penalty every Strength and Dexterity skill takes (PF1 Chapter 4): what the worn
+/// armor and shield state, their masterwork and material included (`compute_equipment_effects`),
+/// less a Fighter's Armor Training, never above 0. Climb and Swim read it here; the sheet's other
+/// Strength and Dexterity skill totals read the same number (SD-42 E4.17 (a)).
+pub fn armor_check_penalty_from_corpus(input: &CharacterInput, corpus: &SourcePackageContent) -> i16 {
+    let equipped: Vec<EquipmentSelection> = input
+        .chosen
+        .equipment_selections
+        .iter()
+        .filter(|selection| selection.active_state == ActiveState::EquippedActive)
+        .cloned()
+        .collect();
+    let effects = compute_equipment_effects(&equipped, corpus);
+    let level = supported_fighter_level(input).unwrap_or(1);
+    (effects.armor_check_penalty_total + fighter_armor_training(level).armor_check_reduction).min(0)
+}
+
 pub fn compute_selected_skill_modifiers_from_corpus(
     base: &PilotBaseChassisComputation,
     input: &CharacterInput,
@@ -950,19 +1017,7 @@ pub fn compute_selected_skill_modifiers_from_corpus(
         return Err(unmet);
     }
 
-    let equipped: Vec<EquipmentSelection> = input
-        .chosen
-        .equipment_selections
-        .iter()
-        .filter(|selection| selection.active_state == ActiveState::EquippedActive)
-        .cloned()
-        .collect();
-    let effects = compute_equipment_effects(&equipped, corpus);
-
-    let level = supported_fighter_level(input).unwrap_or(1);
-    let armor_check_penalty =
-        (effects.armor_check_penalty_total + fighter_armor_training(level).armor_check_reduction)
-            .min(0);
+    let armor_check_penalty = armor_check_penalty_from_corpus(input, corpus);
 
     let climb_rank = selected_skill_ranks(input, CLIMB_SKILL_ID);
     let intimidate_rank = selected_skill_ranks(input, INTIMIDATE_SKILL_ID);
@@ -1075,5 +1130,99 @@ mod carried_weapon_attack_row_tests {
     fn carried_weapon_attack_row_absent_for_not_carried() {
         let input = fighter(&[("Dagger (Base)", ActiveState::Absent)]);
         assert!(attack(&input, "dagger").is_none());
+    }
+}
+
+/// SD-42 E4.17: the sheet terms PCGen's export of its own sample characters showed missing --
+/// armor check penalty with masterwork and mithral, the ranged attack, Small size on skills and on a
+/// Medium weapon, Skill Focus, Halfling Luck, and no Weapon Focus required.
+#[cfg(test)]
+mod sheet_terms_tests {
+    use super::*;
+    use crate::rules_core::character_input::{load_character_input_fixture, SelectedChoice};
+    use crate::rules_core::corpus_loader::{load_equipment_corpus, BookCorpusRoot};
+    use crate::rules_core::size::SizeCategory;
+    use std::path::Path;
+
+    fn character(race: &str, dexterity: u8) -> CharacterInput {
+        load_character_input_fixture(&format!(
+            "case_id=case:test\nsource_package_id=core_rulebook\nrace_id=race:{race}\nclass_level=class:fighter:3\n\
+             ability=strength:14\nability=dexterity:{dexterity}\nability=constitution:14\nability=intelligence:10\n\
+             ability=wisdom:10\nability=charisma:10\n"
+        ))
+        .character_input
+        .expect("the fixture loads")
+    }
+
+    fn wearing(mut input: CharacterInput, item: &str, modifiers: &[&str]) -> CharacterInput {
+        input.chosen.equipment_selections = vec![EquipmentSelection {
+            item_id: item.to_owned(),
+            equipped_or_active: true,
+            active_state: ActiveState::EquippedActive,
+            applied_modifiers: modifiers.iter().map(|m| (*m).to_owned()).collect(),
+        }];
+        input
+    }
+
+    fn corpus() -> SourcePackageContent<'static> {
+        load_equipment_corpus(&[BookCorpusRoot { book_id: "core_rulebook", dir: Path::new("data/corpus/core_rulebook") }])
+    }
+
+    #[test]
+    fn sheet_terms_masterwork_and_mithral_lessen_the_armor_check_penalty() {
+        let corpus = corpus();
+        let acp = |item: &str, modifiers: &[&str]| armor_check_penalty_from_corpus(&wearing(character("human", 12), item, modifiers), &corpus);
+        // The record's -6, less the Fighter 3's Armor Training 1.
+        assert_eq!(acp("Full Plate", &[]), -5);
+        assert_eq!(acp("Full Plate", &["Special Ability ~ +1 ~ Armor"]), -4, "a +1 armor is masterwork: one less");
+        assert_eq!(acp("Full Plate", &["Special Ability ~ +1 ~ Armor", "Special Quality ~ Masterwork ~ Armor"]), -4, "masterwork counts once");
+        assert_eq!(acp("Chain Shirt", &["Special Ability ~ +1 ~ Armor", "Material ~ Mithril ~ Armor / Light"]), 0, "mithral: three less, not below 0");
+        let effects = compute_equipment_effects(&wearing(character("human", 12), "Chain Shirt", &["Material ~ Mithril ~ Armor / Light"]).chosen.equipment_selections, &corpus);
+        assert_eq!(effects.max_dex_cap, Some(6), "mithral raises the chain shirt's max Dexterity 4 by 2");
+    }
+
+    #[test]
+    fn sheet_terms_ranged_attack_is_base_attack_dexterity_and_size() {
+        let input = character("halfling", 16);
+        let row = ranged_attack_baseline_row(&compute_pilot_base_chassis(&input), &input).expect("a Halfling's size is known");
+        // Fighter 3 base attack +3, Dexterity 16 (+3; a saved score holds the race's adjustment), Small +1.
+        assert_eq!((row.id.as_str(), row.value), ("combat.baseline_ranged_attack_bonus", 7), "{}", row.detail);
+    }
+
+    #[test]
+    fn sheet_terms_small_size_on_stealth_fly_and_a_medium_weapon() {
+        let halfling = character("halfling", 12);
+        assert_eq!((size_skill_modifier(&halfling, "stealth"), size_skill_modifier(&halfling, "fly"), size_skill_modifier(&halfling, "perception")), (4, 2, 0));
+        assert_eq!(weapon_size_attack_penalty(&halfling, None), -2, "an unsized copy is Medium");
+        assert_eq!(weapon_size_attack_penalty(&halfling, Some(SizeCategory::Small)), 0);
+        assert_eq!(weapon_size_attack_penalty(&character("human", 12), None), 0);
+    }
+
+    #[test]
+    fn sheet_terms_skill_focus_names_its_skill_and_doubles_at_ten_ranks() {
+        let mut input = character("human", 12);
+        input.chosen.selected_feats.push("Skill Focus".to_owned());
+        input.chosen.selected_choices.push(SelectedChoice { choice_set_id: "choice:skill_focus_target".to_owned(), selection_id: "skill:Knowledge (Planes)".to_owned() });
+        assert_eq!(skill_focus_bonus(&input, "knowledge_planes", 2), 3);
+        assert_eq!(skill_focus_bonus(&input, "knowledge_planes", 10), 6);
+        assert_eq!(skill_focus_bonus(&input, "diplomacy", 2), 0);
+    }
+
+    #[test]
+    fn sheet_terms_halfling_luck_is_on_every_save() {
+        let save = |race: &str, id: &str| {
+            compute_pilot_base_chassis(&character(race, 12)).explanations.iter().find(|row| row.id == id).map(|row| row.value).expect("the save row")
+        };
+        for id in ["defense.total_save.fortitude", "defense.total_save.will"] {
+            assert_eq!(save("halfling", id) - save("human", id), 1, "{id}: Halfling Luck +1, the two otherwise alike");
+        }
+    }
+
+    #[test]
+    fn sheet_terms_weapon_focus_is_not_required() {
+        let input = character("human", 12);
+        assert!(!input.chosen.selected_feats.iter().any(|feat| feat.contains("weapon_focus")), "the fixture holds no Weapon Focus");
+        let unmet = compute_combat_baseline_from_corpus(&compute_pilot_base_chassis(&input), &input, &corpus()).err().unwrap_or_default();
+        assert!(!unmet.iter().any(|reason| reason.contains("missing selected feat")), "{unmet:?}");
     }
 }

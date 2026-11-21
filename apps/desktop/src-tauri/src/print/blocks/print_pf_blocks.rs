@@ -232,14 +232,15 @@ fn print_pf_blocks_every_ranked_skill_prints_the_load_responses_total() {
     let signed = |n: i16| if n >= 0 { format!("+{n}") } else { n.to_string() };
     let book = [
         // Aldric, Human Fighter 3: Str +4, Dex +1, Int +2, Wis +1; Ride, Survival and Knowledge
-        // (Dungeoneering) are Fighter class skills.
-        (ALDRIC_ID, "ride", 3 + 1 + 3),
+        // (Dungeoneering) are Fighter class skills. Ride is a Dexterity skill: his worn Chain Shirt's
+        // -2 armor check penalty, less Armor Training's 1 (SD-42 E4.17 (a)).
+        (ALDRIC_ID, "ride", 3 + 1 + 3 - 1),
         (ALDRIC_ID, "survival", 3 + 1 + 3),
         (ALDRIC_ID, "knowledge_dungeoneering", 3 + 2 + 3),
         // Elowen, Human Wizard 5: Int +4, Dex +2; Spellcraft, Fly and Knowledge (Arcana) are Wizard
-        // class skills.
+        // class skills. Fly is a Dexterity skill: her worn Chain Shirt's -2 (SD-42 E4.17 (a)).
         (ELOWEN_ID, "spellcraft", 5 + 4 + 3),
-        (ELOWEN_ID, "fly", 5 + 2 + 3),
+        (ELOWEN_ID, "fly", 5 + 2 + 3 - 2),
         (ELOWEN_ID, "knowledge_arcana", 5 + 4 + 3),
     ];
     for (tag, id) in [("skills-aldric", ALDRIC_ID), ("skills-elowen", ELOWEN_ID)] {
@@ -720,6 +721,8 @@ fn print_pf_blocks_the_split_combat_blocks_print_the_same_values() {
             ("saves", "Saving Throws", "saves", "Will", vec![signed(snapshot.total_saves.will)], Some("defense.total_save.will")),
             ("attack", "Attack", "attack", "Base Attack Bonus", vec![signed(snapshot.base_attack_bonus)], Some("class_chassis.base_attack_bonus")),
             ("attack", "Attack", "attack", "Melee", vec![signed(snapshot.baseline_melee_attack_bonus)], Some("combat.baseline_melee_attack_bonus")),
+            // SD-42 E4.20: the ranged attack beside the melee one, the engine's row (E4.17 (d)).
+            ("attack", "Attack", "attack", "Ranged", vec![signed(row("combat.baseline_ranged_attack_bonus").value)], Some("combat.baseline_ranged_attack_bonus")),
             ("attack", "Attack", "attack", "CMB", vec![signed(row("combat.combat_maneuver_bonus").value)], Some("combat.combat_maneuver_bonus")),
             ("attack", "Attack", "attack", "CMD", vec![row("defense.combat_maneuver_defense").value.to_string()], Some("defense.combat_maneuver_defense")),
             ("speed", "Speed", "speed", "Land", vec![format!("{} ft.", row("speed.land").value)], Some("speed.land")),
@@ -741,7 +744,7 @@ fn print_pf_blocks_the_split_combat_blocks_print_the_same_values() {
             assert_eq!(line.derivation, source.map(behind), "{tag}: {id} `{label}` has the same engine row behind it");
             numbers += usize::from(source.is_some());
         }
-        assert_eq!(numbers, 13 + 7, "{tag}: the 13 numbers the Combat block printed and the AC's seven parts (E2.12)");
+        assert_eq!(numbers, 13 + 7 + 1, "{tag}: the 13 numbers the Combat block printed, the AC's seven parts (E2.12) and the ranged attack (E4.20)");
         for id in ["armorClass", "saves", "attack", "speed"] {
             let rows = expected.iter().filter(|line| line.0 == id).count();
             assert_eq!(block(id).rows.len(), rows, "{tag}: {id} prints exactly its rows");
@@ -755,6 +758,7 @@ fn print_pf_blocks_the_split_combat_blocks_print_the_same_values() {
             format!("Max {}", row("hit_points.max").value),
             format!("Touch {}", row("defense.touch_armor_class").value),
             format!("CMD {}", row("defense.combat_maneuver_defense").value),
+            format!("Ranged {}", signed(row("combat.baseline_ranged_attack_bonus").value)),
             format!("Land {} ft.", row("speed.land").value),
         ] {
             assert!(text.contains(&line), "{tag}: the PDF prints `{line}`: {text}");
@@ -2512,6 +2516,69 @@ fn print_pf_blocks_gear_nests_container_contents() {
     assert_in_order(&bare, &["Carried", "Backpack", "Holds", "Sack", "Holds", "Rope(50ft.)", "NotCarried"]);
 }
 
+/// SD-42 E4.9 (operator REN-1, `decisions.md §27.3`): a renamed copy prints its name with its
+/// record's beside it, `Camping Gear (Sack)`, its contents still under it; the other Sack prints
+/// as it did. Aldric carries a Backpack and two Sacks, one renamed and holding a Rope (50 ft.).
+#[test]
+fn print_pf_blocks_gear_renamed_copy_prints_its_base_name() {
+    use codex::saved_character::equipment_sets::CopyKey;
+    let root = seeded("gear-renamed", ALDRIC_ID);
+    for item in ["Backpack", "Sack", "Sack", "Rope (50 ft.)"] {
+        hold(&root, item, ActiveState::SelectedInactive);
+    }
+    let sack = CopyKey { item_id: "Sack".to_owned(), bonus: 0, ordinal: 1 };
+    move_to(&root, "Rope (50 ft.)", 0, codex::saved_character::equipment_sets::Location::Inside { container: sack.clone() });
+    crate::character_hub::rename_equipment_copy_at_root(&root, &sack, "Camping Gear").expect("the rename saves");
+    let document = sheet_document_at_root(&root, &request(false, false, false)).expect("the document builds");
+    let sections = gear_sections(gear_block(&document));
+    let carried = &sections.iter().find(|(title, _)| *title == "Carried").expect("Carried").1;
+    let at = |label: &str| carried.iter().position(|row| row.label == label).unwrap_or_else(|| panic!("`{label}` under Carried: {carried:?}"));
+    let (named, rope) = (at("Camping Gear (Sack)"), at("Rope (50 ft.)"));
+    assert_eq!(rope, named + 1, "the rope prints under the renamed sack: {carried:?}");
+    assert_eq!(carried.iter().filter(|row| row.label == "Sack").count(), 1, "the other sack prints as it did: {carried:?}");
+    let text = pdf_text(&render(&root, &request(false, false, false)));
+    let bare: String = text_between(&text, "Gear Item", "Money PP").split_whitespace().collect();
+    assert!(bare.contains("CampingGear(Sack)"), "{bare}");
+}
+
+/// SD-42 E4.11 (operator STK-1, `decisions.md §27.5`): a Backpack holding four empty Sacks prints
+/// them as one line, `Sack ×4`, not one line per sack. Aldric carries the Backpack and the Sacks.
+#[test]
+fn print_pf_blocks_gear_stacks_empty_containers_print_one_line() {
+    let root = seeded("gear-stacks-sacks", ALDRIC_ID);
+    for item in ["Backpack", "Sack", "Sack", "Sack", "Sack"] {
+        hold(&root, item, ActiveState::SelectedInactive);
+    }
+    move_to(&root, "Sack", 0, inside("Backpack"));
+    let document = sheet_document_at_root(&root, &request(false, false, false)).expect("the document builds");
+    let sections = gear_sections(gear_block(&document));
+    let carried = &sections.iter().find(|(title, _)| *title == "Carried").expect("Carried").1;
+    let sacks: Vec<(&str, &str)> = carried.iter().filter(|row| row.label.starts_with("Sack")).map(|row| (row.label.as_str(), row.kind)).collect();
+    assert_eq!(sacks, [("Sack ×4", "in-1")], "one line for the four: {carried:?}");
+    let bare: String = text_between(&pdf_text(&render(&root, &request(false, false, false))), "Gear Item", "Money PP").split_whitespace().collect();
+    assert!(bare.contains("Sack×4") && !bare.contains("Sack#"), "{bare}");
+}
+
+/// SD-42 E4.11: with a Rope (50 ft.) in one of the four Sacks, that Sack prints as its own line
+/// with the rope under it, then `Sack ×3`.
+#[test]
+fn print_pf_blocks_gear_stacks_a_filled_container_prints_apart() {
+    let root = seeded("gear-stacks-filled", ALDRIC_ID);
+    for item in ["Backpack", "Sack", "Sack", "Sack", "Sack", "Rope (50 ft.)"] {
+        hold(&root, item, ActiveState::SelectedInactive);
+    }
+    move_to(&root, "Sack", 0, inside("Backpack"));
+    move_to(&root, "Rope (50 ft.)", 0, inside("Sack"));
+    let document = sheet_document_at_root(&root, &request(false, false, false)).expect("the document builds");
+    let sections = gear_sections(gear_block(&document));
+    let carried = &sections.iter().find(|(title, _)| *title == "Carried").expect("Carried").1;
+    let lines: Vec<(&str, &str)> = carried.iter().map(|row| (row.label.as_str(), row.kind)).collect();
+    let from = lines.iter().position(|(label, _)| *label == "Backpack").unwrap_or_else(|| panic!("{lines:?}"));
+    assert_eq!(lines[from..from + 4], [("Backpack", "item"), ("Sack", "in-1"), ("Rope (50 ft.)", "in-2"), ("Sack ×3", "in-1")], "{lines:?}");
+    let bare: String = text_between(&pdf_text(&render(&root, &request(false, false, false))), "Gear Item", "Money PP").split_whitespace().collect();
+    assert_in_order(&bare, &["Backpack", "Sack", "Rope(50ft.)", "Sack×3"]);
+}
+
 /// SD-41 E4.1 (`decisions.md §9, §22, §33`): the Weapons block prints the weapons in hand first,
 /// then the carried ones marked "(carried)", then the Unarmed strike last, marked "(nonlethal)"
 /// when it is; a Not Carried weapon is not on it. Aldric (longsword in hand) carrying a Dagger,
@@ -2577,6 +2644,95 @@ fn print_pf_blocks_gear_ammunition_boxes_only_under_projectile_weapons() {
     keep_pdf("gear-ammunition-aldric-a4", &pdf);
     let text = pdf_text(&pdf);
     assert!(text.contains(&words), "`{words}` prints: {text}");
+}
+
+/// SD-42 E4.2 (`decisions.md §6, §24`): a copy's properties (a `.pcg` line's `SPROP`) print under
+/// its Inventory line, and its own die (`_DAMAGE|2d4`) is the die its Weapons line prints. Aldric
+/// carrying a Dagger written with two properties and a 2d4 die; with `PRINT_PF_BLOCKS_OUT` set the
+/// PDF is kept as `aldric-copy-overrides.pdf`.
+#[test]
+fn print_pf_blocks_gear_properties() {
+    use codex::saved_character::equipment_sets::{self, CopyKey};
+    let root = seeded("gear-properties", ALDRIC_ID);
+    hold(&root, "Dagger (Base)", ActiveState::SelectedInactive);
+    load_saved_character_at_root(&root).expect("the first load writes the sets");
+    let mut sets = equipment_sets::load(&root).unwrap().expect("the sets file");
+    let facts = sets.copies.entry(CopyKey { item_id: "Dagger (Base)".to_owned(), bonus: 0, ordinal: 0 }.map_key()).or_default();
+    facts.properties = vec!["Keen edge".to_owned(), "Glows faintly".to_owned()];
+    facts.damage_override = Some("2d4".to_owned());
+    equipment_sets::save(&root, &sets).unwrap();
+
+    let document = sheet_document_at_root(&root, &request(false, false, false)).expect("the document builds");
+    let sections = gear_sections(gear_block(&document));
+    let carried = &sections.iter().find(|(title, _)| *title == "Carried").expect("Carried").1;
+    let dagger = carried.iter().find(|row| row.label.starts_with("Dagger")).unwrap_or_else(|| panic!("the dagger: {carried:?}"));
+    assert_eq!(dagger.notes, ["Keen edge", "Glows faintly"], "the properties, under the line, as written");
+    let weapons = document.blocks.iter().find(|block| block.id == "weapons").expect("the Weapons block");
+    let line = weapons.rows.iter().find(|row| row.label.starts_with("Dagger")).unwrap_or_else(|| panic!("the dagger's line: {:?}", weapons.rows));
+    assert!(line.values[1].starts_with("2d4"), "the copy's die: {line:?}");
+    let pdf = render(&root, &request(false, false, false));
+    keep_pdf("aldric-copy-overrides", &pdf);
+    let text = pdf_text(&pdf);
+    let gear: String = text_between(&text, "Gear Item", "Money PP").split_whitespace().collect();
+    assert!(gear.contains("Dagger1lbKeenedgeGlowsfaintly"), "the properties under the dagger: {gear}");
+    let weapons_text: String = text_between(&text, "Weapons Weapon", "Saving Throws").split_whitespace().collect();
+    assert!(weapons_text.contains("2d4"), "{weapons_text}");
+}
+
+/// SD-42 E4.15 (`decisions.md §6, §24`): two copies of one weapon kind, one written with its own die
+/// (an imported "Mourn", base Longsword, `_DAMAGE|2d4`) beside a plain Longsword: each line of the
+/// Weapons block prints its own copy's damage total, read off the engine's per-copy row.
+#[test]
+fn per_copy_weapon_rows_two_longswords_print_their_own_dice() {
+    use codex::saved_character::equipment_sets::{self, CopyKey};
+    const SWORD: &str = "Longsword (Base)";
+    let root = seeded("per-copy-weapon-rows", ALDRIC_ID);
+    // Aldric wields his own Longsword; Mourn is carried beside it.
+    hold(&root, SWORD, ActiveState::SelectedInactive);
+    load_saved_character_at_root(&root).expect("the first load writes the sets");
+    let mut sets = equipment_sets::load(&root).unwrap().expect("the sets file");
+    sets.copies.entry(CopyKey { item_id: SWORD.to_owned(), bonus: 0, ordinal: 0 }.map_key()).or_default().damage_override = Some("2d4".to_owned());
+    equipment_sets::save(&root, &sets).unwrap();
+
+    let loaded = load_saved_character_at_root(&root).expect("Aldric loads");
+    let dice: Vec<_> = loaded.weapon_damage.iter().filter(|w| w.weapon_record_key.as_deref() == Some(SWORD)).map(|w| w.base_dice.map(|d| (d.count, d.die_size))).collect();
+    assert_eq!(dice, [Some((1, 8)), Some((2, 4))], "the plain sword and Mourn: {:?}", loaded.weapon_damage);
+    let totals: Vec<_> = loaded.explanations.iter().filter(|row| row.id.starts_with("combat.weapon_damage_total.longsword")).map(|row| row.id.as_str()).collect();
+    assert_eq!(totals, ["combat.weapon_damage_total.longsword", "combat.weapon_damage_total.longsword.1"], "a row per copy whose total differs");
+    let document = sheet_document_at_root(&root, &request(false, false, false)).expect("the document builds");
+    let weapons = document.blocks.iter().find(|block| block.id == "weapons").expect("the Weapons block");
+    let damage: Vec<&str> = weapons.rows.iter().filter(|row| row.label.starts_with("Longsword")).map(|row| row.values[1].as_str()).collect();
+    assert_eq!(damage.len(), 2, "one line per sword: {:?}", weapons.rows);
+    assert!(damage[0].starts_with("1d8") && damage[1].starts_with("2d4"), "each sword its own die: {damage:?}");
+    assert!(!weapons.rows.iter().any(|row| row.label.starts_with("Damage (")), "the per-copy row is behind its line, not a line of its own: {:?}", weapons.rows);
+    let math = sheet_document_at_root(&root, &request(false, true, false)).expect("the document builds");
+    let breakdown = math.blocks.iter().find(|block| block.id == "weaponsMath").expect("the Weapon Breakdown block");
+    let dice: Vec<&str> = breakdown.rows.iter().filter(|row| row.label.starts_with("Longsword")).map(|row| row.values[1].as_str()).collect();
+    assert_eq!(dice, ["1d8", "2d4"], "Show the math's Dice cell per copy");
+    let text: String = text_between(&pdf_text(&render(&root, &request(false, false, false))), "Weapons Weapon", "Saving Throws").split_whitespace().collect();
+    assert!(text.contains("1d8") && text.contains("2d4"), "{text}");
+}
+
+/// SD-42 E4.15: a character with one weapon per kind, or two copies that total the same, gets no
+/// per-copy row and no copy key on the wire: every seed, and Aldric holding two plain Daggers.
+#[test]
+fn per_copy_weapon_rows_one_per_kind_unchanged() {
+    let per_copy = |loaded: &crate::character_hub::LoadSavedCharacterResponse| -> Vec<String> {
+        let ids = loaded.explanations.iter().filter_map(|row| row.id.strip_prefix("combat.weapon_damage_total.")).filter(|key| key.contains('.')).map(str::to_owned);
+        let keys = loaded.weapon_damage.iter().filter_map(|w| serde_json::to_value(w).unwrap().get("copyRow").map(|value| value.to_string()));
+        ids.chain(keys).collect()
+    };
+    for id in [ALDRIC_ID, ELOWEN_ID, TOMAS_ID] {
+        let root = seeded(&format!("per-copy-unchanged-{id}"), id);
+        let loaded = load_saved_character_at_root(&root).expect("the seed loads");
+        assert_eq!(per_copy(&loaded), Vec::<String>::new(), "{id}");
+    }
+    let root = seeded("per-copy-two-daggers", ALDRIC_ID);
+    hold(&root, "Dagger (Base)", ActiveState::SelectedInactive);
+    hold(&root, "Dagger (Base)", ActiveState::SelectedInactive);
+    let loaded = load_saved_character_at_root(&root).expect("Aldric loads");
+    assert_eq!(loaded.weapon_damage.iter().filter(|w| w.weapon_record_key.as_deref() == Some("Dagger (Base)")).count(), 2);
+    assert_eq!(per_copy(&loaded), Vec::<String>::new(), "two plain daggers share the kind's row");
 }
 
 /// SD-41 E4.1 (`decisions.md §25, §28`): identical copies print as one stack, `<name> ×<pieces>`

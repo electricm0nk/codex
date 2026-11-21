@@ -1,5 +1,6 @@
 import { useEffect, type ReactNode } from 'react';
 import { SETTINGS_DIALOG_SIZE } from '../layout/screenLayout';
+import { DeviceNameField } from './DeviceNameField';
 import { PrintPanel } from './PrintPanel';
 
 /**
@@ -8,12 +9,12 @@ import { PrintPanel } from './PrintPanel';
  * added by extending `SETTINGS_TABS` and the `panels` map the caller passes.
  */
 
-export type SettingsTab = 'appearance' | 'print' | 'google-drive' | 'update' | 'bug' | 'enhancement' | 'developer';
+export type SettingsTab = 'appearance' | 'print' | 'friends' | 'update' | 'bug' | 'enhancement' | 'developer';
 
 export const SETTINGS_TABS: ReadonlyArray<{ id: SettingsTab; label: string }> = [
   { id: 'appearance', label: 'Appearance' },
   { id: 'print', label: 'Print' },
-  { id: 'google-drive', label: 'Google Drive' },
+  { id: 'friends', label: 'Friends' },
   { id: 'update', label: 'Update' },
   { id: 'bug', label: 'Bug Report' },
   { id: 'enhancement', label: 'Enhancement Request' },
@@ -163,7 +164,9 @@ export function SettingsModal(props: {
               ×
             </button>
           </header>
-          <div style={{ flex: 1, fontSize: '1.05rem', overflowY: 'auto', padding: '1.75rem' }}>{props.activeTab === 'print' ? <PrintPanel /> : props.panels[props.activeTab]}</div>
+          <div style={{ flex: 1, fontSize: '1.05rem', overflowY: 'auto', padding: '1.75rem' }}>{props.activeTab === 'print' ? <PrintPanel /> : props.panels[props.activeTab]}
+            {props.activeTab === 'friends' ? <DeviceNameField /> : null}
+          </div>
         </section>
       </div>
     </div>

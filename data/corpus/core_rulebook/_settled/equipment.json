@@ -48695,6 +48695,10 @@
         "base_damage_dice": null,
         "base_item": null,
         "container": true,
+        "container_capacity": {
+          "Pounds": 300.0
+        },
+        "contents_weight_pct": 0,
         "cost_gp": 25.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
@@ -48735,6 +48739,10 @@
         "base_damage_dice": null,
         "base_item": null,
         "container": true,
+        "container_capacity": {
+          "Pounds": 300.0
+        },
+        "contents_weight_pct": 0,
         "cost_gp": 150.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
@@ -48775,6 +48783,10 @@
         "base_damage_dice": null,
         "base_item": null,
         "container": true,
+        "container_capacity": {
+          "Pounds": 690.0
+        },
+        "contents_weight_pct": 0,
         "cost_gp": 8.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
@@ -51316,6 +51328,10 @@
         "base_damage_dice": null,
         "base_item": null,
         "container": true,
+        "container_capacity": {
+          "Pounds": 600.0
+        },
+        "contents_weight_pct": 0,
         "cost_gp": 200.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
@@ -51356,6 +51372,10 @@
         "base_damage_dice": null,
         "base_item": null,
         "container": true,
+        "container_capacity": {
+          "Pounds": 900.0
+        },
+        "contents_weight_pct": 0,
         "cost_gp": 300.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
@@ -51396,6 +51416,10 @@
         "base_damage_dice": null,
         "base_item": null,
         "container": true,
+        "container_capacity": {
+          "Pounds": 450.0
+        },
+        "contents_weight_pct": 0,
         "cost_gp": 75.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
@@ -51436,6 +51460,10 @@
         "base_damage_dice": null,
         "base_item": null,
         "container": true,
+        "container_capacity": {
+          "Pounds": 690.0
+        },
+        "contents_weight_pct": 0,
         "cost_gp": 110.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
@@ -57874,6 +57902,10 @@
         "base_damage_dice": null,
         "base_item": null,
         "container": true,
+        "container_capacity": {
+          "Pounds": 225.0
+        },
+        "contents_weight_pct": 0,
         "cost_gp": 30.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
@@ -57914,6 +57946,10 @@
         "base_damage_dice": null,
         "base_item": null,
         "container": true,
+        "container_capacity": {
+          "Pounds": 300.0
+        },
+        "contents_weight_pct": 0,
         "cost_gp": 45.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
@@ -63691,6 +63727,10 @@
         "base_damage_dice": null,
         "base_item": null,
         "container": true,
+        "container_capacity": {
+          "Pounds": 250.0
+        },
+        "contents_weight_pct": 0,
         "cost_gp": 2500.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
@@ -63731,6 +63771,10 @@
         "base_damage_dice": null,
         "base_item": null,
         "container": true,
+        "container_capacity": {
+          "Pounds": 500.0
+        },
+        "contents_weight_pct": 0,
         "cost_gp": 5000.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
@@ -63771,6 +63815,10 @@
         "base_damage_dice": null,
         "base_item": null,
         "container": true,
+        "container_capacity": {
+          "Pounds": 1000.0
+        },
+        "contents_weight_pct": 0,
         "cost_gp": 7400.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
@@ -63811,6 +63859,10 @@
         "base_damage_dice": null,
         "base_item": null,
         "container": true,
+        "container_capacity": {
+          "Pounds": 1500.0
+        },
+        "contents_weight_pct": 0,
         "cost_gp": 10000.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
@@ -66545,6 +66597,10 @@
         "base_damage_dice": null,
         "base_item": null,
         "container": true,
+        "container_capacity": {
+          "Pounds": 800.0
+        },
+        "contents_weight_pct": 0,
         "cost_gp": 60000.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
@@ -66585,6 +66641,10 @@
         "base_damage_dice": null,
         "base_item": null,
         "container": true,
+        "container_capacity": {
+          "Pounds": 400.0
+        },
+        "contents_weight_pct": 0,
         "cost_gp": 35000.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
@@ -66625,6 +66685,10 @@
         "base_damage_dice": null,
         "base_item": null,
         "container": true,
+        "container_capacity": {
+          "Pounds": 200.0
+        },
+        "contents_weight_pct": 0,
         "cost_gp": 20000.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
@@ -68391,6 +68455,8 @@
         "base_damage_dice": null,
         "base_item": null,
         "container": true,
+        "container_capacity": "Unlimited",
+        "contents_weight_pct": 0,
         "cost_gp": 1800.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
@@ -69784,6 +69850,10 @@
         "base_damage_dice": null,
         "base_item": null,
         "container": true,
+        "container_capacity": {
+          "Pounds": 20.0
+        },
+        "contents_weight_pct": 0,
         "cost_gp": 10000.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
@@ -70279,6 +70349,10 @@
         "base_damage_dice": null,
         "base_item": null,
         "container": true,
+        "container_capacity": {
+          "Pounds": 120.0
+        },
+        "contents_weight_pct": 0,
         "cost_gp": 2000.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
@@ -76424,6 +76498,8 @@
         "base_damage_dice": null,
         "base_item": null,
         "container": true,
+        "container_capacity": "Unlimited",
+        "contents_weight_pct": 0,
         "cost_gp": 20000.0,
         "critical_multiplier": null,
         "critical_threat_range": null,

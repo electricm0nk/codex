@@ -89,7 +89,7 @@ function FriendForm(props: {
   );
 }
 
-/** Local address book of gaming contacts, for filling in campaign invites more easily. */
+/** Local address book of gaming contacts (names and emails), kept on this device only; campaigns list their members by name (decisions.md §13.1), so nothing here is sent or shared. */
 export function FriendsSection() {
   const [friends, setFriends] = useState<Friend[]>(getFriends());
   const [editingId, setEditingId] = useState<string | null>(null);
@@ -104,7 +104,7 @@ export function FriendsSection() {
         Friends
       </p>
       <p style={{ color: 'var(--color-text-secondary)', fontSize: '0.8rem', lineHeight: 1.5, margin: '0 0 0.75rem' }}>
-        Gaming contacts, kept locally, so campaign invites are quicker to fill in.
+        Gaming contacts, kept on this device only. Campaign members are typed by name in the campaign itself.
       </p>
 
       <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>

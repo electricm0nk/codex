@@ -1,4 +1,4 @@
-// The `attack` look (SD-40 E2.1; E2.3 two to a line): Base Attack Bonus, Melee, CMB and CMD,
+// The `attack` look (SD-40 E2.1; E2.3 two to a line): Base Attack Bonus, Melee, Ranged (SD-42 E4.20), CMB and CMD,
 // each a labelled box, the label first. It formats strings it is given; it computes nothing (NR-2).
 
 #import "/looks/section-title.typ": section-title
@@ -23,7 +23,8 @@
 }
 
 // Two labelled boxes to a line (Base Attack Bonus and Melee, then CMB and CMD), so the block sits
-// low beside the Armor Class on page 1.
+// low beside the Armor Class on page 1. With an odd count the first row is alone, so Ranged sits
+// beside Melee (Base Attack Bonus; Melee, Ranged; CMB, CMD).
 #let look(b) = {
   let n = b.value_columns
   let pair = (1fr,) + (1.1cm,) * n
@@ -33,7 +34,7 @@
       columns: pair + (0.3cm,) + pair,
       column-gutter: 0.12cm,
       row-gutter: 0.12cm,
-      ..b.rows.chunks(2).map(two => {
+      ..(if calc.odd(b.rows.len()) { (b.rows.slice(0, 1),) + b.rows.slice(1).chunks(2) } else { b.rows.chunks(2) }).map(two => {
         let cells = ()
         for (i, r) in two.enumerate() {
           if i > 0 { cells.push([]) }

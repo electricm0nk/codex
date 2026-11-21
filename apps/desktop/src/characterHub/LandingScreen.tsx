@@ -1,5 +1,4 @@
 import type { CSSProperties } from 'react';
-import type { CampaignManagerAccessGate } from '../campaign/campaignManagerAccessGate';
 import type { StarfinderCatalogKind } from '../boundary/loadStarfinderCatalog';
 import { STARFINDER_CATALOG_TABS } from '../starfinderCatalog/starfinderCatalogModel';
 import { CYBERPUNK_CATALOG_GROUPS, firstKindOfGroup } from '../cyberpunkCatalog/cyberpunkCatalogModel';
@@ -155,7 +154,7 @@ function RuleSetChip(props: { ruleSet: RuleSet; selected: boolean; onSelect: () 
   );
 }
 
-function ActionBanner(props: { title: string; art: string; onClick: () => void; disabled?: boolean; disabledHint?: string }) {
+export function ActionBanner(props: { title: string; art: string; onClick: () => void; disabled?: boolean; disabledHint?: string }) {
   const disabled = Boolean(props.disabled);
   return (
     <button
@@ -251,7 +250,7 @@ const BROWSE_LINK: CSSProperties = {
   textDecoration: 'underline',
 };
 
-const CAMPAIGN_MANAGER_ART = 'linear-gradient(115deg, #0a1428 0%, #1c3466 55%, #4a7ad6 130%)';
+export const CAMPAIGN_MANAGER_ART = 'linear-gradient(115deg, #0a1428 0%, #1c3466 55%, #4a7ad6 130%)';
 const DM_TOOLKIT_ART = 'linear-gradient(115deg, #240818 0%, #5c1040 55%, #c8288a 130%)';
 
 export function LandingScreen(props: {
@@ -274,7 +273,6 @@ export function LandingScreen(props: {
   onBrowseCyberpunk: (kind: string) => void;
   onCorpusIngestDiagnostic: () => void;
   onCampaignManager: () => void;
-  campaignManagerGate: CampaignManagerAccessGate;
   onDmToolkit: () => void;
 }) {
   const active = RULE_SETS.find((rs) => rs.id === props.selectedRuleSet) ?? RULE_SETS[0];
@@ -304,8 +302,6 @@ export function LandingScreen(props: {
         title={'Campaign\nManager'}
         art={CAMPAIGN_MANAGER_ART}
         onClick={props.onCampaignManager}
-        disabled={!props.campaignManagerGate.enabled}
-        disabledHint={props.campaignManagerGate.disabledHint}
       />
       <ActionBanner title={'DM\nToolkit'} art={DM_TOOLKIT_ART} onClick={props.onDmToolkit} />
 

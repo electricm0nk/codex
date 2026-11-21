@@ -10,14 +10,26 @@ holding `data/`: a packaged app passes its resource directory.
 | Field | Read by |
 |---|---|
 | `displayLabel`, `characterInput` | `import_character`, as `ImportedCharacterFileDto` |
-| `bio` | `bio.json` (`CharacterBioDto`), by `import_character`, as an export's |
+| `gameSystem` | the envelope's game system (`ImportedCharacterFileDto.gameSystem`): `starfinder-1e` for a `GAMEMODE:Starfinder` file, which computes through `sf_adapter::compute_sheet`; else Pathfinder |
+| `bio` | `bio.json` (`CharacterBioDto`), by `import_character`, as an export's; `bio.notes` holds the Notes block (below) |
 | `money.totalCopper` | `money.json`, by `import_character`, as an export's; nothing written at 0 |
-| `custom.feats`, `custom.equipment`, `custom.spells` | `custom.json` (`CharacterCustomDto`) |
+| `custom.feats`, `custom.equipment`, `custom.spells`, `custom.grants` | `custom.json` (`CharacterCustomDto`); a line whose item Codex has no record of is a Create item in `custom.equipment` |
+| `hitPoints` | `hit_points.json`: each level's `HITPOINTS`, when the file states every level's |
+| `equipmentSets` | `equipment_sets.json` (`equipment_sets::save`): the imported `EQUIPSET` tree as one set, one stack per place a line is in, with its pieces |
 | `report` | shown to the player: one line per line of the file, plus each row the file did not hold |
 
-`import_character_from_json` reads `custom`, `bio` and `money` as an export's. It has no field for `report`,
-so the sidecar's caller, `import_pcg` (`character_hub.rs`), returns it with the outcome, and writes the bio
-again after the save, an empty one included. A refused or failed import removes the fresh character's directory.
+`import_pcg` (`character_hub.rs`) runs the sidecar and passes its JSON to `import_pcg_json`, which first
+writes each line's material, masterwork and special-ability eqmods as a Buy Custom build on its selection
+(`custom_equipment_quote`; a build it refuses keeps its `+n` and is a `### Custom parts not applied` line
+in Notes), sets each Create item's worn, slot or left-behind state from the set, then saves through
+`import_character_from_json` and writes `bio.json` and `equipment_sets.json` after it, so the Default
+migration never runs on an import. Every import is a new character: a refused or failed import removes
+the fresh character's directory.
+
+**The Notes block.** Everything the import could not map is still imported and listed in `bio.notes`
+under `## Imported from PCGen (<file>, <date>)`, one `###` heading per kind: an unknown key, a class or race
+Codex lacks, an item with no Codex record (held as a Create item), a `QUANTITY:0` line (not held:
+`<item>: 0 copies in the file`), an eqmod or `DATA` property kept as text, a line kept as a custom feat.
 
 ## How it ships
 
@@ -35,7 +47,9 @@ The app saves a character only when the rules engine computes it. These rows are
 each carries an `added` report line:
 
 - The `power_attack` row. No item is added: a character computes with nothing worn or wielded.
-- `feat:weapon_focus`, unless the file holds Weapon Focus; `choice:fighter_bonus_feat` on any Fighter.
+- On a Fighter, `choice:fighter_bonus_feat` and the Weapon Focus it picks (`feat:weapon_focus`, unless the
+  file holds it); a character with no Fighter level is given no Weapon Focus.
+- On a Human, `choice:human_ability_bonus` for the floating +2, which the score is saved without.
 - Each class's default picks from `class_seeds::canonical_seeds_for`. PCGen's own school, bloodline or
   domain is not read into them; a `DOMAIN` line is a custom feat.
 
@@ -46,32 +60,35 @@ A spell the engine's class list refuses (`class_spell.*`) would refuse the chara
 - A file with no `PCGVERSION` or `CHARACTERNAME` line (PCGen 5 and older) is refused by name, exit 1.
 - A class or race Codex has no record of is a custom feat and is named in `report.unmappedClasses` or
   `report.unmappedRace`. The file still converts; `import_character` then returns the engine's refusal.
-  PCGen's test characters, its Modern and Starfinder files, and monster classes are this case.
-- `+1` to `+5` eqmods (`PLUSnW`, `PLUSnA`, `PLUSnS`) become applied modifiers. Every other eqmod (materials,
-  special abilities) is a report warning (`decisions.md` R14).
-- Stacks list one selection per copy, at most 99. An alternate racial trait or character trait is a custom feat.
+  PCGen's test characters, its Modern files and monster classes are this case.
+- An eqmod Buy Custom has no option for is a `properties` line on the copy, a report warning and a
+  Notes line; the item still imports with its other properties.
+- A companion file (a `MASTER` line, such as `sf_mechanic_drone.pcg`) is refused by name: import its master.
+- An alternate racial trait or character trait is a custom feat.
 
 ## Key mapping
 
-The table is `MAPPING` in `crates/codex-ingest/src/pcg_import/map.rs`; a test holds this list to it. A key
-not in the table becomes a custom feat and is named in `report.unknownKeys`.
+The table is `MAPPING` in `crates/codex-ingest/src/pcg_import/map.rs`, printed here word for word; the test
+`pcg_import_fixtures_the_mapping_doc_lists_every_key` fails when the two differ. A key not in the table
+becomes a custom feat and is named in `report.unknownKeys`. `GAMEMODE` is reported, and also picks the
+catalog: `Starfinder` reads Starfinder records (`Catalog::for_game_mode`).
 
 | `.pcg` key | Outcome | Goes to |
 |---|---|---|
 | `CLASS` | mapped | classLevels |
 | `RACE` | mapped | raceId |
 | `STAT` | mapped | abilityScores, plus the race's adjustments |
-| `ABILITY` | mapped | CATEGORY:FEAT to selectedFeats + a target choice; other categories to a custom feat |
+| `ABILITY` | mapped | CATEGORY:FEAT to selectedFeats + a target choice; a Favored Class Bonus taken as hit points or skill ranks to custom.grants and skillAllocations; other categories to a custom feat |
 | `FEAT` | mapped | selectedFeats + a target choice (the older form of ABILITY) |
 | `SKILL` | mapped | skillAllocations, ranks summed over CLASSBOUGHT |
 | `SPELLNAME` | mapped | spellsSelected |
-| `EQUIPNAME` | mapped | equipmentSelections, BASEITEM first, PLUSnW/A/S to an applied +n modifier |
-| `EQUIPSET` | mapped | activeState: a location at the set's top level is worn; Carried, Not Carried and anything inside a container are carried |
-| `CALCEQUIPSET` | mapped | which EQUIPSET is the worn one |
+| `EQUIPNAME` | mapped | one equipmentSelections row and one equipmentSets stack per place the line is in, its QUANTITY the stack's pieces; BASEITEM first, PLUSnW/A/S to an applied +n modifier; the custom name and every DATA property per CUSTOM_PROPERTIES |
+| `EQUIPSET` | mapped | equipmentSets: a slot word to a Slot (PCGEN_SLOTS), Equipped, Carried, Not Carried, or inside the entry above it; activeState is the set's projection |
+| `CALCEQUIPSET` | mapped | which EQUIPSET is the set imported, and its name |
 | `MONEY` | mapped | money.totalCopper, gp x 100 |
 | `LANGUAGE` | mapped | the Languages custom feat (the Pathfinder sheet has no language list to fill) |
 | `ALIGN` | mapped | bio.alignment |
-| `DEITY` | mapped, `None` derived as no deity | bio.deity |
+| `DEITY` | mapped | bio.deity |
 | `CHARACTERNAME` | mapped | displayLabel |
 | `PLAYERNAME` | mapped | bio.playerName |
 | `GENDER` | mapped | bio.sex |
@@ -111,7 +128,7 @@ not in the table becomes a custom feat and is named in `report.unknownKeys`.
 | `FOLLOWER` | custom | a custom feat |
 | `CHRONICLEENTRY` | custom | a custom feat |
 | `TEMPBONUS` | custom | a custom feat |
-| `CLASSABILITIESLEVEL` | derived | hit points and skill points per level |
+| `CLASSABILITIESLEVEL` | mapped | hitPoints: each level's HITPOINTS, when the file states every level's; skill points per level are derived |
 | `WEAPONPROF` | derived | proficiencies |
 | `FEATPOOL` | derived | feat budget |
 | `USERPOOL` | derived | ability pools |
@@ -146,3 +163,21 @@ not in the table becomes a custom feat and is named in `report.unknownKeys`.
 | `PORTRAITTHUMBNAILRECT` | setting | PCGen's own setup; reported only |
 | `SUPPRESSBIOFIELDS` | setting | PCGen's own setup; reported only |
 | `EXPERIENCETABLE` | setting | PCGen's own setup; reported only |
+
+## Item properties
+
+A line's customisation (`decisions.md §6` of SD-42) is `CUSTOM_PROPERTIES` in the same file, printed here
+word for word under the same test. `PCGEN_SLOTS` there maps every location word of PCGen's Pathfinder
+`equipmentslots.lst` to a body slot; a word in no row is `Equipped`.
+
+| `EQUIPNAME` property | Goes to |
+|---|---|
+| `NAME` | CopyFacts.name, when it is not the record's own name |
+| `EQMOD PLUSnW/A/S` | applied_modifiers, the copy's +n |
+| `EQMOD material, masterwork, special ability` | eqmods: the Buy Custom option key (equipment_sets::eqmod_option_key) |
+| `EQMOD / ALTEQMOD _DAMAGE\|<die>` | CopyFacts.damage_override, the die as written |
+| `SIZE` | CopyFacts.size (Medium is no size) |
+| `SPROP` | CopyFacts.properties, one line per '; '-separated part |
+| `COST (line)` | CopyFacts.cost_override_copper, when it differs from the record's price; COSTMOD is already in it |
+| `WT (line)` | CopyFacts.weight_override_lbs, when it differs from the record's weight |
+| `KEY` | a lookup candidate for the record |

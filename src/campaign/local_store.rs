@@ -28,8 +28,9 @@ use std::fs;
 use std::path::{Path, PathBuf};
 
 use super::{
-    CampaignAsset, CampaignAssets, CampaignListing, CampaignListingError, CampaignSnapshot,
-    CampaignStoreError, CampaignSummary, LoadedCampaign, SaveOutcome,
+    CampaignAsset, CampaignAssets, CampaignFolderSnapshot, CampaignListing, CampaignListingError,
+    CampaignSnapshot, CampaignStoreError, CampaignSummary, LoadedCampaign, LoadedCampaignFolder,
+    SaveOutcome, CAMPAIGN_FOLDER_SCHEMA_VERSION,
 };
 
 const CONFIG_DIR: &str = ".config";
@@ -42,6 +43,10 @@ const CONFLICTS_DIR: &str = "conflicts";
 /// (and not a `CampaignSnapshot` field — the addendum's field list mirrors
 /// `campaignModel.ts` 1:1 and a revision nonce has no frontend counterpart).
 const NONCE_FILE: &str = "nonce";
+/// A schema-2 campaign folder's `campaign.json` (SD-42 `decisions.md §11`) and the hidden
+/// directory holding its nonce and conflict copies.
+pub const CAMPAIGN_JSON: &str = "campaign.json";
+const CODEX_DIR: &str = ".codex";
 
 pub struct CampaignStore;
 
@@ -229,11 +234,77 @@ impl CampaignStore {
     }
 }
 
-fn read_nonce(campaign_dir: &Path) -> Option<u64> {
-    let path = campaign_dir.join(CONFIG_DIR).join(NONCE_FILE);
+impl CampaignStore {
+    /// Loads a schema-2 `campaign.json` from a campaign folder's root with its `.codex/nonce`
+    /// (0 when absent). Any other `schemaVersion` is refused: schema 1 is migration's input.
+    pub fn load_campaign_json_with_nonce(campaign_dir: &Path) -> Result<LoadedCampaignFolder, CampaignStoreError> {
+        let path = campaign_dir.join(CAMPAIGN_JSON);
+        let text = fs::read_to_string(&path).map_err(|err| io_error(&path, err))?;
+        let snapshot: CampaignFolderSnapshot = serde_json::from_str(&text).map_err(|err| CampaignStoreError {
+            message: format!("{} failed to parse as a campaign: {err}", path.display()),
+        })?;
+        if snapshot.schema_version != CAMPAIGN_FOLDER_SCHEMA_VERSION {
+            return Err(CampaignStoreError {
+                message: format!(
+                    "{} is schema {}; this version of Codex opens schema {CAMPAIGN_FOLDER_SCHEMA_VERSION}",
+                    path.display(),
+                    snapshot.schema_version
+                ),
+            });
+        }
+        let nonce = read_nonce_at(&campaign_dir.join(CODEX_DIR).join(NONCE_FILE)).unwrap_or(0);
+        Ok(LoadedCampaignFolder { snapshot, nonce })
+    }
+
+    /// `save_with_conflict_detection` for a campaign folder: writes `campaign.json` at the root
+    /// and bumps `.codex/nonce`. On a stale `expected_nonce` the other writer's `campaign.json`
+    /// is kept under `.codex/conflicts/<timestamp>/` first (local wins; nothing is lost). The
+    /// folder's other files are written one by one by their own screens, so only
+    /// `campaign.json` is versioned here.
+    pub fn save_campaign_json_with_conflict_detection(
+        snapshot: &CampaignFolderSnapshot,
+        campaign_dir: &Path,
+        expected_nonce: Option<u64>,
+    ) -> Result<SaveOutcome, CampaignStoreError> {
+        let codex_dir = campaign_dir.join(CODEX_DIR);
+        fs::create_dir_all(&codex_dir).map_err(|err| io_error(&codex_dir, err))?;
+        let nonce_path = codex_dir.join(NONCE_FILE);
+        let json_path = campaign_dir.join(CAMPAIGN_JSON);
+        let current_nonce = read_nonce_at(&nonce_path);
+
+        let conflict_dir = match (expected_nonce, current_nonce) {
+            (Some(expected), Some(current)) if expected != current && json_path.is_file() => {
+                let kept = codex_dir.join(CONFLICTS_DIR).join(conflict_timestamp());
+                fs::create_dir_all(&kept).map_err(|err| io_error(&kept, err))?;
+                fs::copy(&json_path, kept.join(CAMPAIGN_JSON)).map_err(|err| io_error(&json_path, err))?;
+                Some(kept)
+            }
+            _ => None,
+        };
+
+        let json = serde_json::to_string_pretty(snapshot).map_err(|err| CampaignStoreError {
+            message: format!("failed to serialize campaign.json: {err}"),
+        })?;
+        super::folder::write_atomic(&json_path, json.as_bytes())?;
+        let new_nonce = current_nonce.unwrap_or(0) + 1;
+        super::folder::write_atomic(&nonce_path, new_nonce.to_string().as_bytes())?;
+
+        Ok(SaveOutcome {
+            campaign_dir: campaign_dir.to_path_buf(),
+            nonce: new_nonce,
+            conflict_dir,
+        })
+    }
+}
+
+fn read_nonce_at(path: &Path) -> Option<u64> {
     fs::read_to_string(path)
         .ok()
         .and_then(|text| text.trim().parse::<u64>().ok())
+}
+
+fn read_nonce(campaign_dir: &Path) -> Option<u64> {
+    read_nonce_at(&campaign_dir.join(CONFIG_DIR).join(NONCE_FILE))
 }
 
 fn write_nonce(campaign_dir: &Path, nonce: u64) -> Result<(), CampaignStoreError> {
@@ -243,16 +314,19 @@ fn write_nonce(campaign_dir: &Path, nonce: u64) -> Result<(), CampaignStoreError
     fs::write(&path, nonce.to_string()).map_err(|err| io_error(&path, err))
 }
 
+fn conflict_timestamp() -> String {
+    std::time::SystemTime::now()
+        .duration_since(std::time::UNIX_EPOCH)
+        .map(|duration| duration.as_nanos().to_string())
+        .unwrap_or_else(|_| "0".to_owned())
+}
+
 /// Moves every existing top-level content directory (config + the four
 /// asset groups — never the `conflicts/` directory itself) into a fresh
 /// `conflicts/<timestamp>/` directory, so the caller can write a new active
 /// state into `campaign_dir` afterward without losing what was there.
 fn move_existing_state_to_conflicts(campaign_dir: &Path) -> Result<PathBuf, CampaignStoreError> {
-    let timestamp = std::time::SystemTime::now()
-        .duration_since(std::time::UNIX_EPOCH)
-        .map(|duration| duration.as_nanos().to_string())
-        .unwrap_or_else(|_| "0".to_owned());
-    let conflict_dir = campaign_dir.join(CONFLICTS_DIR).join(&timestamp);
+    let conflict_dir = campaign_dir.join(CONFLICTS_DIR).join(conflict_timestamp());
     fs::create_dir_all(&conflict_dir).map_err(|err| io_error(&conflict_dir, err))?;
 
     for dir_name in [CONFIG_DIR, RESOURCES_DIR, ADVENTURE_LOG_DIR, MAPS_DIR, WIKI_DIR] {
@@ -281,7 +355,7 @@ fn summarize(snapshot: &CampaignSnapshot, folder_name: String) -> CampaignSummar
 /// letters, digits, spaces, and hyphens verbatim. Moved here (rather than
 /// duplicated) from `campaign_drive.rs`, which becomes a thin adapter over
 /// this module in a later cycle.
-pub(crate) fn sanitize_filename(input: &str) -> String {
+pub fn sanitize_filename(input: &str) -> String {
     let cleaned: String = input
         .chars()
         .map(|c| if c.is_alphanumeric() || c == '-' || c == ' ' { c } else { '_' })

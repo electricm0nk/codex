@@ -1,0 +1,572 @@
+{
+  "corrections": {
+    "by_corrector": {
+      "sd41-e3.11": 1,
+      "sd41-e3.9": 1,
+      "sd41-e3.mc": 3,
+      "sd41-e4.1": 1,
+      "sd41-e4.2": 1,
+      "sd41-e4.4": 2,
+      "sd41-e4.5": 1,
+      "sd41-e4.6": 1,
+      "sd41-e4.mc": 3,
+      "sd41-e5.1": 1,
+      "sd41-e5.2": 1,
+      "sd41-e5.3": 3,
+      "sd42-E4.12": 1,
+      "sd42-E4.13": 2,
+      "sd42-E4.14": 2,
+      "sd42-E4.17": 1,
+      "sd42-E4.18": 1,
+      "sd42-E4.19": 1,
+      "sd42-e1.10": 2,
+      "sd42-e1.2": 3,
+      "sd42-e1.3": 3,
+      "sd42-e1.5": 1,
+      "sd42-e1.7": 1,
+      "sd42-e1.mc": 3,
+      "sd42-e2.1": 2,
+      "sd42-e2.10": 1,
+      "sd42-e2.14": 1,
+      "sd42-e2.2": 1,
+      "sd42-e2.3": 1,
+      "sd42-e2.4": 1,
+      "sd42-e2.6": 1,
+      "sd42-e2.7": 1,
+      "sd42-e2.8": 2,
+      "sd42-e2.mc": 2,
+      "sd42-e3.mc": 2,
+      "sd42-e4.1": 2,
+      "sd42-e4.10": 2,
+      "sd42-e4.11": 1,
+      "sd42-e4.15": 1,
+      "sd42-e4.2": 2,
+      "sd42-e4.21": 1,
+      "sd42-e4.3": 2,
+      "sd42-e4.4": 3,
+      "sd42-e4.5": 3,
+      "sd42-e4.6": 1,
+      "sd42-e4.7": 4,
+      "sd42-e4.9": 4,
+      "sd42-e4.mc": 3,
+      "sd42-main": 1
+    },
+    "by_subject": {
+      "E1.2 (pcg_import map.rs read_equipment_sets)": 1,
+      "E1.4 (pcg_import map.rs custom_item)": 1,
+      "E1.5 (pcg_import map.rs Notes block)": 1,
+      "E1.7 (explained.tsv E1.10 rows)": 1,
+      "E3.1 editor fixture party-resources.md": 1,
+      "E3.1 readingView.ts safeUrl": 1,
+      "E3.9 receipt (6b3afbc628)": 1,
+      "E4.17 receipt": 1,
+      "E4.2/E4.15/E4.17 weapon facets (damage_total.rs)": 1,
+      "SD-41 E1.8/E1.9/E1.11 receipts and E1.MC/E2.MC/E3.MC/E4.MC merge checks": 1,
+      "SD-41 epic-breakdown.md E1.4 acceptance": 1,
+      "SD-41 epic-breakdown.md E4.2 and E4.3 acceptance": 1,
+      "SD-41 epic-breakdown.md E4.2 row": 1,
+      "SD-41 epic-breakdown.md E4.4 FILES YOU OWN": 1,
+      "SD-41 epic-breakdown.md E4.4 acceptance command": 1,
+      "SD-41 gearScreenModel.ts weightLabels (E3.1/E3.MC)": 1,
+      "SD-42 E2.5 TEMPLATE_TREE / E2.10 mirror SD-r": 1,
+      "SD-42 decisions.md \u00a712.1 SD-n": 1,
+      "SD-42 decisions.md \u00a76": 1,
+      "SD-42 epic-breakdown E1.2 row": 3,
+      "SD-42 epic-breakdown E4.1 acceptance": 1,
+      "SD-42 epic-breakdown.md E1.3 row": 2,
+      "SD-42 epic-breakdown.md E1.MC partition command": 1,
+      "SD-42 epic-breakdown.md E2.1 row": 1,
+      "SD-42 epic-breakdown.md E4.7 / acceptance G-10 gen_settled_corpus command": 1,
+      "SD-42 epic-breakdown.md E4.7 FILES YOU OWN": 1,
+      "SD-42 epic-breakdown.md E4.7 does-not-cover / decisions.md \u00a727.1 Starfinder": 1,
+      "SD-42 epic-breakdown.md E4.7 settled-bundle count and Python acceptance command": 1,
+      "SD-42 workflow-instruction.md \u00a72.1 FRONTEND line": 1,
+      "acceptance-and-verification.md": 1,
+      "acceptance-and-verification.md G-8 line 1": 1,
+      "architecture_truth_up.py run (E5.3)": 1,
+      "decisions.md \u00a720 2026-11-18 E2.10 row": 1,
+      "desktop load_saved_character_at_root created-item weight": 1,
+      "docs/architecture/desktop-app.md (SD-39/SD-40 inventory rows)": 1,
+      "docs/architecture/pcg-import.md (E1.x-E4.17 converter changes)": 1,
+      "epic-breakdown.md E1.5 R21 RED": 1,
+      "epic-breakdown.md E1.7 / decisions.md \u00a79": 1,
+      "epic-breakdown.md E2.14 FILES YOU OWN": 1,
+      "epic-breakdown.md E2.2 row": 1,
+      "epic-breakdown.md E2.3 row": 1,
+      "epic-breakdown.md E2.4 acceptance test names": 1,
+      "epic-breakdown.md E2.6 FILES YOU OWN": 1,
+      "epic-breakdown.md E2.7 FILES YOU OWN": 1,
+      "epic-breakdown.md E2.8 FILES YOU OWN": 1,
+      "epic-breakdown.md E2.8 acceptance command": 1,
+      "epic-breakdown.md E3.11 smoke design + acceptance command": 1,
+      "epic-breakdown.md E4.1 acceptance": 1,
+      "epic-breakdown.md E4.10 DTO shape": 1,
+      "epic-breakdown.md E4.10 FILES YOU OWN": 1,
+      "epic-breakdown.md E4.13 (signal from E1.7)": 1,
+      "epic-breakdown.md E4.13 FILES YOU OWN / acceptance": 1,
+      "epic-breakdown.md E4.14 (c)": 1,
+      "epic-breakdown.md E4.14 (d) FILES YOU OWN": 1,
+      "epic-breakdown.md E4.15": 1,
+      "epic-breakdown.md E4.17 (b) (written by E4.13)": 1,
+      "epic-breakdown.md E4.2 row": 1,
+      "epic-breakdown.md E4.21 (E4.MC's discovered-card text)": 1,
+      "epic-breakdown.md E4.3 acceptance": 1,
+      "epic-breakdown.md E4.3/E2.10": 1,
+      "epic-breakdown.md E4.4 FILES YOU OWN": 1,
+      "epic-breakdown.md E4.4 campaign-open-button / main-menu-first": 1,
+      "epic-breakdown.md E4.4 row scope": 1,
+      "epic-breakdown.md E4.4 sheet-gear-arrows-split-quiver-backpack + E4.11 tests": 1,
+      "epic-breakdown.md E4.5 FILES YOU OWN": 2,
+      "epic-breakdown.md E4.5 row": 2,
+      "epic-breakdown.md E4.6 FILES YOU OWN": 1,
+      "epic-breakdown.md E4.6 acceptance (R21 RED)": 1,
+      "epic-breakdown.md E4.9 (test file name)": 1,
+      "epic-breakdown.md E4.9 (test name)": 1,
+      "epic-breakdown.md E4.9 G-1": 1,
+      "epic-breakdown.md E4.9 R21/acceptance grep": 1,
+      "epic-breakdown.md-E4.12": 1,
+      "lead brief (E4.2 R21)": 1,
+      "lead dispatch prompt (E3.MC)": 1,
+      "release-notes.md draft (sd41-e5.3, be27ecc83d)": 1,
+      "sd41-e3.4 BuyCustomDialog Material select": 1,
+      "sd41-e3.4 MarketDialog + E3.3 row sheet-market-description-box": 1,
+      "sd42-E4.14": 2
+    },
+    "by_verification_method": {
+      "apps/desktop/src/testSupport/uiProbe.ts UiProbeSnapshot fields (no style); run.mjs assertRow reads the snapshot after the last step": 1,
+      "awk -F'\\t' '$5==\"fixable\" && $6 ~ /^E1.10/' explained.tsv -> 0; awk -F'\\t' '$6 ~ /^E4.14/' -> 12; cargo test --test pcg_import_parity -> 1 passed": 1,
+      "awk -F'|' on kanban.md printed ' E3.12 |Spell Effect\u2026'; with gsub(/\\\\\\|/,\"\") first it prints ' E3.12 | waiting '": 1,
+      "bash scripts/verify.sh --only corpus-sweep -j 8 -> FAIL 1240 findings before (e51-verify.log), PASS 0 findings after (verify-run2-after-sweep-fix.log); grep -rln 'corpus-sweep' docs/release/SD-41-gear-and-equipment-sets -> no file before this commit": 1,
+      "cargo run --locked -j 8 --bin gen_settled_corpus \u2192 error: no bin target named gen_settled_corpus; with -p codex-ingest \u2192 verdict=PASS": 1,
+      "cargo test --locked --lib campaign_folder_ (8 passed) and characters_backup_ (11 passed)": 1,
+      "cargo test --locked --lib characters_backup_ (8 passed) and desktop import_campaign_character (2 passed) through SavedCharacterStore::save_with_warnings / save_and_mirror unchanged": 1,
+      "cargo test --locked --test pcg_import_operator_file -- --nocapture": 1,
+      "cargo test --locked --test pcg_import_operator_file -- --nocapture (stacks 90) and desktop cargo test import_operator_file -- --nocapture (held rows 90)": 1,
+      "cargo test --locked -j 8 -- --list (apps/desktop/src-tauri @1dc5be2861) | awk '/campaign_drive::.*: test$/' -> 7; NR-6 grep | awk 'END{print NR}' -> 70": 1,
+      "cargo test --locked -j 8 --bin codex-desktop weapon_copy_name -- --test-threads=8 (first run: names [Some(\"Flail +1 (Heavy)\"), Some(\"Spiked Gauntlet\"), ...])": 1,
+      "cargo test --locked -j 8 --lib campaign_migrate_ -- --test-threads=8 -> 4 passed; 3155 filtered out": 1,
+      "cargo test --locked -j 8 --lib copy_override_ on 6a07814e62: 0 passed; 3197 filtered out": 1,
+      "cargo test --locked -j 8 --lib maps_ -- --test-threads=8 on e43d730e06 -> test result: ok. 3 passed; 3169 filtered out": 1,
+      "cargo test --locked -j 8 --lib variant_weapon_facets_ on 5c53d7bce6: left None right Some((TwoHanded, 6)); pdftotext page 1 of the imported pf_Paladin print: 'Heavy Flail (Base) +12 1d10+1 \u2014 \u2014'": 1,
+      "cargo test --locked -j 8 attach_modifier_to_copy -- --test-threads=8 (2 passed)": 1,
+      "cargo test --locked -j 8 print_pf_blocks_page1_portrait -- --test-threads=8 -> 1 failed, 1365 filtered out; portrait_prints_the -> 2 failed, 1364 filtered out": 1,
+      "cargo test --locked campaign_folder::tests::read_write_stat_a_file (asserts write_campaign_file(campaign.json) is_err)": 1,
+      "cargo test --test packaged_resources failed at :338 'does not compile in exactly the fonts and templates on disk' once logos existed on disk": 1,
+      "cargo test --test pcg_import_notes notes_block_names_every_custom_feat_of_the_samples: FAILED on 8aca2c44a2 (pf_Cleric: [NAME:Human] not in Notes), 5 passed after the fix": 1,
+      "cargo test --test pcg_import_unmapped unmapped_create_item_keeps_its_customization: FAILED at :121 before the fix, 4 passed after": 1,
+      "cargo test pcg_import_parity (desktop): pf_Paladin stat.STR 20 vs 18 and pf_Cleric stat.CHA 19 vs 17 before map.rs final_scores fix, equal after; pf_Rogue (halfling) equal before and after": 1,
+      "cat docs/retro/events/sd41-e3.9.jsonl; awk -F'|' '$2 ~ /^ (C|E)[0-9]/ && $5 ~ /complete/' kanban.md | awk 'END{print NR}'": 1,
+      "cd apps/desktop && npx tsx src/editor/readingView.test.ts (new hidden-scheme case failed on 1bbd48b771, passes after the fix)": 1,
+      "cd apps/desktop/src-tauri && cargo test --locked -j 8 --no-fail-fast -- --test-threads=8 (1365 passed 1 failed: the_draft_preview_encumbrance_matches_the_saved_sheet_for_the_same_character)": 1,
+      "cd apps/desktop/src-tauri && cargo test --locked -j 8 --test import_writes_equipment_sets -> error: no test target named; cargo test --locked -j 8 import_writes_equipment_sets -> 7 passed": 1,
+      "cd apps/desktop/src-tauri && cargo test --locked -j 8 --test mirror_two_master -> error: no test target named mirror_two_master (exit 101); cargo test --locked -j 8 mirror_two_master -- --test-threads=8 -> 3 passed": 1,
+      "cd apps/desktop/src-tauri && cargo test --locked -j 8 campaign_folder_ -- --test-threads=8 (0 passed, 1372 filtered out) vs campaign_folder:: (3 passed, 1369 filtered out)": 1,
+      "cd apps/desktop/src-tauri && cargo test --locked -j 8 print_pf_blocks_gear_ -- --test-threads=8 (base and RED logs)": 1,
+      "cd apps/desktop/src-tauri && cargo test --locked -j 8 self_install a_declined_appimage_still_gets -- --test-threads=8 (exit 1, usage error) then the single-filter run (4 'running 0 tests')": 1,
+      "cd crates/codex-ingest && cargo test --locked --test pcg_import_stacks (with the lines in pcg_stacks.pcg) -> stacks_slot_table_covers_the_oracle_slots FAILED: Longsword: one stack, left 2 right 1": 1,
+      "cd crates/codex-ingest && cargo test --locked --test pcg_import_stacks stacks_samples -- --nocapture": 1,
+      "cd crates/codex-ingest && cargo test --locked -j 8 --test pcg_import_notes (test written first, on c58b8c47ec)": 1,
+      "cd crates/codex-ingest && cargo test --locked -j 8 --test pcg_import_parity (sf_mechanic stat.INT 26 = PCGen)": 1,
+      "character_hub.rs placed_in (project == saved state check); pcg_import_fixtures_paladin_reads_what_the_file_says": 1,
+      "crates/codex-ingest/tests/pcg_import_parity.rs gate(): stale ledger row failure for unused rows of a build": 1,
+      "desktop pcg_import_parity gate with the E4.17 rows removed, per-row against PCGen's export SKILL.n.RANK/ABMOD/MISC and a load dump of the imported pf_Rogue": 1,
+      "diff of the starter literal extracted from src/campaign/folder.rs vs apps/desktop/src/editor/fixtures/party-resources.md (2 hunks)": 1,
+      "git diff --name-only 589815b65f..5c53d7bce6 -- apps src crates data resources scripts | grep -v scripts/oracle_harness/pcg_import_parity/ | xargs -r grep -lis pcgen | awk 'END{print NR}' -> 39; bash scripts/verify.sh --only pcgen-residue-gate -j 8 -> PASS": 1,
+      "git diff --name-only 589815b65f..HEAD -- apps docs/architecture scripts/verify-baselines.env | awk 'END{print NR}' -> 81; git log --format=%H 589815b65f..HEAD --grep='sd42,e1\\.' | while read c; do git show --name-only --format= $c; done | sort -u | grep -E '^(apps/|docs/architecture/|scripts/verify-baselines\\.env)' | awk 'END{print NR}' -> 0": 1,
+      "git diff --stat -- 'data/corpus/*/_settled/equipment.json' | tail -1 \u2192 5 files changed, 182 insertions; python3 command as written \u2192 TypeError: string indices must be integers": 1,
+      "git grep -n 'FileList files={tabFiles' -- apps/desktop/src/campaign/CampaignSheet.tsx -> the adventureLog tab rendered the read-only list": 1,
+      "git grep -n 'FileList files={tabFiles' -- apps/desktop/src/campaign/CampaignSheet.tsx; maps_pins_round_trip_as_fractions with label 'Room #3, \"the\" vault' fails without the frontmatter.rs line": 1,
+      "git grep -n 'PARTY_RESOURCES_STARTER' -- src apps (only src/campaign/{folder,migrate}.rs); git grep -n write_campaign_file apps/desktop/src (takes bytes, so TS would need its own starter copy)": 1,
+      "git grep -n 'PlacedEquipmentCopy' -- apps src (TS only); git grep -n 'export interface WeaponDamageDto' -- apps/desktop/src": 1,
+      "git grep -n 'campaign_state_at_root\\|load_memberships(' apps/desktop/src-tauri/src (3 load responses + after_write only); grep -n '<PrintDialog' apps/desktop/src/characterHub/*.tsx (3 callers, characterId only)": 1,
+      "git grep -n 'struct ArmorStatsDto' -- apps/desktop/src-tauri/src | awk 'END{print NR}' -> 0": 1,
+      "git grep -n unarmed_strike_combat_rows -- apps; cargo test --locked -j 8 --no-fail-fast (desktop) -> bin 1359 passed; 5 failed": 1,
+      "git log --diff-filter=D -1 -- apps/desktop/src/characterHub/EquipmentPanel.tsx; ls apps/desktop/src/boundary/*.ts | grep -v test | awk 'END{print NR}' -> 85; grep -n drive_list_campaigns apps/desktop/src/boundary/listDriveCampaigns.ts": 1,
+      "git ls-files | grep equipment_sets.json | awk 'END{print NR}' -> 0": 1,
+      "git ls-files | grep gen-corpus-bundle -> scripts/gen-corpus-bundle.mjs; node scripts/gen-corpus-bundle.mjs from apps/desktop -> Cannot find module": 1,
+      "git rev-parse --short develop -> 2b14020bc7; git diff --name-only origin/develop...HEAD | awk 'END{print NR}' -> 1942": 1,
+      "git show 1446031838:apps/desktop/src/characterHub/CharacterSheet.tsx | grep -c 'Attach Modifier'": 1,
+      "git show 50c0e6d6c5:apps/desktop/src/equipmentCatalog/EquipmentCatalogScreen.tsx | grep -c 'export function hasDescription' -> 1": 1,
+      "git show 95081e4087:apps/desktop/scripts/ui-smoke/spec.json read by python for 'Drive'/'drive' outside notes -> 13 rows incl. the 5 rewritten campaign rows; SETTINGS_TABS has no google-drive": 1,
+      "git status --porcelain (empty); git show --stat 5bb2052de7": 1,
+      "grep -h COSTMOD $PCGEN_REPO_DIR/code/testsuite/PCGfiles/pf_*.pcg -> COST:0 ... COSTMOD=-10": 1,
+      "grep -n \"endsWith('.test.ts')\" apps/desktop/scripts/run-tests.mjs": 1,
+      "grep -n '2\\.35' .github/workflows/{publish-tester-release,linux-build-check}.yml | awk 'END{print NR}' -> 0; gh run list -w linux-build-check.yml -b tranche-22 --json event -> push": 1,
+      "grep -n 'E2.MC/\\*.png' docs/release/SD-42-pcgen-import-and-campaign-folder/epic-breakdown.md (\u2265 10) vs decisions.md SD-n row": 1,
+      "grep -n 'HeldEquipmentCopyDto' apps/desktop/src-tauri/src/character_hub.rs": 1,
+      "grep -n 'fn resolve_unified_pilot_snapshot' apps/desktop/src-tauri/src/pf1_adapter.rs; grep -n '^codex = ' crates/codex-ingest/Cargo.toml (codex-ingest depends on the root crate only)": 1,
+      "grep -n 'path = \"import_writes_equipment_sets.rs\"' apps/desktop/src-tauri/src/character_hub.rs": 1,
+      "grep -rc 'CONTAINS:\\*' $PCGEN_REPO_DIR/data/starfinder | awk -F: '{s+=$2} END{print s}' \u2192 5 at the pin": 1,
+      "grep -rn 'interface ContainerLoadDto' apps/desktop/src \u2192 boundary/loadSavedCharacterDetail.ts:272 only": 1,
+      "import_create_items_are_held_and_weighed: 6 -> 8 before the fix, 6 -> 12 after": 1,
+      "mirror_two_master RED on f496612b6d's parent tree: save_writes_backup_and_bumps_counter and stand_in_save_never_writes_backup FAILED with 'the campaign copy was changed by <host>'": 1,
+      "npm run ui-smoke -- --only <the 7-row list>: 0/7 green; artifacts screenshot sheet-gear-container-table-discard.FAILED showed 'Backpack \u00d73', 'Whetstone \u00d73'": 1,
+      "npx tsx src/characterHub/gearScreenModel.test.ts -> 'expected 3 \u00d7 3 lb, got \u2014' before 5e486c00c0, 17 cases passed after": 1,
+      "python3 -I artifacts/epic_1/E1.MC/acceptance_filter_counts.py <e4mc root-lib.log> -> 1 mismatch before, 0 after": 1,
+      "python3 -I artifacts/epic_2/E2.MC/desktop_filter_counts.py <e4mc desktop-full.log> E4. -> 2 mismatches before, 0 after": 1,
+      "python3 -I scan of every git ls-files '_settled/equipment.json' for names containing 'quiver' -> Efficient Quiver (container, contents_weight_pct 0), Quiver of Recall (not a container)": 1,
+      "python3 -c \"import json;print(json.load(open('data/corpus/ultimate_psionics/equipment/astral_armor.json'))['data']['cost_gp'])\" -> 0.0; grep -c '\"key\": \"Astral Armor\"' data/price_overrides/price-unknown.json -> 1": 1,
+      "run-desktop screenshot artifacts/epic_3/E3.MC/05-before-fix-description-below-200-rows.png; MarketDialog.test.ts 'does not wrap' RED then GREEN": 1,
+      "run-desktop screenshot before/after; MarketDialog.test.ts 'the Material select fits the dialog' RED then GREEN": 1,
+      "scripts/pcgen-run-character.sh -c pf_Paladin.pcg with an EQ.x/COUNT[EQUIPMENT] template -> 28 entries, no Gauntlet; cargo test --test pcg_import_stacks stacks_pieces_no_entry_places_are_not_carried": 1,
+      "scripts/verify.sh --full: awk '/Running /{r=$0} /test result: FAILED/{print r}' root-full.log": 1,
+      "sed -n '/^pub fn corpus_weapon_attack_rows/,/^}/p' src/rules_core/pilot_compute_corpus.rs | awk '/enhancement/{n++} END{print n+0}' -> 0; feat_pillar_and_pool_aggregation.rs:3019 attack_total terms": 1,
+      "sheet_rule_convert --check ungated -> verdict=FAIL problems=553; gated -> verdict=PASS": 1,
+      "sheet_rule_convert --check with the gate removed; awk '/stale on disk/{split($4,a,\"/\"); c[a[1]]++}' over its output; Python over git diff --name-only -- data/sheet_rules after --write agrees (136)": 1,
+      "speed.typ importing /frame.typ: cargo test --locked -j 8 print_pf_blocks_speed_prints -- --test-threads=8 -> 'the sheet did not typeset: Error: cyclic import'": 1,
+      "strengthened pcg_import_fixtures_the_mapping_doc_lists_every_key (doc must hold MAPPING and CUSTOM_PROPERTIES printed word for word) fails on 5c53d7bce6; grep -c MAX_COPIES crates/codex-ingest/src/pcg_import/map.rs -> 0": 1,
+      "ui-smoke runs e44/c1..c4 (campaign-wiki-search red: dialog stayed open; campaign-import-stand-in blocked after the Encounter builder); decisions.md \u00a720 2026-11-19 E4.4": 1,
+      "workflow-instruction.md \u00a76 step 5 identifier audit on d148cb1378 -> 3 hits; on 2e17cc889b -> OK_NO_BUNDLE_TAGS": 1,
+      "workflow-instruction/decisions \u00a720 E4.6 row (cargo rejects a second positional filter); E4.19 ran each filter separately": 1
+    },
+    "caught_before": {
+      "implementation": 5,
+      "merge": 2
+    },
+    "recent": [
+      {
+        "actor": "sd42-E4.14",
+        "id": "1795100718648-sd42-e4.14-d95ae8",
+        "summary": "epic-breakdown.md E4.14 (d) FILES YOU OWN claimed the two-TYPE-token fix regenerates data/starfinder-1e/sheet_rules only; actual the same converter line moves 553 Pathfinder records (sheet_rule_convert --check: 553 stale on disk); the union is gated to Starfinder here and the Pathfinder regeneration is discovered card E4.18",
+        "ts": "2026-11-19T15:05:18Z"
+      },
+      {
+        "actor": "sd42-e4.15",
+        "id": "1795109411956-sd42-e4.15-46abe1",
+        "summary": "epic-breakdown.md E4.15 claimed a per-copy attack row where a copy's +N differs; actual the combat.weapon_attack_bonus rows hold no +N term on this head (BAB + ability + focus + nonproficiency + size), so a copy's +N never moves its attack row; E4.17 (e) adds the term and then files the copy's attack row under its copyRow, which the print already reads",
+        "ts": "2026-11-19T17:30:11Z"
+      },
+      {
+        "actor": "sd42-E4.18",
+        "id": "1795117132235-sd42-e4.18-9f2a5e",
+        "summary": "sd42-E4.14 claimed 119 Inner Sea World Guide of the 553 stale records; actual 136 Inner Sea World Guide (103 ACG, 93 Ultimate Psionics agree)",
+        "ts": "2026-11-19T19:38:52Z"
+      },
+      {
+        "actor": "sd42-E4.19",
+        "id": "1795124932278-sd42-e4.19-7649a3",
+        "summary": "sd42-E4.14 claimed E4.19 acceptance: cargo test --locked -j 8 import_writes_equipment_sets import_operator_file pcg_import_parity -- --test-threads=8; actual cargo test takes one positional filter; run the three filters one per run",
+        "ts": "2026-11-19T21:48:52Z"
+      },
+      {
+        "actor": "sd42-E4.17",
+        "id": "1795130243298-sd42-e4.17-494ca3",
+        "summary": "epic-breakdown.md E4.17 (b) (written by E4.13) claimed pf_Rogue's 17 (b) rows come from worn items the sheet does not hold (Cloak of Resistance +3, Amulet of Natural Armor +2, Ring of Protection +2, Boots of Elvenkind); actual those items were already on the sheet (custom_item rows, saves, AC parts); the rows came from Halfling racial traits (Sure-Footed, Keen Senses, Halfling Luck), Small size on Stealth and Fly, the mithral chain shirt's lost material (max Dex, ACP), favored class bonus skill ranks and Trapfinding",
+        "ts": "2026-11-19T23:17:23Z"
+      },
+      {
+        "actor": "sd42-e4.mc",
+        "id": "1795151313452-sd42-e4.mc-4af60d",
+        "summary": "acceptance-and-verification.md G-8 line 1 claimed git diff --name-only <C1>..HEAD -- apps src crates data resources scripts | grep -v parity exports | xargs grep -lis pcgen -> 0; actual 39 files: the lexical grep counts the converter crate (a PCGen reader by design), cfg(test) modules, comments and ui-smoke's {PCGEN_REPO_DIR}; pcgen-residue-gate is the control (live_files=0 live_hits=0 PASS)",
+        "ts": "2026-11-20T05:08:33Z"
+      },
+      {
+        "actor": "sd42-e4.mc",
+        "id": "1795151321861-sd42-e4.mc-c646db",
+        "summary": "docs/architecture/pcg-import.md (E1.x-E4.17 converter changes) claimed stacks list one selection per copy, at most 99; every non-PLUSn eqmod is a report warning; Starfinder files are unmapped-class cases; EQUIPNAME/EQUIPSET rows as SD-39 wrote them; Weapon Focus added to every character; actual one stack per place with QUANTITY pieces, no cap (MAX_COPIES removed); material/masterwork/abilities are Buy Custom builds; Starfinder imports through the SF catalog; MAPPING text differs on EQUIPNAME, EQUIPSET, CALCEQUIPSET, ABILITY, DEITY; Weapon Focus only on a Fighter",
+        "ts": "2026-11-20T05:08:41Z"
+      },
+      {
+        "actor": "sd42-e4.mc",
+        "id": "1795155693169-sd42-e4.mc-ad1e7f",
+        "summary": "E4.2/E4.15/E4.17 weapon facets (damage_total.rs) claimed an imported weapon's row carries its Strength on damage, threat range and multiplier (E4.17: every weapon's attack equals PCGen); actual a BASEITEM alias record (118 of 355 alias records, e.g. Flail (Heavy), Battleaxe, Club, Javelin) printed STR, CRITICAL and WIELD as \u2014 and its damage without Strength (pf_Paladin flail 1d10+1 for PCGen-shape 1d10+7): resolve_str_damage_modifier / resolve_critical_threat_range / resolve_critical_multiplier did not chase base_item as the dice did",
+        "ts": "2026-11-20T06:21:33Z"
+      },
+      {
+        "actor": "sd42-e4.21",
+        "id": "1795172946692-sd42-e4.21-f30917",
+        "summary": "epic-breakdown.md E4.21 (E4.MC's discovered-card text) claimed pf_Paladin imports 'Gauntlet, Spiked' as a copy's custom name the Weapons tab should print; actual the converter folds NAME=Gauntlet, Spiked to its KEY Gauntlet (Spiked) (pcg_import_custom: a NAME equal to the base is not a custom name), so the copy has no name; it prints its alias's base record name, Spiked Gauntlet",
+        "ts": "2026-11-20T11:09:06Z"
+      },
+      {
+        "actor": "sd42-main",
+        "id": "1795196088178-sd42-main-84b806",
+        "summary": "E4.17 receipt claimed root lib 3210/0, codex-ingest 1921/0, desktop 1575/0 (verified at the widest scope); actual root-full has 1 red suite: sd27_feat_effects_reach_both_compute_paths (E4.17 added a direct feat_effects read)",
+        "ts": "2026-11-20T17:34:48Z"
+      }
+    ],
+    "repeat_subjects": [
+      {
+        "count": 3,
+        "subject": "SD-42 epic-breakdown E1.2 row"
+      },
+      {
+        "count": 2,
+        "subject": "epic-breakdown.md E4.5 FILES YOU OWN"
+      },
+      {
+        "count": 2,
+        "subject": "SD-42 epic-breakdown.md E1.3 row"
+      },
+      {
+        "count": 2,
+        "subject": "epic-breakdown.md E4.5 row"
+      },
+      {
+        "count": 2,
+        "subject": "sd42-E4.14"
+      }
+    ],
+    "total": 85,
+    "with_blast_radius": 1
+  },
+  "deferrals": {
+    "open": 2,
+    "open_items": [
+      {
+        "actor": "sd42-plan",
+        "id": "1794847998924-sd42-plan-241e38",
+        "reason": "the import and campaign lanes are file-disjoint and run in parallel, so one bundle costs no wall time; the split point is named in risks-and-open-questions.md \u00a74 for the operator",
+        "revisit": "operator ruling on the split before launch",
+        "ts": "2026-11-16T16:53:18Z",
+        "what": "Splitting SD-42 into import (SD-42) and campaign tabs + editor extras (SD-43)"
+      },
+      {
+        "actor": "sd42-plan",
+        "id": "1794847999077-sd42-plan-14589f",
+        "reason": "operator ruling Q11/Q19: roles are designed first; everything in the folder is shared",
+        "revisit": "the operator's roles design (a later bundle scope-draft naming roles)",
+        "ts": "2026-11-16T16:53:19Z",
+        "what": "GM/Player roles and secrets inside the campaign folder (FSR-C1, FSR-C2)"
+      }
+    ],
+    "recent": [
+      {
+        "actor": "sd42-plan",
+        "id": "1794847998924-sd42-plan-241e38",
+        "summary": "deferred Splitting SD-42 into import (SD-42) and campaign tabs + editor extras (SD-43): the import and campaign lanes are file-disjoint and run in parallel, so one bundle costs no wall time; the split point is named in risks-and-open-questions.md \u00a74 for the operator",
+        "ts": "2026-11-16T16:53:18Z"
+      },
+      {
+        "actor": "sd42-plan",
+        "id": "1794847999077-sd42-plan-14589f",
+        "summary": "deferred GM/Player roles and secrets inside the campaign folder (FSR-C1, FSR-C2): operator ruling Q11/Q19: roles are designed first; everything in the folder is shared",
+        "ts": "2026-11-16T16:53:19Z"
+      }
+    ],
+    "resolved": 0,
+    "total": 2
+  },
+  "events": {
+    "by_actor": {
+      "sd41-e3.11": 2,
+      "sd41-e3.9": 2,
+      "sd41-e3.mc": 3,
+      "sd41-e4.1": 2,
+      "sd41-e4.2": 1,
+      "sd41-e4.4": 3,
+      "sd41-e4.5": 1,
+      "sd41-e4.6": 1,
+      "sd41-e4.mc": 4,
+      "sd41-e5.1": 4,
+      "sd41-e5.2": 2,
+      "sd41-e5.3": 3,
+      "sd41-main": 8,
+      "sd42-E4.12": 1,
+      "sd42-E4.13": 2,
+      "sd42-E4.14": 3,
+      "sd42-E4.17": 1,
+      "sd42-E4.18": 1,
+      "sd42-E4.19": 2,
+      "sd42-campaign": 12,
+      "sd42-e1.10": 3,
+      "sd42-e1.2": 3,
+      "sd42-e1.3": 5,
+      "sd42-e1.4": 1,
+      "sd42-e1.5": 2,
+      "sd42-e1.6": 1,
+      "sd42-e1.7": 2,
+      "sd42-e1.8": 2,
+      "sd42-e1.mc": 6,
+      "sd42-e2.1": 2,
+      "sd42-e2.10": 1,
+      "sd42-e2.13": 1,
+      "sd42-e2.14": 1,
+      "sd42-e2.2": 1,
+      "sd42-e2.3": 1,
+      "sd42-e2.4": 1,
+      "sd42-e2.6": 1,
+      "sd42-e2.7": 1,
+      "sd42-e2.8": 2,
+      "sd42-e2.mc": 2,
+      "sd42-e3.3": 1,
+      "sd42-e3.mc": 2,
+      "sd42-e4.1": 2,
+      "sd42-e4.10": 2,
+      "sd42-e4.11": 1,
+      "sd42-e4.15": 1,
+      "sd42-e4.16": 1,
+      "sd42-e4.2": 2,
+      "sd42-e4.21": 1,
+      "sd42-e4.3": 2,
+      "sd42-e4.4": 5,
+      "sd42-e4.5": 4,
+      "sd42-e4.6": 2,
+      "sd42-e4.7": 5,
+      "sd42-e4.9": 5,
+      "sd42-e4.mc": 3,
+      "sd42-e5.1": 2,
+      "sd42-e5.2": 1,
+      "sd42-editor": 1,
+      "sd42-import": 14,
+      "sd42-main": 21,
+      "sd42-plan": 3
+    },
+    "by_origin": {
+      "agent": 106,
+      "derived": 72
+    },
+    "by_type": {
+      "correction": 85,
+      "deferral": 2,
+      "incident": 17,
+      "note": 1,
+      "rework": 1,
+      "verification": 72
+    },
+    "total": 178
+  },
+  "generated_at": "2026-11-20T22:30:18Z",
+  "generated_by": "scripts/retro.py summary",
+  "git_join": {
+    "authors": 1,
+    "available": true,
+    "commits": 173,
+    "events_per_commit": 1.0289,
+    "top_authors": "redacted by E5.2 (R27: the git author name equals the PII string)"
+  },
+  "incidents": {
+    "by_recurrence_key": {
+      "cargo ran without CARGO_TARGET_DIR in a fresh shell: a 34G target/ grew inside the worktree": 1,
+      "diagnosis-test-rewrites-frozen-artifacts": 4,
+      "discovered-card-never-dispatched": 1,
+      "fence-exit-file-rebase-conflict": 1,
+      "foreign-file-in-lane-tree": 1,
+      "gate-red-unattributed": 1,
+      "native-dialog-dropped-keys": 1,
+      "npm-test-unattributed-flake": 1,
+      "orphaned-smoke-run-after-agent-kill": 1,
+      "pgrep-wait-loop-matches-itself": 2,
+      "pkill-matches-itself": 1,
+      "publisher-fetch-refused": 1,
+      "stale-copy-doc-clobber": 1
+    },
+    "recent": [
+      {
+        "actor": "sd42-e1.7",
+        "id": "1794941527543-sd42-e1.7-49ca92",
+        "summary": "the codex-ingest full suite (pcg_import_diagnosis) rewrote 4 committed E1.1 artifacts (3 TSVs + summary.json) in the sd42-import tree (detected by git status --porcelain after the full suite)",
+        "ts": "2026-11-17T18:52:07Z"
+      },
+      {
+        "actor": "sd42-e1.10",
+        "id": "1794952173892-sd42-e1.10-d10617",
+        "summary": "cargo ran without CARGO_TARGET_DIR in a fresh shell: a 34G target/ grew inside the worktree",
+        "ts": "2026-11-17T21:49:33Z"
+      },
+      {
+        "actor": "sd42-e1.mc",
+        "id": "1794955336420-sd42-e1.mc-448318",
+        "summary": "a wait loop hung 10 min: pgrep -f on the target-dir path matched its own bash command line (detected by the Bash call timed out; TaskStop)",
+        "ts": "2026-11-17T22:42:16Z"
+      },
+      {
+        "actor": "sd42-e2.13",
+        "id": "1795012137993-sd42-e2.13-edb404",
+        "summary": "npm test first run reported 213/214 test files passed; the failing file name was lost because the output was piped through tail -4; an immediate full-log re-run on the same tree passed 214/214 (detected by the 'N/M test files passed' summary line)",
+        "ts": "2026-11-18T14:28:57Z"
+      },
+      {
+        "actor": "sd42-e4.7",
+        "id": "1795043053801-sd42-e4.7-96c28c",
+        "summary": "untracked docs/.obsidian/ (Obsidian vault config, 4 files, mtime 17:54 EST) appeared in the sd42-main lane tree mid-cycle; not written by E4.7; unfiltered git status cannot be empty at the card's commit (detected by git status --porcelain before the first commit \u2192 ?? docs/.obsidian/)",
+        "ts": "2026-11-18T23:04:13Z"
+      },
+      {
+        "actor": "sd42-e4.4",
+        "id": "1795072365863-sd42-e4.4-535ac1",
+        "summary": "native GTK folder dialog kept open after the typed path: the row's next step found no Save (campaign-wiki-search red, run e44/c1)",
+        "ts": "2026-11-19T07:12:45Z"
+      },
+      {
+        "actor": "sd42-e4.4",
+        "id": "1795072365994-sd42-e4.4-b3a0a9",
+        "summary": "pkill -f with a pattern that matched the invoking shell's own command line killed the tool shell (exit 144) twice",
+        "ts": "2026-11-19T07:12:45Z"
+      },
+      {
+        "actor": "sd42-e4.5",
+        "id": "1795082659319-sd42-e4.5-35c486",
+        "summary": "four wait loops ran ~40 min after the desktop suite had finished (no wrong result) (detected by ps showed no test binary while the loop still waited)",
+        "ts": "2026-11-19T10:04:19Z"
+      },
+      {
+        "actor": "sd42-E4.14",
+        "id": "1795108302788-sd42-e4.14-17b1e7",
+        "summary": "pcgen-residue-gate red on tranche-22 since E4.1 (live_files=3 live_hits=5): three desktop #[cfg(test)] modules name codex_ingest; no card ran the gate after E4.1, so it went unseen (detected by bash scripts/verify.sh --only pcgen-residue-gate -j 8 on 32d8d8998c content (git archive HEAD run) -> verdict=FAIL)",
+        "ts": "2026-11-19T17:11:42Z"
+      },
+      {
+        "actor": "sd42-E4.19",
+        "id": "1795124938106-sd42-e4.19-b24bb0",
+        "summary": "E4.18's docs commit 74319edcdf rewrote epic-breakdown.md from a stale copy: dropped the E4.16-E4.19 rows from the \u00a70 table and the E4 card table, the \u00a70 serial order, and later \u00a720 corrections in the E4.4-E4.9/E4.MC rows",
+        "ts": "2026-11-19T21:48:58Z"
+      }
+    ],
+    "recurring": [
+      {
+        "count": 4,
+        "recurrence_key": "diagnosis-test-rewrites-frozen-artifacts"
+      },
+      {
+        "count": 2,
+        "recurrence_key": "pgrep-wait-loop-matches-itself"
+      }
+    ],
+    "silent": 1,
+    "time_lost_minutes": 45,
+    "total": 17
+  },
+  "log": {
+    "invalid_lines": 0,
+    "path": "/home/ubuntu/workspace/repos/codex/.worktrees/sd42-main/docs/retro/events",
+    "problems": [],
+    "shards": 62
+  },
+  "near_misses": {
+    "by_caught_by": {},
+    "escaped": 0,
+    "recent": [],
+    "total": 0
+  },
+  "rework": {
+    "by_cause": {
+      "operator killed the running task by accident, 2026-11-15; uncommitted edits survived in the tree": 1
+    },
+    "recent": [
+      {
+        "actor": "sd41-e3.9",
+        "id": "1794794215905-sd41-e3.9-249e52",
+        "summary": "redid E3.9 verification re-run (clippy, desktop full sweep, root --lib) after the first attempt was killed mid root cargo test: operator killed the running task by accident, 2026-11-15; uncommitted edits survived in the tree",
+        "ts": "2026-11-16T01:56:55Z"
+      }
+    ],
+    "total": 1
+  },
+  "schema_version": 1,
+  "verification": {
+    "by_failing_stage": {
+      "corpus-sweep": 1,
+      "pcgen-residue-gate": 1,
+      "root-full": 1
+    },
+    "fail_rate": 0.0417,
+    "failed_runs": 3,
+    "runs": 72
+  },
+  "window": {
+    "since": "2026-11-16T00:00:00+00:00",
+    "spec": "2026-11-16",
+    "until": null
+  }
+}

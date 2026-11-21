@@ -274,6 +274,8 @@ export interface ContainerLoadDto {
   contentsLbs: number;
   capacity: ContainerCapacityDto;
   over: boolean;
+  /** What the contents weigh toward the carried total, in percent (SD-42 E4.7): 0 for a Bag of Holding; absent means 100. */
+  contentsWeightPct?: number;
 }
 
 /** Mirrors `Resistances` (engine `pilot_compute::resistances`). */
@@ -387,6 +389,12 @@ export interface WeaponDamageDto {
   ammunitionCarried: number;
   /** The ammunition family the weapon's record names (`Arrow`); absent when it names none. */
   ammunitionFamily?: string;
+  /** The die this copy deals instead of its record's, as its file writes it (`2d4`); `baseDice` holds it when it reads as dice. */
+  damageOverride?: string;
+  /** The copy's properties (a `.pcg` line's `SPROP`), printed as text; absent when it has none. */
+  properties?: string[];
+  /** The name the row prints under: the copy's custom name, else an alias's base record name (`Heavy Flail`); absent when the record's own name serves. */
+  name?: string;
 }
 
 export interface ChosenFeatTargetsDto {

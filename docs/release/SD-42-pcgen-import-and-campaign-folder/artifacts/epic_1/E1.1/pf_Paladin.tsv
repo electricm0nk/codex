@@ -1,0 +1,30 @@
+line	name	base	custom_name	outcome	codex_key	sheet_record	worn	carried	copies_emitted	file_quantity	pcgen_location	codex_slot	slot_collision	eqmods_not_applied	data_fields_not_read
+1	Explorer's Outfit	Outfit (Explorer's)	yes	mapped	Outfit (Explorer's)	yes	0	1	1	1.0	in Saddlebags x1.0				COSTMOD,NAME
+2	Lantern (Bullseye)		no	mapped	Lantern (Bullseye)	yes	0	1	1	1.0	in Backpack x1.0				
+3	Grappling Hook		no	mapped	Grappling Hook	yes	0	1	1	1.0	in Saddlebags x1.0				
+4	Iron Spike		no	mapped	Iron Spike	yes	0	3	3	3.0	in Backpack x3.0				
+5	Sunrod		no	mapped	Sunrod	yes	0	2	2	2.0	in Backpack x2.0				
+6	Ring of Protection +1		no	mapped	Ring of Protection +1	yes	1	0	1	1.0	Ring x1.0	Ring			
+7	Dagger	Dagger	no	mapped	Dagger	yes	0	1	1	1.0	Carried x1.0			STEEL	NAME
+8	Outfit (Traveler's)		no	mapped	Outfit (Traveler's)	yes	1	0	1	1.0	Torso x1.0	None			
+9	Flail +1 (Heavy)	Flail (Heavy)	yes	mapped	Flail (Heavy)	yes	1	0	1	1.0	Both Hands x1.0	WieldTwoHanded		DISARM.STEEL.TRIP	NAME
+10	Horse (Heavy/Combat Trained)		no	mapped	Horse (Heavy/Combat Trained)	yes	0	1	1	1.0	Not Carried x1.0				
+11	Oil (1 Pint Flask)		no	mapped	Oil (1 Pint Flask)	yes	0	2	2	2.0	in Backpack x2.0				
+12	Gauntlet	Gauntlet (Part of Armor Suit)	yes	mapped	Gauntlet (Part of Armor Suit)	yes	0	1	1	1.0	(no set entry)			STEEL	NAME
+13	Flint and Steel		no	mapped	Flint and Steel	yes	0	1	1	1.0	in Backpack x1.0				
+14	Javelin	Javelin	no	mapped	Javelin	yes	0	5	5	5.0	Carried x3.0; in Horse (Heavy/Combat Trained) x2.0			WOOD	NAME
+15	Saddlebags		no	mapped	Saddlebags	yes	0	1	1	1.0	in Horse (Heavy/Combat Trained) x1.0				
+16	Full Plate +1	Full Plate	yes	mapped	Full Plate	yes	1	0	1	1.0	Armor x1.0	Armor		STEEL	NAME
+17	Rope (Silk/50 ft.)	Rope (Silk/50 ft)	no	mapped	Rope (Silk/50 ft)	yes	0	1	1	1.0	in Backpack x1.0				NAME
+18	Holy Symbol (Silver)		no	mapped	Holy Symbol (Silver)	yes	0	1	1	1.0	in Backpack x1.0				
+19	Saddle (Military)		no	mapped	Saddle (Military)	yes	0	1	1	1.0	in Horse (Heavy/Combat Trained) x1.0				
+20	Backpack		no	mapped	Backpack	yes	1	0	1	1.0	Equipped x1.0	None			
+21	Holy Water (Flask)		no	mapped	Holy Water (Flask)	yes	0	2	2	2.0	in Backpack x2.0				
+22	Waterskin (Filled)		no	mapped	Waterskin (Filled)	yes	0	1	1	1.0	in Saddlebags x1.0				
+23	Bedroll		no	mapped	Bedroll	yes	0	1	1	1.0	in Saddlebags x1.0				
+24	Wooden Stake	Stake (Wood)	yes	mapped	Stake (Wood)	yes	0	4	4	4.0	in Saddlebags x2.0			WOOD	NAME
+25	Antitoxin (Vial)		no	mapped	Antitoxin (Vial)	yes	0	1	1	1.0	in Backpack x1.0				
+26	Gauntlet, Spiked	Gauntlet (Spiked)	no	mapped	Gauntlet (Spiked)	yes	1	0	1	1.0	Unarmed x1.0	WieldMain	main hand slot is taken by Flail (Heavy)	STEEL	NAME
+27	Longsword (Alchemical Silver)	Longsword	yes	mapped	Longsword	yes	0	1	1	1.0	Carried x1.0			STEEL.ALCHM	NAME
+28	Gauntlet	Gauntlet (Part of Armor Suit)	yes	mapped	Gauntlet (Part of Armor Suit)	yes	0	1	1	1.0	(no set entry)			STEEL	
+29	Gauntlet	Gauntlet	no	mapped	Gauntlet	yes	0	1	1	1.0	(no set entry)			STEEL	

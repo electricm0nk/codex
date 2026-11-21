@@ -303,7 +303,8 @@ pub fn resistances(sources: &SheetSources) -> SheetBlock {
     SheetBlock::new("Resistances", rows).in_look(Look::Resistances)
 }
 
-/// The screen's Attack box (`attack`): Base Attack Bonus, Melee, CMB and CMD.
+/// The screen's Attack box (`attack`): Base Attack Bonus, Melee, Ranged (the engine's
+/// `combat.baseline_ranged_attack_bonus`, SD-42 E4.20; "—" with no row), CMB and CMD.
 pub fn attack(sources: &SheetSources) -> SheetBlock {
     let snapshot = sources.loaded.snapshot.as_ref();
     SheetBlock::new(
@@ -311,6 +312,7 @@ pub fn attack(sources: &SheetSources) -> SheetBlock {
         vec![
             line(sources, "Base Attack Bonus", vec![with_sign(snapshot.map(|s| s.base_attack_bonus))], "class_chassis.base_attack_bonus"),
             line(sources, "Melee", vec![with_sign(snapshot.map(|s| s.baseline_melee_attack_bonus))], "combat.baseline_melee_attack_bonus"),
+            line(sources, "Ranged", vec![with_sign(row_value(sources, "combat.baseline_ranged_attack_bonus"))], "combat.baseline_ranged_attack_bonus"),
             line(sources, "CMB", vec![with_sign(row_value(sources, "combat.combat_maneuver_bonus"))], "combat.combat_maneuver_bonus"),
             line(sources, "CMD", vec![plain(row_value(sources, "defense.combat_maneuver_defense"))], "defense.combat_maneuver_defense"),
         ],

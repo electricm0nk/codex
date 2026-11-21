@@ -1,0 +1,34 @@
+test_constants_match_latest_provenance_entry (scripts.tests.test_shape_coverage_standing_gate.BudgetProvenanceTest.test_constants_match_latest_provenance_entry) ... ok
+test_departed_covered_count_does_not_excuse_a_real_drain (scripts.tests.test_shape_coverage_standing_gate.BudgetProvenanceTest.test_departed_covered_count_does_not_excuse_a_real_drain)
+A repin cannot claim an arbitrarily large `departed_covered_count` ... ok
+test_every_entry_carries_a_nonempty_reason (scripts.tests.test_shape_coverage_standing_gate.BudgetProvenanceTest.test_every_entry_carries_a_nonempty_reason) ... ok
+test_every_evidence_commit_is_real_and_reachable (scripts.tests.test_shape_coverage_standing_gate.BudgetProvenanceTest.test_every_evidence_commit_is_real_and_reachable) ... ok
+test_no_record_delta_never_exceeds_population_delta (scripts.tests.test_shape_coverage_standing_gate.BudgetProvenanceTest.test_no_record_delta_never_exceeds_population_delta)
+The budget cannot widen faster than real content was added -- ... ok
+test_population_strictly_increases_between_entries (scripts.tests.test_shape_coverage_standing_gate.BudgetProvenanceTest.test_population_strictly_increases_between_entries)
+A repin without population growth would be exactly 'raise the ... ok
+test_provenance_log_is_not_empty (scripts.tests.test_shape_coverage_standing_gate.BudgetProvenanceTest.test_provenance_log_is_not_empty) ... ok
+test_unprovenanced_run_still_measured_against_committed_baseline (scripts.tests.test_shape_coverage_standing_gate.BudgetProvenanceTest.test_unprovenanced_run_still_measured_against_committed_baseline)
+The orchestrator's 80-fabricated-object reproduction lands no ... ok
+test_read_oracle_sha_matches_pin_file (scripts.tests.test_shape_coverage_standing_gate.CorpusShaCitationTest.test_read_oracle_sha_matches_pin_file) ... ok
+test_report_carries_corpus_sha (scripts.tests.test_shape_coverage_standing_gate.CorpusShaCitationTest.test_report_carries_corpus_sha) ... ok
+test_dev_null_reports_no_coverage_and_nonzero_exit (scripts.tests.test_shape_coverage_standing_gate.FailClosedOnEmptyTest.test_dev_null_reports_no_coverage_and_nonzero_exit) ... ok
+test_empty_units_list_reports_no_coverage_and_nonzero_exit (scripts.tests.test_shape_coverage_standing_gate.FailClosedOnEmptyTest.test_empty_units_list_reports_no_coverage_and_nonzero_exit) ... ok
+test_run_gate_function_empty_inventory_returns_nonzero (scripts.tests.test_shape_coverage_standing_gate.FailClosedOnEmptyTest.test_run_gate_function_empty_inventory_returns_nonzero) ... ok
+test_stdin_empty_object_reports_no_coverage (scripts.tests.test_shape_coverage_standing_gate.FailClosedOnEmptyTest.test_stdin_empty_object_reports_no_coverage) ... ok
+test_new_kind_no_record_object_fails_the_gate_too (scripts.tests.test_shape_coverage_standing_gate.NoRecordBudgetInvariantTest.test_new_kind_no_record_object_fails_the_gate_too)
+Card 15 (`decisions.md §12b`): the integration cycle widens ... ok
+test_no_record_within_budget_still_passes (scripts.tests.test_shape_coverage_standing_gate.NoRecordBudgetInvariantTest.test_no_record_within_budget_still_passes)
+The inverse of the above: a real corpus with a matched record ... ok
+test_orchestrator_reproduction_now_fails (scripts.tests.test_shape_coverage_standing_gate.NoRecordBudgetInvariantTest.test_orchestrator_reproduction_now_fails)
+The literal repro from `decisions.md §14a`/the reopening brief: ... ok
+test_pile_mismatch_fails_the_gate (scripts.tests.test_shape_coverage_standing_gate.NoRecordBudgetInvariantTest.test_pile_mismatch_fails_the_gate)
+Sum-the-piles: if the per-family rollup does not add back to the ... ok
+test_real_no_record_unit_fails_a_tight_budget (scripts.tests.test_shape_coverage_standing_gate.NoRecordBudgetInvariantTest.test_real_no_record_unit_fails_a_tight_budget)
+A single genuinely-uncovered real object, with the budget ... ok
+test_clean_inventory_passes (scripts.tests.test_shape_coverage_standing_gate.RealCaseGreenTest.test_clean_inventory_passes) ... ok
+
+----------------------------------------------------------------------
+Ran 20 tests in 0.298s
+
+OK

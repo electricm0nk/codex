@@ -1,7 +1,7 @@
 # Persistence
 
 > Scope: how saved characters and campaigns are typed, stored on disk, and reached from the desktop shell.
-> Last verified: **2026-11-16 against `tranche-21` (`be27ecc83d`, SD-41 E5.3)** for `equipment_sets.json`, `campaigns.json`, the campaign write-through and `custom.json`'s Create-item fields. Earlier pass: **2026-11-14 against `tranche-20` (`2fd74a5c15`, SD-40 E5.4)** for the sidecar table (no `hp.json` writer; `bio.json`'s Languages, Biography and Notes). Earlier pass: **2026-11-07 against `tranche-19` (`e5c7415d7f`)** for the `ledger.json` sidecar. Earlier pass: **2026-10-15 against `tranche-18` (`9d23977679`, SD-38 closure truth-up)** for the Cyberpunk RED routing note, the
+> Last verified: **2026-11-20 against `tranche-22` (`fc465cddd1`, SD-42 E5.3)** for the campaign folder (`src/campaign/`: `folder.rs`, `characters.rs`, `migrate.rs`, `adventure_log.rs`, `maps.rs`, `wiki.rs`, `frontmatter.rs`; `campaign_folder.rs`), the `Characters/` backup with `master.json` and the stand-in, `campaigns.json`'s fields, the known-folders file and the `.pcg` import's sets file. Earlier pass: **2026-11-16 against `tranche-21` (`be27ecc83d`, SD-41 E5.3)** for `equipment_sets.json`, `campaigns.json`, the campaign write-through and `custom.json`'s Create-item fields. Earlier pass: **2026-11-14 against `tranche-20` (`2fd74a5c15`, SD-40 E5.4)** for the sidecar table (no `hp.json` writer; `bio.json`'s Languages, Biography and Notes). Earlier pass: **2026-11-07 against `tranche-19` (`e5c7415d7f`)** for the `ledger.json` sidecar. Earlier pass: **2026-10-15 against `tranche-18` (`9d23977679`, SD-38 closure truth-up)** for the Cyberpunk RED routing note, the
 > store-ownership rule and the six-seed list below. Earlier: **2026-10-07 against `tranche/17` (`b99c3d4b02`)** for the `game_system` routing note below. The rest was last verified
 > 2026-09-29 against `tranche/16`. Earlier: **2026-09-29 against `tranche/16` (`165cc205e7`)** — added the SD-36 F6e starter-seeds
 > section (`starter_seeds()` is a list, each entry with its own marker; `character_hub.rs`,
@@ -122,7 +122,7 @@ once for that character:
 | `ledger.json` | `LEDGER_FILE_NAME` (`character_ledger.rs`) | every Pathfinder change through `mutate_saved_character_at_root`, and an ability grant on the Custom tab | no ledger yet — the first load (or first change) builds one from what the character holds, each thing in the earliest slot of its kind, marked as worked out afterwards; `list_progression_ledger` reads it. The engine never reads it and no number depends on it. It also holds `admitted`: each record an Overrides flag let in, with that flag |
 | `custom.json` | `CUSTOM_FILE_NAME` (`character_custom.rs`) | `save_character_custom`, `create_custom_item` (the Market's Create); an import restores it (`import_character_from_json`, behind `import_character` and `import_pcg`); `clone_character` copies it | nothing custom — `load_character_custom_at_root` returns `CharacterCustomDto::default()` (no grants, records, conditions, and every Overrides flag off), not an error. An equipment record may carry `weight_lbs`, `price_gp` and `container_capacity_lbs`, and the overrides `ignore_container_capacity`; all are serde-defaulted, so an older file loads unchanged |
 | `equipment_sets.json` | `EQUIPMENT_SETS_FILE` (`src/saved_character/equipment_sets.rs`) | `equipment_sets::save` (temp file + rename), called from the desktop through `save_sets` (`character_hub.rs`): the first load of a save without one (the `Default` set, `default_from`), the move / set / buy / sell / discard / rename commands; `clone_character` copies it | the first load writes one active `Default` set from the saved `active_state`s. The file holds `schema`, the `active` set's name, every named set's `locations` (a copy a set does not name is Carried) and the `copies` map (`"<itemId>\|<bonus>\|<ordinal>"` → custom `name`, piece `quantity`, `size`). The engine never reads it: `equipment_sets::project` turns the active set into the `equipment=` lines' `active_state`s, which stay the only input the engine reads |
-| `campaigns.json` | `MEMBERSHIPS_FILE` (`src/saved_character/campaign_mirror.rs`) | `set_character_campaigns` (the sheet's Campaign dialog) | no campaigns — nothing is copied anywhere. Each entry is `{ campaignId, campaignName, campaignDir, active }`; `active: false` keeps the old copy and stops new ones. `clone_character` does not copy it, and it is never copied into a campaign folder |
+| `campaigns.json` | `MEMBERSHIPS_FILE` (`src/saved_character/campaign_mirror.rs`) | `set_character_campaigns` (the sheet's Campaign dialog) | no campaigns — nothing is copied anywhere. Each entry is `{ campaignId, campaignName, campaignDir, active, standIn, lastBackupCounter }` (`Membership`); `active: false` keeps the old backup and stops new ones; `standIn: true` (a character imported from another device's backup) never writes a backup; `lastBackupCounter` is the save counter this install last wrote to that campaign's backup. `clone_character` does not copy it, and it is never copied into a campaign folder |
 | `hit_points.json` | `HIT_POINTS_FILE_NAME` | `create_character` (the per-level hit point results), an import (`import_character_from_json`); `clone_character` copies it | no saved results — `load_character_hit_points_at_root` returns an empty list, not an error |
 
 The first three (`portrait.png`, `bio.json`, `money.json`) share one design rationale, stated directly in `character_hub.rs`'s
@@ -143,17 +143,24 @@ text and the Notes text (`CharacterBioDto`). Portraits are capped at
 `MAX_PORTRAIT_BYTES = 3 * 1024 * 1024` bytes as a defensive backstop (the
 frontend crops/resizes before sending bytes — see [desktop-app.md](./desktop-app.md)).
 
-**Campaign write-through.** Every write of a file under a character root ends with
-`after_write(root)` (`character_hub.rs`): for each active entry in `campaigns.json` it calls
+**Campaign write-through (the `Characters/` backup).** Every write of a file under a character root ends with
+`after_write(root)` (`character_hub.rs`): for each active, non-stand-in entry in `campaigns.json` it calls
 `campaign_mirror::mirror`, which copies the whole root (except `campaigns.json`) to
-`<campaignDir>/characters/<slug>-<characterId>/` by writing `<folder>.tmp-<pid>` and renaming it over
-the old copy. The app is the master; the copy is never read back. A missing or unwritable campaign
-folder is a warning, not an error — the local save has already succeeded. The desktop keeps the latest
-warnings per root in memory and the load response returns them as `mirrorWarnings`. Envelope saves go
-through `save_and_mirror` (`SavedCharacterStore::save_with_warnings`; the plain `save` mirrors and
-drops the warnings). A Cyberpunk RED root is identified through `CprCharacterStore::load`. The
-source-scanning test `apps/desktop/src-tauri/tests/every_character_root_writer_mirrors.rs` fails when
-a writer under a character root does not call `after_write`.
+`<campaignDir>/Characters/<slug>-<characterId>/` by writing `<folder>.tmp-<pid>` and renaming it over
+the old copy (the rename retries once after `WRITE_RETRY_DELAY`, 200 ms). The backup also holds
+`master.json` (`MASTER_FILE`): the writing device's id and name (`DeviceIdentity`, kept in
+`<app data>/device.json`, `DEVICE_FILE`; the name is set by `set_device_name`) and the next save counter.
+A backup whose `master.json` counter is not the `lastBackupCounter` this install last wrote is left alone,
+with a warning naming the device that changed it and when: one master per character, never silently
+overwritten. The local copy is the master; another device reads a backup only through
+`campaign::characters` (`list`, `import` as a stand-in or as the moved master, `diff` — shown, never
+merged). A missing or unwritable campaign folder is a warning, not an error — the local save has already
+succeeded, and a missing campaign folder is never created. The desktop keeps the latest warnings per root
+in memory and the load response returns them as `mirrorWarnings`. Envelope saves go through
+`save_and_mirror` (`SavedCharacterStore::save_with_warnings`; the plain `save` mirrors and drops the
+warnings). A Cyberpunk RED root is identified through `CprCharacterStore::load`. The source-scanning test
+`apps/desktop/src-tauri/tests/every_character_root_writer_mirrors.rs` fails when a writer under a
+character root does not call `after_write`.
 
 `SavedCharacterStore::save` refuses to write a record it cannot honestly read
 back: `validate_character_input` rejects any field containing a newline (the
@@ -176,99 +183,57 @@ subdirectory is collected into `SavedCharacterListing::unreadable_entries`
 (as a `SavedCharacterListingError { entry_name, message }`) without failing
 the rest of the listing.
 
-## `campaign/`: `CampaignSnapshot` and the campaign store
+## `campaign/`: the campaign folder
 
-`src/campaign/mod.rs`'s own doc comment states the design intent directly:
-campaigns are not rules-computation, so this module lives as a sibling of
-`saved_character` rather than under `rules_core`. `CampaignSnapshot`'s fields
-are documented as mirroring `apps/desktop/src/campaign/campaignModel.ts`'s
-`Campaign` + `CampaignAssets` TypeScript types 1:1 (`id`, `name`,
-`rule_set_id`, `rule_set_label`, `description`, `members: Vec<CampaignMember>`,
-`party_character_ids: Vec<String>`, `created_at`, `updated_at`,
-`assets: CampaignAssets`), plus a `schema_version` field added from day one
-(`CURRENT_CAMPAIGN_SCHEMA_VERSION = 1`) — there is no legacy campaign format
-to be back-compatible with, unlike `saved_character`. `CampaignAssets` holds
-four `Vec<CampaignAsset>` lists — `resources`, `adventure_log`, `maps`,
-`wiki` — each `CampaignAsset { title, body }`. This is the one deliberate
-exception to the "1:1" framing: `campaignModel.ts`'s asset shape is
-`MarkdownAsset { id, title, body, updatedAt }`, and `CampaignAsset` drops the
-UI-local `id`/`updatedAt` bookkeeping fields, per `src/campaign/mod.rs`'s own
-`CampaignAsset` doc comment. All types derive
-`Serialize`/`Deserialize` with `#[serde(rename_all = "camelCase")]`, and a
-unit test (`serializes_camel_case_field_names_matching_campaign_model_ts`)
-asserts the exact camelCase wire shape (`ruleSetId`, `partyCharacterIds`,
-etc.).
-
-### On-disk layout and `CampaignStore`
-
-`src/campaign/local_store.rs` defines `CampaignStore` (also a concrete unit
-struct) with `save`, `load`, `list_all`, `delete`, `save_under_root`,
-`load_with_nonce`, `save_with_conflict_detection`, and
-`save_under_root_with_conflict_detection`. Its module doc comment gives the
-layout under a campaign's own directory:
+A campaign is a folder the player chooses and syncs however they like (`src/campaign/folder.rs`'s module
+comment). Campaigns are not rules-computation, so `src/campaign/` is a sibling of `saved_character`, not
+under `rules_core`. Everything in it is plain file IO, called from the desktop's `campaign_folder.rs` commands;
+every path a command takes inside a campaign goes through `folder::relative`, so no
+command reads or writes outside the folder.
 
 ```text
-<campaign_dir>/
-  .config/<sanitized name>.json   # CampaignSnapshot minus `assets`
-  .config/nonce                   # conflict-detection sidecar (see below)
-  resources/<sanitized title>.md
-  adventure-log/<sanitized title>.md
-  maps/<sanitized title>.md
-  wiki/<sanitized title>.md
+<campaign folder>/
+  campaign.json            # CampaignFolderSnapshot (schema 2): name, rule set, description, members, dates
+  .codex/nonce             # the conflict counter
+  Party Resources.md       # free Markdown; a starter on request (create_party_resources_starter)
+  Adventure Log/*.md       # one file per session per author; frontmatter read by frontmatter::parse
+  Maps/<name>.png|jpg|jpeg + Maps/<name>.md   # pins in the .md frontmatter, as fractions of the image
+  Wiki/{NPCs,Places,Factions,Items}/...       # free folders; one page per .md
+  Characters/<slug>-<id>/  # the members' character backups, each with master.json (above)
+  Attachments/             # images dropped into the editor (save_attachment)
 ```
 
-```mermaid
-erDiagram
-    CampaignSnapshot ||--o{ CampaignMember : "members"
-    CampaignSnapshot ||--|| CampaignAssets : "assets"
-    CampaignAssets ||--o{ CampaignAsset : "resources"
-    CampaignAssets ||--o{ CampaignAsset : "adventure_log"
-    CampaignAssets ||--o{ CampaignAsset : "maps"
-    CampaignAssets ||--o{ CampaignAsset : "wiki"
-    CampaignSnapshot {
-        string id
-        string name
-        string rule_set_id
-        string description
-        int schema_version
-    }
-    CampaignAsset {
-        string title
-        string body
-    }
-```
-*Empty asset groups never get a subdirectory of their own (`write_asset_group` early-returns on an empty slice).*
+`folder::create_layout` makes every directory in `LAYOUT_DIRS` (10) and writes `campaign.json`;
+`folder::open` reads it with its nonce. `CampaignFolderSnapshot` (`CAMPAIGN_FOLDER_SCHEMA_VERSION = 2`)
+holds no assets and no party: the files are the assets and `Characters/` is the party. Members are
+`FolderMember { name, added_at }` — no email, no invite, no role; the creator is member #1. The other
+modules read the layout: `adventure_log` (`list`, `new_entry`; a file whose frontmatter is missing or
+unreadable is listed by filename and never rewritten), `maps` (`list`, `add_map`, `pins`, `set_pins`),
+`wiki` (`folders`, `add_folder`, `rename_folder`, `delete_folder`, `pages`, `new_page`, `resolve_link` by
+`title` then filename stem across the whole folder, `backlinks`, `search` by title then text),
+`frontmatter` (the YAML subset Obsidian writes; anything else is kept as raw text), and `characters` (the
+backups, above).
 
-The JSON config carries every `CampaignSnapshot` field except `assets`
-(`config_only.assets = CampaignAssets::default()` before serializing); each
-markdown asset is written verbatim as its own `.md` file, named from
-`sanitize_filename(&asset.title)`. `CampaignStore::load` re-reads the `.md`
-files fresh on every call — an edit made outside the app (e.g. in Obsidian)
-between save and load is honored, per the module doc comment and the
-`load_honors_an_external_obsidian_style_edit_to_an_asset_markdown_file` test.
+**Known folders.** The app remembers the campaign folders it has created or opened in
+`<app data>/campaign-folders.json` (`KNOWN_FOLDERS_FILE`, `campaign_folder.rs`): `list_known_campaigns`,
+`add_known_campaign_folder`, `forget_known_campaign_folder`. There is no fixed campaigns root.
 
-`CampaignStore::list_all(campaigns_root)` mirrors
-`SavedCharacterStore::list_all` exactly: a missing root returns an empty
-`CampaignListing` rather than an error, and each subdirectory load failure is
-isolated into `CampaignListing::unreadable_entries` without failing the rest
-of the listing.
+**Conflict detection.** `CampaignStore::save_campaign_json_with_conflict_detection`
+(`src/campaign/local_store.rs`, behind `save_campaign_json`) compares the caller's nonce with
+`.codex/nonce`; on a mismatch the other writer's `campaign.json` is copied to
+`.codex/conflicts/<timestamp>/` before the new one is written and the nonce bumped. Local always wins;
+there is no merge UI. Only `campaign.json` is versioned: the folder's other files are written one by one
+by their own screens (the editor warns when its file changed on disk).
 
-### Conflict detection lives in `campaign/local_store.rs`, not `campaign_drive.rs`
-
-Nonce-based conflict detection is implemented in this module, not in the
-desktop-side `campaign_drive.rs`. A revision nonce is written to a sidecar
-file, `NONCE_FILE = "nonce"` under `.config/`, deliberately kept out of the
-JSON config and out of `CampaignSnapshot`'s own fields (it has no
-`campaignModel.ts` counterpart). `save_with_conflict_detection(snapshot,
-campaign_dir, expected_nonce)` compares `expected_nonce` against the nonce
-currently on disk; on a mismatch it calls
-`move_existing_state_to_conflicts`, which moves the existing `.config` +
-four asset directories into `<campaign_dir>/conflicts/<unix-nanos
-timestamp>/` before the new snapshot is written as the active state. Local
-always wins; both copies are preserved for manual review (the doc comment
-above `save_with_conflict_detection` cites `decisions.md` §7 for this
-policy). `expected_nonce: None` (a brand-new campaign) never triggers a
-conflict.
+**Migration** (`src/campaign/migrate.rs`, `migrate_campaign`). A pre-folder campaign has one of two
+sources: the old localStorage record (`codex.campaigns` + `codex.campaign.assets.<id>`, passed in as the
+raw JSON the UI read) or a folder holding `.config/<name>.json` (schema 1, `CampaignSnapshot`, the older
+`CampaignStore::save` layout with lower-case `resources/`, `adventure-log/`, `maps/`, `wiki/`). Either
+becomes a new campaign folder with one Markdown file per old entry. The old data is written first to
+`<app data>/campaign-migration-backup-<date>.json`; nothing is deleted (a `.config/<name>.json` is
+renamed `.json.bak`, so a second run finds nothing). The Campaign Manager opens the migration screen by
+itself while older campaigns exist. `CampaignSnapshot` and the schema-1 `CampaignStore` functions remain
+only for this read.
 
 ## Reaching these stores from the desktop
 
@@ -276,10 +241,10 @@ conflict.
 flowchart LR
     subgraph Rust["apps/desktop/src-tauri/src/"]
         CH["character_hub.rs\n(+ characterHub/ submodule)"] --> SCS["SavedCharacterStore\n(src/saved_character/local_store.rs)"]
-        CD["campaign_drive.rs"] --> CS["CampaignStore\n(src/campaign/local_store.rs)"]
+        CF["campaign_folder.rs"] --> CS["codex::campaign\n(folder, characters, wiki, maps, ...)"]
     end
     SCS --> Disk1["&lt;characters_root&gt;/&lt;id&gt;/\nenvelope.txt, authoritative_character_input.txt,\nportrait.png?, bio.json?, money.json?, hp.json?"]
-    CS --> Disk2["&lt;campaign_dir&gt;/\n.config/&lt;name&gt;.json, .config/nonce,\nresources|adventure-log|maps|wiki/*.md"]
+    CS --> Disk2["&lt;campaign folder&gt;/\ncampaign.json, .codex/nonce, *.md,\nMaps/, Wiki/, Characters/"]
 ```
 *Two independent Tauri-command surfaces, two independent headless stores, two independent on-disk layouts.*
 
@@ -293,10 +258,10 @@ commands (`move_equipment_copy`, `create_equipment_set`, `rename_equipment_set`,
 `delete_equipment_set`, `activate_equipment_set`), the sidecar commands
 (bio/money/portrait, `set_character_campaigns`), `delete_character`, `export_character(_json)`,
 `import_character`, plus `append_to_character` / `recompute_character` /
-`re_save_character` over the `RuleSystemAdapter` seam. `campaign_drive.rs`
-wraps `CampaignStore` behind `write_campaign_drive_artifacts`,
-`drive_list_campaigns`, `drive_load_campaign`, `drive_save_campaign`, and
-`drive_delete_campaign`.
+`re_save_character` over the `RuleSystemAdapter` seam. `campaign_folder.rs`
+wraps `codex::campaign` behind the known-folders, create/open, file read/write/stat/tree, Adventure Log,
+Maps, Wiki, `Characters/` backup, device-identity and migration commands (listed in
+[desktop-app.md](./desktop-app.md)).
 
 **Revision-id advancement is inconsistent by design today.** Most mutation
 commands route through the shared `mutate_saved_character_at_root` load →
@@ -331,11 +296,7 @@ Each Pathfinder seed
 is built through `compose_character_input`, the same composer `create_character` uses, plus
 `pf1_adapter::apply_record_and_prepare_spell_selection` for any extra spells — never a hand-written
 character file — and is written only when its headless build receipt is `Computed`
-(`stage-f6/f6e-receipt.md`). `campaign_drive.rs`'s own
-module doc comment describes itself as "the thin Tauri-command adapter over
-the headless `codex::campaign` crate ... it deserializes the frontend's
-already-JSON campaign payloads into a typed `CampaignSnapshot` and delegates
-all real file I/O to `codex::campaign::local_store::CampaignStore`". The full
+(`stage-f6/f6e-receipt.md`). The full
 command inventory and request/response DTO shapes are catalogued in
 [desktop-app.md](./desktop-app.md); this file only names the entry points and
 the on-disk shape they write.
@@ -345,14 +306,8 @@ Characters root on disk: `character_hub.rs`'s
 fixed `CHARACTERS_ROOT_DIR_NAME = "characters"` subdirectory
 (`resolve_characters_root` resolves the real `tauri::AppHandle` app-data
 path; `resolve_character_root` joins one more path segment, `character_id`).
-Campaigns root: there is no fixed app-data subdirectory — every
-`campaign_drive.rs` command takes a `drive_folder_path` (a user-configured
-local directory; the name reflects a not-yet-implemented Google Drive sync
-feature — see the module doc comment's note that "Google OAuth / Drive
-API integration does not exist ... the 'Drive folder' is really just a local
-path", and [desktop-app.md](./desktop-app.md)'s State-approach section for
-why campaigns actually live in `localStorage` today, with the Drive folder
-as a one-way write-through mirror).
+Campaigns root: there is none — a campaign is any folder the player chose, remembered in
+`campaign-folders.json` (above).
 
 ## Versioning and migration rules
 
@@ -364,9 +319,9 @@ as a one-way write-through mirror).
   is no write-side upgrade: an old file is read compatibly, but the next save
   of that character writes schema_version 2 going forward (no migration
   script rewrites old files in place).
-- **`CampaignSnapshot`**: `CURRENT_CAMPAIGN_SCHEMA_VERSION = 1` since the
-  type's introduction — there is no legacy format to migrate from, and no
-  version-2 shape exists yet.
+- **Campaigns**: `campaign.json` is schema 2 (`CAMPAIGN_FOLDER_SCHEMA_VERSION`). Schema 1
+  (`CampaignSnapshot`, `CURRENT_CAMPAIGN_SCHEMA_VERSION = 1`, `.config/<name>.json`) is never opened as a
+  campaign: `migrate_campaign` upgrades it into a new folder (above).
 - **Sidecar files** (`bio.json`, `money.json`, `hp.json`, `portrait.png`) carry
   no schema-version field of their own. Each loader treats "file absent" as
   the only backward-compatibility case it needs to handle (see the table
@@ -419,8 +374,9 @@ introducing trait-object indirection.
   payload builder is explicitly extended to read it — `export_character`
   builds its payload from the real on-disk envelope, and the sidecar
   files sit outside that envelope by design. `equipment_sets.json` and
-  `campaigns.json` are not exported: an imported character gets a fresh
-  `Default` set on its first load and belongs to no campaign. Adding a sidecar file
+  `campaigns.json` are not exported: a character imported from an exported JSON gets a fresh
+  `Default` set on its first load and belongs to no campaign. A `.pcg` import is different: its
+  sidecar's `equipmentSets` block becomes the new character's `equipment_sets.json` (`import_pcg_json`). Adding a sidecar file
   without checking whether export/import needs to carry it is an easy way to
   ship a feature that silently disappears on export/import round-trip.
 - **`SavedCharacterStore::list_all` never reads the sidecar files** — a

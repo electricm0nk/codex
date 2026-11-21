@@ -121,6 +121,16 @@ function verifiesTheDisplayNameFallsBackRatherThanBeingInvented() {
   assertEqual(unresolved.name, 'item:longsword', 'falls back to the raw id, never a guessed name');
 }
 
+/** SD-42 E4.21 (`decisions.md §6`): a copy's own name, or an alias's base name, as the engine names the row. */
+function verifiesAWeaponPrintsUnderTheNameTheEngineGivesIt() {
+  const flail = longsword({ weaponItemId: 'Flail (Heavy)', weaponRecordKey: 'Heavy Flail (Base)', name: 'Flail +1 (Heavy)' });
+  const corpus = {
+    equippedItems: [{ itemId: 'Flail (Heavy)', equipmentRecordName: 'Heavy Flail (Base)', equipmentRecordKey: 'Flail (Heavy)', grounded: true, appliedModifiers: [] }],
+  } as unknown as CorpusDerivedDto;
+  assertEqual(buildWeaponsTabSurface([flail], corpus).rows[0].name, 'Flail +1 (Heavy)', "the row's name wins over the record's");
+  assertEqual(buildWeaponsTabSurface([longsword()], CORPUS_DERIVED).rows[0].name, 'Longsword', 'no name: the record name, as before');
+}
+
 function verifiesAnHonestEmptyStateWhenNothingEquippedIsAWeapon() {
   const surface = buildWeaponsTabSurface([], CORPUS_DERIVED);
 
@@ -163,7 +173,18 @@ function verifiesDropNamesTheRowsOwnCopyAndMovesItToNotCarried() {
   assertEqual(last.drop, null, 'nothing to drop on the Unarmed row');
 }
 
+/** SD-42 E4.2: a copy's own die is the engine's `baseDice` (shown as is); one that is not plain dice shows as written; its properties ride under the row. */
+function verifiesACopysOwnDieAndPropertiesShowAsWritten() {
+  const own = buildWeaponsTabSurface([longsword({ baseDice: { count: 2, dieSize: 4 }, damageOverride: '2d4', properties: ['Keen edge', 'Glows faintly'] })], CORPUS_DERIVED).rows[0];
+  assertEqual(own.baseDice, '2d4', 'the engine already rolled the copy\'s die');
+  assertEqual(own.properties.join(' | '), 'Keen edge | Glows faintly', 'the properties, as written');
+  const words = buildWeaponsTabSurface([longsword({ baseDice: null, damageOverride: '1d6 fire' })], CORPUS_DERIVED).rows[0];
+  assertEqual(words.baseDice, '1d6 fire', 'a die the engine cannot read shows as written, never the record\'s');
+  assertEqual(buildWeaponsTabSurface([longsword()], CORPUS_DERIVED).rows[0].properties.length, 0, 'none when the copy has none');
+}
+
 async function main() {
+  verifiesACopysOwnDieAndPropertiesShowAsWritten();
   verifiesDropNamesTheRowsOwnCopyAndMovesItToNotCarried();
   verifiesInHandThenCarriedThenUnarmedLast();
   verifiesAmmunitionBoxesOnlyUnderAmmunitionWeapons();
@@ -175,6 +196,7 @@ async function main() {
   verifiesASingleNumberThreatRangeCollapses();
   verifiesTheDisplayNameFallsBackRatherThanBeingInvented();
   verifiesAnHonestEmptyStateWhenNothingEquippedIsAWeapon();
+  verifiesAWeaponPrintsUnderTheNameTheEngineGivesIt();
 }
 
 main().catch((error: unknown) => {

@@ -33,6 +33,7 @@ use serde::{Deserialize, Serialize};
 
 use codex::rules_core::encounters::{CharacterSnapshot, Difficulty, Encounter, MonsterRef};
 
+use codex::campaign::characters;
 use codex::saved_character::local_store::SavedCharacterStore;
 
 use crate::character_hub::{character_level, resolve_character_root};
@@ -65,11 +66,24 @@ pub struct PartyMemberInput {
     /// shrink the party and inflate the difficulty.
     #[serde(default)]
     pub character_id: Option<String>,
+    /// A campaign folder's `Characters/<folder>/` backup (decisions.md §17): its level is read
+    /// from the backup's envelope. Ignored when `character_id` is given.
+    #[serde(default)]
+    pub campaign_character: Option<CampaignCharacterInput>,
     /// A hypothetical member by bare level, so a DM can rate a party
-    /// without saving characters first. Ignored when `character_id` is
-    /// given.
+    /// without saving characters first. Ignored when `character_id` or
+    /// `campaign_character` is given.
     #[serde(default)]
     pub level: Option<u8>,
+}
+
+#[derive(Debug, Clone, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct CampaignCharacterInput {
+    /// The campaign folder (absolute).
+    pub campaign_dir: String,
+    /// The backup's folder name in `Characters/`.
+    pub folder: String,
 }
 
 #[derive(Debug, Clone, Deserialize)]
@@ -215,6 +229,18 @@ pub(crate) fn saved_character_level_at_root(root: &std::path::Path) -> Result<u8
     Ok(character_level(&envelope.character_input))
 }
 
+/// A campaign backup's `(character id, level)`, read from its envelope in place (a plain read; the
+/// shared backup is never written).
+fn campaign_character_level(input: &CampaignCharacterInput) -> Result<(String, u8), String> {
+    let campaign_dir = std::path::Path::new(&input.campaign_dir);
+    if !campaign_dir.is_absolute() {
+        return Err(format!("{} is not an absolute folder path", campaign_dir.display()));
+    }
+    let backup = characters::backup_path(campaign_dir, &input.folder).map_err(|err| err.message)?;
+    let envelope = SavedCharacterStore::load(&backup).map_err(|err| err.message)?;
+    Ok((envelope.character_id, character_level(&envelope.character_input)))
+}
+
 /// The rating itself, split from the command so it is unit-testable:
 /// `resolve_level` maps a `characterId` to its level (the command wires
 /// the real saved-character store; tests wire a temp root).
@@ -229,15 +255,21 @@ pub(crate) fn rate_encounter_request(
     }
     let mut rated_party = Vec::with_capacity(request.party.len());
     for member in &request.party {
-        let level = match (&member.character_id, member.level) {
-            (Some(character_id), _) => resolve_level(character_id)
-                .map_err(|err| format!("party member '{character_id}' could not be rated: {err}"))?,
-            (None, Some(level)) => level,
-            (None, None) => {
-                return Err("a party member needs either a characterId or a level".to_owned())
+        let (character_id, level) = match (&member.character_id, &member.campaign_character, member.level) {
+            (Some(character_id), _, _) => (
+                Some(character_id.clone()),
+                resolve_level(character_id)
+                    .map_err(|err| format!("party member '{character_id}' could not be rated: {err}"))?,
+            ),
+            (None, Some(campaign), _) => campaign_character_level(campaign)
+                .map(|(id, level)| (Some(id), level))
+                .map_err(|err| format!("campaign party member '{}' could not be rated: {err}", campaign.folder))?,
+            (None, None, Some(level)) => (None, level),
+            (None, None, None) => {
+                return Err("a party member needs a characterId, a campaignCharacter or a level".to_owned())
             }
         };
-        rated_party.push(RatedPartyMemberDto { character_id: member.character_id.clone(), level });
+        rated_party.push(RatedPartyMemberDto { character_id, level });
     }
     let party: Vec<CharacterSnapshot> =
         rated_party.iter().map(|member| CharacterSnapshot::new(member.level)).collect();
@@ -320,7 +352,7 @@ mod tests {
     use super::*;
 
     fn levels(n: usize, level: u8) -> Vec<PartyMemberInput> {
-        vec![PartyMemberInput { character_id: None, level: Some(level) }; n]
+        vec![PartyMemberInput { character_id: None, campaign_character: None, level: Some(level) }; n]
     }
     fn no_saved_characters(id: &str) -> Result<u8, String> {
         Err(format!("test resolver has no character '{id}'"))
@@ -505,8 +537,8 @@ mod tests {
         let response = rate_encounter_request(
             &RateEncounterRequest {
                 party: vec![
-                    PartyMemberInput { character_id: Some("party-member".to_owned()), level: None },
-                    PartyMemberInput { character_id: None, level: Some(3) },
+                    PartyMemberInput { character_id: Some("party-member".to_owned()), campaign_character: None, level: None },
+                    PartyMemberInput { character_id: None, campaign_character: None, level: Some(3) },
                 ],
                 monsters: vec![cr(2.0)],
             },
@@ -545,8 +577,8 @@ mod tests {
         let result = rate_encounter_request(
             &RateEncounterRequest {
                 party: vec![
-                    PartyMemberInput { character_id: Some("ghost".to_owned()), level: None },
-                    PartyMemberInput { character_id: None, level: Some(3) },
+                    PartyMemberInput { character_id: Some("ghost".to_owned()), campaign_character: None, level: None },
+                    PartyMemberInput { character_id: None, campaign_character: None, level: Some(3) },
                 ],
                 monsters: vec![cr(2.0)],
             },
@@ -560,12 +592,71 @@ mod tests {
     fn a_party_member_with_neither_id_nor_level_is_refused() {
         let result = rate_encounter_request(
             &RateEncounterRequest {
-                party: vec![PartyMemberInput { character_id: None, level: None }],
+                party: vec![PartyMemberInput { character_id: None, campaign_character: None, level: None }],
                 monsters: vec![cr(2.0)],
             },
             &no_saved_characters,
         );
         assert!(result.is_err());
+    }
+
+    // ----- party members from a campaign folder's Characters/ backups (decisions.md §17) -----
+
+    fn campaign_member(campaign_dir: &std::path::Path, folder: &str) -> PartyMemberInput {
+        PartyMemberInput {
+            character_id: None,
+            level: None,
+            campaign_character: Some(CampaignCharacterInput {
+                campaign_dir: campaign_dir.to_string_lossy().into_owned(),
+                folder: folder.to_owned(),
+            }),
+        }
+    }
+
+    /// A backup in `<campaign>/Characters/<folder>/` is rated at the level its envelope holds, and
+    /// the response names the backup's character id.
+    #[test]
+    fn rate_encounter_from_campaign_backup_reads_its_level() {
+        let campaign_dir = saved_character_root("campaign");
+        create_fighter(&campaign_dir.join("Characters").join("party-member-party-member"), 5);
+
+        let response = rate_encounter_request(
+            &RateEncounterRequest { party: vec![campaign_member(&campaign_dir, "party-member-party-member")], monsters: vec![cr(5.0)] },
+            &no_saved_characters,
+        )
+        .expect("should rate");
+
+        assert_eq!(response.party[0].level, 5);
+        assert_eq!(response.party[0].character_id.as_deref(), Some("party-member"));
+        assert_eq!(response.average_party_level, 5);
+        assert_eq!(response.difficulty, "medium");
+        std::fs::remove_dir_all(&campaign_dir).ok();
+    }
+
+    /// A folder that is not a backup fails the whole rating with its name -- never a smaller party.
+    #[test]
+    fn rate_encounter_from_campaign_missing_folder_is_a_named_error() {
+        let campaign_dir = saved_character_root("campaign-missing");
+        std::fs::create_dir_all(campaign_dir.join("Characters")).expect("Characters/");
+        let rate_one = |folder: &str| {
+            rate_encounter_request(
+                &RateEncounterRequest { party: vec![campaign_member(&campaign_dir, folder), levels(1, 3).remove(0)], monsters: vec![cr(2.0)] },
+                &no_saved_characters,
+            )
+        };
+
+        let err = rate_one("gone-char-9").expect_err("must not drop the member");
+        assert!(err.contains("gone-char-9"), "{err}");
+        assert!(rate_one("../escape").is_err(), "a folder is one path segment inside Characters/");
+        let relative = rate_encounter_request(
+            &RateEncounterRequest {
+                party: vec![PartyMemberInput { campaign_character: Some(CampaignCharacterInput { campaign_dir: "relative/dir".to_owned(), folder: "x".to_owned() }), ..levels(1, 3).remove(0) }],
+                monsters: vec![cr(2.0)],
+            },
+            &no_saved_characters,
+        );
+        assert!(relative.is_err(), "an absolute campaign folder only");
+        std::fs::remove_dir_all(&campaign_dir).ok();
     }
 
     /// The engine's own business rule for no monsters (Easy) passes

@@ -10,7 +10,7 @@
 > resources and the frontend map; the E7.7 claims critic (2026-10-07) also re-derived the **Landing** paragraph of
 > §"Character flow" (rule-set chips, per-system catalog links). Sections not named here (the Mode machine, boundary layer,
 > persistence-facing commands, ui_probe, the rest of character flow) were last verified 2026-09-28 against `tranche/16` (`b021509e23`) and not re-derived this pass.
-> Last verified: **2026-11-16 against `tranche-21` (`be27ecc83d`, SD-41 E5.3)** for the command inventory (128), the `boundary/` count (85), the gear screen, the Market, Create and Buy Custom, the campaign dialog and write-through, and the Print path's Inventory and page-1 changes. Earlier pass: **2026-11-14 against `tranche-20` (`2fd74a5c15`, SD-40 E5.4)** for the command inventory (116), the `boundary/` count (75), the Print path (layouts on a 12-column grid, 30 looks, eight section checkboxes), the ☰ menu on every screen, the Biography and Notes tabs, the mutation table (no hit-point tracking), the ui-smoke `spec.json` size and the localStorage list. Earlier pass: **2026-11-07 against `tranche-19` (`e5c7415d7f`)** for the command inventory (118), the `boundary/` count (76), the Print path (Rust and Typst, no `window.print()`), the Settings tabs and the print-assets rule under "Corpus root resolution"; the rest of this file was last verified in the passes that follow. Earlier pass: **2026-10-07 against branch `tranche-16-ui` (base `develop` @ `157873a67e`)** for bundled resources, the dependency list, `load_backend_health`, the update commands, the root-resolution chain and its pitfalls, the command inventory (84) and the Create-screen section; the rest of this file was last verified in the pass that follows. Earlier pass: **2026-09-28 against `tranche/16`, HEAD `b021509e23`** (SD-36 Epic F7: Abilities panel and Weapons tab read the engine's own numbers, class-skill lists hold only skills, prestige/Level-Up requirement labels, Expert/Summoner/Psion default-pick markers — no command added or removed). Earlier pass: **2026-09-27 against `tranche/16`, HEAD `08f8cb5ace`** (SD-36 Epic F6: class facts from the engine, HP source rule, Level Up blockers). Earlier pass: **2026-09-26 against `tranche/16`, HEAD `e70a8745ed`** (SD-36 Epic F5: the class roster from the engine, level-up with prestige classes, and the command count re-derived — **77**, the two roster commands SD-36 Epic F4 added). Earlier pass: **2026-09-20 against `tranche/16`, HEAD `424e93e93c`** (SD-36 consolidation, architecture-docs truth-up; capability-claims pass). Full re-derivation of the command inventory (**75** registered commands, re-counted directly from `generate_handler![...]`), the `CharacterHubPage` Mode machine, the boundary layer, the corpus-root resolution chain, the ui-smoke harness, and the character-mutation surfaces added since the 2026-09-15 pass (equipment purchase/attach, feat/trait selection, skill allocation, bio/money/HP sidecars, DM Toolkit). Several claims in the prior pass were stale and are corrected here (see "Corrections since the last pass" below) rather than annotated as deprecated. This pass additionally re-audits every capability/limitation claim in the file against a fresh instrument run and the code, correcting the "Create" section's Fighter-1-3-only claim (at that pass the create-flow class picker was a hardcoded list of 31 classes; SD-36 Epic F4 replaced it with the engine-served roster — see §"Character flow" for the current roster count).
+> Last verified: **2026-11-20 against `tranche-22` (`fc465cddd1`, SD-42 E5.3)** for the command inventory (158: 35 added, the five `campaign_drive.rs` commands removed), the `boundary/` count (85 top-level + 10 under `boundary/campaignFolder/`), the campaign folder screens and commands, the editor, the gear screen's SD-42 additions (slot kinds, Customize, the detail panel, stacks), the Settings tabs and the localStorage list. Earlier pass: **2026-11-16 against `tranche-21` (`be27ecc83d`, SD-41 E5.3)** for the command inventory (128), the `boundary/` count (85), the gear screen, the Market, Create and Buy Custom, the campaign dialog and write-through, and the Print path's Inventory and page-1 changes. Earlier pass: **2026-11-14 against `tranche-20` (`2fd74a5c15`, SD-40 E5.4)** for the command inventory (116), the `boundary/` count (75), the Print path (layouts on a 12-column grid, 30 looks, eight section checkboxes), the ☰ menu on every screen, the Biography and Notes tabs, the mutation table (no hit-point tracking), the ui-smoke `spec.json` size and the localStorage list. Earlier pass: **2026-11-07 against `tranche-19` (`e5c7415d7f`)** for the command inventory (118), the `boundary/` count (76), the Print path (Rust and Typst, no `window.print()`), the Settings tabs and the print-assets rule under "Corpus root resolution"; the rest of this file was last verified in the passes that follow. Earlier pass: **2026-10-07 against branch `tranche-16-ui` (base `develop` @ `157873a67e`)** for bundled resources, the dependency list, `load_backend_health`, the update commands, the root-resolution chain and its pitfalls, the command inventory (84) and the Create-screen section; the rest of this file was last verified in the pass that follows. Earlier pass: **2026-09-28 against `tranche/16`, HEAD `b021509e23`** (SD-36 Epic F7: Abilities panel and Weapons tab read the engine's own numbers, class-skill lists hold only skills, prestige/Level-Up requirement labels, Expert/Summoner/Psion default-pick markers — no command added or removed). Earlier pass: **2026-09-27 against `tranche/16`, HEAD `08f8cb5ace`** (SD-36 Epic F6: class facts from the engine, HP source rule, Level Up blockers). Earlier pass: **2026-09-26 against `tranche/16`, HEAD `e70a8745ed`** (SD-36 Epic F5: the class roster from the engine, level-up with prestige classes, and the command count re-derived — **77**, the two roster commands SD-36 Epic F4 added). Earlier pass: **2026-09-20 against `tranche/16`, HEAD `424e93e93c`** (SD-36 consolidation, architecture-docs truth-up; capability-claims pass). Full re-derivation of the command inventory (**75** registered commands, re-counted directly from `generate_handler![...]`), the `CharacterHubPage` Mode machine, the boundary layer, the corpus-root resolution chain, the ui-smoke harness, and the character-mutation surfaces added since the 2026-09-15 pass (equipment purchase/attach, feat/trait selection, skill allocation, bio/money/HP sidecars, DM Toolkit). Several claims in the prior pass were stale and are corrected here (see "Corrections since the last pass" below) rather than annotated as deprecated. This pass additionally re-audits every capability/limitation claim in the file against a fresh instrument run and the code, correcting the "Create" section's Fighter-1-3-only claim (at that pass the create-flow class picker was a hardcoded list of 31 classes; SD-36 Epic F4 replaced it with the engine-served roster — see §"Character flow" for the current roster count).
 > Maintenance: updated at SD closure — see [README.md](./README.md) §Maintenance contract
 
 ## Corrections since the last pass
@@ -99,9 +99,9 @@ stateDiagram-v2
 ```
 *The Character Hub's own mode machine — every top-level screen the app can show, and how it returns to `landing`.*
 
-The Campaign Manager entry point is gated by `campaignManagerAccessGate.ts`'s
-`computeCampaignManagerAccessGate` (requires a locally-configured "Drive folder" — see
-[persistence.md](./persistence.md)); `dm-toolkit` and the seven catalog modes have no such gate.
+The Campaign Manager has no access gate: `campaign-list` lists the known campaign folders and
+offers Create, Open and the migration screen (which opens by itself while pre-folder campaigns exist);
+see [persistence.md](./persistence.md).
 
 ## The boundary layer
 
@@ -122,7 +122,7 @@ export function formatError(cause: unknown): string {
 }
 ```
 
-**85 non-test files** live under `apps/desktop/src/boundary/` today (`ls apps/desktop/src/boundary/*.ts | grep -v '\.test\.ts$' | awk 'END{print NR}'`), one per Tauri command family plus the shared `runtime.ts`. The full mapping from command to wrapper file is the "Boundary wrapper" column of the command inventory table below — not re-enumerated as a flat list here, since the inventory table is the single source that can't drift out of sync with it.
+**85 non-test files** live directly under `apps/desktop/src/boundary/` today (`ls apps/desktop/src/boundary/*.ts | grep -v '\.test\.ts$' | awk 'END{print NR}'`), one per Tauri command family plus the shared `runtime.ts`, and **10 more** under `boundary/campaignFolder/` (`ls apps/desktop/src/boundary/campaignFolder/*.ts | grep -v '\.test\.ts$' | awk 'END{print NR}'`): one file per campaign-folder area (`knownCampaigns.ts`, `campaignFiles.ts`, `adventureLog.ts`, `maps.ts`, `wiki.ts`, `characters.ts`, `attachments.ts`, `migrateCampaign.ts`), the shared `invokeCampaignFolder.ts` and `types.ts`. The full mapping from command to wrapper file is the "Boundary wrapper" column of the command inventory table below — not re-enumerated as a flat list here, since the inventory table is the single source that can't drift out of sync with it.
 
 **Verified exceptions to the "boundary/*.ts only" rule**: files that call `invoke()` directly rather than through a dedicated wrapper, though each still imports `hasTauriRuntime`/`formatError` from `boundary/runtime.ts` and keeps its own testability seam:
 
@@ -133,7 +133,7 @@ export function formatError(cause: unknown): string {
 
 ## The complete Tauri command inventory
 
-**128 commands are registered** (reachable via `invoke()`; the same parse gives 116 at `83a8a4f414`, before SD-41), re-derived by parsing every entry of
+**158 commands are registered** (reachable via `invoke()`; the same parse gives 128 at `d6890a6c73`, before SD-42, and 116 at `83a8a4f414`, before SD-41), re-derived by parsing every entry of
 `tauri::generate_handler![...]` in `apps/desktop/src-tauri/src/main.rs` with comments stripped
 (`python3` one-liner splitting on `,` after a regex-stripped comment pass — a plain `grep -c ','`
 overcounts because several list entries carry inline `//` explanatory comments of their own with
@@ -170,11 +170,15 @@ Grouped by the Rust file that defines each command:
 | `equipment_catalog.rs` (Market) | `list_market` | One Market category with the `+N` each row can be bought at, its price, weight and body `slot` (`body_slot_of_item`); which rows exist and what they cost are the backend's answer. A row with no price from any source is served with none and is bought through Negotiate | `MarketDialog.tsx` via `boundary/listMarket.ts` |
 | `character_hub.rs` (SD-41 equipment sets) | `move_equipment_copy`, `create_equipment_set`, `rename_equipment_set`, `delete_equipment_set`, `activate_equipment_set`, `discard_equipment_copy`, `rename_equipment_copy` | Edit `equipment_sets.json` (see [persistence.md](./persistence.md)): move n pieces of a stack to a slot, Equipped, Carried, Not Carried or inside a container copy (a move that would put a container inside itself is refused); set CRUD and activation; discard (no refund); a copy's custom name. Each re-projects the active set onto the saved `active_state`s. Move, delete, activate and discard answer with the reloaded sheet, create and rename-set with the sets summary, rename-copy with the held stacks | `GearScreen.tsx` via `boundary/moveEquipmentCopy.ts`, `boundary/equipmentSets.ts`, `boundary/discardEquipmentCopy.ts`, `boundary/renameEquipmentCopy.ts` |
 | `character_hub.rs` (SD-41 Buy Custom) | `list_custom_equipment_options`, `quote_custom_equipment`, `purchase_custom_equipment` | The options a base item can take (masterwork, enhancement, special abilities, material, Small / Large), the quote (price and weight from the settled modifier prices and the size rule; an unpriced modifier is named and the buy goes through Negotiate) and the purchase (the base copy plus its modifiers, Carried, with its custom name) | `BuyCustomDialog.tsx` via `boundary/listCustomEquipmentOptions.ts`, `boundary/quoteCustomEquipment.ts`, `boundary/purchaseCustomEquipment.ts` |
-| `character_hub.rs` (SD-41 campaigns) | `set_character_campaigns` | Writes the character's `campaigns.json` and copies the character to each active campaign at once; answers with the copy warnings | `CampaignMembershipDialog.tsx` via `boundary/setCharacterCampaigns.ts` (the dialog lists the Drive folder's campaigns through `boundary/listDriveCampaigns.ts` → `drive_list_campaigns`) |
+| `character_hub.rs` (SD-41 campaigns) | `set_character_campaigns` | Writes the character's `campaigns.json` and copies the character to each active campaign at once; answers with the copy warnings | `CampaignMembershipDialog.tsx` via `boundary/setCharacterCampaigns.ts` (the dialog lists the known campaign folders through `boundary/campaignFolder/knownCampaigns.ts` → `list_known_campaigns`) |
 | `sf_adapter.rs`, `sf_catalog.rs` (Market) | `starfinder_market_state`, `list_starfinder_market`, `buy_starfinder_market`, `sell_starfinder_market` | The Starfinder Market over the system's own catalog and currency | `SystemMarketDialog.tsx` via `boundary/systemMarket.ts` |
 | `cpr_adapter.rs`, `cpr_catalog.rs` (Market) | `cyberpunk_market_state`, `list_cyberpunk_market`, `buy_cyberpunk_market`, `sell_cyberpunk_market` | The Cyberpunk RED Market over the system's own catalog and currency | `SystemMarketDialog.tsx` via `boundary/systemMarket.ts` |
 | `print/mod.rs` | `save_sheet_pdf`, `print_sheet_pdf` | The sheet's PDF for a `PrintRequest` (paper, the eight `PrintSections` boxes, the campaigns the frontend's store lists the character in): the character's `LoadSavedCharacterResponse` goes through the system's layout (`print/layout/`: `pf1e.rs`, `sf1e.rs`, `cpr.rs`) into a `SheetDocument` (`print/model.rs`, blocks in `print/blocks/`), which Typst used as a library typesets with the bundled Liberation Sans faces only (`print/typst.rs`). See §"Print: blocks, looks, layouts". `save_sheet_pdf` writes where the save-as dialog said and opens it; `print_sheet_pdf` writes `<temp>/codex-print/<characterId>.pdf` and opens that in the system PDF viewer. Both open through `tauri-plugin-opener`; the print path computes no number | `PrintDialog.tsx` via `boundary/saveSheetPdf.ts` |
-| `campaign_drive.rs` | `write_campaign_drive_artifacts`, `drive_list_campaigns`, `drive_load_campaign`, `drive_save_campaign`, `drive_delete_campaign` | `CampaignStore` wrapper over a local "Drive folder" path | `write_campaign_drive_artifacts` (a one-way mirror, see [persistence.md](./persistence.md)) and `drive_list_campaigns` (the sheet's Campaign dialog) are called |
+| `campaign_folder.rs` (known folders, create, open, migrate) | `list_known_campaigns`, `add_known_campaign_folder`, `forget_known_campaign_folder`, `create_campaign_folder`, `open_campaign_folder`, `save_campaign_json`, `migrate_campaign` | The known-folders list (`<app data>/campaign-folders.json`), making a campaign folder's layout, reading `campaign.json` with its nonce, saving it with conflict detection, and migrating a pre-folder campaign (see [persistence.md](./persistence.md)) | `CampaignManagerScreen.tsx`, `CreateCampaignScreen.tsx`, `EditCampaignScreen.tsx`, `CampaignMigrationScreen.tsx`, `CampaignMembershipDialog.tsx` via `boundary/campaignFolder/knownCampaigns.ts`, `migrateCampaign.ts` |
+| `campaign_folder.rs` (files) | `read_campaign_file`, `write_campaign_file`, `stat_campaign_file`, `list_campaign_tree`, `create_party_resources_starter`, `save_attachment` | Plain file IO inside one campaign folder (every path through `folder::relative`); `stat_campaign_file` gives the editor its mtime check; `save_attachment` copies a dropped image into `Attachments/` | the editor and the four tabs, `CampaignHelpScreen.tsx`'s live tree, via `boundary/campaignFolder/campaignFiles.ts`, `attachments.ts` |
+| `campaign_folder.rs` (tabs) | `list_adventure_log`, `new_adventure_log_entry`, `list_maps`, `add_map`, `set_map_pins`, `list_wiki_folders`, `add_wiki_folder`, `rename_wiki_folder`, `delete_wiki_folder`, `list_wiki_pages`, `new_wiki_page`, `resolve_wiki_link`, `wiki_backlinks`, `search_campaign` | The Adventure Log, Maps and Wiki over `codex::campaign::{adventure_log, maps, wiki}` | `campaign/tabs/{AdventureLogTab,MapsTab,WikiTab}.tsx` via `boundary/campaignFolder/adventureLog.ts`, `maps.ts`, `wiki.ts` |
+| `campaign_folder.rs` (characters) | `list_campaign_characters`, `load_campaign_character`, `import_campaign_character`, `diff_campaign_character`, `load_character_campaigns`, `get_device_identity`, `set_device_name` | The `Characters/` backups: list, open read-only, import as a stand-in or as the moved master, the file diff with this device's copy; a character's memberships; this install's device id and name | `CampaignSheet.tsx`'s Characters list, `EncounterBuilderScreen.tsx`'s party (`list_campaign_characters`), `PrintDialog.tsx` (`load_character_campaigns`), `settings/DeviceNameField.tsx` via `boundary/campaignFolder/characters.ts` |
+| `character_hub.rs` (SD-42 gear detail) | `describe_held_equipment` | One held copy's record (weight, cost, type, slot, weapon or armor stats, capacity, description, book) and the copy itself (name, size, modifiers, overrides, quantity, location) | `GearDetail.tsx` via `boundary/describeHeldEquipment.ts` |
 | `equipment_catalog.rs` | `list_equipment_catalog`, `list_equipment` | The equipment table store of **every ingested PF1 book**, not CRB alone (module's own header doc comment) — **8,119** entries test-pinned (`:1237`) across **29** distinct books; the full book roster and its derivation live in [status.md](./status.md)'s capability matrix, not restated here; additive filtered query | `EquipmentCatalogScreen.tsx`; `CharacterSheet.tsx`'s item pickers |
 | `spell_catalog.rs` | `list_spell_catalog`, `list_spells` | **2,481** entries test-pinned (`:945`) across **26** distinct books, exhaustive; the full book roster and its derivation live in [status.md](./status.md)'s capability matrix, not restated here; additive filtered query | `SpellCatalogScreen.tsx`; `CharacterSheet.tsx`'s spell picker |
 | `feat_catalog.rs` | `list_feat_catalog`, `list_feats`, `list_weapon_targets` | Full feat catalog (2,227 entries across 23 books, see [rules-data-tables.md](./rules-data-tables.md)); filtered query; the weapon-name options a "Weapon Focus"-shaped feat's target picker offers | `FeatsTab`/`buildItemPickerConfig` |
@@ -538,9 +542,20 @@ model files for encounter building, DM console export, session history, and DM-t
 (`encounterBuilderModel.ts`, `dmConsoleExport.ts`, `dmConsoleModel.ts`, `dmHistoryModel.ts`,
 `dmLinksModel.ts`, `dmRecordModel.ts`). Backed by `rate_encounter` and `export_dm_console`.
 
-**`campaign/`** — campaign management screens (`CampaignManagerScreen.tsx`, `CreateCampaignScreen.tsx`,
-`EditCampaignScreen.tsx`, `CampaignSheet.tsx`) plus `campaignModel.ts` (localStorage-backed — see
-[persistence.md](./persistence.md)) and `campaignManagerAccessGate.ts`.
+**`campaign/`** — the campaign folder's screens (`CampaignManagerScreen.tsx`, `CreateCampaignScreen.tsx`,
+`EditCampaignScreen.tsx`, `CampaignSheet.tsx`, `CampaignMigrationScreen.tsx`, `CampaignHelpScreen.tsx`), the four
+tabs under `campaign/tabs/` (`PartyResourcesTab.tsx`, `AdventureLogTab.tsx`, `MapsTab.tsx`, `WikiTab.tsx`) and their
+pure models (`campaignFolderModel.ts`, `campaignMembersModel.ts`, `campaignMigrationModel.ts`, `campaignHelpModel.ts`,
+`charactersModel.ts`, `adventureLogModel.ts`, `mapsModel.ts`, `wikiModel.ts`, `tabs/partyResourcesModel.ts`).
+Everything is read from the folder through `boundary/campaignFolder/` — see [persistence.md](./persistence.md).
+
+**`editor/`** — the Markdown editor every campaign tab mounts (`MarkdownEditor.tsx`, CodeMirror 6 with
+`@codemirror/lang-markdown`): `livePreview.ts` (live preview of the source), `readingView.ts` (the Reading view,
+`marked` with every raw-HTML token escaped and unsafe link schemes refused — a shared folder is untrusted input),
+`wikilinks.ts` (`[[` completion and link clicks), `Toolbar.tsx`, `autosave.ts` (writes 1 s after the last edit and on blur,
+comparing the file's mtime first; a difference raises "Changed on disk" and blocks writes until answered), `imageDrop.ts` (drag-in images to
+`Attachments/`) and `roundTrip.ts` (the file is written back byte-for-byte: BOM, line endings and the final newline
+kept; fixtures under `editor/fixtures/`).
 
 **`classCatalog/`, `raceCatalog/`, `spellCatalog/`, `equipmentCatalog/`, `intelligentItemCatalog/`,
 `monsterCatalog/`, `companionCatalog/`** — near-identical catalog browsers, each a `*Screen.tsx` +
@@ -568,11 +583,11 @@ module): `release/` holds `buildVersionTriple.test.ts` and `releaseClosureCheckl
 [release-pipeline.md](./release-pipeline.md).
 
 **`settings/`** — the settings modal and its panels. `SettingsModal.tsx` defines `SettingsTab =
-'appearance' | 'print' | 'google-drive' | 'update' | 'bug' | 'enhancement' | 'developer'`. `PrintPanel.tsx` / `printPaper.ts` hold the paper every printed sheet uses (A4 until the player picks US Letter, `localStorage`); `printSections.ts` holds the print dialog's eight ticks per character (`localStorage` `codex.print.sections.<characterId>`; first time: Primary, Abilities and Feats, Inventory); `featPickerPreference.ts` holds the feat picker's "Hide feats I don't qualify for" setting. `AppearancePanel.tsx`
+'appearance' | 'print' | 'friends' | 'update' | 'bug' | 'enhancement' | 'developer'`. `PrintPanel.tsx` / `printPaper.ts` hold the paper every printed sheet uses (A4 until the player picks US Letter, `localStorage`); `printSections.ts` holds the print dialog's eight ticks per character (`localStorage` `codex.print.sections.<characterId>`; first time: Primary, Abilities and Feats, Inventory); `featPickerPreference.ts` holds the feat picker's "Hide feats I don't qualify for" setting. `AppearancePanel.tsx`
 / `themeMode.ts` / `communityTheme.ts` / `ThemeBrowserModal.tsx` / `obsidianThemeCatalog.ts` handle
-theme selection, localStorage-backed. `GoogleDrivePanel.tsx` / `googleDrive.ts` manage a
-locally-stored path config — there is no real Google OAuth or Drive API integration; "Drive folder"
-means a plain local path. `FriendsSection.tsx` / `friends.ts` is a localStorage-backed friends list.
+theme selection, localStorage-backed. `FriendsSection.tsx` / `friends.ts` is a localStorage-backed friends list
+(the Friends tab); `DeviceNameField.tsx` edits this device's name (`set_device_name`, the name a campaign backup's
+`master.json` shows). There is no Google Drive panel.
 
 **`testSupport/`** — shared test fixtures and the ui-smoke frontend probe: `makeSurface.ts`,
 `makeCharacterSummary.ts`, `asserts.ts`, `uiProbe.ts` (the DOM-snapshot/command-channel client
@@ -671,7 +686,12 @@ The window opens maximized (`tauri.conf.json`) and the Create screen uses the wh
   ("x of y lb", flagged when over capacity unless the "Ignore container capacity limits" override is on). A row moves
   through its "Move to" menu or by drag and drop (`DRAG_FORMAT`; `tauri.conf.json` sets `dragDropEnabled: false` so the
   webview receives HTML drag events); Drop moves it to Not Carried, Sell and Discard are separate. The set bar creates,
-  renames, deletes and activates sets. The screen sums nothing: every weight and load is the load response's.
+  renames, deletes and activates sets. A copy is offered and accepted only in a slot of its kind
+  (`slot_kinds_allowed`; the slot override lifts it). Identical copies at one place are one row with a count; a
+  container copy that holds anything is its own row, and copies with different names never share one; Move to asks "how many?" to split a stack.
+  One Customize button per row (`CustomizeCopyDialog.tsx`) renames that copy or attaches a modifier to it; selecting a
+  row opens `GearDetail.tsx` (`describe_held_equipment`). The screen sums nothing: every weight and load is the load
+  response's.
 - **Market** (`MarketDialog.tsx`, `marketModel.ts`, `BuyCustomDialog.tsx`, `CreateItemDialog.tsx`, SD-41): a table of
   Item, Price, Weight and Slot, sortable on every column (`sortEntries`), a description box for the selected row, "Only
   Show Affordable" (`affordable`, against the character's balance the sheet passes in, at the active price mode), a Quantity, and Negotiate on
@@ -679,8 +699,9 @@ The window opens maximized (`tauri.conf.json`) and the Create screen uses the wh
   `negotiatedPriceCopper`; a row with no price buys only through Negotiate (`buyRoute`). Purchases land Carried. Buy
   Custom and Create open their own dialogs (commands above).
 - **Campaigns on the sheet** (`CampaignMembershipDialog.tsx`, `campaignMembershipModel.ts`, SD-41): the Campaign
-  field opens a dialog listing the Drive folder's campaigns with a checkbox each; saving writes `campaigns.json` and
-  keeps the Campaign Manager's party in step. Under Skills, one "Open <name>" button per active campaign opens it in
+  field opens a dialog listing the known campaign folders with a checkbox each; saving writes `campaigns.json`
+  (keeping each membership's stand-in flag and backup counter) and writes the character's backup into each active
+  campaign's `Characters/`. Under Skills, one "Open <name>" button per active campaign opens it in
   the Campaign Manager. A failed campaign copy shows as "Campaign copy failed: …" from the load response's
   `mirrorWarnings`.
 - **Print** (`PrintDialog.tsx`, `boundary/saveSheetPdf.ts`, `print/`): the sheet's "Print" opens a dialog with the paper (A4 or US Letter, starting from Settings, Print) and eight section checkboxes in box order (Primary, Abilities and Feats, Inventory, Spellbook, Bio, Progression, Math, Notes), remembered per character by `settings/printSections.ts`; Starfinder and Cyberpunk RED read Primary, Spellbook, Bio and Math. The dialog sends the character's campaigns with every print. **Save PDF** asks where with the native save-as dialog; **Print** has the backend write the same PDF to a temp file and open it in the system PDF viewer. Rust makes the PDF (`save_sheet_pdf`, `print_sheet_pdf`); there is no `@media print` path and no `window.print()`.
@@ -760,16 +781,17 @@ the Rust side.
 There is no state-management library (no Redux/Zustand/etc.). Screen-level state is local `useState`
 mode unions. **localStorage usage** (grepped exhaustively across `apps/desktop/src`):
 
-- `campaign/campaignModel.ts` — campaigns (`codex.campaigns`) and per-campaign markdown assets
-  (`codex.campaign.assets.<id>`) are the actual source of truth; `write_campaign_drive_artifacts` is a
-  fire-and-forget write-through mirror to a local "Drive folder" path (see [persistence.md](./persistence.md)).
+- `campaign/campaignMigrationModel.ts`, `CampaignManagerScreen.tsx`, `CampaignMigrationScreen.tsx`,
+  `boundary/campaignFolder/migrateCampaign.ts` — read the pre-folder campaigns (`codex.campaigns`,
+  `codex.campaign.assets.<id>`) only to migrate them into campaign folders; campaigns themselves live on disk (see
+  [persistence.md](./persistence.md)).
 - `settings/friends.ts` — a friends list, same pattern.
 - `settings/communityTheme.ts` — installed community theme CSS and the active-theme id.
-- `settings/googleDrive.ts` — the locally-configured Drive-folder-path config (no OAuth token).
 - `settings/themeMode.ts` — light/dark/system theme mode.
 - `settings/printPaper.ts`, `settings/printSections.ts` — the print paper and the print dialog's ticks per character.
 - `settings/featPickerPreference.ts` — the feat picker's "Hide feats I don't qualify for".
-- `dmToolkit/dmRecordModel.ts` — DM Toolkit records keyed per campaign, mirroring `campaignModel.ts`.
+- `campaign/campaignMembersModel.ts` — the last "Your name" typed on this install (`codex.campaign.yourName`), the creator's member #1 name.
+- `dmToolkit/dmRecordModel.ts` — DM Toolkit records keyed by the campaign folder's path.
 
 Everything else that looks persistent (bio, money, equipment/spell/feat/trait selections, skill
 allocation, level-up) is real disk state reached through the mutation commands table above, not

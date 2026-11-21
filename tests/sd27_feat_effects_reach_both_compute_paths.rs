@@ -268,6 +268,7 @@ fn the_shared_seam_is_where_the_pillar_feat_producers_actually_live() {
             "arg_computed_climb_bonus_from_feats".to_string(),
             "armor_of_the_pit_natural_armor_bonus_from_feats".to_string(),
             "skill_bonuses_from_feats".to_string(),
+            "skill_focus_facts_from_choices".to_string(),
         ],
         "the shared seam's feat_effects producer set changed. That is fine -- but update this \
          pin deliberately, and confirm the new producer reaches BOTH twins through an accessor \

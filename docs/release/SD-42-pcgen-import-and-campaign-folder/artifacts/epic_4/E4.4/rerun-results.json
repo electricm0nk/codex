@@ -1,0 +1,66 @@
+[
+  {
+    "id": "campaign-map-pin",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/a7402d70-3d8d-427c-820e-a54d598e3dda/scratchpad/e44/rerun/campaign-map-pin.png",
+    "rendered_excerpt": "☰ Menu\n✕\nMap Campaign — Pathfinder 1e\nHelp\nCHARACTERS (0)\n\nNo characters yet. A character joins from its sheet's Campaign dialog, which copies it into this folder's Characters/.\n\nParty Resources\nAdventure Log\nMaps\nWiki\nAdd map…\n128x128@2x1 pin\n1\nIronforge → [[Ironforge]] Open Delete\nBIH•LinkTableReading\n---\ntitle: \"128x128@2x\"\npins: [{ x: 0.5, y: 0.5089, label: \"Ironforge\", page: \"[[Ironforge]]\" }",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd42-E4_4-r2-0yhDQ7/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "campaign-wiki-page-and-backlink",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/a7402d70-3d8d-427c-820e-a54d598e3dda/scratchpad/e44/rerun/campaign-wiki-page-and-backlink.png",
+    "rendered_excerpt": "☰ Menu\n✕\nWiki Campaign — Pathfinder 1e\nHelp\nCHARACTERS (0)\n\nNo characters yet. A character joins from its sheet's Campaign dialog, which copies it into this folder's Characters/.\n\nParty Resources\nAdventure Log\nMaps\nWiki\nSearch\n+ Page\n+ Folder\nRename\nDelete\n▸ Wiki/ (0)\n▸ Factions/ (0)\n▸ Items/ (0)\n▸ NPCs/ (0)\n▸ Places/ (1)\nHarbor District\nWiki/Places/Harbor District.md\n\nBIH•LinkTableReading\n---\ntit",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd42-E4_4-r2-0yhDQ7/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "sheet-gear-bag-of-holding-weightless",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/a7402d70-3d8d-427c-820e-a54d598e3dda/scratchpad/e44/rerun/sheet-gear-bag-of-holding-weightless.png",
+    "rendered_excerpt": "☰ Menu\n✕\nBrother Tomas Vane (Copy) — Cleric 3 / Fighter 2\nCHARACTER DETAILS\n«\n\nLevel\n5\n+\nCaster Level\n3\nRACE\nHuman\nCLASS\nCleric 3 / Fighter 2\nCHARACTER DETAILS\n\nALIGNMENT\n\nDEITY\n\nSEX\n\nAGE\n\nHEIGHT\n\nWEIGHT\n\nHAIR\n\nEYES\n\nVISION\nNormal\nSIZE\nMedium\nVision and Size are calculated from race and aren't editable — a race this build has no profile for reads \"Unknown\" rather than a guessed value. The other fi",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd42-E4_4-r2-0yhDQ7/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [
+        "afa0bc10-bbfe-4da2-a36d-27813ea0cfc6"
+      ],
+      "deleted": [
+        "afa0bc10-bbfe-4da2-a36d-27813ea0cfc6"
+      ],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "sheet-gear-detail-panel",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/a7402d70-3d8d-427c-820e-a54d598e3dda/scratchpad/e44/rerun/sheet-gear-detail-panel.png",
+    "rendered_excerpt": "☰ Menu\n✕\nBrother Tomas Vane (Copy) — Cleric 3 / Fighter 2\nCHARACTER DETAILS\n«\n\nLevel\n5\n+\nCaster Level\n3\nRACE\nHuman\nCLASS\nCleric 3 / Fighter 2\nCHARACTER DETAILS\n\nALIGNMENT\n\nDEITY\n\nSEX\n\nAGE\n\nHEIGHT\n\nWEIGHT\n\nHAIR\n\nEYES\n\nVISION\nNormal\nSIZE\nMedium\nVision and Size are calculated from race and aren't editable — a race this build has no profile for reads \"Unknown\" rather than a guessed value. The other fi",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd42-E4_4-r2-0yhDQ7/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [
+        "afabbda7-e5b4-467b-b53b-124e2654e2fc"
+      ],
+      "deleted": [
+        "afabbda7-e5b4-467b-b53b-124e2654e2fc"
+      ],
+      "leftover": [],
+      "errors": {}
+    }
+  }
+]

@@ -28,6 +28,13 @@ fn weapon_row_key(record: &str) -> String {
     record.strip_suffix(" (Base)").unwrap_or(record).chars().filter(char::is_ascii_alphanumeric).map(|c| c.to_ascii_lowercase()).collect()
 }
 
+/// A weapon's row under `prefix`: its own copy's (`combat.weapon_damage_total.longsword.1`, SD-42
+/// E4.15) when the engine filed one for it, else its kind's (`kind`, [`weapon_row_key`]).
+fn weapon_row<'a>(sources: &'a SheetSources, prefix: &str, weapon: &WeaponDamageDto, kind: &str) -> Option<&'a crate::character_hub::ExplanationDto> {
+    let find = |key: &str| sources.loaded.explanations.iter().find(|row| row.id.strip_prefix(prefix) == Some(key));
+    weapon.copy_row.as_deref().and_then(find).or_else(|| find(kind))
+}
+
 /// A per-weapon row as its cell prints it: the damage total as the engine prints it (its detail
 /// opens with `1d8+4:`), the threat range's first number as is, a bonus signed.
 fn weapon_cell(prefix: &str, row: Option<&crate::character_hub::ExplanationDto>) -> String {
@@ -96,11 +103,13 @@ pub fn weapons(sources: &SheetSources) -> SheetBlock {
     let mut rows = vec![SheetRow::new("Weapon", ["Attack", "Damage", "Critical", "Range"].map(str::to_owned))];
     let mut placed: Vec<&str> = Vec::new();
     for weapon in &sources.loaded.weapon_damage {
-        let name = item_name(sources, &weapon.weapon_item_id, weapon.weapon_record_key.as_deref());
-        let key = weapon_row_key(weapon.weapon_record_key.as_deref().unwrap_or(&name));
+        let record_name = item_name(sources, &weapon.weapon_item_id, weapon.weapon_record_key.as_deref());
+        let key = weapon_row_key(weapon.weapon_record_key.as_deref().unwrap_or(&record_name));
+        // The copy's own name, else an alias's base name (E4.21); the row keys stay the record's.
+        let name = weapon.name.clone().unwrap_or(record_name);
         let found: Vec<(&str, Option<&crate::character_hub::ExplanationDto>)> = WEAPON_ROWS
             .iter()
-            .map(|(prefix, _)| (*prefix, sources.loaded.explanations.iter().find(|row| row.id.strip_prefix(prefix) == Some(key.as_str()))))
+            .map(|(prefix, _)| (*prefix, weapon_row(sources, prefix, weapon, &key)))
             .collect();
         placed.extend(found.iter().filter_map(|(_, row)| row.map(|row| row.id.as_str())));
         let range = weapon.range_increment.map_or_else(|| NO_VALUE.to_owned(), |feet| format!("{feet} ft."));
@@ -136,9 +145,11 @@ pub fn weapons(sources: &SheetSources) -> SheetBlock {
 pub(super) fn weapons_breakdown(sources: &SheetSources) -> SheetBlock {
     let mut rows = vec![super::core::captions(&["Attack", "Dice", "Str", "Enh.", "Damage", "Threat", "Critical", "Wield"])];
     for weapon in &sources.loaded.weapon_damage {
-        let name = item_name(sources, &weapon.weapon_item_id, weapon.weapon_record_key.as_deref());
-        let key = weapon_row_key(weapon.weapon_record_key.as_deref().unwrap_or(&name));
-        let cell = |prefix: &str| weapon_cell(prefix, sources.loaded.explanations.iter().find(|row| row.id.strip_prefix(prefix) == Some(key.as_str())));
+        let record_name = item_name(sources, &weapon.weapon_item_id, weapon.weapon_record_key.as_deref());
+        let key = weapon_row_key(weapon.weapon_record_key.as_deref().unwrap_or(&record_name));
+        // The copy's own name, else an alias's base name (E4.21); the row keys stay the record's.
+        let name = weapon.name.clone().unwrap_or(record_name);
+        let cell = |prefix: &str| weapon_cell(prefix, weapon_row(sources, prefix, weapon, &key));
         let dice = weapon.base_dice.as_ref().map_or_else(|| NO_VALUE.to_owned(), |dice| format!("{}d{}", dice.count, dice.die_size));
         let wield = weapon.wield_category.as_deref().map_or_else(|| NO_VALUE.to_owned(), spaced_words);
         let notes = weapon.feat_effects.iter().map(|effect| format!("{}: {} damage", effect.feat_key, signed(effect.damage_bonus)));
@@ -220,13 +231,15 @@ pub fn armor(sources: &SheetSources) -> SheetBlock {
 const NESTING: [&str; 6] = ["item", "in-1", "in-2", "in-3", "in-4", "in-5"];
 
 /// `"<name> ×<n>"` in pieces; a bundle's `(20)` is dropped once bought (`gearScreenModel.ts`'s
-/// `stackLabel`, SD-41 `decisions.md §28, §30`).
+/// `stackLabel`, SD-41 `decisions.md §28, §30`). A renamed copy prints its record's name beside
+/// its own, `Camping Gear (Sack)` (SD-42 `decisions.md §27.3`).
 fn stack_label(copy: &HeldEquipmentCopyDto, quantity: u32) -> String {
-    let name = match copy.name.trim_end().strip_suffix(')').and_then(|rest| rest.rsplit_once('(')) {
+    let base = match copy.base_name.trim_end().strip_suffix(')').and_then(|rest| rest.rsplit_once('(')) {
         Some((name, count)) if copy.base_quantity > 1 && !count.is_empty() && count.chars().all(|c| c.is_ascii_digit()) => name.trim_end(),
-        _ => copy.name.as_str(),
+        _ => copy.base_name.as_str(),
     };
-    if quantity > 1 { format!("{name} ×{quantity}") } else { name.to_owned() }
+    let name = if copy.name == copy.base_name { base.to_owned() } else { format!("{} ({base})", copy.name) };
+    if quantity > 1 { format!("{name} ×{quantity}") } else { name }
 }
 
 /// A row's weight as the engine weighs each copy: `3 lb`, `3 × 3 lb` for a stack of like copies,
@@ -271,28 +284,31 @@ impl<'a> Lines<'a> {
         let (held, loads): (&'a [HeldEquipmentCopyDto], &'a [ContainerLoadDto]) = (self.held, self.loads);
         let row = &held[index];
         let kind = NESTING[depth.min(NESTING.len() - 1)];
-        let containers: Vec<(usize, &ContainerLoadDto)> =
-            row.copies.iter().enumerate().filter_map(|(at, copy)| loads.iter().find(|load| &load.copy == copy).map(|load| (at, load))).collect();
+        let containers: Vec<&ContainerLoadDto> = row.copies.iter().filter_map(|copy| loads.iter().find(|load| &load.copy == copy)).collect();
+        // The copy's properties print under it as text (SD-42 `decisions.md §6`), weighed or not.
+        let properties = row.properties.iter().cloned();
         if containers.is_empty() {
             let line = if weighed {
-                SheetRow::new(stack_label(row, row.quantity), [slot, weight_words(&self.weights[index], row.copies.len())]).with_notes(row.override_flag.map(override_tag))
+                SheetRow::new(stack_label(row, row.quantity), [slot, weight_words(&self.weights[index], row.copies.len())]).with_notes(row.override_flag.map(override_tag).into_iter().chain(properties))
             } else {
-                SheetRow::new(stack_label(row, row.quantity), Vec::<String>::new())
+                SheetRow::new(stack_label(row, row.quantity), Vec::<String>::new()).with_notes(properties)
             };
             out.push(line.of_kind(kind));
             return;
         }
-        // A container prints one line per copy, so each holds its own contents (`decisions.md §38`).
-        for (at, load) in containers {
-            let name = stack_label(row, 1);
-            let label = if row.copies.len() > 1 { format!("{name} #{}", at + 1) } else { name };
-            let line = if weighed {
-                let weight = self.weights[index].get(at).filter(|_| self.weights[index].len() == row.copies.len()).map_or_else(|| NO_VALUE.to_owned(), |lbs| pounds(*lbs));
-                SheetRow::new(label, [slot.clone(), weight]).with_notes(row.override_flag.map(override_tag).into_iter().chain([load_note(load, self.ignore_capacity)]))
-            } else {
-                SheetRow::new(label, Vec::<String>::new())
-            };
-            out.push(line.of_kind(kind));
+        // A container stack is one line, `Sack ×4` (SD-42 `decisions.md §27.5`): the stack builder
+        // never stacks a copy that holds anything, so the first copy's load stands for each.
+        for (at, load) in containers.into_iter().enumerate() {
+            if at == 0 {
+                let label = stack_label(row, row.quantity);
+                let line = if weighed {
+                    SheetRow::new(label, [slot.clone(), weight_words(&self.weights[index], row.copies.len())])
+                        .with_notes(row.override_flag.map(override_tag).into_iter().chain([load_note(load, self.ignore_capacity)]).chain(properties.clone()))
+                } else {
+                    SheetRow::new(label, Vec::<String>::new()).with_notes(properties.clone())
+                };
+                out.push(line.of_kind(kind));
+            }
             let contents: Vec<usize> = (0..self.held.len())
                 .filter(|other| !self.placed[*other] && matches!(&self.held[*other].location, Location::Inside { container } if *container == load.copy))
                 .collect();
@@ -310,7 +326,8 @@ impl<'a> Lines<'a> {
 /// `Equipped`); then Carried; each container's contents under it, one level deeper per nesting,
 /// the container's load beside it; then Not Carried, names only. Identical copies print as one
 /// stack (`<name> ×<pieces>`), each line with the weight the engine weighs its copies at. Then the
-/// carried weight, the load and the three limits, the engine's rows. The `gear` look indents the
+/// carried weight, the load and the three limits, the engine's rows. A copy's properties (SD-42
+/// E4.2) print as notes under its line. The `gear` look indents the
 /// nested lines and adds two blank rows per section.
 pub fn inventory(sources: &SheetSources) -> SheetBlock {
     let encumbrance = &sources.loaded.corpus_derived.encumbrance;

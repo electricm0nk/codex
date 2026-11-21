@@ -20,3 +20,6 @@ docs/release/SD-*/artifacts/corpus/operator-supplied/**
 # Wrangler CLI local cache (created by `wrangler pages deploy` etc.)
 # Do not ship; the deploy state is rebuilt on each run.
 .wrangler/
+
+# Obsidian vault settings (created when a folder of this repo is opened in Obsidian)
+.obsidian/

@@ -260,7 +260,9 @@ fn wizard_level3_without_the_ge06_feats_still_stays_blocked() {
 
     let combat = computation.diagnostics.iter().find(|d| d.id == "combat.baseline_unsupported");
     let combat = combat.unwrap_or_else(|| panic!("the feats are missing: {:?}", computation.diagnostics));
-    assert!(combat.message.contains("feat:weapon_focus"), "{}", combat.message);
+    // Weapon Focus is no longer asked of every character (SD-42 E4.17 (h)); the Power Attack row is.
+    assert!(combat.message.contains("power_attack"), "{}", combat.message);
+    assert!(!combat.message.contains("missing selected feat"), "{}", combat.message);
     assert!(!combat.message.contains("item:"), "no item is asked for: {}", combat.message);
     assert!(
         !has_diagnostic(&computation, "skill.selected_modifier.unsupported"),

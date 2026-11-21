@@ -1,0 +1,16 @@
+[
+  {
+    "id": "import-pcg-sf-sample",
+    "status": "manual",
+    "screenshot": null,
+    "rendered_excerpt": null,
+    "reason": "SKIPPED: PCGen oracle absent at /nonexistent (set PCGEN_REPO_DIR or run scripts/fetch-pcgen-oracle.sh)",
+    "app_data_root": "/tmp/codex-ui-smoke-sd42-E4_4-r2-ElJxRf/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  }
+]

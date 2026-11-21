@@ -379,6 +379,62 @@ pub fn slot_conflict(worn: &[(&str, BodySlot)], slot: BodySlot) -> Result<Option
     }))
 }
 
+/// The slots a copy whose own slot is `own` may sit in (SD-42 `decisions.md §27.2`): its own slot;
+/// a wielded copy any hand, as [`slot_conflict`] counts the hands as one family; a slotless copy none.
+pub fn slot_kinds_allowed(own: BodySlot) -> &'static [BodySlot] {
+    const HANDS: &[BodySlot] = &[BodySlot::WieldMain, BodySlot::WieldOff, BodySlot::WieldTwoHanded];
+    match own {
+        BodySlot::WieldMain | BodySlot::WieldOff | BodySlot::WieldTwoHanded => HANDS,
+        BodySlot::None => &[],
+        BodySlot::Armor => &[BodySlot::Armor],
+        BodySlot::Shield => &[BodySlot::Shield],
+        BodySlot::Belt => &[BodySlot::Belt],
+        BodySlot::Body => &[BodySlot::Body],
+        BodySlot::Chest => &[BodySlot::Chest],
+        BodySlot::Eyes => &[BodySlot::Eyes],
+        BodySlot::Feet => &[BodySlot::Feet],
+        BodySlot::Hands => &[BodySlot::Hands],
+        BodySlot::Head => &[BodySlot::Head],
+        BodySlot::Headband => &[BodySlot::Headband],
+        BodySlot::Neck => &[BodySlot::Neck],
+        BodySlot::Ring => &[BodySlot::Ring],
+        BodySlot::Shoulders => &[BodySlot::Shoulders],
+        BodySlot::Wrist => &[BodySlot::Wrist],
+    }
+}
+
+/// `"Shield slot"`, `"Main hand slot"`.
+fn slot_title(slot: BodySlot) -> String {
+    let words = slot_words(slot);
+    format!("{}{} slot", words[..1].to_uppercase(), &words[1..])
+}
+
+/// What a copy is, by its own slot: `"a Head item"`, `"an Armor item"`, `"a wielded item"`, `"worn in no slot"`.
+fn slot_kind_words(own: BodySlot) -> String {
+    match own {
+        BodySlot::None => "worn in no slot".to_owned(),
+        BodySlot::WieldMain | BodySlot::WieldOff | BodySlot::WieldTwoHanded => "a wielded item".to_owned(),
+        other => {
+            let title = slot_title(other);
+            let kind = title.trim_end_matches(" slot");
+            let article = if kind.starts_with(['A', 'E', 'I', 'O', 'U']) { "an" } else { "a" };
+            format!("{article} {kind} item")
+        }
+    }
+}
+
+/// Why `name` (own slot `own`) cannot go in `target`, or `None` when [`slot_kinds_allowed`] admits it:
+/// `"Backpack cannot go in the Shield slot: it is worn in no slot"`.
+pub fn wrong_slot_refusal(name: &str, own: BodySlot, target: BodySlot) -> Option<String> {
+    (!slot_kinds_allowed(own).contains(&target)).then(|| format!("{name} cannot go in the {}: it is {}", slot_title(target), slot_kind_words(own)))
+}
+
+/// What a copy already saved in a slot [`slot_kinds_allowed`] refuses says on its row, or `None`:
+/// `"in the Shield slot, a Head item"`.
+pub fn wrong_slot_warning(own: BodySlot, target: BodySlot) -> Option<String> {
+    (!slot_kinds_allowed(own).contains(&target)).then(|| format!("in the {}, {}", slot_title(target), slot_kind_words(own)))
+}
+
 /// Whether a record's type tags mark it as already magic.
 pub fn is_magic_marked(tags: &[&str]) -> bool {
     tags.iter().any(|tag| MAGIC_MARKER_TAGS.contains(tag))
@@ -911,5 +967,24 @@ mod tests {
         assert!(disagree.is_empty(), "{disagree:?}");
         assert!(owned_not.is_empty(), "{owned_not:?}");
         assert_eq!(unowned.len(), 2, "{unowned:?}");
+    }
+
+    /// SD-42 E4.8 (`decisions.md §27.2`): own slot only, the hands one family, a slotless copy no slot.
+    #[test]
+    fn slot_kinds_allowed_own_slot_hands_family_and_none() {
+        use BodySlot::*;
+        assert_eq!(slot_kinds_allowed(Shield), [Shield]);
+        assert_eq!(slot_kinds_allowed(Head), [Head]);
+        assert_eq!(slot_kinds_allowed(None), []);
+        for hand in [WieldMain, WieldOff, WieldTwoHanded] {
+            assert_eq!(slot_kinds_allowed(hand), [WieldMain, WieldOff, WieldTwoHanded], "{hand:?}");
+        }
+        assert_eq!(wrong_slot_refusal("Backpack", None, Shield).as_deref(), Some("Backpack cannot go in the Shield slot: it is worn in no slot"));
+        assert_eq!(wrong_slot_refusal("Hat", Head, Shield).as_deref(), Some("Hat cannot go in the Shield slot: it is a Head item"));
+        assert_eq!(wrong_slot_refusal("Chain Shirt", Armor, Head).as_deref(), Some("Chain Shirt cannot go in the Head slot: it is an Armor item"));
+        assert_eq!(wrong_slot_refusal("Dagger", WieldMain, Shield).as_deref(), Some("Dagger cannot go in the Shield slot: it is a wielded item"));
+        assert_eq!(wrong_slot_refusal("Dagger", WieldMain, WieldOff), Option::None);
+        assert_eq!(wrong_slot_warning(Head, Shield).as_deref(), Some("in the Shield slot, a Head item"));
+        assert_eq!(wrong_slot_warning(Shield, Shield), Option::None);
     }
 }

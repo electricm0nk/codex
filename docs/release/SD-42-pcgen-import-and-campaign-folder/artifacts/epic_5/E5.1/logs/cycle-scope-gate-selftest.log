@@ -1,0 +1,57 @@
+test_bucket_delegates_to_the_atlas_partition (scripts.tests.test_cycle_scope_gate.TestBucketing.test_bucket_delegates_to_the_atlas_partition) ... ok
+test_done_statuses_are_done (scripts.tests.test_cycle_scope_gate.TestBucketing.test_done_statuses_are_done) ... ok
+test_non_done_statuses_are_not_done (scripts.tests.test_cycle_scope_gate.TestBucketing.test_non_done_statuses_are_not_done) ... ok
+test_unknown_status_is_unclassified_and_not_done (scripts.tests.test_cycle_scope_gate.TestBucketing.test_unknown_status_is_unclassified_and_not_done) ... ok
+test_clusters_fingerprint_timestamps_into_sessions (scripts.tests.test_cycle_scope_gate.TestBuildSessions.test_clusters_fingerprint_timestamps_into_sessions) ... ok
+test_empty_or_missing_target_dir_is_zero (scripts.tests.test_cycle_scope_gate.TestBuildSessions.test_empty_or_missing_target_dir_is_zero) ... ok
+test_since_excludes_older_sessions (scripts.tests.test_cycle_scope_gate.TestBuildSessions.test_since_excludes_older_sessions) ... ok
+test_bad_scope_flag_exits_two (scripts.tests.test_cycle_scope_gate.TestFloorCli.test_bad_scope_flag_exits_two) ... ok
+test_breakdown_lines_precede_the_verdict (scripts.tests.test_cycle_scope_gate.TestFloorCli.test_breakdown_lines_precede_the_verdict) ... ok
+test_bundling_mechanisms_with_or_reaches_the_floor (scripts.tests.test_cycle_scope_gate.TestFloorCli.test_bundling_mechanisms_with_or_reaches_the_floor) ... ok
+test_five_hundred_unit_scope_exits_zero (scripts.tests.test_cycle_scope_gate.TestFloorCli.test_five_hundred_unit_scope_exits_zero) ... ok
+test_missing_inventory_exits_two (scripts.tests.test_cycle_scope_gate.TestFloorCli.test_missing_inventory_exits_two) ... ok
+test_no_filters_means_the_whole_remainder (scripts.tests.test_cycle_scope_gate.TestFloorCli.test_no_filters_means_the_whole_remainder) ... ok
+test_process_exit_code_is_nonzero_under_floor (scripts.tests.test_cycle_scope_gate.TestFloorCli.test_process_exit_code_is_nonzero_under_floor)
+The criterion's title: a script with a nonzero exit -- proven at ... ok
+test_twelve_unit_scope_exits_one (scripts.tests.test_cycle_scope_gate.TestFloorCli.test_twelve_unit_scope_exits_one) ... ok
+test_twelve_unit_scope_that_is_the_entire_remainder_exits_zero (scripts.tests.test_cycle_scope_gate.TestFloorCli.test_twelve_unit_scope_that_is_the_entire_remainder_exits_zero) ... ok
+test_no_mode_is_a_usage_error (scripts.tests.test_cycle_scope_gate.TestModeSelection.test_no_mode_is_a_usage_error) ... ok
+test_added_and_dropped_ids_are_counted_not_closed (scripts.tests.test_cycle_scope_gate.TestMovement.test_added_and_dropped_ids_are_counted_not_closed) ... ok
+test_already_done_is_not_closed_again (scripts.tests.test_cycle_scope_gate.TestMovement.test_already_done_is_not_closed_again) ... ok
+test_bucket_to_bucket_is_a_relabel_not_a_closure (scripts.tests.test_cycle_scope_gate.TestMovement.test_bucket_to_bucket_is_a_relabel_not_a_closure) ... ok
+test_closed_is_the_id_set_moved_into_done (scripts.tests.test_cycle_scope_gate.TestMovement.test_closed_is_the_id_set_moved_into_done) ... ok
+test_done_to_not_done_is_a_regression (scripts.tests.test_cycle_scope_gate.TestMovement.test_done_to_not_done_is_a_regression) ... ok
+test_ratio_is_not_a_number_when_nothing_closed (scripts.tests.test_cycle_scope_gate.TestReceiptCli.test_ratio_is_not_a_number_when_nothing_closed) ... ok
+test_receipt_line_is_the_schema_verbatim (scripts.tests.test_cycle_scope_gate.TestReceiptCli.test_receipt_line_is_the_schema_verbatim) ... ok
+test_receipt_names_the_movement_detail_above_the_line (scripts.tests.test_cycle_scope_gate.TestReceiptCli.test_receipt_names_the_movement_detail_above_the_line) ... ok
+test_receipt_requires_before_and_after (scripts.tests.test_cycle_scope_gate.TestReceiptCli.test_receipt_requires_before_and_after) ... ok
+test_missing_gate_is_unavailable_never_zero (scripts.tests.test_cycle_scope_gate.TestResidueGateProbe.test_missing_gate_is_unavailable_never_zero) ... ok
+test_reads_live_files_from_the_gate_output (scripts.tests.test_cycle_scope_gate.TestResidueGateProbe.test_reads_live_files_from_the_gate_output) ... ok
+test_reads_the_count_even_when_the_gate_fails (scripts.tests.test_cycle_scope_gate.TestResidueGateProbe.test_reads_the_count_even_when_the_gate_fails) ... ok
+test_counts_only_rs_files_in_a_real_repo (scripts.tests.test_cycle_scope_gate.TestRustLines.test_counts_only_rs_files_in_a_real_repo) ... ok
+test_empty_numstat_is_zero (scripts.tests.test_cycle_scope_gate.TestRustLines.test_empty_numstat_is_zero) ... ok
+test_numstat_sums_added_and_deleted (scripts.tests.test_cycle_scope_gate.TestRustLines.test_numstat_sums_added_and_deleted) ... ok
+test_book (scripts.tests.test_cycle_scope_gate.TestScopeMatching.test_book) ... ok
+test_clauses_union (scripts.tests.test_cycle_scope_gate.TestScopeMatching.test_clauses_union) ... ok
+test_done_units_never_count_as_scoped (scripts.tests.test_cycle_scope_gate.TestScopeMatching.test_done_units_never_count_as_scoped) ... ok
+test_evidence_prefix (scripts.tests.test_cycle_scope_gate.TestScopeMatching.test_evidence_prefix) ... ok
+test_token_matches_tokens_field_when_present (scripts.tests.test_cycle_scope_gate.TestScopeMatching.test_token_matches_tokens_field_when_present) ... ok
+test_token_matches_wiring_class_signal_family (scripts.tests.test_cycle_scope_gate.TestScopeMatching.test_token_matches_wiring_class_signal_family) ... ok
+test_unclassified_bucket_is_selectable_and_counts_as_remaining (scripts.tests.test_cycle_scope_gate.TestScopeMatching.test_unclassified_bucket_is_selectable_and_counts_as_remaining) ... ok
+test_within_a_clause_flags_and_together (scripts.tests.test_cycle_scope_gate.TestScopeMatching.test_within_a_clause_flags_and_together) ... ok
+test_flag_without_value_is_rejected (scripts.tests.test_cycle_scope_gate.TestScopeParsing.test_flag_without_value_is_rejected) ... ok
+test_no_filters_is_one_empty_clause (scripts.tests.test_cycle_scope_gate.TestScopeParsing.test_no_filters_is_one_empty_clause) ... ok
+test_or_splits_clauses (scripts.tests.test_cycle_scope_gate.TestScopeParsing.test_or_splits_clauses) ... ok
+test_same_flag_repeats_accumulate (scripts.tests.test_cycle_scope_gate.TestScopeParsing.test_same_flag_repeats_accumulate) ... ok
+test_unknown_flag_is_rejected (scripts.tests.test_cycle_scope_gate.TestScopeParsing.test_unknown_flag_is_rejected) ... ok
+test_above_floor_passes (scripts.tests.test_cycle_scope_gate.TestVerdict.test_above_floor_passes) ... ok
+test_at_floor_passes (scripts.tests.test_cycle_scope_gate.TestVerdict.test_at_floor_passes) ... ok
+test_nothing_left_is_whole_remainder (scripts.tests.test_cycle_scope_gate.TestVerdict.test_nothing_left_is_whole_remainder) ... ok
+test_under_floor_and_not_remainder_fails (scripts.tests.test_cycle_scope_gate.TestVerdict.test_under_floor_and_not_remainder_fails) ... ok
+test_whole_remainder_passes_under_floor (scripts.tests.test_cycle_scope_gate.TestVerdict.test_whole_remainder_passes_under_floor) ... ok
+test_zero_scoped_with_work_left_fails (scripts.tests.test_cycle_scope_gate.TestVerdict.test_zero_scoped_with_work_left_fails) ... ok
+
+----------------------------------------------------------------------
+Ran 51 tests in 0.785s
+
+OK
