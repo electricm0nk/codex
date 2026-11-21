@@ -37,6 +37,7 @@ import {
   emptyLastCheckState,
   emptyPendingRollbackState,
   noPendingUpdateState,
+  readStoredUpdateChannel,
   type EligibilityResult,
   type InstalledState,
   type InstallResult,
@@ -211,7 +212,7 @@ const NO_LOCAL_RECORD_REASON =
  */
 export function createUpdateControllerDeps(
   mountTimeState: Pick<MountTimeState, 'installed' | 'pendingRollback'>,
-  defaultChannel: UpdateChannelLabel = 'alpha',
+  defaultChannel: UpdateChannelLabel = readStoredUpdateChannel(),
   options: { fetchImpl?: FetchLike; invokeImpl?: InvokeLike } = {},
 ): UpdateControllerDeps {
   const deps: UpdateControllerDeps = {
@@ -223,6 +224,7 @@ export function createUpdateControllerDeps(
   };
 
   let hasRun = false;
+  let noReleaseOnChannel = false;
   let checkedChannel: UpdateChannelLabel | null = null;
   let fetchOutcomes = emptyFetchOutcomes();
   let lastManifest: {
@@ -242,6 +244,9 @@ export function createUpdateControllerDeps(
   } {
     if (!hasRun || checkedChannel !== currentChannel) {
       return { result: 'unknown', reason: 'check has not been run yet for this channel' };
+    }
+    if (noReleaseOnChannel) {
+      return { result: 'ineligible', reason: `No ${currentChannel} release yet` };
     }
     if (fetchOutcomes.indexStatus === 'ok' && fetchOutcomes.manifestStatus === 'ok') {
       // E3.14: the real check succeeded — resolve the real verdict via
@@ -325,6 +330,7 @@ export function createUpdateControllerDeps(
       lastManifestRaw = null;
       localProbe = null;
       localProbeError = null;
+      noReleaseOnChannel = false;
 
       const indexResult = await fetchChannelIndex(channel, { fetchImpl: options.fetchImpl });
       const indexClass = classifyFetchResult(indexResult);
@@ -336,6 +342,10 @@ export function createUpdateControllerDeps(
       };
       deps.lastCheck.indexStatus = indexClass.status === 'ok' ? 'ok' : 'failed';
       if (!indexResult.ok) {
+        noReleaseOnChannel = indexResult.failure.kind === 'http-error' && indexResult.failure.status === 404;
+        if (noReleaseOnChannel) {
+          deps.lastCheck.indexStatus = 'no-release';
+        }
         deps.lastCheck.manifestStatus = 'not-loaded';
         hasRun = true;
         checkedChannel = channel;

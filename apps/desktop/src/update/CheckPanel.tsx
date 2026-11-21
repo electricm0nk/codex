@@ -47,7 +47,7 @@ export function CheckPanel({ deps, checkInProgress, onCheck }: CheckPanelProps) 
       <p style={{ margin: '0 0 12px 0' }}>
         Last check:{' '}
         <span id="check-status" data-testid="check-status">
-          {describeCheckStatus(lastCheck.indexStatus, lastCheck.manifestStatus)}
+          {describeCheckStatus(lastCheck.indexStatus, lastCheck.manifestStatus, channel)}
         </span>
       </p>
       <button
@@ -81,7 +81,11 @@ export function CheckPanel({ deps, checkInProgress, onCheck }: CheckPanelProps) 
 function describeCheckStatus(
   indexStatus: UpdateControllerDeps['lastCheck']['indexStatus'],
   manifestStatus: UpdateControllerDeps['lastCheck']['manifestStatus'],
+  channel: UpdateChannelLabel,
 ): string {
+  if (indexStatus === 'no-release') {
+    return `No ${channel} release yet. Nothing to install on this channel until one is published.`;
+  }
   if (indexStatus === 'not-loaded' && manifestStatus === 'not-loaded') {
     return 'check has not been run yet';
   }
