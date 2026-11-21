@@ -4,7 +4,7 @@
 //! on the operator's machine, the operator's file (`$CODEX_SD42_PCG`) -- is rendered twice: by the
 //! REAL PCGen engine at the pinned oracle (`scripts/oracle_harness/pcg_import_parity/run.sh`; the
 //! samples' exports are committed under `exports/`, the operator's stay under
-//! `/home/ubuntu/sd42-input/parity/`), and by Codex: `pcg_import::convert`, then, for Starfinder,
+//! `$HOME/sample_pcg/parity/`), and by Codex: `pcg_import::convert`, then, for Starfinder,
 //! the engine the sidecar links (the root crate's `sf_*` modules, `map::starfinder_build`). Every
 //! field is compared: classes and levels, race, the six ability scores, HP (and Stamina, Resolve),
 //! the saves, AC (EAC, KAC), initiative, base, melee and ranged attack, every skill total, every
@@ -516,11 +516,11 @@ fn pcg_import_parity_every_difference_is_equal_or_explained() {
 }
 
 /// The operator's file (`decisions.md §10`): its export and its ledger stay under
-/// `$HOME/sd42-input/parity/`; the build is called `operator` so no name is printed.
+/// `$HOME/sample_pcg/parity/`; the build is called `operator` so no name is printed.
 fn operator_file(failures: &mut Vec<String>) {
-    // `$CODEX_SD42_PCG`, else the one `.pcg` in `$HOME/sd42-input/` (`pcg_import_diagnosis.rs`): no
+    // `$CODEX_SD42_PCG`, else the one `.pcg` in `$HOME/sample_pcg/` (`pcg_import_diagnosis.rs`): no
     // name is written here, so the repo never carries it.
-    let input = PathBuf::from(std::env::var("HOME").expect("HOME")).join("sd42-input");
+    let input = PathBuf::from(std::env::var("HOME").expect("HOME")).join("sample_pcg");
     let pcg = match std::env::var("CODEX_SD42_PCG") {
         Ok(path) if !path.is_empty() => PathBuf::from(path),
         _ => std::fs::read_dir(&input)

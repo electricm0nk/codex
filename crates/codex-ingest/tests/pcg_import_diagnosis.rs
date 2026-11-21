@@ -5,7 +5,7 @@
 //! Proof set (`decisions.md §3` Q3, Q7): PCGen's seven samples under
 //! `$PCGEN_REPO_DIR/code/testsuite/PCGfiles` (tables and `summary.json` under the package's
 //! `artifacts/epic_1/E1.1/`), and the operator's file at `$CODEX_SD42_PCG` (else the one `.pcg` in
-//! `$HOME/sd42-input/`), whose table and summary stay beside it in `diagnosis/` (`decisions.md §10`).
+//! `$HOME/sample_pcg/`), whose table and summary stay beside it in `diagnosis/` (`decisions.md §10`).
 //!
 //! **Does not cover:** the desktop's `import_pcg_json` (the app crate is not linked here, so the
 //! Default-set migration and the app's own slot read are retyped: `codex_slot` is
@@ -74,7 +74,7 @@ fn oracle_files() -> PathBuf {
     repo.join("code/testsuite/PCGfiles")
 }
 
-/// The operator's file: `$CODEX_SD42_PCG`, else the one `.pcg` in `$HOME/sd42-input/`. No name is
+/// The operator's file: `$CODEX_SD42_PCG`, else the one `.pcg` in `$HOME/sample_pcg/`. No name is
 /// written here, so the repo never carries it (`decisions.md §10`).
 fn operator_file() -> PathBuf {
     if let Ok(path) = std::env::var("CODEX_SD42_PCG").map(PathBuf::from)
@@ -82,7 +82,7 @@ fn operator_file() -> PathBuf {
     {
         return path;
     }
-    let dir = PathBuf::from(std::env::var("HOME").expect("HOME")).join("sd42-input");
+    let dir = PathBuf::from(std::env::var("HOME").expect("HOME")).join("sample_pcg");
     std::fs::read_dir(&dir)
         .into_iter()
         .flatten()

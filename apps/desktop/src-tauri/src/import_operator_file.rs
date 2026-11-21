@@ -2,7 +2,7 @@
 //! operator's own file goes through the converter the sidecar runs and the app's `import_pcg_json`
 //! into a fresh root, and the held list the gear screen reads is checked. Counts only are printed.
 //!
-//! The file is `$CODEX_SD42_PCG`, else the one `.pcg` in `$HOME/sd42-input/`; absent (CI), the test
+//! The file is `$CODEX_SD42_PCG`, else the one `.pcg` in `$HOME/sample_pcg/`; absent (CI), the test
 //! prints `SKIPPED: …` and passes.
 //!
 //! **Does not cover:** any other operator file; the screen's pixels and the print (E4.MC, E5.G);
@@ -18,7 +18,7 @@ fn repo_root() -> PathBuf {
 }
 
 fn operator_pcg() -> PathBuf {
-    let input = PathBuf::from(std::env::var("HOME").expect("HOME")).join("sd42-input");
+    let input = PathBuf::from(std::env::var("HOME").expect("HOME")).join("sample_pcg");
     match std::env::var("CODEX_SD42_PCG") {
         Ok(path) if !path.is_empty() => PathBuf::from(path),
         _ => std::fs::read_dir(&input)

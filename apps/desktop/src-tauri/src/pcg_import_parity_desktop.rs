@@ -13,7 +13,7 @@
 //! A difference is a row of `explained_desktop.tsv` beside the sidecar's `explained.tsv`, in its shape
 //! and with its rules (`build, field, pcgen, codex, why, decision`; a field ending `*` is a prefix; a
 //! `*` value matches any; a row that explains no difference fails). The operator's rows stay in
-//! `$HOME/sd42-input/parity/explained_desktop.tsv` (`decisions.md §10`); only counts are printed.
+//! `$HOME/sample_pcg/parity/explained_desktop.tsv` (`decisions.md §10`); only counts are printed.
 //!
 //! **Does not cover:** a skill PCGen leaves out of its export (a trained-only skill with no ranks;
 //! Codex's number for it is not compared); a weapon's damage, critical or range (attack only); a
@@ -311,10 +311,10 @@ fn pcg_import_parity_desktop_ledger_names_only_the_samples() {
 }
 
 /// The operator's file (`decisions.md §10`): `$CODEX_SD42_PCG`, else the one `.pcg` in
-/// `$HOME/sd42-input/`; its export and ledger stay under `$HOME/sd42-input/parity/`. Counts only.
+/// `$HOME/sample_pcg/`; its export and ledger stay under `$HOME/sample_pcg/parity/`. Counts only.
 #[test]
 fn pcg_import_parity_desktop_operator_file() {
-    let input = PathBuf::from(std::env::var("HOME").expect("HOME")).join("sd42-input");
+    let input = PathBuf::from(std::env::var("HOME").expect("HOME")).join("sample_pcg");
     let pcg = match std::env::var("CODEX_SD42_PCG") {
         Ok(path) if !path.is_empty() => PathBuf::from(path),
         _ => std::fs::read_dir(&input).into_iter().flatten().flatten().map(|e| e.path()).find(|p| p.extension().is_some_and(|ext| ext == "pcg")).unwrap_or_else(|| input.join("<operator>.pcg")),

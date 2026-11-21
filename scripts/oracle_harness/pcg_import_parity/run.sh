@@ -2,7 +2,7 @@
 # SD-42 E1.7 (decisions.md §9): PCGen's own export of each import-proof file, through the REAL PCGen
 # engine at the pinned oracle. Writes exports/<sample>.txt for PCGen's 7 sample characters
 # ($PCGEN_REPO_DIR/code/testsuite/PCGfiles); with --operator, the operator's file ($CODEX_SD42_PCG)
-# to $HOME/sd42-input/parity/<stem>.txt, never into the repo (decisions.md §10).
+# to $HOME/sample_pcg/parity/<stem>.txt, never into the repo (decisions.md §10).
 # The template is the game mode's totals template (sheet-totals.txt.ftl less its prose lines, or
 # sf_parity.txt.ftl) followed by pcg-gear.txt.ftl. A companion file (sf_mechanic_drone) is exported
 # alone; Codex refuses it by name (§21 Q-A), and the test reads only its class line.
@@ -32,11 +32,11 @@ export_one() { # <pcg> <out>
 }
 
 if [ "${1:-}" = --operator ]; then
-  # $CODEX_SD42_PCG, else the one .pcg in $HOME/sd42-input (no name is written here).
-  pcg="${CODEX_SD42_PCG:-$(find "$HOME/sd42-input" -maxdepth 1 -name '*.pcg' -print -quit 2>/dev/null)}"
-  [ -n "$pcg" ] && [ -f "$pcg" ] || { echo "SKIPPED: operator .pcg absent at ${pcg:-$HOME/sd42-input/*.pcg} (decisions.md §10)"; exit 0; }
-  mkdir -p "$HOME/sd42-input/parity"
-  export_one "$pcg" "$HOME/sd42-input/parity/$(basename "$pcg" .pcg).txt"
+  # $CODEX_SD42_PCG, else the one .pcg in $HOME/sample_pcg (no name is written here).
+  pcg="${CODEX_SD42_PCG:-$(find "$HOME/sample_pcg" -maxdepth 1 -name '*.pcg' -print -quit 2>/dev/null)}"
+  [ -n "$pcg" ] && [ -f "$pcg" ] || { echo "SKIPPED: operator .pcg absent at ${pcg:-$HOME/sample_pcg/*.pcg} (decisions.md §10)"; exit 0; }
+  mkdir -p "$HOME/sample_pcg/parity"
+  export_one "$pcg" "$HOME/sample_pcg/parity/$(basename "$pcg" .pcg).txt"
   exit 0
 fi
 samples=("$@")
