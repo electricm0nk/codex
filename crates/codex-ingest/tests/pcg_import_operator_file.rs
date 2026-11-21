@@ -1,7 +1,7 @@
 //! The local proof run on the operator's own file (SD-42 `decisions.md §10`, E4.5; OPERATOR Q3, Q9).
 //!
 //! The file lives only on the operator's machine: `$CODEX_SD42_PCG`, else the one `.pcg` in
-//! `$HOME/sd42-input/` (`pcg_import_diagnosis.rs`). Absent, the test prints `SKIPPED: …` and passes
+//! `$HOME/sample_pcg/` (`pcg_import_diagnosis.rs`). Absent, the test prints `SKIPPED: …` and passes
 //! (CI never has it). Present, it converts the file as the sidecar does and asserts, printing counts
 //! only (no line of the file is printed): every held line is in at least one stack and the pieces are
 //! conserved (`decisions.md §20`, E1.2: one stack per place a line is in), every custom `NAME=` is the
@@ -26,7 +26,7 @@ fn repo_root() -> PathBuf {
 }
 
 fn operator_pcg() -> PathBuf {
-    let input = PathBuf::from(std::env::var("HOME").expect("HOME")).join("sd42-input");
+    let input = PathBuf::from(std::env::var("HOME").expect("HOME")).join("sample_pcg");
     match std::env::var("CODEX_SD42_PCG") {
         Ok(path) if !path.is_empty() => PathBuf::from(path),
         _ => std::fs::read_dir(&input)
