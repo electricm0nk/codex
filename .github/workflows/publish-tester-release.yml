@@ -246,6 +246,10 @@ jobs:
     env:
       # Tauri's linuxdeploy is itself an AppImage; a container has no FUSE.
       APPIMAGE_EXTRACT_AND_RUN: 1
+    # A container job defaults run steps to `sh` (dash), which lacks `set -o pipefail`.
+    defaults:
+      run:
+        shell: bash
     needs: [test, stamp]
 
     # SD16-F-WINDOWS: the `stage` step's outputs are surfaced as job
