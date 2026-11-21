@@ -99,7 +99,7 @@ Then E5.G (the one wait) → E5.1 → E5.2 → E5.3 → E5.4.
 | E5.1 widest verify + clean build + packaged resources (sidecar, SF data) + fresh-install check | 2 | main | no | sonnet | yes | `scripts/verify.sh --full` |
 | E5.2 final-acceptance scan → retrospective → sweep | 2 | main | no | opus | no | `decisions.md §23` |
 | E5.3 release notes → architecture truth-up → claims critic | 2 | main | no | sonnet + opus | no | two calls |
-| E5.4 graphify LAST → PR `tranche-22 → develop` (final action) | 2 | main | no | sonnet | no | the operator merges |
+| E5.4 graphify LAST → PR `tranche-22 → develop` (final action) | 2 | main | no | sonnet | no | the lead merges |
 | E5.5 the corpus twin reads the feat seam (discovered by E5.1) | 1 | main | no, before E5.1 re-run | opus | no (root) | `sd27_feat_effects_reach_both_compute_paths` red since E4.17 |
 | E5.6 diagnosis test's out-dir check is wrong in CI (discovered by E5.4) | 1 | main | no, before E5.4 | opus | no (ingest) | red in PR #413 `Test (PR into develop)` |
 

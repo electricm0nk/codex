@@ -112,7 +112,7 @@ SD-42 is done when every row below holds on `tranche-22` and the operator has si
     per line. (`decisions.md §12`.)
 20. **Closure.** All cards `complete` → final-acceptance scan → retrospective written and cited → sweep →
     release notes → architecture truth-up + claims critic → **graphify LAST** → **PR last**
-    (`decisions.md §23`). The operator merges.
+    (`decisions.md §23`). The lead merges.
 
 ## 3. Not in the Definition of Done (planned deferrals, `forward-scope-register.md §4`)
 
