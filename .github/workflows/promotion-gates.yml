@@ -111,8 +111,8 @@ jobs:
               "https://api.github.com/repos/${REPO}/releases?per_page=30")"
           printf '%s' "$releases_json" > releases.json
           if [ "$LANE" = "beta" ]; then
-            url="$(jq -r '[.[] | select((.tag_name // "") | startswith("alpha/"))] | sort_by(.published_at) | reverse | (.[0].html_url // empty)' < releases.json)"
-            tag="$(jq -r '[.[] | select((.tag_name // "") | startswith("alpha/"))] | sort_by(.published_at) | reverse | (.[0].tag_name // empty)' < releases.json)"
+            url="$(jq -r '[.[] | select((.tag_name // "") | startswith("alpha-v"))] | sort_by(.published_at) | reverse | (.[0].html_url // empty)' < releases.json)"
+            tag="$(jq -r '[.[] | select((.tag_name // "") | startswith("alpha-v"))] | sort_by(.published_at) | reverse | (.[0].tag_name // empty)' < releases.json)"
             if [ -n "$url" ] && [ "$url" != "null" ]; then
               echo "alpha_release_url=$url" >> "$GITHUB_OUTPUT"
             fi
@@ -121,8 +121,8 @@ jobs:
             fi
             echo "alpha_release_url=${url:-<none>} alpha_tag=${tag:-<none>}"
           else
-            url="$(jq -r '[.[] | select((.tag_name // "") | startswith("beta/"))] | sort_by(.published_at) | reverse | (.[0].html_url // empty)' < releases.json)"
-            tag="$(jq -r '[.[] | select((.tag_name // "") | startswith("beta/"))] | sort_by(.published_at) | reverse | (.[0].tag_name // empty)' < releases.json)"
+            url="$(jq -r '[.[] | select((.tag_name // "") | startswith("beta-v"))] | sort_by(.published_at) | reverse | (.[0].html_url // empty)' < releases.json)"
+            tag="$(jq -r '[.[] | select((.tag_name // "") | startswith("beta-v"))] | sort_by(.published_at) | reverse | (.[0].tag_name // empty)' < releases.json)"
             if [ -n "$url" ] && [ "$url" != "null" ]; then
               echo "beta_release_url=$url" >> "$GITHUB_OUTPUT"
             fi
@@ -139,7 +139,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           set -eu
-          url="$(jq -r '[.[] | select((.tag_name // "") | startswith("beta/"))] | sort_by(.published_at) | reverse | (.[0].assets[]? | select(.name == "provenance.json") | .url) // empty' < releases.json)"
+          url="$(jq -r '[.[] | select((.tag_name // "") | startswith("beta-v"))] | sort_by(.published_at) | reverse | (.[0].assets[]? | select(.name == "provenance.json") | .url) // empty' < releases.json)"
           if [ -z "$url" ] || [ "$url" = "null" ]; then
             echo "No provenance.json asset on the most recent beta release."
             echo "provenance_status=missing" >> "$GITHUB_OUTPUT"
