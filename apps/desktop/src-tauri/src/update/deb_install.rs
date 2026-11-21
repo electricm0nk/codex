@@ -10,6 +10,7 @@ use std::path::{Path, PathBuf};
 
 use serde_json::Value;
 
+use super::signature::VerifiedManifest;
 use super::transaction::{
     config_update_dir, sha256_of_file, InstallKind, InstalledState, RelaunchPrompt,
     INSTALLED_STATE_FILENAME,
@@ -169,13 +170,13 @@ impl DebSystem for SystemDebInstaller {
     }
 }
 
-/// Run the deb self-update for the recorded install. `manifest` is the raw published manifest.
-pub fn perform_deb_install(config_dir: &Path, manifest: &Value) -> Result<RelaunchPrompt, String> {
+/// Run the deb self-update for the recorded install. `manifest` is the release's signature-verified manifest.
+pub fn perform_deb_install(config_dir: &Path, manifest: &VerifiedManifest) -> Result<RelaunchPrompt, String> {
     let record = config_update_dir(config_dir).join(INSTALLED_STATE_FILENAME);
     let bytes = fs::read(&record).map_err(|e| format!("no installed-state record at {}: {e}", record.display()))?;
     let installed: InstalledState =
         serde_json::from_slice(&bytes).map_err(|e| format!("installed-state.json is unreadable: {e}"))?;
-    let req = parse_deb_install_request(manifest)?;
+    let req = parse_deb_install_request(manifest.value())?;
     install_deb_update(config_dir, &installed, &req, &SystemDebInstaller)
 }
 
@@ -402,7 +403,7 @@ mod tests {
     #[test]
     fn perform_deb_install_without_an_installed_record_is_an_honest_error() {
         let cfg = config("norecord");
-        let err = perform_deb_install(&cfg, &serde_json::json!({ "version": "1.0.0" })).unwrap_err();
+        let err = perform_deb_install(&cfg, &VerifiedManifest::assume_verified_for_test(serde_json::json!({ "version": "1.0.0" }))).unwrap_err();
         assert!(err.contains("installed-state"), "{err}");
     }
 }

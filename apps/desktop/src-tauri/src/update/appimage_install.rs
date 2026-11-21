@@ -14,6 +14,7 @@ use serde_json::Value;
 use sha2::{Digest, Sha256};
 
 use super::download::{download_to_writer, validate_asset};
+use super::signature::VerifiedManifest;
 use super::transaction::{
     config_update_dir, execute_transaction, sha256_of_file, EligibilityPolicy, InstallKind, InstalledState,
     ManifestIdentity, RelaunchPrompt, RunningBuildIdentity, TransactionConfig, TransactionOutcome,
@@ -131,14 +132,14 @@ where
     }
 }
 
-/// Run the AppImage self-update for the recorded install. `manifest` is the raw published manifest.
-pub fn perform_appimage_install(config_dir: &Path, manifest: &Value) -> Result<RelaunchPrompt, String> {
+/// Run the AppImage self-update for the recorded install. `manifest` is the release's signature-verified manifest.
+pub fn perform_appimage_install(config_dir: &Path, manifest: &VerifiedManifest) -> Result<RelaunchPrompt, String> {
     let record = config_update_dir(config_dir).join(INSTALLED_STATE_FILENAME);
     let bytes = fs::read(&record).map_err(|e| format!("no installed-state record at {}: {e}", record.display()))?;
     let installed: InstalledState =
         serde_json::from_slice(&bytes).map_err(|e| format!("installed-state.json is unreadable: {e}"))?;
     let running = running_appimage_path(std::env::var_os("APPIMAGE").map(PathBuf::from), &installed)?;
-    let req = parse_appimage_install_request(manifest)?;
+    let req = parse_appimage_install_request(manifest.value())?;
     install_appimage_update(config_dir, &installed, &running, &req, |writer| download_to_writer(&req.url, writer))
 }
 

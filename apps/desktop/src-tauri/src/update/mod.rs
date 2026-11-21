@@ -19,5 +19,6 @@ pub mod deb_install;
 pub mod download;
 pub mod seed;
 pub mod self_install;
+pub mod signature;
 pub mod transaction;
 pub mod windows_install;
