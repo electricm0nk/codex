@@ -78,7 +78,9 @@ export type LastCheckFetchStatus =
   | 'not-loaded'
   | 'in-progress'
   | 'ok'
-  | 'failed';
+  | 'failed'
+  // The channel has no published release: its pointer file does not exist (HTTP 404).
+  | 'no-release';
 
 export interface LastCheckState {
   selectedChannel: UpdateChannelLabel;
@@ -204,6 +206,32 @@ export function buildUnwiredUpdateDeps(): UpdateControllerDeps {
   };
 }
 
+const UPDATE_CHANNEL_STORAGE_KEY = 'codex.update.channel';
+
+type ChannelStorage = Pick<Storage, 'getItem' | 'setItem'>;
+
+function browserStorage(): ChannelStorage | undefined {
+  return (globalThis as { localStorage?: ChannelStorage }).localStorage;
+}
+
+/** The channel this profile chose before; a fresh profile (nothing stored) reads `stable`. */
+export function readStoredUpdateChannel(storage?: ChannelStorage): UpdateChannelLabel {
+  try {
+    const stored = (storage ?? browserStorage())?.getItem(UPDATE_CHANNEL_STORAGE_KEY);
+    return UPDATE_CHANNEL_OPTIONS.find((channel) => channel === stored) ?? 'stable';
+  } catch {
+    return 'stable';
+  }
+}
+
+export function storeUpdateChannel(channel: UpdateChannelLabel, storage?: ChannelStorage): void {
+  try {
+    (storage ?? browserStorage())?.setItem(UPDATE_CHANNEL_STORAGE_KEY, channel);
+  } catch {
+    /* a profile that cannot persist still gets the channel for this session */
+  }
+}
+
 export function emptyInstalledState(
   channel: UpdateChannelLabel = 'alpha',
 ): InstalledState {
@@ -220,7 +248,7 @@ export function emptyInstalledState(
 }
 
 export function emptyLastCheckState(
-  channel: UpdateChannelLabel = 'alpha',
+  channel: UpdateChannelLabel = 'stable',
 ): LastCheckState {
   return {
     selectedChannel: channel,

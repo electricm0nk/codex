@@ -765,30 +765,49 @@ pub struct PerformInstallArgs {
 /// The frontend sends the flat payload `{ manifest, indexUrl }`, so the command takes those two
 /// fields as its own parameters (Tauri maps `index_url` to `indexUrl`). A single struct parameter
 /// would make Tauri demand `{ args: { ... } }` instead.
+///
+/// The webview's `manifest` only names the release. Before any installer runs, the signed bytes of
+/// that release's manifest are fetched and verified against the embedded public keys
+/// (`signature.rs`); the installers take only a `VerifiedManifest`. There is no skip.
 #[tauri::command]
 pub fn perform_install(manifest: serde_json::Value, index_url: String) -> Result<RelaunchPrompt, String> {
-    perform_install_from_wire(&resolve_config_root(), manifest, index_url)
+    let keys = super::signature::trusted_keys()?;
+    perform_install_from_wire(&resolve_config_root(), manifest, index_url, &keys, &super::signature::fetch_url)
 }
 
 fn perform_install_from_wire(
     config_dir: &Path,
     manifest: serde_json::Value,
     index_url: String,
+    keys: &[ed25519_dalek::VerifyingKey],
+    fetch: &dyn Fn(&str) -> Result<Vec<u8>, String>,
 ) -> Result<RelaunchPrompt, String> {
-    perform_install_impl(config_dir, PerformInstallArgs { manifest, index_url })
+    perform_install_impl(config_dir, PerformInstallArgs { manifest, index_url }, keys, fetch)
 }
 
-fn perform_install_impl(config_dir: &Path, args: PerformInstallArgs) -> Result<RelaunchPrompt, String> {
+fn perform_install_impl(
+    config_dir: &Path,
+    args: PerformInstallArgs,
+    keys: &[ed25519_dalek::VerifyingKey],
+    fetch: &dyn Fn(&str) -> Result<Vec<u8>, String>,
+) -> Result<RelaunchPrompt, String> {
     let installed_state_path = config_update_dir(config_dir).join(INSTALLED_STATE_FILENAME);
     let bytes = fs::read(&installed_state_path).map_err(|_| {
         "no installed-state record yet: cannot tell how this copy was installed".to_string()
     })?;
     let installed: InstalledState = serde_json::from_slice(&bytes)
         .map_err(|source| format!("installed-state.json is unreadable: {source}"))?;
+    if installed.install_kind == InstallKind::DevLocal {
+        return Err("dev builds are not update-eligible".to_string());
+    }
+    let verified = super::signature::fetch_verified_manifest(&args.manifest, keys, fetch).map_err(|reason| {
+        eprintln!("Codex update refused: {reason}");
+        reason
+    })?;
     match installed.install_kind {
-        InstallKind::Deb => super::deb_install::perform_deb_install(config_dir, &args.manifest),
-        InstallKind::AppImage => super::appimage_install::perform_appimage_install(config_dir, &args.manifest),
-        InstallKind::WindowsNsis => super::windows_install::perform_windows_install(config_dir, &args.manifest),
+        InstallKind::Deb => super::deb_install::perform_deb_install(config_dir, &verified),
+        InstallKind::AppImage => super::appimage_install::perform_appimage_install(config_dir, &verified),
+        InstallKind::WindowsNsis => super::windows_install::perform_windows_install(config_dir, &verified),
         InstallKind::DevLocal => Err("dev builds are not update-eligible".to_string()),
     }
 }
@@ -1750,12 +1769,15 @@ mod verify_relaunch_artifact_tests {
     #[test]
     fn perform_install_shim_errors_instead_of_fabricating_truth() {
         let dir = tempdir("perform-install-no-record");
+        let no_fetch = |url: &str| -> Result<Vec<u8>, String> { panic!("must not fetch {url}") };
         let err = perform_install_impl(
             &dir,
             PerformInstallArgs {
                 manifest: serde_json::json!({}),
                 index_url: "https://example.invalid/index.json".to_string(),
             },
+            &[],
+            &no_fetch,
         )
         .unwrap_err();
         assert!(err.contains("installed-state"), "{err}");
@@ -1780,10 +1802,47 @@ mod verify_relaunch_artifact_tests {
         write_atomic_json(&update_dir.join(INSTALLED_STATE_FILENAME), &record).unwrap();
     }
 
+    use super::super::signature::test_support::{manifest_bytes, public, serving, sign, throwaway};
+
+    /// The release the user chose: a manifest with no platform blocks, so each installer, once
+    /// reached, names the block it is missing.
     fn install_args() -> PerformInstallArgs {
         PerformInstallArgs {
-            manifest: serde_json::json!({ "version": "0.2.0" }),
+            manifest: serde_json::from_slice(&manifest_bytes(serde_json::json!({}))).unwrap(),
             index_url: "https://example.invalid/index.json".to_string(),
+        }
+    }
+
+    /// `perform_install_impl` with the chosen release's bytes served, signed by `signer`, against a
+    /// trusted list holding throwaway key 1. `signer: None` serves no `.sig` at all.
+    fn install_signed_by(dir: &Path, signer: Option<u8>) -> Result<RelaunchPrompt, String> {
+        let bytes = manifest_bytes(serde_json::json!({}));
+        let sig = signer.map(|seed| sign(&throwaway(seed), &bytes));
+        perform_install_impl(dir, install_args(), &[public(&throwaway(1))], &serving(bytes, sig))
+    }
+
+    const ALL_INSTALL_PATHS: [(InstallKind, &str); 3] =
+        [(InstallKind::Deb, "linux_deb"), (InstallKind::AppImage, "$APPIMAGE"), (InstallKind::WindowsNsis, "windows_nsis")];
+
+    #[test]
+    fn every_install_path_refuses_a_release_with_no_signature() {
+        for (kind, reached) in ALL_INSTALL_PATHS {
+            let dir = tempdir(&format!("perform-install-unsigned-{kind:?}"));
+            write_record(&dir, kind);
+            let err = install_signed_by(&dir, None).unwrap_err();
+            assert!(err.contains("no signature"), "{kind:?}: {err}");
+            assert!(!err.contains(reached), "{kind:?}: the installer must not be reached: {err}");
+        }
+    }
+
+    #[test]
+    fn every_install_path_refuses_a_release_signed_by_an_untrusted_key() {
+        for (kind, reached) in ALL_INSTALL_PATHS {
+            let dir = tempdir(&format!("perform-install-untrusted-{kind:?}"));
+            write_record(&dir, kind);
+            let err = install_signed_by(&dir, Some(9)).unwrap_err();
+            assert!(err.contains("signature"), "{kind:?}: {err}");
+            assert!(!err.contains(reached), "{kind:?}: the installer must not be reached: {err}");
         }
     }
 
@@ -1791,7 +1850,7 @@ mod verify_relaunch_artifact_tests {
     fn perform_install_routes_a_deb_record_to_the_deb_path() {
         let dir = tempdir("perform-install-deb");
         write_record(&dir, InstallKind::Deb);
-        let err = perform_install_impl(&dir, install_args()).unwrap_err();
+        let err = install_signed_by(&dir, Some(1)).unwrap_err();
         assert!(err.contains("linux_deb"), "deb path must run and name the missing artifact: {err}");
     }
 
@@ -1801,7 +1860,7 @@ mod verify_relaunch_artifact_tests {
         // no $APPIMAGE file to replace, and it says so rather than pretending to install.
         let dir = tempdir("perform-install-appimage");
         write_record(&dir, InstallKind::AppImage);
-        let err = perform_install_impl(&dir, install_args()).unwrap_err();
+        let err = install_signed_by(&dir, Some(1)).unwrap_err();
         assert!(!err.contains("not wired"), "{err}");
         assert!(err.contains("$APPIMAGE") || err.contains("linux_appimage"), "the AppImage path must run: {err}");
     }
@@ -1810,7 +1869,7 @@ mod verify_relaunch_artifact_tests {
     fn perform_install_routes_a_windows_record_to_the_windows_path() {
         let dir = tempdir("perform-install-windows");
         write_record(&dir, InstallKind::WindowsNsis);
-        let err = perform_install_impl(&dir, install_args()).unwrap_err();
+        let err = install_signed_by(&dir, Some(1)).unwrap_err();
         assert!(err.contains("windows_nsis"), "the Windows path must run and name the missing installer: {err}");
     }
 
@@ -1829,8 +1888,10 @@ mod verify_relaunch_artifact_tests {
     fn perform_install_takes_the_flat_frontend_payload() {
         let _shim: fn(serde_json::Value, String) -> Result<RelaunchPrompt, String> = perform_install;
 
+        let bytes = manifest_bytes(serde_json::json!({}));
+        let parsed: serde_json::Value = serde_json::from_slice(&bytes).unwrap();
         let wire: serde_json::Value = serde_json::json!({
-            "manifest": { "version": "0.2.0" },
+            "manifest": parsed,
             "indexUrl": "https://example.invalid/index.json",
         });
         assert!(wire.get("args").is_none(), "frontend sends no `args` wrapper");
@@ -1839,7 +1900,8 @@ mod verify_relaunch_artifact_tests {
 
         let dir = tempdir("perform-install-flat-wire");
         write_record(&dir, InstallKind::Deb);
-        let err = perform_install_from_wire(&dir, manifest, index_url).unwrap_err();
+        let fetch = serving(bytes.clone(), Some(sign(&throwaway(1), &bytes)));
+        let err = perform_install_from_wire(&dir, manifest, index_url, &[public(&throwaway(1))], &fetch).unwrap_err();
         assert!(err.contains("linux_deb"), "flat payload must reach the deb path: {err}");
     }
 
@@ -1847,7 +1909,7 @@ mod verify_relaunch_artifact_tests {
     fn perform_install_refuses_dev_builds() {
         let dir = tempdir("perform-install-dev");
         write_record(&dir, InstallKind::DevLocal);
-        assert!(perform_install_impl(&dir, install_args()).is_err());
+        assert!(install_signed_by(&dir, Some(1)).unwrap_err().contains("dev builds"));
     }
 
     /// E3.13 — `is_install_eligible`'s real probe body: with no
