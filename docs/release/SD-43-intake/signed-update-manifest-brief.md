@@ -1,9 +1,11 @@
 # Execution brief: release channels — signed manifest, beta publishing, stable default
 
-Drafted 2026-11-20. Status: READY (both public keys recorded in §15), waits for SD-42 to merge. Operator rulings 2026-11-20 are in §14.
-Operator ruling 2026-11-20: this is its OWN SD (not SD-42, which is closing in Epic 5 on tranche-22;
-not a card inside SD-43). It takes the next tranche cut after SD-42 merges. The SD number is the
-operator's to assign. Three parts: A signing, B beta publishing, C default channel.
+Drafted 2026-11-20. Status: READY (both public keys recorded in §15). SD-42 merged (PR #413). Waits for SD-43 to be authored. Operator rulings 2026-11-20 are in §14.
+Operator ruling 2026-11-20 (corrected): this is NOT a new SD and NOT a new tranche. It is a new
+build inside SD-43, delivered on SD-43's tranche branch. It is too small to justify any version
+increment: NO tranche cut, NO version-surface bump, NO new SD number. The publish workflow keeps
+stamping `0.<tranche>.<run>` as it does today. SD-43 authoring (from `intake.md`) includes this brief.
+Three parts: A signing, B beta publishing, C default channel.
 
 ## 1. Objective
 
@@ -72,7 +74,7 @@ and `grep -n -i -E "signature|ed25519|minisign" apps/desktop/src-tauri/src/updat
 1. **Transition.** Installs already in the field have no verify code. Do they get ONE final
    unsigned hop to a verifying build? (Recommended: yes, one hop, then enforce.)
 2. **Key custody.** Who holds the offline backup of the private key? (Operator.)
-3. ~~SD placement~~ Ruled 2026-11-20: own SD, after SD-42 merges.
+3. ~~SD placement~~ Ruled 2026-11-20: a build inside SD-43; no new SD, no version bump.
 
 ## 8. Non-goals
 
