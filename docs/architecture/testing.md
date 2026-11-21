@@ -255,14 +255,13 @@ are compared against the bundle's base commit, and a diff is a defect, not a re-
 
 `scripts/verify.sh` is the single verification command for this repo. `scripts/verify.sh --list`
 (read-only — it only prints and exits, never runs a stage) is the authority on stage membership;
-as of this verification it prints **53** stages in `ALL_STAGES`, **43** of which are also in
-`QUICK_STAGES` (`--quick`); `bash scripts/verify.sh --list | awk 'NR>1{n++; if($3=="yes")q++} END{print n,q}'` → `53 43`. Both counts come straight from that command's own output, not from a
+as of this verification it prints **46** stages in `ALL_STAGES`, **36** of which are also in
+`QUICK_STAGES` (`--quick`); `bash scripts/verify.sh --list | awk 'NR>1{n++; if($3=="yes")q++} END{print n,q}'` → `46 36`. Both counts come straight from that command's own output, not from a
 count maintained by hand in this doc.
 
 ```mermaid
 flowchart TD
-    A["preflight & self-tests\n(disk, oracle pin, producer,\ndoneness, PI-redaction, provenance)"] --> B
-    B["frozen public status\n(site-status-frozen-check + selftest,\nsite-dashboard-pi-gate,\nbuild-public-status-selftest,\nsite-public-status-check + pi-gate,\nsite-asset-stamp-check)"] --> C
+    A["preflight & self-tests\n(disk, oracle pin, producer,\ndoneness, PI-redaction, provenance)"] --> C
     C["standing audits & self-tests\n(reachability-audit + selftest,\ngroundtruth-guard-selftest,\nsupersession-gate-selftest,\nshape-coverage-standing-gate + selftest,\ncycle-scope-gate-selftest)"] --> D
     D["data-shape & wall gates\n(missing-engine-tables, denominator-gate,\nfigure-provenance, corpus-bundle,\ntauri-resources-tracked, pcgen-residue-gate,\ncrate-wall, token-coverage + selftest,\npi-sweep, declared-pi-audit)"] --> E
     E["tooling self-tests\n(audit-selftest, reclaim-selftest,\ndriver-selftest, corpus-sweep-selftest,\ncorpus-trap-audit-selftest)"] --> F
@@ -270,8 +269,8 @@ flowchart TD
     G["frontend\n(frontend-install, frontend-test,\nfrontend-typecheck)"] --> H
     H["clippy\n(three crates, -D warnings)"] --> I["class-dump"]
 ```
-*`scripts/verify.sh`'s 53 stages, grouped by what they protect, in execution order. `--quick`
-(43 stages) drops the expensive builds group's `root-full`/`ingest-full`/`desktop`/`corpus-sweep`/
+*`scripts/verify.sh`'s 46 stages, grouped by what they protect, in execution order. `--quick`
+(36 stages) drops the expensive builds group's `root-full`/`ingest-full`/`desktop`/`corpus-sweep`/
 `sheet-rules-check`/`sf-sheet-rules-check`/`rules-schema-check`/`corpus-trap-audit`/`supersession-gate` rows and `clippy`, keeping every
 Python-or-hash-only gate — see `scripts/verify.sh --list`'s own `full`/`quick` columns for the
 authoritative per-stage membership.*
@@ -283,27 +282,22 @@ What each group actually protects:
    (`scripts/pcgen-oracle-pin.env`) is absent or off-pin. The `*-selftest` stages prove their
    paired gate can actually fail (mutation-style: plant a defect, confirm RED, revert, confirm
    GREEN) before trusting its green as meaningful.
-2. **Frozen public status** — `site-status-frozen-check` (SD-36 D3/D5) asserts the committed
-   `site/status-data.json` snapshot still reads `overall.pct == 100.0`, `overall.denominator ==
-   49450`, `partial == 0`, `not_started == 0`, and a constant `generated_at` — the page is
-   regenerated once per bundle closure, never live, so this gate only catches silent drift in the
-   committed file, not staleness against a live producer (there is no live producer any more).
-3. **Standing audits & self-tests** — `reachability-audit`, `groundtruth-guard-selftest`,
+2. **Standing audits & self-tests** — `reachability-audit`, `groundtruth-guard-selftest`,
    `supersession-gate-selftest`, `shape-coverage-standing-gate` and its selftest,
    `cycle-scope-gate-selftest` — cross-cutting standing invariants (e.g. a race/class record is
    reachable from a live consumer; a superseded printing doesn't silently re-appear as current)
    that don't belong to any one book or feature.
-4. **Data-shape & wall gates** — `denominator-gate`/`figure-provenance` (see
+3. **Data-shape & wall gates** — `denominator-gate`/`figure-provenance` (see
    [conventions.md](./conventions.md)'s doctrine table); `corpus-bundle` and
    `tauri-resources-tracked` (see [The corpus bundle](#the-corpus-bundle-and-its-parity-test));
    `pcgen-residue-gate` and `crate-wall` (the PCGen-wall doctrine, structurally enforced — `cargo
    tree`, `cargo metadata` dependency-direction check, a manifest `awk` scan, and the residue
    gate itself, all in one stage); `token-coverage`, `pi-sweep`, `declared-pi-audit` (OGL Product
    Identity discipline — see `docs/governance/ogl-pi-blacklist.md`).
-5. **Tooling self-tests** — prove the maintenance scripts themselves (`scripts/reclaim.sh`,
+4. **Tooling self-tests** — prove the maintenance scripts themselves (`scripts/reclaim.sh`,
    the corpus-sweep driver, the corpus-trap audit) still fail on a planted defect before the real
    run below trusts their green.
-6. **Builds & full test suites** — the expensive group: `root-lib`/`root-full` (`codex`),
+5. **Builds & full test suites** — the expensive group: `root-lib`/`root-full` (`codex`),
    `ingest-full` (`codex-ingest`), `desktop` (`codex-desktop`), `corpus-sweep` (the corpus-literal
    byte-equality sweep — see [corpus-ingest.md](./corpus-ingest.md)), `sheet-rules-check` and `sf-sheet-rules-check` (the Pathfinder and Starfinder sheet-rule packages regenerate as a no-op; see
    [The sheet-rule data gates](#the-sheet-rule-data-gates)), `rules-schema-check` (the published JSON schemas under `schemas/rules/`, including
@@ -313,12 +307,12 @@ What each group actually protects:
    `Running tests/<name>.rs` lines the test runner's own log actually produced, failing by name if
    any suite present on disk never ran — a floor on the aggregate pass count cannot catch one
    suite silently dropping out while another appears in the same run.
-7. **Frontend** — `frontend-install` (`npm ci`), `frontend-test` (`npm test`),
+6. **Frontend** — `frontend-install` (`npm ci`), `frontend-test` (`npm test`),
    `frontend-typecheck` (`npm run typecheck`).
-8. **Clippy** — three crates, `-D warnings`, described above.
-9. **`class-dump`** — a structural dump of every compiled class's chassis, used to eyeball a
+7. **Clippy** — three crates, `-D warnings`, described above.
+8. **`class-dump`** — a structural dump of every compiled class's chassis, used to eyeball a
    widening's shape without reading the full engine.
-10. **`class-census`** — `cargo run --locked --bin class_census -- --json` (SD-36 Epic F0), then
+9. **`class-census`** — `cargo run --locked --bin class_census -- --json` (SD-36 Epic F0), then
    `scripts/check_class_census_baselines.py` (five floors in `scripts/verify-baselines.env`:
    `BASELINE_CENSUS_{IDS,COMPUTED,MIX_COMPUTED,PRESTIGE_ALONE_BLOCKED,PRESTIGE_MIX_COMPUTED}`, which
    can only rise) and `scripts/gen_class_status_table.py --check` (status.md's class table matches the
@@ -338,7 +332,6 @@ there are per-cycle, because each is Python-or-hash only and runs in seconds:
 python3 scripts/pcgen_residue_gate.py --check           # live PCGen surface; monotonic, only goes down
 python3 scripts/token_coverage.py --check                # the remainder, named by token type, counts summing
 python3 scripts/denominator_gate.py --check-provenance   # NOT the same flag as --check
-python3 scripts/site/check_frozen_status.py              # the frozen PF1e public status snapshot, re-checked
 ```
 
 `--check` and `--check-provenance` are **different checks** and neither substitutes for the other:
