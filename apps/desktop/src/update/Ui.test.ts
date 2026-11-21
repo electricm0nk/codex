@@ -107,7 +107,17 @@ function testInstallOutcomeShowsTheFailureReason() {
   assertContains(html, 'cancelled at the authorization prompt', 'the real reason is shown, not a generic one');
 }
 
+function testUnwiredMountSelectsStable() {
+  const html = render({});
+  assertContains(html, '<option value="stable" selected="">', 'the selector opens on stable');
+  assertContains(html, 'data-testid="check-channel">stable<', 'the check panel names stable');
+  for (const channel of ['alpha', 'beta', 'stable']) {
+    assertContains(html, `<option value="${channel}"`, `the selector still offers ${channel}`);
+  }
+}
+
 function main() {
+  testUnwiredMountSelectsStable();
   testInstallOutcomeRendersNothingBeforeAnyInstall();
   testInstallOutcomeOnWindowsSaysCodexClosesAndReopens();
   testInstallOutcomeSaysToRestartAfterSuccess();

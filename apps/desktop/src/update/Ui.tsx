@@ -8,6 +8,7 @@ import { PendingRollbackPanel } from './pendingRollbackPanel';
 import { RestoreOffer } from './restoreOffer';
 import {
   buildUnwiredUpdateDeps,
+  storeUpdateChannel,
   UI_BUTTON_BASE_STYLE,
   UI_BUTTON_DISABLED_STYLE,
   UI_CONTAINER_STYLE,
@@ -79,7 +80,7 @@ export function UpdateUi({ initialDeps, restoreOffer }: UpdateUiProps) {
   // selector reflects the most recent authoritative value, including any
   // state mutation F3a performs during runCheck().
   const [selectedChannel, setSelectedChannel] = useState<UpdateChannelLabel>(
-    () => (initialDeps ? initialDeps.lastCheck.selectedChannel : 'alpha'),
+    () => deps.lastCheck.selectedChannel,
   );
 
   useEffect(() => {
@@ -126,6 +127,7 @@ export function UpdateUi({ initialDeps, restoreOffer }: UpdateUiProps) {
 
   const handleChannelChange = useCallback(
     (channel: UpdateChannelLabel) => {
+      storeUpdateChannel(channel);
       setSelectedChannel(channel);
       setDeps((prev) => ({
         ...prev,

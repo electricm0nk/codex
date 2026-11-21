@@ -3,6 +3,7 @@ import { renderToStaticMarkup } from 'react-dom/server';
 import { assert, assertEqual } from '../testSupport/asserts';
 import type { FetchLike } from './fetch';
 import { UpdateUi } from './Ui';
+import { readStoredUpdateChannel, storeUpdateChannel } from './updateModel';
 import {
   createUpdateControllerDeps,
   loadMountTimeState,
@@ -585,12 +586,12 @@ async function verifiesIneligibleWhenFetchedManifestMatchesAlreadyInstalledVersi
 async function verifiesRunCheckSurfacesRealIndexFetchFailure() {
   const mountTimeState = await emptyMountTimeState();
   const deps = createUpdateControllerDeps(mountTimeState, 'alpha', {
-    fetchImpl: makeFetchImpl([{ url: CHANNEL_INDEX_URL, status: 404, responded: 'not found' }]),
+    fetchImpl: makeFetchImpl([{ url: CHANNEL_INDEX_URL, status: 500, responded: 'server error' }]),
   });
 
   await deps.controller.runCheck('alpha');
 
-  assertEqual(deps.lastCheck.indexStatus, 'failed', 'index status after 404');
+  assertEqual(deps.lastCheck.indexStatus, 'failed', 'index status after HTTP 500');
   assertEqual(deps.lastCheck.manifestStatus, 'not-loaded', 'manifest never attempted after index failure');
 
   const decision = deps.controller.disabledReason(deps.installed, deps.lastCheck);
@@ -960,6 +961,126 @@ async function verifiesRestorePreviousVersionSurfacesFailureHonestly() {
   }
 }
 
+// ---------- default channel = stable (SD-43 Part C) ----------
+
+function memoryStorage(initial: Record<string, string> = {}) {
+  const data = new Map(Object.entries(initial));
+  return {
+    getItem: (key: string) => data.get(key) ?? null,
+    setItem: (key: string, value: string) => {
+      data.set(key, value);
+    },
+  };
+}
+
+async function verifiesAFreshProfileDefaultsToStable() {
+  assertEqual(readStoredUpdateChannel(memoryStorage()), 'stable', 'nothing stored reads stable');
+  assertEqual(
+    readStoredUpdateChannel(memoryStorage({ 'codex.update.channel': 'nightly' })),
+    'stable',
+    'an unrecognised stored value reads stable, not the junk value',
+  );
+  // No `localStorage` global under node: the real default path is the fresh-profile path.
+  const deps = createUpdateControllerDeps(await emptyMountTimeState());
+  assertEqual(deps.lastCheck.selectedChannel, 'stable', 'a fresh install selects stable');
+}
+
+async function verifiesAStoredAlphaOrBetaChoiceIsKept() {
+  for (const channel of ['alpha', 'beta'] as const) {
+    const storage = memoryStorage();
+    storeUpdateChannel(channel, storage);
+    assertEqual(readStoredUpdateChannel(storage), channel, `a stored ${channel} stays ${channel}`);
+    const g = globalThis as { localStorage?: unknown };
+    g.localStorage = storage;
+    try {
+      const deps = createUpdateControllerDeps(await emptyMountTimeState());
+      assertEqual(deps.lastCheck.selectedChannel, channel, `the update page opens on the stored ${channel}`);
+    } finally {
+      delete g.localStorage;
+    }
+  }
+}
+
+const STABLE_INDEX_URL =
+  'https://raw.githubusercontent.com/electricm0nk/codex/update-index/channels/stable.json';
+
+async function verifiesNoStableReleaseYetIsAMessageNotAnError() {
+  const deps = createUpdateControllerDeps(await emptyMountTimeState(), 'stable', {
+    fetchImpl: makeFetchImpl([{ url: STABLE_INDEX_URL, status: 404, responded: '404: Not Found' }]),
+  });
+
+  await deps.controller.runCheck('stable');
+
+  assertEqual(deps.lastCheck.indexStatus, 'no-release', 'a missing stable pointer is no-release, not failed');
+  assertEqual(
+    deps.lastCheck.installDisabledReason,
+    'No stable release yet',
+    'Last check names the real situation, not an HTTP error',
+  );
+  const html = renderToStaticMarkup(createElement(UpdateUi, { initialDeps: deps }));
+  assert(
+    html.includes('data-testid="check-status">No stable release yet.'),
+    'the Check panel status line shows the no-stable-release message',
+  );
+  assert(!html.includes('check failed'), `the update page must not call it a failed check: ${html}`);
+  assert(!html.includes('HTTP 404'), 'the update page must not show the raw HTTP error');
+}
+
+async function verifiesSwitchingDownToStableNeverOffersAnOlderBuild() {
+  // Installed: an alpha build 0.22.150. Stable's newest is 0.21.40: lower, so no install.
+  const stableManifestUrl =
+    'https://raw.githubusercontent.com/electricm0nk/codex/update-index/manifests/stable/v0.21.40-abc12345/update-manifest.json';
+  const deps = createUpdateControllerDeps(await emptyMountTimeState(), 'stable', {
+    fetchImpl: makeFetchImpl([
+      {
+        url: STABLE_INDEX_URL,
+        status: 200,
+        responded: channelText({
+          channel: 'stable',
+          version: '0.21.40',
+          tag: 'stable/v0.21.40-abc12345',
+          manifest_url: stableManifestUrl,
+        }),
+      },
+      {
+        url: stableManifestUrl,
+        status: 200,
+        responded: manifestText({
+          channel: 'stable',
+          version: '0.21.40',
+          tag: 'stable/v0.21.40-abc12345',
+          linux_appimage: { ...VALID_MANIFEST_WIRE.linux_appimage, sha256: 'a'.repeat(64) },
+        }),
+      },
+    ]),
+    invokeImpl: (async (cmd: string) => {
+      if (cmd === 'is_install_eligible') {
+        return {
+          ...READABLE_RECORD_PROBE,
+          installed: { ...READABLE_RECORD_PROBE.installed, version: '0.22.150', releaseTag: 'alpha/v0.22.150' },
+        };
+      }
+      throw new Error(`unexpected invoke ${cmd}`);
+    }) as InvokeLike,
+  });
+
+  await deps.controller.runCheck('stable');
+
+  assertEqual(deps.lastCheck.eligibilityResult, 'ineligible', 'an older stable build is never offered');
+  assertEqual(
+    deps.lastCheck.installDisabledReason,
+    'installed version is at or above manifest version',
+    'the reason is the version rule',
+  );
+  let refused = false;
+  try {
+    await deps.controller.install();
+  } catch {
+    refused = true;
+  }
+  assert(refused, 'install must refuse a downgrade');
+}
+
 async function main() {
   await verifiesRunCheckOnSuccessPopulatesLastCheckHonestly();
   await verifiesRunCheckFetchesAndVerifiesReleaseNotesOnSuccess();
@@ -992,6 +1113,10 @@ async function main() {
   await verifiesInstallRefusesWhenNotEligible();
   await verifiesRestorePreviousVersionCallsRealCommand();
   await verifiesRestorePreviousVersionSurfacesFailureHonestly();
+  await verifiesAFreshProfileDefaultsToStable();
+  await verifiesAStoredAlphaOrBetaChoiceIsKept();
+  await verifiesNoStableReleaseYetIsAMessageNotAnError();
+  await verifiesSwitchingDownToStableNeverOffersAnOlderBuild();
   console.log('controllerAdapter.test.ts: all assertions passed');
 }
 

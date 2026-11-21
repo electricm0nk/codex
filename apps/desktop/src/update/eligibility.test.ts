@@ -40,6 +40,7 @@ function main() {
   verifiesWindowsInstallsUpdateFromTheInstallerNotByHash();
   verifiesVersionNotGreaterIneligible();
   verifiesVersionEqualIneligible();
+  verifiesSwitchingDownToStableDoesNotDowngrade();
   verifiesHashMatchIneligible();
   verifiesIndexFetchFailedUnknown();
   verifiesManifestFetchFailedUnknown();
@@ -164,6 +165,21 @@ function verifiesVersionEqualIneligible() {
     decision.install_disabled_reason,
     'installed version is at or above manifest version',
     'equal version reason string'
+  );
+}
+
+// SD-43 Part C: alpha 0.22.150 installed, user picks stable whose newest is 0.21.40.
+function verifiesSwitchingDownToStableDoesNotDowngrade() {
+  const input = eligibleInput();
+  input.selectedChannel = 'stable';
+  input.installedState.version = '0.22.150';
+  input.manifest.version = '0.21.40';
+  const decision = decideEligibility(input);
+  assertEqual(decision.result, 'ineligible', 'a lower stable build is never offered');
+  assertEqual(
+    decision.install_disabled_reason,
+    'installed version is at or above manifest version',
+    'down-switch reason string'
   );
 }
 

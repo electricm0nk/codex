@@ -19,7 +19,12 @@ function main() {
   verifiesThreeGroupsSurfaceEveryKey();
   verifiesRenderFillsPlaceholders();
   verifiesRenderPassesThroughKnownValues();
+  verifiesSelectedChannelDefaultsToStable();
   console.log('diagnostics.test.ts: all diagnostics model assertions passed');
+}
+
+function verifiesSelectedChannelDefaultsToStable() {
+  assertEqual(defaultLastCheckDiagnostics().selected_channel, 'stable', 'default selected channel is stable');
 }
 
 function verifiesThreeGroupsSurfaceEveryKey() {

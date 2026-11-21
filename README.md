@@ -77,8 +77,11 @@ If the window opens blank, start it with
 
 The app checks for updates itself. It reads the release feed on the `update-index` branch (see
 [Long-lived infrastructure branches](#long-lived-infrastructure-branches)). The update panel
-lets you pick a channel (`alpha`, `beta`, `stable`) and install a newer build. Today only `alpha`
-has builds.
+lets you pick a channel (`alpha`, `beta`, `stable`) and install a newer build. A new install starts
+on `stable`; `alpha` and `beta` are opt-in, and the app remembers the channel you pick. A channel
+that has no release yet says so ("No stable release yet") instead of showing an error. Switching to
+a slower channel never installs an older build: you stay on your version until that channel
+publishes a newer one.
 
 ## Build from source
 

@@ -76,7 +76,7 @@ export function defaultInstalledDiagnostics(): InstalledDiagnostics {
 /** Last-check defaults: no check has run yet, so fetch statuses fail-closed. */
 export function defaultLastCheckDiagnostics(): LastCheckDiagnostics {
   return {
-    selected_channel: 'alpha',
+    selected_channel: 'stable',
     index_url: '',
     index_status: 'failed',
     manifest_status: 'failed',
