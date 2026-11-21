@@ -1,10 +1,11 @@
 # Execution brief: release channels — signed manifest, beta publishing, stable default
 
-Drafted 2026-11-20. Status: READY (both public keys recorded in §15). SD-42 merged (PR #413). Waits for SD-43 to be authored. Operator rulings 2026-11-20 are in §14.
-Operator ruling 2026-11-20 (corrected): this is NOT a new SD and NOT a new tranche. It is a new
-build inside SD-43, delivered on SD-43's tranche branch. It is too small to justify any version
-increment: NO tranche cut, NO version-surface bump, NO new SD number. The publish workflow keeps
-stamping `0.<tranche>.<run>` as it does today. SD-43 authoring (from `intake.md`) includes this brief.
+Drafted 2026-11-20. Status: IN EXECUTION 2026-11-21 (Parts A+B on branch `build/0.22-channels-signing-beta`;
+Part C on its own branch). Both public keys recorded in §15. Operator rulings 2026-11-20 are in §14.
+Placement (operator correction 2026-11-21, supersedes earlier text): this is NOT inside SD-43, NOT a
+new SD, and NOT a new tranche. It is another build on v0.22.x: NO version bump, NO tranche cut, NO
+version-surface change. The publish workflow keeps stamping `0.22.<run>`. This file only lives in the
+SD-43 intake folder; the SD-43 intake items are separate work and are not part of this build.
 Three parts: A signing, B beta publishing, C default channel.
 
 ## 1. Objective
@@ -74,7 +75,7 @@ and `grep -n -i -E "signature|ed25519|minisign" apps/desktop/src-tauri/src/updat
 1. **Transition.** Installs already in the field have no verify code. Do they get ONE final
    unsigned hop to a verifying build? (Recommended: yes, one hop, then enforce.)
 2. **Key custody.** Who holds the offline backup of the private key? (Operator.)
-3. ~~SD placement~~ Ruled 2026-11-20: a build inside SD-43; no new SD, no version bump.
+3. ~~SD placement~~ Ruled 2026-11-21: another build on v0.22.x, not inside SD-43; no new SD, no tranche cut, no version bump.
 
 ## 8. Non-goals
 
@@ -157,7 +158,9 @@ New installs default to `stable`. Alpha and beta are opt-in.
    Watch item: the operator may call a coming release major version 1. The stamp step and
    `buildVersionTriple` tests must keep the major digit in ONE place so that change is one edit.
    Moving to 1.x does not reset the tranche digit rule; re-read `publish-tester-release.yml`
-   "tranche-base" comments before that change. Not part of this SD.
+   "tranche-base" comments before that change. Not part of this build.
+4. **Placement (corrected 2026-11-21).** Not inside SD-43, not a new SD or tranche: another build on
+   v0.22.x. Publish keeps stamping `0.22.<run>`.
 
 ## 15. Key material (public only)
 
