@@ -1,14 +1,18 @@
 name: Publish tester release
 
 # Publish official tester-channel release units from governed promotion sources only.
-# develop -> alpha (prerelease)
+# develop -> alpha  (prerelease)
+# test    -> beta   (prerelease)
 # main    -> stable (non-prerelease)
-# beta is reserved until a governed candidate promotion surface exists in repo/workflow truth.
+# Any other ref fails (scripts/release/resolve-channel.sh); nothing defaults to alpha.
+# Every channel's update-manifest.json is signed (scripts/release/sign-manifest.sh,
+# secret UPDATE_SIGNING_KEY); the app refuses an unsigned manifest.
 
 on:
   push:
     branches:
       - develop
+      - test
       - main
 
 permissions:
@@ -296,14 +300,7 @@ jobs:
 
       - name: Resolve publication channel
         id: channel
-        run: |
-          if [ "$GITHUB_REF_NAME" = "main" ]; then
-            echo "channel=stable" >> "$GITHUB_OUTPUT"
-            echo "prerelease=false" >> "$GITHUB_OUTPUT"
-          else
-            echo "channel=alpha" >> "$GITHUB_OUTPUT"
-            echo "prerelease=true" >> "$GITHUB_OUTPUT"
-          fi
+        run: bash scripts/release/resolve-channel.sh "$GITHUB_REF_NAME" >> "$GITHUB_OUTPUT"
 
       # SD16-F-WINDOWS: pull the stamped-sources artifact produced by
       # the top-level `stamp` job so this job (and the new windows job)
@@ -811,11 +808,10 @@ jobs:
           set -euo pipefail
           VERSION="${{ needs.stamp.outputs.version }}"
           SHORT_SHA="${GITHUB_SHA:0:8}"
-          if [ "${GITHUB_REF_NAME}" = "main" ]; then
-            CHANNEL="stable"; PRERELEASE="false"
-          else
-            CHANNEL="alpha"; PRERELEASE="true"
-          fi
+          # Three-way case on the ref; an unknown ref fails here (never defaults to alpha).
+          RESOLVED="$(bash scripts/release/resolve-channel.sh "${GITHUB_REF_NAME}")"
+          CHANNEL="$(sed -n 's/^channel=//p' <<<"${RESOLVED}")"
+          PRERELEASE="$(sed -n 's/^prerelease=//p' <<<"${RESOLVED}")"
           MANIFEST_TAG="${CHANNEL}/v${VERSION}-${SHORT_SHA}"
           RELEASE_TAG="${CHANNEL}-v${VERSION}-${SHORT_SHA}"
           echo "channel=${CHANNEL}" >> "$GITHUB_OUTPUT"
@@ -952,6 +948,17 @@ jobs:
           python3 ../tools/release/check_release_manifest_against_dev_schema.py \
             update-manifest.json
 
+      # Sign the exact bytes that ship: update-manifest.json (the release asset and the update-index
+      # mirror) and update-manifest-stub.json are the same file, so one signature covers both. The
+      # key reaches the script only as env; the script fails on an empty or untrusted key.
+      - name: Sign update-manifest.json
+        env:
+          UPDATE_SIGNING_KEY: ${{ secrets.UPDATE_SIGNING_KEY }}
+        run: |
+          set -euo pipefail
+          cmp -s release-staging/update-manifest.json release-staging/update-manifest-stub.json
+          bash scripts/release/sign-manifest.sh release-staging/update-manifest.json
+
       # Runs before the release exists, while a failure is still cheap. --fetch-notes proves the
       # published notes URL serves bytes that hash to release_notes_hash, which is what the app checks.
       - name: Verify release consistency (versions, hashes, deb metadata, served notes)
@@ -985,7 +992,7 @@ jobs:
           shopt -s nullglob
           GLOB=( *.deb *.AppImage *.msi *.exe *.dmg
                  checksums.sha256 provenance.json
-                 update-manifest.json update-manifest-stub.json
+                 update-manifest.json update-manifest.json.sig update-manifest-stub.json
                  "$NOTES_FILE" )
 
           gh release create "${TAG}" \
@@ -997,7 +1004,7 @@ jobs:
       # === Channel-index preparation + push (moved from linux publish job) ===
 
       - name: Assert channel-index gate preconditions
-        if: success() && github.event_name == 'push' && (github.ref_name == 'develop' || github.ref_name == 'main') && hashFiles('docs/release/SD-16/tranche-*/manifest.yaml') == ''
+        if: success() && github.event_name == 'push' && (github.ref_name == 'develop' || github.ref_name == 'test' || github.ref_name == 'main') && hashFiles('docs/release/SD-16/tranche-*/manifest.yaml') == ''
         run: |
           echo "::error::channel-index: no tranche manifest matched docs/release/SD-16/tranche-*/manifest.yaml — the channel-index steps would be silently skipped and the update-index branch would never move. Failing loudly instead."
           exit 1
@@ -1020,7 +1027,7 @@ jobs:
             --published-at "$(date -u +%Y-%m-%dT%H:%M:%SZ)"
 
       - name: Prepare channel index payload
-        if: success() && github.event_name == 'push' && (github.ref_name == 'develop' || github.ref_name == 'main') && hashFiles('docs/release/SD-16/tranche-*/manifest.yaml') != ''
+        if: success() && github.event_name == 'push' && (github.ref_name == 'develop' || github.ref_name == 'test' || github.ref_name == 'main') && hashFiles('docs/release/SD-16/tranche-*/manifest.yaml') != ''
         id: channel_index_prep
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -1087,6 +1094,8 @@ jobs:
           python3 -c "import json; json.load(open('channels/${CHANNEL}.json'))"
 
           MANIFEST_CONTENT_B64="$(base64 -w0 "manifests/${MANIFEST_TAG}/update-manifest.json")"
+          # The app fetches the signature from the mirror URL + .sig; no mirror without it.
+          MANIFEST_SIG_B64="$(base64 -w0 "${MANIFEST_SRC}.sig")"
           if [ -z "${MANIFEST_CONTENT_B64}" ]; then
             echo "::error::channel-index: failed to base64-encode the staged manifest mirror at manifests/${MANIFEST_TAG}/update-manifest.json"
             exit 1
@@ -1104,17 +1113,18 @@ jobs:
             echo "COMMIT_MESSAGE=channel-index: ${CHANNEL} ${TAG} (tranche ${TRANCHE_ID})"
             echo "CHANNEL_INDEX_JSON_B64=$(printf '%s' "${INDEX_JSON}" | base64 -w0)"
             echo "MANIFEST_CONTENT_B64=${MANIFEST_CONTENT_B64}"
+            echo "MANIFEST_SIG_B64=${MANIFEST_SIG_B64}"
           } >> "${GITHUB_ENV}"
 
           echo "channel-index: prepared channels/${CHANNEL}.json (channel=${CHANNEL}, tag=${TAG}, tranche=${TRANCHE_ID}, published_at=${PUBLISHED_AT}, mirror_url=${MIRROR_URL})"
 
       - name: Update channel index on update-index branch
-        if: success() && github.event_name == 'push' && (github.ref_name == 'develop' || github.ref_name == 'main') && hashFiles('docs/release/SD-16/tranche-*/manifest.yaml') != ''
+        if: success() && github.event_name == 'push' && (github.ref_name == 'develop' || github.ref_name == 'test' || github.ref_name == 'main') && hashFiles('docs/release/SD-16/tranche-*/manifest.yaml') != ''
         run: |
           set -euo pipefail
 
-          if [ -z "${CHANNEL:-}" ] || [ -z "${COMMIT_MESSAGE:-}" ] || [ -z "${CHANNEL_INDEX_JSON_B64:-}" ] || [ -z "${MANIFEST_TAG:-}" ] || [ -z "${MANIFEST_CONTENT_B64:-}" ]; then
-            echo "::error::channel-index: missing CHANNEL, COMMIT_MESSAGE, CHANNEL_INDEX_JSON_B64, MANIFEST_TAG, or MANIFEST_CONTENT_B64"
+          if [ -z "${CHANNEL:-}" ] || [ -z "${COMMIT_MESSAGE:-}" ] || [ -z "${CHANNEL_INDEX_JSON_B64:-}" ] || [ -z "${MANIFEST_TAG:-}" ] || [ -z "${MANIFEST_CONTENT_B64:-}" ] || [ -z "${MANIFEST_SIG_B64:-}" ]; then
+            echo "::error::channel-index: missing CHANNEL, COMMIT_MESSAGE, CHANNEL_INDEX_JSON_B64, MANIFEST_TAG, MANIFEST_CONTENT_B64, or MANIFEST_SIG_B64"
             exit 1
           fi
 
@@ -1139,8 +1149,10 @@ jobs:
           mkdir -p "manifests/${MANIFEST_TAG}"
           printf '%s' "${MANIFEST_CONTENT_B64}" | base64 -d > "${MIRROR_FILE}"
           python3 -c "import json; json.load(open('${MIRROR_FILE}'))"
+          printf '%s' "${MANIFEST_SIG_B64}" | base64 -d > "${MIRROR_FILE}.sig"
+          [ "$(wc -c < "${MIRROR_FILE}.sig")" -eq 64 ] || { echo "::error::channel-index: mirror signature is not 64 bytes"; exit 1; }
 
-          git add "${FILE}" "${MIRROR_FILE}"
+          git add "${FILE}" "${MIRROR_FILE}" "${MIRROR_FILE}.sig"
           if git diff --cached --quiet; then
             echo "channel-index: no changes for ${FILE} and ${MIRROR_FILE}; update-index is already current"
             exit 0
