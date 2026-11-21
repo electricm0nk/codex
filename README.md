@@ -174,7 +174,6 @@ codex/
   scripts/              # verify.sh, oracle fetch, corpus bundle and other tooling
   tools/release/        # release-manifest tooling used by CI
   schemas/              # JSON schemas (rules, update feed)
-  site/                 # public status site
   docs/architecture/    # current-state docs: start here
   docs/release/         # one folder per work bundle (SD-NN-<slug>), with release notes
   AGENTS.md             # rules for coding agents in this repo

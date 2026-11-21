@@ -1,11 +1,11 @@
 # Release pipeline
 
-> Scope: how a commit on `develop` or `main` becomes a tagged, schema-validated tester release, how branches get promoted between channels, and how the public `campaign-codex.org` status site is deployed.
+> Scope: how a commit on `develop` or `main` becomes a tagged, schema-validated tester release, and how branches get promoted between channels. The public `campaign-codex.org` site is not built or deployed from this repo: it lives in `electricm0nk/codex-web`, which deploys it to Cloudflare Pages.
 > Merge pass: **2026-10-07, `tranche/17` merged with `develop` @ `fd68740f60` (PR #396)** (SD-37 E7.9a): the job list and bundled-resources paragraph below carry both branches' changes; the version prefix is `0.17` (tranche/17's bump).
 > Last verified: **2026-11-20 against `tranche-22` (`fc465cddd1`, SD-42 E5.3)** for the version stamp (`0.22`), the bump history, the Linux publish job's `container: ubuntu:22.04`, the glibc floor gate (`tools/release/check_glibc_floor.py`) and `linux-build-check.yml`. Earlier: **2026-11-16 against `tranche-21` (`be27ecc83d`, SD-41 E5.3)** for the version stamp (`0.21`: `publish-tester-release.yml` stamp line, the three version files, `buildVersionTriple.test.ts`) and the bump history. Earlier: **2026-11-14 against `tranche-20` (`2fd74a5c15`, SD-40 E5.4)** for the version stamp (`0.20`), the bump history and the PR-time notes check in `check-release-manifest.yml`. Earlier: **2026-11-07 against `tranche-19` (`e5c7415d7f`)** for the publish jobs' sidecar steps and the installer contents. Earlier: **2026-10-15 against `tranche-18` (`9d23977679`, SD-38 closure truth-up)** for the version stamp (`0.18`), the
 > `tranche-18` bump history and the bundled resources (Cyberpunk RED corpus added). Earlier: **2026-10-07 against `tranche/17` (`b99c3d4b02`, SD-37 closure truth-up)** for the version stamp (`0.17`),
 > the Windows job (NSIS bundle only), the bundled resources and the Starfinder data size. Everything else in this document
-> (manifest scripts, branch-promotion gates, `deploy-site.yml`, the PR-time workflows) was last verified 2026-09-20 against
+> (manifest scripts, branch-promotion gates, the PR-time workflows) was last verified 2026-09-20 against
 > `tranche/16` and not re-derived this pass beyond the paths it cites.
 > Last verified: **2026-10-07 against branch `tranche-16-ui` (base `develop` @ `157873a67e`)** — the
 > stamp, notes-selection, manifest and consistency-gate sections were re-derived against the workflow
@@ -15,11 +15,10 @@
 
 ## Overview
 
-Three independent systems live under `.github/workflows/`:
+Two independent systems live under `.github/workflows/`:
 
 1. **Publish** (`publish-tester-release.yml`): turns a push to `develop` or `main` into a multi-platform GitHub Release with a schema-validated update manifest, and (conditionally) advances the `update-index` branch's channel pointer.
 2. **Promotion**: a chain of branch-source guards and an evidence gate control which branch may open a PR into which downstream branch (`develop` → `test` → `main`), independent of the publish workflow.
-3. **Site deploy** (`deploy-site.yml`): pushes `site/**` to Cloudflare Pages on a push to `main` — a separate concern from the desktop app release, sharing only the same repo and the same `main` branch.
 
 Systems 1 and 2 share doctrine constants (tranche id, required notes sections) but are enforced by separate code paths kept in sync by hand — see [The pinned-SD-16 quirk](#the-pinned-sd-16-quirk) below.
 
@@ -30,7 +29,6 @@ flowchart LR
     test -->|"allow-only-test-into-main.yml\n(source must be test)"| main
     develop -->|push| PublishAlpha["publish-tester-release.yml\nchannel=alpha (prerelease)"]
     main -->|push| PublishStable["publish-tester-release.yml\nchannel=stable"]
-    main -->|"push, site/** changed"| DeploySite["deploy-site.yml\nCloudflare Pages"]
     PublishAlpha --> UpdateIndex["update-index branch\nchannels/alpha.json"]
     PublishStable --> UpdateIndex2["update-index branch\nchannels/stable.json"]
 ```
@@ -203,16 +201,6 @@ Two pipeline surfaces are pinned to frozen SD-16-era identifiers regardless of w
 
 These two pins are consistent with each other only in the sense that they both point at old identifiers; they are not the *same* identifier, and nothing in the codebase currently derives one from another. A future contract bump that changes either needs to touch every file listed above plus its corresponding test fixtures (`scripts/release/test-promotion-gates.test.sh`, `scripts/release/__tests__/fixtures/`, `scripts/release/check_promotion_evidence.py`'s embedded `_t_*` self-tests).
 
-## The site-deploy workflow (`deploy-site.yml`)
-
-A separate, smaller lane, unrelated to the desktop-app release above except for sharing `main`:
-
-- **Trigger**: `push` to `main` with `paths: ['site/**', '.github/workflows/deploy-site.yml']`, plus manual `workflow_dispatch`.
-- **What it deploys**: the static `site/` tree (the `campaign-codex.org` public status page — see [status.md](./status.md) for what that page reports) to the Cloudflare Pages project `codex` (default URL `https://codex-3cc.pages.dev/`, custom domain `https://campaign-codex.org/`).
-- **Concurrency**: `group: deploy-site`, `cancel-in-progress: false` — deploys are serialized rather than raced, unlike `publish-tester-release.yml` (see below).
-- **Permissions**: `contents: read` only; the Cloudflare side is authenticated via the `CLOUDFLARE_API_TOKEN` repository secret.
-- **Not gated by any test job** — a push to `main` touching only `site/**` deploys directly, without running `cargo test`/`npm test` first (those only run for a real app-code push via `publish-tester-release.yml`'s own `test` job).
-
 ## Installer contents and size
 
 Bundle targets, per `tauri.conf.json`: `deb`, `appimage` (Linux), `msi`, `nsis` (Windows; CI builds only `nsis`), `app`, `dmg` (macOS). The `pcg_import` sidecar is `bundle.externalBin` through `tauri.sidecar.json`, passed with `--config` only at bundling; the print fonts and Typst templates are compiled into the binary and are not bundle resources (see [desktop-app.md](./desktop-app.md)). Bundled resources: `resources/authoring_workbench/guard-stance-package/`, `resources/corpus_fixtures/` (small hand-authored fixtures), `resources/corpus_bundle/` mapped to `data/corpus/` inside the package, and the rules engine's own runtime reads: `data/sheet_rules/`, `data/starfinder-1e/sheet_rules/`, `data/cyberpunk-red/corpus/` (the Cyberpunk RED corpus, `git ls-files data/cyberpunk-red | awk 'END{print NR}'` → 55 tracked files), `data/rules_tables/` (13,291,625 bytes by `du -sb data/rules_tables`; the Starfinder tree is part of the 17,717 tracked files under `data/starfinder-1e`, `git ls-files data/starfinder-1e | awk 'END{print NR}'`), `data/class_feature_grants/`, `data/equipment_types.json`, `data/converted/record_vars.json`, and two files under `tests/fixtures/rules_core/` (the shared sweep fixture and the multiclass mix panel) that the class roster reads. The engine reads these through `support::paths::repo_root()`, which a packaged app redirects with `set_data_root` at startup (see [desktop-app.md](./desktop-app.md)); `apps/desktop/src-tauri/tests/packaged_resources.rs` lays out exactly what `tauri.conf.json` bundles and fails if the engine reads anything else — the sanitized runtime corpus mirror described in [desktop-app.md](./desktop-app.md)'s "The corpus-bundle build step". That bundle alone is **64 MiB** across **14,029** JSON files (`du -sh apps/desktop/src-tauri/resources/corpus_bundle/`; `find … -name '*.json' | wc -l`) — the dominant contributor to installed size alongside the Tauri/WebView2/webkit runtime itself. No installer artifact from a real `tauri build` run was inspected for this pass (that would mean running a build, out of this doc-only pass's scope) — the 64 MiB corpus-bundle figure is the one concretely re-derivable number; total installer size per platform is not independently re-verified here.
@@ -259,11 +247,10 @@ All Python validators that call `jsonschema.validate`/`Draft202012Validator` nee
 | `allow-only-test-into-main.yml` | `pull_request_target` → `main`, `delete` | `{}` (the `restore-test-branch` job grants `contents: write`) | none declared |
 | `check-release-manifest.yml` | `pull_request` → `develop`, `test`, `main` (path-filtered) | `contents: read`, `pull-requests: read` | none declared |
 | `tranche-3-ci.yml` | `pull_request` → `tranche/3`, `push` → `tranche/3` | `contents: read`, `pull-requests: read` | `tranche-3-${{ github.ref }}`, `cancel-in-progress: true` |
-| `deploy-site.yml` | `push` to `main` (path-filtered: `site/**`), `workflow_dispatch` | `contents: read` | `deploy-site`, `cancel-in-progress: false` |
 | `linux-build-check.yml` | `workflow_dispatch`, and `pull_request` / `push` path-filtered to the two Linux build workflows and `tools/release/check_glibc_floor.py` | `contents: read` | none declared |
 | `release-tooling-tests.yml` | `pull_request` and `push` to `develop` (path-filtered: `tools/release/**`, `scripts/release/**`, `schemas/update/**`, `docs/release/current-release.json`, the publish workflow) | `contents: read` | none declared |
 
-`publish-tester-release.yml` remains the only workflow that runs on every commit to `develop`/`main` with no `concurrency:` block — two pushes to `develop` in quick succession can run two full `finalize` jobs concurrently, each pushing to the shared `update-index` branch (mitigated only by each push being a fast-forward-or-fail `git push origin HEAD:update-index`, not by the workflow itself serializing runs). `deploy-site.yml` and `tranche-3-ci.yml` are the only two workflows with an explicit `concurrency:` group.
+`publish-tester-release.yml` remains the only workflow that runs on every commit to `develop`/`main` with no `concurrency:` block — two pushes to `develop` in quick succession can run two full `finalize` jobs concurrently, each pushing to the shared `update-index` branch (mitigated only by each push being a fast-forward-or-fail `git push origin HEAD:update-index`, not by the workflow itself serializing runs). `tranche-3-ci.yml` is the only workflow with an explicit `concurrency:` group.
 
 ## How to extend
 
@@ -283,12 +270,11 @@ All Python validators that call `jsonschema.validate`/`Draft202012Validator` nee
 - **A `paths:` filter that names a moved directory silently stops firing** — `check-release-manifest.yml`'s `sd16/**`/`sd17/**` globs are the live example: they resolve to nothing today, so a change under the app's real `feedback/`/`update/` directories that should trigger this gate does not, unless it also happens to touch one of the filter's still-live globs. Whenever a directory this filter names gets renamed, update the filter in the same commit.
 - **Line-number citations in this doc rot fast.** `publish-tester-release.yml` is 1,000+ lines and grows every bundle; this pass deliberately cites step/job names instead of line ranges for exactly that reason. Do not reintroduce line-number citations without expecting them to be wrong again within a tranche or two.
 - **`GITHUB_RUN_NUMBER` is monotonic repo-wide, not per-branch** — a build number is never reused across channels, but it also never resets, so "build 42" on its own says nothing about which tranche it came from; always read it alongside the `major.tranche` prefix.
-- **`deploy-site.yml` shares no gate with the app release** — a broken `cargo test`/`npm test` on `main` does not block a `site/**`-only push from deploying. Do not assume a green site deploy says anything about app-code health, or vice versa.
 
 ## Related docs
 
 - [testing.md](./testing.md) — the full verification command set, including the standalone scripts referenced in the inventory table above.
 - [overview.md](./overview.md) — system-level architecture context.
 - [conventions.md](./conventions.md) — repo-wide coding and doc conventions.
-- [status.md](./status.md) — current SD/tranche state, and what the deployed public status site (`site/`) actually reports.
+- [status.md](./status.md) — current SD/tranche state.
 - [desktop-app.md](./desktop-app.md) — the corpus-bundle build step this pipeline's `tauri build` step depends on.
