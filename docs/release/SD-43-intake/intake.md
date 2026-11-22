@@ -538,6 +538,40 @@ Run in this order, after SD-42 is merged:
   whether the engine already holds prerequisites for pool members; how the pool size per level is
   modeled in our engine. Each needs a command, not a guess.
 
+### 22a. Closer look at PCGen's Abilities tab: what it has that we do not carry (operator, 2026-11-22: "a lot in there which we have not carried over")
+
+Read from the pinned oracle (`7f81800`): `gui2/tabs/AbilitiesInfoTab.java` (319 lines),
+`AbilityChooserTab.java` (788), `ability/AbilityTreeTableModel.java`, `AbilityTreeViews.java`,
+`CategoryTableModel.java`. Read-only. Compared with our `FeatsTab` (`CharacterSheet.tsx` ~2343, props
+read only, not run).
+
+| # | PCGen feature | Where in PCGen | Ours (read, not run) |
+|---|---|---|---|
+| 1 | A **category table**: Category / **Total** / **Remaining** picks, one row per category | `CategoryTableModel` | feat budget badge only; no per-pool table |
+| 2 | Categories grouped into **tabs by category type**, shown only once the character has them (a "Gained" filter on the category bar) | `AbilitiesInfoTab` `AbilityTabsModel` | one Feats tab |
+| 3 | **Available** pane (filtered tree) beside a **Selected** pane (tree) | `AbilityChooserTab` | one picker plus a list |
+| 4 | Available pane has several **tree views**: Name, Type, Source, Prerequisite | `AbilityTreeViews` | to verify |
+| 5 | Available columns: Type, **Multiples**, **Stacks**, Description, **Cost**, Source | `AvailableAbilityTreeViewModel` | to verify |
+| 6 | **Search** box and a **Qualified** filter; unqualified rows drawn differently | `SearchFilterPanel`, `qFilterButton` | to verify |
+| 7 | **Info pane** for the highlighted ability (description, prerequisites, benefit) | `InfoPane`, `InfoHandler` | to verify |
+| 8 | Selected pane has a **Choices** column (the target picked, for example the weapon) | `AbilityTreeTableModel` | feat targets shown; other pools none |
+| 9 | **Add Selected / Remove Selected**; double-click adds; the buttons are disabled with a tooltip when the category is not editable (granted automatically) | `AddAction`, `RemoveAction` | add/remove for feats only |
+| 10 | Pool rules in data: **EDITPOOL** (the player may change the pool by hand), **FRACTIONALPOOL**, ability **Cost**, **VISIBLE:QUALIFY** | `uc_abilitycategories.lst` | none for pools |
+| 11 | Auto-granted abilities appear in the same list as chosen ones, not removable | category `EDITABLE:NO` | to verify |
+
+- **Scale (derived, not yet interpreted):**
+  `grep -rh '^ABILITYCATEGORY:' --include=*.lst ~/workspace/repos/pcgen/data/pathfinder | wc -l` → 2616 lines,
+  2430 distinct names. Most are tiny pools (for example one per spell word and level, or +2/+4 stat
+  bumps), so this is NOT the number of tabs. Count only the visible, player-editable categories before
+  quoting a scope number.
+- **What this look did not cover:** the Summary and Skills tabs; the feat choose-dialogs (`CHOOSE:`
+  flows that ask which weapon or skill); how PCGen prints abilities on its sheet; the Starfinder and
+  other game-system data (only `data/pathfinder` was counted). Rows marked "to verify" are unread
+  parts of our `FeatsTab`.
+- **Next step (proposal):** before the strawman is fixed, one read-only pass lists, for the visible and
+  editable categories only: name, pool source, member count, and whether our engine holds the pool.
+  That list, not the 2616 lines, is the scope.
+
 ## 23. RELEASE: the minor version follows the SD number — SD-43 ships as 0.43
 
 - **Reported:** 2026-11-22 (operator): "jump our minor version to 0.43… it's getting hard to remember to
