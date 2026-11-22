@@ -428,7 +428,7 @@ The author's run of the gate is recorded in `progress.md` Cycle 0.
 5. **Architecture docs (E7.3).** `~/.hermes/profiles/god-emporer/skills/devops/architecture-truth-up/scripts/architecture_truth_up.py --integration-target develop --receipts-md docs/release/SD-43-market-inventory-and-abilities/receipts.md --bundle SD-43`;
    if it maps 0 docs (SD-39…SD-42 precedent), hand-map from `git diff --name-status origin/develop...HEAD` and
    append a second receipt; then an Opus claims critic over every added line.
-6. **Graphify LAST (E7.4).** Precondition: unfiltered `git status --porcelain` prints nothing and
+6. **Graphify — OUT OF SCOPE (operator ruling 2026-11-22: "the graph refresh is out of scope"). E7.4 does not run it.** Original text kept for the record: Precondition: unfiltered `git status --porcelain` prints nothing and
    `git rev-parse HEAD` = `git rev-parse origin/tranche-43`. Run
    `~/.hermes/profiles/god-emporer/skills/devops/graphify-update/scripts/update_graphify.py --integration-target develop --receipts-md docs/release/SD-43-market-inventory-and-abilities/receipts.md --bundle SD-43`.
    **Never `--force`, never `graphify update`.** Node-count guard exit 1 → file the receipt and stop (memory:

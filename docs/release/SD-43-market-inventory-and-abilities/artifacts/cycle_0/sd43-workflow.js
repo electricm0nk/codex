@@ -55,8 +55,8 @@ const CARDS = [
   "lane": "main",
   "cargo": false,
   "hub": false,
-  "row": "| C2 | Incremental graphify after SD-42 (no `--force`, no `graphify update`); receipt | sonnet | blocked | C1 | main | no | no | BLOCKED: node count 648328 -> 322949 (49.8% < 90%), restored; needs operator ruling on semantic backend; receipt `artifacts/cycle_0/C2-graphify-receipt.md`; SHA `ba5da0573d8b612877265ea408affe658770a56c` |",
-  "section": "### C2 — graphify after SD-42 (intake item 0 step 4)\n- **Objective:** run graphify incrementally against the current tree, as the operator named (no `--force`, no\n  `graphify update`); a node-count guard exit 1 means file the receipt and stop (memory).\n- **FILES YOU OWN:** `graphify-out/**` (as the tool writes it); `artifacts/cycle_0/C2-graphify-receipt.md`.\n- **Acceptance:** the receipt holds the command, exit code and node counts before/after (`python3 -c \"import\n  json;print(len(json.load(open('graphify-out/graph.json'))['nodes']))\"`, before and after; the after count is not\n  lower than 90 % of the before count, else stop and restore from the dated snapshot).\n- **Depends:** C1. **Tier:** sonnet.\n- **Does not cover:** the closure graphify (E7.4).",
+  "row": "| C2 | Incremental graphify after SD-42 (no `--force`, no `graphify update`); receipt | sonnet | complete | C1 | main | no | no | OUT OF SCOPE — operator ruling 2026-11-22: \"the graph refresh is out of scope\"; nothing written to graphify-out; attempt receipt `artifacts/cycle_0/C2-graphify-receipt.md` (SHA `597ff805dc2beecf1097ec87e9069cdd122733d1`) |",
+  "section": "### C2 — graphify after SD-42 (intake item 0 step 4)\n- **OUT OF SCOPE** (operator ruling 2026-11-22: \"the graph refresh is out of scope\"). Not run again; the run-2 attempt and its restore are in the receipt. The text below is the original card.\n- **Objective:** run graphify incrementally against the current tree, as the operator named (no `--force`, no\n  `graphify update`); a node-count guard exit 1 means file the receipt and stop (memory).\n- **FILES YOU OWN:** `graphify-out/**` (as the tool writes it); `artifacts/cycle_0/C2-graphify-receipt.md`.\n- **Acceptance:** the receipt holds the command, exit code and node counts before/after (`python3 -c \"import\n  json;print(len(json.load(open('graphify-out/graph.json'))['nodes']))\"`, before and after; the after count is not\n  lower than 90 % of the before count, else stop and restore from the dated snapshot).\n- **Depends:** C1. **Tier:** sonnet.\n- **Does not cover:** the closure graphify (E7.4).",
   "phase": "C — package, pointer, graph"
  },
  {
@@ -159,7 +159,7 @@ const CARDS = [
   "lane": "gear",
   "cargo": false,
   "hub": false,
-  "row": "| E1.3 | Whole container box is a drop target (nearest container) | sonnet | complete | E1.2 | gear | no | no | receipt `artifacts/epic_1/E1.3_cycle_receipt.md`; SHA `1a72bf730baad31aad1b8a5d4d3d3af4dc774b88` |",
+  "row": "| E1.3 | Whole container box is a drop target (nearest container) | sonnet | complete | E1.2 | gear | no | no | receipt `artifacts/epic_1/E1.3_cycle_receipt.md`; SHA `1a72bf730baad31aad1b8a5d4d3d3af4dc774b88`; repair SHA `f1090131dfea7c3af48c2346682bcc864219cfe9` |",
   "section": "### E1.3 — whole-box drop target (item 7)\n- **Objective:** header, empty space and every child row of a container box target that container (nearest\n  when nested); same-container drop is a no-op; self/descendant drops refused.\n- **FILES YOU OWN:** `ui/characterHub/GearScreen.tsx`, `gearScreenModel.ts` (`dropTarget` `:363`),\n  `gearScreenModel.test.ts`.\n- **Failing test first:** a model test that a drop on a child row's zone resolves to its container (fails today:\n  child rows carry no zone).\n- **Acceptance:** the test; a refusal test for container-into-own-descendant over the widened area.\n- **Depends:** E1.2. **Tier:** sonnet.\n- **Does not cover:** drag between screens.",
   "phase": "E1 — Market and inventory"
  },
@@ -172,7 +172,7 @@ const CARDS = [
   "lane": "gear",
   "cargo": false,
   "hub": false,
-  "row": "| E1.4 | Double-click / Enter: first free slot, else swap; to Carried; one piece | opus | todo | E1.3 | gear | no | no | |",
+  "row": "| E1.4 | Double-click / Enter: first free slot, else swap; to Carried; one piece | opus | complete | E1.3 | gear | no | no | receipt `artifacts/epic_1/E1.4_cycle_receipt.md`; SHA `e761ee7072a94a26dc50766c7872d1adf20ea207` |",
   "section": "### E1.4 — double-click and Enter (item 6)\n- **Objective:** per `decisions.md §6`; reuses the Move-to write.\n- **FILES YOU OWN:** `ui/characterHub/gearScreenModel.ts` (a pure `doubleClickTarget` function),\n  `gearScreenModel.test.ts`, `GearScreen.tsx`.\n- **Failing test first:** `doubleClickTarget` cases: ring with one ring slot free; both full → swap first; worn →\n  Carried; stack of 3 → moves 1; slot-less → null with reason.\n- **Acceptance:** the test; `grep -c \"onDoubleClick\" apps/desktop/src/characterHub/GearScreen.tsx` ≥ 1; a test\n  that a double-click inside a row button does not fire; Enter on a focused row calls the same function.\n- **Depends:** E1.3. **Tier:** opus.\n- **Does not cover:** drag.",
   "phase": "E1 — Market and inventory"
  },
@@ -224,7 +224,7 @@ const CARDS = [
   "lane": "market",
   "cargo": false,
   "hub": false,
-  "row": "| E1.8 | Market inventory sell value column (`sellNegotiateGp`) | sonnet | complete | E0.2 | market | no | no | receipt `artifacts/epic_1/E1.8_cycle_receipt.md`; SHA `fec7a7bda2de993a0b457a77810b8d286d2c0675` |",
+  "row": "| E1.8 | Market inventory sell value column (`sellNegotiateGp`) | sonnet | complete | E0.2 | market | no | no | receipt `artifacts/epic_1/E1.8_cycle_receipt.md`; SHA `7adf7e494d1b376c76ba01a0ee41e66721bf6d79` |",
   "section": "### E1.8 — sell values in the Market inventory (item 12 ask 1)\n- **Objective:** a value cell between the name/quantity and Negotiate (`MarketDialog.tsx` ~316–336), from\n  `sellNegotiateGp` under the Market's live price option, `formatMarketPrice`; `—` for no price and Cashless.\n- **FILES YOU OWN:** `ui/characterHub/MarketDialog.tsx`, `MarketDialog.test.ts`.\n- **Failing test first:** inventory row of a 3-stack under `standard` shows the 50 % total; under `cashless` `—`.\n- **Acceptance:** the test; `grep -c \"sellNegotiateGp\" apps/desktop/src/characterHub/MarketDialog.tsx` ≥ 2 (the\n  existing Negotiate use and the new cell — one function, two uses).\n- **Depends:** E0.2 (lane order). **Tier:** sonnet.",
   "phase": "E1 — Market and inventory"
  },
@@ -782,8 +782,8 @@ const CARDS = [
   "lane": "main",
   "cargo": false,
   "hub": false,
-  "row": "| E7.4 | Graphify LAST → PR LAST → lead merges when green → watch the develop publish | sonnet | todo | E7.3 | main | no | no | a red publish is a blocker |",
-  "section": "### E7.4 — graphify last, PR last, merge and watch\n- **Objective:** graphify (no `--force`) → PR `tranche-43 → develop` → when green the lead merges → watch the\n  develop publish to green on all three OSes; a red publish is a blocker.\n- **Acceptance:** `gh pr view --json state` → `MERGED`; the publish run's conclusion `success`. **Tier:** sonnet.",
+  "row": "| E7.4 | PR LAST → lead merges when green → watch the develop publish (graphify out of scope, operator 2026-11-22) | sonnet | todo | E7.3 | main | no | no | a red publish is a blocker |",
+  "section": "### E7.4 — PR last, merge and watch\n- **Objective:** (graphify is out of scope, operator ruling 2026-11-22: \"the graph refresh is out of scope\"; do not run it) PR `tranche-43 → develop` → when green the lead merges → watch the\n  develop publish to green on all three OSes; a red publish is a blocker.\n- **Acceptance:** `gh pr view --json state` → `MERGED`; the publish run's conclusion `success`. **Tier:** sonnet.",
   "phase": "E7 — closure"
  }
 ]

@@ -32,7 +32,7 @@ touched workspace and `bash scripts/verify.sh --only pcgen-residue-gate -j 8` �
 |---|---|---|
 | C0 | All package files exist; the placeholder gate passes | `find docs/release/SD-43-market-inventory-and-abilities -type f -name '*.md' \| sort` lists the 13 chassis files + `technical-requirements.md`, `technical-design.md`, `kanban.md`, `forward-scope-register.md`, `receipts.md`; `grep -rn '<[a-z_-]*>' docs/release/SD-43-market-inventory-and-abilities/ --include=*.md` → only `workflow-instruction.md §9` tokens |
 | C1 | Pointer resolves; version and notes agree; branch on origin | `python3 tools/release/resolve_release_notes.py --repo-root .` exit 0 and prints `docs/release/SD-43-market-inventory-and-abilities/release-notes.md` (exit 2 on 2026-11-22); `python3 -c "import json;d=json.load(open('docs/release/current-release.json'));assert d['tranche']==43,d"`; `grep -c 'SD-43 INTERIM NOTES' docs/release/SD-43-market-inventory-and-abilities/release-notes.md` → 1; `python3 -m pytest tools/release -q` green; `git ls-remote --heads origin tranche-43 \| awk 'END{print NR}'` → 1 |
-| C2 | Incremental graphify ran without `--force` and kept the graph | `artifacts/cycle_0/C2-graphify-receipt.md` holds the command, exit code, node counts before/after (`python3 -c "import json;print(len(json.load(open('graphify-out/graph.json'))['nodes']))"`); after ≥ 90 % of before; `grep -c -- '--force\|graphify update' artifacts/cycle_0/C2-graphify-receipt.md` → 0 outside quoted prohibitions |
+| C2 | **OUT OF SCOPE (operator ruling 2026-11-22: "the graph refresh is out of scope")** — Incremental graphify ran without `--force` and kept the graph | `artifacts/cycle_0/C2-graphify-receipt.md` holds the command, exit code, node counts before/after (`python3 -c "import json;print(len(json.load(open('graphify-out/graph.json'))['nodes']))"`); after ≥ 90 % of before; `grep -c -- '--force\|graphify update' artifacts/cycle_0/C2-graphify-receipt.md` → 0 outside quoted prohibitions |
 
 ## G-E0 Census (read-only; each output reproduces its stated figure or the card stops)
 
@@ -195,8 +195,7 @@ no sweep, **no PR**; it reports what is short with the command that shows it.
 
 **E7.3:** G-R's notes lines; the architecture truth-up receipt (and the hand-mapped one if the script maps 0 docs)
 appended to `receipts.md`; the claims critic's refuted count in the receipt.
-**E7.4:** graphify receipt in `receipts.md` with exit code and node counts, run only with an empty
-`git status --porcelain` and `HEAD` = `origin/tranche-43`, never `--force`; `gh pr view <n> --json state` →
+**E7.4:** (graphify out of scope, operator ruling 2026-11-22: "the graph refresh is out of scope"; no graphify receipt) `gh pr view <n> --json state` →
 `MERGED`; `gh run list -w publish-tester-release.yml -b develop -L 1 --json conclusion` → `success` on all three
 OS jobs; fresh-install step 2.
 

@@ -88,7 +88,7 @@ warning). A card that only *adds registration lines* to `main.rs` still holds `h
 | E7.1 | ui-smoke rows for every changed screen (the one `spec.json` writer); inventory regenerated | main | all E*.MC, E4.2 | sonnet | no | no |
 | E7.2 | Final-acceptance scan → retrospective written and cited → full worktree/branch sweep | main | E7.1 | opus | no | no |
 | E7.3 | Release notes (final) + `current-release.json` check → architecture truth-up | main | E7.2 | sonnet | no | no |
-| E7.4 | Graphify LAST → PR `tranche-43 → develop` LAST → merge when green → watch the develop publish | main | E7.3 | sonnet | no | no |
+| E7.4 | PR `tranche-43 → develop` LAST (graphify out of scope) → merge when green → watch the develop publish | main | E7.3 | sonnet | no | no |
 
 Card count: `awk -F'|' '$2 ~ /^ (C|E)[0-9]/' docs/release/SD-43-market-inventory-and-abilities/epic-breakdown.md | awk 'END{print NR}'`
 → 58 (this table only; 56 at authoring + E3.12 discovered by E0.1 + E1.12 discovered by E0.4; the per-card headings below use `###`).
@@ -140,6 +140,7 @@ change); **Does not cover** (rule 7). Every code-bearing card also runs the four
 - **Does not cover:** the final notes (E7.3).
 
 ### C2 — graphify after SD-42 (intake item 0 step 4)
+- **OUT OF SCOPE** (operator ruling 2026-11-22: "the graph refresh is out of scope"). Not run again; the run-2 attempt and its restore are in the receipt. The text below is the original card.
 - **Objective:** run graphify incrementally against the current tree, as the operator named (no `--force`, no
   `graphify update`); a node-count guard exit 1 means file the receipt and stop (memory).
 - **FILES YOU OWN:** `graphify-out/**` (as the tool writes it); `artifacts/cycle_0/C2-graphify-receipt.md`.
@@ -696,7 +697,7 @@ so no card ships a picker the engine does not check.
   still signs on `0.43.<run>` (`grep -n "sign" .github/workflows/publish-tester-release.yml`).
 - **Tier:** sonnet.
 
-### E7.4 — graphify last, PR last, merge and watch
-- **Objective:** graphify (no `--force`) → PR `tranche-43 → develop` → when green the lead merges → watch the
+### E7.4 — PR last, merge and watch
+- **Objective:** (graphify is out of scope, operator ruling 2026-11-22: "the graph refresh is out of scope"; do not run it) PR `tranche-43 → develop` → when green the lead merges → watch the
   develop publish to green on all three OSes; a red publish is a blocker.
 - **Acceptance:** `gh pr view --json state` → `MERGED`; the publish run's conclusion `success`. **Tier:** sonnet.
