@@ -75,6 +75,7 @@ line, the `git grep` used for second call sites. A RED that exited 0 is not disp
 
 | Date | Card | Status | SHA | Receipt | Notes |
 |---|---|---|---|---|---|
+| 2026-11-22 | C1 | complete | this commit (`git log -1 --format=%H -- docs/release/current-release.json`) | `artifacts/cycle_0/C1_cycle_receipt.md` | Pointer → tranche 43 + interim `release-notes.md`; resolver exit 0; pytest `tools/release` 62 passed, 2 subtests passed |
 
 ## Epic reports
 

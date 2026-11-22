@@ -38,7 +38,7 @@ awk -F'|' '$2 ~ /^ (C|E)[0-9]/ {print $5}' kanban.md | sort | uniq -c   # 56 tod
 | ID | Title | Tier | Status | Depends on | Lane | Cargo | hub | Receipt / notes |
 |---|---|---|---|---|---|---|---|---|
 | C0 | This package (front + back half) committed; placeholder gate run | lead | complete | — | lead | no | no | front half `75e95b30c2`; back half = this commit; the lead marks `complete` after reviewing both — reviewed 2026-11-22 at `64432acc84`; receipt `progress.md` Cycle 0 |
-| C1 | Interim `release-notes.md` + `current-release.json` → tranche 43, one commit; branch pushed | haiku | todo | C0 | main | no | no | RED: `resolve_release_notes.py` exit 2 (2026-11-22) |
+| C1 | Interim `release-notes.md` + `current-release.json` → tranche 43, one commit; branch pushed | haiku | complete | C0 | main | no | no | RED: `resolve_release_notes.py` exit 2 (2026-11-22); receipt `artifacts/cycle_0/C1_cycle_receipt.md`; SHA = this commit (`git log -1 --format=%H -- docs/release/current-release.json`) |
 | C2 | Incremental graphify after SD-42 (no `--force`, no `graphify update`); receipt | sonnet | todo | C1 | main | no | no | intake item 0 step 4 |
 | E0.1 | Abilities census: seven sub-tabs, every class-granted choice by mechanism (§22c), pools, saved fields, budgets, prereqs, pool sizes per level, PCGen mapping, data-gap list | opus | todo | C1 | census | no | no | settles Q-22.2 |
 | E0.2 | Market count reconciliation test over `built_catalog()` | opus | todo | C1 | market | yes (desktop) | no | settles Q-11.1 |
