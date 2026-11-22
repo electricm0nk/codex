@@ -363,12 +363,12 @@ function AnonymousReportControls(props: {
           : 'Opens a prefilled GitHub issue form in your browser (needs a GitHub account).'}
       </p>
       {props.anonymous ? (
-        <BugReportField
-          label="Handle (optional — shown as the first line of the report)"
-          value={props.handle}
-          placeholder="e.g. Gus"
-          onChange={props.onHandleChange}
-        />
+        <label style={{ display: 'block', marginTop: '0.9rem' }}>
+          <span style={{ color: 'var(--color-text-secondary)', fontSize: '0.8rem', fontWeight: 700, letterSpacing: '0.04em', textTransform: 'uppercase' }}>
+            Handle (optional — shown as the first line of the report)
+          </span>
+          <input type="text" value={props.handle} onChange={(event) => props.onHandleChange(event.target.value)} style={bugFieldStyle()} />
+        </label>
       ) : null}
       {props.anonymous && props.availability && !props.availability.available ? (
         <p style={{ color: 'var(--color-warn)', lineHeight: 1.6, margin: '0.45rem 0 0' }}>
