@@ -363,6 +363,10 @@ jobs:
 
       - name: Build Linux artifact set
         working-directory: apps/desktop
+        # decisions.md §23: the report key is stamped into the binary (option_env! in report_api.rs);
+        # build env only, never echoed. Absent secret -> the build reports anonymous Send as unavailable.
+        env:
+          CODEX_REPORT_KEY: ${{ secrets.CODEX_REPORT_KEY }}
         run: npx tauri build --config src-tauri/tauri.sidecar.json --bundles deb,appimage --ci
 
       - name: Stage release artifacts
@@ -609,6 +613,10 @@ jobs:
 
       - name: Build macOS artifact set
         working-directory: apps/desktop
+        # decisions.md §23: the report key is stamped into the binary (option_env! in report_api.rs);
+        # build env only, never echoed. Absent secret -> the build reports anonymous Send as unavailable.
+        env:
+          CODEX_REPORT_KEY: ${{ secrets.CODEX_REPORT_KEY }}
         run: npx tauri build --config src-tauri/tauri.sidecar.json --target aarch64-apple-darwin --bundles app,dmg --ci
 
       - name: Stage macOS release artifacts
@@ -696,6 +704,10 @@ jobs:
 
       - name: Build Windows artifact set
         working-directory: apps/desktop
+        # decisions.md §23: the report key is stamped into the binary (option_env! in report_api.rs);
+        # build env only, never echoed. Absent secret -> the build reports anonymous Send as unavailable.
+        env:
+          CODEX_REPORT_KEY: ${{ secrets.CODEX_REPORT_KEY }}
         run: npx tauri build --config src-tauri/tauri.sidecar.json --target x86_64-pc-windows-msvc --bundles nsis --ci
 
       - name: Stage Windows release artifacts

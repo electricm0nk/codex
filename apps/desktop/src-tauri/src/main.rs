@@ -45,6 +45,7 @@ mod print;
 mod race_catalog;
 mod race_trait_picker;
 mod reference_library_catalog;
+mod report_api;
 mod rule_system_adapter;
 mod sf_adapter;
 mod sf_catalog;
@@ -260,6 +261,8 @@ fn main() {
             load_authoring_workbench_snapshot,
             load_backend_health,
             browser_handoff::handoff_defect_report_to_browser,
+            report_api::report_api_availability,
+            report_api::send_report,
             is_install_eligible,
             perform_install,
             perform_restore_previous,

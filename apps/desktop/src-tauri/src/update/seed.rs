@@ -168,7 +168,7 @@ pub fn gather_running_install(
 }
 
 /// Channel this build publishes to. Overridable at compile time for a beta/stable lane.
-pub(super) const BUILD_CHANNEL: &str = match option_env!("CODEX_UPDATE_CHANNEL") {
+pub(crate) const BUILD_CHANNEL: &str = match option_env!("CODEX_UPDATE_CHANNEL") {
     Some(channel) => channel,
     None => "alpha",
 };
