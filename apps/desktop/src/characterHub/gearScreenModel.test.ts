@@ -8,6 +8,7 @@ import {
   copyId,
   DRAG_FORMAT,
   boxZoneId,
+  doubleClickTarget,
   dropTarget,
   filterGearRows,
   gearScreenModel,
@@ -16,6 +17,7 @@ import {
   parseQuantity,
   slotKindsAllowed,
   quantityPrompt,
+  rowActivates,
   stackLabel,
   type GearRow,
   type GearTreeItem,
@@ -473,4 +475,42 @@ const chalkLine = packBox.slice(packBox.indexOf('gear-row-item:chalk-0-0'), pack
 assert(['Chalk', '>Customize<', '>Move to<', '>Drop<', '>Sell<', '>Discard<'].every((part) => chalkLine.includes(part)), 'one column: the buttons sit on the item\'s line');
 assert(columnHtml.slice(at('gear-container-item:belt_pouch-0-0')).includes('>Empty<'), 'one column: an empty container box reads Empty');
 
-console.log('gearScreenModel.test.ts: 23 cases passed');
+// 24. Double-click / Enter (SD-43 E1.4, operator 6): first free slot, else swap the first slot it fits; worn → Carried; one piece of a stack; slot-less → a reason.
+const RING_A = key('item:ring_a');
+const RING_B = key('item:ring_b');
+const RING_C = key('item:ring_c');
+const ringModel = (rings: PlacedEquipmentCopyDto[]) => gearScreenModel(rings, { perItem: [], containerLoads: [] });
+const ringRow = (model: ReturnType<typeof ringModel>, itemId: string) => model.rows.find((row) => row.held.itemId === itemId)!;
+const oneRingOn = ringModel([held('Ring A', { kind: 'slot', slot: 'ring' }, { copies: [RING_A] }), held('Ring C', { kind: 'carried' }, { copies: [RING_C], slot: 'ring' })]);
+assertEqual(JSON.stringify(doubleClickTarget(oneRingOn, ringRow(oneRingOn, 'item:ring_c'))), JSON.stringify({ location: { kind: 'slot', slot: 'ring' }, label: 'Ring' }), 'double-click: a ring goes to the Ring slot while one of its two places is free');
+const bothRingsOn = ringModel([
+  held('Ring A', { kind: 'slot', slot: 'ring' }, { copies: [RING_A] }),
+  held('Ring B', { kind: 'slot', slot: 'ring' }, { copies: [RING_B] }),
+  held('Ring C', { kind: 'carried' }, { copies: [RING_C], slot: 'ring' }),
+]);
+const swap = doubleClickTarget(bothRingsOn, ringRow(bothRingsOn, 'item:ring_c'));
+assert('location' in swap && swap.location.kind === 'slot' && swap.location.slot === 'ring', 'double-click: both ring places full → still the Ring slot');
+assertEqual('location' in swap ? swap.swapOut?.row.held.itemId : null, 'item:ring_a', 'double-click: both full → swap out the first ring in the slot');
+const handsFull = ringModel([held('Longsword', { kind: 'slot', slot: 'wield_main' }), held('Dagger', { kind: 'carried' }, { slot: 'wield_main' })]);
+const dagger = doubleClickTarget(handsFull, ringRow(handsFull, 'item:dagger'));
+assert('location' in dagger && dagger.location.kind === 'slot' && dagger.location.slot === 'wield_off' && dagger.swapOut === undefined, 'double-click: a one-hand weapon takes the first FREE hand (off hand), no swap');
+const wornRing = doubleClickTarget(bothRingsOn, ringRow(bothRingsOn, 'item:ring_a'));
+assertEqual(JSON.stringify(wornRing), JSON.stringify({ location: { kind: 'carried' }, label: 'Carried' }), 'double-click: a worn item goes to Carried');
+const arrowsModel = ringModel([held('Ring A', { kind: 'carried' }, { copies: [RING_A, key('item:ring_a', 1), key('item:ring_a', 2)], slot: 'ring' })]);
+const stackMove = doubleClickTarget(arrowsModel, arrowsModel.rows[0]);
+assert('location' in stackMove && stackMove.quantity === 1, 'double-click: a stack of 3 moves ONE piece');
+const ropeModel = ringModel([held('Rope', { kind: 'carried' })]);
+const rope = doubleClickTarget(ropeModel, ropeModel.rows[0]);
+assert('reason' in rope && rope.reason === 'Rope takes no body slot, so nothing moved.', 'double-click: a slot-less item moves nowhere and says why');
+// The handler fires on the row, never on a double-click or Enter inside one of its buttons, menus or forms.
+const target = (inControl: boolean) => ({ closest: () => (inControl ? {} : null) }) as unknown as EventTarget;
+assert(rowActivates({ type: 'dblclick', target: target(false) }), 'double-click on the row fires');
+assert(!rowActivates({ type: 'dblclick', target: target(true) }), 'double-click inside a row button does not fire');
+assert(rowActivates({ type: 'keydown', key: 'Enter', target: target(false) }), 'Enter on a focused row fires the same function');
+assert(!rowActivates({ type: 'keydown', key: 'Enter', target: target(true) }) && !rowActivates({ type: 'keydown', key: ' ', target: target(false) }), 'Enter on a button, or another key, does not');
+const rowHtml = renderToStaticMarkup(
+  createElement(GearPanels, { model: ropeModel, armorClass: null, carriedLbs: null, busy: false, refusal: null, onMove: noop, onDrop: noop, onSell: noop, onDiscard: noop, onSets: { activate: noop, create: noop, rename: noop, remove: noop }, onCustomizeName: noop, onCustomizeModifier: noop }),
+);
+assert(/data-testid="gear-row-item:rope-0-0"[^>]*tabindex="0"/.test(rowHtml), 'Enter: the row takes focus');
+
+console.log('gearScreenModel.test.ts: 24 cases passed');

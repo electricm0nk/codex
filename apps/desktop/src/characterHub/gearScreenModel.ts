@@ -334,6 +334,41 @@ export function moveTargets(model: GearModel, row: GearRow): MoveTarget[] {
   return targets;
 }
 
+/** A double-click's move: where, one piece of a stack, and the slot's occupant that goes to Carried first on a swap. */
+export type DoubleClickTarget = { location: LocationDto; label: string; quantity?: number; swapOut?: { row: GearRow; quantity?: number } } | { reason: string };
+
+/**
+ * Double-click / Enter on a row (SD-43 `decisions.md §6`, operator 6): a worn item goes to Carried;
+ * else the first FREE slot of its kind in `WORN_SLOTS` order; else the first slot of its kind, swapping
+ * that slot's first item to Carried. A stack moves one piece. A slot-less item moves nowhere and says why.
+ */
+export function doubleClickTarget(model: GearModel, row: GearRow): DoubleClickTarget {
+  const one = (held: PlacedEquipmentCopyDto) => (held.quantity > 1 ? { quantity: 1 } : {});
+  const kind = row.held.location.kind;
+  if (kind === 'slot' || kind === 'equipped') {
+    return { location: { kind: 'carried' }, label: 'Carried', ...one(row.held) };
+  }
+  const allowed = slotKindsAllowed(row.held.slot);
+  const slots = model.tree.filter((section) => section.location.kind === 'slot' && allowed.includes(section.location.slot));
+  if (slots.length === 0) {
+    return { reason: `${row.label} takes no body slot, so nothing moved.` };
+  }
+  const placesFree = (section: GearTreeSection) => section.location.kind === 'slot' && copiesIn(section.items) < placesOf(section.location.slot);
+  const free = slots.find(placesFree);
+  const into = free ?? slots[0];
+  const out = free ? undefined : into.items[0]?.row;
+  return { location: into.location, label: into.label, ...one(row.held), ...(out ? { swapOut: { row: out, ...one(out.held) } } : {}) };
+}
+
+/** Whether a double-click or key on a row fires `doubleClickTarget`: a double-click or Enter on the row itself, not inside its buttons, menus or forms. */
+export function rowActivates(event: { type: string; key?: string; target: EventTarget | null }): boolean {
+  const inControl = (event.target as Element | null)?.closest?.(ROW_CONTROLS);
+  return !inControl && (event.type === 'dblclick' || (event.type === 'keydown' && event.key === 'Enter'));
+}
+
+/** A row's own controls: a click, double-click or Enter there is the control's, not the row's. */
+export const ROW_CONTROLS = 'button, input, select, label, [role="menu"], [role="group"]';
+
 /** The drop zone of a container box: the Move to target `inside-<copy>` of the container's row. */
 export function insideZoneId(copy: CopyKeyDto): string {
   return `inside-${copyId(copy)}`;

@@ -11,8 +11,11 @@ import type { EquipmentSetsSummaryDto } from '../boundary/loadSavedCharacterDeta
 import { OverrideTag } from './OverrideTag';
 import {
   copyId,
+  doubleClickTarget,
   DRAG_FORMAT,
   dropTarget,
+  ROW_CONTROLS,
+  rowActivates,
   insideZoneId,
   filterGearRows,
   gearScreenModel,
@@ -72,7 +75,8 @@ export interface GearPanelsProps {
   busy: boolean;
   /** The backend's refusal of the last change, word for word. */
   refusal: string | null;
-  onMove: (row: GearRow, location: LocationDto, quantity?: number) => void;
+  /** `swapOut` (a double-click on a full slot): that row goes to Carried first, in the same write. */
+  onMove: (row: GearRow, location: LocationDto, quantity?: number, swapOut?: { row: GearRow; quantity?: number }) => void;
   onDrop: (row: GearRow, quantity?: number) => void;
   onSell: (row: GearRow, quantity?: number, negotiatedGp?: number) => void;
   onDiscard: (row: GearRow, quantity?: number) => void;
@@ -386,13 +390,31 @@ export function GearPanels(props: GearPanelsProps) {
   });
   const tag = (row: GearRow) => (row.held.override ? <OverrideTag flag={row.held.override} /> : null);
   // A row is selected by a click on it, not on one of its buttons, menus or forms.
-  const selectable = (row: GearRow) => ({
+  // Double-click or Enter on a row (SD-43 E1.4): the Move to write, to the slot or to Carried; a slot-less row says why.
+  const [note, setNote] = useState<{ at: string; text: string } | null>(null);
+  const activate = (row: GearRow, at: string) => (event: MouseEvent<HTMLElement> | KeyboardEvent<HTMLElement>) => {
+    if (props.busy || !rowActivates(event)) {
+      return;
+    }
+    event.preventDefault();
+    const target = doubleClickTarget(model, row);
+    if ('reason' in target) {
+      setNote({ at, text: target.reason });
+      return;
+    }
+    setNote(null);
+    props.onMove(row, target.location, target.quantity, target.swapOut);
+  };
+  const selectable = (row: GearRow, at: string) => ({
     'aria-selected': props.selectedId === row.id,
+    tabIndex: 0,
     onClick: (event: MouseEvent<HTMLElement>) => {
-      if (!(event.target as HTMLElement).closest('button, input, select, label, [role="menu"], [role="group"]')) {
+      if (!(event.target as HTMLElement).closest(ROW_CONTROLS)) {
         props.onSelect?.(row);
       }
     },
+    onDoubleClick: activate(row, at),
+    onKeyDown: activate(row, at),
   });
 
   // One held row with its buttons on its line (operator 5-a); a container's capacity and Customize read the copy it stands for.
@@ -438,8 +460,13 @@ export function GearPanels(props: GearPanelsProps) {
   const gearItem = (item: GearTreeItem): ReactNode => {
     const at = `row:${item.row.id}`;
     const line = (
-      <div data-testid={`gear-row-${item.row.id}`} {...selectable(item.row)}>
+      <div data-testid={`gear-row-${item.row.id}`} {...selectable(item.row, at)}>
         {gearRow(item, at)}
+        {note && note.at === at ? (
+          <p role="status" data-testid="gear-row-note" style={{ ...quiet, margin: '0 0 0.25rem 1rem' }}>
+            {note.text}
+          </p>
+        ) : null}
         {formAt(at)}
       </div>
     );
@@ -639,7 +666,17 @@ export function GearScreen(props: GearScreenProps) {
       sets={props.sets}
       busy={busy}
       refusal={refusal}
-      onMove={(row, location, quantity) => write((savedAt) => moveEquipmentCopy({ characterId, copy: row.held.copies[0], location, quantity, savedAt }))}
+      onMove={(row, location, quantity, swapOut) =>
+        write(async (savedAt) => {
+          if (swapOut) {
+            const out = await moveEquipmentCopy({ characterId, copy: swapOut.row.held.copies[0], location: { kind: 'carried' }, quantity: swapOut.quantity, savedAt });
+            if (out.kind === 'Blocked') {
+              return out;
+            }
+          }
+          return moveEquipmentCopy({ characterId, copy: row.held.copies[0], location, quantity, savedAt });
+        })
+      }
       onDrop={(row, quantity) => write((savedAt) => moveEquipmentCopy({ characterId, copy: row.held.copies[0], location: { kind: 'notCarried' }, quantity, savedAt }))}
       onSell={(row, quantity, negotiatedGp) => act(props.onSell(row.held, quantity, negotiatedGp))}
       onDiscard={(row, quantity) => write((savedAt) => discardEquipmentCopy({ characterId, copy: row.held.copies[0], quantity, savedAt }))}
