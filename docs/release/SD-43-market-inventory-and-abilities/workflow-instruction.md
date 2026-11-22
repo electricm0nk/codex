@@ -200,8 +200,9 @@ its dependencies in `kanban.md` (the prefix).
 1. `export const meta = { name: 'sd43-market-inventory-and-abilities', description, phases }`, one phase per §3
    row, same titles.
 2. Each card's dispatch awaits its dependencies' promises, then the cargo semaphore (if `cargo != 'no'`), then the
-   `hub` token (if `hub`). Lanes are serial chains; lanes run concurrently (`parallel()`), and **every lane agent
-   gets `isolation: 'worktree'`** (§3's rule) in addition to working inside its named lane tree per the prefix.
+   `hub` token (if `hub`). Lanes are serial chains; lanes run concurrently (`parallel()`). **No `isolation: 'worktree'`:** run 1 (`wf_5a8c1aee-909`) showed the
+   isolated agent's sandbox refuses git commands on its named lane tree, so C1 worked in a throwaway tree instead.
+   The lane tree per the prefix is the isolation (one writer per tree, own `CARGO_TARGET_DIR`).
 3. **Every `agent()` sets `model`** from the Tier column, on the same line as `agent(`. Check:
    `awk '/agent\(/ && !/model:/' artifacts/cycle_0/sd43-workflow.js` prints nothing. Tier is exactly `opus`,
    `sonnet` or `haiku`; C0 (`lead`) and E4.G (`operator`) are never dispatched as work.
@@ -241,7 +242,7 @@ const run = async (c) => {
   const deps = await Promise.all(c.deps.map(d => done[d]))
   if (deps.some(r => r.status !== 'complete')) return { status: 'not-dispatched', id: c.id }
   const release = [c.cargo !== 'no' ? await sem.acquire() : null, c.hub ? await hub.acquire() : null]
-  try { return await agent(PREFIX(c) + PROCEDURE + criterion(c) + red(c), { model: c.tier, phase: c.phase, isolation: 'worktree' }) }
+  try { return await agent(PREFIX(c) + PROCEDURE + criterion(c) + red(c), { model: c.tier, phase: c.phase }) }
   finally { release.forEach(r => r && r()) }
 }
 const lane = async (cards) => { for (const c of cards) { done[c.id] = run(c); const r = await done[c.id]; if (r.status !== 'complete') break } }
@@ -260,7 +261,7 @@ files, never the summary.
 ## 3. Per-epic parallel/sequential map
 
 Phase titles above match these rows. Lanes cross epics (the `sheet` lane carries E1.7, E2, E3, E4.1–E4.2,
-E6.2–E6.4); a card's phase is its epic. Every `parallel: yes` lane agent gets `isolation: 'worktree'` and its own
+E6.2–E6.4); a card's phase is its epic. Every `parallel: yes` lane works in its own lane tree (no `isolation: 'worktree'`, §2.4 item 2) with its own
 `CARGO_TARGET_DIR` (`/home/ubuntu/cargo-target/sd43-<lane>`, never under `/tmp`, deleted when the lane ends); at
 most 3 cargo cards at once (semaphore); at most one `hub` card at once (token).
 

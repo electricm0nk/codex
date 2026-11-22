@@ -92,6 +92,11 @@ THE LEAD'S PRE-DISPATCH RED (logged in progress.md Dispatch log):
 - failing line: ${red.failingLine}
 SECOND CALL SITES (lead's git grep): ${red.secondCallSites}
 ${c.id === 'E3.1' ? '\nOPERATOR RULING Q-22.3 (2026-11-22): the Feats tab is renamed Abilities; Feats becomes one of its seven sub-tabs (today\'s FeatsTab unchanged in behaviour). No second feat picker, no tab beside Feats.\n' : ''}
+RECEIPT AND BOARD (checked by a separate verify step; a miss fails the card):
+- The receipt has rows literally named "closure check", "RED", "Does not cover"${/MC$/.test(c.id) || /screen|sheet|tab|Market|button|layout|menu|window|list/i.test(c.row) ? ', and "Looked at"' : ''} (receipts.md §2).
+- Your kanban.md row's last column holds the receipt path and the literal 40-hex SHA of your work commit (not a command).
+- Work in your lane tree as the prefix says; this agent has no isolated worktree.
+
 Return: status (complete only if the card's Definition of Done is fully met, kanban row set to complete with receipt
 path and SHA, and pushed to origin/tranche-43), the pushed SHA, the receipt path, and your §6 step 9 report text.`
 }
@@ -101,7 +106,7 @@ function verifyPrompt(c, r) {
   return `Read-only check of card ${c.id}'s claimed result. Do NOT write anything. Never trust the agent's message.
 cd ${ROOT} && git fetch origin tranche-43 -q
 1. \`git merge-base --is-ancestor ${r.sha || 'MISSING'} origin/tranche-43\` must succeed.
-2. \`git show origin/tranche-43:${PKG}/kanban.md | awk -F'|' '$2 ~ /^ ${c.id.replace('.', '\\.')} *$/ {print $5, $10}'\` must show complete and a receipt path + SHA.
+2. \`git show origin/tranche-43:${PKG}/kanban.md | awk -F'|' '$2 ~ /^ ${c.id.replace('.', '\\.')} *$/ {print $5, $10}'\` must show complete, a receipt path, and a literal 40-hex SHA (a command in place of a SHA fails).
 3. The receipt \`${r.receipt}\` exists on origin/tranche-43 (\`git show origin/tranche-43:<path>\`). Save it to a temp file and run
    \`grep -c 'closure check\\|Does not cover\\|RED' <file>\` → must be ≥ 3, and each of "closure check", "Does not cover", "RED" occurs at least once.
 ${screen ? '4. This is a screen card or merge check: the receipt must contain a "Looked at" row naming the images it read.\n' : ''}Return ok=true only if every check passes; list each failed check in problems.`
@@ -144,7 +149,7 @@ async function runCard(c) {
     if (red.exitCode === 0) return { id: c.id, status: 'declined', why: `RED exited 0: ${red.command}` }
     if (!red.logged) return { id: c.id, status: 'red-failed', why: 'RED not logged in progress.md' }
     log(`${c.id}: RED exit ${red.exitCode} — dispatching on ${c.tier}`)
-    const r = await agent(implPrompt(c, red), { model: c.tier, label: c.id, phase: c.phase, schema: IMPL_SCHEMA, isolation: 'worktree' })
+    const r = await agent(implPrompt(c, red), { model: c.tier, label: c.id, phase: c.phase, schema: IMPL_SCHEMA })  // no isolation: run 1 showed worktree isolation blocks the lane tree
     if (!r) return { id: c.id, status: 'agent-died' }
     if (r.status !== 'complete') return { id: c.id, status: r.status, sha: r.sha, report: r.report }
     const v = await agent(verifyPrompt(c, r), { model: 'haiku', label: `verify:${c.id}`, phase: c.phase, schema: VERIFY_SCHEMA })
