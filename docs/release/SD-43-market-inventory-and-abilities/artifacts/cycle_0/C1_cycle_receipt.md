@@ -9,7 +9,29 @@ Depends: C0 (complete, `kanban.md` row C0, front `75e95b30c2`, reviewed at `6443
 - Worktree used: `/home/ubuntu/workspace/repos/codex/.claude/worktrees/wf_5a8c1aee-909-2` (this agent's own
   isolated worktree). The lane tree named in the dispatch, `/home/ubuntu/workspace/repos/codex/.worktrees/sd43-main`,
   was not used: the sandbox refused git commands that name it from this worktree-isolated agent.
-- Base control: `git merge-base --is-ancestor fb94a85049 HEAD` → exit 0 before the fetch.
+- The dispatch's lane tree was not used because worktree isolation blocked it; the lead dropped isolation for later cards.
+
+## FILES YOU OWN closure check
+
+- Consumers of `current-release.json` (`git grep -l 'current-release.json' -- ':!docs/release/SD-*' | awk '!seen[$0]++' | awk 'END{print NR}'` → 13 distinct files):
+  - `.claude/skills/stc-authoring/SKILL.md`
+  - `.github/workflows/check-release-manifest.yml`
+  - `.github/workflows/publish-tester-release.yml`
+  - `.github/workflows/release-tooling-tests.yml`
+  - `docs/architecture/getting-started.md`
+  - `docs/architecture/glossary.md`
+  - `docs/architecture/release-pipeline.md`
+  - `docs/architecture/testing.md`
+  - `docs/release/template/template.md`
+  - `docs/retro/events/sd37-e7-9a.jsonl`
+  - `docs/retro/events/sd38-c1.jsonl`
+  - `tools/release/resolve_release_notes.py`
+  - `tools/release/test_resolve_release_notes.py`
+- The two `docs/retro/events/*.jsonl` entries quote the path in historical logs; they are not readers.
+- C1 owned exactly two files: `docs/release/current-release.json` and `docs/release/SD-43-market-inventory-and-abilities/release-notes.md`.
+- No command registration, DTO producer, `bundle.resources` or `packaged_resources.rs` change applies: C1 adds no runtime data read.
+
+## RED (pre-change tree, HEAD `1ee425b885`)- Base control: `git merge-base --is-ancestor fb94a85049 HEAD` → exit 0 before the fetch.
 - Fast-forward: `git fetch origin tranche-43`; `git merge --ff-only origin/tranche-43` → HEAD `1ee425b885`.
 - `git status --porcelain` before the first write listed nothing; before staging it listed only the two C1 files.
 
