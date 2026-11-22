@@ -630,6 +630,22 @@ its own set of selectable options:
   - (2) A screenshot of the PCGen tab, saved in the repo's intake folder, would remove guessing about
     Misc and the layout. Optional.
 
+### 22c. Operator ruling (2026-11-22): scope is EVERY class-chosen ability, not the examples
+
+"I gave ninja trick as an example of missing UI abilities. There are others like barbarian rage powers
+and the like. Make sure the scope is sufficiently broad to cover all of the class abilities like the
+example I gave but not limited to those examples."
+
+- Ninja tricks and rage powers are examples only. The Class Features sub-tab covers every choice a
+  class (or archetype) grants the player: talents, tricks, powers, discoveries, hexes, arcana,
+  revelations, mercies, bloodlines, domains, schools, mysteries, orders, and every other shape the
+  books define. The list in this sentence is also only examples.
+- The proof is a count, not a list: E0.1 enumerates every class-granted choice in the corpus by
+  mechanism, and E3.MC must show every one of them reachable in the UI (selectable and recorded) or
+  named as a discovered card. "Not reachable" is a number to close, never an exemption.
+- Check at E0.1: whether choices that are not modeled as a catalog "pool" today (for example a
+  bloodline or domain picked at level 1) are in the 1,913-group count or outside it. Not yet checked.
+
 ## 23. RELEASE: the minor version follows the SD number — SD-43 ships as 0.43
 
 - **Reported:** 2026-11-22 (operator): "jump our minor version to 0.43… it's getting hard to remember to
