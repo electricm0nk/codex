@@ -78,10 +78,14 @@ fn market_counts() {
 
     let mut shown: BTreeMap<&str, usize> = BTreeMap::new();
     let mut shown_keys: HashSet<String> = HashSet::new();
+    let mut shown_rows = Vec::new();
     for (category, name) in LISTS {
         let rows = list_market(MarketFilter { category, name_contains: None, book: None }).entries;
         shown.insert(name, rows.len());
-        shown_keys.extend(rows.into_iter().map(|row| row.entry.key));
+        for row in rows {
+            shown_rows.push(json!({"list": name, "key": row.entry.key, "category": row.entry.category, "types": row.entry.types}));
+            shown_keys.insert(row.entry.key);
+        }
     }
 
     // Per list (the list a row's tags would put it in): source, and dropped by reason.
@@ -151,4 +155,8 @@ fn market_counts() {
         "dropped_rows": dropped_rows,
     });
     std::fs::write(&out, serde_json::to_string_pretty(&doc).unwrap() + "\n").unwrap();
+
+    // Every shown row with its type tags, one line each: the Market filter model's test data (E1.10).
+    let lines: Vec<String> = shown_rows.iter().map(|row| serde_json::to_string(row).unwrap()).collect();
+    std::fs::write(out.with_file_name("market-rows.jsonl"), lines.join("\n") + "\n").unwrap();
 }
