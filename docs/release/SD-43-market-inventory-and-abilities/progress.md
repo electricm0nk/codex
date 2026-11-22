@@ -47,6 +47,7 @@ line, the `git grep` used for second call sites. A RED that exited 0 is not disp
 
 | Date | Card | Run id | RED command | Exit | Failing line | Second-call-site grep |
 |---|---|---|---|---|---|---|
+| 2026-11-22 | E5.2 | r2 | `test -f docs/release/SD-43-market-inventory-and-abilities/artifacts/epic_5/E5.2_cycle_receipt.md` (no Anonymous/Handle test exists yet; `grep -rn "issue created" apps/desktop/src/feedback \| awk 'END{print NR}'` → 0 already) | 1 | receipt absent; `git grep -i 'anonymous\|handle'` in feedback sources → no production hits | `git grep -ln 'submissionState\|submissionUiState\|browserHandoff' -- apps/desktop/src apps/desktop/src-tauri/src`; `git grep -n 'report_api' -- apps/desktop/src-tauri/src` |
 
 ## Cycle 0 — package authored (2026-11-22)
 
