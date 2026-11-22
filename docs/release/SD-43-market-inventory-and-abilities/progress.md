@@ -34,7 +34,7 @@ run with parallel lanes is never resumed; a new run starts with `START=<card>`.)
 ## Operator replies
 
 (The lead quotes the operator's replies here, one line each, in the form `- <id> (<date>): <verbatim reply>` —
-Q-22.3 at launch; E4.G; any §30 overrule; P-8 when the secret is created. G-CL reads the E4.G line.)
+Q-22.3 (2026-11-22: rename the Feats tab to Abilities; Feats becomes a sub-tab); E4.G; any §30 overrule; P-8 when the secret is created. G-CL reads the E4.G line.)
 
 ## Dispatch log
 

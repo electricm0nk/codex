@@ -50,8 +50,8 @@ and 3 and is counted once; E3.MC is counted under item 22.
 
 The operator's frame is PCGen's seven sub-tabs, in this order. Each must, by E3.MC: show the picks granted per level
 with their source, what can be selected (search, Qualified filter), what is selected, remaining picks per pool, the
-rule text; enforce grants and prerequisites in the engine; save on the character; print. The Abilities tab's host
-(rename of Feats vs. a tab beside it) is pending operator ruling Q-22.3 (E3.1).
+rule text; enforce grants and prerequisites in the engine; save on the character; print. The Abilities tab is the renamed
+Feats tab, with Feats as one of its seven sub-tabs (operator ruling Q-22.3, 2026-11-22; E3.1).
 
 | Sub-tab | Today (read from code, `decisions.md §15`) | Engine card(s) | Records (to be measured by E0.1) |
 |---|---|---|---|

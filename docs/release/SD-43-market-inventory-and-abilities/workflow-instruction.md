@@ -22,8 +22,8 @@ status: planning — back half; §1's commands were run on 2026-11-22 and their 
 > the proposed item names, `decisions.md §22`). Every other open question takes its default from
 > `decisions.md §30` and logs it. One **precondition** only the operator can clear: the CI secret
 > `CODEX_REPORT_KEY` (P-8, Q-13.2) — E5.1 lands without it, but closure (E7.2) cannot pass without it
-> (`risks-and-open-questions.md` R-1). One **pending ruling** the lead asks at launch: Q-22.3, whether the
-> Abilities tab replaces the Feats tab or sits beside it (§2.2).
+> (`risks-and-open-questions.md` R-1). Q-22.3 is settled by the operator (2026-11-22): the Feats tab is renamed
+> **Abilities** and Feats becomes one of its seven sub-tabs (E3.1).
 
 ## 0. Bundle at a glance
 
@@ -165,7 +165,7 @@ ENVIRONMENT (SD-43, binding — every rule here applies to you):
 The session that launches SD-43 is the orchestrator. §6 runs **inside** dispatched `agent()` calls, never as the
 orchestrator's own `Edit`/`Write`/`Bash` on `apps/`, `src/`, `crates/`, `scripts/`, `tests/`, `data/`,
 `resources/` or `.github/`. The orchestrator may make read-only investigation calls, edit this package's planning
-docs, run git plumbing for them, and record operator replies (E4.G, Q-22.3) in `progress.md`. **Dispatch first,
+docs, run git plumbing for them, and record operator replies (E4.G, any §30 overrule) in `progress.md`. **Dispatch first,
 report second.** Never accept a lane's message as evidence: check `git log origin/tranche-43` and the target
 files. Before every dispatch: `git reflog --date=iso -3`, `git worktree list`, `git status --porcelain`
 (memory: a peer session may grab the shared checkout).
@@ -175,12 +175,10 @@ failure or a non-zero exit, and paste it into both the dispatch prompt and `prog
 retrospective change 1: the script refuses to dispatch a card whose recorded RED exited 0). Derive its second
 call sites with `git grep` over the producers its row names and add them to the prompt.
 
-**At launch, before E3.1 can be dispatched:** ask the operator Q-22.3 once ("The Abilities tab replaces the Feats
-tab with Feats as its first sub-tab (default), or a new Abilities tab beside Feats?") and record the reply in
-`progress.md`. No reply by the time E3.1's dependencies are `complete` → the default (rename) is taken and
-recorded in the dispatch log as the default taken; the operator may still overrule it, and that becomes a rework
-card (logged with `scripts/retro.py rework`). E3.1 reads correctly either way: under the alternative, `SHEET_TABS` keeps `Feats` and gains
-`Abilities` beside it holding the six non-Feats sub-tabs; the Traits section still moves out of `FeatsTab`.
+**E3.1 is the rename (operator ruling Q-22.3, 2026-11-22):** the `Feats` entry in `SHEET_TABS` becomes
+`Abilities`; inside it, seven sub-tabs in PCGen's order with today's `FeatsTab` as the Feats sub-tab, unchanged in
+behaviour. No second feat picker and no tab beside Feats. The lead records the ruling line in `progress.md ##
+Operator replies` before E3.1 dispatches.
 
 **After each card returns:** run the receipt-row greps (`grep -c 'closure check\|Does not cover\|RED' <receipt>`
 → 3 rows present; `Looked at` for screen cards and every MC) on that receipt before the next dependent card

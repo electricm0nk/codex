@@ -63,7 +63,7 @@ awk -F'|' '$2 ~ /^ (C|E)[0-9]/ {print $5}' kanban.md | sort | uniq -c   # 56 tod
 | E2.4 | Rest and recovery: cited table, engine command, print block, override field | opus | todo | E0.5, E2.3 | sheet | yes (root + desktop) | hub | new runtime data read: `bundle.resources` + `packaged_resources.rs` |
 | E2.5 | Rest text read-only under the Biography text | sonnet | todo | E2.4 | sheet | no | hub | |
 | E2.MC | E2 merge check + epic report | opus | todo | E2.5 | sheet | yes (base build) | no | |
-| E3.1 | The Abilities tab (E3.1; rename vs. new tab pending operator ruling Q-22.3): seven sub-tabs, existing surfaces moved, no behaviour change | opus | todo | E0.1, E2.5 | sheet | no | hub | the lead records the Q-22.3 reply or the default before dispatch |
+| E3.1 | Rename the Feats tab to Abilities (operator ruling Q-22.3, 2026-11-22): seven sub-tabs with Feats as one of them, existing surfaces moved, no behaviour change | opus | todo | E0.1, E2.5 | sheet | no | hub | Q-22.3 settled: rename |
 | E3.2 | Engine: generic ability-budget module, saved selections, list/add/remove commands; proved on Traits | opus | todo | E3.1 | sheet | yes (root + desktop) | hub | |
 | E3.3 | Generic sub-tab UI; Traits sub-tab on it | opus | todo | E3.2 | sheet | no | hub | |
 | E3.4 | Class Features: grants per level for every catalog pool | opus | todo | E3.3 | sheet | yes (root + desktop) | hub | split rule per E0.1 |
