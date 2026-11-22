@@ -524,11 +524,11 @@ function BugReportComposer(props: { surface: TesterWorkbenchSurface }) {
         onClick={onPrepareSubmission}
         disabled={submitting || (composed.submittable && sendBlocked)}
         style={{
-          backgroundColor: composed.submittable ? 'var(--color-accent)' : 'var(--color-text-muted)',
+          backgroundColor: composed.submittable && !sendBlocked ? 'var(--color-accent)' : 'var(--color-text-muted)',
           border: 'none',
           borderRadius: 8,
           color: 'var(--color-on-accent)',
-          cursor: submitting ? 'wait' : 'pointer',
+          cursor: submitting ? 'wait' : composed.submittable && sendBlocked ? 'not-allowed' : 'pointer',
           fontWeight: 700,
           marginTop: '1rem',
           padding: '0.6rem 1rem',
@@ -761,11 +761,11 @@ function EnhancementRequestComposer(props: { surface: TesterWorkbenchSurface }) 
         onClick={onPrepareSubmission}
         disabled={submitting || (composed.submittable && sendBlocked)}
         style={{
-          backgroundColor: composed.submittable ? 'var(--color-accent)' : 'var(--color-text-muted)',
+          backgroundColor: composed.submittable && !sendBlocked ? 'var(--color-accent)' : 'var(--color-text-muted)',
           border: 'none',
           borderRadius: 8,
           color: 'var(--color-on-accent)',
-          cursor: submitting ? 'wait' : 'pointer',
+          cursor: submitting ? 'wait' : composed.submittable && sendBlocked ? 'not-allowed' : 'pointer',
           fontWeight: 700,
           marginTop: '1rem',
           padding: '0.6rem 1rem',
