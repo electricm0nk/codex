@@ -42,7 +42,7 @@ const CARDS = [
   "lane": "main",
   "cargo": false,
   "hub": false,
-  "row": "| C1 | Interim `release-notes.md` + `current-release.json` → tranche 43, one commit; branch pushed | haiku | complete | C0 | main | no | no | RED: `resolve_release_notes.py` exit 2 (2026-11-22); receipt `artifacts/cycle_0/C1_cycle_receipt.md`; SHA = this commit (`git log -1 --format=%H -- docs/release/current-release.json`) |",
+  "row": "| C1 | Interim `release-notes.md` + `current-release.json` → tranche 43, one commit; branch pushed | haiku | complete | C0 | main | no | no | RED: `resolve_release_notes.py` exit 2 (2026-11-22); receipt `artifacts/cycle_0/C1_cycle_receipt.md`; SHA `c422d005ee4c39a9e144dc038da9cee8703bf6c5` |",
   "section": "### C1 — release pointer\n- **Objective:** `release-notes.md` (interim, sentinel `SD-43 INTERIM NOTES`) and\n  `docs/release/current-release.json` = `{\"tranche\": 43, \"notes_path\":\n  \"docs/release/SD-43-market-inventory-and-abilities/release-notes.md\"}` in one commit; push `tranche-43`.\n- **FILES YOU OWN:** `docs/release/current-release.json`; this package's `release-notes.md`.\n- **Failing test first:** `python3 tools/release/resolve_release_notes.py --repo-root .` exits 2 today (recorded\n  2026-11-22).\n- **Acceptance:** that command exits 0 and prints this package's notes path;\n  `python3 -m pytest tools/release -q` green; `git ls-remote --heads origin tranche-43` prints one line.\n- **Depends:** C0. **Tier:** haiku.\n- **Does not cover:** the final notes (E7.3).",
   "phase": "C — package, pointer, graph"
  },
@@ -55,7 +55,7 @@ const CARDS = [
   "lane": "main",
   "cargo": false,
   "hub": false,
-  "row": "| C2 | Incremental graphify after SD-42 (no `--force`, no `graphify update`); receipt | sonnet | todo | C1 | main | no | no | intake item 0 step 4 |",
+  "row": "| C2 | Incremental graphify after SD-42 (no `--force`, no `graphify update`); receipt | sonnet | blocked | C1 | main | no | no | BLOCKED: node count 648328 -> 322949 (49.8% < 90%), restored; needs operator ruling on semantic backend; receipt `artifacts/cycle_0/C2-graphify-receipt.md`; SHA `ba5da0573d8b612877265ea408affe658770a56c` |",
   "section": "### C2 — graphify after SD-42 (intake item 0 step 4)\n- **Objective:** run graphify incrementally against the current tree, as the operator named (no `--force`, no\n  `graphify update`); a node-count guard exit 1 means file the receipt and stop (memory).\n- **FILES YOU OWN:** `graphify-out/**` (as the tool writes it); `artifacts/cycle_0/C2-graphify-receipt.md`.\n- **Acceptance:** the receipt holds the command, exit code and node counts before/after (`python3 -c \"import\n  json;print(len(json.load(open('graphify-out/graph.json'))['nodes']))\"`, before and after; the after count is not\n  lower than 90 % of the before count, else stop and restore from the dated snapshot).\n- **Depends:** C1. **Tier:** sonnet.\n- **Does not cover:** the closure graphify (E7.4).",
   "phase": "C — package, pointer, graph"
  },
@@ -68,7 +68,7 @@ const CARDS = [
   "lane": "census",
   "cargo": false,
   "hub": false,
-  "row": "| E0.1 | Abilities census: seven sub-tabs, every class-granted choice by mechanism (§22c), pools, saved fields, budgets, prereqs, pool sizes per level, PCGen mapping, data-gap list | opus | todo | C1 | census | no | no | settles Q-22.2 |",
+  "row": "| E0.1 | Abilities census: seven sub-tabs, every class-granted choice by mechanism (§22c), pools, saved fields, budgets, prereqs, pool sizes per level, PCGen mapping, data-gap list | opus | complete | C1 | census | no | no | settles Q-22.2; RED `abilities_census.py --check` exit 2 (no such file); GREEN exit 0; 1,329 class-granted choice sites (A=B); 34 data gaps (30 ingest → E3.12); receipt `artifacts/epic_0/E0.1_cycle_receipt.md`; SHA `d9c84afeaf037a84a04700c640447e1a1f935c14` |",
   "section": "### E0.1 — Abilities census\n- **Objective:** for each of the seven sub-tabs and for every Class Features pool, write\n  `artifacts/epic_0/abilities-census.json` and `.md` with: records in the corpus (count, by book); where a\n  selection is saved today (field on `ChosenCharacterState`, `src/rules_core/character_input.rs:17`, or none);\n  whether the engine has a budget (`grep` for budget rows) and a prerequisite evaluator; how pool size per level is\n  stated in the class records (the tokens, with three worked classes: Rogue, Barbarian, Ninja); the PCGen\n  sub-tab → category mapping read from PCGen's UI strings and `ABILITYCATEGORY` lines at the pin; the count of\n  visible, player-editable categories (`VISIBLE:QUALIFY|YES` and `EDITABLE:YES`), not the raw 2,616 lines; and\n  the **data-gap list** (sub-tabs/pools with zero selectable records).\n- **FILES YOU OWN:** `artifacts/epic_0/abilities_census.py` (new, read-only over the corpus and the oracle),\n  its two outputs.\n- **Failing test first:** n/a (read-only census); the script exits non-zero when an input is missing.\n- **Acceptance:** `python3 -I artifacts/epic_0/abilities_census.py --check` exits 0 and its JSON has a non-null\n  entry for all seven sub-tabs; the Class Features section reproduces `python3\n  scripts/census_class_feature_pool_population.py`'s 1,913 groups / 16,348 records; the oracle is resolved via\n  `scripts/fetch-pcgen-oracle.sh --print-env` and its HEAD equals `PCGEN_ORACLE_SHA`.\n- **Depends:** C1. **Tier:** opus.\n- **Does not cover:** Starfinder and CPR data (out of scope, `scope-draft.md §5`); whether a member's rule text\n  is correct.",
   "phase": "E0 — census and engine-gap measurement"
  },
@@ -81,7 +81,7 @@ const CARDS = [
   "lane": "market",
   "cargo": true,
   "hub": false,
-  "row": "| E0.2 | Market count reconciliation test over `built_catalog()` | opus | todo | C1 | market | yes (desktop) | no | settles Q-11.1 |",
+  "row": "| E0.2 | Market count reconciliation test over `built_catalog()` | opus | complete | C1 | market | yes (desktop) | no | settles Q-11.1 (Weapons 480, Armor 63, Shields 31, Gear 1,624, Magic 3,680; sum 8,119); receipt `artifacts/epic_0/E0.2_cycle_receipt.md`; SHA `29132b1d71d77d03d13966d107aaa2fe1099c4ea` |",
   "section": "### E0.2 — Market count reconciliation\n- **Objective:** a committed Rust test that walks `built_catalog()` (`desktop/equipment_catalog.rs:834`) and\n  prints, per Market list, the count shown and every dropped row's reason (duplicate key, template, `.FORGET`,\n  `Codex-Named Unit`, `Equipmods`, no tags, book not ingested); writes `artifacts/epic_0/market-counts.json`.\n- **FILES YOU OWN:** `apps/desktop/src-tauri/src/equipment_catalog.rs` (a `#[cfg(test)]` module, or\n  `apps/desktop/src-tauri/tests/market_counts.rs` new); the artifact.\n- **Failing test first:** the test asserts shown + dropped = source for each list and that no row is dropped\n  without a reason; run before any reason is named, it fails on the unreasoned rows.\n- **Acceptance:** `cd apps/desktop/src-tauri && cargo test --test market_counts -- --nocapture` green; its output\n  prints Magic 3,680, Gear 1,624, Weapons 480 (the operator's screen figures) and exact Armor and Shields values,\n  and the sum equals `built_catalog().entries.len()`. If the three figures do not reproduce, the card stops and\n  reports — the test is wrong, not the screen.\n- **Depends:** C1. **Tier:** opus.\n- **Does not cover:** whether a dropped row *should* be on a list (a reason is a fact, not a ruling; a reason\n  that looks wrong becomes a discovered card).",
   "phase": "E0 — census and engine-gap measurement"
  },
@@ -107,7 +107,7 @@ const CARDS = [
   "lane": "gear",
   "cargo": true,
   "hub": false,
-  "row": "| E0.4 | Reproduce items 5, 7, 12 on a fresh Brother Tomas Vane | opus | todo | C1 | gear | yes (app build) | no | isolated app-data root |",
+  "row": "| E0.4 | Reproduce items 5, 7, 12 on a fresh Brother Tomas Vane | opus | complete | C1 | gear | yes (app build) | no | RED: `test -f …/gear-repro.md` exit 1 (2026-11-22); receipt `artifacts/epic_0/E0.4_cycle_receipt.md`; SHA `952d79c7e1af9e2fca2868391d8cad4288e4d059`; discovered E1.12 |",
   "section": "### E0.4 — reproduce the gear defects\n- **Objective:** on a fresh Brother Tomas Vane seed in an isolated app-data root, reproduce item 5's symptoms 1–3\n  (and the renamed copy showing `Sack #2`), item 7's three drop places, and today's container sale; record per\n  symptom the steps, the stored `equipment_sets.json` rows, and display-bug vs data-bug.\n- **FILES YOU OWN:** `artifacts/epic_0/gear-repro.md`, screenshots under `artifacts/epic_0/gear-repro/`.\n- **Acceptance:** each symptom has a classification and the stored rows quoted; a symptom that does not reproduce\n  says so with the steps tried.\n- **Depends:** C1. **Tier:** opus.\n- **Does not cover:** the operator's own save (not on this machine).",
   "phase": "E0 — census and engine-gap measurement"
  },
@@ -133,7 +133,7 @@ const CARDS = [
   "lane": "gear",
   "cargo": true,
   "hub": true,
-  "row": "| E1.1 | Container truth: no `#N`, custom names, filled container never stacked, split on put-into-stack | opus | todo | E0.4 | gear | yes (desktop) | hub | |",
+  "row": "| E1.1 | Container truth: no `#N`, custom names, filled container never stacked, split on put-into-stack | opus | complete | E0.4 | gear | yes (desktop) | hub | receipt `artifacts/epic_1/E1.1_cycle_receipt.md`; SHA `210eeccc3e6f39c5772488ba9c0235d8b95ede62` |",
   "section": "### E1.1 — container truth (item 5 data and naming)\n- **Objective:** remove `#N` (`gearScreenModel.ts:324–329` `copyTitle`); a renamed copy's `CopyFacts.name` shows\n  on both panels; a container holding items is never in a stack; the move target and the table bind to the copy\n  actually holding items, not `copies[0]` (`:312`, `:342–343`); putting an item into a stacked empty container\n  splits that copy off first (backend if E0.4 classed it a data bug).\n- **FILES YOU OWN:** `ui/characterHub/gearScreenModel.ts`, `gearScreenModel.test.ts`, `GearScreen.tsx` (labels\n  only); `desktop/character_hub.rs` move/split path if E0.4 says data bug, with its test (`hub`).\n- **Failing test first:** `gearScreenModel.test.ts` cases from E0.4: one Sack with 2 items + three empty Sacks →\n  labels `Sack` and `Sack x3`, no `#`; renamed copy → its custom name; item into the stack → a new single row.\n- **Acceptance:** `cd apps/desktop && npx tsx src/characterHub/gearScreenModel.test.ts`; `grep -n \"#\\${\"\n  apps/desktop/src/characterHub/gearScreenModel.ts | awk 'END{print NR}'` → 0; if backend: `cd\n  apps/desktop/src-tauri && cargo test split_into_stacked_container` (≥1 test).\n- **Depends:** E0.4. **Tier:** opus.\n- **Does not cover:** the layout (E1.2).",
   "phase": "E1 — Market and inventory"
  },
@@ -146,7 +146,7 @@ const CARDS = [
   "lane": "gear",
   "cargo": false,
   "hub": false,
-  "row": "| E1.2 | One-column gear list: order, natural sort, nested boxes, Not Carried section | opus | todo | E1.1 | gear | no | no | |",
+  "row": "| E1.2 | One-column gear list: order, natural sort, nested boxes, Not Carried section | opus | complete | E1.1 | gear | no | no | receipt `artifacts/epic_1/E1.2_cycle_receipt.md`; SHA `56e28e711f78ba190ebdc5390a7b167c374d48b0` |",
   "section": "### E1.2 — one-column list (item 5 redesign)\n- **Objective:** one column under the equipment set; buttons on the item's line; non-containers A–Z then\n  containers A–Z, recursively, natural sort; indent; nested light boxes (today's styling re-derived from\n  `GearScreen.tsx` first); Not Carried as its own section, excluded from carried weight.\n- **FILES YOU OWN:** `ui/characterHub/GearScreen.tsx`, `gearScreenModel.ts` (order function),\n  `gearScreenModel.test.ts`.\n- **Failing test first:** an order test: `Sack #10`, `Sack #2`, `Belt Pouch`, `Backpack` (holding loose A–Z and a\n  container) → expected order at every depth.\n- **Acceptance:** that test; a test that the screen's carried weight equals `totalCarriedWeightLbs` with a Not\n  Carried item present; `npm test && npm run typecheck`; one screenshot per section shape.\n- **Depends:** E1.1. **Tier:** opus.\n- **Does not cover:** drop targets (E1.3).",
   "phase": "E1 — Market and inventory"
  },
@@ -266,6 +266,19 @@ const CARDS = [
   "hub": false,
   "row": "| E1.11 | Filter column; 200 cap removed; windowed list; first paint measured | opus | todo | E1.10 | market | no | no | |",
   "section": "### E1.11 — filter column, no cap, windowed list (item 11)\n- **Objective:** the dialog's filter column; `MARKET_ROW_LIMIT` (`itemPickerFilter.ts:362`) and the notice\n  (`MarketDialog.tsx:248`) removed; a windowed list; header \"N of N\".\n- **FILES YOU OWN:** `ui/characterHub/MarketDialog.tsx`, `itemPickerFilter.ts`, their tests.\n- **Failing test first:** `marketShownRows` returns every row (fails today at 200).\n- **Acceptance:** `grep -rn \"MARKET_ROW_LIMIT\" apps/desktop/src | awk 'END{print NR}'` → 0; keyboard selection,\n  description, sort, Only Show Affordable and `+N` tests green; time to first paint on Magic items measured and\n  stated \"on this machine\".\n- **Depends:** E1.10. **Tier:** opus.",
+  "phase": "E1 — Market and inventory"
+ },
+ {
+  "id": "E1.12",
+  "tier": "opus",
+  "deps": [
+   "E1.5"
+  ],
+  "lane": "gear",
+  "cargo": true,
+  "hub": true,
+  "row": "| E1.12 | Sell removes the copy the player clicked (copy key, not item id + state) — discovered by E0.4 | opus | todo | E1.5 | gear | yes (desktop) | hub | discovered E0.4 (`artifacts/epic_0/gear-repro.md` §12.2) |",
+  "section": "### E1.12 — Sell names the copy (discovered by E0.4)\n- **Objective:** the Gear screen's Sell (and the Market inventory's) removes the copy the player clicked. Today\n  `handleGearSell` (`ui/characterHub/CharacterSheet.tsx`) sends `itemId` + `bonus` + `fromState`, and\n  `sell_held_pieces_at_root` (`desktop/character_hub.rs:5635`) takes `first_copy_in_hand` (`desktop/pf1_adapter.rs:1349`),\n  so with several Sacks it sells a different one (E0.4 `artifacts/epic_0/gear-repro.md` §12.2: clicked `Sack|0|2`,\n  removed `Sack|0|1` and its custom name). Drop, Discard and Move already send `copies[0]`.\n- **FILES YOU OWN:** `desktop/character_hub.rs` (sell path and its tests), the remove/sell request DTO and its\n  command registration if it changes, `ui/boundary/removeEquipmentSelection` (or its file), `ui/characterHub/CharacterSheet.tsx`\n  (`handleGearSell`, `handleMarketSell`) (`hub`). Closure check first: `git grep -n \"removeEquipmentSelection\\|sell_held_pieces_at_root\"`.\n- **Failing test first:** two Sack lines Carried, the second holding a Bedroll; sell the second by its copy key →\n  the second line is gone, the first stays, the Bedroll is Carried.\n- **Acceptance:** `cd apps/desktop/src-tauri && cargo test sell_names_the_copy` (≥ 1 test, 0 filtered = FAIL); a\n  frontend test that `handleGearSell`'s request carries `row.held.copies[0]`.\n- **Depends:** E1.5. **Tier:** opus.\n- **Does not cover:** what the sale pays (E1.6) and Drop/Discard (already by copy key).",
   "phase": "E1 — Market and inventory"
  },
  {
@@ -506,6 +519,19 @@ const CARDS = [
   "phase": "E3 — the Abilities tab"
  },
  {
+  "id": "E3.12",
+  "tier": "opus",
+  "deps": [
+   "E0.1"
+  ],
+  "lane": "sheet",
+  "cargo": true,
+  "hub": false,
+  "row": "| E3.12 | DISCOVERED (E0.1): ingest the oracle's member typing (`<record>.MOD TYPE:` lines) so the 30 ingest-gap pools in E0.1's data-gap list get members; add the missing `Ninja ~ Ninja Trick` grant row (level 2) to `data/class_feature_grants`; resolve the 7 pool names with no ABILITYCATEGORY | opus | todo | E0.1 | sheet | yes (root) | no | must be complete before E3.MC; E3.MC's notice count then = the 4 book gaps; `artifacts/epic_0/abilities-census.json` `data_gap_list[].cause` |",
+  "section": "### E3.12 — ingest-gap pools get members (discovered by E0.1, 2026-11-22)\n- **Objective:** close the 30 ingest-cause entries of E0.1's data-gap list (`artifacts/epic_0/abilities-census.json`\n  `data_gap_list[]`, 34 entries: 30 `cause` starting `ingest:`, 4 `the books in the corpus define no members` —\n  `python3 -c \"import json,collections;g=json.load(open('artifacts/epic_0/abilities-census.json'))['data_gap_list'];print(len(g),sum(x['cause'].startswith('ingest:') for x in g))\"`\n  → `34 30`): apply the oracle's member typing (`<record>.MOD TYPE:` lines) in the ingest so those pools get members;\n  add the missing `Ninja ~ Ninja Trick` grant row (level 2) to `data/class_feature_grants`; resolve the 7 pool names with\n  no ABILITYCATEGORY (E0.1 receipt, \"Discovered cards\").\n- **FILES YOU OWN:** the ingest step that applies `.MOD` lines (located by the card: `git grep -n 'MOD' crates/codex-ingest/src/pcgen_import`),\n  its test, the regenerated corpus records it writes, `data/class_feature_grants`; second call sites by `git grep` per the prefix.\n  Nothing from the oracle is read at runtime (prefix: THE ORACLE).\n- **Failing test first:** a test that the 30 ingest-gap pools have ≥ 1 member each fails today (E0.1: 0 members).\n- **Acceptance:** `python3 -I artifacts/epic_0/abilities_census.py --check` exits 0 and the re-run census reports\n  `data_gap_list` = 4 entries, every one `the books in the corpus define no members`; the new test green; root\n  `cargo test --locked -j 8 --lib -- --test-threads=8` and the desktop workspace green. **Depends:** E0.1 (lane order:\n  after E3.11, before E3.MC). **Tier:** opus.\n- **Does not cover:** the 4 book gaps (they stay as on-screen data-gap notices, E3.MC).",
+  "phase": "E3 — the Abilities tab"
+ },
+ {
   "id": "E3.MC",
   "tier": "opus",
   "deps": [
@@ -567,7 +593,7 @@ const CARDS = [
   "lane": "settings",
   "cargo": true,
   "hub": true,
-  "row": "| E5.1 | Report API client in Rust; key stamped at build; every reply handled | opus | todo | C1 | settings | yes (desktop) | hub | precondition P-8 (CI secret) is checked at E7.2, not waived |",
+  "row": "| E5.1 | Report API client in Rust; key stamped at build; every reply handled | opus | complete | C1 | settings | yes (desktop) | hub | precondition P-8 (CI secret) is checked at E7.2, not waived; receipt `artifacts/epic_5/E5.1_cycle_receipt.md`; SHA `f9416a5d0712d3931d209ad4dfb8b87405f1cf9f` |",
   "section": "### E5.1 — report API client (item 13)\n- **Objective:** per `decisions.md §23`.\n- **FILES YOU OWN:** `desktop/report_api.rs` (new), `desktop/main.rs` (`hub`), the build-time key stamp (a\n  `build.rs` env read or `option_env!`, named in the card), `.github/workflows/publish-tester-release.yml` (the\n  secret into the build env only), `ui/boundary/sendReport.ts` (new), tests.\n- **Failing test first:** a test against a local stub server (test-only) for 201/400/403/413/timeout/no network,\n  and a 9 KB body refused before sending.\n- **Acceptance:** `cd apps/desktop/src-tauri && cargo test report_api` ≥ 7; `grep -rn \"x-codex-key\"\n  apps/desktop/src | awk 'END{print NR}'` → 0 (the key never in JS); a build without the key reports\n  \"unavailable\" with the reason. **Precondition:** the operator has created the CI secret (Q-13.2); without it the\n  card still lands (the dev-build \"unavailable\" path is proved), and E7.2's final-acceptance scan checks P-8: a\n  missing secret then is an escalation to the operator that pauses closure, never a release with Send disabled\n  (`risks-and-open-questions.md` R-1).\n- **Depends:** C1. **Tier:** opus.\n- **Does not cover:** codex-web's side; the key's extractability (stated risk).",
   "phase": "E5 — reports, Update menu, Developer tab"
  },
@@ -580,7 +606,7 @@ const CARDS = [
   "lane": "settings",
   "cargo": false,
   "hub": false,
-  "row": "| E5.2 | Anonymous selector + optional Handle; GitHub-unavailable message | opus | todo | E5.1 | settings | no | no | |",
+  "row": "| E5.2 | Anonymous selector + optional Handle; GitHub-unavailable message | opus | complete | E5.1 | settings | no | no | fence exit App.tsx (composers live there; retro incident); receipt `artifacts/epic_5/E5.2_cycle_receipt.md`; SHA `96e241f7310ae4ec3728a46f649857e150e5afff` |",
   "section": "### E5.2 — Anonymous and Handle (item 15)\n- **FILES YOU OWN:** `ui/feedback/submissionState.ts`, `submissionUiState.ts`, `browserHandoff.ts`, the bug and\n  enhancement composers under `ui/testerWorkbench/feedback/`, tests.\n- **Failing test first:** Anonymous on + Handle \"Gus\" → body's first line is the handle and the API is called;\n  off → browser handoff; GitHub unavailable → message, no API call.\n- **Acceptance:** the tests; success text \"sent for review\" (`grep -rn \"issue created\" apps/desktop/src/feedback\n  | awk 'END{print NR}'` → 0). **Depends:** E5.1. **Tier:** opus.",
   "phase": "E5 — reports, Update menu, Developer tab"
  },
@@ -593,7 +619,7 @@ const CARDS = [
   "lane": "settings",
   "cargo": false,
   "hub": false,
-  "row": "| E5.3 | Update menu: channel selector beside `Channel:`; wider text blocks | sonnet | todo | E5.2 | settings | no | no | |",
+  "row": "| E5.3 | Update menu: channel selector beside `Channel:`; wider text blocks | sonnet | complete | E5.2 | settings | no | no | receipt `artifacts/epic_5/E5.3_cycle_receipt.md`; SHA `7c82126eeb0a612d786000a9ac15201b58e8eb29` |",
   "section": "### E5.3 — Update menu (item 14)\n- **FILES YOU OWN:** `ui/update/ChannelSelector.tsx`, `CheckPanel.tsx`, `installedPanel.tsx`, `lastCheckPanel.tsx`,\n  `Ui.tsx`, `Ui.test.ts`.\n- **Failing test first:** the selector renders inside the top block next to `Channel:`.\n- **Acceptance:** the test; a screenshot of a long release note at the narrowest window. **Depends:** E5.2.\n  **Tier:** sonnet.",
   "phase": "E5 — reports, Update menu, Developer tab"
  },
@@ -633,7 +659,7 @@ const CARDS = [
   "lane": "campaign",
   "cargo": true,
   "hub": true,
-  "row": "| E6.1 | Campaign folder relocation: copy, verify, switch, skeleton | opus | todo | C1 | campaign | yes (desktop) | hub | |",
+  "row": "| E6.1 | Campaign folder relocation: copy, verify, switch, skeleton | opus | complete | C1 | campaign | yes (desktop) | hub | RED: 0 tests matched `relocate_campaign` (exit 1); GREEN 3 passed; receipt `artifacts/epic_6/E6.1_cycle_receipt.md`; SHA `a2530d82d746d8efeb568dfa209636dcce8af2a7` |",
   "section": "### E6.1 — relocation (item 1)\n- **FILES YOU OWN:** `desktop/campaign_folder.rs`, `desktop/main.rs` (`hub`), `ui/campaign/campaignFolderModel.ts`,\n  `campaignMigrationModel.ts`, `EditCampaignScreen.tsx`, `ui/boundary/` campaign file, tests.\n- **Failing test first:** relocate a folder with files → all bytes present at the target, skeleton complete, old\n  folder intact, known-folders entry updated; a foreign non-empty target refused; same-campaign target opened.\n- **Acceptance:** `cd apps/desktop/src-tauri && cargo test relocate_campaign` ≥ 3. **Depends:** C1. **Tier:** opus.",
   "phase": "E6 — campaign folder, House Rules, custom items"
  },
@@ -685,7 +711,7 @@ const CARDS = [
   "lane": "campaign",
   "cargo": true,
   "hub": true,
-  "row": "| E6.5 | Custom items export/import | opus | todo | E6.1 | campaign | yes (desktop) | hub | |",
+  "row": "| E6.5 | Custom items export/import | opus | complete | E6.1 | campaign | yes (desktop) | hub | RED: receipt absent, 0 export/import fns (exit 1); GREEN `custom_items_exchange` 3 passed; receipt `artifacts/epic_6/E6.5_cycle_receipt.md`; SHA `f5a12da36086c5abd1d02685fc3bbff24e30b4c1` |",
   "section": "### E6.5 — custom item exchange (item 4)\n- **FILES YOU OWN:** `desktop/character_custom.rs` (export/import functions), `desktop/campaign_folder.rs`\n  (skeleton adds `Custom Items/`), `desktop/main.rs` (`hub`), a dialog + boundary + tests.\n- **Failing test first:** export two items, import into another character → two items; import again with an\n  edited description → edited, not duplicated; an SF file into a PF character → refused.\n- **Acceptance:** the tests. **Depends:** E6.1. **Tier:** opus.",
   "phase": "E6 — campaign folder, House Rules, custom items"
  },
@@ -761,10 +787,13 @@ const CARDS = [
   "phase": "E7 — closure"
  }
 ]
-const LANES = {"lead": ["C0", "E4.G"], "main": ["C1", "C2", "E7.1", "E7.2", "E7.3", "E7.4"], "census": ["E0.1", "E0.3", "E0.5"], "market": ["E0.2", "E1.8", "E1.9", "E1.10", "E1.11"], "gear": ["E0.4", "E1.1", "E1.2", "E1.3", "E1.4", "E1.5", "E1.6", "E1.MC"], "sheet": ["E1.7", "E2.1", "E2.2", "E2.3", "E2.4", "E2.5", "E2.MC", "E3.1", "E3.2", "E3.3", "E3.4", "E3.5", "E3.6", "E3.7", "E3.8", "E3.9", "E3.10", "E3.11", "E3.MC", "E4.1", "E6.2", "E6.3", "E6.4", "E4.2"], "settings": ["E5.1", "E5.2", "E5.3", "E5.4", "E5.MC"], "campaign": ["E6.1", "E6.5", "E6.MC"]}
+const LANES = {"lead": ["C0", "E4.G"], "main": ["C1", "C2", "E7.1", "E7.2", "E7.3", "E7.4"], "census": ["E0.1", "E0.3", "E0.5"], "market": ["E0.2", "E1.8", "E1.9", "E1.10", "E1.11"], "gear": ["E0.4", "E1.1", "E1.2", "E1.3", "E1.4", "E1.5", "E1.6", "E1.12", "E1.MC"], "sheet": ["E1.7", "E2.1", "E2.2", "E2.3", "E2.4", "E2.5", "E2.MC", "E3.1", "E3.2", "E3.3", "E3.4", "E3.5", "E3.6", "E3.7", "E3.8", "E3.9", "E3.10", "E3.11", "E3.12", "E3.MC", "E4.1", "E6.2", "E6.3", "E6.4", "E4.2"], "settings": ["E5.1", "E5.2", "E5.3", "E5.4", "E5.MC"], "campaign": ["E6.1", "E6.5", "E6.MC"]}
 const PKG = 'docs/release/SD-43-market-inventory-and-abilities'
 const ROOT = '/home/ubuntu/workspace/repos/codex'
 const byId = Object.fromEntries(CARDS.map(c => [c.id, c]))
+const REPAIR = A.repair || {}   // {cardId: 'what the verify step found'} — re-dispatch to fix only that
+// run 2: a title regex marked census cards as screen cards; the card section says whether it looks at a screen
+const isScreen = (c) => /MC$/.test(c.id) || /screenshot|Looked at|\.tsx|pdftotext|Printout|print block/.test(c.section)
 
 function makeSemaphore(n) {
   let free = n
@@ -832,7 +861,7 @@ THE LEAD'S PRE-DISPATCH RED (logged in progress.md Dispatch log):
 SECOND CALL SITES (lead's git grep): ${red.secondCallSites}
 ${c.id === 'E3.1' ? '\nOPERATOR RULING Q-22.3 (2026-11-22): the Feats tab is renamed Abilities; Feats becomes one of its seven sub-tabs (today\'s FeatsTab unchanged in behaviour). No second feat picker, no tab beside Feats.\n' : ''}
 RECEIPT AND BOARD (checked by a separate verify step; a miss fails the card):
-- The receipt has rows literally named "closure check", "RED", "Does not cover"${/MC$/.test(c.id) || /screen|sheet|tab|Market|button|layout|menu|window|list/i.test(c.row) ? ', and "Looked at"' : ''} (receipts.md §2).
+- The receipt has rows literally named "closure check", "RED", "Does not cover"${isScreen(c) ? ', and "Looked at" naming every image path you Read and what you saw in it' : ''} (receipts.md §2).
 - Your kanban.md row's last column holds the receipt path and the literal 40-hex SHA of your work commit (not a command).
 - Work in your lane tree as the prefix says; this agent has no isolated worktree.
 
@@ -841,14 +870,14 @@ path and SHA, and pushed to origin/tranche-43), the pushed SHA, the receipt path
 }
 
 function verifyPrompt(c, r) {
-  const screen = /MC$/.test(c.id) || /screen|sheet|tab|Market|button|layout|menu|window|list/i.test(c.row)
+  const screen = isScreen(c)
   return `Read-only check of card ${c.id}'s claimed result. Do NOT write anything. Never trust the agent's message.
 cd ${ROOT} && git fetch origin tranche-43 -q
 1. \`git merge-base --is-ancestor ${r.sha || 'MISSING'} origin/tranche-43\` must succeed.
 2. \`git show origin/tranche-43:${PKG}/kanban.md | awk -F'|' '$2 ~ /^ ${c.id.replace('.', '\\.')} *$/ {print $5, $10}'\` must show complete, a receipt path, and a literal 40-hex SHA (a command in place of a SHA fails).
 3. The receipt \`${r.receipt}\` exists on origin/tranche-43 (\`git show origin/tranche-43:<path>\`). Save it to a temp file and run
    \`grep -c 'closure check\\|Does not cover\\|RED' <file>\` → must be ≥ 3, and each of "closure check", "Does not cover", "RED" occurs at least once.
-${screen ? '4. This is a screen card or merge check: the receipt must contain a "Looked at" row naming the images it read.\n' : ''}Return ok=true only if every check passes; list each failed check in problems.`
+${screen ? '4. This is a screen card or merge check: the receipt must contain a "Looked at" row that names image paths (they exist on origin/tranche-43) and says what was seen in them.\n' : ''}Return ok=true only if every check passes; list each failed check in problems.`
 }
 
 const e4gPrompt = (c) => `${prefix(c)}
@@ -863,6 +892,17 @@ fetch + rebase origin/tranche-43. Read ${PKG}/progress.md "## Operator replies".
   Commit only progress.md, push via §5. Return status partial.
 ${cardBlock(c)}`
 
+
+const repairPrompt = (c) => `${prefix(c)}
+
+REPAIR of card ${c.id}. Its change is already on origin/tranche-43 and its kanban row says complete, but the lead's
+verify step failed it for this reason only:
+  ${REPAIR[c.id]}
+Fix exactly that, nothing else (no new feature work). If it needs a fresh look at the app, follow §6 step 6 (run-desktop,
+isolated XDG_DATA_HOME, Read every PNG, keep images under ${PKG}/artifacts/epic_<n>/${c.id}/). Update the receipt; keep the
+kanban row complete with the literal 40-hex SHA of your repair commit; push via §5. Return complete only when fixed and pushed.
+
+${cardBlock(c)}`
 
 const notDispatched = (id, why) => ({ id, status: 'not-dispatched', why })
 
@@ -882,6 +922,13 @@ async function runCard(c) {
   try {
     if (c.cargo) rel.push(await sem.acquire())
     if (c.hub) rel.push(await hub.acquire())
+    if (REPAIR[c.id]) {
+      const r = await agent(repairPrompt(c), { model: c.tier, label: `repair:${c.id}`, phase: c.phase, schema: IMPL_SCHEMA })
+      if (!r || r.status !== 'complete') return { id: c.id, status: r ? r.status : 'agent-died', report: r && r.report }
+      const v = await agent(verifyPrompt(c, r), { model: 'haiku', label: `verify:${c.id}`, phase: c.phase, schema: VERIFY_SCHEMA })
+      if (!v || !v.ok) return { id: c.id, status: 'unverified', sha: r.sha, why: v ? v.problems.join('; ') : 'verify agent died' }
+      return { id: c.id, status: 'complete', sha: r.sha, receipt: r.receipt }
+    }
     const red = await agent(redPrompt(c), { model: 'sonnet', label: `red:${c.id}`, phase: c.phase, schema: RED_SCHEMA })
     if (!red) return { id: c.id, status: 'red-failed', why: 'RED agent returned nothing' }
     if (red.diskFreeGb < 24) return { id: c.id, status: 'stopped-disk', why: `${red.diskFreeGb} GB free < 24 GB` }

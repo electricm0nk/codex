@@ -26,6 +26,9 @@ const LANES = __LANES__
 const PKG = 'docs/release/SD-43-market-inventory-and-abilities'
 const ROOT = '/home/ubuntu/workspace/repos/codex'
 const byId = Object.fromEntries(CARDS.map(c => [c.id, c]))
+const REPAIR = A.repair || {}   // {cardId: 'what the verify step found'} — re-dispatch to fix only that
+// run 2: a title regex marked census cards as screen cards; the card section says whether it looks at a screen
+const isScreen = (c) => /MC$/.test(c.id) || /screenshot|Looked at|\.tsx|pdftotext|Printout|print block/.test(c.section)
 
 function makeSemaphore(n) {
   let free = n
@@ -93,7 +96,7 @@ THE LEAD'S PRE-DISPATCH RED (logged in progress.md Dispatch log):
 SECOND CALL SITES (lead's git grep): ${red.secondCallSites}
 ${c.id === 'E3.1' ? '\nOPERATOR RULING Q-22.3 (2026-11-22): the Feats tab is renamed Abilities; Feats becomes one of its seven sub-tabs (today\'s FeatsTab unchanged in behaviour). No second feat picker, no tab beside Feats.\n' : ''}
 RECEIPT AND BOARD (checked by a separate verify step; a miss fails the card):
-- The receipt has rows literally named "closure check", "RED", "Does not cover"${/MC$/.test(c.id) || /screen|sheet|tab|Market|button|layout|menu|window|list/i.test(c.row) ? ', and "Looked at"' : ''} (receipts.md §2).
+- The receipt has rows literally named "closure check", "RED", "Does not cover"${isScreen(c) ? ', and "Looked at" naming every image path you Read and what you saw in it' : ''} (receipts.md §2).
 - Your kanban.md row's last column holds the receipt path and the literal 40-hex SHA of your work commit (not a command).
 - Work in your lane tree as the prefix says; this agent has no isolated worktree.
 
@@ -102,14 +105,14 @@ path and SHA, and pushed to origin/tranche-43), the pushed SHA, the receipt path
 }
 
 function verifyPrompt(c, r) {
-  const screen = /MC$/.test(c.id) || /screen|sheet|tab|Market|button|layout|menu|window|list/i.test(c.row)
+  const screen = isScreen(c)
   return `Read-only check of card ${c.id}'s claimed result. Do NOT write anything. Never trust the agent's message.
 cd ${ROOT} && git fetch origin tranche-43 -q
 1. \`git merge-base --is-ancestor ${r.sha || 'MISSING'} origin/tranche-43\` must succeed.
 2. \`git show origin/tranche-43:${PKG}/kanban.md | awk -F'|' '$2 ~ /^ ${c.id.replace('.', '\\.')} *$/ {print $5, $10}'\` must show complete, a receipt path, and a literal 40-hex SHA (a command in place of a SHA fails).
 3. The receipt \`${r.receipt}\` exists on origin/tranche-43 (\`git show origin/tranche-43:<path>\`). Save it to a temp file and run
    \`grep -c 'closure check\\|Does not cover\\|RED' <file>\` → must be ≥ 3, and each of "closure check", "Does not cover", "RED" occurs at least once.
-${screen ? '4. This is a screen card or merge check: the receipt must contain a "Looked at" row naming the images it read.\n' : ''}Return ok=true only if every check passes; list each failed check in problems.`
+${screen ? '4. This is a screen card or merge check: the receipt must contain a "Looked at" row that names image paths (they exist on origin/tranche-43) and says what was seen in them.\n' : ''}Return ok=true only if every check passes; list each failed check in problems.`
 }
 
 const e4gPrompt = (c) => `${prefix(c)}
@@ -124,6 +127,17 @@ fetch + rebase origin/tranche-43. Read ${PKG}/progress.md "## Operator replies".
   Commit only progress.md, push via §5. Return status partial.
 ${cardBlock(c)}`
 
+
+const repairPrompt = (c) => `${prefix(c)}
+
+REPAIR of card ${c.id}. Its change is already on origin/tranche-43 and its kanban row says complete, but the lead's
+verify step failed it for this reason only:
+  ${REPAIR[c.id]}
+Fix exactly that, nothing else (no new feature work). If it needs a fresh look at the app, follow §6 step 6 (run-desktop,
+isolated XDG_DATA_HOME, Read every PNG, keep images under ${PKG}/artifacts/epic_<n>/${c.id}/). Update the receipt; keep the
+kanban row complete with the literal 40-hex SHA of your repair commit; push via §5. Return complete only when fixed and pushed.
+
+${cardBlock(c)}`
 
 const notDispatched = (id, why) => ({ id, status: 'not-dispatched', why })
 
@@ -143,6 +157,13 @@ async function runCard(c) {
   try {
     if (c.cargo) rel.push(await sem.acquire())
     if (c.hub) rel.push(await hub.acquire())
+    if (REPAIR[c.id]) {
+      const r = await agent(repairPrompt(c), { model: c.tier, label: `repair:${c.id}`, phase: c.phase, schema: IMPL_SCHEMA })
+      if (!r || r.status !== 'complete') return { id: c.id, status: r ? r.status : 'agent-died', report: r && r.report }
+      const v = await agent(verifyPrompt(c, r), { model: 'haiku', label: `verify:${c.id}`, phase: c.phase, schema: VERIFY_SCHEMA })
+      if (!v || !v.ok) return { id: c.id, status: 'unverified', sha: r.sha, why: v ? v.problems.join('; ') : 'verify agent died' }
+      return { id: c.id, status: 'complete', sha: r.sha, receipt: r.receipt }
+    }
     const red = await agent(redPrompt(c), { model: 'sonnet', label: `red:${c.id}`, phase: c.phase, schema: RED_SCHEMA })
     if (!red) return { id: c.id, status: 'red-failed', why: 'RED agent returned nothing' }
     if (red.diskFreeGb < 24) return { id: c.id, status: 'stopped-disk', why: `${red.diskFreeGb} GB free < 24 GB` }

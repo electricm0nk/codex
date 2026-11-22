@@ -47,7 +47,8 @@ for line in kb.splitlines():
         "row": line.strip(), "section": secs.get(cid, ""),
     })
 
-assert len(cards) == 56, len(cards)
+eb_ids = set(re.findall(r"^\| ((?:C|E)\d+(?:\.\w+)?) \|", eb, re.M))
+assert {c["id"] for c in cards} == eb_ids, ({c["id"] for c in cards} ^ eb_ids)
 missing = [c["id"] for c in cards if not c["section"]]
 assert not missing, f"no epic-breakdown section for {missing}"
 assert all(c["tier"] in ("opus", "sonnet", "haiku", "lead", "operator") for c in cards)

@@ -540,6 +540,23 @@ so no card ships a picker the engine does not check.
 - **Acceptance:** `cd apps/desktop/src-tauri && cargo test print_pf_blocks_abilities` ≥ 1. **Depends:** E3.10.
   **Tier:** opus.
 
+### E3.12 — ingest-gap pools get members (discovered by E0.1, 2026-11-22)
+- **Objective:** close the 30 ingest-cause entries of E0.1's data-gap list (`artifacts/epic_0/abilities-census.json`
+  `data_gap_list[]`, 34 entries: 30 `cause` starting `ingest:`, 4 `the books in the corpus define no members` —
+  `python3 -c "import json,collections;g=json.load(open('artifacts/epic_0/abilities-census.json'))['data_gap_list'];print(len(g),sum(x['cause'].startswith('ingest:') for x in g))"`
+  → `34 30`): apply the oracle's member typing (`<record>.MOD TYPE:` lines) in the ingest so those pools get members;
+  add the missing `Ninja ~ Ninja Trick` grant row (level 2) to `data/class_feature_grants`; resolve the 7 pool names with
+  no ABILITYCATEGORY (E0.1 receipt, "Discovered cards").
+- **FILES YOU OWN:** the ingest step that applies `.MOD` lines (located by the card: `git grep -n 'MOD' crates/codex-ingest/src/pcgen_import`),
+  its test, the regenerated corpus records it writes, `data/class_feature_grants`; second call sites by `git grep` per the prefix.
+  Nothing from the oracle is read at runtime (prefix: THE ORACLE).
+- **Failing test first:** a test that the 30 ingest-gap pools have ≥ 1 member each fails today (E0.1: 0 members).
+- **Acceptance:** `python3 -I artifacts/epic_0/abilities_census.py --check` exits 0 and the re-run census reports
+  `data_gap_list` = 4 entries, every one `the books in the corpus define no members`; the new test green; root
+  `cargo test --locked -j 8 --lib -- --test-threads=8` and the desktop workspace green. **Depends:** E0.1 (lane order:
+  after E3.11, before E3.MC). **Tier:** opus.
+- **Does not cover:** the 4 book gaps (they stay as on-screen data-gap notices, E3.MC).
+
 ### E3.MC — E3 merge check
 - **Acceptance:** every sub-tab exercised on three seeds (a Rogue/Ninja, a Barbarian, a Human Fighter with an
   archetype); the count of on-screen gap notices equals E0.1's data-gap list and no engine-gap notice remains
