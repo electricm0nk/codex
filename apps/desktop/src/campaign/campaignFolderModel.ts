@@ -1,4 +1,4 @@
-import type { CampaignTreeEntry } from '../boundary/campaignFolder/types';
+import type { CampaignTreeEntry, RelocatedCampaign } from '../boundary/campaignFolder/types';
 
 /**
  * What the campaign sheet shows of a campaign folder (SD-42 `decisions.md §11`). Pure; the sheet
@@ -34,4 +34,14 @@ export function partyCharacterIds(tree: readonly CampaignTreeEntry[], savedIds: 
 /** "Open folder…" picked a folder with no `campaign.json` that is not an older campaign either. */
 export function notACampaignFolder(message: string): boolean {
   return message.includes('it is not a campaign folder');
+}
+
+/** What Edit Campaign says after "Move campaign folder…": where it went and where the old folder stays. */
+export function relocationNotice(moved: Pick<RelocatedCampaign, 'campaignDir' | 'previousDir' | 'copiedFiles'>): string {
+  const kept = `The old folder is kept, unchanged, at ${moved.previousDir}; delete it yourself once you no longer need it.`;
+  if (moved.copiedFiles === 0) {
+    return `${moved.campaignDir} already holds this campaign, so it was opened as is and nothing was copied. ${kept}`;
+  }
+  const files = moved.copiedFiles === 1 ? '1 file' : `${moved.copiedFiles} files`;
+  return `Moved: ${files} copied to ${moved.campaignDir} and checked byte for byte. ${kept}`;
 }

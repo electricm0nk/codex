@@ -1,9 +1,12 @@
 import { useEffect, useState, type CSSProperties } from 'react';
+import { open } from '@tauri-apps/plugin-dialog';
 import { RULE_SETS } from '../characterHub/LandingScreen';
-import { openCampaignFolder, saveCampaignJson } from '../boundary/campaignFolder/knownCampaigns';
+import { hasTauriRuntime } from '../boundary/runtime';
+import { openCampaignFolder, relocateCampaignFolder, saveCampaignJson } from '../boundary/campaignFolder/knownCampaigns';
 import type { FolderMember, OpenedCampaign } from '../boundary/campaignFolder/types';
 import { addMember, membersForSave, removeMember, renameMember } from './campaignMembersModel';
 import { CampaignHelpButton } from './CampaignHelpScreen';
+import { relocationNotice } from './campaignFolderModel';
 
 const LABEL_STYLE: CSSProperties = {
   color: 'var(--color-text-secondary)',
@@ -49,6 +52,8 @@ export function EditCampaignScreen(props: { campaignId: string; onCancel: () => 
   const [members, setMembers] = useState<FolderMember[]>([]);
   const [saving, setSaving] = useState(false);
   const [status, setStatus] = useState<string | null>(null);
+  const [moving, setMoving] = useState(false);
+  const [moveStatus, setMoveStatus] = useState<string | null>(null);
 
   useEffect(() => {
     openCampaignFolder(campaignDir)
@@ -75,6 +80,31 @@ export function EditCampaignScreen(props: { campaignId: string; onCancel: () => 
         </button>
       </section>
     );
+  }
+
+  async function handleMove() {
+    if (!opened) {
+      return;
+    }
+    if (!hasTauriRuntime()) {
+      setMoveStatus('Choosing a folder needs the desktop app.');
+      return;
+    }
+    const picked = await open({ directory: true, multiple: false, title: 'Move the campaign folder to…' });
+    if (typeof picked !== 'string') {
+      return;
+    }
+    setMoving(true);
+    setMoveStatus(null);
+    try {
+      const moved = await relocateCampaignFolder(opened.campaignDir, picked);
+      setOpened({ campaignDir: moved.campaignDir, campaign: moved.campaign, nonce: moved.nonce });
+      setMoveStatus(relocationNotice(moved));
+    } catch (cause: unknown) {
+      setMoveStatus(cause instanceof Error ? cause.message : String(cause));
+    } finally {
+      setMoving(false);
+    }
   }
 
   async function handleSave() {
@@ -116,7 +146,7 @@ export function EditCampaignScreen(props: { campaignId: string; onCancel: () => 
       <div style={{ alignItems: 'center', display: 'flex', gap: '0.6rem', justifyContent: 'space-between', marginBottom: '1rem' }}>
         <h2 style={{ margin: 0 }}>Edit campaign</h2>
         <div style={{ flex: 1 }} />
-        <CampaignHelpButton campaignDir={campaignDir} />
+        <CampaignHelpButton campaignDir={opened.campaignDir} />
         <button
           type="button"
           onClick={props.onCancel}
@@ -133,7 +163,23 @@ export function EditCampaignScreen(props: { campaignId: string; onCancel: () => 
         }}
         style={{ border: '1px solid var(--color-border)', borderRadius: 12, maxWidth: 560, padding: '1.25rem' }}
       >
-        <p style={{ color: 'var(--color-text-muted)', fontSize: '0.75rem', margin: '0 0 1rem', overflowWrap: 'anywhere' }}>{opened.campaignDir}</p>
+        <div style={{ ...FIELD_STYLE, alignItems: 'center', display: 'flex', gap: '0.5rem' }}>
+          <p style={{ color: 'var(--color-text-muted)', flex: 1, fontSize: '0.75rem', margin: 0, overflowWrap: 'anywhere' }}>{opened.campaignDir}</p>
+          <button
+            type="button"
+            onClick={handleMove}
+            disabled={moving || saving}
+            title="Copy the whole folder to a new place, check every file, and use it from there; the old folder is kept"
+            style={{ ...SMALL_BUTTON, cursor: moving || saving ? 'not-allowed' : 'pointer', fontSize: '0.8rem' }}
+          >
+            {moving ? 'Moving…' : 'Move campaign folder…'}
+          </button>
+        </div>
+        {moveStatus ? (
+          <p role="status" style={{ color: 'var(--color-text-muted)', fontSize: '0.8rem', lineHeight: 1.6, margin: '-0.5rem 0 1rem', overflowWrap: 'anywhere' }}>
+            {moveStatus}
+          </p>
+        ) : null}
 
         <div style={FIELD_STYLE}>
           <label style={LABEL_STYLE} htmlFor="campaign-name">

@@ -27,6 +27,13 @@ export interface OpenedCampaign {
   nonce: number;
 }
 
+/** `relocate_campaign_folder`: the campaign at its new folder; the old folder is kept as it was. */
+export interface RelocatedCampaign extends OpenedCampaign {
+  previousDir: string;
+  /** 0 when the new folder already held this campaign (a synced copy) and was opened as is. */
+  copiedFiles: number;
+}
+
 /** One entry of `<app data>/campaign-folders.json`: `name` when it opens, else `error`. */
 export interface KnownCampaign {
   path: string;

@@ -1,4 +1,4 @@
-import { createCampaignFolder, listKnownCampaigns, openCampaignFolder, saveCampaignJson } from './knownCampaigns';
+import { createCampaignFolder, listKnownCampaigns, openCampaignFolder, relocateCampaignFolder, saveCampaignJson } from './knownCampaigns';
 import { listCampaignTree, readCampaignFile, writeCampaignFile } from './campaignFiles';
 import { getDeviceIdentity, setDeviceName } from './characters';
 import { assertEqual } from '../../testSupport/asserts';
@@ -28,6 +28,11 @@ async function main() {
     await messageOf(() => openCampaignFolder('/x')),
     'Tauri runtime not available for opening a campaign folder',
     'open'
+  );
+  assertEqual(
+    await messageOf(() => relocateCampaignFolder('/x', '/y')),
+    'Tauri runtime not available for moving the campaign folder',
+    'relocate'
   );
   assertEqual(
     await messageOf(() =>

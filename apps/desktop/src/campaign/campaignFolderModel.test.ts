@@ -1,4 +1,4 @@
-import { notACampaignFolder, partyCharacterIds } from './campaignFolderModel';
+import { notACampaignFolder, partyCharacterIds, relocationNotice } from './campaignFolderModel';
 import type { CampaignTreeEntry } from '../boundary/campaignFolder/types';
 import { assert, assertEqual } from '../testSupport/asserts';
 
@@ -35,6 +35,26 @@ function testNotACampaignFolderIsRecognised() {
   assert(!notACampaignFolder('permission denied'), 'another error');
 }
 
+function testRelocationNoticeNamesBothFolders() {
+  const base = { campaignDir: '/new/Rise', previousDir: '/old/Rise' };
+  assertEqual(
+    relocationNotice({ ...base, copiedFiles: 12 }),
+    'Moved: 12 files copied to /new/Rise and checked byte for byte. The old folder is kept, unchanged, at /old/Rise; delete it yourself once you no longer need it.',
+    'a copy names the count, the new folder and the kept old folder'
+  );
+  assertEqual(
+    relocationNotice({ ...base, copiedFiles: 1 }).startsWith('Moved: 1 file copied'),
+    true,
+    'one file is singular'
+  );
+  assertEqual(
+    relocationNotice({ ...base, copiedFiles: 0 }),
+    '/new/Rise already holds this campaign, so it was opened as is and nothing was copied. The old folder is kept, unchanged, at /old/Rise; delete it yourself once you no longer need it.',
+    'a synced copy is opened, nothing copied'
+  );
+}
+
 testPartyIsTheFolderCharactersThisInstallHolds();
 testNotACampaignFolderIsRecognised();
-console.log('campaignFolderModel.test.ts: 2 cases passed');
+testRelocationNoticeNamesBothFolders();
+console.log('campaignFolderModel.test.ts: 3 cases passed');

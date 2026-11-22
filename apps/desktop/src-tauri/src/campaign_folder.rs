@@ -227,6 +227,144 @@ pub fn open_campaign_folder_at(app_data_dir: &Path, campaign_dir: &str) -> Resul
     })
 }
 
+// --- relocation (SD-43 decisions.md §7) ---
+
+#[derive(Debug, Clone, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct RelocateCampaignFolderRequest {
+    pub campaign_dir: String,
+    /// The folder the campaign moves to: absent, empty, or already a copy of this campaign.
+    pub target_dir: String,
+}
+
+#[derive(Debug, Clone, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct RelocatedCampaignDto {
+    pub campaign_dir: String,
+    pub campaign: CampaignFolderSnapshot,
+    pub nonce: u64,
+    /// The old folder, left exactly as it was (Q-1.3).
+    pub previous_dir: String,
+    /// Files copied; 0 when the target already held this campaign.
+    pub copied_files: usize,
+}
+
+/// Schema 2 has no campaign id, so creation time plus name stand in for one; a copy renamed
+/// elsewhere is refused rather than opened, which loses nothing.
+fn same_campaign(a: &CampaignFolderSnapshot, b: &CampaignFolderSnapshot) -> bool {
+    a.created_at == b.created_at && a.name == b.name
+}
+
+/// Every folder and file under `dir`, relative, parents before children. A symlink is refused:
+/// copying it could reach outside the campaign.
+fn campaign_entries(dir: &Path, rel: &Path, out: &mut Vec<(PathBuf, bool)>) -> Result<(), String> {
+    let at = dir.join(rel);
+    let mut entries: Vec<_> = fs::read_dir(&at)
+        .map_err(|err| format!("{}: {err}", at.display()))?
+        .collect::<Result<_, _>>()
+        .map_err(|err| format!("{}: {err}", at.display()))?;
+    entries.sort_by_key(|entry| entry.file_name());
+    for entry in entries {
+        let child = rel.join(entry.file_name());
+        let kind = entry.file_type().map_err(|err| format!("{}: {err}", entry.path().display()))?;
+        if kind.is_dir() {
+            out.push((child.clone(), true));
+            campaign_entries(dir, &child, out)?;
+        } else if kind.is_file() {
+            out.push((child, false));
+        } else {
+            return Err(format!("{} is a link; Codex moves only files and folders", entry.path().display()));
+        }
+    }
+    Ok(())
+}
+
+/// Writes the skeleton with the create path's `create_layout`, copies every entry over it (the
+/// old `campaign.json`, nonce and files win), then compares every file's bytes.
+fn copy_campaign(from: &Path, to: &Path, snapshot: &CampaignFolderSnapshot) -> Result<usize, String> {
+    let mut entries = Vec::new();
+    campaign_entries(from, Path::new(""), &mut entries)?;
+    folder::create_layout(to, snapshot).map_err(|err| err.message)?;
+    for (rel, is_dir) in &entries {
+        let (src, dst) = (from.join(rel), to.join(rel));
+        let copied = if *is_dir { fs::create_dir_all(&dst) } else { fs::copy(&src, &dst).map(|_| ()) };
+        copied.map_err(|err| format!("{} -> {}: {err}", src.display(), dst.display()))?;
+    }
+    let files: Vec<_> = entries.iter().filter(|(_, is_dir)| !is_dir).map(|(rel, _)| rel).collect();
+    for rel in &files {
+        let read = |base: &Path| fs::read(base.join(rel)).map_err(|err| format!("{}: {err}", base.join(rel).display()));
+        if read(from)? != read(to)? {
+            return Err(format!("{} differs after the copy", to.join(rel).display()));
+        }
+    }
+    Ok(files.len())
+}
+
+/// The target's path with its nearest existing ancestor resolved, so `..` or a link cannot hide
+/// that it lies inside the campaign.
+fn resolved(path: &Path) -> PathBuf {
+    match (path.canonicalize(), path.parent(), path.file_name()) {
+        (Ok(real), _, _) => real,
+        (Err(_), Some(parent), Some(name)) => resolved(parent).join(name),
+        _ => path.to_path_buf(),
+    }
+}
+
+/// Moves a campaign to `target_dir` (Q-1.1–Q-1.3): copy, verify bytes, then switch the
+/// known-folders entry; the old folder is kept. A non-empty target is refused unless it is this
+/// same campaign (a synced copy), which is opened with nothing copied.
+pub fn relocate_campaign_folder_at(
+    app_data_dir: &Path,
+    request: &RelocateCampaignFolderRequest,
+) -> Result<RelocatedCampaignDto, String> {
+    let from = require_absolute(&request.campaign_dir)?;
+    let to = require_absolute(&request.target_dir)?;
+    let current = folder::open(&from).map_err(|err| err.message)?;
+    if resolved(&to).starts_with(resolved(&from)) {
+        return Err(format!("{} is inside the campaign folder; pick a folder outside it", to.display()));
+    }
+    if to.exists() && !to.is_dir() {
+        return Err(format!("{} is a file, not a folder", to.display()));
+    }
+    // An unreadable target is refused, never assumed empty: the cleanup below removes the target.
+    let non_empty = match fs::read_dir(&to) {
+        Ok(mut entries) => entries.next().is_some(),
+        Err(err) if err.kind() == std::io::ErrorKind::NotFound => false,
+        Err(err) => return Err(format!("{}: {err}", to.display())),
+    };
+    let copied_files = if non_empty {
+        match folder::open(&to) {
+            Ok(there) if same_campaign(&there.snapshot, &current.snapshot) => 0,
+            _ => {
+                return Err(format!(
+                    "{} is not empty and is not a copy of {}; pick an empty folder",
+                    to.display(),
+                    current.snapshot.name
+                ))
+            }
+        }
+    } else {
+        let existed = to.is_dir();
+        copy_campaign(&from, &to, &current.snapshot).inspect_err(|_| {
+            // The target was absent or empty: removing the partial copy loses nothing.
+            let _ = fs::remove_dir_all(&to);
+            if existed {
+                let _ = fs::create_dir(&to);
+            }
+        })?
+    };
+    let loaded = folder::open(&to).map_err(|err| err.message)?;
+    forget_known_campaign_folder_at(app_data_dir, &request.campaign_dir)?;
+    remember(app_data_dir, &to)?;
+    Ok(RelocatedCampaignDto {
+        campaign_dir: to.to_string_lossy().into_owned(),
+        campaign: loaded.snapshot,
+        nonce: loaded.nonce,
+        previous_dir: request.campaign_dir.clone(),
+        copied_files,
+    })
+}
+
 /// Saves an edited `campaign.json` through the nonce path (`decisions.md §11`, §13.1).
 pub fn save_campaign_json_impl(request: &SaveCampaignJsonRequest) -> Result<SavedCampaignJsonDto, String> {
     let dir = require_absolute(&request.campaign_dir)?;
@@ -548,6 +686,14 @@ pub fn open_campaign_folder(app: tauri::AppHandle, campaign_dir: String) -> Resu
 }
 
 #[tauri::command]
+pub fn relocate_campaign_folder(
+    app: tauri::AppHandle,
+    request: RelocateCampaignFolderRequest,
+) -> Result<RelocatedCampaignDto, String> {
+    relocate_campaign_folder_at(&app_data_dir(&app)?, &request)
+}
+
+#[tauri::command]
 pub fn migrate_campaign(app: tauri::AppHandle, request: MigrateCampaignRequest) -> Result<MigratedCampaignDto, String> {
     migrate_campaign_at(&app_data_dir(&app)?, &request)
 }
@@ -862,6 +1008,147 @@ mod tests {
 
         // A second create with the same name is refused (SD-f), never suffixed.
         assert!(create_campaign_folder_at(&app_data, &create_request(&campaigns, "First")).is_err());
+        let _ = fs::remove_dir_all(&root);
+    }
+
+    /// Every file under `dir` as (`/`-path, bytes), sorted; written apart from the production walk.
+    fn files_with_bytes(dir: &Path) -> Vec<(String, Vec<u8>)> {
+        let mut out = Vec::new();
+        let mut stack = vec![dir.to_path_buf()];
+        while let Some(at) = stack.pop() {
+            for entry in fs::read_dir(&at).unwrap() {
+                let path = entry.unwrap().path();
+                if path.is_dir() {
+                    stack.push(path);
+                } else {
+                    let rel = path.strip_prefix(dir).unwrap().to_string_lossy().replace('\\', "/");
+                    out.push((rel, fs::read(&path).unwrap()));
+                }
+            }
+        }
+        out.sort();
+        out
+    }
+
+    fn known_paths(app_data: &Path) -> Vec<String> {
+        list_known_campaigns_at(app_data).unwrap().into_iter().map(|c| c.path).collect()
+    }
+
+    fn relocate_request(from: &str, to: &Path) -> RelocateCampaignFolderRequest {
+        RelocateCampaignFolderRequest { campaign_dir: from.to_owned(), target_dir: to.to_string_lossy().into_owned() }
+    }
+
+    #[test]
+    fn relocate_campaign_copies_every_byte_completes_the_skeleton_and_keeps_the_old_folder() {
+        let root = temp_dir("relocate-copy");
+        let app_data = root.join("app-data");
+        let old = create_campaign_folder_at(&app_data, &create_request(&root.join("campaigns"), "Moving")).unwrap();
+        let old_dir = PathBuf::from(&old.campaign_dir);
+        fs::write(old_dir.join("Wiki/NPCs/Bob.md"), "# Bob\n").unwrap();
+        fs::write(old_dir.join("Attachments/map.png"), (0u8..=255).collect::<Vec<u8>>()).unwrap();
+        fs::create_dir_all(old_dir.join("Wiki/Custom/Empty")).unwrap();
+        // A folder made by hand or synced in part: the skeleton is incomplete before the move.
+        fs::remove_dir_all(old_dir.join("Maps")).unwrap();
+        fs::remove_file(old_dir.join(folder::PARTY_RESOURCES_FILE)).unwrap();
+        let saved = save_campaign_json_impl(&SaveCampaignJsonRequest {
+            campaign_dir: old.campaign_dir.clone(),
+            campaign: old.campaign.clone(),
+            expected_nonce: Some(old.nonce),
+        })
+        .unwrap();
+        let before = files_with_bytes(&old_dir);
+
+        let target = root.join("synced").join("Moving");
+        let moved = relocate_campaign_folder_at(&app_data, &relocate_request(&old.campaign_dir, &target)).unwrap();
+
+        assert_eq!(moved.campaign_dir, target.to_string_lossy());
+        assert_eq!(moved.previous_dir, old.campaign_dir);
+        assert_eq!(moved.copied_files, before.len());
+        assert_eq!(moved.nonce, saved.nonce, "the nonce file travels with the campaign");
+        assert_eq!(moved.campaign, old.campaign);
+        // Every byte of every old file is at the target, and the old folder is untouched.
+        let after: Vec<_> = files_with_bytes(&target).into_iter().filter(|(rel, _)| rel != folder::PARTY_RESOURCES_FILE).collect();
+        assert_eq!(after, before);
+        assert_eq!(files_with_bytes(&old_dir), before);
+        assert!(target.join("Wiki/Custom/Empty").is_dir(), "empty folders are copied too");
+        // The skeleton is complete at the target.
+        for sub in folder::LAYOUT_DIRS {
+            assert!(target.join(sub).is_dir(), "{sub} missing at the target");
+        }
+        assert_eq!(fs::read_to_string(target.join(folder::PARTY_RESOURCES_FILE)).unwrap(), folder::PARTY_RESOURCES_STARTER);
+        // The known-folders entry now points at the target, and only there.
+        assert_eq!(known_paths(&app_data), vec![moved.campaign_dir.clone()]);
+        let _ = fs::remove_dir_all(&root);
+    }
+
+    #[test]
+    fn relocate_campaign_refuses_a_foreign_non_empty_target() {
+        let root = temp_dir("relocate-foreign");
+        let app_data = root.join("app-data");
+        let campaigns = root.join("campaigns");
+        let mine = create_campaign_folder_at(&app_data, &create_request(&campaigns, "Mine")).unwrap();
+        let other = create_campaign_folder_at(&app_data, &create_request(&campaigns, "Other")).unwrap();
+        let known_before = known_paths(&app_data);
+
+        let stray = root.join("stray");
+        fs::create_dir_all(&stray).unwrap();
+        fs::write(stray.join("notes.txt"), "keep me").unwrap();
+        for target in [stray.clone(), PathBuf::from(&other.campaign_dir)] {
+            let before = files_with_bytes(&target);
+            let err = relocate_campaign_folder_at(&app_data, &relocate_request(&mine.campaign_dir, &target)).unwrap_err();
+            assert!(err.contains("not empty"), "{err}");
+            assert_eq!(files_with_bytes(&target), before, "a refused target is not written");
+        }
+        // A target inside the campaign itself is refused too.
+        let inside = PathBuf::from(&mine.campaign_dir).join("Wiki").join("Moved");
+        assert!(relocate_campaign_folder_at(&app_data, &relocate_request(&mine.campaign_dir, &inside)).is_err());
+        assert!(!inside.exists());
+        assert!(relocate_campaign_folder_at(&app_data, &relocate_request(&mine.campaign_dir, Path::new("relative"))).is_err());
+        // A file, or a folder that cannot be listed, is refused and left in place.
+        let file_target = root.join("a-file");
+        fs::write(&file_target, "x").unwrap();
+        assert!(relocate_campaign_folder_at(&app_data, &relocate_request(&mine.campaign_dir, &file_target)).is_err());
+        assert!(file_target.is_file());
+        #[cfg(unix)]
+        {
+            use std::os::unix::fs::PermissionsExt;
+            let locked = root.join("locked");
+            fs::create_dir_all(locked.join("inside")).unwrap();
+            fs::set_permissions(&locked, fs::Permissions::from_mode(0o300)).unwrap();
+            let refused = relocate_campaign_folder_at(&app_data, &relocate_request(&mine.campaign_dir, &locked));
+            fs::set_permissions(&locked, fs::Permissions::from_mode(0o755)).unwrap();
+            assert!(refused.is_err());
+            assert!(locked.join("inside").is_dir(), "an unlistable target is never cleaned up");
+        }
+        assert_eq!(known_paths(&app_data), known_before);
+        let _ = fs::remove_dir_all(&root);
+    }
+
+    #[test]
+    fn relocate_campaign_opens_a_same_campaign_target_and_copies_nothing() {
+        let root = temp_dir("relocate-same");
+        let app_data = root.join("app-data");
+        let old = create_campaign_folder_at(&app_data, &create_request(&root.join("campaigns"), "Synced")).unwrap();
+        let old_dir = PathBuf::from(&old.campaign_dir);
+        // The synced copy: the same campaign.json and nonce, one file the old folder lacks.
+        let target = root.join("cloud").join("Synced");
+        for (rel, bytes) in files_with_bytes(&old_dir) {
+            let path = target.join(&rel);
+            fs::create_dir_all(path.parent().unwrap()).unwrap();
+            fs::write(path, bytes).unwrap();
+        }
+        fs::create_dir_all(target.join("Wiki")).unwrap();
+        fs::write(target.join("Wiki/Synced only.md"), "from the cloud").unwrap();
+        fs::write(old_dir.join("Wiki/Local only.md"), "stays local").unwrap();
+        let target_before = files_with_bytes(&target);
+
+        let moved = relocate_campaign_folder_at(&app_data, &relocate_request(&old.campaign_dir, &target)).unwrap();
+        assert_eq!(moved.copied_files, 0);
+        assert_eq!(moved.campaign_dir, target.to_string_lossy());
+        assert_eq!(moved.previous_dir, old.campaign_dir);
+        assert_eq!(files_with_bytes(&target), target_before, "an opened copy is not written");
+        assert!(old_dir.join("Wiki/Local only.md").is_file());
+        assert_eq!(known_paths(&app_data), vec![moved.campaign_dir.clone()]);
         let _ = fs::remove_dir_all(&root);
     }
 

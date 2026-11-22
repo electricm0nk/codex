@@ -1,5 +1,5 @@
 import { invokeCampaignFolder } from './invokeCampaignFolder';
-import type { CampaignFolderSnapshot, KnownCampaign, OpenedCampaign, SavedCampaignJson } from './types';
+import type { CampaignFolderSnapshot, KnownCampaign, OpenedCampaign, RelocatedCampaign, SavedCampaignJson } from './types';
 
 /** The known campaign folders, most recently opened first (`list_known_campaigns`). */
 export function listKnownCampaigns(): Promise<KnownCampaign[]> {
@@ -28,6 +28,18 @@ export function createCampaignFolder(parentDir: string, campaign: CampaignFolder
 /** Opens a known campaign folder and marks it most recently opened. */
 export function openCampaignFolder(campaignDir: string): Promise<OpenedCampaign> {
   return invokeCampaignFolder('open_campaign_folder', { campaignDir }, 'opening a campaign folder');
+}
+
+/**
+ * "Move campaign folder…": copies every file to `targetDir`, checks the bytes, completes the
+ * folder layout and points the known list there; the old folder is kept (SD-43 decisions §7).
+ */
+export function relocateCampaignFolder(campaignDir: string, targetDir: string): Promise<RelocatedCampaign> {
+  return invokeCampaignFolder(
+    'relocate_campaign_folder',
+    { request: { campaignDir, targetDir } },
+    'moving the campaign folder'
+  );
 }
 
 /** Saves an edited `campaign.json` through the conflict-detecting nonce path (`save_campaign_json`). */

@@ -65,7 +65,7 @@ use serde::Serialize;
 
 use campaign_folder::{
     add_known_campaign_folder, add_map, create_campaign_folder, create_party_resources_starter, forget_known_campaign_folder, list_adventure_log, list_campaign_tree,
-    list_known_campaigns, list_maps, migrate_campaign, new_adventure_log_entry, open_campaign_folder, read_campaign_file, save_attachment, save_campaign_json,
+    list_known_campaigns, list_maps, migrate_campaign, new_adventure_log_entry, open_campaign_folder, read_campaign_file, relocate_campaign_folder, save_attachment, save_campaign_json,
     set_map_pins, stat_campaign_file, write_campaign_file,
     add_wiki_folder, delete_wiki_folder, list_wiki_folders, list_wiki_pages, new_wiki_page, rename_wiki_folder, resolve_wiki_link, search_campaign, wiki_backlinks,
     diff_campaign_character, get_device_identity, set_device_name, import_campaign_character, list_campaign_characters, load_campaign_character,
@@ -349,6 +349,7 @@ fn main() {
             forget_known_campaign_folder,
             create_campaign_folder,
             open_campaign_folder,
+            relocate_campaign_folder,
             save_campaign_json,
             migrate_campaign,
             read_campaign_file,
