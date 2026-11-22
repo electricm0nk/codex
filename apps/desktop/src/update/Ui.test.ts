@@ -110,13 +110,34 @@ function testInstallOutcomeShowsTheFailureReason() {
 function testUnwiredMountSelectsStable() {
   const html = render({});
   assertContains(html, '<option value="stable" selected="">', 'the selector opens on stable');
-  assertContains(html, 'data-testid="check-channel">stable<', 'the check panel names stable');
   for (const channel of ['alpha', 'beta', 'stable']) {
     assertContains(html, `<option value="${channel}"`, `the selector still offers ${channel}`);
   }
 }
 
+function testSelectorSitsInsideCheckPanelTopBlock() {
+  const html = render({});
+  const panelStart = html.indexOf('id="check-panel"');
+  const selectorAt = html.indexOf('id="channel-selector"');
+  const checkBtnAt = html.indexOf('id="check-button"');
+  assert(panelStart >= 0 && selectorAt > panelStart && selectorAt < checkBtnAt,
+    'the channel selector renders inside the check panel, above the Check button');
+  assert(html.split('Channel:').length === 2, 'exactly one Channel: label is rendered');
+  assertNotContains(html, 'data-testid="check-channel"', 'no second read-only channel label beside the selector');
+}
+
+function testLongReleaseNotesWrapInsideAWiderColumn() {
+  const base = buildUnwiredUpdateDeps();
+  const html = render({
+    initialDeps: { ...base, releaseNotes: { releaseVersion: '9.9.9', body: 'x'.repeat(400) } },
+  });
+  assertContains(html, 'overflow-wrap:anywhere', 'a long release-note line wraps instead of overflowing');
+  assertContains(html, 'max-width:960px', 'the update column is wider than the old 720px');
+}
+
 function main() {
+  testLongReleaseNotesWrapInsideAWiderColumn();
+  testSelectorSitsInsideCheckPanelTopBlock();
   testUnwiredMountSelectsStable();
   testInstallOutcomeRendersNothingBeforeAnyInstall();
   testInstallOutcomeOnWindowsSaysCodexClosesAndReopens();

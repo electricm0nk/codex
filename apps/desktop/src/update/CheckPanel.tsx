@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react';
 import type { UpdateControllerDeps, UpdateChannelLabel } from './updateModel';
 import {
   UI_BUTTON_BASE_STYLE,
@@ -11,6 +12,8 @@ export interface CheckPanelProps {
   deps: UpdateControllerDeps;
   checkInProgress: boolean;
   onCheck: (channel: UpdateChannelLabel) => void;
+  /** The channel selector; shown beside `Channel:` in the top block. */
+  channelControl?: ReactNode;
 }
 
 const CHECK_BUTTON_ID = 'check-button';
@@ -23,7 +26,7 @@ const RELEASE_NOTES_ID = 'release-notes';
  * component renders the notes block and reads the installed/last-check
  * state to drive the button label.
  */
-export function CheckPanel({ deps, checkInProgress, onCheck }: CheckPanelProps) {
+export function CheckPanel({ deps, checkInProgress, onCheck, channelControl }: CheckPanelProps) {
   const { controller, lastCheck, releaseNotes } = deps;
   const channel = lastCheck.selectedChannel;
   const buttonStyle =
@@ -38,12 +41,16 @@ export function CheckPanel({ deps, checkInProgress, onCheck }: CheckPanelProps) 
       style={UI_PANEL_STYLE}
     >
       <h2 style={UI_PANEL_TITLE_STYLE}>Check for updates</h2>
-      <p style={{ margin: '0 0 8px 0' }}>
-        Channel:{' '}
-        <strong id="check-channel" data-testid="check-channel">
-          {channel}
-        </strong>
-      </p>
+      {channelControl ? (
+        <div style={{ margin: '0 0 8px 0' }}>{channelControl}</div>
+      ) : (
+        <p style={{ margin: '0 0 8px 0' }}>
+          Channel:{' '}
+          <strong id="check-channel" data-testid="check-channel">
+            {channel}
+          </strong>
+        </p>
+      )}
       <p style={{ margin: '0 0 12px 0' }}>
         Last check:{' '}
         <span id="check-status" data-testid="check-status">
@@ -115,7 +122,9 @@ function renderReleaseNotes(
     );
   }
   return (
-    <div style={UI_NOTES_BLOCK_STYLE} aria-label={`Release notes for ${notes.releaseVersion}`}>
+    <div
+      style={{ ...UI_NOTES_BLOCK_STYLE, overflowWrap: 'anywhere', maxHeight: '320px' }}
+      aria-label={`Release notes for ${notes.releaseVersion}`}>
       {notes.body ?? '(release notes body is unavailable)'}
     </div>
   );

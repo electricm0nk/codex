@@ -141,7 +141,7 @@ export function UpdateUi({ initialDeps, restoreOffer }: UpdateUiProps) {
     <main
       id={UPDATE_UI_ID}
       data-testid={UPDATE_UI_ID}
-      style={UI_CONTAINER_STYLE}
+      style={{ ...UI_CONTAINER_STYLE, maxWidth: '960px' }}
     >
       <h1
         style={{
@@ -152,12 +152,14 @@ export function UpdateUi({ initialDeps, restoreOffer }: UpdateUiProps) {
       >
         Codex Desktop Updates
       </h1>
-      <ChannelSelector
-        selected={selectedChannel}
-        onChange={handleChannelChange}
-        disabled={checkInProgress || installInProgress}
-      />
       <CheckPanel
+        channelControl={
+          <ChannelSelector
+            selected={selectedChannel}
+            onChange={handleChannelChange}
+            disabled={checkInProgress || installInProgress}
+          />
+        }
         deps={deps}
         checkInProgress={checkInProgress}
         onCheck={handleCheck}
