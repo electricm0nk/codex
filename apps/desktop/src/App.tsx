@@ -23,10 +23,9 @@ import {
   submitEnhancementRequest,
   type EnhancementRequestSubmissionOutcome,
 } from './testerWorkbench/feedback/enhancement';
-import {
-  runBrowserHandoff,
-  type BrowserHandoffOutcome,
-} from './feedback/browserHandoff';
+import { type BrowserHandoffOutcome } from './feedback/browserHandoff';
+import { routeReport, type ReportRouteOutcome } from './feedback/reportRoute';
+import { loadReportAvailability, type ReportAvailability } from './boundary/sendReport';
 import { CharacterHubPage } from './characterHub/CharacterHubPage';
 import { UpdateUi } from './update/Ui';
 import {
@@ -232,7 +231,11 @@ function outcomeTone(status: BugReportSubmissionOutcome['status']): string {
  * opened in the tester's browser" — never that an issue was submitted. Every
  * outcome keeps the governed draft copyable so no evidence is lost.
  */
-function BrowserHandoffResultPanel(props: { handoff: BrowserHandoffOutcome; copyablePayload: string }) {
+function BrowserHandoffResultPanel(props: {
+  handoff: BrowserHandoffOutcome;
+  copyablePayload: string;
+  githubUnavailable: string | null;
+}) {
   const [copied, setCopied] = useState(false);
   const confirmed = props.handoff.ui.status === 'confirmed';
   const tone = confirmed ? 'var(--color-accent)' : 'var(--color-warn)';
@@ -276,6 +279,11 @@ function BrowserHandoffResultPanel(props: { handoff: BrowserHandoffOutcome; copy
         </>
       ) : (
         <>
+          {props.githubUnavailable ? (
+            <p style={{ color: 'var(--color-warn)', fontWeight: 700, lineHeight: 1.6, margin: '0.45rem 0 0' }}>
+              {props.githubUnavailable}
+            </p>
+          ) : null}
           <p style={{ color: 'var(--color-warn)', lineHeight: 1.6, margin: '0.45rem 0 0' }}>
             The prefilled GitHub issue form could not be opened
             {props.handoff.ui.reason ? ` (${props.handoff.ui.reason})` : ''}. Nothing was filed and
@@ -314,6 +322,73 @@ function BrowserHandoffResultPanel(props: { handoff: BrowserHandoffOutcome; copy
   );
 }
 
+/** Anonymous on: whether this build can send (it needs the build-stamped key) and why not. */
+function useAnonymousAvailability(anonymous: boolean): ReportAvailability | null {
+  const [availability, setAvailability] = useState<ReportAvailability | null>(null);
+  useEffect(() => {
+    if (!anonymous) {
+      setAvailability(null);
+      return;
+    }
+    let live = true;
+    loadReportAvailability()
+      .then((value) => live && setAvailability(value))
+      .catch((cause: unknown) =>
+        live && setAvailability({ available: false, reason: cause instanceof Error ? cause.message : String(cause) }),
+      );
+    return () => {
+      live = false;
+    };
+  }, [anonymous]);
+  return availability;
+}
+
+/** The Anonymous selector and the optional Handle, shared by the bug and enhancement screens. */
+function AnonymousReportControls(props: {
+  anonymous: boolean;
+  onAnonymousChange: (value: boolean) => void;
+  handle: string;
+  onHandleChange: (value: string) => void;
+  availability: ReportAvailability | null;
+}) {
+  return (
+    <div style={{ backgroundColor: 'var(--color-surface)', border: '1px solid var(--color-border)', borderRadius: 12, marginTop: '1rem', padding: '0.9rem 1rem' }}>
+      <label style={{ alignItems: 'center', display: 'flex', fontWeight: 700, gap: '0.5rem' }}>
+        <input type="checkbox" checked={props.anonymous} onChange={(event) => props.onAnonymousChange(event.target.checked)} />
+        Anonymous
+      </label>
+      <p style={{ color: 'var(--color-text-secondary)', lineHeight: 1.6, margin: '0.45rem 0 0' }}>
+        {props.anonymous
+          ? 'Sent for review through the Campaign Codex report service — no GitHub account needed.'
+          : 'Opens a prefilled GitHub issue form in your browser (needs a GitHub account).'}
+      </p>
+      {props.anonymous ? (
+        <BugReportField
+          label="Handle (optional — shown as the first line of the report)"
+          value={props.handle}
+          placeholder="e.g. Gus"
+          onChange={props.onHandleChange}
+        />
+      ) : null}
+      {props.anonymous && props.availability && !props.availability.available ? (
+        <p style={{ color: 'var(--color-warn)', lineHeight: 1.6, margin: '0.45rem 0 0' }}>
+          Send is disabled: {props.availability.reason ?? 'anonymous reports are not available in this build.'}
+        </p>
+      ) : null}
+    </div>
+  );
+}
+
+function AnonymousReportResultPanel(props: { sent: boolean; message: string }) {
+  const tone = props.sent ? 'var(--color-accent)' : 'var(--color-warn)';
+  return (
+    <div style={{ backgroundColor: 'var(--color-surface)', border: `1px solid ${tone}`, borderRadius: 12, marginTop: '1rem', padding: '0.9rem 1rem' }}>
+      <p style={{ color: tone, fontWeight: 700, margin: 0 }}>Anonymous report: {props.sent ? 'sent for review' : 'not sent'}</p>
+      <p style={{ color: 'var(--color-text-secondary)', lineHeight: 1.6, margin: '0.45rem 0 0' }}>{props.message}</p>
+    </div>
+  );
+}
+
 function BugReportComposer(props: { surface: TesterWorkbenchSurface }) {
   const [title, setTitle] = useState('');
   const [observedBehavior, setObservedBehavior] = useState('');
@@ -323,6 +398,10 @@ function BugReportComposer(props: { surface: TesterWorkbenchSurface }) {
   const [handoff, setHandoff] = useState<BrowserHandoffOutcome | null>(null);
   const [submitting, setSubmitting] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [anonymous, setAnonymous] = useState(false);
+  const [reporterHandle, setReporterHandle] = useState('');
+  const [routed, setRouted] = useState<ReportRouteOutcome | null>(null);
+  const availability = useAnonymousAvailability(anonymous);
 
   const composed = useMemo(() => {
     const payload = assembleFeedbackEvidence({
@@ -332,6 +411,8 @@ function BugReportComposer(props: { surface: TesterWorkbenchSurface }) {
     });
     return composeBugReport({ title, payload });
   }, [props.surface, title, observedBehavior, expectedBehavior, reproductionSteps]);
+  // Anonymous on in a build without the report key: Send is disabled with the stated reason.
+  const sendBlocked = anonymous && availability !== null && !availability.available;
 
   // Submittable drafts go through the governed browser handoff (F4):
   // the Rust boundary builds + validates a prefilled GitHub issue URL and
@@ -344,9 +425,12 @@ function BugReportComposer(props: { surface: TesterWorkbenchSurface }) {
     try {
       if (composed.submittable) {
         setOutcome(null);
-        setHandoff(await runBrowserHandoff(composed.draft));
+        const result = await routeReport({ kind: 'bug', anonymous, handle: reporterHandle, draft: composed.draft });
+        setRouted(result);
+        setHandoff(result.route === 'browser' ? result.handoff : null);
       } else {
         setHandoff(null);
+        setRouted(null);
         setOutcome(await submitBugReport({ composed, transport: null }));
       }
     } finally {
@@ -416,6 +500,14 @@ function BugReportComposer(props: { surface: TesterWorkbenchSurface }) {
         <p style={{ color: 'var(--color-text-secondary)', lineHeight: 1.6, margin: '0.45rem 0 0' }}>{REDACTION_POLICY_NOTICE}</p>
       </div>
 
+      <AnonymousReportControls
+        anonymous={anonymous}
+        onAnonymousChange={setAnonymous}
+        handle={reporterHandle}
+        onHandleChange={setReporterHandle}
+        availability={availability}
+      />
+
       {composed.problems.length ? (
         <div style={{ backgroundColor: 'var(--color-warn-bg)', border: '1px solid var(--color-warn-border)', borderRadius: 12, marginTop: '1rem', padding: '0.9rem 1rem' }}>
           <p style={{ color: 'var(--color-warn)', fontWeight: 700, margin: 0 }}>Still required before this report can be submitted</p>
@@ -430,7 +522,7 @@ function BugReportComposer(props: { surface: TesterWorkbenchSurface }) {
       <button
         type="button"
         onClick={onPrepareSubmission}
-        disabled={submitting}
+        disabled={submitting || (composed.submittable && sendBlocked)}
         style={{
           backgroundColor: composed.submittable ? 'var(--color-accent)' : 'var(--color-text-muted)',
           border: 'none',
@@ -442,7 +534,9 @@ function BugReportComposer(props: { surface: TesterWorkbenchSurface }) {
           padding: '0.6rem 1rem',
         }}
       >
-        {composed.submittable ? 'Open prefilled GitHub issue form' : 'Preserve bug draft (not yet submittable)'}
+        {composed.submittable
+          ? anonymous ? 'Send for review (Anonymous)' : 'Open prefilled GitHub issue form'
+          : 'Preserve bug draft (not yet submittable)'}
       </button>
 
       <h3 style={{ marginBottom: '0.4rem', marginTop: '1.25rem' }}>Composed issue preview</h3>
@@ -515,8 +609,10 @@ function BugReportComposer(props: { surface: TesterWorkbenchSurface }) {
         <BrowserHandoffResultPanel
           handoff={handoff}
           copyablePayload={renderCopyableBugPayload(composed.draft)}
+          githubUnavailable={routed?.route === 'browser' ? routed.githubUnavailable : null}
         />
       ) : null}
+      {routed?.route === 'api' ? <AnonymousReportResultPanel sent={routed.sent} message={routed.message} /> : null}
     </section>
   );
 }
@@ -531,6 +627,10 @@ function EnhancementRequestComposer(props: { surface: TesterWorkbenchSurface }) 
   const [handoff, setHandoff] = useState<BrowserHandoffOutcome | null>(null);
   const [submitting, setSubmitting] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [anonymous, setAnonymous] = useState(false);
+  const [reporterHandle, setReporterHandle] = useState('');
+  const [routed, setRouted] = useState<ReportRouteOutcome | null>(null);
+  const availability = useAnonymousAvailability(anonymous);
 
   const composed = useMemo(() => {
     const payload = assembleFeedbackEvidence({
@@ -540,6 +640,8 @@ function EnhancementRequestComposer(props: { surface: TesterWorkbenchSurface }) 
     });
     return composeEnhancementRequest({ title, payload });
   }, [props.surface, title, testerGoal, currentFriction, requestedCapability, affectedSurface]);
+  // Anonymous on in a build without the report key: Send is disabled with the stated reason.
+  const sendBlocked = anonymous && availability !== null && !availability.available;
 
   // Submittable drafts go through the governed browser handoff (F4):
   // the Rust boundary builds + validates a prefilled GitHub issue URL and
@@ -552,9 +654,12 @@ function EnhancementRequestComposer(props: { surface: TesterWorkbenchSurface }) 
     try {
       if (composed.submittable) {
         setOutcome(null);
-        setHandoff(await runBrowserHandoff(composed.draft));
+        const result = await routeReport({ kind: 'enhancement', anonymous, handle: reporterHandle, draft: composed.draft });
+        setRouted(result);
+        setHandoff(result.route === 'browser' ? result.handoff : null);
       } else {
         setHandoff(null);
+        setRouted(null);
         setOutcome(await submitEnhancementRequest({ composed, transport: null }));
       }
     } finally {
@@ -632,6 +737,14 @@ function EnhancementRequestComposer(props: { surface: TesterWorkbenchSurface }) 
         <p style={{ color: 'var(--color-text-secondary)', lineHeight: 1.6, margin: '0.45rem 0 0' }}>{REDACTION_POLICY_NOTICE}</p>
       </div>
 
+      <AnonymousReportControls
+        anonymous={anonymous}
+        onAnonymousChange={setAnonymous}
+        handle={reporterHandle}
+        onHandleChange={setReporterHandle}
+        availability={availability}
+      />
+
       {composed.problems.length ? (
         <div style={{ backgroundColor: 'var(--color-warn-bg)', border: '1px solid var(--color-warn-border)', borderRadius: 12, marginTop: '1rem', padding: '0.9rem 1rem' }}>
           <p style={{ color: 'var(--color-warn)', fontWeight: 700, margin: 0 }}>Still required before this request can be submitted</p>
@@ -646,7 +759,7 @@ function EnhancementRequestComposer(props: { surface: TesterWorkbenchSurface }) 
       <button
         type="button"
         onClick={onPrepareSubmission}
-        disabled={submitting}
+        disabled={submitting || (composed.submittable && sendBlocked)}
         style={{
           backgroundColor: composed.submittable ? 'var(--color-accent)' : 'var(--color-text-muted)',
           border: 'none',
@@ -659,7 +772,7 @@ function EnhancementRequestComposer(props: { surface: TesterWorkbenchSurface }) 
         }}
       >
         {composed.submittable
-          ? 'Open prefilled GitHub issue form'
+          ? anonymous ? 'Send for review (Anonymous)' : 'Open prefilled GitHub issue form'
           : 'Preserve enhancement draft (not yet submittable)'}
       </button>
 
@@ -733,8 +846,10 @@ function EnhancementRequestComposer(props: { surface: TesterWorkbenchSurface }) 
         <BrowserHandoffResultPanel
           handoff={handoff}
           copyablePayload={renderCopyableEnhancementPayload(composed.draft)}
+          githubUnavailable={routed?.route === 'browser' ? routed.githubUnavailable : null}
         />
       ) : null}
+      {routed?.route === 'api' ? <AnonymousReportResultPanel sent={routed.sent} message={routed.message} /> : null}
     </section>
   );
 }
