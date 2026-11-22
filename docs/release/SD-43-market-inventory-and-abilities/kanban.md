@@ -52,7 +52,7 @@ awk -F'|' '$2 ~ /^ (C|E)[0-9]/ {print $5}' kanban.md | sort | uniq -c   # 56 tod
 | E1.5 | Selling a container moves its direct contents to Carried | opus | todo | E1.4 | gear | yes (desktop) | hub | |
 | E1.6 | Sell window: Market Rate / Build / Negotiate | opus | todo | E1.5 | gear | no | no | |
 | E1.7 | One `MarketButton` on every panel (PF, SF, CPR); Print and pricing control leave the panels | sonnet | todo | E1.6 | sheet | no | hub | |
-| E1.8 | Market inventory sell value column (`sellNegotiateGp`) | sonnet | complete | E0.2 | market | no | no | receipt `artifacts/epic_1/E1.8_cycle_receipt.md`; SHA `c9786cfb3201c5b7f4f06cd554da99f493cdc590` |
+| E1.8 | Market inventory sell value column (`sellNegotiateGp`) | sonnet | complete | E0.2 | market | no | no | receipt `artifacts/epic_1/E1.8_cycle_receipt.md`; SHA `fec7a7bda2de993a0b457a77810b8d286d2c0675` |
 | E1.9 | Item stats in the Market description box (engine-stated, shared renderer) | opus | todo | E1.8 | market | yes (desktop) | hub | |
 | E1.10 | Filter model: per-list columns and values, `Other`, counts cover every row | opus | todo | E1.9, E0.2 | market | no | no | |
 | E1.11 | Filter column; 200 cap removed; windowed list; first paint measured | opus | todo | E1.10 | market | no | no | |
