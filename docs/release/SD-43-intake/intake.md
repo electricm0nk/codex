@@ -572,6 +572,45 @@ read only, not run).
   editable categories only: name, pool source, member count, and whether our engine holds the pool.
   That list, not the 2616 lines, is the scope.
 
+### 22b. Operator correction (2026-11-22): the seven PCGen sub-tabs are the scope, not the code-side category table
+
+The operator does not see a "category table" on screen. 22a describes PCGen's code; read it as
+background. What the operator sees in PCGen's Feats and Abilities tab is **seven sub-tabs**, each with
+its own set of selectable options:
+
+1. **Feats**  2. **Racial Abilities**  3. **Traits**  4. **Archetype**  5. **Background**
+6. **Class Features**  7. **Misc**
+
+- **Ruling (operator):** the **Class Features selections are missing** from our UI and must be added.
+  The UI must track **what can be selected** and **what is selected**, for each sub-tab.
+- **Ruling (operator):** "PCGen's Feats and Abilities tab is a big missing gap in our UI." The new
+  Abilities tab (item 22) is modeled on those seven sub-tabs. This replaces the earlier idea of one
+  section per pool as the organizing frame. Pools (ninja tricks, rogue talents, rage powers) sit under
+  **Class Features**.
+- **Where ours stands (read from `CharacterSheet.tsx`, not run; `SHEET_TABS` is Weapons, Defense, Gear,
+  Spells, Pets, Feats, Actions, Custom, Biography, Notes):**
+
+| PCGen sub-tab | Ours today |
+|---|---|
+| Feats | `FeatsTab`: pick and remove feats, with a feat budget badge |
+| Racial Abilities | `RacialTraitsSection` (~1689); whether its alternates are selectable is unread |
+| Traits | a Traits section inside `FeatsTab` (add and remove) |
+| Archetype | no selectable UI found (grep for archetype and background in the sheet found none) |
+| Background | none found |
+| Class Features | read-only descriptions (`ClassFeatureDescriptionReferenceSection`) and a reference menu for two pools; nothing selectable or recorded |
+| Misc | unknown |
+
+- **Not verified:** that PCGen's seven sub-tabs map to specific category types in the data (the first
+  grep of `TYPE:` values on `ABILITYCATEGORY` lines did not show such a mapping). The operator's
+  on-screen view is the authority until a read of the PCGen UI strings or a screenshot settles it.
+- **Open questions for the operator:**
+  - (1) For SD-43's strawman, build all seven sub-tabs as read-and-select lists, or Class Features
+    first and the other six to follow in SD-44? My pick: Class Features fully (can-select and
+    is-selected, saved, on the printout), the other six as the same list shape filled in as far as the
+    engine already holds the data; the gaps listed, not hidden.
+  - (2) A screenshot of the PCGen tab, saved in the repo's intake folder, would remove guessing about
+    Misc and the layout. Optional.
+
 ## 23. RELEASE: the minor version follows the SD number — SD-43 ships as 0.43
 
 - **Reported:** 2026-11-22 (operator): "jump our minor version to 0.43… it's getting hard to remember to
