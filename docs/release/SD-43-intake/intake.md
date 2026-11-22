@@ -479,3 +479,40 @@ Run in this order, after SD-42 is merged:
     dock bar's height. Use the viewport (`100dvh`), not a fixed pixel number.
   - Look for other bottom-edge controls on the same screen with the same fault.
   - Test with the window at the smallest size the app allows.
+
+## 22. GAP: class-chosen abilities (ninja tricks, rogue talents, rage powers, …) and favored class bonuses are not in the UI
+
+- **Reported:** 2026-11-22 (operator). Question: was this accounted for anywhere?
+- **Answer (read from the code, not run):** only in part. No SD-43 item covered it until now.
+  - **Option pools (ninja tricks and the like):** the sheet has a read-only reference list in
+    `CharacterSheet.tsx` `POOL_REFERENCE_SECTIONS` (~1798). It lists "Available Rogue Talents" and
+    "Available Rage Powers". Its own note says it shows every member "whether or not this build has
+    selected one". It is a menu, not a picker, and it does not record what the character chose.
+  - Only two pools are registered: **Rogue Talent** and **Rage Power**. **Ninja Trick is not
+    registered**, though the corpus holds it (`data/corpus/ultimate_campaign/ability/ninja_trick.json`).
+    The same is probably true for other class pools (not yet counted).
+  - **Favored class bonus:** no native UI at all. `grep -i favored` over `apps/desktop/src` finds no
+    sheet code. The only support is the PCGen import (`pcg_import/map.rs`), which carries an imported
+    character's favored class bonus as hit points and skill ranks (`favored_hit_points`,
+    `favored_skill_ranks`) into the custom grants.
+- **Ask:** let a player see and set these on the sheet: the class's chosen abilities (ninja tricks,
+  rogue talents, rage powers, and every other class pool the books define), and the favored class
+  choice with its per-level bonus.
+- **Scope check needed before planning (do not guess):**
+  - Count every class that has a chosen-ability pool in the corpus, and which of those are registered.
+    Derive it with a loop over `data/corpus/*/ability/*.json` and the `REGISTERED_POOL_GROUPS` list
+    in `rules_core` (`class_feature_pool_catalog`). Not yet run.
+  - Check what the memory note "choice-picker Path A" left as canonical-default seeding, so a picker
+    does not duplicate it.
+  - Sheet doctrine: print the rule, do not simulate. A chosen ability shows its rule text. Only
+    numbers that feed a sheet total get computed. Favored class hit points and skill ranks do feed
+    totals (HP, skills), so those are computed; the pool text is printed.
+- **Open questions for the operator:**
+  - (1) Pickers or just a record? My pick: a real picker per pool (choose a talent at the right level,
+    saved on the character, shown on the sheet and the printout), because a menu that forgets the choice
+    does not help the player.
+  - (2) Favored class bonus: choose hit point or skill rank per level, per race rule (for example
+    half-elf, human, and others have alternates). My pick: do the core hit point / skill rank choice
+    first; race-specific alternates are a second step, named in the plan.
+  - (3) Which pools first? My pick: all pools the corpus defines, generic, driven by the registry. Not
+    one lane per class.
