@@ -272,7 +272,7 @@ before reuse.
 - The frame is PCGen's seven sub-tabs as the operator sees them: Feats, Racial Abilities, Traits, Archetype,
   Background, Class Features, Misc (22b). Pools (ninja tricks, rogue talents, rage powers…) sit under Class
   Features. The category table in 22a is background, not the frame.
-- **One tab, not two (DEFAULT, §30 Q-22.3).** Ruling 22-a said "a new Abilities tab next to Feats (working
+- **One tab, not two (OPERATOR 2026-11-22, Q-22.3: "yes, rename to abilities").** Ruling 22-a said "a new Abilities tab next to Feats (working
   name)"; ruling 22b makes Feats the first of the seven sub-tabs. Two feat pickers would drift, so: the `Feats`
   entry in `SHEET_TABS` (`CharacterSheet.tsx:579`) becomes `Abilities`; its first sub-tab is today's `FeatsTab`
   (`:2343`) unchanged in behaviour; the Traits section (`TraitsSection` `:2516`, today inside `FeatsTab`) moves to
@@ -483,14 +483,14 @@ command when the repo can settle it, else the operator.
 | Q-12.1 | Drop / Discard of a container move its contents too? (item 12) | unchanged in SD-43 (item 12 excludes them) — the intake's pick was yes for Drop; if the operator says yes it becomes a card | operator |
 | Q-12.2 | Cashless value in the Market inventory (item 12) | `—` | operator |
 | Q-12.3 | Not Carried contents of a sold container (item 12) | stay Not Carried | operator |
-| Q-13.2 | Key into release builds; dev builds (item 13) | CI secret `CODEX_REPORT_KEY` stamped at build; dev builds disable Send with a reason. **Precondition: the operator creates the secret** before E5.1 can be proved in a release build | operator |
+| Q-13.2 | Key into release builds; dev builds (item 13) | CI secret `CODEX_REPORT_KEY` stamped at build; dev builds disable Send with a reason. **Secret created 2026-11-22 from the operator's key file (`gh secret list` shows it). Precondition was: the operator creates the secret** before E5.1 can be proved in a release build | operator |
 | Q-13.3 | Diagnostics attached? (item 13) | version, OS, install kind, channel | operator |
 | Q-17.1 | Side columns scroll on their own when taller than the window? (item 17) | yes | operator |
 | Q-19.1 | Embed the diagnostic or open it from a button? (item 19) | embed as a section | operator |
 | Q-20.1 | Confirm the reading of "1" (item 20) | operator proposes-and-approves as written | operator, at E4.G |
 | Q-22.1 | "SD23"/"SD24" read as SD-43/SD-44 (item 22) | yes — item 23 and ruling 22b-1 settle it | settled |
 | Q-22.2 | PCGen sub-tab → data category mapping; what Background and Misc hold | E0.1 reads PCGen's UI strings at the pin; the operator's screen is the authority; a screenshot in `../SD-43-intake/` would settle it (optional, item 22b (2)) | E0.1 (`grep -rn "Racial Abilities\|Background\|Misc" "$PCGEN_REPO_DIR/code/src/java/pcgen/gui2" --include=*.java --include=*.properties`) |
-| Q-22.3 | One Abilities tab replacing Feats, or a tab beside it? | one tab, Feats as sub-tab 1 | operator |
+| Q-22.3 | One Abilities tab replacing Feats, or a tab beside it? | **RULED 2026-11-22: rename; Feats is sub-tab 1** | operator |
 | Q-22.4 | Overrides on the six new sub-tabs? (22b) | yes, two new flags | operator |
 | Q-22.5 | Retraining and replace-a-pick: excluded as the strawman said? (22) | excluded (scope-draft §5); advanced/master tricks still selectable as members | operator |
 | Q-22.6 | Abilities tab on SF and CPR sheets? | no; Pathfinder only | operator |
@@ -508,3 +508,15 @@ command when the repo can settle it, else the operator.
 | C-6 | Item 3: "to verify where existing custom options are stored" | Per character, `custom.json` `Overrides`; four of the six house rules already exist as flags | §11 |
 | C-7 | Item 20: "18 distinct patterns" | The loop's 18 is distinct name strings; same figure | §22 |
 | C-8 | Item 22a: `ABILITYCATEGORY` count 2,616 lines / 2,430 names | Not re-derived here: `$PCGEN_REPO_DIR` is unset in this shell and the rule forbids the literal path; E0.1 re-runs it through `scripts/fetch-pcgen-oracle.sh --print-env` | E0.1 |
+
+## §32 — Rulings recorded after the package was authored (2026-11-22)
+
+- **Q-22.3 (OPERATOR):** "yes, rename to abilities". The `Feats` entry in `SHEET_TABS` becomes `Abilities`;
+  Feats is the first of its seven sub-tabs. E3.1 carries it.
+- **Intake §22c (OPERATOR):** the Class Features scope is every class- or archetype-granted choice in the corpus,
+  not the examples (ninja tricks, rage powers). E0.1 counts them by mechanism; E3.MC proves each one reachable
+  (selectable and recorded) or a discovered card. `acceptance-and-verification.md` and
+  `content-unit-inventory.md §2a` carry it.
+- **P-8 met:** the CI secret `CODEX_REPORT_KEY` was created 2026-11-22 from the operator's key file
+  (`~/workspace/.report_key`, outside the repo; the key is never written into the repo). Check:
+  `gh secret list -R electricm0nk/codex | awk '$1=="CODEX_REPORT_KEY"' | awk 'END{print NR}'` → 1.

@@ -1,6 +1,6 @@
 ---
 title: SD-43 — Market, Inventory and the Abilities Tab — Release Package
-status: planning-ready — front half (75e95b30c2) and back half authored 2026-11-22; all 13 canonical files present; the placeholder gate passes (every hit is in workflow-instruction.md §9); decisions.md §30's defaults are carried into kanban.md and risks-and-open-questions.md §2. Before launch the lead asks the operator Q-22.3 (Abilities tab rename vs. a tab beside Feats; pending) and for the CI secret CODEX_REPORT_KEY (P-8).
+status: planning-ready — front half (75e95b30c2) and back half authored 2026-11-22; all 13 canonical files present; the placeholder gate passes (every hit is in workflow-instruction.md §9); decisions.md §30's defaults are carried into kanban.md and risks-and-open-questions.md §2. Operator rulings 2026-11-22: Q-22.3 settled (rename Feats to Abilities); CI secret CODEX_REPORT_KEY created (P-8 met).
 bundle_id: SD-43
 slug: market-inventory-and-abilities
 scope: docs/release/SD-43-market-inventory-and-abilities
@@ -115,7 +115,7 @@ number"); `build` = the GitHub run number, stamped at publish. Repo files read `
 
 | # | Call | Default taken | Where |
 |---|---|---|---|
-| 1 | One Abilities tab or a tab beside Feats | `Feats` in `SHEET_TABS` becomes `Abilities`, holding seven sub-tabs with Feats first; no second feat picker | `decisions.md §15`, §30 Q-22.3 |
+| 1 | One Abilities tab (OPERATOR 2026-11-22: rename) | `Feats` in `SHEET_TABS` becomes `Abilities`, holding seven sub-tabs with Feats first; no second feat picker | `decisions.md §15`, §30 Q-22.3 |
 | 2 | How a sub-tab's grants and prerequisites are modeled | one engine module per the `feat_budget.rs` shape: `abilities.budget.<subtab>.<pool>.{granted,spent,remaining}` rows plus a `refusal` string; the UI reads rows only | `decisions.md §16`, `technical-design.md §3` |
 | 3 | Overrides on the six new sub-tabs | the existing `Overrides` mechanism in `custom.json`, two new flags | `decisions.md §17` |
 | 4 | Where the House Rules live | the same per-character `custom.json` `Overrides`, four of six flags already exist | `decisions.md §11` |

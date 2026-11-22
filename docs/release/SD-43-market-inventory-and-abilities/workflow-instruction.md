@@ -21,7 +21,7 @@ status: planning — back half; §1's commands were run on 2026-11-22 and their 
 > **Unattended after launch.** The run stops for the operator at exactly one planned wait, **E4.G** (approval of
 > the proposed item names, `decisions.md §22`). Every other open question takes its default from
 > `decisions.md §30` and logs it. One **precondition** only the operator can clear: the CI secret
-> `CODEX_REPORT_KEY` (P-8, Q-13.2) — E5.1 lands without it, but closure (E7.2) cannot pass without it
+> `CODEX_REPORT_KEY` (P-8, Q-13.2) — created 2026-11-22 (`decisions.md §32`); closure (E7.2) still re-checks it is present; before it existed, closure (E7.2) could not pass without it
 > (`risks-and-open-questions.md` R-1). Q-22.3 is settled by the operator (2026-11-22): the Feats tab is renamed
 > **Abilities** and Feats becomes one of its seven sub-tabs (E3.1).
 

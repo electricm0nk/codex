@@ -147,7 +147,7 @@ cargo test --locked -j 8 --test no_baked_manifest_dir_in_production -- --test-th
 # The publish still signs on 0.43.<run> (signed manifest, PR #419 — not SD-43 work, re-checked only)
 grep -n 'UPDATE_SIGNING_KEY' .github/workflows/publish-tester-release.yml | awk 'END{print NR}'        # ≥ 1 (2 on 2026-11-22)
 # The report key reaches the release build (P-8; E5.1)
-gh secret list -R electricm0nk/codex | awk '$1=="CODEX_REPORT_KEY"' | awk 'END{print NR}'             # 1 (0 on 2026-11-22)
+gh secret list -R electricm0nk/codex | awk '$1=="CODEX_REPORT_KEY"' | awk 'END{print NR}'             # 1 (created 2026-11-22)
 ```
 
 **Fresh-install acceptance (manual check, recorded in E7.2's receipt, completed in E7.4's).**

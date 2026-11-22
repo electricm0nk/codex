@@ -151,7 +151,7 @@ print(scan(glob.glob('data/corpus/*/*/**/*.json',recursive=True)))"
 | version files at `0.43.0` | package.json, tauri.conf.json, Cargo.toml, Cargo.lock entry | `acceptance-and-verification.md` G-R |
 | publish runs so far (the next build is `0.43.<run>`, `<run>` ≥ 169) | newest run 168 | `gh run list -w publish-tester-release.yml -L 1 --json number` |
 | `current-release.json` tranche | 22 (C1 makes it 43) | `python3 -c "import json;print(json.load(open('docs/release/current-release.json'))['tranche'])"` |
-| CI secret `CODEX_REPORT_KEY` | absent (0) | `gh secret list -R electricm0nk/codex \| awk '$1=="CODEX_REPORT_KEY"' \| awk 'END{print NR}'` |
+| CI secret `CODEX_REPORT_KEY` | present (1), created 2026-11-22 | `gh secret list -R electricm0nk/codex \| awk '$1=="CODEX_REPORT_KEY"' \| awk 'END{print NR}'` |
 
 ## §8 What this inventory does not count
 

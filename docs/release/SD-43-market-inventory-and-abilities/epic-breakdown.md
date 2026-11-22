@@ -410,7 +410,7 @@ Design: `technical-design.md §3`. Every sub-tab card is vertical (engine → co
 so no card ships a picker the engine does not check.
 
 ### E3.1 — the tab shell
-- **Objective:** `SHEET_TABS` `Feats` → `Abilities` (DEFAULT Q-22.3); seven sub-tabs; Feats sub-tab = `FeatsTab`
+- **Objective:** `SHEET_TABS` `Feats` → `Abilities` (OPERATOR 2026-11-22, Q-22.3: rename); seven sub-tabs; Feats sub-tab = `FeatsTab`
   unchanged; `TraitsSection`, `RacialTraitsSection`, the pool reference lists and
   `ClassFeatureDescriptionReferenceSection` moved to their sub-tabs. Sub-tabs whose engine card has not landed
   show a notice naming that card; E3.MC asserts none remain.
