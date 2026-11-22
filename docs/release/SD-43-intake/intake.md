@@ -604,10 +604,12 @@ its own set of selectable options:
   grep of `TYPE:` values on `ABILITYCATEGORY` lines did not show such a mapping). The operator's
   on-screen view is the authority until a read of the PCGen UI strings or a screenshot settles it.
 - **Open questions for the operator:**
-  - (1) For SD-43's strawman, build all seven sub-tabs as read-and-select lists, or Class Features
-    first and the other six to follow in SD-44? My pick: Class Features fully (can-select and
-    is-selected, saved, on the printout), the other six as the same list shape filled in as far as the
-    engine already holds the data; the gaps listed, not hidden.
+  - (1) **Ruled (operator, 2026-11-22): all seven sub-tabs in SD-43**, as a first working version.
+    "I'm sure we will need to do adjustments in SD-44 once I get to put my hands on something."
+    Plan the work so SD-43 delivers all seven (what can be selected, what is selected, saved on the
+    character, on the printout), and SD-44 is a feedback round, not unfinished scope. Where the engine
+    does not yet hold a sub-tab's data, SD-43 still ships the tab with that gap shown on screen, and the
+    gap is listed in the plan. A gap is never hidden and never faked. No stub shipped as done.
   - (2) A screenshot of the PCGen tab, saved in the repo's intake folder, would remove guessing about
     Misc and the layout. Optional.
 
