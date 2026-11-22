@@ -1,0 +1,54 @@
+{
+  "channel": "beta",
+  "eligibility": {
+    "appimage_install": true,
+    "deb_install": true,
+    "min_supported_version": "0.0.0",
+    "required_install_kind": "any",
+    "windows_install": true
+  },
+  "linux_appimage": {
+    "name": "Codex_0.22.165_amd64.AppImage",
+    "sha256": "862bb17c3d1f8e5fdb6ae624ae4af40784284c904bb8d0ab99698d614c6d1a89",
+    "size_bytes": 121899512,
+    "url": "https://github.com/electricm0nk/codex/releases/download/beta-v0.22.165-336f1b1d/Codex_0.22.165_amd64.AppImage"
+  },
+  "linux_deb": {
+    "name": "Codex_0.22.165_amd64.deb",
+    "sha256": "1e47730dcd94c7db5c3b6154aa098d1852ac53225f4298cd3272c15c1c08db78",
+    "size_bytes": 52660950,
+    "url": "https://github.com/electricm0nk/codex/releases/download/beta-v0.22.165-336f1b1d/Codex_0.22.165_amd64.deb"
+  },
+  "macos_dmg": {
+    "name": "Codex_0.22.165_aarch64.dmg",
+    "sha256": "2e481ae5f61f784c34f08dd43bba77dd1244c63e2c92e47f4d141f02d8360423",
+    "size_bytes": 50960801,
+    "url": "https://github.com/electricm0nk/codex/releases/download/beta-v0.22.165-336f1b1d/Codex_0.22.165_aarch64.dmg"
+  },
+  "promotion_lineage": {
+    "promoted_at": "2026-11-22T03:44:44Z",
+    "source_branch": "test",
+    "source_commit": "336f1b1d4a68937cc0cc2eccb7a6f8016dc10387"
+  },
+  "release_notes_hash": "5adefcfec8e18f8c518b296edacd75fcacdced5eb340a3c8908791e86d1e7664",
+  "release_notes_path": "docs/release/SD-42-pcgen-import-and-campaign-folder/release-notes.md",
+  "release_notes_url": "https://raw.githubusercontent.com/electricm0nk/codex/336f1b1d4a68937cc0cc2eccb7a6f8016dc10387/docs/release/SD-42-pcgen-import-and-campaign-folder/release-notes.md",
+  "schema_version": "1.3.0",
+  "signature": null,
+  "source_branch": "test",
+  "source_commit": "336f1b1d4a68937cc0cc2eccb7a6f8016dc10387",
+  "tag": "beta/v0.22.165-336f1b1d",
+  "tranche_id": "STC-CODEX-SD-16",
+  "version": "0.22.165",
+  "windows_nsis": {
+    "name": "Codex_0.22.165_x64-setup.exe",
+    "sha256": "66a135e60057ad03fb9d82f404356c63ec75439f54c0932de6c737a6dabef80b",
+    "size_bytes": 30357522,
+    "url": "https://github.com/electricm0nk/codex/releases/download/beta-v0.22.165-336f1b1d/Codex_0.22.165_x64-setup.exe"
+  },
+  "workflow_provenance": {
+    "run_attempt": 1,
+    "run_id": "44977513962",
+    "workflow": ".github/workflows/publish-tester-release.yml"
+  }
+}
