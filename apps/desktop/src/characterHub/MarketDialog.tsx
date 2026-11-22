@@ -93,6 +93,21 @@ export function sellValueGp(row: MarketTableRow | null, copy: MarketHeldCopy, mo
   return row ? sellNegotiateGp(marketPriceGp(row, copy.bonus), copy.quantity ?? 1, copy.baseQuantity ?? 1, mode) : null;
 }
 
+/** A legacy `item:longsword` id and the Market's `Longsword (Base)` key name one record. */
+const recordName = (id: string) => id.replace(/^item:/, '').replace(/ \(base\)$/i, '').replace(/[_\s]+/g, ' ').toLowerCase();
+
+/** The held copy's own Market row among `rows`, named as the Market names it (a custom name is not). */
+export function rowOfHeldCopy(rows: MarketTableRow[], copy: MarketHeldCopy): MarketTableRow | null {
+  const legacy = copy.itemId.startsWith('item:');
+  return (
+    rows.find(
+      (row) =>
+        (row.key === copy.itemId || (legacy && recordName(row.key) === recordName(copy.itemId))) &&
+        (copy.bonus === 0 ? row.name : row.variants.find((variant) => variant.bonus === copy.bonus)?.name) === copy.name,
+    ) ?? null
+  );
+}
+
 export interface MarketDialogViewProps {
   category: MarketCategory;
   onCategory: (category: MarketCategory) => void;
@@ -332,7 +347,7 @@ export function MarketDialogView(props: MarketDialogViewProps) {
                     </td>
                     <td style={cell}>{copy.quantity !== undefined && copy.quantity > 1 ? `×${copy.quantity}` : ''}</td>
                     {props.sellValue ? (
-                      <td data-testid="market-sell-value" style={cell}>
+                      <td data-testid="market-sell-value" style={{ ...cell, whiteSpace: 'nowrap' }}>
                         {props.priceMode === 'cashless' ? '\u2014' : (() => {
                           const gp = props.sellValue(copy);
                           return gp === null ? '\u2014' : formatMarketPrice(gp, props.currency);
@@ -584,10 +599,7 @@ export function MarketDialog(props: {
   };
   const sellPieces = (copy: MarketHeldCopy) => Math.min(count, copy.quantity ?? 1);
   /** The held copy's own Market row, when it is loaded and named as the Market names it (a custom name is not). */
-  const rowOfCopy = (copy: MarketHeldCopy) =>
-    Object.values(loaded)
-      .flat()
-      .find((row) => row !== undefined && row.key === copy.itemId && (copy.bonus === 0 ? row.name : row.variants.find((variant) => variant.bonus === copy.bonus)?.name) === copy.name) ?? null;
+  const rowOfCopy = (copy: MarketHeldCopy) => rowOfHeldCopy(Object.values(loaded).flat().filter((row) => row !== undefined), copy);
 
   const deals: MarketDealsProps | undefined = props.takesDeals
     ? {

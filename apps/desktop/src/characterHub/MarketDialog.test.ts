@@ -15,7 +15,7 @@ import {
   marketShownRows,
   MARKET_ROW_LIMIT,
 } from './itemPickerFilter';
-import { MARKET_CATEGORIES, MarketDialogView, sellValueGp, type MarketDealsProps, type MarketDialogViewProps } from './MarketDialog';
+import { MARKET_CATEGORIES, MarketDialogView, sellValueGp, rowOfHeldCopy, type MarketDealsProps, type MarketDialogViewProps } from './MarketDialog';
 import { mapMarketTableRows } from './marketModel';
 import { buildOf, BuyCustomDialogView, EMPTY_BUY_CUSTOM } from './BuyCustomDialog';
 import { createItemFields, CreateItemDialogView, EMPTY_CREATE_ITEM } from './CreateItemDialog';
@@ -143,6 +143,16 @@ assertEqual(marketPlacementWords('SelectedInactive', null), 'carried', 'an item 
   assert(/data-testid="market-sell-value"[^>]*>15 gp<\/td>/.test(view('standard')), 'standard shows the 50 % total');
   assert(/data-testid="market-sell-value"[^>]*>\u2014<\/td>/.test(view('cashless')), 'cashless shows a dash');
   assert(/data-testid="market-sell-value"[^>]*>\u2014<\/td>/.test(render({ inventory: [stack], sellValue: () => null })), 'no price shows a dash');
+}
+
+// A starter character holds the legacy id `item:longsword`, which is the Market's `Longsword (Base)`; a
+// copy must find its row by that id or the value cell reads a dash (seen live in the E1.8 repair).
+{
+  const rows = mapMarketEntries([{ ...SWORD, costGp: 15, name: 'Longsword' } as MarketEntryDto]);
+  const legacy = { itemId: 'item:longsword', name: 'Longsword', bonus: 0 };
+  assert(rowOfHeldCopy(rows, legacy) === rows[0], 'a legacy item: id finds its Market row');
+  assert(rowOfHeldCopy(rows, { ...legacy, itemId: 'item:longspear', name: 'Longspear' }) === null, 'another item does not');
+  assert(rowOfHeldCopy(rows, { ...legacy, name: 'Mine' }) === null, 'a custom name does not');
 }
 
 // A pick offers its bonuses and prices the one chosen.
