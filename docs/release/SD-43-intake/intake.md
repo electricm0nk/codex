@@ -452,8 +452,8 @@ Run in this order, after SD-42 is merged:
   name still containing `[`, `]`, or `NAME`, so a new book cannot reintroduce it.
 - **Ruling (operator, 2026-11-22), question 1:** I propose names from the book text; the operator
   approves the list before it ships. Read from a one-word reply ("1"): confirm if that was not the intent.
-- **Open question for the operator:** does the "no placeholder in a display name" test cover all item
-  kinds, or only equipment? My pick: all kinds, one test.
+- **Ruling (operator, 2026-11-22):** the "no placeholder in a display name" test covers all item kinds,
+  one test.
 
 ## 21. BUG: "Show Progression" is cut off at the bottom of the character screen on a shorter display
 
