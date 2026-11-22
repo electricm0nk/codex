@@ -557,6 +557,7 @@ Run in this order, after SD-42 is merged:
 - **Why it is safe for installed apps (to verify):** `0.43.x` is higher than `0.22.x`, so the updater
   sees it as an upgrade. Check the update comparison code treats the minor number numerically, and that
   the signed manifest and channel index accept the new prefix. Not yet run.
-- **Open question for the operator:** the branch is named `tranche-23`. To remove the translation too,
+- **DONE 2026-11-22 (operator ruled: yes, SD-43; rename and bump):** branch renamed `tranche-43`; version moved to `0.43.0` in commit `147a3f71eb` (3 version files, the `codex-desktop` Cargo.lock entry, the publish stamp, 9 version-pinning test files). Not done: `docs/release/current-release.json` (no SD-43 notes yet), and the Cargo.lock check (`cargo metadata --offline --locked` could not run: no offline registry cache).
+- **(Superseded) question:** the branch was named `tranche-23`. To remove the translation too,
   rename it `tranche-43` (not pushed yet, so free to do). Docs and tooling mostly say `tranche-N`.
   My pick: rename to `tranche-43` before the first push.
