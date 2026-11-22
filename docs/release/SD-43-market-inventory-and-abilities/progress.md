@@ -1,0 +1,90 @@
+---
+canonical: true
+bundle_id: SD-43
+slug: market-inventory-and-abilities
+canonical_branch: tranche-43
+target_version: 0.43.0
+date: 2026-11-22
+status: planning — no card dispatched
+---
+
+# SD-43 Progress
+
+## Summary
+
+| Epic | Cards | Complete | Status |
+|---|---|---|---|
+| C | 3 | 0 | not started |
+| E0 census | 5 | 0 | not started |
+| E1 Market and inventory | 12 | 0 | not started |
+| E2 sheet layout, campaign button, rest text | 6 | 0 | not started |
+| E3 the Abilities tab | 12 | 0 | not started |
+| E4 item names | 3 | 0 | not started (E4.G is the operator's) |
+| E5 reports, Update menu, Developer tab | 5 | 0 | not started |
+| E6 campaign folder, House Rules, custom items | 6 | 0 | not started |
+| E7 closure | 4 | 0 | not started |
+
+Re-derive: `awk -F'|' '$2 ~ /^ (C|E)[0-9]/ {gsub(/ /,"",$2); split($2,a,"."); g=(a[1] ~ /^C/)?"C":a[1]; n[g]++; if ($5 ~ /^ complete *$/) c[g]++} END {for (e in n) print e, n[e], c[e]+0}' kanban.md | sort`.
+
+## Run handle
+
+(The lead writes the Workflow run id and `artifacts/cycle_0/sd43-workflow.js` here the moment each run starts. A
+run with parallel lanes is never resumed; a new run starts with `START=<card>`.)
+
+## Operator replies
+
+(The lead quotes the operator's replies here, one line each, in the form `- <id> (<date>): <verbatim reply>` —
+Q-22.3 at launch; E4.G; any §30 overrule; P-8 when the secret is created. G-CL reads the E4.G line.)
+
+## Dispatch log
+
+(One row per dispatch, written before the dispatch: card, run id, the RED command and its exit code and failing
+line, the `git grep` used for second call sites. A RED that exited 0 is not dispatched.)
+
+| Date | Card | Run id | RED command | Exit | Failing line | Second-call-site grep |
+|---|---|---|---|---|---|---|
+
+## Cycle 0 — package authored (2026-11-22)
+
+- **Tree:** the shared checkout, branch `tranche-43` @ `75e95b30c2` (front half), one writer
+  (`git status --porcelain | awk 'END{print NR}'` → 0 before the first write of each half).
+- **Front half** (`75e95b30c2`): README, scope-draft, decisions, epic-breakdown, technical-requirements,
+  technical-design.
+- **Back half** (the commit that adds this file): workflow-instruction, kanban, progress, acceptance-and-verification,
+  risks-and-open-questions, content-unit-inventory, forward-scope-register, receipts, references/README,
+  artifacts/README; consistency fixes to README, scope-draft and epic-breakdown listed in that commit's message.
+- **Figures:** 56 cards (`awk -F'|' '$2 ~ /^ (C|E)[0-9]/' kanban.md | awk 'END{print NR}'`); `SAME_IDS` against
+  `epic-breakdown.md`; the placeholder-name scan re-run (111 of 3,805 equipment; 201 of 51,474 all kinds —
+  `content-unit-inventory.md §3`).
+- **Placeholder gate:** see below.
+- **Status:** C0 stays `todo` until the lead reviews both halves.
+
+### Placeholder gate output (author, 2026-11-22)
+
+`grep -rhoE '<[a-z_-]+>' docs/release/SD-43-market-inventory-and-abilities/ --include=*.md | sort -u` →
+`<card-id> <card> <cmd> <command-or-check> <command> <cycle_id> <date> <epic-start> <epic> <file> <id> <lane> <list> <log> <n> <name> <output> <path> <pidfile> <pkg> <pool> <reason> <receipt> <result> <run> <sha> <subtab> <text> <tree> <type> <value> <violations> <who-was-wrong>`
+— 33 distinct tokens, every one in `workflow-instruction.md §9` (a) or (b); no defect.
+
+- **Intake §22c** (operator, 2026-11-22, `c9994e01bd`, arrived during authoring): Class Features scope is every
+  class- or archetype-granted choice; folded into `acceptance-and-verification.md` (E0.1 (22c), E3.MC (22c)),
+  `content-unit-inventory.md §2a`, `risks-and-open-questions.md` R-3a. `decisions.md` is updated by the lead.
+
+## Cycle log
+
+| Date | Card | Status | SHA | Receipt | Notes |
+|---|---|---|---|---|---|
+
+## Epic reports
+
+(Each `*.MC` appends its Epic report here: what shipped, the screenshots looked at, retro counts for the epic's
+window, the lane sweep's found/removed counts.)
+
+## Open blockers
+
+**A filed blocker pauses the work; it is never a closure path.** An entry here is a request for an operator
+ruling — it names what blocks the card, what was tried, and the specific ruling, write scope or precondition
+needed. It does not authorise any later card to proceed past the blocked one, it does not satisfy the
+final-acceptance scan (E7.2), and only the operator may move blocked scope anywhere
+(`../../governance/blocker-closure-doctrine.md`).
+
+(none)

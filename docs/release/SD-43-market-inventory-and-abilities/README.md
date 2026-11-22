@@ -1,6 +1,6 @@
 ---
 title: SD-43 — Market, Inventory and the Abilities Tab — Release Package
-status: planning — front half (README, scope-draft, decisions, epic-breakdown, technical-requirements, technical-design) authored 2026-11-22; the back half (workflow-instruction, kanban, progress, acceptance-and-verification, risks-and-open-questions, content-unit-inventory, forward-scope-register, artifacts/, references/) is authored next. Not planning-ready until the back half lands, the placeholder gate passes over all files, and the open questions in decisions.md §30 carry their defaults into the kanban.
+status: planning-ready — front half (75e95b30c2) and back half authored 2026-11-22; all 13 canonical files present; the placeholder gate passes (every hit is in workflow-instruction.md §9); decisions.md §30's defaults are carried into kanban.md and risks-and-open-questions.md §2. Before launch the lead asks the operator Q-22.3 (Abilities tab rename vs. a tab beside Feats; pending) and for the CI secret CODEX_REPORT_KEY (P-8).
 bundle_id: SD-43
 slug: market-inventory-and-abilities
 scope: docs/release/SD-43-market-inventory-and-abilities
@@ -75,12 +75,12 @@ version; SD-44 is the operator's feedback round on it, not a home for unfinished
 | `acceptance-and-verification.md` | gates; ruling → card → acceptance traceability | back half |
 | `risks-and-open-questions.md` | ranked risks with controls; mirrors `decisions.md §30` | back half |
 | `content-unit-inventory.md` | every figure with its command | back half |
-| `forward-scope-register.md` | what SD-44 inherits (feedback only) and the real exclusions | back half |
+| `forward-scope-register.md` | planned capability deferrals to SD-44 (condition, checker, accepted cost) and the real exclusions | back half |
+| `receipts.md` | §1 closure-script YAML receipts (E7.3, E7.4 append); §2 the per-cycle receipt schema | back half |
 | `artifacts/`, `artifacts/README.md` | per-epic receipts and census output | back half; populated per cycle |
 | `references/`, `references/README.md` | doctrine, skills, sibling bundles, retrospectives | back half |
 
-`receipts.md` and `release-notes.md` are created by cards (C1 writes the interim notes; E7.3/E7.4 the closure
-receipts).
+`release-notes.md` is created by a card (C1 writes the interim notes; E7.3 the final ones).
 
 ## 3. In-repo cross-references
 
@@ -138,8 +138,9 @@ authored by a dispatched agent; the back half follows.
 | `<run>` | the GitHub run number in `0.43.<run>` | each publish (`publish-tester-release.yml:129`) |
 | `<pool>`, `<subtab>` | schema placeholders in explanation-row ids (`feats.budget.<pool>.granted`, `abilities.budget.<subtab>.<pool>.granted`) | never; they name a family of rows |
 | `<lane>` | worktree/target-dir name in `epic-breakdown.md §0` | the lane column of the same table |
+| schema and command tokens (`<card-id>`, `<sha>`, `<epic>`, …) | receipt schema and command arguments in the back half | bound by the running card; the full list is `workflow-instruction.md §9` (a) |
 
-Any other hit is a defect.
+Any hit not in this table or in `workflow-instruction.md §9` is a defect.
 
 ## 9. Cross-reference
 

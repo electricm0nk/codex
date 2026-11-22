@@ -49,7 +49,7 @@ faked, no stub shipped as done; and engine gaps are SD-43 work, *"not a reason t
 | 19 | Corpus Ingest Diagnostic moves into Options → Developer | IN (one card with 16) | E5.4 |
 | 20 | `[NAME]` placeholders in item names; every item a proper name; one test over all item kinds | IN, with one operator wait (names list approval) | E0.3, E4.1, E4.G, E4.2 |
 | 21 | "Show Progression" cut off on a shorter display | IN (one card with 17) | E2.1 |
-| 22 / 22a / 22b | The Abilities tab: seven sub-tabs, grants and prerequisites enforced, UI and printout | IN | E0.1, E3.1–E3.12, E3.MC |
+| 22 / 22a / 22b | The Abilities tab: seven sub-tabs, grants and prerequisites enforced, UI and printout | IN | E0.1, E3.1–E3.11, E3.MC |
 | 23 | Minor version follows the SD number (0.43) | **Done** in `147a3f71eb`, except `current-release.json` | C1 |
 | Brief | Signed update manifest, beta, stable default | **Not SD-43** (the brief's own placement ruling, 2026-11-21) and already merged (PR #419) | none; `decisions.md §25` |
 

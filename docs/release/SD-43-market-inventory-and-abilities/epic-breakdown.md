@@ -562,7 +562,9 @@ so no card ships a picker the engine does not check.
 - **Acceptance:** `cd apps/desktop/src-tauri && cargo test report_api` ≥ 7; `grep -rn "x-codex-key"
   apps/desktop/src | awk 'END{print NR}'` → 0 (the key never in JS); a build without the key reports
   "unavailable" with the reason. **Precondition:** the operator has created the CI secret (Q-13.2); without it the
-  card still lands and E7.4's release check records Send as disabled with the reason.
+  card still lands (the dev-build "unavailable" path is proved), and E7.2's final-acceptance scan checks P-8: a
+  missing secret then is an escalation to the operator that pauses closure, never a release with Send disabled
+  (`risks-and-open-questions.md` R-1).
 - **Depends:** C1. **Tier:** opus.
 - **Does not cover:** codex-web's side; the key's extractability (stated risk).
 
@@ -643,10 +645,15 @@ so no card ships a picker the engine does not check.
 
 ### E7.2 — final-acceptance scan, retrospective, sweep
 - **Objective:** every card `complete` (a filed blocker does not satisfy it; if short, stop — no retro, no sweep,
-  no PR); `scripts/retro.py summary --since 2026-11-22 --json` → `docs/retro/sd43-market-inventory-and-abilities-retrospective.md`
+  no PR); the release-artifact checks of `acceptance-and-verification.md` G-R as part of the scan (widest verify
+  in both cargo workspaces + frontend, `packaged_resources`, `no_baked_manifest_dir_in_production`,
+  `pytest tools/release`, fresh-install of the .deb and the AppImage, P-8 the CI secret);
+  `scripts/retro.py summary --since 2026-11-22 --json` → `docs/retro/sd43-market-inventory-and-abilities-retrospective.md`
   cited from `references/README.md`; every `sd43-*` worktree, branch and `CARGO_TARGET_DIR` removed with counts.
 - **Acceptance:** `awk -F'|' '$2 ~ /^ (C|E)[0-9]/ && $5 !~ /complete/' docs/release/SD-43-market-inventory-and-abilities/kanban.md | awk 'END{print NR}'`
-  → 0 (column per the back half's kanban); `git worktree list | grep -c sd43` → 0. **Tier:** opus.
+  → 0 with E7.2–E7.4 exempted (the exact commands: `acceptance-and-verification.md` G-CL; kanban Status is
+  `$5`); `git worktree list | grep -c sd43` → 1 (only `sd43-main`, which E7.3–E7.4 still use; removed after the
+  merge). **Tier:** opus.
 
 ### E7.3 — release notes, pointer, architecture
 - **Objective:** final `release-notes.md` (no interim sentinel); `resolve_release_notes.py` and
