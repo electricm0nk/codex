@@ -1,0 +1,17 @@
+population (not-done units considered): 2485
+unclassified: 0
+piles reconcile: True (2485 families-total == 2485 population)
+join-status split (decisions.md §14b): matched=617 no_formula_tokens=1868 no_record=0
+no_record budget: 0/2485 vs. baseline 21521/36028 -- exceeded: False
+corpus SHA: 7f818006e371188e5717fd18d74d18a420747fc6
+
+family rollup:
+  F0      1868
+  F1       113
+  F2       115
+  F3       312
+  F4        16
+  F5        46
+  F6         5
+  F8         9
+  F9         1

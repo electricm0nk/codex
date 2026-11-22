@@ -1,0 +1,51 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Brain Mole ~ SLA",
+    "delivery": "SpellLike",
+    "description": null,
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_5:monster_ability:brain_mole_sla",
+    "name": "Spell-Like Abilities",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "KEY",
+        "value": "Brain Mole ~ SLA"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=1|TIMEUNIT=PE|CASTERLEVEL=2|Expeditious Retreat|Mind Thrust I,11+CHA|Silent Image,11+CHA"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.SpellLike.BrainMoleRacialTrait"
+      }
+    ],
+    "source_page": null,
+    "traits": [
+      "BrainMoleRacialTrait"
+    ]
+  },
+  "ingested_at": "2026-08-23T15:23:07Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 12,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_5/support/b5_abilities_race_oa.lst",
+    "record_key": "Brain Mole ~ SLA",
+    "sha256": "15f9a4abfa03080f40ce11e5d4b72bb8cc91dbc3842745dcb37a90f996336142"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:spells"
+  ]
+}

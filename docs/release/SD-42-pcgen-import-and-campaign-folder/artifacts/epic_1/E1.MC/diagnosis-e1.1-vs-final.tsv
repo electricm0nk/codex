@@ -1,0 +1,8 @@
+sample	lines	quantity_in_file	copies_emitted	equipment_selection_rows	lines_emitting_more_than_one_row	custom	custom_equipment_records	custom_named_lines	lines_with_eqmods_not_applied	lines_worn_in_codex	worn_copies_in_slot_conflict	verdict	warnings	data_fields_not_read
+pf_Cleric	20->20	47->47	47->47	48->22	6->6	0->0	0->0	1->1	5->5	5->5	0->0	computes->computes	5->0	1->1
+pf_Paladin	29->29	41->41	41->41	42->32	6->6	0->0	0->0	7->7	10->10	6->6	1->1	computes->computes	11->3	11->11
+pf_Rogue	41->41	56->56	56->56	57->44	6->6	0->0	0->0	13->13	11->11	14->14	0->0	computes->computes	11->2	26->26
+pf_goldielocks	4->4	4->4	0->0	1->1	0->0	4->4	4->4	4->4	0->0	4->0	0->0	refused: class_chassis.unsupported, defense.size_modifier.unknown_race, defense.total_save.unsupported->refused: class_chassis.unsupported, defense.size_modifier.unknown_race, defense.total_save.unsupported	0->4	0->0
+sf_mechanic	22->22	100072->100072	0->20	1->19	0->1	22->3	22->3	6->6	1->1	16->13	0->0	refused: class_chassis.unsupported, defense.size_modifier.unknown_race, defense.total_save.unsupported->refused: class_chassis.unsupported, defense.size_modifier.unknown_race, defense.total_save.unsupported	1->5	8->8
+sf_mechanic_drone	0->None	0->None	0->None	1->None	0->None	0->None	0->None	0->None	0->None	0->None	0->None	refused: class_chassis.unsupported, defense.size_modifier.unknown_race, defense.total_save.unsupported->None	1->0	0->0
+sf_soldier	4->4	4->4	0->4	1->4	0->0	4->0	4->0	0->0	0->0	2->2	0->0	refused: class_chassis.unsupported, defense.size_modifier.unknown_race, defense.total_save.unsupported->refused: class_chassis.unsupported, defense.size_modifier.unknown_race, defense.total_save.unsupported	1->0	4->4

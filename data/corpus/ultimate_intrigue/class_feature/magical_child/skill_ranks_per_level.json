@@ -1,0 +1,44 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Magical Child ~ Skill Ranks per Level",
+    "name": "Skill Ranks per Level",
+    "class": "Vigilante",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Magical Child ~ Skill Ranks per Level"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "TYPE",
+        "value": "Vigilante Class Features.MagicalChildClassFeatures"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILLPOINTS|NUMBER|-2"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/support/ui_abilities_class_pu.lst",
+    "sha256": "31facfcea3534d72c26bfbfeebc7af50e80e79157eda459e9afb16f184a93aaf",
+    "line": 95,
+    "record_key": "Magical Child ~ Skill Ranks per Level"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

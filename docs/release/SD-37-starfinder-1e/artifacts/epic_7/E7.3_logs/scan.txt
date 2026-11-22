@@ -1,0 +1,8 @@
+$ (§11 step 1 fenced scan, from the package dir)
+scan exit=0 (no lines above = pass)
+$ status census
+rows 57
+ complete  50
+ waiting  7
+$ python cross-check
+rows 57 not-complete outside E7.3-9 []

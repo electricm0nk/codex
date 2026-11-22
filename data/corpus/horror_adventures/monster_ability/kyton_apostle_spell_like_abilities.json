@@ -1,0 +1,56 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Kyton (Apostle) ~ Spell-Like Abilities",
+    "delivery": "SpellLike",
+    "description": null,
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "horror_adventures:monster_ability:kyton_apostle_spell_like_abilities",
+    "name": "Spell-Like Abilities",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "KEY",
+        "value": "Kyton (Apostle) ~ Spell-Like Abilities"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=1|CASTERLEVEL=TL|Shadow Walk,16+CHA|PREHD:MIN=11,MAX=19"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=ATWILL|CASTERLEVEL=TL|Shadow Walk,16+CHA|PREHD:MIN=20"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.SpellLike.ApostleKyton"
+      }
+    ],
+    "source_page": null,
+    "traits": [
+      "ApostleKyton"
+    ]
+  },
+  "ingested_at": "2026-08-23T14:10:27Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 301,
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_race.lst",
+    "record_key": "Kyton (Apostle) ~ Spell-Like Abilities",
+    "sha256": "63d4d7024f3fea15adb5b626c17f3f1dc4c40e4fc4bef4616a1d36be77a9fe00"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:spells"
+  ]
+}

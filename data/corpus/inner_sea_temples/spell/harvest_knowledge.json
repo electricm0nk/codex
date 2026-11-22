@@ -1,0 +1,25 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:46:05Z",
+  "data": {
+    "key": "Harvest Knowledge",
+    "school": "Divination",
+    "level": 4,
+    "description": "You touch a creature and temporarily absorb its knowledge for yourself. If the target fails its saving throw, you can sort through its lore and memories. You can retrieve one answer to a specific question per minute, as through sifting through the creature's surface thoughts with detect thoughts. Alternatively, you can tap into the target's learned experiences and attempt one Knowledge check in a skill in which the target has at least 1 rank, using the target's total skill modifier. Each Knowledge check requires 1 minute and allows the target another Will save to resist the effect. If the target successfully resists, the spell does not end, but you are unable to attempt another Knowledge check for that skill using this spell. You can also use this spell against targets trapped in magic items or spells that hold their bodies or souls, such as an iron flask or the spell trap the soul, by touching the associated receptacle. [Material Components] a piece of lodestone"
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_temples/istem_spells.lst",
+    "sha256": "3011dc07f51b9c160a6c8e9b38c1467a23d4fe4b8528653e554e203b43fe2a50",
+    "line": 8,
+    "record_key": "Harvest Knowledge"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,29 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Elemental Vigor",
+    "category": "General",
+    "name": "Elemental Vigor",
+    "description": "You have learned transformative secrets from communing with elemental beings. Whenever you use a polymorph effect to assume the form of an elemental you gain a rush of vital energy. You gain a number of temporary hit points equal to the caster level of the polymorph effect and you gain a +10 foot bonus to your base speed.",
+    "prerequisites": [
+      "PREDEITY:1,PANTHEON.Elemental Lord",
+      "PRETEXT:Prerequisite: Worshiper of an elemental lord."
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities_feat.lst",
+    "sha256": "91f53f0051455ec8e7daca4e0286799e397009fe7fdae555ebe342f40085256e",
+    "line": 44,
+    "record_key": "Elemental Vigor"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

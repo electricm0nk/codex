@@ -1,0 +1,16 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "A cruel weapon with blades placed at opposite ends of a long haft, an orc double axe is a double weapon.",
+    "key": "Orc Double Axe (Base)",
+    "name": "Orc Double Axe"
+  },
+  "license": "OGL",
+  "population": "in_scope",
+  "source": {
+    "kind": "desktop_ui_fixture",
+    "line": 1,
+    "path": "apps/desktop/src-tauri/fixtures_src/equip_orc_double_axe_base.txt",
+    "record_key": "Orc Double Axe (Base)"
+  }
+}

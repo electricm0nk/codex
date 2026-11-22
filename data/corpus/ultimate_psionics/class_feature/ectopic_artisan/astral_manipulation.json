@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Ectopic Artisan ~ Astral Manipulation",
+    "name": "Astral Manipulation",
+    "class": "Ectopic Artisan",
+    "description": "As a standard action, you can touch an object and either deal 2 hit points of damage to the object or heal 2 hit points of damage, although broken objects cannot be repaired in this fashion.  Damage dealt to objects is not subject to object hardness.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ectopic Artisan ~ Astral Manipulation"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "AegisClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action, you can touch an object and either deal 2 hit points of damage to the object or heal 2 hit points of damage, although broken objects cannot be repaired in this fashion.  Damage dealt to objects is not subject to object hardness."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.263"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1751,
+    "record_key": "Ectopic Artisan ~ Astral Manipulation"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

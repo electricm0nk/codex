@@ -1,0 +1,39 @@
+{
+  "codex_generated_name": false,
+  "completeness": "chassis_only",
+  "data": {
+    "key": "Skinwalker ~ Werecrocodile-Kin",
+    "name": "Werecrocodile-Kin",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Skinwalker ~ Werecrocodile-Kin"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "SUBRACE",
+        "value": "Werecrocodile-Kin"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T16:43:17Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 13,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/skinwalker/skinwalker_templates_subrace.lst",
+    "record_key": "Skinwalker ~ Werecrocodile-Kin",
+    "sha256": "c19ca0e34b67be23c3196c11f6c751d857d9a0e39fb0a15936bd2d703f938ad8"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

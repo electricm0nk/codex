@@ -1,0 +1,19 @@
+{
+  "data": {
+    "key": "Adaptive defense module (mk 2)",
+    "name": "Adaptive defense module, mk 2",
+    "type": "Armor"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 4,
+    "path": "starfinder/paizo/alien_archive_2/saa2_equipmods.lst",
+    "record_key": "Adaptive defense module (mk 2)",
+    "sha256": "81eb2dc2b2280772b5943b97225ddd75755a28f029efe1faa2ef05e901f1e03c"
+  },
+  "unit_id": "alien_archive_2:equipment_modifier:adaptive_defense_module_mk_2"
+}

@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Accursed Corruption ~ Wish Peddler Gift",
+    "name": "Wish Peddler Gift",
+    "description": "Once per day as a full-round action, you can duplicate the effect of a witch spell of a spell level lower than your manifestation level. This spell cannot have a material or focus component costing more than 1 gp or a casting time longer than 1 standard action. The spell's effect must fulfill, in part or in whole, a wish verbally stated by a humanoid creature you can hear (other than yourself ).",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Accursed Corruption ~ Wish Peddler Gift"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.AccursedWishPeddlerGift"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.17"
+      },
+      {
+        "key": "DESC",
+        "value": "Once per day as a full-round action, you can duplicate the effect of a witch spell of a spell level lower than your manifestation level. This spell cannot have a material or focus component costing more than 1 gp or a casting time longer than 1 standard action. The spell's effect must fulfill, in part or in whole, a wish verbally stated by a humanoid creature you can hear (other than yourself )."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
+    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381",
+    "line": 98,
+    "record_key": "Accursed Corruption ~ Wish Peddler Gift"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

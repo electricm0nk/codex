@@ -1,0 +1,78 @@
+{
+  "completeness": "full",
+  "data": {
+    "key": "Agile Breastplate",
+    "name": "Agile Breastplate",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "COMBAT",
+          "AC",
+          "6",
+          "TYPE=Armor",
+          "PREVAREQ:DisableArmorBonus,0"
+        ]
+      },
+      {
+        "qualifiers": [
+          "SITUATION",
+          "Acrobatics=When Jumping",
+          "min(-ARMORACCHECK,3)"
+        ]
+      },
+      {
+        "qualifiers": [
+          "SKILL",
+          "Climb",
+          "min(-ARMORACCHECK,3)"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "PROFICIENCY",
+        "value": "ARMOR|Agile Breastplate"
+      },
+      {
+        "key": "TYPE",
+        "value": "Armor.Medium.ArmorProfMedium.Suit.Standard"
+      },
+      {
+        "key": "COST",
+        "value": "400"
+      },
+      {
+        "key": "WT",
+        "value": "25"
+      },
+      {
+        "key": "ACCHECK",
+        "value": "-4"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Material ~ Steel"
+      },
+      {
+        "key": "MAXDEX",
+        "value": "3"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.180"
+      },
+      {
+        "key": "SPELLFAILURE",
+        "value": "25"
+      }
+    ]
+  },
+  "license": "OGL",
+  "population": "in_scope",
+  "source": {
+    "kind": "desktop_ui_fixture",
+    "line": 1,
+    "path": "apps/desktop/src-tauri/fixtures_src/equip_agile_breastplate.txt",
+    "record_key": "Agile Breastplate"
+  }
+}

@@ -1,0 +1,66 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "Wyrwoods have a base speed of 30 feet.",
+    "key": "Wyrwood ~ Speed",
+    "name": "Normal Speed",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wyrwood ~ Speed"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Wyrwood Racial Trait.Wyrwood Racial Default.SpecialQuality.Racial Speed"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      },
+      {
+        "key": "!PREFACT",
+        "value": "1,ABILITIES,Wyrwood_ReplaceSpeed=True"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MOVEBASE|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Wyrwoods have a base speed of 30 feet."
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,30"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MOVEBASE|30"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.xx"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 17,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/wyrwood/wyrwood_abilities_race.lst",
+    "record_key": "Wyrwood ~ Speed",
+    "sha256": "c42ff94153eb4f0c731a7aa3db89d3a9cd1d48f2a82f28fb172ceaba3e85888d"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

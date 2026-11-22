@@ -1,0 +1,89 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Green Faith Marshal ~ Crocodile Domain",
+    "name": "Crocodile",
+    "class": "Green Faith Marshal",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Green Faith Marshal ~ Crocodile Domain"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "GreenFaithMarshalDomainSelection.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainCrocodileLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainCrocodileDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainCrocodileTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainCrocodileAbilityTriggerLVL|0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Crocodile Domain ~ Familiar|PREVARGTEQ:DomainCrocodileAbilityTriggerLVL,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Crocodile Domain ~ Death Roll"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Crocodile Domain ~ Ambush|PREVARGTEQ:DomainCrocodileAbilityTriggerLVL,6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainCrocodileLVL|DomainLVL|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainCrocodileDC|10+(DomainCrocodileLVL/2)+WIS|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainCrocodileTimes|DomainPowerTimes|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainCrocodileAbilityTriggerLVL|DomainAbilityTriggerLVL|TYPE=Domain"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "CLASS|Inquisitor=1|Touch of the Sea|Inquisitor=2|Savage Maw|Inquisitor=3|Water Walk|Inquisitor=4|Strong Jaw|Inquisitor=5|Legend Lore|Inquisitor=6|Owl's Wisdom (Mass)"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/support/uw_abilities_class_fap.lst",
+    "sha256": "7c3db2030157f04d08ce9d813c1f22162bfaeaea7227bd40419a8d5fe75d566b",
+    "line": 7,
+    "record_key": "Green Faith Marshal ~ Crocodile Domain"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

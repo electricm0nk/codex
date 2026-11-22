@@ -1,0 +1,47 @@
+{
+  "codex_generated_name": false,
+  "completeness": "chassis_only",
+  "data": {
+    "key": "Half-Dragon Flight",
+    "name": "Half-Dragon Flight",
+    "raw_tokens": [
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Maneuverability|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Maneuverability|3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Flight Maneuverability"
+      },
+      {
+        "key": "MOVECLONE",
+        "value": "Walk,Fly,*2"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T16:43:14Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 44,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_templates.lst",
+    "record_key": "Half-Dragon Flight",
+    "sha256": "7c27e01584c43c548e0c2c3ed900332d774628c6a8c56a5be4992cba036085d1"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

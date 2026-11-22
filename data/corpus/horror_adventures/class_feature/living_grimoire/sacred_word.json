@@ -1,0 +1,161 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-24T03:51:47Z",
+  "data": {
+    "key": "Living Grimoire ~ Sacred Word",
+    "name": "Sacred Word",
+    "class": "Inquisitor",
+    "description": "A living grimoire learns to charge his holy book with the power of his faith. The inquisitor gains the benefits of the warpriest's sacred weapon class ability, but the benefits apply only to his bonded holy book. Like a warpriest's sacred weapon, it can do base %1d%2 damage instead of the normal base damage (unless the inquisitor chooses to use the book's base damage).|LivingGrimoireSacredWordBaseDice|LivingGrimoireSacredWordBaseDiceSize",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Living Grimoire ~ Sacred Word"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Inquisitor Class Feature.LivingGrimoireClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.53"
+      },
+      {
+        "key": "DESC",
+        "value": "A living grimoire learns to charge his holy book with the power of his faith. The inquisitor gains the benefits of the warpriest's sacred weapon class ability, but the benefits apply only to his bonded holy book. Like a warpriest's sacred weapon, it can do base %1d%2 damage instead of the normal base damage (unless the inquisitor chooses to use the book's base damage).|LivingGrimoireSacredWordBaseDice|LivingGrimoireSacredWordBaseDiceSize"
+      },
+      {
+        "key": "DEFINE",
+        "value": "LivingGrimoireSacredWordBaseDice|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "LivingGrimoireSacredWordBaseDiceSize|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "LivingGrimoireSacredWordLVL|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|LivingGrimoireSacredWordBaseDice|1+min(1,LivingGrimoireSacredWordLVL/20)|PREBASESIZELT:M"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|LivingGrimoireSacredWordBaseDice|1+min(1,LivingGrimoireSacredWordLVL/15)|PREBASESIZEEQ:M"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|LivingGrimoireSacredWordBaseDice|1+min(2,((LivingGrimoireSacredWordLVL+5)/10))|PREBASESIZEGT:M"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|LivingGrimoireSacredWordBaseDiceSize|if(LivingGrimoireSacredWordLVL<5,4,if(LivingGrimoireSacredWordLVL<10,6,if(LivingGrimoireSacredWordLVL<15,8,if(LivingGrimoireSacredWordLVL<20,10,6))))|PREBASESIZELT:M"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|LivingGrimoireSacredWordBaseDiceSize|if(LivingGrimoireSacredWordLVL<5,6,if(LivingGrimoireSacredWordLVL<10,8,if(LivingGrimoireSacredWordLVL<15,10,if(LivingGrimoireSacredWordLVL<20,6,8))))|PREBASESIZEEQ:M"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|LivingGrimoireSacredWordBaseDiceSize|if(LivingGrimoireSacredWordLVL<5,8,if(LivingGrimoireSacredWordLVL<10,6,if(LivingGrimoireSacredWordLVL<15,8,if(LivingGrimoireSacredWordLVL<20,6,8))))|PREBASESIZEGT:M"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|LivingGrimoireSacredWordLVL|InquisitorLVL"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Rounds per Day"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|LivingGrimoireSacredWordEnhancementUses"
+      },
+      {
+        "key": "DESC",
+        "value": "A living grimoire can enhance his holy book with divine power as a swift action, granting a +%1 enhancement bonus for %2 rounds per day. These rounds don't need to be consecutive. He determines the enhancement bonus and special abilities the first time he uses the ability each day, and they cannot be changed until the next day. These bonuses stack with any existing bonuses the holy book might have, to a maximum of +5. The holy book must have at least a +1 enhancement bonus before any other special abilities can be added. Special abilities replace an amount of bonus equal to the special ability's base cost. The living grimoire can enhance a holy book with any of the following weapon special abilities: Bane, Defending, Flaming, Frost, Keen, Shock,|LivingGrimoireSacredWordEnhancement|LivingGrimoireSacredWordEnhancementUses|PRECLASS:1,Inquisitor=4"
+      },
+      {
+        "key": "DESC",
+        "value": "Vicious,|PREMULT:2,[PREALIGN:CG,CN,CE],[PREVARGTEQ:LivingGrimoireSacredWordEnhancement,1]"
+      },
+      {
+        "key": "DESC",
+        "value": "Merciful,|PREMULT:2,[PREALIGN:LG,LN,LE],[PREVARGTEQ:LivingGrimoireSacredWordEnhancement,1]"
+      },
+      {
+        "key": "DESC",
+        "value": "Ghost touch,|PREMULT:2,[PREALIGN:LG,NG,CG],[PREVARGTEQ:LivingGrimoireSacredWordEnhancement,1]"
+      },
+      {
+        "key": "DESC",
+        "value": "Mighty cleaving,|PREMULT:2,[PREALIGN:LE,NE,CE],[PREVARGTEQ:LivingGrimoireSacredWordEnhancement,1]"
+      },
+      {
+        "key": "DESC",
+        "value": "Spell storing, Thundering,|PREMULT:2,[PREALIGN:TN],[PREVARGTEQ:LivingGrimoireSacredWordEnhancement,1]"
+      },
+      {
+        "key": "DESC",
+        "value": "Disruption,|PREVARGTEQ:LivingGrimoireSacredWordEnhancement,2"
+      },
+      {
+        "key": "DESC",
+        "value": "Anarchic,|PREMULT:2,[PREALIGN:CG,CN,CE],[PREVARGTEQ:LivingGrimoireSacredWordEnhancement,2]"
+      },
+      {
+        "key": "DESC",
+        "value": "Axiomatic,|PREMULT:2,[PREALIGN:LG,LN,LE],[PREVARGTEQ:LivingGrimoireSacredWordEnhancement,2]"
+      },
+      {
+        "key": "DESC",
+        "value": "Holy,|PREMULT:2,[PREALIGN:LG,NG,CG],[PREVARGTEQ:LivingGrimoireSacredWordEnhancement,2]"
+      },
+      {
+        "key": "DESC",
+        "value": "Unholy,|PREMULT:2,[PREALIGN:LE,NE,CE],[PREVARGTEQ:LivingGrimoireSacredWordEnhancement,2]"
+      },
+      {
+        "key": "DESC",
+        "value": "Brilliant energy|PREVARGTEQ:LivingGrimoireSacredWordEnhancement,4"
+      },
+      {
+        "key": "DEFINE",
+        "value": "LivingGrimoireSacredWordEnhancement|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "LivingGrimoireSacredWordEnhancementUses|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|LivingGrimoireSacredWordEnhancement|min(5,InquisitorLVL/4)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|LivingGrimoireSacredWordEnhancementUses|InquisitorLVL"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+    "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+    "line": 144,
+    "record_key": "Living Grimoire ~ Sacred Word"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

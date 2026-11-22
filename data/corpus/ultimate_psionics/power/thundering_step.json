@@ -1,0 +1,77 @@
+{
+  "completeness": "full",
+  "data": {
+    "key": "Thundering Step",
+    "name": "Thundering Step",
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Psionic"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Psychic Warrior=4"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Psychoportation"
+      },
+      {
+        "key": "DESCRIPTOR",
+        "value": "Sonic"
+      },
+      {
+        "key": "COMPS",
+        "value": "Au, Vi"
+      },
+      {
+        "key": "CASTTIME",
+        "value": "Full-round action"
+      },
+      {
+        "key": "RANGE",
+        "value": "Melee"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "One creature"
+      },
+      {
+        "key": "DURATION",
+        "value": "Instantaneous; see text"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "None; see text"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.251"
+      },
+      {
+        "key": "DESC",
+        "value": "Attack creature and deal additional damage and daze, then teleport away."
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T12:11:36Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 450,
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_powers.lst",
+    "record_key": "Thundering Step",
+    "sha256": "81fdd7a4262066f630c0db104e743f5f78388b2df76409d50ba2a13c7a233f3a"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

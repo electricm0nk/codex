@@ -1,0 +1,65 @@
+{
+  "codex_generated_name": false,
+  "completeness": "full",
+  "data": {
+    "description": "You gain cold resistance 5 and DR equal to 1/2 your manifestation level that is overcome by bludgeoning damage.",
+    "key": "Lich Corruption ~ Greater Cadaver Countenance Gift",
+    "name": "Greater Cadaver's Countenance Gift",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Lich Corruption ~ Greater Cadaver Countenance Gift"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.LichGreaterCadaversCountenanceGift"
+      },
+      {
+        "key": "DEFINE",
+        "value": "GreaterCadaverCountenanceDR|0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.27"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain cold resistance 5 and DR equal to 1/2 your manifestation level that is overcome by bludgeoning damage."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ColdResistanceBonus|5|TYPE=Resistance"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|GreaterCadaverCountenanceDR|LichManifestationLevel/2"
+      },
+      {
+        "key": "DR",
+        "value": "GreaterCadaverCountenanceDR/Bludgeoning"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 509,
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
+    "record_key": "Lich Corruption ~ Greater Cadaver Countenance Gift",
+    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:dr"
+  ]
+}

@@ -1,0 +1,58 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Wyvaran ~ Slapping Tail",
+    "name": "Slapping Tail",
+    "description": "Wyvarans have a tail attack they can use only when making attacks of opportunity. This slapping tail attack deals a number of points of damage equal to 1d8 + the wyvaran's Strength modifier.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wyvaran ~ Slapping Tail"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Wyvaran Racial Trait.Wyvaran Racial Default.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "!PREFACT",
+        "value": "1,ABILITIES,Wyvaran_ReplaceSlappingTail=True"
+      },
+      {
+        "key": "DESC",
+        "value": "Wyvarans have a tail attack they can use only when making attacks of opportunity. This slapping tail attack deals a number of points of damage equal to 1d8 + the wyvaran's Strength modifier."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.xx"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Slapping Tail,Weapon.Natural.NaturalPrimary.Weapon Group Natural.Melee.Bludgeoning,*1,1d8,SPROP=attacks of opportunity only"
+      },
+      {
+        "key": "ASPECT",
+        "value": "NaturalAttackCondition|attacks of opportunity only"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/wyvaran/wyvaran_abilities_race.lst",
+    "sha256": "f9263c1e5ec38c272aea979b35614055b3d7ae8ce582325efc216270053d6fed",
+    "line": 19,
+    "record_key": "Wyvaran ~ Slapping Tail"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

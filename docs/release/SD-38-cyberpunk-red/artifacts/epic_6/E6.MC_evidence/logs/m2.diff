@@ -1,0 +1,13 @@
+diff --git a/src/rules_core/cpr/netrunning.rs b/src/rules_core/cpr/netrunning.rs
+index 0d52daf9c6..8009e90af4 100644
+--- a/src/rules_core/cpr/netrunning.rs
++++ b/src/rules_core/cpr/netrunning.rs
+@@ -83,7 +83,7 @@ impl CprDeckQuality {
+     pub fn base_slots(self) -> u8 {
+         match self {
+             Self::Poor => 5,
+-            Self::Standard => 7,
++            Self::Standard => 8,
+             Self::Excellent => 9,
+         }
+     }

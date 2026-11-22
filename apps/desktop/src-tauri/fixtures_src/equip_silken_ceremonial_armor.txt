@@ -1,0 +1,2 @@
+# Fixture for desktop Market +N (AC and attack rows), source: ue_equip_arms_armor.lst, KEY: Silken Ceremonial Armor
+Silken Ceremonial Armor	PROFICIENCY:ARMOR|Silken Ceremonial Armor	TYPE:Armor.Light.ArmorProfLight.Suit.Standard	COST:30	WT:4					EQMOD:Material ~ Cloth							SPELLFAILURE:0		BONUS:COMBAT|AC|1|TYPE=Armor|PREVAREQ:DisableArmorBonus,0

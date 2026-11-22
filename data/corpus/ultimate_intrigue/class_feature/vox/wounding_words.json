@@ -1,0 +1,49 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Vox ~ Wounding Words",
+    "name": "Wounding Words",
+    "class": "Mesmerist",
+    "description": "A vox can focus the power of his voice to magnify the force of his blows in melee. As a standard action, a vox can make a melee touch attack that deals 1d6+%1 points of sonic damage. Alternatively, he can make a single attack with a melee weapon as a standard action, adding the listed sonic damage to the damage dealt by his weapon on a successful attack. He can use this ability %2 times per day. If the target of the vox's wounding words is also the target of his compelling voice, that creature must succeed at a Will save (DC %3) or take a -2 penalty on attack rolls, saving throws, skill checks, and ability checks for 1 round. This penalty doesn't stack with the effects of the Concussive Spell metamagic feat.|MesmeristLVL|3+CHA|10+MesmeristLVL/2+CHA",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Vox ~ Wounding Words"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mesmerist Class Features.VoxClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "A vox can focus the power of his voice to magnify the force of his blows in melee. As a standard action, a vox can make a melee touch attack that deals 1d6+%1 points of sonic damage. Alternatively, he can make a single attack with a melee weapon as a standard action, adding the listed sonic damage to the damage dealt by his weapon on a successful attack. He can use this ability %2 times per day. If the target of the vox's wounding words is also the target of his compelling voice, that creature must succeed at a Will save (DC %3) or take a -2 penalty on attack rolls, saving throws, skill checks, and ability checks for 1 round. This penalty doesn't stack with the effects of the Concussive Spell metamagic feat.|MesmeristLVL|3+CHA|10+MesmeristLVL/2+CHA"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.39"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/support/ui_abilities_class_oa.lst",
+    "sha256": "123f008e9a2f31828861df9025f48f5c2f7c78a648553f22dba96a8d8a2e24dc",
+    "line": 90,
+    "record_key": "Vox ~ Wounding Words"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

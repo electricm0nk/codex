@@ -1,0 +1,36 @@
+{
+  "codex_generated_name": false,
+  "completeness": "chassis_only",
+  "data": {
+    "description": null,
+    "key": "Racial Traits ~ Fetchling",
+    "name": "Racial Traits ~ Fetchling",
+    "raw_tokens": [
+      {
+        "key": "DEFINE",
+        "value": "Fetchling_ReplaceAbilityScores|0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Fetchling Racial Trait|AUTOMATIC|Fetchling ~ Ability Scores|PREVAREQ:Fetchling_ReplaceAbilityScores,0"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 10,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/fetchling/fetchling_abilities_globalvar.lst",
+    "record_key": "Racial Traits ~ Fetchling",
+    "sha256": "2ca1b6dcb31c1c48905218c9c2a65a42b5bee9cd6254a2baa84996730ea6e01d"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

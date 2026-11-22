@@ -1,0 +1,57 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Shinigami ~ Destroy Soul",
+    "delivery": "Supernatural",
+    "description": "A shinigami possesses six gems in which it encapsulates souls with its soul bind spell-like ability. These gems are only useful to the shinigami that owns them, and if the shinigami dies, the gems are destroyed as well. As a standard action once per day, a shinigami can hold up a gem that currently contains a soul and crush it, permanently destroying the soul within and releasing a 30-foot-radius burst of negative energy that inflicts 1d6 negative levels on all creatures in the area of effect. A successful DC 30 Fortitude save reduces this to 1 negative level. The soul destroyed in the process of using this ability can only be brought back to life by means of a miracle or wish spell. This is a death effect. The save DC is Charisma-based.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:shinigami_destroy_soul",
+    "name": "Destroy Soul",
+    "owners": [
+      "bestiary_3:monster:shinigami"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A shinigami possesses six gems in which it encapsulates souls with its soul bind spell-like ability. These gems are only useful to the shinigami that owns them, and if the shinigami dies, the gems are destroyed as well. As a standard action once per day, a shinigami can hold up a gem that currently contains a soul and crush it, permanently destroying the soul within and releasing a 30-foot-radius burst of negative energy that inflicts 1d6 negative levels on all creatures in the area of effect. A successful DC 30 Fortitude save reduces this to 1 negative level. The soul destroyed in the process of using this ability can only be brought back to life by means of a miracle or wish spell. This is a death effect. The save DC is Charisma-based."
+      },
+      {
+        "key": "KEY",
+        "value": "Shinigami ~ Destroy Soul"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.244"
+      },
+      {
+        "key": "TYPE",
+        "value": "ShinigamiRacialAbility.SpecialQuality.Supernatural"
+      }
+    ],
+    "source_page": "p.244",
+    "traits": [
+      "ShinigamiRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T10:26:03Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1525,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Shinigami ~ Destroy Soul",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

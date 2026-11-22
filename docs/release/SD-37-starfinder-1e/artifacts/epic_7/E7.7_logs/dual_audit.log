@@ -1,0 +1,9 @@
+OK_NO_BUNDLE_TAGS
+DOC_CITATION `tests/sd22_*_resolves.rs`
+DOC_CITATION `tests/sd22_apg_class_witch_resolves.rs`
+DOC_CITATION `tests/sd24_equipment_coverage_audit.rs`
+DOC_CITATION `tests/sd24_equipment_field_completion.rs`
+OK_NO_TOKENS
+OK_NO_NOOP_HANDLERS
+OK_NO_MOCK_LEAKS
+OK_NO_WOULD_STRINGS

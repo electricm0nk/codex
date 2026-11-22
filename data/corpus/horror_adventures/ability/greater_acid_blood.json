@@ -1,0 +1,64 @@
+{
+  "codex_generated_name": false,
+  "completeness": "full",
+  "data": {
+    "description": "Your blood becomes even more vitriolic.",
+    "key": "Hive Corruption ~ Greater Acid Blood",
+    "name": "Greater Acid Blood",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Hive Corruption ~ Greater Acid Blood"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "HiveManifestation"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "HiveManifestationLevel,5"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Hive Corruption ~ Acid Blood"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.24"
+      },
+      {
+        "key": "DESC",
+        "value": "Your blood becomes even more vitriolic."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Hive Greater Acid Blood Gift Choice|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Hive Greater Acid Blood Stain Choice|1"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 404,
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
+    "record_key": "Hive Corruption ~ Greater Acid Blood",
+    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

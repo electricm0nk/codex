@@ -1,0 +1,45 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "key": "Autohypnosis",
+    "name": "Autohypnosis",
+    "raw_tokens": [
+      {
+        "key": "KEYSTAT",
+        "value": "WIS"
+      },
+      {
+        "key": "USEUNTRAINED",
+        "value": "NO"
+      },
+      {
+        "key": "TYPE",
+        "value": "Wisdom.Base"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.82"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Autohypnosis|3|TYPE=ClassSkill|PRECSKILL:1,Autohypnosis|PRESKILL:1,Autohypnosis=1"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T12:11:35Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 8,
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_skills.lst",
+    "record_key": "Autohypnosis",
+    "sha256": "0f4493199e7e13bab58c63551160be3ef872e131fba5999d3996db197af5bd49"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

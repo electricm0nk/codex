@@ -1,0 +1,29 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Absorb Spirit",
+    "category": "General",
+    "name": "Absorb Spirit",
+    "description": "You absorb restless spirits into your body at the cost of your own life force and sanity. When an incorporeal undead with the rejuvenation special ability or a haunt is reduced to 0 or fewer hit points within 30 feet of you, you can attempt to absorb its spirit into your body as an immediate action. You must attempt a Will save with a DC equal to 5 + twice the CR of the undead creature or haunt. If you are a medium with the haunt channeler class feature, you receive a +2 bonus on this saving throw. If you succeed, you harbor the undead or haunt's essence, and it cannot continue to rejuvenate or manifest until you release it. For every 24 hours that you harbor the entity, you must attempt a Constitution check (DC = 10 + the CR of the undead or haunt). If you are a medium with the haunt channeler class feature, you receive a +2 bonus on this check. If you fail the check, you take 1d4 points of Constitution and",
+    "prerequisites": [
+      "PREVARGTEQ:PreStatScore_CON,13",
+      "PRETEXT:Must have died at least once or been possessed by an undead creature."
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_feats.lst",
+    "sha256": "b8183ddca5eece895bf40f7765744bb470970418a8baca58aee907487f0140e6",
+    "line": 3,
+    "record_key": "Absorb Spirit"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

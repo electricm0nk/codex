@@ -1,0 +1,72 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Contemplative ~ Mind Blast",
+    "name": "Mind Blast",
+    "class": "Contemplative",
+    "description": "As a standard action, you can expend your psionic focus to make a ranged touch attack at a creature within %1 ft. that deals %2d%3 points of force damage to the creature struck.|ContemplativeMindBlastRange|ContemplativeMindBlastDice|ContemplativeMindBlastDieSize",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Contemplative ~ Mind Blast"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "WilderClassFeatures.SpecialAttack.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ContemplativeMindBlastRange|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ContemplativeMindBlastDieSize|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ContemplativeMindBlastDice|0"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action, you can expend your psionic focus to make a ranged touch attack at a creature within %1 ft. that deals %2d%3 points of force damage to the creature struck.|ContemplativeMindBlastRange|ContemplativeMindBlastDice|ContemplativeMindBlastDieSize"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ContemplativeMindBlastRange|30"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ContemplativeMindBlastDieSize|8"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ContemplativeMindBlastDice|floor((WilderLVL+2)/3)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.291"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2380,
+    "record_key": "Contemplative ~ Mind Blast"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

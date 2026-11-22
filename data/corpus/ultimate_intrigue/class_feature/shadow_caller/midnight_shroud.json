@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Shadow Caller ~ Midnight Shroud",
+    "name": "Midnight Shroud",
+    "class": "Spiritualist",
+    "description": "When the shadow caller reaches 17th level, her shade's umbral shroud also lowers the light level in its range to darkness, regardless of the prevailing conditions; this counts as a 7th-level darkness spell for the purpose of adjudicating light and darkness effects.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shadow Caller ~ Midnight Shroud"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Emotional Focus 2d"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Spiritualist Class Features.ShadowCallerClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "When the shadow caller reaches 17th level, her shade's umbral shroud also lowers the light level in its range to darkness, regardless of the prevailing conditions; this counts as a 7th-level darkness spell for the purpose of adjudicating light and darkness effects."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.50"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/support/ui_abilities_class_oa.lst",
+    "sha256": "123f008e9a2f31828861df9025f48f5c2f7c78a648553f22dba96a8d8a2e24dc",
+    "line": 137,
+    "record_key": "Shadow Caller ~ Midnight Shroud"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

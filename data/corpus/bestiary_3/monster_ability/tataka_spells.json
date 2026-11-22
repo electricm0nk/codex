@@ -1,0 +1,55 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Tataka ~ Spells",
+    "delivery": null,
+    "description": "A tataka casts spells as a 12th-level sorcerer. A tataka can cast spells from the cleric list as well as those normally available to a sorcerer. Cleric spells are considered arcane spells for a tataka.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:tataka_spells",
+    "name": "Spells",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A tataka casts spells as a 12th-level sorcerer. A tataka can cast spells from the cleric list as well as those normally available to a sorcerer. Cleric spells are considered arcane spells for a tataka."
+      },
+      {
+        "key": "KEY",
+        "value": "Tataka ~ Spells"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.230"
+      },
+      {
+        "key": "TYPE",
+        "value": "TatakaRacialAbility.SpecialQuality"
+      }
+    ],
+    "source_page": "p.230",
+    "traits": [
+      "TatakaRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T14:09:11Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1465,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Tataka ~ Spells",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

@@ -1,0 +1,59 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Ogrekin ~ Vestigal Twin",
+    "delivery": null,
+    "description": "A malformed twin's head just out from the ogrekin, providing the ogrekin with all-around vision.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_2:monster_ability:ogrekin_vestigal_twin",
+    "name": "Vestigal Twin",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|All-Around Vision"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A malformed twin's head just out from the ogrekin, providing the ogrekin with all-around vision."
+      },
+      {
+        "key": "KEY",
+        "value": "Ogrekin ~ Vestigal Twin"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.204"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.OgrekinBeneficialDeformity"
+      }
+    ],
+    "source_page": "p.204",
+    "traits": [
+      "OgrekinBeneficialDeformity"
+    ]
+  },
+  "ingested_at": "2026-08-23T14:07:19Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 914,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Ogrekin ~ Vestigal Twin",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

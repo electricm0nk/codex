@@ -1,0 +1,20 @@
+{
+  "data": {
+    "category": "Class Feature",
+    "key": "Initial Drone Proficiency ~ Basic Melee Weapons",
+    "name": "Basic Melee Weapons",
+    "type": "Initial Drone Proficiency"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1384,
+    "path": "starfinder/paizo/core/scr_abilities.lst",
+    "record_key": "Initial Drone Proficiency ~ Basic Melee Weapons",
+    "sha256": "dfd415e1ab4cbef3c0417edecd59e13a7a116cad2086fcf2773dbafcb78711f5"
+  },
+  "unit_id": "core:ability:initial_drone_proficiency_basic_melee_weapons"
+}

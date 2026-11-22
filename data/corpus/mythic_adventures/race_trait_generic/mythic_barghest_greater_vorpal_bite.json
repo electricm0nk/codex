@@ -1,0 +1,46 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Mythic Barghest (Greater) ~ Vorpal Bite",
+    "name": "Vorpal Bite",
+    "description": "If a mythic greater barghest confirms a critical hit against a non-mythic opponent, it can expend one use of mythic power as a free action to bite off the opponent's head, instantly killing it (Fort DC 15 negates). The save DC is Constitution-based.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Barghest (Greater) ~ Vorpal Bite"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Barghest (Greater) Trait.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "If a mythic greater barghest confirms a critical hit against a non-mythic opponent, it can expend one use of mythic power as a free action to bite off the opponent's head, instantly killing it (Fort DC 15 negates). The save DC is Constitution-based."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities_race.lst",
+    "sha256": "9dc17c2fc1ba84d040fb04d6175b48b6ff52cc30ad113933d5dff3d75ea2652a",
+    "line": 78,
+    "record_key": "Mythic Barghest (Greater) ~ Vorpal Bite"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

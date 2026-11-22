@@ -1,0 +1,54 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Blood Hag ~ Detonate",
+    "delivery": "Supernatural",
+    "description": "A blood hag in fiery form can explode in a 30-foot-radius burst that deals 8d6 points of fire damage (Reflex DC %1 for half). Using this ability returns a blood hag to her normal form.",
+    "description_variables": [
+      "16+CON"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:blood_hag_detonate",
+    "name": "Detonate",
+    "owners": [
+      "bestiary_4:monster:blood_hag"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A blood hag in fiery form can explode in a 30-foot-radius burst that deals 8d6 points of fire damage (Reflex DC %1 for half). Using this ability returns a blood hag to her normal form.|16+CON"
+      },
+      {
+        "key": "KEY",
+        "value": "Blood Hag ~ Detonate"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "ingested_at": "2026-08-15T01:24:20Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 312,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "record_key": "Blood Hag ~ Detonate",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ]
+}

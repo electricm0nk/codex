@@ -1,0 +1,243 @@
+CPR Sheet Edgerunner Netrunner
+Cyberpunk RED
+Open
+Close
+STATS
+
+STAT	Current
+INT	6	—
+REF	8	8
+DEX	6	6
+TECH	7	—
+COOL	7	—
+WILL	3	—
+LUCK	7	—
+MOVE	7	7
+BODY	6	6
+EMP	5	3
+SKILLS
+
+Level	Base
+Awareness
+Concentration (WILL)	2	5
+Conceal/Reveal Object (INT)	6	12
+Lip Reading (INT)	0	6
+Perception (INT)	2	8
+Tracking (INT)	0	6
+Body
+Athletics (DEX)	2	8
+Contortionist (DEX)	0	6
+Dance (DEX)	0	6
+Endurance (WILL)	0	3
+Resist Torture/Drugs (WILL)	0	3
+Stealth (DEX)	6	12
+Control
+Drive Land Vehicle (REF)	0	8
+Pilot Air Vehicle (REF)	0	8
+Pilot Sea Vehicle (REF)	0	8
+Riding (REF)	0	8
+Education
+Accounting (INT)	0	6
+Animal Handling (INT)	0	6
+Bureaucracy (INT)	0	6
+Business (INT)	0	6
+Composition (INT)	0	6
+Criminology (INT)	0	6
+Cryptography (INT)	6	12
+Deduction (INT)	0	6
+Education (INT)	6	12
+Gamble (INT)	0	6
+Language (Streetslang) (INT)	2	8
+Language (Creole) (INT)	4	10
+Library Search (INT)	6	12
+Local Expert (Your Home) (INT)	2	8
+Science (INT)	0	6
+Tactics (INT)	0	6
+Wilderness Survival (INT)	0	6
+Fighting
+Brawling (DEX)	2	8
+Evasion (DEX)	6	12
+Martial Arts (DEX)	0	6
+Melee Weapon (DEX)	0	6
+Performance
+Acting (COOL)	0	7
+Play Instrument (TECH)	0	7
+Ranged Weapon
+Archery (REF)	0	8
+Autofire (REF)	0	8
+Handgun (REF)	6	14
+Heavy Weapons (REF)	0	8
+Shoulder Arms (REF)	0	8
+Social
+Bribery (COOL)	0	7
+Conversation (EMP)	2	5
+Human Perception (EMP)	2	5
+Interrogation (COOL)	0	7
+Persuasion (COOL)	2	9
+Personal Grooming (COOL)	0	7
+Streetwise (COOL)	0	7
+Trading (COOL)	0	7
+Wardrobe & Style (COOL)	0	7
+Technique
+Air Vehicle Tech (TECH)	0	7
+Basic Tech (TECH)	6	13
+Cybertech (TECH)	6	13
+Demolitions (TECH)	0	7
+Electronics/Security Tech (TECH)	6	13
+First Aid (TECH)	2	9
+Forgery (TECH)	0	7
+Land Vehicle Tech (TECH)	0	7
+Paint/Draw/Sculpt (TECH)	0	7
+Paramedic (TECH)	0	7
+Photography/Film (TECH)	0	7
+Pick Lock (TECH)	0	7
+Pick Pocket (TECH)	0	7
+Sea Vehicle Tech (TECH)	0	7
+Weaponstech (TECH)	0	7
+ROLE ABILITY
+
+Netrunner
+Rank	4
+Net Actions	3
+REPUTATION
+
+Reputation Level	0
+Facedown (COOL + Reputation)	7
+Facedown roll	7 + 1d10
+IMPROVEMENT POINTS
+
+Improvement Points (current / total)	0 / 0
+LIFEPATH
+
+Cultural Origins: Your (General) Cultural Region	South/Central American
+Your Personality: What Are You Like?	Picky, fussy, and nervous
+Dress and Personal Style: Clothing Style and Hairstyle: Clothing Style	High Fashion (Exclusive, Designer, Couture)
+Dress and Personal Style: Clothing Style and Hairstyle: Hairstyle	Long and straight
+Affectation You Are Never Without	Spiked gloves
+Your Motivations and Relationships: What Do You Value Most? and How Do You Feel About Most People?: What Do You Value Most?	Love
+Your Motivations and Relationships: What Do You Value Most? and How Do You Feel About Most People?: How Do You Feel About Most People?	I like almost everyone.
+Things You Value the Most: Most Valued Person in Your Life?: Most Valued Person in Your Life?	A pet
+Things You Value the Most: Most Valued Possession You Own?: Most Valued Possession You Own?	A piece of clothing
+Your Original Family Background: Original Background	Edgerunners
+Your Environment: Childhood Environment	In a Nomad pack with roots in transport (ships, planes, caravans).
+Your Family Crisis: Background	Your family is involved in a long-term conspiracy, organization, or association, such as a crime family or revolutionary group.
+Sweet Revenge!: What are You/They Gonna do About it?	Backstab them indirectly.
+Your Life Goals: Life Goals	Save, if possible, anyone else involved in your background, like a lover, or family member.
+Netrunner: What Kind of Runner are You?: Type	Hacktivist interested in cracking systems and exposing bad guys.
+Netrunner: What's Your Workspace Like?: Workspace	It looks better in Virtuality, you swear.
+Netrunner: If You Have a Partner, Who are They?: Who?	Possible romantic partner as well
+Netrunner: Who are Some of Your Other Clients?: Who?	Local gangers who also protect your work area while you sweep for NET threats.
+Netrunner: Where Do You Get Your Programs?: Where?	Dig around in old abandoned City Zones.
+Netrunner: Who's Gunning for You?: Who?	Fixer or another client who wants your services exclusively.
+HIT POINTS, HUMANITY, MOVE AND LUCK
+
+Hit Points	35
+Seriously Wounded	18
+Death Save	6
+Humanity	36 / 50
+MOVE	7
+LUCK	7
+WOUND TRACK
+
+Below HP	Stabilize DV
+Lightly Wounded	35	10
+Seriously Wounded	18	13
+Mortally Wounded	1	15
+Death Save	6	—
+Base Death Save Penalty	0	—
+CRITICAL INJURIES
+
+Critical Injuries to the Body
+Dismembered Arm
+Dismembered Hand
+Collapsed Lung
+Broken Ribs
+Broken Arm
+Foreign Object
+Broken Leg
+Torn Muscle
+Spinal Injury
+Crushed Fingers
+Dismembered Leg
+Critical Injuries to the Head
+Lost Eye
+Brain Injury
+Damaged Eye
+Concussion
+Broken Jaw
+Foreign Object
+Whiplash
+Cracked Skull
+Damaged Ear
+Crushed Windpipe
+Lost Ear
+ARMOR
+
+SP	Penalty
+Head	11	0
+Body	11	0
+Armor Penalty (REF, DEX, MOVE)	—	0
+WEAPONS
+
+DMG	ROF	Hands	Concealable	Magazine	Skill Base
+Very Heavy Pistol	4d6	1	1	No	8	14
+RANGE DV (M/YDS UP TO)
+
+6	12	25	50	100	200	400	800
+Very Heavy Pistol	13	15	20	25	30	30	N/A	N/A
+CYBERWARE
+
+Interface Plugs	7
+Neural Link	7
+Shift Tacts	0
+Humanity Loss	14
+Maximum Humanity	46
+Head SP (cyberware)	0
+Body SP (cyberware)	0
+Initiative bonus	0
+Fashionware slots	1 / 7
+Internal Body slots	0 / 7
+External Body slots	0 / 7
+Neural Link slots	1 / 5
+CYBERDECK AND NET ACTIONS
+
+NET Actions	3
+Deck slots (used / available)	5 / 7
+Cyberdeck	Cyberdeck (Standard Quality)
+Program	Armor
+Program	Sword
+Program	See Ya
+Program	Sword
+Program	Worm
+OTHER TOTALS
+
+cpr.cash	500
+cpr.ammo.0	30
+RULES AND FEATURES
+
+Role ability
+Interface
+Interface Rank 4
+NET Actions per Turn 3
+A Netrunner's Interface Role Ability allows them to Netrun, determines how many NET Actions they can take on their Turn, and gives them access to a suite of Interface Abilities. We will be going into Netrunning in-depth in the Netrunning Section (pg. 198). (Cyberpunk RED core rulebook p148)
+Cyberware
+Interface Plugs
+Humanity Loss 7
+Neuralware Option. Plugs in the wrist or head that allow user to jack into and make use of Smartguns, Cyberdecks, heavy machinery, and drive vehicles with no hands! Multiple installations allow user to be plugged into multiple things at the same time. Requires Neural Link. (Cyberpunk RED core rulebook p360)
+Neural Link
+Humanity Loss 7
+Wired artificial nervous system, required to use Neuralware, and Subdermal Grips. System has 5 Option Slots for Neuralware options. (Cyberpunk RED core rulebook p360)
+Shift Tacts
+Humanity Loss 0
+Color-changing lenses implanted into the eye. Several patterns are also available. Lenses can optionally be temperature-sensitive or reactant to hormone changes in the body. Only one choice of color and pattern can be made, but the user can deactivate the color change at any time desired without an Action. (Cyberpunk RED core rulebook p359)
+Humanity
+Humanity Loss
+Humanity Loss 14
+Humanity 36
+EMP 3
+Humanity Loss 14 from installed cyberware: Humanity 36 = EMP 5 x 10 - 14. EMP 3: EMP is lowered by 1 every time the tens place of Humanity is lowered (Cyberpunk RED core rulebook p. 80-81).
+Netrunning
+Brain damage
+Hit Points 35
+armor SP does not apply
+Brain damage (from Zap and from Programs and Black ICE that deal damage directly to the brain) is subtracted from your Hit Points; armor does not reduce it (Cyberpunk RED core rulebook p. 201).

@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Blade Skill ~ Grasping Shield",
+    "name": "Grasping Shield",
+    "class": "Blade Skill",
+    "description": "Once per round, you may make a free disarm attempt against any enemy that makes a melee attack that misses you.  This disarm attempt counts as an attack of opportunity and does not provoke attacks of opportunity.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Blade Skill ~ Grasping Shield"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "BladeSkill.SpecialQuality"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "2,CATEGORY=Special Ability,Blade Skill ~ Shield Block,Blade Skill ~ Form Mind Shield"
+      },
+      {
+        "key": "DESC",
+        "value": "Once per round, you may make a free disarm attempt against any enemy that makes a melee attack that misses you.  This disarm attempt counts as an attack of opportunity and does not provoke attacks of opportunity."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.278"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 817,
+    "record_key": "Blade Skill ~ Grasping Shield"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

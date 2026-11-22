@@ -1,0 +1,20 @@
+{
+  "data": {
+    "category": "Class Feature",
+    "key": "Drone Resistance ~ Fire",
+    "name": "Fire",
+    "type": "Drone Resistance.Class Feature"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1505,
+    "path": "starfinder/paizo/core/scr_abilities.lst",
+    "record_key": "Drone Resistance ~ Fire",
+    "sha256": "dfd415e1ab4cbef3c0417edecd59e13a7a116cad2086fcf2773dbafcb78711f5"
+  },
+  "unit_id": "core:ability:drone_resistance_fire"
+}

@@ -1,0 +1,891 @@
+{
+  "format": "codex.rules_tables/1",
+  "table": "beastiary1/monster_resolve",
+  "licence": {
+    "license": "OGL",
+    "book": "beastiary1",
+    "screen": "pi_screening::classify_field",
+    "pi_hits": [],
+    "redacted": []
+  },
+  "rows": [
+    {
+      "monster": "Ghoul",
+      "stat_block": {
+        "name": "Ghoul",
+        "challenge_rating": 1.0,
+        "size": "M",
+        "speed_ft": 30,
+        "race_type": "Undead",
+        "race_subtype": null,
+        "source_page": "p.146",
+        "natural_attacks": [
+          {
+            "name": "Claw",
+            "damage_dice": "1d6"
+          },
+          {
+            "name": "Bite",
+            "damage_dice": "1d6"
+          }
+        ]
+      }
+    },
+    {
+      "monster": "Gnoll",
+      "stat_block": {
+        "name": "Gnoll",
+        "challenge_rating": 1.0,
+        "size": "M",
+        "speed_ft": 30,
+        "race_type": "Humanoid",
+        "race_subtype": "Gnoll",
+        "source_page": "p.155",
+        "natural_attacks": []
+      }
+    },
+    {
+      "monster": "GoblinDog",
+      "stat_block": {
+        "name": "Goblin Dog",
+        "challenge_rating": 1.0,
+        "size": "M",
+        "speed_ft": 50,
+        "race_type": "Animal",
+        "race_subtype": null,
+        "source_page": "p.157",
+        "natural_attacks": [
+          {
+            "name": "Bite",
+            "damage_dice": "1d6"
+          }
+        ]
+      }
+    },
+    {
+      "monster": "Lizardfolk",
+      "stat_block": {
+        "name": "Lizardfolk",
+        "challenge_rating": 1.0,
+        "size": "M",
+        "speed_ft": 30,
+        "race_type": "Humanoid",
+        "race_subtype": "Reptilian",
+        "source_page": "p.195",
+        "natural_attacks": [
+          {
+            "name": "Claw",
+            "damage_dice": "1d4"
+          },
+          {
+            "name": "Bite",
+            "damage_dice": "1d4"
+          }
+        ]
+      }
+    },
+    {
+      "monster": "Wolf",
+      "stat_block": {
+        "name": "Wolf",
+        "challenge_rating": 1.0,
+        "size": "M",
+        "speed_ft": 50,
+        "race_type": "Animal",
+        "race_subtype": null,
+        "source_page": "p.278",
+        "natural_attacks": [
+          {
+            "name": "Bite",
+            "damage_dice": "1d6"
+          }
+        ]
+      }
+    },
+    {
+      "monster": "Darkmantle",
+      "stat_block": {
+        "name": "Darkmantle",
+        "challenge_rating": 1.0,
+        "size": "S",
+        "speed_ft": 20,
+        "race_type": "Magical Beast",
+        "race_subtype": null,
+        "source_page": "p.55",
+        "natural_attacks": [
+          {
+            "name": "Slam",
+            "damage_dice": "1d4"
+          }
+        ]
+      }
+    },
+    {
+      "monster": "Horse",
+      "stat_block": {
+        "name": "Horse",
+        "challenge_rating": 1.0,
+        "size": "L",
+        "speed_ft": 50,
+        "race_type": "Animal",
+        "race_subtype": null,
+        "source_page": "p.177",
+        "natural_attacks": [
+          {
+            "name": "Hoof",
+            "damage_dice": "1d4"
+          }
+        ]
+      }
+    },
+    {
+      "monster": "Hyena",
+      "stat_block": {
+        "name": "Hyena",
+        "challenge_rating": 1.0,
+        "size": "M",
+        "speed_ft": 50,
+        "race_type": "Animal",
+        "race_subtype": null,
+        "source_page": "p.179",
+        "natural_attacks": [
+          {
+            "name": "Bite",
+            "damage_dice": "1d6"
+          }
+        ]
+      }
+    },
+    {
+      "monster": "Octopus",
+      "stat_block": {
+        "name": "Octopus",
+        "challenge_rating": 1.0,
+        "size": "S",
+        "speed_ft": 20,
+        "race_type": "Animal",
+        "race_subtype": "Aquatic",
+        "source_page": "p.219",
+        "natural_attacks": [
+          {
+            "name": "Bite",
+            "damage_dice": "1d3"
+          },
+          {
+            "name": "Tentacle",
+            "damage_dice": "0"
+          }
+        ]
+      }
+    },
+    {
+      "monster": "SpiderSwarm",
+      "stat_block": {
+        "name": "Spider Swarm",
+        "challenge_rating": 1.0,
+        "size": "D",
+        "speed_ft": 20,
+        "race_type": "Vermin",
+        "race_subtype": "Swarm",
+        "source_page": "p.258",
+        "natural_attacks": [
+          {
+            "name": "Swarm",
+            "damage_dice": "1d6"
+          }
+        ]
+      }
+    },
+    {
+      "monster": "BatSwarm",
+      "stat_block": {
+        "name": "Bat Swarm",
+        "challenge_rating": 2.0,
+        "size": "D",
+        "speed_ft": 5,
+        "race_type": "Animal",
+        "race_subtype": "Swarm",
+        "source_page": "p.30",
+        "natural_attacks": [
+          {
+            "name": "Swarm",
+            "damage_dice": "1d6"
+          }
+        ]
+      }
+    },
+    {
+      "monster": "Boar",
+      "stat_block": {
+        "name": "Boar",
+        "challenge_rating": 2.0,
+        "size": "M",
+        "speed_ft": 40,
+        "race_type": "Animal",
+        "race_subtype": null,
+        "source_page": "p.36",
+        "natural_attacks": [
+          {
+            "name": "Gore",
+            "damage_dice": "1d8"
+          }
+        ]
+      }
+    },
+    {
+      "monster": "Boggard",
+      "stat_block": {
+        "name": "Boggard",
+        "challenge_rating": 2.0,
+        "size": "M",
+        "speed_ft": 20,
+        "race_type": "Humanoid",
+        "race_subtype": "Boggard",
+        "source_page": "p.37",
+        "natural_attacks": [
+          {
+            "name": "Tongue",
+            "damage_dice": "0"
+          }
+        ]
+      }
+    },
+    {
+      "monster": "Bugbear",
+      "stat_block": {
+        "name": "Bugbear",
+        "challenge_rating": 2.0,
+        "size": "M",
+        "speed_ft": 30,
+        "race_type": "Humanoid",
+        "race_subtype": "Goblinoid",
+        "source_page": "p.38",
+        "natural_attacks": []
+      }
+    },
+    {
+      "monster": "CaveFisher",
+      "stat_block": {
+        "name": "Cave Fisher",
+        "challenge_rating": 2.0,
+        "size": "M",
+        "speed_ft": 20,
+        "race_type": "Vermin",
+        "race_subtype": null,
+        "source_page": "p.41",
+        "natural_attacks": [
+          {
+            "name": "Filament",
+            "damage_dice": "0"
+          },
+          {
+            "name": "Claw",
+            "damage_dice": "1d4"
+          }
+        ]
+      }
+    },
+    {
+      "monster": "Choker",
+      "stat_block": {
+        "name": "Choker",
+        "challenge_rating": 2.0,
+        "size": "S",
+        "speed_ft": 20,
+        "race_type": "Aberration",
+        "race_subtype": null,
+        "source_page": "p.45",
+        "natural_attacks": [
+          {
+            "name": "Tentacle",
+            "damage_dice": "1d4"
+          }
+        ]
+      }
+    },
+    {
+      "monster": "Crocodile",
+      "stat_block": {
+        "name": "Crocodile",
+        "challenge_rating": 2.0,
+        "size": "L",
+        "speed_ft": 20,
+        "race_type": "Animal",
+        "race_subtype": null,
+        "source_page": "p.51",
+        "natural_attacks": [
+          {
+            "name": "Bite",
+            "damage_dice": "1d8"
+          },
+          {
+            "name": "Tail Slap",
+            "damage_dice": "1d12"
+          }
+        ]
+      }
+    },
+    {
+      "monster": "DarkCreeper",
+      "stat_block": {
+        "name": "Dark Creeper",
+        "challenge_rating": 2.0,
+        "size": "S",
+        "speed_ft": 30,
+        "race_type": "Humanoid",
+        "race_subtype": "Dark Folk",
+        "source_page": "p.53",
+        "natural_attacks": []
+      }
+    },
+    {
+      "monster": "IronCobra",
+      "stat_block": {
+        "name": "Iron Cobra",
+        "challenge_rating": 2.0,
+        "size": "S",
+        "speed_ft": 40,
+        "race_type": "Construct",
+        "race_subtype": null,
+        "source_page": "p.182",
+        "natural_attacks": [
+          {
+            "name": "Bite",
+            "damage_dice": "1d6"
+          }
+        ]
+      }
+    },
+    {
+      "monster": "Morlock",
+      "stat_block": {
+        "name": "Morlock",
+        "challenge_rating": 2.0,
+        "size": "M",
+        "speed_ft": 40,
+        "race_type": "Monstrous Humanoid",
+        "race_subtype": null,
+        "source_page": "p.209",
+        "natural_attacks": [
+          {
+            "name": "Bite (Primary)",
+            "damage_dice": "1d4"
+          },
+          {
+            "name": "Bite (With Weapon Attack)",
+            "damage_dice": "1d4"
+          }
+        ]
+      }
+    },
+    {
+      "monster": "RatSwarm",
+      "stat_block": {
+        "name": "Rat Swarm",
+        "challenge_rating": 2.0,
+        "size": "T",
+        "speed_ft": 15,
+        "race_type": "Animal",
+        "race_subtype": "Swarm",
+        "source_page": "p.232",
+        "natural_attacks": [
+          {
+            "name": "Swarm",
+            "damage_dice": "1d6"
+          }
+        ]
+      }
+    },
+    {
+      "monster": "Sahuagin",
+      "stat_block": {
+        "name": "Sahuagin",
+        "challenge_rating": 2.0,
+        "size": "M",
+        "speed_ft": 30,
+        "race_type": "Monstrous Humanoid",
+        "race_subtype": "Aquatic",
+        "source_page": "p.239",
+        "natural_attacks": [
+          {
+            "name": "Claws",
+            "damage_dice": "1d4"
+          },
+          {
+            "name": "Bite (w/o weapon)",
+            "damage_dice": "1d4"
+          },
+          {
+            "name": "Bite (with weapon)",
+            "damage_dice": "1d4"
+          }
+        ]
+      }
+    },
+    {
+      "monster": "Shark",
+      "stat_block": {
+        "name": "Shark",
+        "challenge_rating": 2.0,
+        "size": "L",
+        "speed_ft": 0,
+        "race_type": "Animal",
+        "race_subtype": "Aquatic",
+        "source_page": "p.247",
+        "natural_attacks": [
+          {
+            "name": "Bite",
+            "damage_dice": "1d8"
+          }
+        ]
+      }
+    },
+    {
+      "monster": "ShockerLizard",
+      "stat_block": {
+        "name": "Shocker Lizard",
+        "challenge_rating": 2.0,
+        "size": "S",
+        "speed_ft": 40,
+        "race_type": "Magical Beast",
+        "race_subtype": null,
+        "source_page": "p.248",
+        "natural_attacks": [
+          {
+            "name": "Bite",
+            "damage_dice": "1d4"
+          }
+        ]
+      }
+    },
+    {
+      "monster": "Skum",
+      "stat_block": {
+        "name": "Skum",
+        "challenge_rating": 2.0,
+        "size": "M",
+        "speed_ft": 20,
+        "race_type": "Monstrous Humanoid",
+        "race_subtype": "Aquatic",
+        "source_page": "p.253",
+        "natural_attacks": [
+          {
+            "name": "Bite (w/o weapon)",
+            "damage_dice": "1d6"
+          },
+          {
+            "name": "Bite (w/weapon)",
+            "damage_dice": "1d6"
+          },
+          {
+            "name": "Claw (w/o weapon)",
+            "damage_dice": "1d4"
+          },
+          {
+            "name": "Claw (w/weapon)",
+            "damage_dice": "1d4"
+          }
+        ]
+      }
+    },
+    {
+      "monster": "Squid",
+      "stat_block": {
+        "name": "Squid",
+        "challenge_rating": 1.0,
+        "size": "M",
+        "speed_ft": 0,
+        "race_type": "Animal",
+        "race_subtype": "Aquatic",
+        "source_page": "p.259",
+        "natural_attacks": [
+          {
+            "name": "Bite",
+            "damage_dice": "1d3"
+          },
+          {
+            "name": "Tentacles",
+            "damage_dice": "1d4"
+          }
+        ]
+      }
+    },
+    {
+      "monster": "Troglodyte",
+      "stat_block": {
+        "name": "Troglodyte",
+        "challenge_rating": 1.0,
+        "size": "M",
+        "speed_ft": 30,
+        "race_type": "Humanoid",
+        "race_subtype": "Reptilian",
+        "source_page": "p.267",
+        "natural_attacks": [
+          {
+            "name": "Claw",
+            "damage_dice": "1d4"
+          },
+          {
+            "name": "Claw (with weapon attack)",
+            "damage_dice": "1d4"
+          },
+          {
+            "name": "Bite",
+            "damage_dice": "1d4"
+          },
+          {
+            "name": "Bite (with weapon attack)",
+            "damage_dice": "1d4"
+          }
+        ]
+      }
+    },
+    {
+      "monster": "Vargouille",
+      "stat_block": {
+        "name": "Vargouille",
+        "challenge_rating": 2.0,
+        "size": "S",
+        "speed_ft": 0,
+        "race_type": "Outsider",
+        "race_subtype": "Evil|Extraplanar",
+        "source_page": "p.272",
+        "natural_attacks": [
+          {
+            "name": "Bite",
+            "damage_dice": "1d4"
+          }
+        ]
+      }
+    },
+    {
+      "monster": "Wolverine",
+      "stat_block": {
+        "name": "Wolverine",
+        "challenge_rating": 2.0,
+        "size": "M",
+        "speed_ft": 30,
+        "race_type": "Animal",
+        "race_subtype": null,
+        "source_page": "p.279",
+        "natural_attacks": [
+          {
+            "name": "Bite",
+            "damage_dice": "1d4"
+          },
+          {
+            "name": "Claw",
+            "damage_dice": "1d6"
+          }
+        ]
+      }
+    },
+    {
+      "monster": "Worg",
+      "stat_block": {
+        "name": "Worg",
+        "challenge_rating": 2.0,
+        "size": "M",
+        "speed_ft": 50,
+        "race_type": "Magical Beast",
+        "race_subtype": null,
+        "source_page": "p.280",
+        "natural_attacks": [
+          {
+            "name": "Bite",
+            "damage_dice": "1d6"
+          }
+        ]
+      }
+    },
+    {
+      "monster": "YellowMuskCreeper",
+      "stat_block": {
+        "name": "Yellow Musk Creeper",
+        "challenge_rating": 2.0,
+        "size": "M",
+        "speed_ft": 5,
+        "race_type": "Plant",
+        "race_subtype": null,
+        "source_page": "p.285",
+        "natural_attacks": [
+          {
+            "name": "Tendril",
+            "damage_dice": "1d4"
+          }
+        ]
+      }
+    },
+    {
+      "monster": "Ankheg",
+      "stat_block": {
+        "name": "Ankheg",
+        "challenge_rating": 3.0,
+        "size": "L",
+        "speed_ft": 30,
+        "race_type": "Magical Beast",
+        "race_subtype": null,
+        "source_page": "p.15",
+        "natural_attacks": [
+          {
+            "name": "Bite",
+            "damage_dice": "2d6"
+          }
+        ]
+      }
+    },
+    {
+      "monster": "AssassinVine",
+      "stat_block": {
+        "name": "Assassin Vine",
+        "challenge_rating": 3.0,
+        "size": "L",
+        "speed_ft": 5,
+        "race_type": "Plant",
+        "race_subtype": null,
+        "source_page": "p.22",
+        "natural_attacks": [
+          {
+            "name": "Slam",
+            "damage_dice": "1d8"
+          }
+        ]
+      }
+    },
+    {
+      "monster": "Centaur",
+      "stat_block": {
+        "name": "Centaur",
+        "challenge_rating": 3.0,
+        "size": "L",
+        "speed_ft": 50,
+        "race_type": "Monstrous Humanoid",
+        "race_subtype": null,
+        "source_page": "p.42",
+        "natural_attacks": [
+          {
+            "name": "Hoof",
+            "damage_dice": "1d6"
+          }
+        ]
+      }
+    },
+    {
+      "monster": "Cockatrice",
+      "stat_block": {
+        "name": "Cockatrice",
+        "challenge_rating": 3.0,
+        "size": "S",
+        "speed_ft": 20,
+        "race_type": "Magical Beast",
+        "race_subtype": null,
+        "source_page": "p.48",
+        "natural_attacks": [
+          {
+            "name": "Bite",
+            "damage_dice": "1d4"
+          }
+        ]
+      }
+    },
+    {
+      "monster": "Derro",
+      "stat_block": {
+        "name": "Derro",
+        "challenge_rating": 3.0,
+        "size": "S",
+        "speed_ft": 20,
+        "race_type": "Humanoid",
+        "race_subtype": "Derro",
+        "source_page": "p.70",
+        "natural_attacks": []
+      }
+    },
+    {
+      "monster": "Doppelganger",
+      "stat_block": {
+        "name": "Doppelganger",
+        "challenge_rating": 3.0,
+        "size": "M",
+        "speed_ft": 30,
+        "race_type": "Monstrous Humanoid",
+        "race_subtype": "Shapechanger",
+        "source_page": "p.89",
+        "natural_attacks": [
+          {
+            "name": "Claw",
+            "damage_dice": "1d8"
+          }
+        ]
+      }
+    },
+    {
+      "monster": "Dryad",
+      "stat_block": {
+        "name": "Dryad",
+        "challenge_rating": 3.0,
+        "size": "M",
+        "speed_ft": 30,
+        "race_type": "Fey",
+        "race_subtype": null,
+        "source_page": "p.116",
+        "natural_attacks": []
+      }
+    },
+    {
+      "monster": "Ettercap",
+      "stat_block": {
+        "name": "Ettercap",
+        "challenge_rating": 3.0,
+        "size": "M",
+        "speed_ft": 30,
+        "race_type": "Aberration",
+        "race_subtype": null,
+        "source_page": "p.129",
+        "natural_attacks": [
+          {
+            "name": "Bite",
+            "damage_dice": "1d6"
+          },
+          {
+            "name": "Claw",
+            "damage_dice": "1d4"
+          }
+        ]
+      }
+    },
+    {
+      "monster": "GelatinousCube",
+      "stat_block": {
+        "name": "Gelatinous Cube",
+        "challenge_rating": 3.0,
+        "size": "L",
+        "speed_ft": 15,
+        "race_type": "Ooze",
+        "race_subtype": null,
+        "source_page": "p.138",
+        "natural_attacks": [
+          {
+            "name": "Slam",
+            "damage_dice": "1d6"
+          }
+        ]
+      }
+    },
+    {
+      "monster": "HellHound",
+      "stat_block": {
+        "name": "Hell Hound",
+        "challenge_rating": 3.0,
+        "size": "M",
+        "speed_ft": 40,
+        "race_type": "Outsider",
+        "race_subtype": "Evil|Extraplanar|Fire|Lawful",
+        "source_page": "p.173",
+        "natural_attacks": [
+          {
+            "name": "Bite",
+            "damage_dice": "1d8"
+          }
+        ]
+      }
+    },
+    {
+      "monster": "Lion",
+      "stat_block": {
+        "name": "Lion",
+        "challenge_rating": 3.0,
+        "size": "L",
+        "speed_ft": 40,
+        "race_type": "Animal",
+        "race_subtype": null,
+        "source_page": "p.193",
+        "natural_attacks": [
+          {
+            "name": "Bite",
+            "damage_dice": "1d8"
+          },
+          {
+            "name": "Claw",
+            "damage_dice": "1d4"
+          }
+        ]
+      }
+    },
+    {
+      "monster": "Ogre",
+      "stat_block": {
+        "name": "Ogre",
+        "challenge_rating": 3.0,
+        "size": "L",
+        "speed_ft": 40,
+        "race_type": "Humanoid",
+        "race_subtype": "Giant",
+        "source_page": "p.220",
+        "natural_attacks": []
+      }
+    },
+    {
+      "monster": "Pegasus",
+      "stat_block": {
+        "name": "Pegasus",
+        "challenge_rating": 3.0,
+        "size": "L",
+        "speed_ft": 60,
+        "race_type": "Magical Beast",
+        "race_subtype": null,
+        "source_page": "p.225",
+        "natural_attacks": [
+          {
+            "name": "Bite",
+            "damage_dice": "1d3"
+          },
+          {
+            "name": "Hoof",
+            "damage_dice": "1d6"
+          }
+        ]
+      }
+    },
+    {
+      "monster": "RustMonster",
+      "stat_block": {
+        "name": "Rust Monster",
+        "challenge_rating": 3.0,
+        "size": "M",
+        "speed_ft": 40,
+        "race_type": "Aberration",
+        "race_subtype": null,
+        "source_page": "p.238",
+        "natural_attacks": [
+          {
+            "name": "Bite",
+            "damage_dice": "1d3"
+          },
+          {
+            "name": "Antennae",
+            "damage_dice": "0"
+          }
+        ]
+      }
+    },
+    {
+      "monster": "Shadow",
+      "stat_block": {
+        "name": "Shadow",
+        "challenge_rating": 3.0,
+        "size": "M",
+        "speed_ft": 0,
+        "race_type": "Undead",
+        "race_subtype": "Incorporeal",
+        "source_page": "p.245",
+        "natural_attacks": [
+          {
+            "name": "Incorporeal Touch",
+            "damage_dice": "1d6"
+          }
+        ]
+      }
+    }
+  ]
+}

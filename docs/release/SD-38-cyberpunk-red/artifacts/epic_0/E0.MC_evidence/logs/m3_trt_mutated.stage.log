@@ -1,0 +1,20 @@
+../../../data/class_feature_grants/ -> data/class_feature_grants: tracked_files=240
+../../../data/converted/record_vars.json -> data/converted/record_vars.json: tracked_files=1
+../../../data/cyberpunk-red/corpus/ -> data/cyberpunk-red/corpus: tracked_files=1
+../../../data/equipment_types.json -> data/equipment_types.json: tracked_files=1
+../../../data/rules_tables/ -> data/rules_tables: tracked_files=281
+../../../data/sheet_rules/ -> data/sheet_rules: tracked_files=56009
+../../../data/starfinder-1e/sheet_rules/ -> data/starfinder-1e/sheet_rules: tracked_files=9126
+../../../tests/fixtures/rules_core/multiclass_census_panel.json -> tests/fixtures/rules_core/multiclass_census_panel.json: tracked_files=1
+../../../tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt -> tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt: tracked_files=1
+resources/authoring_workbench/guard-stance-package/ -> apps/desktop/src-tauri/resources/authoring_workbench/guard-stance-package: tracked_files=6
+resources/corpus_bundle/ -> apps/desktop/src-tauri/resources/corpus_bundle: tracked_files=1
+resources/corpus_fixtures/ -> apps/desktop/src-tauri/resources/corpus_fixtures: tracked_files=5
+resources/corpus_fixtures/_settled/ -> apps/desktop/src-tauri/resources/corpus_fixtures/_settled: tracked_files=1
+resources/corpus_fixtures/equipment/ -> apps/desktop/src-tauri/resources/corpus_fixtures/equipment: tracked_files=2
+resources/corpus_fixtures/spell/ -> apps/desktop/src-tauri/resources/corpus_fixtures/spell: tracked_files=2
+systems without a sheet-rule package: CyberpunkRed
+system root data/sheet_rules_moved: bundled_as=None
+system root data/starfinder-1e/sheet_rules: bundled_as=data/starfinder-1e/sheet_rules
+UNTRACKED_RESOURCE_PATHS:
+  game-system sheet-rule roots not bundled at their own path: data/sheet_rules_moved (bundled as None)

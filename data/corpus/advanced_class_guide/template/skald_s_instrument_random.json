@@ -1,0 +1,35 @@
+{
+  "codex_generated_name": false,
+  "completeness": "chassis_only",
+  "data": {
+    "key": "Skald's Instrument (Random)",
+    "name": "Skald's Instrument (Random)",
+    "raw_tokens": [
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "KIT",
+        "value": "1|Skald's Instrument (Random)"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T16:43:13Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 34,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_templates.lst",
+    "record_key": "Skald's Instrument (Random)",
+    "sha256": "089a3c6958b30fa81dd066355de5fe92a518c6e9df7f3b5374f0560fd40a9ee9"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

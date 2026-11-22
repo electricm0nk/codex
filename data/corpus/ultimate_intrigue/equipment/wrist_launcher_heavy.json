@@ -1,0 +1,90 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "ArmsArmor",
+    "cost_gp": 250.0,
+    "description": "Full-round action to reloaded, Sleight of Hand check to keep concealed after firing.",
+    "key": "Wrist Launcher (Heavy)",
+    "name": "Wrist Launcher, Heavy",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wrist Launcher (Heavy)"
+      },
+      {
+        "key": "PROFICIENCY",
+        "value": "WEAPON|Crossbow (Hand)"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weapon.Resizable.Exotic.Ranged.Standard.Piercing.Container.Projectile.Crossbow"
+      },
+      {
+        "key": "CONTAINS",
+        "value": "UNLIM|Bolt=1"
+      },
+      {
+        "key": "COST",
+        "value": "250"
+      },
+      {
+        "key": "WT",
+        "value": "2"
+      },
+      {
+        "key": "CRITMULT",
+        "value": "x2"
+      },
+      {
+        "key": "CRITRANGE",
+        "value": "2"
+      },
+      {
+        "key": "DAMAGE",
+        "value": "1d4"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Material ~ Steel.Material ~ Leather"
+      },
+      {
+        "key": "WIELD",
+        "value": "Light"
+      },
+      {
+        "key": "RANGE",
+        "value": "30"
+      },
+      {
+        "key": "SIZE",
+        "value": "M"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.232"
+      },
+      {
+        "key": "SPROP",
+        "value": "Full-round action to reloaded, Sleight of Hand check to keep concealed after firing."
+      }
+    ],
+    "weight_lbs": 2.0
+  },
+  "ingested_at": "2026-08-16T05:06:54Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 22,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_equip_arms_armor.lst",
+    "record_key": "Wrist Launcher (Heavy)",
+    "sha256": "e26d0cc65210cee59a2976677c7385a467248278cd2c1951351f9b0a0941f74b"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

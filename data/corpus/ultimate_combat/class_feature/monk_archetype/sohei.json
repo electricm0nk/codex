@@ -1,0 +1,176 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-24T03:51:47Z",
+  "data": {
+    "key": "Monk Archetype ~ Sohei",
+    "name": "Sohei",
+    "class": "Monk",
+    "description": "The sohei are masters of the horse and the hunt. A monastic soldier, the sohei is equally adept at combat afoot or on horseback. While skilled in unarmed techniques, many sohei favor weapons they can use while mounted on horseback or against others' horses.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Monk Archetype ~ Sohei"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.MonkArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Monk=1"
+      },
+      {
+        "key": "DESC",
+        "value": "The sohei are masters of the horse and the hunt. A monastic soldier, the sohei is equally adept at combat afoot or on horseback. While skilled in unarmed techniques, many sohei favor weapons they can use while mounted on horseback or against others' horses."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Monk Class Feature|AUTOMATIC|Sohei ~ Skills|PRECLASS:1,Monk=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Monk Class Feature|AUTOMATIC|Sohei ~ Weapon and Armor Proficiency|PRECLASS:1,Monk=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Monk Class Feature|AUTOMATIC|Sohei ~ Bonus Feat|PRECLASS:1,Monk=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Monk Class Feature|AUTOMATIC|Sohei ~ Devoted Guardian|PRECLASS:1,Monk=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Monk Class Feature|AUTOMATIC|Sohei ~ Unarmed Strike|PRECLASS:1,Monk=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Monk Class Feature|AUTOMATIC|Sohei ~ Monastic Mount|PRECLASS:1,Monk=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Monk Class Feature|AUTOMATIC|Sohei ~ Ki Weapon|PRECLASS:1,Monk=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Monk Class Feature|AUTOMATIC|Sohei ~ Weapon Training|PRECLASS:1,Monk=6"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.60"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Monk"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Monk Archetype ~ Sohei],[!PREFACT:1,ABILITIES,Monk_Archetype_BonusFeats=True,Monk_Archetype_StunningFist=True,Monk_Archetype_SlowFall=True,Monk_Archetype_AbundantStep=True,Monk_Archetype_PurityOfBody=True,Monk_Archetype_DiamondBody=True,Monk_Archetype_QuiveringPalm=True,Monk_Archetype_TimelessBody=True,Monk_Archetype_TongueOfTheSunAndMoon=True,Monk_Archetype_Proficiencies=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_CF_BonusFeats|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_CF_StunningFist|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_CF_SlowFall|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_CF_AbundantStep|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_CF_PurityOfBody|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_CF_DiamondBody|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_CF_QuiveringPalm|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_CF_TimelessBody|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_CF_TongueOfTheSunAndMoon|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_Archetype_BonusFeats|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_Archetype_StunningFist|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_Archetype_SlowFall|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_Archetype_AbundantStep|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_Archetype_PurityOfBody|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_Archetype_DiamondBody|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_Archetype_QuiveringPalm|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_Archetype_TimelessBody|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_Archetype_TongueOfTheSunAndMoon|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_Archetype_Proficiencies|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_CF_Proficiencies|True"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 930,
+    "record_key": "Monk Archetype ~ Sohei"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

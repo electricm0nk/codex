@@ -1,0 +1,17 @@
+# G-9 scan, E5.2 r5, tree 8406460cc0 + this card's working changes
+$ ROW_COUNT awk
+$ not-complete awk (E5.2-E5.4 exempt)
+$ usable: yes
+3
+$ copies_emitted
+2
+$ SKIPPED (corrected line)
+0
+$ INTERIM NOTES (0 at E5.3+; E5.3 owns)
+1
+$ resolve_release_notes
+docs/release/SD-42-pcgen-import-and-campaign-folder/release-notes.md
+exit=0
+$ Looked at
+$ closure check
+# end

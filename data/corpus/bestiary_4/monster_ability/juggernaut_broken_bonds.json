@@ -1,0 +1,53 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Juggernaut ~ Broken Bonds",
+    "delivery": "Supernatural",
+    "description": "10 times per day a standard action, the juggernaut can affect one its allies within 20 feet with freedom of movement for 1 round.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:juggernaut_broken_bonds",
+    "name": "Liberation Domain - Broken Bonds",
+    "owners": [
+      "bestiary_4:monster:juggernaut"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "10 times per day a standard action, the juggernaut can affect one its allies within 20 feet with freedom of movement for 1 round."
+      },
+      {
+        "key": "KEY",
+        "value": "Juggernaut ~ Broken Bonds"
+      },
+      {
+        "key": "TYPE",
+        "value": "JuggernautDomain.SpecialQuality.Supernatural"
+      }
+    ],
+    "source_page": null,
+    "traits": [
+      "JuggernautDomain"
+    ]
+  },
+  "ingested_at": "2026-08-23T09:31:46Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 935,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "record_key": "Juggernaut ~ Broken Bonds",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

@@ -1,0 +1,46 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Mythic Elemental (Air) ~ Swallow Whole",
+    "name": "Swallow Whole",
+    "description": "A mythic air elemental can use this ability on a creature it has grabbed. If a trapped creature cuts itself free, the hole heals itself closed at the start of the elemental's next turn, allowing it to use swallow whole again.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Elemental (Air) ~ Swallow Whole"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Elemental (Air) Trait.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A mythic air elemental can use this ability on a creature it has grabbed. If a trapped creature cuts itself free, the hole heals itself closed at the start of the elemental's next turn, allowing it to use swallow whole again."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities_race.lst",
+    "sha256": "9dc17c2fc1ba84d040fb04d6175b48b6ff52cc30ad113933d5dff3d75ea2652a",
+    "line": 138,
+    "record_key": "Mythic Elemental (Air) ~ Swallow Whole"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

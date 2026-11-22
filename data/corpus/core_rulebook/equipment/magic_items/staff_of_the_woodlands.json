@@ -1,0 +1,126 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "magic_items",
+    "cost_gp": 100400.0,
+    "description": "Appearing to have grown naturally into its shape, this oak, ash, or yew staff allows use of the following spells:\n* Charm animal (1 charge)\n* Speak with animals (1 charge)\n* Barkskin (2 charges)\n* Summon nature's ally VI (3 charges)\n* Wall of thorns (3 charges)\n* Animate plants (4 charges)\nThe staff may be used as a weapon, functioning as a +2 quarterstaff. The staff of the woodlands also allows its wielder to cast pass without trace at will, with no charge cost. These two attributes continue to function after all the charges are expended.",
+    "key": "Staff of the Woodlands",
+    "name": "Staff",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Staff of the Woodlands"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Staff of the Woodlands"
+      },
+      {
+        "key": "PROFICIENCY",
+        "value": "WEAPON|Quarterstaff"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Staff.Weapon.Resizable.Melee.Simple.OneHanded.Double.Bludgeoning.Quarterstaff.Polearm.Weapon Group Double.Weapon Group Monk"
+      },
+      {
+        "key": "ALTTYPE",
+        "value": "Weapon.Resizable.Melee.Bludgeoning"
+      },
+      {
+        "key": "COST",
+        "value": "100400"
+      },
+      {
+        "key": "WT",
+        "value": "5"
+      },
+      {
+        "key": "CRITMULT",
+        "value": "x2"
+      },
+      {
+        "key": "CRITRANGE",
+        "value": "1"
+      },
+      {
+        "key": "ALTCRITMULT",
+        "value": "x2"
+      },
+      {
+        "key": "ALTCRITRANGE",
+        "value": "1"
+      },
+      {
+        "key": "DAMAGE",
+        "value": "1d6"
+      },
+      {
+        "key": "ALTDAMAGE",
+        "value": "1d6"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Ability ~ +2 ~ Weapon.Special Ability ~ Staff Charges|CHARGES[10]"
+      },
+      {
+        "key": "ALTEQMOD",
+        "value": "Special Ability ~ +2 ~ Weapon"
+      },
+      {
+        "key": "WIELD",
+        "value": "TwoHanded"
+      },
+      {
+        "key": "SIZE",
+        "value": "M"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.496"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Aura|strong varied"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Caster Level|13th"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Slot|none"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Cost|50,500 gp"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Requirements|Craft Magic Arms and Armor, Craft Staff, animate plants, barkskin, charm animal, pass without trace, speak with animals, summon nature's ally VI, wall of thorns"
+      },
+      {
+        "key": "DESC",
+        "value": "Appearing to have grown naturally into its shape, this oak, ash, or yew staff allows use of the following spells:&nl;* Charm animal (1 charge)&nl;* Speak with animals (1 charge)&nl;* Barkskin (2 charges)&nl;* Summon nature's ally VI (3 charges)&nl;* Wall of thorns (3 charges)&nl;* Animate plants (4 charges)&nl;The staff may be used as a weapon, functioning as a +2 quarterstaff. The staff of the woodlands also allows its wielder to cast pass without trace at will, with no charge cost. These two attributes continue to function after all the charges are expended."
+      }
+    ],
+    "weight_lbs": 5.0
+  },
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 443,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "record_key": "Staff of the Woodlands",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

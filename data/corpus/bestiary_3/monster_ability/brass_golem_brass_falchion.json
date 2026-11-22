@@ -1,0 +1,63 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Brass Golem ~ Brass Falchion",
+    "delivery": "Extraordinary",
+    "description": "A brass golem's falchion deals damage as a Huge falchion, but is actually a primary natural attack, not a manufactured weapon, and cannot be disarmed.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:brass_golem_brass_falchion",
+    "name": "Brass Falchion",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Brass Falchion|CRITRANGEADD|2"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A brass golem's falchion deals damage as a Huge falchion, but is actually a primary natural attack, not a manufactured weapon, and cannot be disarmed."
+      },
+      {
+        "key": "KEY",
+        "value": "Brass Golem ~ Brass Falchion"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Brass Falchion,Natural.Weapon.Melee.Weapon Group Natural.Slashing,*1,3d6,SPROP=Cannot be disarmed"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.134"
+      },
+      {
+        "key": "TYPE",
+        "value": "BrassGolemRacialAbility.SpecialQuality.Extraordinary"
+      }
+    ],
+    "source_page": "p.134",
+    "traits": [
+      "BrassGolemRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T14:09:11Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 939,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Brass Golem ~ Brass Falchion",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

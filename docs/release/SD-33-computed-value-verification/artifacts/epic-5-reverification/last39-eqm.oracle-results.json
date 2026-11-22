@@ -1,0 +1,66 @@
+{
+  "results": [
+    {
+      "unit_id": "core_rulebook:equipment_modifier:draco",
+      "ours": -1,
+      "oracle": -1,
+      "verdict": "agree",
+      "kind": "equipment_modifier",
+      "dimension": "VAR.ArmorCheckPenalty",
+      "note": "SD-33 remediation wave 6 (eqm-modifier-final lane): draco is a COPY-style alias record (corpus_key DRACO, visible=false) resolving to the same real modifier KEY:Material ~ Dragonhide as dragonhide and material_dragonhide (confirmed by direct corpus-record read: data/corpus/core_rulebook/equipment/equipmods/draco.json's own KEY token is 'Material ~ Dragonhide', identical raw_bonus_chains to the other two). Mechanism: a NEW live-oracle host (scripts/oracle_harness/eqm-fixtures/sd33r6_eqm.pcc / sd33r6_eqm_items.lst / sd33r6_eqm_combo.pcg) -- an EQMOD:Material ~ Dragonhide token baked directly into a custom homebrew armor item's own LST line (the same encoding PCGen's own real magic items use, e.g. Armor of Grim Triumph -- NOT wave 5's CUSTOMIZATION:[...] .pcg-time attachment, which was proven this cycle's predecessor to never take effect). Host: a Leather Armor (Base)-shaped item (ACCHECK:0, matching core_rulebook:equipment:leather_armor_base's own literal tokens) so the modifier is the ONLY source of VAR.ArmorCheckPenalty on the whole test character (no shield/outfit VAR chain present -- confirmed by reading both sibling hosts' own LST lines in the same fixture file, neither carries a VAR chain). Live oracle run (charbuild_remainder_run_one.sh, PCGen 6.09.08.RC1, pinned SHA 7f818006e371188e5717fd18d74d18a420747fc6): VAR.ArmorCheckPenalty.INTVAL=-1 (docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/eqm-final-work/combo.txt). Ours: compute_var_effect() called directly on the resolved modifier record (no host needed -- the VAR|ArmorCheckPenalty|-1|TYPE=Enhancement chain lives on the modifier's own record), via src/bin/e5_eqm_final_ours.rs, equipment_id_resolve('DRACO', RuleSetId::Crb, corpus) -> ArmorCheckPenalty=-1. Re-derive: /home/ubuntu/workspace/repos/codex/.claude/worktrees/wf_d17c6032-727-5/target/debug/e5_eqm_final_ours <repo_root> <out.json>."
+    },
+    {
+      "unit_id": "core_rulebook:equipment_modifier:dragonhide",
+      "ours": -1,
+      "oracle": -1,
+      "verdict": "agree",
+      "kind": "equipment_modifier",
+      "dimension": "VAR.ArmorCheckPenalty",
+      "note": "SD-33 remediation wave 6 (eqm-modifier-final lane): dragonhide is a second alias record (corpus_key 'Dragonhide', visible=false) for the same real modifier KEY:Material ~ Dragonhide as draco and material_dragonhide -- same method, same fixture, same live-oracle run as draco's own row (VAR.ArmorCheckPenalty.INTVAL=-1). Ours: equipment_id_resolve('Dragonhide', RuleSetId::Crb, corpus) -> compute_var_effect() -> ArmorCheckPenalty=-1, confirming the OUTPUTNAME/KEY-alias resolution wave 5's equipment_id_resolve fix established holds for this second alias too. Re-derive: same command as draco's row."
+    },
+    {
+      "unit_id": "core_rulebook:equipment_modifier:material_dragonhide",
+      "ours": -1,
+      "oracle": -1,
+      "verdict": "agree",
+      "kind": "equipment_modifier",
+      "dimension": "VAR.ArmorCheckPenalty",
+      "note": "SD-33 remediation wave 6 (eqm-modifier-final lane): material_dragonhide is the canonical, visible=true declared record (corpus_key 'Material ~ Dragonhide') that draco and dragonhide both alias to -- same method, same fixture, same live-oracle run (VAR.ArmorCheckPenalty.INTVAL=-1). Ours: equipment_id_resolve('Material ~ Dragonhide', RuleSetId::Crb, corpus) -> compute_var_effect() -> ArmorCheckPenalty=-1. Re-derive: same command as draco's row. Note the item-level EQ.MERGELOC.0.ACCHECK export token showed 0 (unchanged) on this same live run, not 1 as the EQMARMOR|ACCHECK|1 chain alone would suggest in isolation -- PCGen appears to floor a masterwork-quality ACCHECK improvement at the base item's own 0-penalty value (Leather Armor's own ACCHECK:0 already has no penalty to reduce). This cycle used the unambiguous PC-level VAR.ArmorCheckPenalty magnitude (which is not floored, and matches the modifier's own literal -1 chain exactly) as the comparable quantity rather than the floored item-level ACCHECK field, and states this explicitly rather than silently picking whichever field agreed."
+    },
+    {
+      "unit_id": "core_rulebook:equipment_modifier:spike_sb",
+      "ours": "1d6",
+      "oracle": "1d6",
+      "verdict": "agree",
+      "kind": "equipment_modifier",
+      "dimension": "WEAPON.0.DAMAGE (die size, not a scalar)",
+      "note": "SD-33 remediation wave 6 (eqm-modifier-final lane): spike_sb (corpus_key SPIKE_SB, visible=false) aliases to the same real modifier KEY:Special Quality ~ Spikes ~ Shieldbash as special_quality_spikes_shieldbash (BONUS:EQMWEAPON|DAMAGESIZE|1, no scalar). Comparable magnitude is a die STEP, not a scalar, per the dispatch brief's own routing -- recorded as the die string. Mechanism: same EQMOD-baked-into-a-homebrew-LST-item approach as the dragonhide rows, host = a Heavy Wooden Shield (Base)-shaped item (DAMAGE:1d4, ACCHECK:-2, matching core_rulebook:equipment:heavy_wooden_shield_base's own literal tokens) with EQMOD:Special Quality ~ Spikes ~ Shieldbash baked into its own LST line. Live oracle run: WEAPON.0.DAMAGE=1d6+3 (the +3 is the wielder's own STR 16 modifier, applied by PCGen's normal weapon-damage export regardless of this modifier -- not part of the DAMAGESIZE effect; the die-size term is the comparable part, 1d4 base -> 1d6). Engine gap closed this cycle: EQMWEAPON|DAMAGESIZE had NO resolver anywhere in src/rules_core/ before this cycle (confirmed absent: git log shows resolve_eqmweapon_damagesize_effect + step_single_die new this commit in src/rules_core/damage_total.rs, RED->GREEN, cargo test --locked --lib damage_total::eqmweapon_damagesize_tests -- 3/3 passed). Ours: resolve_eqmweapon_damagesize_effect() on a synthetic host built to the identical literal tokens as the live-oracle fixture (src/bin/e5_eqm_final_ours.rs) -> Some(DiceExpression{count:1,die_size:6}) -> '1d6'."
+    },
+    {
+      "unit_id": "core_rulebook:equipment_modifier:special_quality_spikes_shieldbash",
+      "ours": "1d6",
+      "oracle": "1d6",
+      "verdict": "agree",
+      "kind": "equipment_modifier",
+      "dimension": "WEAPON.0.DAMAGE (die size, not a scalar)",
+      "note": "SD-33 remediation wave 6 (eqm-modifier-final lane): special_quality_spikes_shieldbash is the canonical, visible=true declared record (corpus_key 'Special Quality ~ Spikes ~ Shieldbash') that spike_sb aliases to -- same method, same fixture, same live-oracle run and same new resolve_eqmweapon_damagesize_effect resolver as spike_sb's own row. Re-derive: same command as spike_sb's row."
+    },
+    {
+      "unit_id": "advanced_race_guide:equipment_modifier:material_darkleaf_cloth_clothing",
+      "ours": 4.0,
+      "oracle": 4,
+      "verdict": "agree",
+      "kind": "equipment_modifier",
+      "dimension": "weight (EQ.MERGELOC.x.WT)",
+      "note": "SD-33 remediation wave 6 (eqm-modifier-final lane): BONUS:EQM|WEIGHTDIV|2 -- weight is a real computed magnitude, not silently truncated (8/2=4 happens to be an exact integer here; resolve_eqm_weightdiv_effect returns an f32 and would report a real fraction had one occurred). Mechanism: EQMOD:Material ~ Darkleaf Cloth ~ Clothing baked into a homebrew LST item shaped like core_rulebook:equipment:outfit_explorer_s (WT:8, TYPE:Goods.Clothing.Resizable.Starting, matching that record's own literal WT token). Live oracle run: EQ.MERGELOC.2.WT=4 (docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/eqm-final-work/combo.txt). Engine gap closed this cycle: EQM|WEIGHTDIV had NO resolver anywhere in src/rules_core/ before this cycle (confirmed absent by grep across equipment_effects*.rs pre-cycle). New: resolve_eqm_weightdiv_effect() in src/rules_core/equipment_effects.rs, RED->GREEN, cargo test --locked --lib eqm_weightdiv_tests -- 2/2 passed. Ours: resolve_eqm_weightdiv_effect() on a synthetic host built to the identical literal WT:8 token as the live-oracle fixture -> Some(4.0)."
+    },
+    {
+      "unit_id": "ultimate_combat:equipment:arrow_iron_tipped_distance_20",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "equipment",
+      "reason": "no_comparable_export_token (SD-33 remediation wave 6, eqm-modifier-final lane: this record's own raw_bonus_chains, BONUS:EQMWEAPON|RANGEADD|10 and BONUS:WEAPON|DAMAGE|-1, are carried on the AMMUNITION item itself and are meant to modify the wielding ranged weapon's exported RANGE/DAMAGE when this ammo is loaded/fired -- a real PCGen ammo-transfer mechanic, not the base-item-with-EQMOD-attached shape the other 6 units in this lane use. Proven by execution + source read, not by attempt failure: (1) root-caused and FIXED wave 5's separate blocker first -- Ultimate Combat's own uc_abilities_class.lst references AbilityCategory 'Cavalier Class Feature', which is defined only in advanced_players_guide/apg_abilitycategories.lst, not in Ultimate Combat's own uc_abilitycategories.lst; adding CAMPAIGN:Advanced Player's Guide to the .pcg makes Ultimate Combat load cleanly (0 SEVERE lines, exit 0) -- a real, pre-existing pinned-oracle data-loading defect, unrelated to this modifier, now unblocked for every ultimate_combat unit, not just this one. (2) With Ultimate Combat loading cleanly, equipped a real Longbow (Base) (CONTAINS:UNLIM|Arrow) with the arrow nested inside it (EQUIPSET ID 0.1.01.01 under the bow's 0.1.01) and queried WEAPON.0.RANGE via the SAME BatchExporter template family every other row in this lane uses: result was 100 ft (the bow's own unmodified base RANGE:100, the arrow's RANGEADD:10 not reflected) despite a clean load. (3) Read PCGen's own export-token source (pcgen/io/exporttoken/WeaponToken.java's getRangeToken(eq, pc, units) -> EqToken.getRange(pc, eq), and Equipment.java's private bonusTo(...) which iterates only getEqModifierList(bPrimary) -- EquipmentModifiers explicitly EQMOD-attached to THIS SAME Equipment object) -- RANGE is computed purely from the weapon's own attached EquipmentModifier list; a separately-contained ammunition Equipment object's own raw BONUS:EQMWEAPON tokens are never read by this call, confirmed by WeaponToken's RANGE case never accepting an ammo index parameter (unlike its DAMAGE/hit-roll cases, which do). This is a structural fact about BatchExporter's own export surface, proven by source code and confirmed live, not a limitation of this cycle's attachment mechanism -- the ammo-to-weapon RANGEADD/DAMAGE transfer this record's own chains implement has no reachable BatchExporter export token to compare against, on any host, via any mechanism this or the prior cycle tried."
+    }
+  ]
+}

@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:20:31Z",
+  "data": {
+    "key": "Animal Companion Feat ~ Devotion against the Unnatural",
+    "name": "Devotion against the Unnatural",
+    "description": "The animal companion gains a +2 morale bonus on saving throws against spells, spell-like abilities, and supernatural abilities of aberrations, outsiders, and undead. The animal companion is immune to the unnatural aura ability that some undead creatures (such as wraiths) have.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Animal Companion Feat ~ Devotion against the Unnatural"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "AnimalCompanionFeat"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Companion ~ Devotion"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Companion=1"
+      },
+      {
+        "key": "DESC",
+        "value": "The animal companion gains a +2 morale bonus on saving throws against spells, spell-like abilities, and supernatural abilities of aberrations, outsiders, and undead. The animal companion is immune to the unnatural aura ability that some undead creatures (such as wraiths) have."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Devotion against the Unnatural"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.217"
+      }
+    ],
+    "origin": "declared",
+    "owners": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5",
+    "line": 656,
+    "record_key": "Animal Companion Feat ~ Devotion against the Unnatural"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Sorcerer Domain ~ War",
+    "name": "Sorcerer Domain ~ War",
+    "class": "Sorcerer",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "CLASS|Sorcerer/Cleric (Arcane)=1|Magic Weapon|Sorcerer/Cleric (Arcane)=2|Spiritual Weapon|Sorcerer/Cleric (Arcane)=3|Magic Vestment|Sorcerer/Cleric (Arcane)=4|Divine Power|Sorcerer/Cleric (Arcane)=5|Flame Strike|Sorcerer/Cleric (Arcane)=6|Blade Barrier|Sorcerer/Cleric (Arcane)=7|Power Word Blind|Sorcerer/Cleric (Arcane)=8|Power Word Stun|Sorcerer/Cleric (Arcane)=9|Power Word Kill|PREVAREQ:WarDomainAllowed,1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 3145,
+    "record_key": "Sorcerer Domain ~ War"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

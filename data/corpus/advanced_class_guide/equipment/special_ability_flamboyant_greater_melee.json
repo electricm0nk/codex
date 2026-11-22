@@ -1,0 +1,66 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "Equipmods",
+    "cost_gp": null,
+    "description": "has 3 panache points",
+    "key": "Special Ability ~ Flamboyant / Greater ~ Melee",
+    "name": "Flamboyant (Greater)",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Special Ability ~ Flamboyant / Greater ~ Melee"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weapon.Melee.Piercing.Light.OneHanded"
+      },
+      {
+        "key": "PLUS",
+        "value": "3"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "QUALIFY"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.214"
+      },
+      {
+        "key": "PRETYPE",
+        "value": "4,WeaponEnhancement,Weapon,Melee,Piercing"
+      },
+      {
+        "key": "PRETYPE",
+        "value": "1,Light,OneHanded"
+      },
+      {
+        "key": "!PRETYPE",
+        "value": "1,EQMOD=FLAMB"
+      },
+      {
+        "key": "SPROP",
+        "value": "has 3 panache points"
+      }
+    ],
+    "weight": null
+  },
+  "ingested_at": "2026-08-03T17:41:57Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 40,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equipmods.lst",
+    "record_key": "Special Ability ~ Flamboyant / Greater ~ Melee",
+    "sha256": "48a6507abf8d3a3a6965e6a8635f5bc69bf0e959261439eb1108ca4e3faae96c"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

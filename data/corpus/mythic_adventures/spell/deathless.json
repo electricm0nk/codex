@@ -1,0 +1,25 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:34:12Z",
+  "data": {
+    "key": "Deathless",
+    "school": "Necromancy",
+    "level": 4,
+    "description": "The target's soul is strongly anchored to its body, preventing death from hit point damage. No matter how low the target's hit points get, it remains alive (though not necessarily conscious). This spell doesn't prevent death from sources other than hit point damage-such as Constitution damage or drain, death effects, or energy drain. Spells that cure hit points affect the creature normally."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_spells.lst",
+    "sha256": "d62f0bb802aab15dde7b963773c586cb539a4571e3c404ead1b76788b0546374",
+    "line": 282,
+    "record_key": "Deathless"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

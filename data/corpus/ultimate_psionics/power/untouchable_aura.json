@@ -1,0 +1,77 @@
+{
+  "completeness": "full",
+  "data": {
+    "key": "Untouchable Aura",
+    "name": "Untouchable Aura",
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Psionic"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Dread=1"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Telepathy"
+      },
+      {
+        "key": "DESCRIPTOR",
+        "value": "Fear|Mind-Affecting"
+      },
+      {
+        "key": "COMPS",
+        "value": "Me, Vi"
+      },
+      {
+        "key": "CASTTIME",
+        "value": "1 move action"
+      },
+      {
+        "key": "RANGE",
+        "value": "Aura"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "You"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) rounds"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Will negates (see text)"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.255"
+      },
+      {
+        "key": "DESC",
+        "value": "Your presence keeps enemies from attacking you."
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T12:11:36Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 473,
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_powers.lst",
+    "record_key": "Untouchable Aura",
+    "sha256": "81fdd7a4262066f630c0db104e743f5f78388b2df76409d50ba2a13c7a233f3a"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr"
+  ]
+}

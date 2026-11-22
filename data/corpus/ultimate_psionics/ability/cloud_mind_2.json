@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Ninja Trick ~ Cloud Mind",
+    "name": "Cloud Mind",
+    "description": "As a standard action, the ninja can expend a ki point to manifest cloud mind as a psi-like ability with a manifester level equal to her ninja level.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ninja Trick ~ Cloud Mind"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "NinjaClassFeatures.SpecialAttack.Supernatural.NinjaTrick"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREVARGTEQ:NinjaTrickLVL,10],[PREVARGTEQ:RogueTalentLVL,10]"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action, the ninja can expend a ki point to manifest cloud mind as a psi-like ability with a manifester level equal to her ninja level."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.315"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_uc.lst",
+    "sha256": "2c97bc0e551c9846872c03df149c4ecd081e231a9e6753a35271d5f9708f5f80",
+    "line": 55,
+    "record_key": "Ninja Trick ~ Cloud Mind"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

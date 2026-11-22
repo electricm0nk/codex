@@ -1,0 +1,137 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "ability_keys": [
+      "bestiary_2:monster_ability:xtabay_acid_sting",
+      "bestiary_2:monster_ability:xtabay_devour",
+      "bestiary_2:monster_ability:xtabay_soporific_pollen"
+    ],
+    "challenge_rating": "1/2",
+    "corpus_key": "Xtabay",
+    "external_ability_refs": [
+      "Can't Be Tripped",
+      "Immunity to Acid"
+    ],
+    "key": "bestiary_2:monster:xtabay",
+    "monster_class": "Plant:1",
+    "name": "Xtabay",
+    "natural_attacks": [
+      {
+        "damage_dice": "1d3",
+        "name": "Sting"
+      }
+    ],
+    "race_subtype": null,
+    "race_type": "Plant",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Can't Be Tripped|Immunity to Acid|Xtabay ~ Acid Sting|Xtabay ~ Devour|Xtabay ~ Soporific Pollen"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CON|8"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|-2"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|WIS|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HasLowLightVision|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Mindless|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TremorsenseRange|30|TYPE=Base"
+      },
+      {
+        "key": "CR",
+        "value": "1/2"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|S"
+      },
+      {
+        "key": "HANDS",
+        "value": "0"
+      },
+      {
+        "key": "KIT",
+        "value": "1|TN"
+      },
+      {
+        "key": "LEGS",
+        "value": "0"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Plant:1"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,5"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Sting,Weapon.Natural.Weapon Group Natural.Melee.Piercing.Acid,*2,1d3"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Plant"
+      },
+      {
+        "key": "REACH",
+        "value": "5"
+      },
+      {
+        "key": "SIZE",
+        "value": "S"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.289"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "0"
+      }
+    ],
+    "size": "S",
+    "source_page": "p.289",
+    "speeds": [
+      {
+        "feet": 5,
+        "mode": "Walk"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-15T01:24:19Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 915,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+    "record_key": "Xtabay",
+    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

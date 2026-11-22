@@ -1,0 +1,70 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "arms_armor",
+    "cost_gp": 8810.0,
+    "description": "acts as a +1 short sword when in dim light. In darkness, it acts as +2 short sword. When surrounded by supernatural darkness, such as in an area of deeper darkness, it acts a +2 short sword and bestows the benefit of the Blind-Fight feat to its wielder.",
+    "key": "Gloom Blade",
+    "name": "Gloom Blade",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "PROFICIENCY",
+        "value": "WEAPON|Sword (Short)"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weapon.Resizable.Melee.Light.Finesseable.Martial.Specific.Piercing.Slashing.Sword.BladeLight"
+      },
+      {
+        "key": "COST",
+        "value": "8810"
+      },
+      {
+        "key": "WT",
+        "value": "2"
+      },
+      {
+        "key": "BASEITEM",
+        "value": "Sword (Short)"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Quality ~ Masterwork ~ Weapon.Material ~ Steel"
+      },
+      {
+        "key": "WIELD",
+        "value": "Light"
+      },
+      {
+        "key": "SIZE",
+        "value": "M"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.106"
+      },
+      {
+        "key": "SPROP",
+        "value": "acts as a +1 short sword when in dim light. In darkness, it acts as +2 short sword. When surrounded by supernatural darkness, such as in an area of deeper darkness, it acts a +2 short sword and bestows the benefit of the Blind-Fight feat to its wielder.|PRERULE:1,DisplayWeaponDetails"
+      }
+    ],
+    "weight_lbs": 2.0
+  },
+  "ingested_at": "2026-08-03T19:41:45Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 35,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equip_arms_armor.lst",
+    "record_key": "Gloom Blade",
+    "sha256": "34bf37d241bf277200170432a33c322930b10cd1c8a96b6b2a41cc08667ed566"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

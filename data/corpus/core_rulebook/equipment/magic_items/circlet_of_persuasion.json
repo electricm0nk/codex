@@ -1,0 +1,87 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "magic_items",
+    "cost_gp": 4500.0,
+    "description": "This silver headband grants a +3 competence bonus on the wearer's Charisma-based checks.",
+    "key": "Circlet of Persuasion",
+    "name": "Circlet of Persuasion",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "SKILL",
+          "Bluff,Diplomacy,Disguise,Handle Animal,Intimidate,Perform (Act),Perform (Comedy),Perform (Dance),Perform (Keyboard Instruments),Perform (Oratory),Perform (Percussion Instruments),Perform (Sing),Perform (String Instruments),Perform (Wind Instruments),Perform (Untrained),Use Magic Device",
+          "3",
+          "TYPE=Competence"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Circlet of Persuasion"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Circlet of Persuasion"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.Head.Circlet"
+      },
+      {
+        "key": "COST",
+        "value": "4500"
+      },
+      {
+        "key": "WT",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.506"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Aura|faint transmutation"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Caster Level|5th"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Slot|head"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Cost|2,250 gp"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Requirements|Craft Wondrous Item, eagle's splendor"
+      },
+      {
+        "key": "DESC",
+        "value": "This silver headband grants a +3 competence bonus on the wearer's Charisma-based checks."
+      }
+    ],
+    "weight_lbs": 0.0
+  },
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 101,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "record_key": "Circlet of Persuasion",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

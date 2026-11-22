@@ -1,0 +1,49 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Hate-Monger ~ Insidious Emotions",
+    "name": "Insidious Emotions",
+    "class": "Mesmerist",
+    "description": "The power of a hate-monger's psychic hold becomes more difficult to detect or to break. The DC of Sense Motive checks to notice if a creature is under the effects of his enchantments with the emotion descriptor increases by 5 (if he also has the Subtle Enchantment feat, the effects stack), as does the DC to identify his emotion spells. Magical divinations can detect his emotion effects only if the caster succeeds at a casterlevel check (DC %1) as if the affected creatures were the subject of nondetection.|11+MesmeristLVL",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Hate-Monger ~ Insidious Emotions"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mesmerist Class Feature.HateMongerClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.61"
+      },
+      {
+        "key": "DESC",
+        "value": "The power of a hate-monger's psychic hold becomes more difficult to detect or to break. The DC of Sense Motive checks to notice if a creature is under the effects of his enchantments with the emotion descriptor increases by 5 (if he also has the Subtle Enchantment feat, the effects stack), as does the DC to identify his emotion spells. Magical divinations can detect his emotion effects only if the caster succeeds at a casterlevel check (DC %1) as if the affected creatures were the subject of nondetection.|11+MesmeristLVL"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/support/ha_abilities_class_oa.lst",
+    "sha256": "9c111f652f8442433ea215fa11e67258c7e6c15c75d1c1753fa6fef34827f46c",
+    "line": 186,
+    "record_key": "Hate-Monger ~ Insidious Emotions"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

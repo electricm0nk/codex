@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Combat Trick ~ Snapping Turtle Shell",
+    "name": "Snapping Turtle Shell",
+    "description": "While using Snapping Turtle Style, you can spend up to 5 stamina points to cause an enemy to take an additional penalty on one critical conf irmation roll against you equal to the number of stamina points you spent.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Combat Trick ~ Snapping Turtle Shell"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Combat Trick"
+      },
+      {
+        "key": "DESC",
+        "value": "While using Snapping Turtle Style, you can spend up to 5 stamina points to cause an enemy to take an additional penalty on one critical conf irmation roll against you equal to the number of stamina points you spent."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "132"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SourceBook|UC"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/support/ability_uc.lst",
+    "sha256": "11fe5af3a23ebdf6b90f238bb433207cc58d2f76a5ad62759e2be4ef6b712f14",
+    "line": 164,
+    "record_key": "Combat Trick ~ Snapping Turtle Shell"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

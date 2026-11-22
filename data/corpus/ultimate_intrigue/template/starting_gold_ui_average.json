@@ -1,0 +1,35 @@
+{
+  "codex_generated_name": false,
+  "completeness": "chassis_only",
+  "data": {
+    "key": "Starting Gold UI ~ Average",
+    "name": "Starting Gold UI ~ Average",
+    "raw_tokens": [
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "KIT",
+        "value": "1|Starting Gold UI ~ Average"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T16:43:18Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 10,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_templates.lst",
+    "record_key": "Starting Gold UI ~ Average",
+    "sha256": "6b3f93bd80a51032d941b2a70aabf96597b4784fa96800e8e8b75d7981534344"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

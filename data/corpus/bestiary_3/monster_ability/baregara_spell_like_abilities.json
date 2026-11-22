@@ -1,0 +1,54 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Baregara ~ Spell-Like Abilities",
+    "delivery": "SpellLike",
+    "description": "(CL 16th; concentration +19) Constant-see invisibility At will-dispel magic, teleport (self plus 50 lbs. of objects only) 3/day-quickened hold person (DC 15) 1/day-summon (level 4, 1d4 dire apes 50%% or 1d2 girallons 35%%), unholy blight (DC 17)",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:baregara_spell_like_abilities",
+    "name": "Spell-Like Abilities",
+    "owners": [
+      "bestiary_3:monster:baregara"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "(CL 16th; concentration +19) Constant-see invisibility At will-dispel magic, teleport (self plus 50 lbs. of objects only) 3/day-quickened hold person (DC 15) 1/day-summon (level 4, 1d4 dire apes 50%% or 1d2 girallons 35%%), unholy blight (DC 17)"
+      },
+      {
+        "key": "KEY",
+        "value": "Baregara ~ Spell-Like Abilities"
+      },
+      {
+        "key": "TYPE",
+        "value": "BaregaraRacialAbility.SpecialQuality.SpellLike"
+      }
+    ],
+    "source_page": null,
+    "traits": [
+      "BaregaraRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T10:26:03Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 474,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Baregara ~ Spell-Like Abilities",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "display:no_magnitude_token"
+  ]
+}

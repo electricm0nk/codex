@@ -1,0 +1,55 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Plesiosaurus ~ Ambush Attack",
+    "delivery": "Extraordinary",
+    "description": "If a plesiosaurus successfully hits a foe with its bite attack in the surprise round, it inflicts an additional 1d6 points of damage and threatens a critical hit on an 18-20. The additional damage from the ambush attack itself is precision damage and is not multiplied on a successful critical hit.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "bestiary_5:monster_ability:plesiosaurus_ambush_attack",
+    "name": "Ambush Attack",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "If a plesiosaurus successfully hits a foe with its bite attack in the surprise round, it inflicts an additional 1d6 points of damage and threatens a critical hit on an 18-20. The additional damage from the ambush attack itself is precision damage and is not multiplied on a successful critical hit."
+      },
+      {
+        "key": "KEY",
+        "value": "Plesiosaurus ~ Ambush Attack"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.83"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary.PlesiosaurusRacialTrait"
+      }
+    ],
+    "source_page": "p.83",
+    "traits": [
+      "PlesiosaurusRacialTrait"
+    ]
+  },
+  "ingested_at": "2026-08-23T15:23:07Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 36,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_5/b5_abilities_race.lst",
+    "record_key": "Plesiosaurus ~ Ambush Attack",
+    "sha256": "da3b63848f2dea0a3cc2088f288e93a85921513ab30d601d05330ceac6db664c"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

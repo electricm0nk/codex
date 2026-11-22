@@ -1,0 +1,7 @@
+sd24 exit=0
+root-full exit=0
+desktop-full exit=101
+pf-seed exit=0
+sf-seed exit=0
+frontend exit=0
+DONE

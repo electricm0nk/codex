@@ -1,0 +1,54 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Titled ~ Gathlain ~ Spell-Like Abilities",
+    "name": "Spell-Like Abilities",
+    "description": "Titled gathlains can cast entangle once per day as a spell-like ability. The caster level is equal to the gathlain's character level.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Titled ~ Gathlain ~ Spell-Like Abilities"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Gathlain Racial Trait.SpecialQuality"
+      },
+      {
+        "key": "PREFACT",
+        "value": "1,ABILITIES,Gathlain_ReplaceSpellLikeAbilities=True"
+      },
+      {
+        "key": "DESC",
+        "value": "Titled gathlains can cast entangle once per day as a spell-like ability. The caster level is equal to the gathlain's character level."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Spell-Like Ability|AUTOMATIC|Racial SLA ~ Entangle"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.10"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_race.lst",
+    "sha256": "0c4ae15128009d48586ea7794a6aeae96d492e10d49f8200529fca2dbb801284",
+    "line": 60,
+    "record_key": "Titled ~ Gathlain ~ Spell-Like Abilities"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

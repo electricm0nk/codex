@@ -1,0 +1,2 @@
+# Fixture for desktop Market +N (AC and attack rows), source: ue_equip_arms_armor.lst, KEY: Haramaki
+Haramaki			PROFICIENCY:ARMOR|Haramaki			TYPE:Armor.Light.ArmorProfLight.Suit.Standard	COST:3	WT:1					EQMOD:Material ~ Steel							SPELLFAILURE:0		BONUS:COMBAT|AC|1|TYPE=Armor|PREVAREQ:DisableArmorBonus,0

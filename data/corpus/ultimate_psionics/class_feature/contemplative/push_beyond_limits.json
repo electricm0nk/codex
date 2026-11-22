@@ -1,0 +1,44 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Contemplative ~ Push Beyond Limits",
+    "name": "Push Beyond Limits",
+    "class": "Contemplative",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Contemplative ~ Push Beyond Limits"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Talented"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Overchannel"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2379,
+    "record_key": "Contemplative ~ Push Beyond Limits"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

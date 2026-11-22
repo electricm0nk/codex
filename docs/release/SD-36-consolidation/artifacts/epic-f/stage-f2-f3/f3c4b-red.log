@@ -1,0 +1,18 @@
+# F3c4b RED (before --write; package on disk = F3c4 713bcfba74 + first regeneration for the second test)
+$ cargo test --locked -j 8 -p codex-ingest --test sheet_rule_convert_gate a_sorcerer_bloodline_pick_row -- --test-threads=8
+$ cargo test --locked -j 8 -p codex-ingest --test sheet_rule_convert_gate a_category_less -- --test-threads=8
+test a_sorcerer_bloodline_pick_row_converts_as_an_option_of_the_bloodline_choice ... FAILED
+thread 'a_sorcerer_bloodline_pick_row_converts_as_an_option_of_the_bloodline_choice' (1235599) panicked at crates/codex-ingest/tests/sheet_rule_convert_gate.rs:885:65:
+core_rulebook/pool_option/sorcerer_bloodline_draconic_bloodline.json is in the package
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 45 filtered out; finished in 2.63s
+test a_category_less_record_is_found_under_the_category_its_row_declares ... FAILED
+thread 'a_category_less_record_is_found_under_the_category_its_row_declares' (1247053) panicked at crates/codex-ingest/tests/sheet_rule_convert_gate.rs:922:5:
+[]
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 46 filtered out; finished in 2.50s
+
+# F3c4b GREEN (after --write)
+test a_category_less_record_is_found_under_the_category_its_row_declares ... ok
+test a_sorcerer_bloodline_pick_row_converts_as_an_option_of_the_bloodline_choice ... ok
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 45 filtered out
+test a_draconic_pick_reaches_its_lines_at_the_levels_the_book_states ... ok   (tests/sd36_bloodline_pick_option.rs; F3c4 measured 0 of 287 lines reachable on the same probe)
+test a_race_gated_pick_is_not_held_by_another_race ... ok

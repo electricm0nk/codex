@@ -1,0 +1,88 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Cryptic Archetype ~ Lost Mind",
+    "name": "Lost Mind",
+    "class": "Cryptic",
+    "description": "You see the void inside every pattern.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Cryptic Archetype ~ Lost Mind"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.CrypticArchetype.CrypticTrapfinding.CrypticTrapmaker.CrypticHideInPlainSight.CrypticInsight12.CrypticPower12"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Cryptic=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Cryptic Archetype ~ Lost Mind],[!PREABILITY:1,CATEGORY=Archetype,TYPE.CrypticTrapfinding,TYPE.CrypticTrapmaker,TYPE.CrypticHideInPlainSight,TYPE.CrypticInsight12,TYPE.CrypticPower12]"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CanTakeVoidInsights|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You see the void inside every pattern."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Cryptic Class Feature|AUTOMATIC|Lost Mind ~ Insight of the Madman|PRECLASS:1,Cryptic=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Cryptic Class Feature|AUTOMATIC|Lost Mind ~ Decipher Secrets|PRECLASS:1,Cryptic=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Cryptic Class Feature|AUTOMATIC|Lost Mind ~ Protection of Insanity|PRECLASS:1,Cryptic=10"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Cryptic Class Feature|AUTOMATIC|Lost Mind ~ Symbols of the Void|PRECLASS:1,Cryptic=12"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CanTakeVoidInsights|1"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.265"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Cryptic=0|Know Direction and Location"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1802,
+    "record_key": "Cryptic Archetype ~ Lost Mind"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

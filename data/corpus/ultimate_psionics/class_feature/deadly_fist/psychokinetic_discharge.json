@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Deadly Fist ~ Psychokinetic Discharge",
+    "name": "Psychokinetic Discharge",
+    "class": "Deadly Fist",
+    "description": "You can make an unarmed attack as a ranged attack with range increment %1 (max range %2 increments).  When used, your unarmed attacks are no longer empowered and you must take the normal time to empower them.|PsychokineticDischargeRangeInc|PsychokineticDischargeMaxRangeInc",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Deadly Fist ~ Psychokinetic Discharge"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SoulknifeClassFeatures.SpecialAttack.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PsychokineticDischargeRangeInc|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PsychokineticDischargeMaxRangeInc|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can make an unarmed attack as a ranged attack with range increment %1 (max range %2 increments).  When used, your unarmed attacks are no longer empowered and you must take the normal time to empower them.|PsychokineticDischargeRangeInc|PsychokineticDischargeMaxRangeInc"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PsychokineticDischargeRangeInc|10"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PsychokineticDischargeMaxRangeInc|10"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.280"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2162,
+    "record_key": "Deadly Fist ~ Psychokinetic Discharge"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

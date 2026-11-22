@@ -1,0 +1,55 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Revenant ~ Self-Loathing",
+    "delivery": "Extraordinary",
+    "description": "When confronted with its reflection or any object that was important to it in life, a revenant must make a DC 20 Will save to avoid becoming overwhelmed with self-pity.  This condition renders the revenant helpless, and lasts until the revenant is attacked or sees its murderer.  If a revenant resists becoming overwhelmed, the revenant becomes obsessed with the source that triggered the saving throw and does everything it can to destroy it, reacting to the trigger as if the trigger were its murderer and gaining bonuses from its reason to hate ability.",
+    "description_variables": [],
+    "facet": "Weakness",
+    "key": "bestiary_2:monster_ability:revenant_self_loathing",
+    "name": "Self-Loathing",
+    "owners": [
+      "bestiary_2:monster:revenant"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "When confronted with its reflection or any object that was important to it in life, a revenant must make a DC 20 Will save to avoid becoming overwhelmed with self-pity.  This condition renders the revenant helpless, and lasts until the revenant is attacked or sees its murderer.  If a revenant resists becoming overwhelmed, the revenant becomes obsessed with the source that triggered the saving throw and does everything it can to destroy it, reacting to the trigger as if the trigger were its murderer and gaining bonuses from its reason to hate ability."
+      },
+      {
+        "key": "KEY",
+        "value": "Revenant ~ Self-Loathing"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.235"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weakness.Extraordinary"
+      }
+    ],
+    "source_page": "p.235",
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T10:25:56Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1080,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Revenant ~ Self-Loathing",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

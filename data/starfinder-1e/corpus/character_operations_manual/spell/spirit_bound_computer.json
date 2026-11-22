@@ -1,0 +1,19 @@
+{
+  "data": {
+    "key": "Spirit-bound Computer",
+    "name": "Spirit-bound Computer",
+    "type": "Spell"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 57,
+    "path": "starfinder/paizo/character_operations_manual/scom_spells.lst",
+    "record_key": "Spirit-bound Computer",
+    "sha256": "eb969b6cfbd38caf362ac173dfeca866c392c7a6bc9246a11eaa9f298107d108"
+  },
+  "unit_id": "character_operations_manual:spell:spirit_bound_computer"
+}

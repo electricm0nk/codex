@@ -1,0 +1,513 @@
+{
+  "format": "codex.rules_tables/1",
+  "table": "equipment_gap_tables/ADVANCED_CLASS_GUIDE_GAP_ROWS",
+  "licence": {
+    "license": "OGL",
+    "book": "equipment_gap_tables",
+    "screen": "pi_screening::classify_field",
+    "pi_hits": [],
+    "redacted": []
+  },
+  "rows": [
+    {
+      "book": "ACG",
+      "key": "Amorphous",
+      "name": "Amorphous",
+      "category": "Equipmods",
+      "cost_gp": 4500.0,
+      "weight_lbs": null,
+      "description": "1/day take form of viscous liquid",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ACG",
+      "key": "Burdenless",
+      "name": "Burdenless",
+      "category": "Equipmods",
+      "cost_gp": 4000.0,
+      "weight_lbs": null,
+      "description": "Carrying capacity increased by 50%",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ACG",
+      "key": "Calming",
+      "name": "Calming",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "10 rounds/day create 5' aura that supresses rage or emotion effects (DC 15 Will negates)",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ACG",
+      "key": "Jarring",
+      "name": "Jarring",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "3/day daze attacker for 1 round (DC 16 Fortitude negates)",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ACG",
+      "key": "Restful",
+      "name": "Restful",
+      "category": "Equipmods",
+      "cost_gp": 4500.0,
+      "weight_lbs": null,
+      "description": "Only need 2 hours of uninterrupted sleep, and heals as in comfortable bed; not fatigued by sleeping in this armor",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ACG",
+      "key": "Sensing",
+      "name": "Sensing",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Gain 5-foot blindsight and 60-foot darksense when wearer can't see",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ACG",
+      "key": "Spell_Dodging",
+      "name": "Spell_Dodging",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "+4 dodge AC against attack rolls from spells, spell-like abilities, and attacks of summoned creatures",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ACG",
+      "key": "Spiteful",
+      "name": "Spiteful",
+      "category": "Equipmods",
+      "cost_gp": 7000.0,
+      "weight_lbs": null,
+      "description": "If wearer has panache class feature, can spend 1 panache point to make melee attack aginst creature that reduced wearer to below 0 hp",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ACG",
+      "key": "Trackless",
+      "name": "Trackless",
+      "category": "Equipmods",
+      "cost_gp": 7500.0,
+      "weight_lbs": null,
+      "description": "+5 on Stealth; Survival checks to track wearer take -5 penalty",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ACG",
+      "key": "Vouchsafing",
+      "name": "Vouchsafing",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Gain stacking DR 5/- when unconscious, nauseated, stunned, or pinned",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ACG",
+      "key": "Answering",
+      "name": "Answering",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Enhancement bonus increases by 4 (to a max of 5) for the purpose of the opportune parry and riposte deed",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ACG",
+      "key": "BloodHunting",
+      "name": "BloodHunting",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "+2 enhancement, +2d6 damage against foe with bloodline",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ACG",
+      "key": "Bloodsong",
+      "name": "Bloodsong",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "weapon gains keen ability when wielder benefits from raging song; gain 1d10 temporary hit points if wearer confirms critical while under raging song (2d10 if crit multiplier is x3, 3d10 if crit multiplier is x4)",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ACG",
+      "key": "Brawling",
+      "name": "Brawling",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "wielder gains enhancement bonus on combat maneuver checks equal to the enhancement bonus of the weapon",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ACG",
+      "key": "Confounding",
+      "name": "Confounding",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "wielder can spend 1 panache point when confirming critical to attempt disarm, reposition, sunder, or trip, as an immediate action with no attack of opportunity provoked, with a enhancement bonus equal to the weapon's enhancement bonus",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ACG",
+      "key": "Distracting",
+      "name": "Distracting",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "increase target's concentration DC by 5 for 1 minute; can't be affected again for 24 hours",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ACG",
+      "key": "Distracting_Greater",
+      "name": "Distracting_Greater",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "increase target's concentration DC by 10 for 1 minute; can't be affected again for 24 hours",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ACG",
+      "key": "Exclusionary",
+      "name": "Exclusionary",
+      "category": "Equipmods",
+      "cost_gp": 3750.0,
+      "weight_lbs": null,
+      "description": "can choose not to include target in channel ability for next minute; maximum of Wisdom bonus plus enhancement bonus exclusions",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ACG",
+      "key": "Exhausting",
+      "name": "Exhausting",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "on critical hit, wielder can forgo additional damage to cause exhaustion",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ACG",
+      "key": "FateStealing",
+      "name": "FateStealing",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "steal 1 grit or panache point from target as swift action",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ACG",
+      "key": "Flamboyant",
+      "name": "Flamboyant",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "has 1 panache point",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ACG",
+      "key": "Flamboyant_Greater",
+      "name": "Flamboyant_Greater",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "has 3 panache points",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ACG",
+      "key": "Flying",
+      "name": "Flying",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "as dancing but 30 ft. away; weapon returns to wielder as swift action (500 ft./rd), attempts sunder to return if needed",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ACG",
+      "key": "Fortuitous",
+      "name": "Fortuitous",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "if first attack of opportunity hits, can make second at -5 penalty",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ACG",
+      "key": "Inspired",
+      "name": "Inspired",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "investigator need only spend one use of inspiration to augment attack rolls; add twice result to damage with combat inspiration talent",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ACG",
+      "key": "Phantom_Ammunition",
+      "name": "Phantom_Ammunition",
+      "category": "Equipmods",
+      "cost_gp": 2000.0,
+      "weight_lbs": null,
+      "description": "ammunition dissolves and wound closes 1 round after fired",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ACG",
+      "key": "Prehensile",
+      "name": "Prehensile",
+      "category": "Equipmods",
+      "cost_gp": 2500.0,
+      "weight_lbs": null,
+      "description": "as swift action, whip can be used as grappling hook; spend 1 panache to increase reach to 20 ft. for 1 attack, and can use the whip with precise strike",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ACG",
+      "key": "Sacred",
+      "name": "Sacred",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "acts as holy symbol; if wielder has blessings class feature, when channeling energy can choose one ally or ally's weapon within the area to get one of his minor blessings at a cost of one use of that blessing",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ACG",
+      "key": "Sneaky",
+      "name": "Sneaky",
+      "category": "Equipmods",
+      "cost_gp": 5000.0,
+      "weight_lbs": null,
+      "description": "1/day designate foe as prey: get sneak attack damage on next attack; use 2/day if user is rogue or slayer with hunter's surprise talent",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ACG",
+      "key": "SpiritHunting",
+      "name": "SpiritHunting",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "+2 enhancement, +2d6 damage against foe with mystery or spirit",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ACG",
+      "key": "Answering_AMF",
+      "name": "Answering_AMF",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Enhancement bonus increases by 4 (to a max of 5) when wielder is using the opportune parry and riposte deed",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ACG",
+      "key": "BloodHunting_AMF",
+      "name": "BloodHunting_AMF",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "+2 enhancement, +2d6 damage against foe with bloodline",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ACG",
+      "key": "Bloodsong_AMF",
+      "name": "Bloodsong_AMF",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "weapon gains keen ability when wielder benefits from raging song; gain 1d10 temporary hit points if wearer confirms critical while under raging song (2d10 if crit multiplier is x3, 3d10 if crit multiplier is x4)",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ACG",
+      "key": "Brawling_AMF",
+      "name": "Brawling_AMF",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "wielder gains enhancement bonus on combat maneuver checks equal to the enhancement bonus of the weapon",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ACG",
+      "key": "Confounding_AMF",
+      "name": "Confounding_AMF",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "wielder can spend 1 panache point when confirming critical to attempt disarm, reposition, sunder, or trip, as an immediate action with no attack of opportunity provoked, with a bonus equal to the weapon's enhancement bonus",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ACG",
+      "key": "Distracting_AMF",
+      "name": "Distracting_AMF",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "increase target's concentration DC by 5 for 1 minute; can't be affected again for 24 hours",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ACG",
+      "key": "Distracting_Greater_AMF",
+      "name": "Distracting_Greater_AMF",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "increase target's concentration DC by 10 for 1 minute; can't be affected again for 24 hours",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ACG",
+      "key": "Exclusionary_AMF",
+      "name": "Exclusionary_AMF",
+      "category": "Equipmods",
+      "cost_gp": 3750.0,
+      "weight_lbs": null,
+      "description": "can choose not to include target in channel ability for next minute; maximum of Wisdom bonus plus enhancement bonus exclusions",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ACG",
+      "key": "Exhausting_AMF",
+      "name": "Exhausting_AMF",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "on critical hit, wielder can forgo additional damage to cause exhaustion",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ACG",
+      "key": "FateStealing_AMF",
+      "name": "FateStealing_AMF",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "steal 1 grit or panache point from target as swift action",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ACG",
+      "key": "Flamboyant_AMF",
+      "name": "Flamboyant_AMF",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "has 1 panache point",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ACG",
+      "key": "Flamboyant_Greater_AMF",
+      "name": "Flamboyant_Greater_AMF",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "has 3 panache points",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ACG",
+      "key": "Flying_AMF",
+      "name": "Flying_AMF",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "as dancing but 30 ft. away; weapon returns to wielder as swift action (500 ft./rd), attempts sunder to return if needed",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ACG",
+      "key": "Fortuitous_AMF",
+      "name": "Fortuitous_AMF",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "if first attack of opportunity hits, can make second at -5 penalty",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ACG",
+      "key": "Inspired_AMF",
+      "name": "Inspired_AMF",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "investigator need only spend one use of inspiration to augment attack rolls; add twice result to damage with combat inspiration talent",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ACG",
+      "key": "Sacred_AMF",
+      "name": "Sacred_AMF",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "acts as holy symbol; if wielder has blessings class feature, when channeling energy can choose one ally or ally's weapon within the area to get one of his minor blessings at a cost of one use of that blessing",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ACG",
+      "key": "Sneaky_AMF",
+      "name": "Sneaky_AMF",
+      "category": "Equipmods",
+      "cost_gp": 5000.0,
+      "weight_lbs": null,
+      "description": "1/day designate foe as prey: get sneak attack damage on next attack; use 2/day if user is rogue or slayer with hunter's surprise talent",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ACG",
+      "key": "SpiritHunting_AMF",
+      "name": "SpiritHunting_AMF",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "+2 enhancement, +2d6 damage against foe with mystery or spirit",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ACG",
+      "key": "Dust Knuckles.FORGET",
+      "name": "Dust Knuckles.FORGET",
+      "category": "General",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ACG",
+      "key": "False Face.FORGET",
+      "name": "False Face.FORGET",
+      "category": "General",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    }
+  ]
+}

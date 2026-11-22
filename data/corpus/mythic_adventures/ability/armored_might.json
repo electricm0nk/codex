@@ -1,0 +1,67 @@
+{
+  "codex_generated_name": false,
+  "completeness": "full",
+  "data": {
+    "description": "You treat the armor bonus from your armor as 50%% higher than normal, to maximum increase of %1. For example, if you are 4th tier and wearing +2 breastplate, you treat the armor's +6 armor bonus as +8 (50%% of +6 is +3, limited to +2 by half your tier).|HalfMythicLevel",
+    "key": "Mythic Path Ability ~ Armored Might",
+    "name": "Armored Might",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Path Ability ~ Armored Might"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Path Ability.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Mythic Path ~ Guardian"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "MythicTierLevel,1"
+      },
+      {
+        "key": "DESC",
+        "value": "You treat the armor bonus from your armor as 50%% higher than normal, to maximum increase of %1. For example, if you are 4th tier and wearing +2 breastplate, you treat the armor's +6 armor bonus as +8 (50%% of +6 is +3, limited to +2 by half your tier).|HalfMythicLevel"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.27"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|COMBAT|AC|min(floor(%CHOICE/2),HalfMythicLevel)|TYPE=Armor.STACK|PREVAREQ:DisableArmorBonus,0"
+      },
+      {
+        "key": "TEMPVALUE",
+        "value": "MIN=1|MAX=9|TITLE=Armor Value"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 118,
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "record_key": "Mythic Path Ability ~ Armored Might",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice",
+    "computed:pre_guard",
+    "computed:tempbonus",
+    "derived:tempbonus"
+  ]
+}

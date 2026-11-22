@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Marksman ~ Favored Weapon Thrown",
+    "name": "Favored Weapon (Thrown)",
+    "class": "Marksman",
+    "description": "Gain +%1 bonus to ranged attack bonus from thrown weapons.|FavoredWeaponThrown",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Marksman ~ Favored Weapon Thrown"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.FavoredWeapon"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FavoredWeaponThrown|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Gain +%1 bonus to ranged attack bonus from thrown weapons.|FavoredWeaponThrown"
+      },
+      {
+        "key": "MULT",
+        "value": "NO"
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|TOHIT.Thrown|FavoredWeaponThrown|TYPE=Competence"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FavoredWeaponThrown|FavoredWeaponBase"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.45"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 345,
+    "record_key": "Marksman ~ Favored Weapon Thrown"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

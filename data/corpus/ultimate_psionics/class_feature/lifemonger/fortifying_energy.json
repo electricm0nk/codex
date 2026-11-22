@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Lifemonger ~ Fortifying Energy",
+    "name": "Fortifying Energy",
+    "class": "Lifemonger",
+    "description": "You gain %1 temporary hit points when using The Greater Good.  These temporary hit points last one minute.|FortifyingEnergyTempHP",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Lifemonger ~ Fortifying Energy"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "VitalistClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FortifyingEnergyTempHP|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain %1 temporary hit points when using The Greater Good.  These temporary hit points last one minute.|FortifyingEnergyTempHP"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FortifyingEnergyTempHP|VitalistLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.318"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2336,
+    "record_key": "Lifemonger ~ Fortifying Energy"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

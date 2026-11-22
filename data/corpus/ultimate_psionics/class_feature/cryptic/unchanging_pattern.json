@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Cryptic ~ Unchanging Pattern",
+    "name": "Unchanging Pattern",
+    "class": "Cryptic",
+    "description": "You gain power resistance %1.|UnchangingPatternPR",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Cryptic ~ Unchanging Pattern"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "CrypticClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "UnchangingPatternPR|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain power resistance %1.|UnchangingPatternPR"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|UnchangingPatternPR|12+CrypticLVL"
+      },
+      {
+        "key": "SR",
+        "value": "UnchangingPatternPR"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.36"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 181,
+    "record_key": "Cryptic ~ Unchanging Pattern"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

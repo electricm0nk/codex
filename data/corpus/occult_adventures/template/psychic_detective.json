@@ -1,0 +1,67 @@
+{
+  "codex_generated_name": false,
+  "completeness": "chassis_only",
+  "data": {
+    "key": "Psychic Detective",
+    "name": "Psychic Detective",
+    "raw_tokens": [
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "BONUS",
+        "value": "CASTERLEVEL|Psychic Detective|classlevel(\"Investigator\")-1"
+      },
+      {
+        "key": "BONUS",
+        "value": "PCLEVEL|Psychic Detective|classlevel(\"Investigator\")"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Investigator;LEVEL=1|-10"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Investigator;LEVEL=2|-10"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Investigator;LEVEL=3|-10"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Investigator;LEVEL=4|-10"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Investigator;LEVEL=5|-10"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Investigator;LEVEL=6|-10"
+      },
+      {
+        "key": "ADD",
+        "value": "SPELLCASTER|Psychic Detective"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T16:43:18Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 10,
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_templates.lst",
+    "record_key": "Psychic Detective",
+    "sha256": "e2ca879c13b5acf2829b6a55f9b88f7517087475136bc9a20a6bd1b102b8f2a6"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

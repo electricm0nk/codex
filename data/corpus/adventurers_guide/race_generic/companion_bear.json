@@ -1,0 +1,32 @@
+{
+  "codex_generated_name": false,
+  "completeness": "chassis_only",
+  "data": {
+    "description": null,
+    "key": "Companion (Bear)",
+    "name": "Companion (Bear)",
+    "raw_tokens": [
+      {
+        "key": "BONUS",
+        "value": "VAR|RaceReducedCompanion|1"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T13:40:37Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 3,
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_races.lst",
+    "record_key": "Companion (Bear)",
+    "sha256": "66d482bb2e6df9db251b81915fd1730a875cbafd1fca4303991f2ac549db366d"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

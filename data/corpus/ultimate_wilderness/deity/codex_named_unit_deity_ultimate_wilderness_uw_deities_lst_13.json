@@ -1,0 +1,70 @@
+{
+  "codex_generated_name": true,
+  "completeness": "full",
+  "data": {
+    "key": "Codex-Named Unit (deity_ultimate_wilderness_uw_deities_lst_13)",
+    "name": "Codex-Named Unit (deity_ultimate_wilderness_uw_deities_lst_13)",
+    "raw_tokens": [
+      {
+        "key": "NAMEISPI",
+        "value": "YES"
+      },
+      {
+        "key": "DOMAINS",
+        "value": "Death,Destruction,Madness,Magic,Arcane Subdomain,Catastrophe Subdomain,Divine Subdomain,Insanity Subdomain|PREALIGN:LN,NG,TN,NE,CN"
+      },
+      {
+        "key": "DESC",
+        "value": "Eldest of entropy, reincarnation, time"
+      },
+      {
+        "key": "FACT",
+        "value": "Title|The Many"
+      },
+      {
+        "key": "FACT",
+        "value": "Symbol|Broken hourglass"
+      },
+      {
+        "key": "FACTSET",
+        "value": "Pantheon|Eldest"
+      },
+      {
+        "key": "DEITYWEAP",
+        "value": "Mace (Light)"
+      },
+      {
+        "key": "ALIGN",
+        "value": "TN"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.131"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|InquisitorDomainDeath,InquisitorDomainDestruction,InquisitorDomainMadness,InquisitorDomainMagic,InquisitorDomainArcaneSubdomain,InquisitorDomainCatastropheSubdomain,InquisitorDomainDivineSubdomain,InquisitorDomainInsanitySubdomain|1"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T14:24:41Z",
+  "license": "PI-REDACTED",
+  "pi_field": "name",
+  "pi_marker": "redacted",
+  "population": "in_scope",
+  "rename": {
+    "coordinate": "ultimate_wilderness:uw_deities.lst:13",
+    "reason": "name_pi_blocked"
+  },
+  "source": {
+    "kind": "lst_token",
+    "line": 13,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_deities.lst",
+    "record_key": "Codex-Named Unit (deity_ultimate_wilderness_uw_deities_lst_13)",
+    "sha256": "aa5a4376eaf49e6d6c23c2b78003538e51eb5bd0f638c9371387e1a34a435a3f"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

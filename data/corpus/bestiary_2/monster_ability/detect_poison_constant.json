@@ -1,0 +1,67 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Detect Poison ~ Constant",
+    "delivery": "SpellLike",
+    "description": "You Detect Poison, as per the spell, as a constant ability. Constant spell-like abilities function at all times but can be dispelled. Constant spell-like abilities can be reactivated a as a swift action.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_2:monster_ability:detect_poison_constant",
+    "name": "Detect Poison",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SLA_CL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You Detect Poison, as per the spell, as a constant ability. Constant spell-like abilities function at all times but can be dispelled. Constant spell-like abilities can be reactivated a as a swift action.|PRERULE:1,DisplayFullAbility"
+      },
+      {
+        "key": "DESC",
+        "value": "You can Detect Poison, as per the spell, as a constant ability.|!PRERULE:1,DisplayFullAbility"
+      },
+      {
+        "key": "KEY",
+        "value": "Detect Poison ~ Constant"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.268"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=ATWILL|TIMEUNIT=Constant|CASTERLEVEL=SLA_CL|Detect Poison,10+CHA"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.SpellLike.Sense"
+      }
+    ],
+    "source_page": "p.268",
+    "traits": [
+      "Sense"
+    ]
+  },
+  "ingested_at": "2026-08-23T14:07:19Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 2204,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "record_key": "Detect Poison ~ Constant",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:spells"
+  ]
+}

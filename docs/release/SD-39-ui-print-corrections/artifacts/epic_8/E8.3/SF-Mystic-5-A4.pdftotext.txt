@@ -1,0 +1,493 @@
+SF-Mystic-5 printed
+Identity
+
+Name                                                                  SF-Mystic-5 printed
+Game system                                                                    Starfinder
+Race                                                                           Lashunta
+
+Class
+
+Mystic                                                                                 5
+
+Ability Scores
+
+                                                                         Score Modifier
+Strength                                                                    10      +0
+Dexterity                                                                   14      +2
+Constitution                                                                 8       -1
+Intelligence                                                                14      +2
+Wisdom                                                                      19      +4
+Charisma                                                                    15      +2
+
+Stamina, Hit Points and Resolve
+
+Stamina Points                                                                        25
+Hit Points                                                                            34
+Resolve Points                                                                         6
+
+Armor Class
+
+Energy Armor Class (EAC)                                                              16
+Kinetic Armor Class (KAC)                                                             16
+Initiative                                                                            +2
+
+Saving Throws
+
+Fortitude                                                                             +0
+Reflex                                                                                +3
+Will                                                                                  +8
+
+Attack
+
+Base Attack Bonus                                                                     +3
+Melee attack                                                                          +3
+Ranged attack                                                                         +5
+
+Credits and Bulk
+
+Starting credits                                                                    9000
+Credits spent                                                                       2650
+Credits remaining                                                                   6350
+Bulk carried                                                                           1
+Unencumbered up to (bulk)                                                              5
+Overburdened above (bulk)                                                             10
+
+Weapons
+
+
+                                  SF-Mystic-5 printed · page 1 of 8
+                                                                                                             Attack Damage bonus
+Laser pistol, azimuth                                                                                            +5           +2
+Baton, tactical                                                                                                  +5           +2
+
+Skills
+
+Acrobatics                                                                                                                              +2
+Athletics                                                                                                                               +0
+Bluff                                                                                                                                  +10
+Culture                                                                                                                                +10
+Diplomacy                                                                                                                              +12
+Disguise                                                                                                                                +2
+Intimidate                                                                                                                              +2
+Life Science                                                                                                                           +10
+Medicine                                                                                                                               +12
+Mysticism                                                                                                                              +13
+Perception                                                                                                                             +14
+Piloting                                                                                                                                +2
+Sense Motive                                                                                                                           +14
+Stealth                                                                                                                                 +2
+Survival                                                                                                                                +4
+
+Mystic Spells
+
+                                                                                                        Per day Known Save DC
+Level 0                                                                                                      —      6      15
+Level 1                                                                                                       5     5      16
+Level 2                                                                                                       3     4      17
+
+Rules and Features: Abilities
+
++2 Racial Bonus to Skill                                                                                                                 +2
+Armor Prof ~ Light Armor
+Channel Skill
+ You draw strange feelings, instincts, knowledge, and urges from your connection, augmenting your prowess in certain tasks. Each
+ connection has two skills associated with it. You gain a +1 insight bonus to skill checks with your connection's associated skills.
+ This bonus increases by 1 at 5th level and every 3 levels thereafter.
+Connection                                                                                                                               +1
+Connection Power
+ At 1st level, 3rd level, and every 3 levels thereafter, you gain a connection power unique to your connection. If a connection power
+ allows a saving throw to resist its effects, the DC is equal to 10 + half your mystic level + your Wisdom modifier. If the power
+ requires an enemy to attempt a skill check, the DC is equal to 10 + 1-1/2 x your mystic level + your Wisdom modifier.
+Connection Spell
+ Your connection grants you additional spells known, one for each level of mystic spell you can cast, starting at 1st level and at any
+ level when you normally gain access to a new spell level. These spells are in addition to the spells known listed on Table 4-6:
+ Mystic Spells Known. These spells can't be exchanged for different spells at higher levels (except in specific cases; see below).
+ The spell level of each spell is listed in your connection's entry. If your connection lists a single variable-level spell (see page 330)
+ for all spell levels at the start of its spells entry, you gain that variable-level spell when you first get your connection spell for each
+ level. The next time you gain a connection spell, add the next higher level of the variable-level spell to your list of spells known.
+ You immediately lose the lower-level version of that variable-level spell and replace it with the listed connection spell for that lower
+ level.
+DIMORPHIC                                                                                                                                +1
+ All lashuntas gain +2 Charisma at character creation. Korasha lashuntas are muscular (+2 Strength at character creation) but
+ often brash and unobservant (-2 Wisdom at character creation). Damaya lashuntas are typically clever and well-spoken (+2
+ Intelligence at character creation) but somewhat delicate (-2 Constitution at character creation).
+Damaya (Con)                                                                                                                             -2
+Damaya (Int)                                                                                                                             +2
+Empath (Perception)                                                                                                                      +2
+Empath (Sense Motive)                                                                                                                    +2
+
+
+                                                     SF-Mystic-5 printed · page 2 of 8
+Empath Connection Spell - 2: detect thoughts (level 1 Mystic spell known)                                                              +1
+Empath Connection Spell - 2: zone of truth (level 2 Mystic spell known)                                                                +1
+Empathy
+ As a full action, you can attempt a Sense Motive check to read the emotions of a particular creature (DC = 20 or 10 + its Bluff
+ modifier, whichever is higher). If you succeed, you learn its general disposition and attitude toward creatures within 30 feet of it,
+ and you gain a +2 circumstance bonus to Bluff, Diplomacy, Intimidate, and Sense Motive checks against that creature for 1 hour.
+ Whether you succeed or fail, after opening your mind to read emotions, you take a -2 penalty to saving throws against mind-
+ affecting effects for 1 minute.
+Greater Mindlink
+ You can use your mindlink ability on the same creature as many times per day as you wish, and the communication can be both
+ ways, though the maximum of 10 minutes of communication per round still applies.
+Healing Touch
+ Once per day, you can spend 10 minutes to magically heal an ally up to 5 Hit Points per mystic level.
+LASHUNTA MAGIC
+ Lashuntas gain the following spell-like abilities: At will: daze, psychokinetic hand 1/day: detect thoughts See Spell-like Abilities on
+ page 262. The caster level for these effects is equal to the lashunta's level.
+LIMITED TELEPATHY
+ Lashuntas can mentally communicate with any creatures within 30 feet with whom they share a language. Conversing
+ telepathically with multiple creatures simultaneously is just as difficult as listening to multiple people speaking.
+Lashunta                                                                                                                               +1
+Mindlink
+ You can form a mental link with creatures you touch, communicating information rapidly through it. You can use mindlink at will as
+ a spell-like ability, though only once per day on any given individual.
+Mystic (mystic archetype picks)                                                                                                        +1
+Priest
+ You are a member of an organized religion or similar association. Your belief, whether it has been a part of you since childhood or
+ it came to you later in life, is an integral part of your character. You might travel the stars proselytizing your deity, or your church
+ might have sent you out on a specific holy (or unholy) mission. No matter what obstacles life puts in your way, you always have
+ the conviction of your beliefs to fall back on.
+ TITLE: Priest
+SIZE AND TYPE
+ Lashuntas are Medium humanoids with the lashunta subtype.
+STUDENT                                                                                                                                +2
+ Lashuntas love to learn, and they receive a +2 racial bonus to any two skills of their choice.
+THEME KNOWLEDGE (Mysticism)
+ Choose a deity or a philosophy whose alignment is within one step (on either the good-evil axis or the law-chaos axis) of your
+ own. Reduce the DC of Culture and Mysticism checks to recall knowledge about religious traditions, religious symbols, and
+ famous religious leaders by 5. Mysticism becomes a class skill for you, though if it's a class skill from the class you take at 1st
+ level, you instead gain a +1 bonus to Mysticism checks. In addition, you gain an ability adjustment of +1 to Wisdom at character
+ creation.
+THEME KNOWLEDGE (Mysticism)                                                                                                            +1
+THEME KNOWLEDGE (Wis)                                                                                                                  +1
+Weapon Prof ~ Basic Melee Weapons
+Weapon Prof ~ Small Arms
+Weapon Specialization
+ You gain Weapon Specialization as a bonus feat for each weapon type this class grants you proficiency with.
+Weapon Specialization ~ Basic Melee Weapons
+Weapon Specialization ~ Small Arms
+
+Rules and Features: Classes
+
+Mystic                                                                                                                                 +3
+ Skill ranks per level: 6
+Mystic (Stamina Points)                                                                                                              +30
+Mystic (base Fortitude save)                                                                                                          +1
+Mystic (base Reflex save)                                                                                                             +1
+Mystic (base Will save)                                                                                                               +4
+Mystic (caster level)                                                                                                                 +5
+Mystic (hit points)                                                                                                                  +25
+Mystic (level 0 spells known)                                                                                                         +6
+Mystic (level 1 spells known)                                                                                                         +4
+Mystic (level 1 spells per day)                                                                                                       +4
+
+                                                    SF-Mystic-5 printed · page 3 of 8
+Mystic (level 2 spells known)                                                                                                         +3
+Mystic (level 2 spells per day)                                                                                                       +2
+
+Rules and Features: Equipment
+
+Lashunta tempweave, basic                                                           +4 quantity 1, upgrade slots used 0 of 1
+ EAC = 4
+ KAC = 4
+ Price: 1950
+ Armor check penalty: 0
+ Max Dex bonus: 5
+ Quality: Level: 4
+ Quality: BULK: L
+ Upgrade slots: 1
+Lashunta tempweave, basic (KAC)                                                     +4
+Lashunta tempweave, basic (walk speed)                                              +0
+
+Rules and Features: Feats
+
+Quick Draw
+ You can draw weapons faster than most.
+ You can draw a weapon as a swift action. Additionally, when making an attack using a thrown weapon as an attack or full attack
+ action, you can draw a weapon as part of the action of making a thrown attack with it. You can draw a hidden weapon (see Sleight
+ of Hand on page 146) as a move action.
+ Normal: You can draw a weapon as a move action, or (if your base attack bonus is +1 or higher) as part of a move action, and you
+ can draw a hidden weapon as a standard action.
+Spell Focus                                                                                                                           +1
+ Through careful study, you have developed methods to make your spells harder to resist.
+ The DC of spells you cast increases by 1. At 11th level, the DC of your spells instead increases by 2, and at 17th level, the DC of
+ spells you cast instead increases by 3. This bonus does not apply to spell-like abilities.
+Spell Penetration
+ Your spells break through spell resistance more easily than those of other spellcasters.
+ You gain a +2 bonus to caster level checks to overcome a creature's spell resistance (see page 265).
+
+Rules and Features: Races
+
+Lashunta                                                                                                                              +2
+ Speed: Walk 30 ft.
+Lashunta (racial Hit Points)                                                                                                          +4
+
+Rules and Features: Spells
+
+Detect Affliction                                                                                               Mystic spell level 0
+ You determine whether a creature or object has been poisoned, is diseased, is cursed, or is suffering a similar affliction. If the
+ target is poisoned or diseased, you automatically detect that fact and can determine the exact type of poison or disease with a
+ successful DC 20 Intelligence or Wisdom check. If you are trained in Life Science or Medicine (depending on the nature of the
+ poison or disease), you can attempt a DC 20 check of that skill if you fail your Wisdom or Intelligence check. If the target is cursed
+ or suffering from a similar affliction, you must succeed at a DC 20 Intelligence or Wisdom check to determine that fact. You can
+ then determine the exact nature of the curse with a successful DC 25 Mysticism check.
+ School: Divination
+ Casting time: 1 standard action
+ Range: 35 ft.
+ Target or area: One creature or object
+ Duration: Instantaneous
+ Saving throw: None
+ Spell resistance: Yes (harmless)
+Detect Magic                                                                                                    Mystic spell level 0
+ You detect all magic spells, effects, items, and objects (including those on or affecting creatures you can see), as well as hybrid
+ items, in the area. You can't detect magical traps in this way, as they are created with additional magic that wards them from this
+ common spell. Each round you concentrate on the same area, you can determine if one magic source you detect is from a spell,
+ magic item, or other effect, and the caster level (or item level) of the effect. You can't determine if there are magic sources in areas
+ you can't see, or if there was a magic source in an area at one time but that has since expired.
+ School: Divination
+ Casting time: 1 standard action
+
+
+                                                    SF-Mystic-5 printed · page 4 of 8
+ Range: 60 ft.
+ Target or area: Cone-shaped emanation
+ Duration: Concentration, up to 5 minutes
+ Saving throw: None
+ Spell resistance: No
+Ghost Sound                                                                                                         Mystic spell level 0
+ You create a volume of sound that rises, falls, recedes, approaches, or remains fixed. You choose what type of sound this spell
+ creates when casting it and cannot thereafter change the sound's basic character. The volume of sound created can produce as
+ much noise as 20 normal humans. Thus, you can create shouting, singing, talking, marching, running, or walking sounds, as well
+ as sounds of battle or small explosions. You can make noises that sound like machines, the general chatter of distant
+ conversation, or the roar of an alien predator, but you can't make specific sounds such as intelligible speech or the exact hum of a
+ particular starship's engines.
+ School: Illusion
+ Casting time: 1 standard action
+ Range: 35 ft.
+ Target or area: Illusory sounds
+ Duration: 5 rounds (D)
+ Saving throw: Will disbelief
+ Spell resistance: No
+Grave Words                                                                                                         Mystic spell level 0
+ You can force a touched corpse talk to you, but you can't ask it specific questions or communicate with it at all. The corpse utters
+ random sentences for 1 round, with a 10% chance this information is of some use to you. Useful information might include
+ warnings about dangers in a wrecked starship, the password to unlock a computer, or the name of a supernatural creature seeking
+ you or your allies. The GM makes the d% roll in secret and decides what information, useful or not, the corpse spews out in its
+ babbling. Once a corpse has been subjected to grave words by any caster, any new attempt to cast grave words on that corpse
+ fails. A corpse must have a mouth or means to speak in order for this spell to function, and the spell doesn't affect a corpse that
+ has been turned into an undead creature.
+ School: Necromancy
+ Descriptor: Language-Dependent
+ Casting time: 1 minute
+ Range: Touch
+ Target or area: One dead creature
+ Duration: 1 round
+ Saving throw: None
+ Spell resistance: No
+Stabilize                                                                                                           Mystic spell level 0
+ If the target of this spell has 0 Hit Points and is dying, it automatically stabilizes. If the creature later takes damage, it is no longer
+ stable.
+ School: Conjuration
+ Descriptor: Healing
+ Casting time: 1 standard action
+ Range: 35 ft.
+ Target or area: One living creature
+ Duration: Instantaneous
+ Saving throw: Will negates (harmless)
+ Spell resistance: Yes (harmless)
+Telepathic Message                                                                                                  Mystic spell level 0
+ You can send a short telepathic message and hear simple telepathic replies. Any living creature within 10 feet of you or an
+ intended recipient also receives your telepathic message if it succeeds at a DC 25 Perception check. You must be able to see or
+ hear each recipient. The creatures that receive the message can reply telepathically, but no more than a single message can be
+ sent each round, and each message cannot exceed 10 words. A technomancer casting this spell can also use it to send a
+ message to a computer or a construct with the technological subtype if the receiving target is designed to receive messages.
+ School: Divination
+ Descriptor: Language-Dependent, Mind-Affecting
+ Casting time: 1 standard action
+ Range: 150 ft.
+ Target or area: Up to 5 creatures
+ Duration: 50 minutes
+ Saving throw: None
+ Spell resistance: No
+Charm Person                                                                                                        Mystic spell level 1
+ This charm makes a humanoid creature regard you as its trusted friend and ally (treat the target's attitude as friendly). If the
+ creature is currently being threatened or attacked by you or your allies, however, it receives a +5 bonus to its saving throw. The
+ spell does not enable you to control the charmed creature as if it were an automaton. It is unlikely to attempt to harm you, but it is
+ also unlikely to attack any of its true friends or allies. You can try to give the target suggestions, but you must succeed at an
+ opposed Charisma check to convince it to do anything it wouldn't ordinarily do. (Retries of this check are not allowed.) An affected
+ creature never obeys suicidal or obviously harmful suggestions. Any act by you or your apparent allies that threatens the charmed
+
+
+
+                                                     SF-Mystic-5 printed · page 5 of 8
+ creature breaks the spell. You must speak the creature's language to communicate your suggestions, or else be good at
+ pantomiming.
+ School: Enchantment
+ Descriptor: Charm, Mind-Affecting
+ Casting time: 1 standard action
+ Range: 35 ft.
+ Target or area: One humanoid creature
+ Duration: 5 hours
+ Saving throw: Will negates
+ Spell resistance: Yes
+Command                                                                                                          Mystic spell level 1
+ You give the target one of the following commands, which it obeys to the best of its ability at its earliest opportunity. If the target
+ can't carry out your command on its next turn, the spell automatically fails. Approach - The target moves toward you as quickly and
+ directly as possible for 1 round, taking no other actions and triggering reactions (such as attacks of opportunity) for this movement
+ as normal. Drop - The target drops whatever it is holding. It can't pick up any dropped item until its next turn. Fall - The target falls
+ to the ground and remains prone for 1 round. It can otherwise act normally. Flee - The target moves away from you as quickly and
+ directly as possible for 1 round, taking no other actions and provoking reactions (such as attacks of opportunity) for this movement
+ as normal. Halt - The target is dazed for 1 round.
+ School: Enchantment
+ Descriptor: Compulsion, Language-Dependent, Mind-Affecting
+ Casting time: 1 standard action
+ Range: 35 ft.
+ Target or area: One living creature
+ Duration: 1 round
+ Saving throw: Will negates
+ Spell resistance: Yes
+Detect Thoughts                                                                                                  Mystic spell level 1
+ You detect the surface thoughts of intelligent creatures around you. The amount of information revealed depends on how long you
+ study a particular area or target. (1st Round) You detect the presence or absence of thoughts from conscious creatures that have
+ Intelligence scores of at least 1 (or an Intelligence modifier of –5) or higher. (2nd Round) You detect the number of thinking minds
+ and the Intelligence score (or modifier) of each. If the highest Intelligence score is 26 (or a modifier of +8) or higher and at least 10
+ points higher than your own Intelligence score (or 5 points higher than your own Intelligence modifier), you are stunned for 1 round
+ and the spell ends. This spell doesn't let you determine the location of the thinking minds if you can't see the creatures whose
+ thoughts you are detecting. (3rd Round) You can read the surface thoughts of any mind in the area. A target who succeeds at its
+ Will save prevents you from reading its thoughts, and you must cast detect thoughts again to have another chance. Creatures of
+ animal intelligence (an Intelligence score of 1 or 2 or an Intelligence modifier of –4 or lower) have simple, instinctual thoughts.
+ Each round, you can turn to detect thoughts in a new area. The spell can penetrate barriers, but 3 feet of dirt or wood, 1 foot of
+ stone, 1 inch of common metal, a thin sheet of lead, or any force field blocks it.
+ School: Divination
+ Descriptor: Mind-Affecting
+ Casting time: 1 standard action
+ Range: 60 ft.
+ Target or area: Cone-shaped emanation
+ Duration: Concentration, up to 5 minutes
+ Saving throw: Will negates; see text
+ Spell resistance: No
+Mystic Cure                                                                                                      Mystic spell level 1
+ With a touch, you heal and invigorate your target, restoring a number of Hit Points. If the target regains all of its Hit Points as a
+ result of this healing, you can apply the remaining healing to yourself, as long as you are a living creature. On the other hand, if
+ this isn't enough to restore all the target's Hit Points, you can transfer any number of your own Hit Points to the target, healing the
+ target that amount. You can't transfer more Hit Points than you have or more Hit Points than the target is missing. Mystic cure
+ restores a number of Hit Points to your target depending on the spell's level. (1st) 1d8 + your Wisdom modifier
+ School: Conjuration
+ Descriptor: Healing
+ Casting time: 1 standard action
+ Range: Touch
+ Target or area: One living creature
+ Duration: Instantaneous
+ Saving throw: Will half (harmless)
+ Spell resistance: Yes (harmless)
+Share Language                                                                                                   Mystic spell level 1
+ For 24 hours, the target can read, understand, and communicate to the best of its ability in up to three languages that you already
+ know. This doesn't change the physical nature of the creature (if it lacks a means of speech, it still can't talk) or its attitude toward
+ you. It does, however, allow intelligent creatures that normally have no language to understand and (if physically capable)
+ communicate in the languages granted by this spell.
+ School: Divination
+ Casting time: 1 standard action
+ Range: Touch
+
+
+                                                    SF-Mystic-5 printed · page 6 of 8
+ Target or area: One creature
+ Duration: 24 hours
+ Saving throw: Will negates (harmless)
+ Spell resistance: Yes (harmless)
+Hold Person                                                                                                     Mystic spell level 2
+ The target becomes paralyzed and freezes in place. It is aware and breathes normally but can't take any physical actions, even
+ speech. A held creature can't cast spells. Each round on its turn, the target can spend a full action to attempt a new saving throw
+ to end the effect. This does not provoke attacks of opportunity. A winged creature that is paralyzed can't flap its wings and falls. A
+ swimmer can't swim and may drown.
+ School: Enchantment
+ Descriptor: Compulsion, Mind-Affecting
+ Casting time: 1 standard action
+ Range: 150 ft.
+ Target or area: One humanoid creature
+ Duration: 5 rounds (D)
+ Saving throw: Will negates, see text
+ Spell resistance: Yes
+Remove Condition                                                                                                Mystic spell level 2
+ You remove any one of the following conditions affecting the target; frightened, nauseated, shaken, sickened, or staggered. If the
+ condition is the result of a disease or another ongoing effect, this spell removes the condition but does not cure the disease or
+ ongoing effect, and the target can regain the condition from that effect as normal, potentially immediately. Lesser remove condition
+ also doesn't cure or remove other damage or conditions the target is suffering from any source, even the same source that caused
+ the removed condition. Since this spell's duration is instantaneous, it does not prevent the target from gaining the condition again.
+ Casting this spell doesn't provoke attacks of opportunity.
+ School: Conjuration
+ Descriptor: Healing
+ Casting time: 1 standard action
+ Range: Touch
+ Target or area: One creature
+ Duration: Instantaneous
+ Saving throw: Fortitude negates (harmless)
+ Spell resistance: Yes (harmless)
+Status                                                                                                          Mystic spell level 2
+ School: Divination
+ Casting time: 1 standard action
+ Range: Touch
+ Target or area: Up to 1 living creatures touched
+ Duration: 5 hours
+ Saving throw: Will negates (harmless)
+ Spell resistance: Yes (harmless)
+Zone of Truth                                                                                                   Mystic spell level 2
+ Creatures within the emanation area can't speak any deliberate and intentional lies. Each potentially affected creature can attempt
+ a Will saving throw to avoid the effect when the spell is cast or when that creature first enters the emanation area. Affected
+ creatures are aware of this enchantment, and they can therefore avoid answering questions to which they would normally respond
+ with a lie, or they can be evasive as long as they remain within the boundaries of the truth. Creatures who leave the area are free
+ to speak as they choose.
+ School: Enchantment
+ Descriptor: Compulsion, Mind-Affecting
+ Casting time: 1 standard action
+ Range: 35 ft.
+ Target or area: 20-ft.-radius emanation
+ Duration: 5 minutes
+ Saving throw: Will negates
+ Spell resistance: Yes
+
+Rules and Features: Equipment
+
+Laser pistol, azimuth                                                                                               1d4 quantity 1
+ -
+ Price: 350
+ Range: 80
+ Quality: Level: 1
+ Quality: Critical: Burn 1d4
+ Quality: Capacity: 20 charges
+ Quality: Usage: 1
+ Quality: Bulk: L
+ Item level: 1
+ Damage: 1d4
+
+
+                                                    SF-Mystic-5 printed · page 7 of 8
+Baton, tactical                                                             1d4 quantity 1
+ Analog.operative
+ Price: 90
+ Quality: Level: 1
+ Quality: Critical: -
+ Quality: Bulk: L
+ Item level: 1
+ Damage: 1d4
+Battery                                                               quantity 1
+ -
+ Price: 60
+ Quality: Level: 1
+ Quality: ChargesCartridges: 20
+ Quality: Bulk: -
+ Item level: 1
+Medkit (Basic)                                                        quantity 1
+ Price: 100
+ Quality: Level: 1
+ Quality: Bulk: 1
+Serum of Healing Mk 1                                                 quantity 2
+ Price: 50
+ Quality: Level: 1
+ Quality: Bulk: L
+
+
+
+
+                                  SF-Mystic-5 printed · page 8 of 8
+

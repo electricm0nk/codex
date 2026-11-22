@@ -1,0 +1,49 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Pod-Spawned ~ Mimic",
+    "delivery": "Extraordinary",
+    "description": "A pod-spawned creature retains all the knowledge of its original. It can impersonate the original perfectly except for its lack of emotion. This emotionlessness can be detected with a successful DC 20 Sense Motive check. A creature familiar with the original gains a +5 circumstance bonus on this check. If the pod-spawned creature feigns sincere emotion, the Sense Motive check is opposed by its Bluff check instead. Pod-spawned creatures resemble the original down to hair and blood. Noticing small physical imperfections requires a successful Perception check with a DC determined by the spawning bodythief's Disguise check, made when the pod hatches.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:pod_spawned_mimic",
+    "name": "Mimic",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A pod-spawned creature retains all the knowledge of its original. It can impersonate the original perfectly except for its lack of emotion. This emotionlessness can be detected with a successful DC 20 Sense Motive check. A creature familiar with the original gains a +5 circumstance bonus on this check. If the pod­spawned creature feigns sincere emotion, the Sense Motive check is opposed by its Bluff check instead. Pod­spawned creatures resemble the original down to hair and blood. Noticing small physical imperfections requires a successful Perception check with a DC determined by the spawning bodythief's Disguise check, made when the pod hatches."
+      },
+      {
+        "key": "KEY",
+        "value": "Pod-Spawned ~ Mimic"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary"
+      }
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T14:10:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 325,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "record_key": "Pod-Spawned ~ Mimic",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

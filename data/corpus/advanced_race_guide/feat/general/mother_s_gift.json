@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-03T19:41:45Z",
+  "data": {
+    "key": "Mother's Gift",
+    "category": "general",
+    "name": "Mother's Gift",
+    "description": "You inherit a special boon from your hag parent.",
+    "effect": [
+      [
+        "ABILITYPOOL",
+        "Mother's Gift Option",
+        "1"
+      ]
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_feats.lst",
+    "sha256": "420384054e43adeb60135c7e379a4645e5817ea1f2e78a8de8c7c687fc510fec",
+    "line": 128,
+    "record_key": "Mother's Gift"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice",
+    "computed:pre_guard"
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "Unlike a chain shirt, chainmail covers the legs and arms of the wearer. The suit includes gauntlets.",
+    "key": "Chainmail (Base)",
+    "name": "Chainmail"
+  },
+  "license": "OGL",
+  "population": "in_scope",
+  "source": {
+    "kind": "desktop_ui_fixture",
+    "line": 1,
+    "path": "apps/desktop/src-tauri/fixtures_src/equip_chainmail_base.txt",
+    "record_key": "Chainmail (Base)"
+  }
+}

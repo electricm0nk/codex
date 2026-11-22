@@ -1,0 +1,62 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "General",
+    "cost_gp": 2635.0,
+    "description": "Level 8 Transmuter; Protection - Good lock (DC 30), explosive runes (Reflex DC 16); Opposition Schools - Illusion, necromancy; Spells - 4.beast shape II(S), calcific touch(S), confusion, dimension door, stone shape(S); 3.arcane sight, dispel magic, explosive runes, lightning bolt, greater magic weapon(S), slow(S); 2.alter self(S), flaming sphere, knock(S), pyrotechnics(S), resist energy, see invisibility, whispering wind(S); 1.animate rope(S), charm person, color spray(OP), erase(S), floating disk, hush, mage armor, magic missile, protection from chaos, unseen servant; Preparation Ritual - Defensive Transmutation",
+    "key": "Tome of the Transmuter",
+    "name": "Tome of the Transmuter",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "COST",
+        "value": "2635"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.123"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Preparation Ritual ~ Defensive Transmutation"
+      },
+      {
+        "key": "SPROP",
+        "value": "Level 8 Transmuter"
+      },
+      {
+        "key": "SPROP",
+        "value": "Protection - Good lock (DC 30), explosive runes (Reflex DC 16)"
+      },
+      {
+        "key": "SPROP",
+        "value": "Opposition Schools - Illusion, necromancy"
+      },
+      {
+        "key": "SPROP",
+        "value": "Spells - 4.beast shape II(S), calcific touch(S), confusion, dimension door, stone shape(S); 3.arcane sight, dispel magic, explosive runes, lightning bolt, greater magic weapon(S), slow(S); 2.alter self(S), flaming sphere, knock(S), pyrotechnics(S), resist energy, see invisibility, whispering wind(S); 1.animate rope(S), charm person, color spray(OP), erase(S), floating disk, hush, mage armor, magic missile, protection from chaos, unseen servant"
+      },
+      {
+        "key": "SPROP",
+        "value": "Preparation Ritual - Defensive Transmutation"
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-16T05:06:54Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 20,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_equip_general.lst",
+    "record_key": "Tome of the Transmuter",
+    "sha256": "9b2e23c56f9f7c79d3b52169c9fc786a3bad00c8587abc03796c306d122de9f5"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

@@ -1,0 +1,77 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Dual Disciple ~ Clairsentience Secondary Discipline",
+    "name": "Clairsentience Secondary Discipline",
+    "class": "Dual Disciple",
+    "description": "You have a secondary discipline of Clairsentience.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Dual Disciple ~ Clairsentience Secondary Discipline"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "PsionClassFeatures.SpecialQuality.SecondaryDiscipline"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Clairsentience Discipline"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ClairsentienceDisciplineLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You have a secondary discipline of Clairsentience."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Psion Class Feature|AUTOMATIC|Clairsentience ~ Recovered Information|PRECLASS:1,Psion=10"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Psion Class Feature|AUTOMATIC|Clairsentience ~ Alter the Waves|PRECLASS:1,Psion=15"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Clairsentience Power List"
+      },
+      {
+        "key": "BONUS",
+        "value": "CASTERLEVEL|SCHOOL.Clairsentience|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ClairsentienceDisciplineLVL|PsionLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.274"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1968,
+    "record_key": "Dual Disciple ~ Clairsentience Secondary Discipline"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

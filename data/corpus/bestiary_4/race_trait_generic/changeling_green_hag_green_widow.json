@@ -1,0 +1,58 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "The changeling gains a +2 racial bonus on Bluff checks against creatures that are sexually attracted to her.",
+    "key": "Changeling ~ Green Hag Green Widow",
+    "name": "Green Widow (Green Hag)",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Changeling ~ Green Hag Green Widow"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "Green Widow"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Hag Racial Trait.SpecialQuality.Special Quality.Applied Bonus"
+      },
+      {
+        "key": "DESC",
+        "value": "The changeling gains a +2 racial bonus on Bluff checks against creatures that are sexually attracted to her."
+      },
+      {
+        "key": "BONUS",
+        "value": "SITUATION|Bluff=against sexually attracted creatures|2|TYPE=Racial"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.xx"
+      },
+      {
+        "key": "ASPECT",
+        "value": "RacialSkillModifier|+2 Bluff vs. sexually attracted creatures"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 35,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/changeling/changeling_abilities_race.lst",
+    "record_key": "Changeling ~ Green Hag Green Widow",
+    "sha256": "ea1837e5672dcd358434489df12eb86cf7d50127cd9c60da090a6e95e32e011e"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

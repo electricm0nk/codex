@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Clan Warden ~ On the Scene",
+    "name": "On the Scene",
+    "description": "Your natural speed and agility are bolstered while within your home community, granting you a +5 ft. morale bonus to your base speed.  This ability does not function if you are wearing medium or heavy armor or when carrying a medium or heavy load.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Clan Warden ~ On the Scene"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "InquisitorClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "Your natural speed and agility are bolstered while within your home community, granting you a +5 ft. morale bonus to your base speed.  This ability does not function if you are wearing medium or heavy armor or when carrying a medium or heavy load."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.340"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_apg.lst",
+    "sha256": "d4ac8a9a33149811222e6affeba9ba1553ced3ba7f6beb6be722e89ddfc9a51f",
+    "line": 72,
+    "record_key": "Clan Warden ~ On the Scene"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

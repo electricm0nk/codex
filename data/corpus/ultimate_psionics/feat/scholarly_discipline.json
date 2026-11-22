@@ -1,0 +1,29 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:38:17Z",
+  "data": {
+    "key": "Scholarly Discipline",
+    "category": "General",
+    "name": "Scholarly Discipline",
+    "description": "Your psion manifester level and wizard caster level gain a +2 bonus as long as this bonus doesn't raise your manifester level or caster level above your current Hit Dice. [NOT IMPLEMENTED]",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=Special Ability,TYPE.PsionicDiscipline",
+      "PREABILITY:1,CATEGORY=Special Ability,TYPE.ArcaneSchool"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_feats.lst",
+    "sha256": "528096cb97ebe8255b9f9fe67682dd7e045f53b65e32295cd57967002eccb137",
+    "line": 302,
+    "record_key": "Scholarly Discipline"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,55 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Ghaele ~ Light Form",
+    "delivery": "Supernatural",
+    "description": "A ghaele can shift between its solid body and one made of light as a standard action. In solid form, it cannot fly or use light rays. In light form, it can fly and gains the incorporeal quality--it can make light ray attacks or use spell-like abilities in this form, but can't make physical attacks or cast spells. This ability otherwise functions similarly to a bralani's wind form ability.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "beastiary:monster_ability:ghaele_light_form",
+    "name": "Light Form",
+    "owners": [
+      "beastiary:monster:azata_ghaele"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A ghaele can shift between its solid body and one made of light as a standard action. In solid form, it cannot fly or use light rays. In light form, it can fly and gains the incorporeal quality--it can make light ray attacks or use spell-like abilities in this form, but can't make physical attacks or cast spells. This ability otherwise functions similarly to a bralani's wind form ability."
+      },
+      {
+        "key": "KEY",
+        "value": "Ghaele ~ Light Form"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.25"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      }
+    ],
+    "source_page": "p.25",
+    "traits": []
+  },
+  "ingested_at": "2026-08-15T01:24:18Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 135,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "record_key": "Ghaele ~ Light Form",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

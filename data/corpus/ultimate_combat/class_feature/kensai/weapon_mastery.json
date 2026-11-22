@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Kensai ~ Weapon Mastery",
+    "name": "Weapon Mastery",
+    "class": "Kensai",
+    "description": "At 20th level, a kensai gains weapon mastery with his favored weapon, as the fighter class ability. This ability replaces true magus.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Kensai ~ Weapon Mastery"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MagusClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 20th level, a kensai gains weapon mastery with his favored weapon, as the fighter class ability. This ability replaces true magus."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Weapon Mastery|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.55"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/support/uc_abilities_class_um.lst",
+    "sha256": "b8cff28b7be84f4f3c6b650c3e375a3027ff13bf4226233a514d34385bdfb67a",
+    "line": 27,
+    "record_key": "Kensai ~ Weapon Mastery"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

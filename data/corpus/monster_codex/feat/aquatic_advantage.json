@@ -1,0 +1,29 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Aquatic Advantage",
+    "category": "General",
+    "name": "Aquatic Advantage",
+    "description": "Foes without a swim speed provoke attacks of opportunity from you underwater. A creature that lacks a swim speed provokes an attack of opportunity from you when it attacks you underwater. You don't get an attack of opportunity if the attacker is under the effects of freedom of movement.",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=FEAT,Combat Reflexes",
+      "PREMOVE:1,Swim=1"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/monster_codex/mc_feats.lst",
+    "sha256": "c4261bd4df0271759c3cf8949dcdfd7112b51560c14cf91a3b3937bdf0db98e7",
+    "line": 7,
+    "record_key": "Aquatic Advantage"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

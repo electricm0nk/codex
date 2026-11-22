@@ -1,0 +1,18 @@
+{
+  "data": {
+    "key": "Night plate III",
+    "name": "Night plate III"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 56,
+    "path": "starfinder/paizo/armory/sa_profs_armor.lst",
+    "record_key": "Night plate III",
+    "sha256": "48b29a3452e63c792f87a0ede85365a4e88da4edb184f9bbed2b6f5587e4eb21"
+  },
+  "unit_id": "armory:proficiency:night_plate_iii"
+}

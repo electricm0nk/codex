@@ -1,0 +1,174 @@
+codex verify — mode: full, jobs: 2
+repo:  /home/ubuntu/workspace/repos/codex
+logs:  /tmp/codex-verify-mkPs8F
+---------------------------------------------------------------
+==> preflight-disk — disk budget check before any build starts
+    repo filesystem (/home/ubuntu/workspace/repos/codex, mounted at /): 51% used, 723G available
+    scratch-log filesystem (/tmp/codex-verify-mkPs8F, mounted at /): 51% used, 723G available
+    PASS  preflight-disk  (disk budget OK)
+---------------------------------------------------------------
+==> preflight-oracle — scripts/fetch-pcgen-oracle.sh --check
+    PASS  preflight-oracle  (oracle at pin 7f818006e371188e5717fd18d74d18a420747fc6)
+---------------------------------------------------------------
+==> oracle-pin-selftest — scripts/tests/test_fetch_pcgen_oracle.sh
+    PASS  oracle-pin-selftest  (11 passed, 0 failed)
+---------------------------------------------------------------
+==> producer-selftest — python3 -m unittest scripts/tests/test_pf1e_dashboard_producer.py
+    PASS  producer-selftest  (30 cases passed)
+---------------------------------------------------------------
+==> doneness-selftest — python3 -m unittest scripts/tests/test_doneness.py
+    PASS  doneness-selftest  (5 cases passed)
+---------------------------------------------------------------
+==> pi-redaction-selftest — python3 -m unittest scripts/tests/test_pi_redaction.py
+    PASS  pi-redaction-selftest  (49 cases passed)
+---------------------------------------------------------------
+==> provenance-selftest — python3 -m unittest scripts/tests/test_provenance.py
+    PASS  provenance-selftest  (32 cases passed)
+---------------------------------------------------------------
+==> site-status-frozen-check — python3 scripts/site/check_frozen_status.py
+    PASS  site-status-frozen-check  (site/status-data.json is frozen at 100%)
+---------------------------------------------------------------
+==> site-status-frozen-check-selftest — python3 -m unittest scripts/tests/test_check_frozen_status.py
+    PASS  site-status-frozen-check-selftest  (6 cases passed)
+---------------------------------------------------------------
+==> site-dashboard-pi-gate — declared-PI names vs. what is committed under site/dashboard/
+    PASS  site-dashboard-pi-gate  (22 file(s) scanned against 1612 declared-PI name(s), zero leaked)
+---------------------------------------------------------------
+==> build-public-status-selftest — python3 -m unittest scripts/tests/test_build_public_status.py
+    PASS  build-public-status-selftest  (40 cases passed)
+---------------------------------------------------------------
+==> site-public-status-check — scripts/site/build_public_status.py --check
+    PASS  site-public-status-check  (site/status-data.json and site/status-data/*.json are current)
+---------------------------------------------------------------
+==> site-public-status-pi-gate — declared-PI names vs. what is committed under site/status-data*
+    PASS  site-public-status-pi-gate  (38 file(s) scanned against 1612 declared-PI name(s), zero leaked)
+---------------------------------------------------------------
+==> site-asset-stamp-check — scripts/site/stamp_asset_versions.py --check
+    PASS  site-asset-stamp-check  (site/*.html cache-busting stamps match site/styles.css)
+---------------------------------------------------------------
+==> reachability-audit-selftest — python3 -m unittest scripts/tests/test_reachability_audit.py
+    PASS  reachability-audit-selftest  (11 cases passed)
+---------------------------------------------------------------
+==> reachability-audit — python3 scripts/reachability_audit.py
+    PASS  reachability-audit  (reachable ceiling 100.00%)
+---------------------------------------------------------------
+==> groundtruth-guard-selftest — python3 -m unittest scripts/tests/test_ground_truth_evidence_guard.py scripts/tests/test_sample_ground_truth_units.py
+    PASS  groundtruth-guard-selftest  (17 cases passed)
+---------------------------------------------------------------
+==> supersession-gate-selftest — python3 -m unittest scripts/tests/test_supersession_register_gate.py
+    PASS  supersession-gate-selftest  (16 cases passed)
+---------------------------------------------------------------
+==> shape-coverage-standing-gate-selftest — python3 -m unittest scripts/tests/test_shape_coverage_standing_gate.py
+    PASS  shape-coverage-standing-gate-selftest  (20 cases passed)
+---------------------------------------------------------------
+==> shape-coverage-standing-gate — python3 scripts/shape_coverage_standing_gate.py
+    PASS  shape-coverage-standing-gate  (population=2485 unclassified=0 no_record=0 corpus_sha=7f818006e371188e5717fd18d74d18a420747fc6)
+---------------------------------------------------------------
+==> cycle-scope-gate-selftest — python3 -m unittest scripts/tests/test_cycle_scope_gate.py
+    PASS  cycle-scope-gate-selftest  (51 cases passed)
+---------------------------------------------------------------
+==> missing-engine-tables — python3 scripts/missing_engine_tables.py --check
+    PASS  missing-engine-tables  (population=0 kinds=0)
+---------------------------------------------------------------
+==> denominator-gate — python3 scripts/denominator_gate.py --check
+    PASS  denominator-gate  (files_checked=367 violations=0)
+---------------------------------------------------------------
+==> figure-provenance — python3 scripts/denominator_gate.py --check-provenance
+    PASS  figure-provenance  (files_checked=297 figures_examined=631 violations=0)
+---------------------------------------------------------------
+==> corpus-bundle — node scripts/gen-corpus-bundle.mjs, then 0 residue hits
+    PASS  corpus-bundle  (files_copied=14029 pattern_sync=ok scoped_residue_hits=0 full_gate=live_files=0 live_hits=0 verdict=PASS)
+---------------------------------------------------------------
+==> tauri-resources-tracked — every bundle.resources path has >=1 git-tracked file
+    PASS  tauri-resources-tracked  (resources_checked=7 verdict=PASS)
+---------------------------------------------------------------
+==> pcgen-residue-gate — python3 scripts/pcgen_residue_gate.py --check --closure
+    PASS  pcgen-residue-gate  (live_files=0 live_hits=0 verdict=PASS)
+---------------------------------------------------------------
+==> crate-wall — codex-ingest reaches codex-desktop only via [dev-dependencies]
+    PASS  crate-wall  (0 codex-ingest in normal+build graph, dep direction codex-ingest->codex confirmed, manifest + residue gate clean)
+---------------------------------------------------------------
+==> token-coverage-selftest — python3 -m unittest scripts/tests/test_token_coverage.py
+    PASS  token-coverage-selftest  (21 cases passed)
+---------------------------------------------------------------
+==> token-coverage — python3 scripts/token_coverage.py --check
+    PASS  token-coverage  (non_done=0 tokened=0 token_less=0 refused=0 refused_non_done=0 token_types=233 shapes=0 verdict=PASS)
+---------------------------------------------------------------
+==> pi-sweep — Product-Identity blacklist over src/rules_core/rules_tables
+    PASS  pi-sweep  (11 hits over src/rules_core/rules_tables, 11 baseline rows)
+---------------------------------------------------------------
+==> declared-pi-audit — corpus NAMEISPI:/DESCISPI: declarations vs. what shipped
+    PASS  declared-pi-audit  (clean)
+---------------------------------------------------------------
+==> audit-selftest — scripts/tests/test_identifier_discipline_audit.sh
+    PASS  audit-selftest  (28 passed, 0 failed)
+---------------------------------------------------------------
+==> reclaim-selftest — scripts/tests/test_reclaim_orphan_targets.sh
+    PASS  reclaim-selftest  (13 passed, 0 failed)
+---------------------------------------------------------------
+==> driver-selftest — scripts/tests/test_run_desktop_driver.sh
+    PASS  driver-selftest  (7 passed, 0 failed)
+---------------------------------------------------------------
+==> corpus-sweep-selftest — scripts/tests/test_corpus_literal_sweep.sh
+    PASS  corpus-sweep-selftest  (15 passed, 0 failed)
+---------------------------------------------------------------
+==> corpus-trap-audit-selftest — scripts/tests/test_corpus_trap_audit_baseline.sh
+    PASS  corpus-trap-audit-selftest  (14 passed, 0 failed)
+---------------------------------------------------------------
+==> root-lib — cargo test --locked --lib -j 2  (repo root)
+    PASS  root-lib  (2723 passed)
+---------------------------------------------------------------
+==> root-full — cargo test --locked --no-fail-fast -j 2  (repo root)
+    building ~490 test binaries; this is the slow one
+    PASS  root-full  (6370 passed across 290 suites, all 283 tests/*.rs suites executed)
+---------------------------------------------------------------
+==> ingest-full — cargo test --locked --no-fail-fast -p codex-ingest -j 2  (repo root)
+    PASS  ingest-full  (1763 passed across 166 suites, all 119 tests/*.rs suites executed)
+---------------------------------------------------------------
+==> desktop — cargo test --locked -j 2  (apps/desktop/src-tauri)
+    PASS  desktop  (615 passed)
+---------------------------------------------------------------
+==> corpus-sweep — cargo run --locked --bin corpus_literal_sweep  (repo root)
+    PASS  corpus-sweep  (48706 records examined of 51523 read, 413314 tokens compared (9 synthesized), 51463 digests checked, 0 findings)
+---------------------------------------------------------------
+==> sheet-rules-check — cargo run --locked -p codex-ingest --bin sheet_rule_convert -- --check  (repo root)
+    PASS  sheet-rules-check  (records=49450 converted=49450 refused=0 rules=73363 var_tables=6211 verdict=PASS (409.8s))
+---------------------------------------------------------------
+==> corpus-trap-audit — timeout 300s cargo run --locked --bin v06_corpus_trap_report -- --audit --json
+    PASS  corpus-trap-audit  (records_examined=27681 defects[wiring-class-mismatch=0 disabled-line=165 key-differs-from-name=650 mod-record=2117 shared-name-distinct-records=249] traps=407 — all defect kinds at their registered counts)
+---------------------------------------------------------------
+==> supersession-gate — python3 scripts/supersession_register_gate.py
+    PASS  supersession-gate  (116 objects, all clean)
+---------------------------------------------------------------
+==> frontend-install — npm ci if node_modules is absent  (apps/desktop)
+    PASS  frontend-install  (node_modules present)
+---------------------------------------------------------------
+==> frontend-test — npm test  (apps/desktop)
+    PASS  frontend-test  (125/125 files)
+---------------------------------------------------------------
+==> frontend-typecheck — npm run typecheck  (apps/desktop)
+    PASS  frontend-typecheck  (tsc --noEmit clean)
+---------------------------------------------------------------
+==> clippy — cargo clippy --locked --tests -j 2  (THREE crates)
+    PASS  clippy  (root:0 desktop:0 ingest:0 warnings, 0 errors)
+---------------------------------------------------------------
+==> class-dump — cargo run --locked --bin v06_class_state_dump  (repo root)
+    PASS  class-dump  (31/31 computing)
+---------------------------------------------------------------
+==> class-census — cargo run --locked --bin class_census -- --json  (repo root)
+    PASS  class-census  (ids=137 computed=63 prestige_alone_blocked=74 mix_panel_computed=185 prestige_mix_computed=68; OK class-coverage table matches the census (ids=137 computed=63 prestige_swept=74 mix_panel_computed=185 of 185))
+---------------------------------------------------------------
+SUMMARY
+  passed:  51  preflight-disk preflight-oracle oracle-pin-selftest producer-selftest doneness-selftest pi-redaction-selftest provenance-selftest site-status-frozen-check site-status-frozen-check-selftest site-dashboard-pi-gate build-public-status-selftest site-public-status-check site-public-status-pi-gate site-asset-stamp-check reachability-audit-selftest reachability-audit groundtruth-guard-selftest supersession-gate-selftest shape-coverage-standing-gate-selftest shape-coverage-standing-gate cycle-scope-gate-selftest missing-engine-tables denominator-gate figure-provenance corpus-bundle tauri-resources-tracked pcgen-residue-gate crate-wall token-coverage-selftest token-coverage pi-sweep declared-pi-audit audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest corpus-trap-audit-selftest root-lib root-full ingest-full desktop corpus-sweep sheet-rules-check corpus-trap-audit supersession-gate frontend-install frontend-test frontend-typecheck clippy class-dump class-census
+
+BASELINE NOTES (not failures — update deliberately):
+  - BASELINE_ROOT_LIB_TESTS baseline is stale: 2587 recorded, 2723 measured. Update /home/ubuntu/workspace/repos/codex/scripts/verify-baselines.env.
+  - BASELINE_ROOT_FULL_TESTS baseline is stale: 6203 recorded, 6370 measured. Update /home/ubuntu/workspace/repos/codex/scripts/verify-baselines.env.
+  - BASELINE_ROOT_TEST_BINARIES baseline is stale: 285 recorded, 290 measured. Update /home/ubuntu/workspace/repos/codex/scripts/verify-baselines.env.
+  - BASELINE_INGEST_FULL_TESTS baseline is stale: 1679 recorded, 1763 measured. Update /home/ubuntu/workspace/repos/codex/scripts/verify-baselines.env.
+  - BASELINE_INGEST_TEST_BINARIES baseline is stale: 157 recorded, 166 measured. Update /home/ubuntu/workspace/repos/codex/scripts/verify-baselines.env.
+  - BASELINE_DESKTOP_TESTS baseline is stale: 612 recorded, 615 measured. Update /home/ubuntu/workspace/repos/codex/scripts/verify-baselines.env.
+
+RESULT: PASS
+logs in /tmp/codex-verify-mkPs8F
+EXIT=0

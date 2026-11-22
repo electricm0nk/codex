@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Rule - Use Automatic Bonus Progression ~ Magic Items Removed",
+    "name": "Rule - Use Automatic Bonus Progression ~ Magic Items Removed",
+    "class": "Rule - Use Automatic Bonus Progression",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "TYPE",
+        "value": "OptionalRules"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Internal,Rule - Use Automatic Bonus Progression"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ABP_LVL|2"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.156"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst",
+    "sha256": "2becbb0524bd4c367cc1273434c20bcd8e42e3e08abd372f99b005e69e8c4725",
+    "line": 26,
+    "record_key": "Rule - Use Automatic Bonus Progression ~ Magic Items Removed"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

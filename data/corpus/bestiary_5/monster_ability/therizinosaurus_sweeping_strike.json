@@ -1,0 +1,55 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Therizinosaurus ~ Sweeping Strike",
+    "delivery": "Extraordinary",
+    "description": "As a full-round action, a therizinosaurus can hunker down and make a great, sweeping attack with its claws against up to four adjacent foes. The dinosaur makes an attack roll against each target, inflicting claw damage on a successful hit.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "bestiary_5:monster_ability:therizinosaurus_sweeping_strike",
+    "name": "Sweeping Strike",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "As a full-round action, a therizinosaurus can hunker down and make a great, sweeping attack with its claws against up to four adjacent foes. The dinosaur makes an attack roll against each target, inflicting claw damage on a successful hit."
+      },
+      {
+        "key": "KEY",
+        "value": "Therizinosaurus ~ Sweeping Strike"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.84"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary.TherizinosaurusRacialTrait"
+      }
+    ],
+    "source_page": "p.84",
+    "traits": [
+      "TherizinosaurusRacialTrait"
+    ]
+  },
+  "ingested_at": "2026-08-23T15:23:07Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 40,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_5/b5_abilities_race.lst",
+    "record_key": "Therizinosaurus ~ Sweeping Strike",
+    "sha256": "da3b63848f2dea0a3cc2088f288e93a85921513ab30d601d05330ceac6db664c"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

@@ -1,0 +1,43 @@
+{
+  "codex_generated_name": false,
+  "completeness": "chassis_only",
+  "data": {
+    "key": "Demon Talon ~ Colossal",
+    "name": "Demon Talon ~ Colossal",
+    "raw_tokens": [
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "PRESIZEEQ",
+        "value": "C"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Claw|WIELDCATEGORY|4"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Claw,Weapon.Natural.Melee.Weapon Group Natural.Finesseable.Bludgeoning.Slashing,*2,4d6"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T16:43:17Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 17,
+    "path": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_2/botd2_templates.lst",
+    "record_key": "Demon Talon ~ Colossal",
+    "sha256": "07b373534c84464f24a6cfa5278912ea1081076e1739c0486f843d74e65c93d6"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

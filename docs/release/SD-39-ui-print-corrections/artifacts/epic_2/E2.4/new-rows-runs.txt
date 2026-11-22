@@ -1,0 +1,12 @@
+FAIL  sheet-layout-title-and-columns  -- expected string missing: 'Character Details'; expected string missing: 'Abilities'; expected string missing: 'Skills'
+FAIL  sheet-progression-drawer-open  -- expected string missing: 'Skill points: 7'
+PASS  sheet-progression-drawer-close-x
+PASS  sheet-progression-drawer-close-escape
+PASS  load-seed-wizard-fireball
+PASS  open-seed-elowen
+4/6 green, 2 red, 0 blocked, 0 manual, 0 not-run (M = 6 rows)
+FAIL  sheet-layout-title-and-columns  -- expected string missing: 'Character Details'; expected string missing: 'Abilities'; expected string missing: 'Skills'
+PASS  sheet-progression-drawer-open
+1/2 green, 1 red, 0 blocked, 0 manual, 0 not-run (M = 2 rows)
+PASS  sheet-layout-title-and-columns
+1/1 green, 0 red, 0 blocked, 0 manual, 0 not-run (M = 1 rows)

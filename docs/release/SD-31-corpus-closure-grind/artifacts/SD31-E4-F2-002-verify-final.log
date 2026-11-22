@@ -1,0 +1,67 @@
+codex verify — mode: full, jobs: 2
+repo:  /home/ubuntu/workspace/repos/codex/.claude/worktrees/wf_0110693c-cd9-2
+logs:  /tmp/codex-verify-DIbcre
+---------------------------------------------------------------
+==> preflight-disk — disk budget check before any build starts
+    repo filesystem (/home/ubuntu/workspace/repos/codex/.claude/worktrees/wf_0110693c-cd9-2, mounted at /): 44% used, 543G available
+    scratch-log filesystem (/tmp/codex-verify-DIbcre, mounted at /): 44% used, 543G available
+    PASS  preflight-disk  (disk budget OK)
+---------------------------------------------------------------
+==> preflight-oracle — scripts/fetch-pcgen-oracle.sh --check
+    PASS  preflight-oracle  (oracle at pin 7f818006e371188e5717fd18d74d18a420747fc6)
+---------------------------------------------------------------
+==> oracle-pin-selftest — scripts/tests/test_fetch_pcgen_oracle.sh
+    PASS  oracle-pin-selftest  (11 passed, 0 failed)
+---------------------------------------------------------------
+==> producer-selftest — python3 -m unittest scripts/tests/test_pf1e_dashboard_producer.py
+    PASS  producer-selftest  (5 cases passed)
+---------------------------------------------------------------
+==> site-dashboard-selftest — bash scripts/tests/test_publish_site_dashboard.sh
+    PASS  site-dashboard-selftest  (6 passed, 0 failed)
+---------------------------------------------------------------
+==> site-dashboard-check — scripts/publish-site-dashboard.sh --check
+    FAIL  site-dashboard-check  (exit 1 — /tmp/codex-verify-DIbcre/site-dashboard-check.log)
+---------------------------------------------------------------
+==> reachability-audit-selftest — python3 -m unittest scripts/tests/test_reachability_audit.py
+    PASS  reachability-audit-selftest  (11 cases passed)
+---------------------------------------------------------------
+==> reachability-audit — python3 scripts/reachability_audit.py
+    PASS  reachability-audit  (reachable ceiling 98.95%)
+---------------------------------------------------------------
+==> groundtruth-guard-selftest — python3 -m unittest scripts/tests/test_ground_truth_evidence_guard.py scripts/tests/test_sample_ground_truth_units.py
+    PASS  groundtruth-guard-selftest  (17 cases passed)
+---------------------------------------------------------------
+==> supersession-gate-selftest — python3 -m unittest scripts/tests/test_supersession_register_gate.py
+    PASS  supersession-gate-selftest  (16 cases passed)
+---------------------------------------------------------------
+==> pi-sweep — Product-Identity blacklist over src/rules_core/rules_tables
+    PASS  pi-sweep  (10 hits over src/rules_core/rules_tables, 10 baseline rows)
+---------------------------------------------------------------
+==> declared-pi-audit — corpus NAMEISPI:/DESCISPI: declarations vs. what shipped
+    PASS  declared-pi-audit  (clean)
+---------------------------------------------------------------
+==> audit-selftest — scripts/tests/test_identifier_discipline_audit.sh
+    PASS  audit-selftest  (28 passed, 0 failed)
+---------------------------------------------------------------
+==> reclaim-selftest — scripts/tests/test_reclaim_orphan_targets.sh
+    PASS  reclaim-selftest  (13 passed, 0 failed)
+---------------------------------------------------------------
+==> driver-selftest — scripts/tests/test_run_desktop_driver.sh
+    PASS  driver-selftest  (7 passed, 0 failed)
+---------------------------------------------------------------
+==> corpus-sweep-selftest — scripts/tests/test_corpus_literal_sweep.sh
+    PASS  corpus-sweep-selftest  (15 passed, 0 failed)
+---------------------------------------------------------------
+==> root-lib — cargo test --locked --lib -j 2  (repo root)
+    FAIL  root-lib  (cargo exit 101 — /tmp/codex-verify-DIbcre/root-lib.log)
+---------------------------------------------------------------
+==> root-full — cargo test --locked --no-fail-fast -j 2  (repo root)
+    building ~490 test binaries; this is the slow one
+
+--- CYCLE NOTE (sd31-pools-wire) ---
+Killed intentionally: root-lib FAILED on oracle_unrecognized_mystery_or_curse_alongside_the_canonical_one_stays_blocked
+(a test-premise staleness this cycle's OWN Heavens Mystery wiring caused -- see retro.py correction).
+Fixed in source (swapped the probe value to a synthetic non-corpus id), verified green via
+`cargo test --locked --lib pilot_compute::apg_canonical_choice_path_a_tests` against a separate
+check-only target dir. This log's own root-full/desktop stages therefore ran against a since-fixed
+lib and are not the authoritative verdict; a fresh, code-complete run follows below.

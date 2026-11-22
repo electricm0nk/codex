@@ -1,0 +1,76 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Arcanotheign ~ Energy Channel Aura",
+    "delivery": "Supernatural",
+    "description": "On its turn, the herald can channel energy (Will DC %1 half) to deal 2d6 points of acid, cold, electricity, or fire damage to each creature in its aura. A creature struck by its incorporeal touch attack also takes this damage (no saving throw).",
+    "description_variables": [
+      "EnergyChannelDC"
+    ],
+    "facet": "SpecialQuality",
+    "key": "inner_sea_gods:monster_ability:arcanotheign_energy_channel_aura",
+    "name": "Energy Channel Aura",
+    "owners": [
+      "inner_sea_gods:monster:arcanotheign"
+    ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Energy Channel Aura"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(30 ft., DC %1)|EnergyChannelDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EnergyChannelDC|10+(HD/2)+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EnergyChannelDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Energy Channel Aura)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "EnergyChannelDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "On its turn, the herald can channel energy (Will DC %1 half) to deal 2d6 points of acid, cold, electricity, or fire damage to each creature in its aura. A creature struck by its incorporeal touch attack also takes this damage (no saving throw).|EnergyChannelDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Arcanotheign ~ Energy Channel Aura"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.Aura"
+      }
+    ],
+    "source_page": null,
+    "traits": [
+      "Aura"
+    ]
+  },
+  "ingested_at": "2026-08-15T02:34:27Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 214,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities_races.lst",
+    "record_key": "Arcanotheign ~ Energy Channel Aura",
+    "sha256": "b309f3f779ee8d564aacff977e2a9119410a70844107ecd3e6bdc0170fe79ea8"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

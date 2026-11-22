@@ -1,0 +1,84 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Aegis ~ Tentacle",
+    "name": "Tentacle",
+    "class": "Aegis",
+    "description": "You grow a tentacle and gain a secondary natural attack with the tentacle that deals 1d4 points of damage.  You also gain the grab ability and get a +%1 bonus to grab.|TentacleBonusToGrab",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Aegis ~ Tentacle"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "AberrantCustomization.SpecialAttack"
+      },
+      {
+        "key": "DEFINE",
+        "value": "TentacleBonusToGrab|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You grow a tentacle and gain a secondary natural attack with the tentacle that deals 1d4 points of damage.  You also gain the grab ability and get a +%1 bonus to grab.|TentacleBonusToGrab"
+      },
+      {
+        "key": "STACK",
+        "value": "YES"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "NUMCHOICES=4|NOCHOICE"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Grab"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TentacleBonusToGrab|-2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TentacleBonusToGrab|2"
+      },
+      {
+        "key": "COST",
+        "value": "1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.262"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Tentacle,Weapon.Natural.Melee.Bludgeoning,*1,1d4"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1719,
+    "record_key": "Aegis ~ Tentacle"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

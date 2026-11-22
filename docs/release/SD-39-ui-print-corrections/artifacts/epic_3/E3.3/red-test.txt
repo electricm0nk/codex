@@ -1,0 +1,12 @@
+    at nextResolve (node:internal/modules/esm/hooks:748:28)
+    at resolveBase (file:///home/ubuntu/workspace/repos/codex/.worktrees/sd39-main/apps/desktop/node_modules/tsx/dist/register-tkXbOgAS.mjs:2:8145)
+    at async resolveDirectory (file:///home/ubuntu/workspace/repos/codex/.worktrees/sd39-main/apps/desktop/node_modules/tsx/dist/register-tkXbOgAS.mjs:2:9225)
+    at async resolve (file:///home/ubuntu/workspace/repos/codex/.worktrees/sd39-main/apps/desktop/node_modules/tsx/dist/register-tkXbOgAS.mjs:2:11935)
+    at async nextResolve (node:internal/modules/esm/hooks:748:22)
+    at async Hooks.resolve (node:internal/modules/esm/hooks:240:24)
+    at async handleMessage (node:internal/modules/esm/worker:199:18) {
+  code: 'ERR_MODULE_NOT_FOUND',
+  url: 'file:///home/ubuntu/workspace/repos/codex/.worktrees/sd39-main/apps/desktop/src/characterHub/MarketDialog'
+}
+
+Node.js v22.23.4

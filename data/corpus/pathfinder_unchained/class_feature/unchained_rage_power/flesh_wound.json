@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Unchained Rage Power ~ Flesh Wound",
+    "name": "Flesh Wound",
+    "class": "Unchained Barbarian",
+    "description": "Once per day, you can avoid serious harm from an attack. You attempt a Fortitude save with a DC equal to the damage that would be dealt by the attack. If you succeed, you take no damage from the attack. If you fail, you take half damage from the attack and the damage is nonlethal. You must elect to use this ability after the attack roll is made, but before the damage is rolled.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Unchained Rage Power ~ Flesh Wound"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Unchained Rage Power.SpecialAttack.Extraordinary"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "RagePowersPrereqLVL,10"
+      },
+      {
+        "key": "SERVESAS",
+        "value": "ABILITY=Special Ability|Rage Power ~ Flesh Wound"
+      },
+      {
+        "key": "DESC",
+        "value": "Once per day, you can avoid serious harm from an attack. You attempt a Fortitude save with a DC equal to the damage that would be dealt by the attack. If you succeed, you take no damage from the attack. If you fail, you take half damage from the attack and the damage is nonlethal. You must elect to use this ability after the attack roll is made, but before the damage is rolled."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.11"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Rage"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per Day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst",
+    "sha256": "2becbb0524bd4c367cc1273434c20bcd8e42e3e08abd372f99b005e69e8c4725",
+    "line": 354,
+    "record_key": "Unchained Rage Power ~ Flesh Wound"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

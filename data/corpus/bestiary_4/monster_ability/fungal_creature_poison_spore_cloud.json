@@ -1,0 +1,49 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Fungal Creature ~ Poison Spore Cloud",
+    "delivery": "Extraordinary",
+    "description": "Once per day, a fungal creature can release a choking cloud of spores in a 15-foot-radius spread that lingers in the air for 10 rounds. This cloud functions as an inhaled poison. Any breathing creature in the cloud must succeed at a Fortitude save or inhale the spores. A creature that remains in the area of the spore cloud must continue to attempt Fortitude saves against its effects. Multiple spore clouds from multiple fungal creatures require multiple saves from any creature in an area where the clouds overlap.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:fungal_creature_poison_spore_cloud",
+    "name": "Poison Spore Cloud",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Once per day, a fungal creature can release a choking cloud of spores in a 15-foot-radius spread that lingers in the air for 10 rounds. This cloud functions as an inhaled poison. Any breathing creature in the cloud must succeed at a Fortitude save or inhale the spores. A creature that remains in the area of the spore cloud must continue to attempt Fortitude saves against its effects. Multiple spore clouds from multiple fungal creatures require multiple saves from any creature in an area where the clouds overlap."
+      },
+      {
+        "key": "KEY",
+        "value": "Fungal Creature ~ Poison Spore Cloud"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary"
+      }
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T14:10:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 725,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "record_key": "Fungal Creature ~ Poison Spore Cloud",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

@@ -1,0 +1,2 @@
+     Running `/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/rules_tables_package --check`
+rules_tables_package: tables=281 rows_bytes=13291625 pi_files=9 verdict=PASS

@@ -1,0 +1,55 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Arcanotheign ~ Constant Spells",
+    "delivery": "SpellLike",
+    "description": "The Arcanotheign is constantly under the effects of the following spells: Arcane Sight, Protection from Chaos/Evil/Good/Law.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "inner_sea_gods:monster_ability:arcanotheign_constant_spells",
+    "name": "Constant Spells",
+    "owners": [
+      "inner_sea_gods:monster:arcanotheign"
+    ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Arcane Sight ~ Constant"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "The Arcanotheign is constantly under the effects of the following spells: Arcane Sight, Protection from Chaos/Evil/Good/Law."
+      },
+      {
+        "key": "KEY",
+        "value": "Arcanotheign ~ Constant Spells"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.SpellLike"
+      }
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "ingested_at": "2026-08-15T02:34:27Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 215,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities_races.lst",
+    "record_key": "Arcanotheign ~ Constant Spells",
+    "sha256": "b309f3f779ee8d564aacff977e2a9119410a70844107ecd3e6bdc0170fe79ea8"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

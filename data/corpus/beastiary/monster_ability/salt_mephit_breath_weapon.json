@@ -1,0 +1,80 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Salt Mephit ~ Breath Weapon",
+    "delivery": "Supernatural",
+    "description": "A salt mephit can unleash a 15' cone of salt crystals every 4 rounds as a standard action that deals 1d4 slashing damage. The salt also causes living creatures to be sickened for 3 rounds. A reflex save (DC %1) halves the damage and negates the sickened effect.",
+    "description_variables": [
+      "BreathWeaponDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:salt_mephit_breath_weapon",
+    "name": "Breath Weapon",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Breath Weapon"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(15' cone of salt crystals, 1d4 slashing damage, DC %1)|BreathWeaponDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BreathWeaponDC|10+(HD/2)+CON|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BreathWeaponDC|1|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BreathWeaponDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Breath Weapon)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BreathWeaponDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A salt mephit can unleash a 15' cone of salt crystals every 4 rounds as a standard action that deals 1d4 slashing damage. The salt also causes living creatures to be sickened for 3 rounds. A reflex save (DC %1) halves the damage and negates the sickened effect.|BreathWeaponDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Salt Mephit ~ Breath Weapon"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.202"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
+    "source_page": "p.202",
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T12:58:07Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 902,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "record_key": "Salt Mephit ~ Breath Weapon",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

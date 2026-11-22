@@ -1,0 +1,31 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T17:11:45Z",
+  "data": {
+    "corpus_key": "Dragon Cantrips",
+    "delivery": "Supernatural",
+    "description": "If the mythic dragon is able to cast arcane spells, it automatically knows all cantrips for its equivalent spellcasting class and can cast them at will.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "mythic_adventures:monster_ability:dragon_cantrips",
+    "name": "Dragon Cantrips",
+    "owners": [],
+    "source_page": "p.227",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities_race.lst",
+    "sha256": "9dc17c2fc1ba84d040fb04d6175b48b6ff52cc30ad113933d5dff3d75ea2652a",
+    "line": 344,
+    "record_key": "Dragon Cantrips"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

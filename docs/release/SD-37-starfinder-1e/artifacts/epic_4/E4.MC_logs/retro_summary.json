@@ -1,0 +1,175 @@
+{
+  "corrections": {
+    "by_corrector": {
+      "sd37-e4-1": 1,
+      "sd37-e4-2": 1,
+      "sd37-e4-3": 1
+    },
+    "by_subject": {
+      "E3.MC discovery (progress.md ## DISCOVERED, kanban E4.1 row)": 1,
+      "E4.3 receipt draft (own)": 1,
+      "progress.md DISCOVERED E3.4 -> E4.2 (SF skill bonus targets)": 1
+    },
+    "by_verification_method": {
+      "python census over data/starfinder-1e/sheet_rules/*/*/*.json grouped by kind and bonus_type: 16+32+204+203": 1,
+      "python3 -c \"import json;r=json.load(open('data/starfinder-1e/sheet_rules/core/class/soldier.json'));print(r[0]['prose'][0])\" -> {'family': {'StatBlock': 'Hit die'}, 'pieces': [{'Text': 'd1'}], ...}": 1,
+      "python3 census over data/starfinder-1e/sheet_rules/*/*/*.json target.Skill / target.SkillSituation.skill prefix (E4.2 receipt Figures)": 1
+    },
+    "caught_before": {},
+    "recent": [
+      {
+        "actor": "sd37-e4-1",
+        "id": "1791060770520-sd37-e4-1-eff05a",
+        "summary": "E3.MC discovery (progress.md ## DISCOVERED, kanban E4.1 row) claimed HD:1 per level is a class token with no package line; actual every SF class principal carries StatBlock \"Hit die\" prose \"d1\" (the HD term has a package source; only RaceHP was absent, and Con x level is a system rule)",
+        "ts": "2026-10-03T20:52:50Z"
+      },
+      {
+        "actor": "sd37-e4-2",
+        "id": "1791082061456-sd37-e4-2-265707",
+        "summary": "progress.md DISCOVERED E3.4 -> E4.2 (SF skill bonus targets) claimed SF skill bonuses resolve to the display records (ids display_*), not the base skill; actual on the E4.2 package 374 of 374 Skill targets and 20 of 20 SkillSituation targets name the base skill id; 0 name display_*",
+        "ts": "2026-10-04T02:47:41Z"
+      },
+      {
+        "actor": "sd37-e4-3",
+        "id": "1791084678976-sd37-e4-3-620ad2",
+        "summary": "E4.3 receipt draft (own) claimed SF package Ability-targeting rows: 535; actual 455 (252 ability-kind + 203 race-kind)",
+        "ts": "2026-10-04T03:31:18Z"
+      }
+    ],
+    "repeat_subjects": [],
+    "total": 3,
+    "with_blast_radius": 1
+  },
+  "deferrals": {
+    "open": 1,
+    "open_items": [
+      {
+        "actor": "sd37-e4-6",
+        "id": "1791121789146-sd37-e4-6-871e0a",
+        "reason": "LevelUpPlan grants cite Grant::source_table: TableCellRef whose rule_set is a Pathfinder rules_tables RuleSetId; no Starfinder package row can be named without changing level_up.rs (no E4 row); SF level-up is card E6.5's criterion",
+        "revisit": "E6.5 (SF level-up)",
+        "ts": "2026-10-04T13:49:49Z",
+        "what": "StarfinderAdapter::level_up returns the empty LevelUpPlan"
+      }
+    ],
+    "recent": [
+      {
+        "actor": "sd37-e4-6",
+        "id": "1791121789146-sd37-e4-6-871e0a",
+        "summary": "deferred StarfinderAdapter::level_up returns the empty LevelUpPlan: LevelUpPlan grants cite Grant::source_table: TableCellRef whose rule_set is a Pathfinder rules_tables RuleSetId; no Starfinder package row can be named without changing level_up.rs (no E4 row); SF level-up is card E6.5's criterion",
+        "ts": "2026-10-04T13:49:49Z"
+      }
+    ],
+    "resolved": 0,
+    "total": 1
+  },
+  "events": {
+    "by_actor": {
+      "codex-sd37": 4,
+      "sd37-e4-1": 2,
+      "sd37-e4-2": 1,
+      "sd37-e4-3": 2,
+      "sd37-e4-4": 2,
+      "sd37-e4-5": 1,
+      "sd37-e4-6": 1,
+      "sd37-e4-mc": 1
+    },
+    "by_origin": {
+      "agent": 8,
+      "derived": 6
+    },
+    "by_type": {
+      "correction": 3,
+      "deferral": 1,
+      "incident": 2,
+      "rework": 2,
+      "verification": 6
+    },
+    "total": 14
+  },
+  "generated_at": "2026-10-04T14:17:10Z",
+  "generated_by": "scripts/retro.py summary",
+  "git_join": {
+    "authors": 1,
+    "available": true,
+    "commits": 13,
+    "events_per_commit": 1.0769,
+    "top_authors": [
+      [
+        "Todd Hintzmann",
+        13
+      ]
+    ]
+  },
+  "incidents": {
+    "by_recurrence_key": {
+      "clippy-stage-not-in-card-verify": 1,
+      "liveness-check-cannot-see-process": 1
+    },
+    "recent": [
+      {
+        "actor": "sd37-e4-4",
+        "id": "1791092334271-sd37-e4-4-4588a5",
+        "summary": "two E4.4 verify drivers ran concurrently on one tree for ~1 min (first launched with nohup &, judged dead by a Monitor 'kill -0' that cannot see the Bash tool's process namespace; second launched via run_in_background); both wrote the same stage logs (detected by pgrep showed sheet_rule_convert --check with PPID = the first driver's pid)",
+        "ts": "2026-10-04T05:38:54Z"
+      },
+      {
+        "actor": "sd37-e4-5",
+        "id": "1791112026255-sd37-e4-5-7f306e",
+        "summary": "verify.sh --only clippy is red on tranche/17 before E4.5's lines: 11 -D warnings errors, all in lines earlier SD-37 cards added (src/rules_core/sheet_rule.rs:4123 manual_is_multiple_of, E2.2 f3457f59d9; codex-ingest convert.rs:519 tabs_in_doc_comments x4, E4.4 989353a2eb; pool_option.rs:368-373 doc_lazy_continuation x6, E4.2 c9a31b35bf); no earlier E-card receipt ran the clippy stage (detected by E4.5_verify.sh clippy stage (bash scripts/verify.sh --only clippy), locations from grep '-->' over the stage's clippy-root/clippy-ingest logs, owners from git blame)",
+        "ts": "2026-10-04T11:07:06Z"
+      }
+    ],
+    "recurring": [],
+    "silent": 0,
+    "time_lost_minutes": 3,
+    "total": 2
+  },
+  "log": {
+    "invalid_lines": 0,
+    "path": "/home/ubuntu/workspace/worktrees/codex-sd37/docs/retro/events",
+    "problems": [],
+    "shards": 8
+  },
+  "near_misses": {
+    "by_caught_by": {},
+    "escaped": 0,
+    "recent": [],
+    "total": 0
+  },
+  "rework": {
+    "by_cause": {
+      "implementation written first; RED confirmed only on the chosen-ability gap and by 7 planted mutations": 1,
+      "the 20th-row parse took the last 6 digit/dash tokens of the page tail, which on the Witchwarper page includes the Starfinder Enhanced note after the table": 1
+    },
+    "recent": [
+      {
+        "actor": "sd37-e4-3",
+        "id": "1791084679097-sd37-e4-3-442eef",
+        "summary": "redid sf_abilities.rs drafted before its tests (TDD order): implementation written first; RED confirmed only on the chosen-ability gap and by 7 planted mutations",
+        "ts": "2026-10-04T03:31:19Z"
+      },
+      {
+        "actor": "sd37-e4-4",
+        "id": "1791092277068-sd37-e4-4-e5b0a6",
+        "summary": "redid E4.4_progression_check.py SRD table parser: first run reported 2 false mismatches (witchwarper 5th/6th-level spells per day at class level 20, SRD 3/1 vs package 5/5): the 20th-row parse took the last 6 digit/dash tokens of the page tail, which on the Witchwarper page includes the Starfinder Enhanced note after the table",
+        "ts": "2026-10-04T05:37:57Z"
+      }
+    ],
+    "total": 2
+  },
+  "schema_version": 1,
+  "verification": {
+    "by_failing_stage": {
+      "clippy": 2
+    },
+    "fail_rate": 0.3333,
+    "failed_runs": 2,
+    "runs": 6
+  },
+  "window": {
+    "since": "2026-10-03T20:36:43+00:00",
+    "spec": "2026-10-03T20:36:43Z",
+    "until": null
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:34:12Z",
+  "data": {
+    "key": "Damnation of Memory",
+    "school": "Enchantment",
+    "level": 6,
+    "description": "You name one creature and excise all memory of that creature's involvement in events the targets remember. The targets either forget who exactly performed the named creature's deeds or assume some other individual performed them. Alternatively, you can name either one event lasting no more than %1 minutes or a single topic (defined at the GM's discretion) such as a shameful secret of the king that was recently revealed or a small revolt that was quelled messily, and erase all recollection of that subject from the minds of all creatures within the area. Memory of facts and topics that are common knowledge (information with a Knowledge check DC of 10 or less) cannot be stolen via this spell."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_spells.lst",
+    "sha256": "03a2e5e296f66a797d40d633aee1e6f08144e807e49c9923f72def8a78bab996",
+    "line": 17,
+    "record_key": "Damnation of Memory"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:prose_formula_segment",
+    "derived:range_keyword"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

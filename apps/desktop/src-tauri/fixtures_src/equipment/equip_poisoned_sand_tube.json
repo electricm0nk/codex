@@ -1,0 +1,46 @@
+{
+  "completeness": "full",
+  "data": {
+    "key": "Poisoned Sand Tube",
+    "name": "Poisoned Sand Tube",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "PROFICIENCY",
+        "value": "WEAPON|Poisoned Sand Tube"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weapon.Resizable.EasternWeapon.Eastern.Ranged.Martial.Blowgun"
+      },
+      {
+        "key": "COST",
+        "value": "1"
+      },
+      {
+        "key": "WT",
+        "value": "1"
+      },
+      {
+        "key": "DAMAGE",
+        "value": "Special"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Material ~ Wood"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.34"
+      }
+    ]
+  },
+  "license": "OGL",
+  "population": "in_scope",
+  "source": {
+    "kind": "desktop_ui_fixture",
+    "line": 1,
+    "path": "apps/desktop/src-tauri/fixtures_src/equip_poisoned_sand_tube.txt",
+    "record_key": "Poisoned Sand Tube"
+  }
+}

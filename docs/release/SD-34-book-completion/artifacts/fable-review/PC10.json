@@ -1,0 +1,70 @@
+{
+  "lane": "PC10",
+  "findings": [
+    {
+      "id": "PC10-1",
+      "file": "src/rules_core/pilot_compute/mod.rs",
+      "line_start": 69157,
+      "line_end": 78506,
+      "severity": "P2",
+      "category": "duplication",
+      "title": "Per-class test module boilerplate (fixture const + `human_<class>_input`) is copy-pasted ~30+ times file-wide, 4 fresh copies in this chunk alone",
+      "evidence": "Within this chunk, `swashbuckler_dispatch_widening_safety_tests` (69169-69176), `investigator_dispatch_widening_safety_tests` (69590-69597), `shaman_dispatch_widening_safety_tests` (71261-71267) and `bard_dispatch_widening_safety_tests` (71736-71742) each independently declare `const FIGHTER_LEVEL_1_FIXTURE: &str = include_str!(\"../../../tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt\");` followed by `fn human_<class>_input(level: u8) -> CharacterInput { let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE); assert!(result.diagnostics.is_empty()); let mut input = result.character_input.expect(\"valid fixture\"); input.chosen.class_levels = vec![CharacterClassLevel { class_id: <CLASS>_CLASS_ID.to_owned(), level }]; input }` -- identical apart from the class-id constant. File-wide this exact `human_<class>_input(level: u8) -> CharacterInput` shape occurs 22 times (grep count) and the `const FIGHTER_LEVEL_1_FIXTURE: &str = include_str!(...)` line occurs 74 times across the whole 78506-line file.",
+      "fix_description": "Hoist a single shared `FIGHTER_LEVEL_1_FIXTURE` const and a generic `fn single_class_input(class_id: &str, level: u8) -> CharacterInput` into one file-scoped `#[cfg(test)] mod test_support` (or a `super`-level helper), and have every per-class test module call it instead of redeclaring its own copy. Would remove on the order of 200-300 duplicated lines across the file.",
+      "proposed_action": "report_only",
+      "confidence": "high",
+      "risk_notes": "Mechanical in principle but touches ~30 test modules across the whole file (most outside this chunk), so it should be done as one coordinated pass, not per-lane, and verified with `cargo test` for this file's test target rather than auto-fixed blind."
+    },
+    {
+      "id": "PC10-2",
+      "file": "src/rules_core/pilot_compute/mod.rs",
+      "line_start": 72262,
+      "line_end": 72273,
+      "severity": "P3",
+      "category": "duplication",
+      "title": "`human_monk_input_with_bonus_feat` is byte-for-byte duplicated across two adjacent test modules",
+      "evidence": "`monk_bonus_feat_improvised_weapon_closure_tests::human_monk_input_with_bonus_feat` (72262-72273) and `monk_bonus_feat_remaining_three_closure_tests::human_monk_input_with_bonus_feat` (72461-72472) are identical function bodies (same fixture load, same `MONK_CLASS_ID`/level 1, same `choice:monk_bonus_feat` selection push).",
+      "fix_description": "Merge the two modules (they both test Monk level-1 bonus-feat closures) or move the helper to a shared test-support scope so only one copy exists.",
+      "proposed_action": "report_only",
+      "confidence": "high"
+    },
+    {
+      "id": "PC10-3",
+      "file": "src/rules_core/pilot_compute/mod.rs",
+      "line_start": 69157,
+      "line_end": 78506,
+      "severity": "P2",
+      "category": "structure",
+      "title": "Natural submodule-extraction seam: this chunk is entirely self-contained `#[cfg(test)]` modules that only reach into `super::`",
+      "evidence": "All 32 top-level items in lines 69157-78506 are `#[cfg(test)] mod ..._tests { ... }` blocks (310 `#[test]` fns total), none of which define anything consumed outside their own module -- every reference out is a `use super::{...}` pulling production symbols in, never the reverse. The same shape continues unbroken from line 52595 (`multiclass_bab_save_stacking_generalization_tests`) through EOF, i.e. the whole back third (~26,000 of 78,506 lines, one third of the file) is test-only.",
+      "fix_description": "These test modules could be moved out of `mod.rs` into a `pilot_compute/tests/` companion tree (one file per class family) glued back in with `#[cfg(test)] #[path = \"tests/mod.rs\"] mod tests;`, with no production-code changes required. This would cut the file IDEs/tools must parse for `mod.rs` roughly in half without touching shipped behavior.",
+      "proposed_action": "report_only",
+      "confidence": "medium",
+      "risk_notes": "Purely mechanical in theory (test-only code, no production callers), but a full-file restructuring is out of a single lane's blast radius and needs a `cargo test` pass across the whole crate to confirm nothing relies on the current module path (e.g. `cargo test module_name::` invocations in CI scripts or docs)."
+    },
+    {
+      "id": "PC10-4",
+      "file": "src/rules_core/pilot_compute/mod.rs",
+      "line_start": 74854,
+      "line_end": 75721,
+      "severity": "P3",
+      "category": "bloat",
+      "title": "Per-module re-declaration of trivial explanation/diagnostic accessor helpers (`value`, `blocking_ids`, `claim_blocking_ids`, `explanation`, `explanation_value`) instead of one shared set",
+      "evidence": "This chunk alone redefines a `value`/`explanation`/`explanation_value` closure-or-fn (12 occurrences by name) and a `blocking_ids`/`claim_blocking_ids` filter (7 occurrences combined) with the same body -- e.g. `opponent_conditioned_tier_zero_tests::value` (74877-74884), `spellcasting_shaped_class_closure_tests::explanation_value` (76563-76570), `monk_and_summoner_chassis_recognition_tests::explanation` (76087-76094) all do `build_pilot_headless_receipt(input).computation.explanations.iter().find(|e| e.id == id).map(|e| e.value)`.",
+      "fix_description": "Same fix as PC10-1: one shared test-support module exporting `explanation_value`, `blocking_ids` etc. would let every per-class module `use` them instead of retyping.",
+      "proposed_action": "report_only",
+      "confidence": "medium"
+    }
+  ],
+  "lane_summary": {
+    "files_reviewed": 1,
+    "files_skipped_generated": 0,
+    "cross_chunk": [
+      "fn human_<class>_input(level: u8) -> CharacterInput  -- fixture-load + single-class-level-override helper, duplicated ~22x file-wide (this chunk: human_swashbuckler_input@69169, human_investigator_input@69590, human_shaman_input@71261, human_bard_input@71736); also seen at 60432/61594/61789 (barbarian), 61983 (unchained_barbarian), 62159 (bloodrager), 62732 (hunter), 63531/63991 (alchemist), 64096 (fighter), 64326/65330 (inquisitor), 65479 (arcanist), 66023 (warpriest), 66835 (slayer), 67000 (oracle), 68774 (witch) -- all just outside/adjacent to this chunk's lower boundary.",
+      "const FIGHTER_LEVEL_1_FIXTURE: &str = include_str!(\"../../../tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt\");  -- redeclared 74x across the whole file, one copy per test module.",
+      "fn value/explanation/explanation_value(input: &CharacterInput, id: &str) -> Option<i16>  -- `build_pilot_headless_receipt(input).computation.explanations.iter().find(|e| e.id == id).map(|e| e.value)`, redeclared per test module under 3 different names.",
+      "fn blocking_ids/claim_blocking_ids(input: &CharacterInput) -> Vec<String>  -- `build_pilot_headless_receipt(input).computation.diagnostics.into_iter().filter(|d| d.claim_blocking).map(|d| d.id).collect()`, redeclared per test module under 2 different names."
+    ],
+    "notes": "Actually covered lines 69157-78506 (snapped the 69500 start up to the enclosing `swashbuckler_dispatch_widening_safety_tests` module at 69157, since 69500 fell mid-module). This entire range -- and in fact the whole file from line 52595 to EOF (78506), one third of the file -- is exclusively `#[cfg(test)]` modules; there is no production code anywhere in this chunk. Per instructions I skimmed structure (32 top-level test modules, 310 #[test] fns via grep count) and sampled representative modules in full (swashbuckler_dispatch_widening_safety_tests, investigator_dispatch_widening_safety_tests opening, opponent_conditioned_tier_zero_tests opening, monk_and_summoner_chassis_recognition_tests, ultimate_combat_chassis_gate_tests opening, spellcasting_shaped_class_closure_tests opening, generic_pool_group_selection_wiring_tests through EOF) rather than reading all ~9350 lines line-by-line. No GENERATED FILE markers found (checked file head). No dead/unreachable branches, no unchecked-unwrap-on-external-data, and no inverted/wrong assertions found in the sampled tests -- the one `.unwrap()` at line 78062 is guarded by an immediately preceding `assert!(resolved.is_some())` and is safe. All findings are duplication/bloat/structure in the test scaffolding; no P1 correctness bugs found in this chunk because it contains no production logic. The dominant theme (confirmed by the cross_chunk helper-name list) is that every one of the ~30+ per-class test modules in the file's back third reinvents the same 3-4 tiny helpers, which is the one thing worth correlating with the lanes covering lines 1-69157."
+  }
+}

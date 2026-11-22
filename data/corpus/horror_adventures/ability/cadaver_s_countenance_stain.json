@@ -1,0 +1,52 @@
+{
+  "codex_generated_name": false,
+  "completeness": "full",
+  "data": {
+    "description": "Your flesh tightens, turning corpselike and gray as your body rots. You take a -2 penalty to your Constitution.",
+    "key": "Lich Corruption ~ Cadaver's Countenance Stain",
+    "name": "Cadaver's Countenance Stain",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Lich Corruption ~ Cadaver's Countenance Stain"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.LichCadaversCountenanceStain"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.26"
+      },
+      {
+        "key": "DESC",
+        "value": "Your flesh tightens, turning corpselike and gray as your body rots. You take a -2 penalty to your Constitution."
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CON|-2"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 487,
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
+    "record_key": "Lich Corruption ~ Cadaver's Countenance Stain",
+    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

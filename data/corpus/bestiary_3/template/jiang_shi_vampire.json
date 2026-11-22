@@ -1,0 +1,47 @@
+{
+  "codex_generated_name": false,
+  "completeness": "chassis_only",
+  "data": {
+    "key": "Jiang-Shi Vampire",
+    "name": "Jiang-Shi Vampire",
+    "raw_tokens": [
+      {
+        "key": "HITDIE",
+        "value": "8|CLASS.TYPE=Monster"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.278-279"
+      },
+      {
+        "key": "PREALIGN",
+        "value": "LE,NE,CE"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Racial Traits ~ Jiang-Shi Vampire"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Undead"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T16:43:16Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 20,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_templates.lst",
+    "record_key": "Jiang-Shi Vampire",
+    "sha256": "2558383378bdc55d460faa927817343ff857be38c8ea7cf620f3a61c09e11b2b"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

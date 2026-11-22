@@ -1,0 +1,80 @@
+{
+  "codex_generated_name": true,
+  "completeness": "full",
+  "data": {
+    "description": "[redacted PI]",
+    "key": "Codex-Named Unit (ability_inner_sea_magic_ism_abilities_other_lst_131)",
+    "name": "Codex-Named Unit (ability_inner_sea_magic_ism_abilities_other_lst_131)",
+    "raw_tokens": [
+      {
+        "key": "NAMEISPI",
+        "value": "YES"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.MonasteryReward"
+      },
+      {
+        "key": "PREDEITY",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "DESCISPI",
+        "value": "YES"
+      },
+      {
+        "key": "DESC",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "USERINPUT|TITLE=Pick a settlement"
+      },
+      {
+        "key": "SELECT",
+        "value": "1"
+      },
+      {
+        "key": "COST",
+        "value": "3"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.24"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SkillBonus|+2 circumstance bonus on Bluff, Diplomacy, and Knowledge (local) checks in %1|LIST"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T16:00:10Z",
+  "license": "PI-REDACTED",
+  "pi_field": "description,name,raw_tokens",
+  "pi_marker": "redacted",
+  "population": "in_scope",
+  "rename": {
+    "coordinate": "inner_sea_magic:ism_abilities_other.lst:131",
+    "reason": "name_pi_blocked"
+  },
+  "source": {
+    "kind": "lst_token",
+    "line": 131,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_abilities_other.lst",
+    "record_key": "Codex-Named Unit (ability_inner_sea_magic_ism_abilities_other_lst_131)",
+    "sha256": "6ea35a2432c9b609f27926d9492f1d85c599eb18e81adf36154ae594b89072db"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice",
+    "computed:pre_guard"
+  ]
+}

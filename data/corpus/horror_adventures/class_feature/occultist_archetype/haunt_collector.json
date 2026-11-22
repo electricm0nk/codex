@@ -1,0 +1,120 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Occultist Archetype ~ Haunt Collector",
+    "name": "Haunt Collector",
+    "class": "Occultist",
+    "description": "Haunt collectors use items haunted by their former owners to create ghostly presences imbued with psychic power.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Occultist Archetype ~ Haunt Collector"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.OccultistArchetype"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.62"
+      },
+      {
+        "key": "DESC",
+        "value": "Haunt collectors use items haunted by their former owners to create ghostly presences imbued with psychic power."
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Occultist=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Occultist Archetype ~ Haunt Collector],[!PREFACT:1,ABILITIES,Occultist_Archetype_Implements=True,Occultist_Archetype_AuraSight=True,Occultist_Archetype_OutsideContact=True,Occultist_Archetype_MagicCircles=True,Occultist_Archetype_BindingCircles=True,Occultist_Archetype_FastCircles=True]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Occultist Class Feature|AUTOMATIC|Haunt Collector ~ Possessed Possessions|PRECLASS:1,Occultist=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Occultist Class Feature|AUTOMATIC|Haunt Collector ~ Hauntist|PRECLASS:1,Occultist=5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Occultist Class Feature|AUTOMATIC|Haunt Collector ~ Spirit Speaker|PRECLASS:1,Occultist=8"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Occultist Class Feature|AUTOMATIC|Haunt Collector ~ Extricate Haunt|PRECLASS:1,Occultist=1"
+      },
+      {
+        "key": "FACT",
+        "value": "Occultist_Archetype_Implements|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Occultist_Archetype_AuraSight|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Occultist_Archetype_OutsideContact|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Occultist_Archetype_MagicCircles|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Occultist_Archetype_BindingCircles|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Occultist_Archetype_FastCircles|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Occultist_CF_AuraSight|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Occultist_CF_OutsideContact|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Occultist_CF_MagicCircles|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Occultist_CF_BindingCircles|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Occultist_CF_FastCircles|true"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/support/ha_abilities_class_oa.lst",
+    "sha256": "9c111f652f8442433ea215fa11e67258c7e6c15c75d1c1753fa6fef34827f46c",
+    "line": 262,
+    "record_key": "Occultist Archetype ~ Haunt Collector"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

@@ -1,0 +1,49 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Serial Killer ~ Death Attack",
+    "name": "Death Attack",
+    "class": "Vigilante",
+    "description": "A serial killer gains the ability to make a death attack as if she were an assassin (DC %1).|10+VigilanteLVL/2+CHA",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Serial Killer ~ Death Attack"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Vigilante Class Feature.SerialKillerClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.71"
+      },
+      {
+        "key": "DESC",
+        "value": "A serial killer gains the ability to make a death attack as if she were an assassin (DC %1).|10+VigilanteLVL/2+CHA"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/support/ha_abilities_class_ui.lst",
+    "sha256": "ef4d4c665ec9e9551c7b5e968fae9f10ad358ac8fdcf2addf3b9bb647cb3801b",
+    "line": 38,
+    "record_key": "Serial Killer ~ Death Attack"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

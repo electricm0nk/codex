@@ -1,0 +1,93 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "War Mind Power Points",
+    "name": "War Mind Power Points",
+    "class": "War Mind",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WarMindPPStat|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WarMindPPL|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WarMindPPStat|WarMindPrimeStat"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WarMindPPL|WarMindML"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BasePowerPoints|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BasePowerPoints|3|PREVARGTEQ:WarMindPPL,2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BasePowerPoints|4|PREVARGTEQ:WarMindPPL,3"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BasePowerPoints|5|PREVARGTEQ:WarMindPPL,4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BasePowerPoints|6|PREVARGTEQ:WarMindPPL,5"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BasePowerPoints|8|PREVARGTEQ:WarMindPPL,6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BasePowerPoints|9|PREVARGTEQ:WarMindPPL,7"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BasePowerPoints|10|PREVARGTEQ:WarMindPPL,8"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BasePowerPoints|11|PREVARGTEQ:WarMindPPL,9"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BasePowerPoints|12|PREVARGTEQ:WarMindPPL,10"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BonusPowerPoints|(WarMindPPStat*WarMindPPL)/2|TYPE=WarMindBonusPP"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1569,
+    "record_key": "War Mind Power Points"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

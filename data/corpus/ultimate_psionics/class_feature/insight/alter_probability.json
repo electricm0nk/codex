@@ -1,0 +1,80 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Insight ~ Alter Probability",
+    "name": "Alter Probability",
+    "class": "Insight",
+    "description": "Force one enemy within %1 feet to reroll a single dice roll (Will DC %2 negates); the target takes the worst of the two rolls.  %3/day.|AlterProbabilityRange|AlterProbabilityDC|AlterProbabilityTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Insight ~ Alter Probability"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "PsionClassFeatures.SpecialQuality.Supernatural.PsionicDisciplineTalent"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AlterProbabilityRange|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AlterProbabilityDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AlterProbabilityTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Force one enemy within %1 feet to reroll a single dice roll (Will DC %2 negates); the target takes the worst of the two rolls.  %3/day.|AlterProbabilityRange|AlterProbabilityDC|AlterProbabilityTimes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AlterProbabilityRange|100+10*ClairsentienceDisciplineLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AlterProbabilityDC|10+INT+(ClairsentienceDisciplineLVL/2)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AlterProbabilityTimes|(ClairsentienceDisciplineLVL-6)/2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.272"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|AlterProbabilityTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 502,
+    "record_key": "Insight ~ Alter Probability"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

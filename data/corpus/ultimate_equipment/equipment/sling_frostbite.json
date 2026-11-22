@@ -1,0 +1,58 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "category": "ArmsArmor",
+    "cost_gp": 9380.0,
+    "description": null,
+    "key": "Sling (Frostbite)",
+    "name": "Sling, Frostbite",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sling (Frostbite)"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Material ~ Leather"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "YES"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "Frostbite Sling"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Ability ~ Frost ~ Weapon.Special Ability ~ Enhancement Cost|9380.Special Ability ~ +1 ~ Weapon"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.155"
+      },
+      {
+        "key": "SPROP",
+        "value": "3/day wielder can hurl a magic snowball for 1d6+6 nonlethal cold damage that leaves target fatigued."
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-16T01:34:54Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 527,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_equipment/ue_equip_arms_armor.lst",
+    "record_key": "Sling (Frostbite)",
+    "sha256": "0283152baf7f7c9e547849da095df5cd4a5275fc4041c92028cbd85c7a1b5322"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

@@ -1,0 +1,83 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Ability Damage ~ Su",
+    "delivery": "Supernatural",
+    "description": "Your attack causes ability damage reducing %1 by the %2d%3. Ability damage can be healed naturally.",
+    "description_variables": [
+      "%CHOICE",
+      "AbilityDamageDice",
+      "AbilityDamageDieSize"
+    ],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:ability_damage_su",
+    "name": "Ability Damage",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(%1d%2 %3 damage)|AbilityDamageDice|AbilityDamageDieSize|%CHOICE"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AbilityDamageDice|1"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "STRING|Cha|Con|Dex|Int|Str|Wis"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AbilityDamageDice|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AbilityDamageDieSize|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Your attack causes ability damage reducing %1 by the %2d%3. Ability damage can be healed naturally.|%CHOICE|AbilityDamageDice|AbilityDamageDieSize"
+      },
+      {
+        "key": "KEY",
+        "value": "Ability Damage ~ Su"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.298"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural.AttackOption"
+      }
+    ],
+    "source_page": "p.298",
+    "traits": [
+      "AttackOption"
+    ]
+  },
+  "ingested_at": "2026-08-23T12:58:07Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1281,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "record_key": "Ability Damage ~ Su",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice"
+  ]
+}

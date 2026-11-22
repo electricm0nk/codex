@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:22:10Z",
+  "data": {
+    "corpus_key": "Kentrosaurus ~ Impaling Strike",
+    "delivery": "Extraordinary",
+    "description": "A kentrosaurus's tail is a primary attack that deals piercing damage and has a x3 critical damage multiplier.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_6:monster_ability:kentrosaurus_impaling_strike",
+    "name": "Impaling Strike",
+    "owners": [],
+    "source_page": "p.95",
+    "traits": [
+      "KentrosaurusRacialTrait"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_6/b6_abilities_race.lst",
+    "sha256": "d60128d0229b23016cc603e691bb97cc6bf568f5e504e5bd32b57f2504fdd8f0",
+    "line": 22,
+    "record_key": "Kentrosaurus ~ Impaling Strike"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

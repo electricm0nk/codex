@@ -1,0 +1,116 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-24T03:51:47Z",
+  "data": {
+    "key": "Arcanist Archetype ~ Blood Arcanist",
+    "name": "Blood Arcanist",
+    "class": "Arcanist",
+    "description": "Though most arcanists possess only a rudimentary innate arcane gift, the blood arcanist has the full power of a bloodline to draw upon.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Arcanist Archetype ~ Blood Arcanist"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.ArcanistArchetype.ArcanistExploit1.ArcanistExploit3.ArcanistExploit9.ArcanistExploit15.ArcanistMagicalSupremacy"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Arcanist=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Arcanist Archetype ~ Blood Arcanist],[!PREABILITY:1,CATEGORY=Archetype,TYPE.ArcanistExploit1,TYPE.ArcanistExploit3,TYPE.ArcanistExploit9,TYPE.ArcanistExploit15,TYPE.ArcanistMagicalSupremacy]"
+      },
+      {
+        "key": "DESC",
+        "value": "Though most arcanists possess only a rudimentary innate arcane gift, the blood arcanist has the full power of a bloodline to draw upon."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Arcanist Class Feature|AUTOMATIC|Blood Arcanist ~ Bloodline|PRECLASS:1,Arcanist=1"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.77"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Arcanist"
+      },
+      {
+        "key": "TYPE",
+        "value": "PFSLegal"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Arcanist Archetype ~ Blood Arcanist],[!PREFACT:1,ABILITIES,Arcanist_Archetype_ArcanistExploit1=True,Arcanist_Archetype_ArcanistExploit3=True,Arcanist_Archetype_ArcanistExploit9=True,Arcanist_Archetype_ArcanistExploit15=True,Arcanist_Archetype_MagicalSupremacy=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Arcanist_CF_ArcanistExploit1|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Arcanist_CF_ArcanistExploit3|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Arcanist_CF_ArcanistExploit9|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Arcanist_CF_ArcanistExploit15|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Arcanist_CF_MagicalSupremacy|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Arcanist_Archetype_ArcanistExploit1|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Arcanist_Archetype_ArcanistExploit3|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Arcanist_Archetype_ArcanistExploit9|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Arcanist_Archetype_ArcanistExploit15|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Arcanist_Archetype_MagicalSupremacy|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2374,
+    "record_key": "Arcanist Archetype ~ Blood Arcanist"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

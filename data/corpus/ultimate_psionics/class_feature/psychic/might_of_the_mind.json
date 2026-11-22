@@ -1,0 +1,69 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Psychic ~ Might of the Mind",
+    "name": "Might of the Mind",
+    "class": "Sorcerer",
+    "description": "You can use the power of the mind to either attack an enemy or pick up an object.  As a standard action, you can hurl a single unattended object of up to 250 lbs. at an enemy within 30 ft.  This attack is treated as a ranged attack with a thrown weapon (dealing an amount of bludgeoning damage equal to 1d6+%1), except that you add your Charisma modifier on the attack roll instead of your Dexterity modifier.  Alternatively, you can pick up an unattended object of up to 250 lbs. within 30 feet and transport it to your hand as a move action.  You can use this ability %2/day.|MightOfTheMindBonusDamage|BloodlinePowerTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Psychic ~ Might of the Mind"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Sorcerer Class Feature.SpecialAttack.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MightOfTheMindBonusDamage|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can use the power of the mind to either attack an enemy or pick up an object.  As a standard action, you can hurl a single unattended object of up to 250 lbs. at an enemy within 30 ft.  This attack is treated as a ranged attack with a thrown weapon (dealing an amount of bludgeoning damage equal to 1d6+%1), except that you add your Charisma modifier on the attack roll instead of your Dexterity modifier.  Alternatively, you can pick up an unattended object of up to 250 lbs. within 30 feet and transport it to your hand as a move action.  You can use this ability %2/day.|MightOfTheMindBonusDamage|BloodlinePowerTimes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MightOfTheMindBonusDamage|BloodlineLVL/2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.72"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(1d6+%1, %2/day)|MightOfTheMindBonusDamage|BloodlinePowerTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|BloodlinePowerTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1107,
+    "record_key": "Psychic ~ Might of the Mind"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "ambiguous:prose_ability_scaling",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

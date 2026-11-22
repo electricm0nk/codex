@@ -1,0 +1,30 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Brute Style",
+    "category": "Combat",
+    "name": "Brute Style",
+    "description": "Through strength, study, and intense inner reflection, you have become an expert at battering fallen opponents. While using this style, you can use your Vicious Stomp feat against any opponent within 10 feet of you, as long as it is within your natural reach. If you don't have the Vicious Stomp feat, you gain no benefit from this feat. [Normal] The Vicious Stomp feat only works against an opponent that falls prone adjacent to you.",
+    "prerequisites": [
+      "PREABILITY:5,CATEGORY=FEAT,Combat Reflexes,Improved Overrun,Improved Trip,Improved Unarmed Strike,Vicious Stomp",
+      "PRETOTALAB:6",
+      "PREVARGTEQ:PreStatScore_STR,15,PreStatScore_INT,13"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_feats.lst",
+    "sha256": "b8183ddca5eece895bf40f7765744bb470970418a8baca58aee907487f0140e6",
+    "line": 11,
+    "record_key": "Brute Style"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

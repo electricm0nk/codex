@@ -1,0 +1,55 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Fjord Linnorm ~ Poison",
+    "delivery": "Extraordinary",
+    "description": "Bite-injury; save Fort DC 27; frequency 1/round for 10 rounds; effect 3d6 cold damage and 1d6 Con drain; cure 2 consecutive saves.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:fjord_linnorm_poison",
+    "name": "Poison",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Bite-injury; save Fort DC 27; frequency 1/round for 10 rounds; effect 3d6 cold damage and 1d6 Con drain; cure 2 consecutive saves."
+      },
+      {
+        "key": "KEY",
+        "value": "Fjord Linnorm ~ Poison"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.183"
+      },
+      {
+        "key": "TYPE",
+        "value": "FjordLinnormRacialAbility.SpecialQuality.Extraordinary"
+      }
+    ],
+    "source_page": "p.183",
+    "traits": [
+      "FjordLinnormRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T14:09:11Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1219,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Fjord Linnorm ~ Poison",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

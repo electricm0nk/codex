@@ -1,0 +1,6 @@
+Error: a copy left behind can be sold, and two copies read apart
+Error: left behind says so: expected left_behind, got carried
+FAIL src/characterHub/EquipmentPanel.test.ts
+FAIL src/characterHub/MarketDialog.test.ts
+FAIL src/characterHub/customModel.test.ts
+SyntaxError: The requested module './EquipmentPanel' does not provide an export named 'leftBehindMoves'

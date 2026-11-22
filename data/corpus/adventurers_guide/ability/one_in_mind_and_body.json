@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Student of Perfection ~ One in Mind and Body",
+    "name": "One in Mind and Body",
+    "description": "The student of perfection can spend 1 ki point as a swift action to add his Wisdom modifier as a bonus on a Strength- or Dexterity-based skill check.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Student of Perfection ~ One in Mind and Body"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary.StudentOfPerfectionKiPower"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "UnfoldingWindStudent,1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.103"
+      },
+      {
+        "key": "DESC",
+        "value": "The student of perfection can spend 1 ki point as a swift action to add his Wisdom modifier as a bonus on a Strength- or Dexterity-based skill check."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/support/ag_abilities_pu.lst",
+    "sha256": "5ec588e897907d739c5b66f29ef8486385ceb24c1ef86a3d43bdbfd8b0ead09f",
+    "line": 29,
+    "record_key": "Student of Perfection ~ One in Mind and Body"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

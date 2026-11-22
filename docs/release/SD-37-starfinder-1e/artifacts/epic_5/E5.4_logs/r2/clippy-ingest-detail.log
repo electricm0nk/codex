@@ -1,0 +1,35 @@
+    Checking codex v0.1.0 (/home/ubuntu/workspace/worktrees/codex-sd37)
+    Checking codex-ingest v0.1.0 (/home/ubuntu/workspace/worktrees/codex-sd37/crates/codex-ingest)
+error: for loop over a single element
+   --> crates/codex-ingest/tests/sf_core_proof.rs:219:5
+    |
+219 | /     for id in ["core:ability:1_hit_point"] {
+220 | |         let (rules, _) = converted(id);
+221 | |         let t = targets(&rules);
+222 | |         assert!(!t.iter().any(|x| x == "Hp" || x == "Stamina"), "{id} must not feed a pool: {t:?}");
+...   |
+228 | |         );
+229 | |     }
+    | |_____^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.96.0/index.html#single_element_loop
+    = note: `-D clippy::single-element-loop` implied by `-D warnings`
+    = help: to override `-D warnings` add `#[allow(clippy::single_element_loop)]`
+help: try
+    |
+219 ~     {
+220 +         let id = "core:ability:1_hit_point";
+221 +         let (rules, _) = converted(id);
+222 +         let t = targets(&rules);
+223 +         assert!(!t.iter().any(|x| x == "Hp" || x == "Stamina"), "{id} must not feed a pool: {t:?}");
+224 +         let (c, _) = convert_one_for(&repo_root(), GameSystem::Starfinder1e, id).unwrap();
+225 +         assert!(
+226 +             c.degradations.iter().any(|d| d.contains("no Starfinder mapping-table term")),
+227 +             "{id}: the degradation names the missing term: {:?}",
+228 +             c.degradations
+229 +         );
+230 +     }
+    |
+
+error: could not compile `codex-ingest` (test "sf_core_proof") due to 1 previous error
+warning: build failed, waiting for other jobs to finish...

@@ -1,0 +1,3 @@
+$ red acceptance on pre-change tree
+73 92 16 72 
+python os.walk [73, 92, 16, 72]

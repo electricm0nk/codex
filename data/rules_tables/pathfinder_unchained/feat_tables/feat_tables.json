@@ -1,0 +1,132 @@
+{
+  "format": "codex.rules_tables/1",
+  "table": "pathfinder_unchained/feat_tables/feat_tables",
+  "licence": {
+    "license": "OGL",
+    "book": "pathfinder_unchained",
+    "screen": "pi_screening::classify_field",
+    "pi_hits": [],
+    "redacted": []
+  },
+  "rows": [
+    {
+      "key": "Champion of Anarchy",
+      "category": "Alignment",
+      "name": "Champion of Anarchy",
+      "description": "You spread chaos wherever you go.",
+      "source_page": "p.98"
+    },
+    {
+      "key": "Champion of Balance",
+      "category": "Alignment",
+      "name": "Champion of Balance",
+      "description": "You are dedicated to perfect balance in the multiverse.",
+      "source_page": "p.98"
+    },
+    {
+      "key": "Champion of Destruction",
+      "category": "Alignment",
+      "name": "Champion of Destruction",
+      "description": "You would destroy the world if it were within your power.",
+      "source_page": "p.98"
+    },
+    {
+      "key": "Champion of Freedom",
+      "category": "Alignment",
+      "name": "Champion of Freedom",
+      "description": "You believe that beings can thrive only when free.",
+      "source_page": "p.99"
+    },
+    {
+      "key": "Champion of Grace",
+      "category": "Alignment",
+      "name": "Champion of Grace",
+      "description": "It is your mission to do as much good as possible.",
+      "source_page": "p.99"
+    },
+    {
+      "key": "Champion of Malevolence",
+      "category": "Alignment",
+      "name": "Champion of Malevolence",
+      "description": "Things would be better if everyone just did as you wished.",
+      "source_page": "p.99"
+    },
+    {
+      "key": "Champion of Righteousness",
+      "category": "Alignment",
+      "name": "Champion of Righteousness",
+      "description": "You know that good must be tempered with order if it's going to prevail in the long term.",
+      "source_page": "p.99"
+    },
+    {
+      "key": "Champion of Tranquility",
+      "category": "Alignment",
+      "name": "Champion of Tranquility",
+      "description": "The harmony of law is your highest ideal.",
+      "source_page": "p.99"
+    },
+    {
+      "key": "Champion of Tyranny",
+      "category": "Alignment",
+      "name": "Champion of Tyranny",
+      "description": "You must beat down the masses to have true order.",
+      "source_page": "p.99"
+    },
+    {
+      "key": "Combat Stamina",
+      "category": "CombatStamina",
+      "name": "Combat Stamina",
+      "description": "You stop at nothing to drive your attack home.",
+      "source_page": "p.112"
+    },
+    {
+      "key": "Extra Stamina",
+      "category": "CombatStamina",
+      "name": "Extra Stamina",
+      "description": "You can push yourself to higher limits.",
+      "source_page": "p.113"
+    },
+    {
+      "key": "Push the Limits",
+      "category": "CombatStamina",
+      "name": "Push the Limits",
+      "description": "Even when suffering from fatigue, you can fight through and overcome incredible opposition.",
+      "source_page": "p.113"
+    },
+    {
+      "key": "Critical Cure",
+      "category": "WoundThreshold",
+      "name": "Critical Cure",
+      "description": "Your healing is more effective if your patient is badly injured.",
+      "source_page": "P.137"
+    },
+    {
+      "key": "Endurance",
+      "category": "WoundThreshold",
+      "name": "Endurance",
+      "description": "Harsh conditions or long exertions do not easily tire you.",
+      "source_page": "P.137"
+    },
+    {
+      "key": "Twist the Knife",
+      "category": "WoundThreshold",
+      "name": "Twist the Knife",
+      "description": "You're especially dangerous against enemies who are suffering from injuries.",
+      "source_page": "P.137"
+    },
+    {
+      "key": "Extra Unchained Rogue Talent",
+      "category": "General",
+      "name": "Extra Unchained Rogue Talent",
+      "description": "Through constant practice, you have learned how to perform a special trick.",
+      "source_page": "APG p.160"
+    },
+    {
+      "key": "Signature Skill",
+      "category": "General",
+      "name": "Signature Skill",
+      "description": "Your ability with a particular skill is the stuff of legends, and you can do things with that skill that others cannot.",
+      "source_page": null
+    }
+  ]
+}

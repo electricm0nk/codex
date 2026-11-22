@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Talisman Crafter ~ Spellbound Talisman",
+    "name": "Spellbound Talisman",
+    "class": "Occultist",
+    "description": "A talisman crafter can inscribe spellbound talismans in addition to her master talismans, infusing small tokens she crafts with psychic spells she knows that normally affect one or more target creatures (but not spells that target the caster, spells that affect an area, spells that create effects, or other such spells). When the occultist infuses a talisman with one of her spells, she expends the spell slot just as if she had cast the spell and expends any material components necessary. The talisman crafter can hurl this prepared talisman as a standard action that provokes an attack of opportunity and that requires the same thought and emotion components (Occult Adventures 144) as the original spell. Even if she can normally throw objects without provoking an attack of opportunity, throwing a talisman still provokes an attack of opportunity unless she also succeeds at a concentration check to cast defensively. The thrown talisman has a range of 20 feet, and the occultist must succeed at a ranged touch attack to hit her target. If she hits the target, the spell affects it normally, and the creature receives the normal saving throw (if any) against the spell effect. This allows the talisman crafter to deliver touch spells at range through the spellbound talisman. Alternatively, the talisman crafter can touch the talisman to a target creature as a melee touch attack (for a willing target, she automatically hits); this attack doesn't provoke an attack of opportunity as long as she succeeds at a concentration check to cast defensively. If an inscribed talisman's spell would normally target more than one creature, its DC increases by 2. Only a talisman crafter can activate her spellbound talismans. Once created, a spellbound talisman remains potent until the next time the talisman crafter regains spell slots before losing its magic. Inscribing a spellbound talisman in this manner takes 1 minute of work.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Talisman Crafter ~ Spellbound Talisman"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Occultist Class Feature.TalismanCrafterClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.63"
+      },
+      {
+        "key": "DESC",
+        "value": "A talisman crafter can inscribe spellbound talismans in addition to her master talismans, infusing small tokens she crafts with psychic spells she knows that normally affect one or more target creatures (but not spells that target the caster, spells that affect an area, spells that create effects, or other such spells). When the occultist infuses a talisman with one of her spells, she expends the spell slot just as if she had cast the spell and expends any material components necessary. The talisman crafter can hurl this prepared talisman as a standard action that provokes an attack of opportunity and that requires the same thought and emotion components (Occult Adventures 144) as the original spell. Even if she can normally throw objects without provoking an attack of opportunity, throwing a talisman still provokes an attack of opportunity unless she also succeeds at a concentration check to cast defensively. The thrown talisman has a range of 20 feet, and the occultist must succeed at a ranged touch attack to hit her target. If she hits the target, the spell affects it normally, and the creature receives the normal saving throw (if any) against the spell effect. This allows the talisman crafter to deliver touch spells at range through the spellbound talisman. Alternatively, the talisman crafter can touch the talisman to a target creature as a melee touch attack (for a willing target, she automatically hits); this attack doesn't provoke an attack of opportunity as long as she succeeds at a concentration check to cast defensively. If an inscribed talisman's spell would normally target more than one creature, its DC increases by 2. Only a talisman crafter can activate her spellbound talismans. Once created, a spellbound talisman remains potent until the next time the talisman crafter regains spell slots before losing its magic. Inscribing a spellbound talisman in this manner takes 1 minute of work."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/support/ha_abilities_class_oa.lst",
+    "sha256": "9c111f652f8442433ea215fa11e67258c7e6c15c75d1c1753fa6fef34827f46c",
+    "line": 289,
+    "record_key": "Talisman Crafter ~ Spellbound Talisman"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

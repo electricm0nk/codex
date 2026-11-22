@@ -1,0 +1,49 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Vampire (Nosferatu) ~ Telepathy",
+    "delivery": "Supernatural",
+    "description": "A nosferatu can communicate telepathically with any creature within 60 feet that speaks the same language it does. In addition, a nosferatu can use this ability to communicate with any animal, magical beast, or vermin.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:vampire_nosferatu_telepathy",
+    "name": "Telepathy",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A nosferatu can communicate telepathically with any creature within 60 feet that speaks the same language it does. In addition, a nosferatu can use this ability to communicate with any animal, magical beast, or vermin."
+      },
+      {
+        "key": "KEY",
+        "value": "Vampire (Nosferatu) ~ Telepathy"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      }
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T14:10:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1415,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "record_key": "Vampire (Nosferatu) ~ Telepathy",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

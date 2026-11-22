@@ -1,0 +1,31 @@
+test_derive_writes_the_ledger_and_prints_the_sums (scripts.tests.test_token_coverage.LedgerRows.test_derive_writes_the_ledger_and_prints_the_sums) ... ok
+test_per_token_rows_count_carrying_converted_and_refused_because_of_this_token (scripts.tests.test_token_coverage.LedgerRows.test_per_token_rows_count_carrying_converted_and_refused_because_of_this_token) ... ok
+test_rederiving_the_same_inputs_is_byte_identical (scripts.tests.test_token_coverage.LedgerRows.test_rederiving_the_same_inputs_is_byte_identical) ... ok
+test_refusal_shapes_section_names_the_token_each_shape_arose_under (scripts.tests.test_token_coverage.LedgerRows.test_refusal_shapes_section_names_the_token_each_shape_arose_under) ... ok
+test_token_less_is_its_own_row_and_an_unmapped_head_has_no_mapping_row (scripts.tests.test_token_coverage.LedgerRows.test_token_less_is_its_own_row_and_an_unmapped_head_has_no_mapping_row) ... ok
+test_a_census_that_does_not_cover_the_population_fails (scripts.tests.test_token_coverage.RedGreen.test_a_census_that_does_not_cover_the_population_fails) ... ok
+test_a_missing_census_is_an_input_error_not_a_pass (scripts.tests.test_token_coverage.RedGreen.test_a_missing_census_is_an_input_error_not_a_pass) ... ok
+test_a_non_done_unit_under_no_token_and_not_token_less_fails_coverage (scripts.tests.test_token_coverage.RedGreen.test_a_non_done_unit_under_no_token_and_not_token_less_fails_coverage) ... ok
+test_a_planted_duplicate_census_entry_fails_the_check (scripts.tests.test_token_coverage.RedGreen.test_a_planted_duplicate_census_entry_fails_the_check) ... ok
+test_a_planted_duplicate_token_on_one_record_fails_the_check (scripts.tests.test_token_coverage.RedGreen.test_a_planted_duplicate_token_on_one_record_fails_the_check) ... ok
+test_a_refused_id_the_census_does_not_refuse_fails_the_refused_set_check (scripts.tests.test_token_coverage.RedGreen.test_a_refused_id_the_census_does_not_refuse_fails_the_refused_set_check) ... ok
+test_a_shape_total_that_does_not_sum_fails_the_check (scripts.tests.test_token_coverage.RedGreen.test_a_shape_total_that_does_not_sum_fails_the_check) ... ok
+test_check_fails_on_a_stale_committed_ledger_and_rewrites_it (scripts.tests.test_token_coverage.RedGreen.test_check_fails_on_a_stale_committed_ledger_and_rewrites_it) ... ok
+test_check_fails_when_no_ledger_is_committed_yet (scripts.tests.test_token_coverage.RedGreen.test_check_fails_when_no_ledger_is_committed_yet) ... ok
+test_a_healthy_fixture_passes_the_rule_files_check (scripts.tests.test_token_coverage.RuleFilesGate.test_a_healthy_fixture_passes_the_rule_files_check) ... ok
+test_a_refused_units_missing_rule_file_is_not_flagged (scripts.tests.test_token_coverage.RuleFilesGate.test_a_refused_units_missing_rule_file_is_not_flagged) ... ok
+test_a_rule_file_whose_principal_id_does_not_match_its_own_unit_fails_the_check (scripts.tests.test_token_coverage.RuleFilesGate.test_a_rule_file_whose_principal_id_does_not_match_its_own_unit_fails_the_check) ... ok
+test_an_empty_rule_array_fails_the_check (scripts.tests.test_token_coverage.RuleFilesGate.test_an_empty_rule_array_fails_the_check) ... ok
+test_corrupting_one_rule_file_to_invalid_json_fails_the_check (scripts.tests.test_token_coverage.RuleFilesGate.test_corrupting_one_rule_file_to_invalid_json_fails_the_check) ... ok
+test_deleting_one_converted_rule_file_fails_the_check (scripts.tests.test_token_coverage.RuleFilesGate.test_deleting_one_converted_rule_file_fails_the_check) ... ok
+test_restoring_the_corrupted_file_returns_to_a_clean_pass (scripts.tests.test_token_coverage.RuleFilesGate.test_restoring_the_corrupted_file_returns_to_a_clean_pass) ... ok
+test_a_missing_census_is_an_input_error (scripts.tests.test_token_coverage.SfFormulaMode.test_a_missing_census_is_an_input_error) ... ok
+test_a_token_the_census_missed_fails_identity (scripts.tests.test_token_coverage.SfFormulaMode.test_a_token_the_census_missed_fails_identity) ... ok
+test_an_unnamed_refusal_fails (scripts.tests.test_token_coverage.SfFormulaMode.test_an_unnamed_refusal_fails) ... ok
+test_partition_sums_and_refusals_are_named (scripts.tests.test_token_coverage.SfFormulaMode.test_partition_sums_and_refusals_are_named) ... ok
+test_totals_that_do_not_sum_fail_partition (scripts.tests.test_token_coverage.SfFormulaMode.test_totals_that_do_not_sum_fail_partition) ... ok
+
+----------------------------------------------------------------------
+Ran 26 tests in 0.156s
+
+OK

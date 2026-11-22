@@ -1,0 +1,91 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "This spell functions similarly to modify memory, except you can modify the target's memory only in a specific way. In response to a triggering condition you determine, up to the last 5 minutes of the target's memory are eliminated and replaced with a memory of your choosing (or no memory at all). For example, you could cast this on an assassin, set it to trigger when he completes his kill, and replace his memory of the murder with the memory of him discovering the body and picking up the murder weapon. You can cast this spell multiple times on the same target, even with the same trigger, affecting different memories. A single casting of false alibi affects a creature only until the specified condition has been triggered; once a condition has been triggered and the target's memory altered, that condition no longer triggers this spell unless the victim is subject to another casting of false alibi that specifies the same trigger.",
+    "key": "False Alibi",
+    "level": 3,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 round"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Bard,Cleric,Inquisitor=3"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, M"
+      },
+      {
+        "key": "DESC",
+        "value": "This spell functions similarly to modify memory, except you can modify the target's memory only in a specific way. In response to a triggering condition you determine, up to the last 5 minutes of the target's memory are eliminated and replaced with a memory of your choosing (or no memory at all). For example, you could cast this on an assassin, set it to trigger when he completes his kill, and replace his memory of the murder with the memory of him discovering the body and picking up the murder weapon. You can cast this spell multiple times on the same target, even with the same trigger, affecting different memories. A single casting of false alibi affects a creature only until the specified condition has been triggered; once a condition has been triggered and the target's memory altered, that condition no longer triggers this spell unless the victim is subject to another casting of false alibi that specifies the same trigger."
+      },
+      {
+        "key": "DESCRIPTOR",
+        "value": "Mind-Affecting"
+      },
+      {
+        "key": "DURATION",
+        "value": "Permanent; see text"
+      },
+      {
+        "key": "FACT",
+        "value": "CompMaterial|(emerald dust worth 100 gp)"
+      },
+      {
+        "key": "FACTSET",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "KEY",
+        "value": "False Alibi"
+      },
+      {
+        "key": "RANGE",
+        "value": "Close"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Will negates"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Enchantment"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.234"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes"
+      },
+      {
+        "key": "SUBSCHOOL",
+        "value": "Compulsion"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "One living creature"
+      }
+    ],
+    "school": "Enchantment"
+  },
+  "ingested_at": "2026-08-17T01:45:11Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 27,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_spells.lst",
+    "record_key": "False Alibi",
+    "sha256": "48bcb314dbdf8369982b3bc68d10dbe11baa5fe748d4121d6e197ab414406e68"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:range_keyword"
+  ]
+}

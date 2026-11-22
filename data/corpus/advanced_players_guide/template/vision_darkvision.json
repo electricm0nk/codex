@@ -1,0 +1,35 @@
+{
+  "codex_generated_name": false,
+  "completeness": "chassis_only",
+  "data": {
+    "key": "Vision Darkvision",
+    "name": "Vision Darkvision",
+    "raw_tokens": [
+      {
+        "key": "PREVISION",
+        "value": "1,Darkvision=1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VISION|Darkvision|30"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T16:43:13Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 76,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_templates.lst",
+    "record_key": "Vision Darkvision",
+    "sha256": "b6eb4cd001ab2ad02bfa2dc2f6935d539bd988d8538a1656518a52e402924e99"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

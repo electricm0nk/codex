@@ -1,0 +1,31 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:10:40Z",
+  "data": {
+    "corpus_key": "Nascent Demon Lord ~ Aligned Strike",
+    "delivery": "Supernatural",
+    "description": "A nascent demon lord's natural weapons, as well as any weapon it wields, are treated as chaotic, epic, and evil for the purpose of resolving damage reduction.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "inner_sea_world_guide:monster_ability:nascent_demon_lord_aligned_strike",
+    "name": "Aligned Strike",
+    "owners": [],
+    "source_page": "p.315",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_abilities_race.lst",
+    "sha256": "776debf1cea780aac4b3518c47baf43523d6b06deb0aea80de08b640ffc03c15",
+    "line": 86,
+    "record_key": "Nascent Demon Lord ~ Aligned Strike"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

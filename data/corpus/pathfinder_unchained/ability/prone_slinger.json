@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Combat Trick ~ Prone Slinger",
+    "name": "Prone Slinger",
+    "description": "As long as you have at least 1 stamina point in your stamina pool, you gain a +2 bonus on attack rolls made while prone and using a sling.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Combat Trick ~ Prone Slinger"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Combat Trick"
+      },
+      {
+        "key": "DESC",
+        "value": "As long as you have at least 1 stamina point in your stamina pool, you gain a +2 bonus on attack rolls made while prone and using a sling."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "129"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SourceBook|UC"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/support/ability_uc.lst",
+    "sha256": "11fe5af3a23ebdf6b90f238bb433207cc58d2f76a5ad62759e2be4ef6b712f14",
+    "line": 136,
+    "record_key": "Combat Trick ~ Prone Slinger"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

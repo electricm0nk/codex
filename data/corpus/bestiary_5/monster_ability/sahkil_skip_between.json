@@ -1,0 +1,52 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Sahkil ~ Skip Between",
+    "delivery": "Supernatural",
+    "description": "Many sahkils can shift between the Ethereal Plane and the Material Plane as a move action. This ability is otherwise identical to ethereal jaunt (CL 15th).",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_5:monster_ability:sahkil_skip_between",
+    "name": "Skip Between",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Many sahkils can shift between the Ethereal Plane and the Material Plane as a move action. This ability is otherwise identical to ethereal jaunt (CL 15th)."
+      },
+      {
+        "key": "KEY",
+        "value": "Sahkil ~ Skip Between"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.SahkilSubtypeTrait"
+      }
+    ],
+    "source_page": null,
+    "traits": [
+      "SahkilSubtypeTrait"
+    ]
+  },
+  "ingested_at": "2026-08-23T15:23:07Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 101,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_5/b5_abilities_race.lst",
+    "record_key": "Sahkil ~ Skip Between",
+    "sha256": "da3b63848f2dea0a3cc2088f288e93a85921513ab30d601d05330ceac6db664c"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "display:no_magnitude_token"
+  ]
+}

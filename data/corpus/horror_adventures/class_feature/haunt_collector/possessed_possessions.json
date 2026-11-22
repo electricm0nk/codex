@@ -1,0 +1,61 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Haunt Collector ~ Possessed Possessions",
+    "name": "Possessed Possessions",
+    "class": "Occultist",
+    "description": "At 2nd level, and every 4 occultist levels thereafter, when the haunt collector chooses an implement school he doesn't already know, instead of using implements as normal for that school, he can gain access to a haunted implement-a powerful, spirit-possessed item collected during his travels. When he selects a haunted implement, he forsakes the resonant power from the item's implement group and instead selects a spirit from the medium's list of spirits (Pathfinder RPG Occult Adventures 33), gaining that spirit's seance boon in place of the resonant power. He can also call upon the implement's haunting entity as a swift action to temporarily gain bonuses on all checks associated with the selected legendary spirit's spirit bonus for 1 round. This spirit bonus is equal to 1/2 the amount of mental focus invested in the implement, to a maximum bonus of +%1. He can call upon this spirit bonus a number of times per day equal to the amount of mental focus invested in the implement, though invoking it doesn't expend any mental focus. Once the spirit type is selected for an implement, it cannot be changed. This ability alters implements.|1+(OccultistLVL/4)",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Haunt Collector ~ Possessed Possessions"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Occultist Class Feature.HauntCollectorClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.62"
+      },
+      {
+        "key": "DESC",
+        "value": "At 2nd level, and every 4 occultist levels thereafter, when the haunt collector chooses an implement school he doesn't already know, instead of using implements as normal for that school, he can gain access to a haunted implement-a powerful, spirit-possessed item collected during his travels. When he selects a haunted implement, he forsakes the resonant power from the item's implement group and instead selects a spirit from the medium's list of spirits (Pathfinder RPG Occult Adventures 33), gaining that spirit's seance boon in place of the resonant power. He can also call upon the implement's haunting entity as a swift action to temporarily gain bonuses on all checks associated with the selected legendary spirit's spirit bonus for 1 round. This spirit bonus is equal to 1/2 the amount of mental focus invested in the implement, to a maximum bonus of +%1. He can call upon this spirit bonus a number of times per day equal to the amount of mental focus invested in the implement, though invoking it doesn't expend any mental focus. Once the spirit type is selected for an implement, it cannot be changed. This ability alters implements.|1+(OccultistLVL/4)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OccultistImplementSchool|-((OccultistLVL+2)/4)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HauntedOccultistImplementSchool|(OccultistLVL+2)/4"
+      },
+      {
+        "key": "DEFINE",
+        "value": "HauntedOccultistImplementSchool|0"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/support/ha_abilities_class_oa.lst",
+    "sha256": "9c111f652f8442433ea215fa11e67258c7e6c15c75d1c1753fa6fef34827f46c",
+    "line": 266,
+    "record_key": "Haunt Collector ~ Possessed Possessions"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:prose_formula_segment"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

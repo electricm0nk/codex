@@ -1,0 +1,108 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-24T03:51:47Z",
+  "data": {
+    "key": "Shaman Archetype ~ Spirit Warden",
+    "name": "Spirit Warden",
+    "class": "Shaman",
+    "description": "Not all spirits deserve reverence and respect. Some are twisted and despicable. It's a spirit warden's duty to end these spirits' existence.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shaman Archetype ~ Spirit Warden"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.ShamanArchetype.ShamanHex10.ShamanHex2.ShamanSpiritMagic"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Shaman=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Shaman Archetype ~ Spirit Warden],[!PREABILITY:1,CATEGORY=Archetype,TYPE.ShamanHex10,TYPE.ShamanHex2,TYPE.ShamanSpirit]"
+      },
+      {
+        "key": "DESC",
+        "value": "Not all spirits deserve reverence and respect. Some are twisted and despicable. It's a spirit warden's duty to end these spirits' existence."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Shaman Class Feature|AUTOMATIC|Spirit Warden ~ Unnatural Mien|PRECLASS:1,Shaman=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Shaman Class Feature|AUTOMATIC|Spirit Warden ~ Restless Magic|PRECLASS:1,Shaman=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Shaman Class Feature|AUTOMATIC|Spirit Warden ~ Rebuke Spirits|PRECLASS:1,Shaman=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Shaman Class Feature|AUTOMATIC|Spirit Warden ~ Laugh at Death|PRECLASS:1,Shaman=10"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.112"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Shaman"
+      },
+      {
+        "key": "TYPE",
+        "value": "PFSLegal"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Shaman Archetype ~ Spirit Warden],[!PREFACT:1,ABILITIES,Shaman_Archetype_SpiritMagic=True,Shaman_Archetype_Hex=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Shaman_CF_SpiritMagic|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Shaman_CF_Hex2|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Shaman_CF_Hex10|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Shaman_Archetype_SpiritMagic|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Shaman_Archetype_Hex|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3589,
+    "record_key": "Shaman Archetype ~ Spirit Warden"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

@@ -1,0 +1,72 @@
+[
+  {
+    "id": "sheet-open-for-tabs",
+    "status": "green",
+    "screenshot": "docs/release/SD-36-consolidation/artifacts/ui-smoke/f6a/regression/sheet-open-for-tabs.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nSmoke Test PC — Wizard 1\nPROGRESSION\n«\n\nLevel\n1\n+\nCaster Level\n1\nRACE\nElf\nCLASS\nWizard 1\nLevel 1 Wizard\nSkill points: 3\nFeat\nNEXT\nLevel 2 Wizard\nSkill points: 3\nCharacter Name\nSmoke Test PC\nCampaign\n—\nABILITIES\n\nSTR\n16\n+3\nDEX\n16\n+3\nCON\n12\n+1\nINT\n12\n+1\nWIS\n12\n+1\nCHA\n8\n-1\nINITIATIVE\n+3\nHIT POINTS\n7 / 7\nARMOR CLASS\n\nAC\n17\nTOUCH\n13\nFLAT-FOOTED\n14\nATTACK\n\nBAB\n+0\nMELEE\n+0\nCMB\n+3\nCMD\n16\nSAVING",
+    "reason": null
+  },
+  {
+    "id": "sheet-tab-weapons",
+    "status": "green",
+    "screenshot": "docs/release/SD-36-consolidation/artifacts/ui-smoke/f6a/regression/sheet-tab-weapons.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nSmoke Test PC — Wizard 1\nPROGRESSION\n«\n\nLevel\n1\n+\nCaster Level\n1\nRACE\nElf\nCLASS\nWizard 1\nLevel 1 Wizard\nSkill points: 3\nFeat\nNEXT\nLevel 2 Wizard\nSkill points: 3\nCharacter Name\nSmoke Test PC\nCampaign\n—\nABILITIES\n\nSTR\n16\n+3\nDEX\n16\n+3\nCON\n12\n+1\nINT\n12\n+1\nWIS\n12\n+1\nCHA\n8\n-1\nINITIATIVE\n+3\nHIT POINTS\n7 / 7\nARMOR CLASS\n\nAC\n17\nTOUCH\n13\nFLAT-FOOTED\n14\nATTACK\n\nBAB\n+0\nMELEE\n+0\nCMB\n+3\nCMD\n16\nSAVING",
+    "reason": null
+  },
+  {
+    "id": "sheet-action-skill-allocation-dialog",
+    "status": "green",
+    "screenshot": "docs/release/SD-36-consolidation/artifacts/ui-smoke/f6a/regression/sheet-action-skill-allocation-dialog.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nSmoke Test PC — Wizard 1\nPROGRESSION\n«\n\nLevel\n1\n+\nCaster Level\n1\nRACE\nElf\nCLASS\nWizard 1\nLevel 1 Wizard\nSkill points: 3\nFeat\nNEXT\nLevel 2 Wizard\nSkill points: 3\nCharacter Name\nSmoke Test PC\nCampaign\n—\nABILITIES\n\nSTR\n16\n+3\nDEX\n16\n+3\nCON\n12\n+1\nINT\n12\n+1\nWIS\n12\n+1\nCHA\n8\n-1\nINITIATIVE\n+3\nHIT POINTS\n7 / 7\nARMOR CLASS\n\nAC\n17\nTOUCH\n13\nFLAT-FOOTED\n14\nATTACK\n\nBAB\n+0\nMELEE\n+0\nCMB\n+3\nCMD\n16\nSAVING",
+    "reason": null
+  },
+  {
+    "id": "sheet-action-add-spell",
+    "status": "green",
+    "screenshot": "docs/release/SD-36-consolidation/artifacts/ui-smoke/f6a/regression/sheet-action-add-spell.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nSmoke Test PC — Wizard 1\nPROGRESSION\n«\n\nLevel\n1\n+\nCaster Level\n1\nRACE\nElf\nCLASS\nWizard 1\nLevel 1 Wizard\nSkill points: 3\nFeat\nNEXT\nLevel 2 Wizard\nSkill points: 3\nCharacter Name\nSmoke Test PC\nCampaign\n—\nABILITIES\n\nSTR\n16\n+3\nDEX\n16\n+3\nCON\n12\n+1\nINT\n12\n+1\nWIS\n12\n+1\nCHA\n8\n-1\nINITIATIVE\n+3\nHIT POINTS\n7 / 7\nARMOR CLASS\n\nAC\n17\nTOUCH\n13\nFLAT-FOOTED\n14\nATTACK\n\nBAB\n+0\nMELEE\n+0\nCMB\n+3\nCMD\n16\nSAVING",
+    "reason": null
+  },
+  {
+    "id": "sheet-action-level-up-dialog",
+    "status": "green",
+    "screenshot": "docs/release/SD-36-consolidation/artifacts/ui-smoke/f6a/regression/sheet-action-level-up-dialog.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nSmoke Test PC — Wizard 1\nPROGRESSION\n«\n\nLevel\n1\n+\nCaster Level\n1\nRACE\nElf\nCLASS\nWizard 1\nLevel 1 Wizard\nSkill points: 3\nFeat\nNEXT\nLevel 2 Wizard\nSkill points: 3\nCharacter Name\nSmoke Test PC\nCampaign\n—\nABILITIES\n\nSTR\n16\n+3\nDEX\n16\n+3\nCON\n12\n+1\nINT\n12\n+1\nWIS\n12\n+1\nCHA\n8\n-1\nINITIATIVE\n+3\nHIT POINTS\n7 / 7\nARMOR CLASS\n\nAC\n17\nTOUCH\n13\nFLAT-FOOTED\n14\nATTACK\n\nBAB\n+0\nMELEE\n+0\nCMB\n+3\nCMD\n16\nSAVING",
+    "reason": null
+  },
+  {
+    "id": "create-character-samurai",
+    "status": "green",
+    "screenshot": "docs/release/SD-36-consolidation/artifacts/ui-smoke/f6a/regression/create-character-samurai.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nF4 Smoke Alpha — Samurai 1\nPROGRESSION\n«\n\nLevel\n1\n+\nCaster Level\n—\nRACE\nHuman\nCLASS\nSamurai 1\nLevel 1 Samurai\nSkill points: 5\nFeat\nNEXT\nLevel 2 Samurai\nSkill points: 5\nCharacter Name\nF4 Smoke Alpha\nCampaign\n—\nABILITIES\n\nSTR\n18\n+4\nDEX\n14\n+2\nCON\n14\n+2\nINT\n10\n+0\nWIS\n12\n+1\nCHA\n8\n-1\nINITIATIVE\n+2\nHIT POINTS\n12 / 12\nARMOR CLASS\n\nAC\n17\nTOUCH\n13\nFLAT-FOOTED\n14\nATTACK\n\nBAB\n+1\nMELEE\n+6\nCMB\n+5\nCMD",
+    "reason": null
+  },
+  {
+    "id": "create-character-magus",
+    "status": "green",
+    "screenshot": "docs/release/SD-36-consolidation/artifacts/ui-smoke/f6a/regression/create-character-magus.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nF4 Smoke Bravo — Magus 1\nPROGRESSION\n«\n\nLevel\n1\n+\nCaster Level\n1\nRACE\nHuman\nCLASS\nMagus 1\nLevel 1 Magus\nSkill points: 3\nFeat\nNEXT\nLevel 2 Magus\nSkill points: 3\nCharacter Name\nF4 Smoke Bravo\nCampaign\n—\nABILITIES\n\nSTR\n18\n+4\nDEX\n14\n+2\nCON\n14\n+2\nINT\n10\n+0\nWIS\n12\n+1\nCHA\n8\n-1\nINITIATIVE\n+2\nHIT POINTS\n10 / 10\nARMOR CLASS\n\nAC\n17\nTOUCH\n13\nFLAT-FOOTED\n14\nATTACK\n\nBAB\n+0\nMELEE\n+5\nCMB\n+4\nCMD\n16\nSAVI",
+    "reason": null
+  },
+  {
+    "id": "create-character-warrior",
+    "status": "green",
+    "screenshot": "docs/release/SD-36-consolidation/artifacts/ui-smoke/f6a/regression/create-character-warrior.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nF4 Smoke Charlie — Warrior 1\nPROGRESSION\n«\n\nLevel\n1\n+\nCaster Level\n—\nRACE\nHuman\nCLASS\nWarrior 1\nLevel 1 Warrior\nSkill points: 3\nFeat\nNEXT\nLevel 2 Warrior\nSkill points: 3\nCharacter Name\nF4 Smoke Charlie\nCampaign\n—\nABILITIES\n\nSTR\n18\n+4\nDEX\n14\n+2\nCON\n14\n+2\nINT\n10\n+0\nWIS\n12\n+1\nCHA\n8\n-1\nINITIATIVE\n+2\nHIT POINTS\n12 / 12\nARMOR CLASS\n\nAC\n17\nTOUCH\n13\nFLAT-FOOTED\n14\nATTACK\n\nBAB\n+1\nMELEE\n+6\nCMB\n+5",
+    "reason": null
+  },
+  {
+    "id": "create-character-kineticist",
+    "status": "green",
+    "screenshot": "docs/release/SD-36-consolidation/artifacts/ui-smoke/f6a/regression/create-character-kineticist.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nF4 Smoke Delta — Kineticist 1\nPROGRESSION\n«\n\nLevel\n1\n+\nCaster Level\n1\nRACE\nHuman\nCLASS\nKineticist 1\nLevel 1 Kineticist\nSkill points: 5\nFeat\nNEXT\nLevel 2 Kineticist\nSkill points: 5\nCharacter Name\nF4 Smoke Delta\nCampaign\n—\nABILITIES\n\nSTR\n18\n+4\nDEX\n14\n+2\nCON\n14\n+2\nINT\n10\n+0\nWIS\n12\n+1\nCHA\n8\n-1\nINITIATIVE\n+2\nHIT POINTS\n10 / 10\nARMOR CLASS\n\nAC\n17\nTOUCH\n13\nFLAT-FOOTED\n14\nATTACK\n\nBAB\n+0\nMELEE\n+",
+    "reason": null
+  },
+  {
+    "id": "create-character-inquisitor-generic",
+    "status": "green",
+    "screenshot": "docs/release/SD-36-consolidation/artifacts/ui-smoke/f6a/regression/create-character-inquisitor-generic.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nF4 Smoke Echo — Inquisitor 1\nPROGRESSION\n«\n\nLevel\n1\n+\nCaster Level\n1\nRACE\nHuman\nCLASS\nInquisitor 1\nLevel 1 Inquisitor\nSkill points: 7\nFeat\nNEXT\nLevel 2 Inquisitor\nSkill points: 7\nCharacter Name\nF4 Smoke Echo\nCampaign\n—\nABILITIES\n\nSTR\n18\n+4\nDEX\n14\n+2\nCON\n14\n+2\nINT\n10\n+0\nWIS\n12\n+1\nCHA\n8\n-1\nINITIATIVE\n+2\nHIT POINTS\n10 / 10\nARMOR CLASS\n\nAC\n17\nTOUCH\n13\nFLAT-FOOTED\n14\nATTACK\n\nBAB\n+0\nMELEE\n+1\n",
+    "reason": null
+  }
+]

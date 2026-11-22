@@ -1,0 +1,27 @@
+App data root: /tmp/codex-ui-smoke-sd37-e7-9a-smoke-wj59T2/data/io.electricm0nk.codex (isolated; the real store /home/ubuntu/.local/share/io.electricm0nk.codex is never opened)
+Real store before: 15379 entries, sha256 ddfc4461e3f278447373d61e1eff268905da65d3894566b68ab1bc2cbdf9b8bf
+Launching app for agent 'sd37-e7-9a-smoke'...
+PASS  create-starfinder-soldier
+PASS  open-starfinder-sheet
+PASS  level-up-starfinder-soldier-preview
+PASS  level-up-starfinder-soldier-accept
+PASS  choices-starfinder-soldier-loadout
+PASS  build-starfinder-soldier
+PASS  open-starfinder-soldier
+PASS  build-starfinder-mystic
+PASS  open-starfinder-mystic
+PASS  build-starfinder-technomancer
+PASS  open-starfinder-technomancer
+PASS  build-starfinder-envoy
+PASS  open-starfinder-envoy
+PASS  browse-starfinder-catalog
+PASS  landing-select-pathfinder
+PASS  open-seed-aldric
+PASS  open-seed-elowen
+Real store after:  15379 entries, sha256 ddfc4461e3f278447373d61e1eff268905da65d3894566b68ab1bc2cbdf9b8bf -- UNTOUCHED (count and sha256 equal)
+
+17/17 green, 0 red, 0 blocked, 0 manual, 0 not-run (M = 17 rows)
+Cleanup: 13 character(s) created across 17 row(s) with a cleanup record, 13 deleted, 0 leftover; store /tmp/codex-ui-smoke-sd37-e7-9a-smoke-wj59T2/data/io.electricm0nk.codex now holds: 00000000-0000-0000-0000-000000000001, 00000000-0000-0000-0000-000000000002
+Evidence: /home/ubuntu/workspace/worktrees/e79a-scratch/smoke_sf
+Removed isolated app-data root /tmp/codex-ui-smoke-sd37-e7-9a-smoke-wj59T2 (it held 2 character(s) at the end: 00000000-0000-0000-0000-000000000001, 00000000-0000-0000-0000-000000000002).
+exit=0

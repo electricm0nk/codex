@@ -1,0 +1,220 @@
+{
+  "corrections": {
+    "by_corrector": {
+      "sd37-e5-1": 1,
+      "sd37-e5-4": 2
+    },
+    "by_subject": {
+      "E5.4 attempt-1 receipt (Does not cover: Flight System)": 1,
+      "E5.4 attempt-1 receipt (Does not cover: drone HP)": 1,
+      "kanban.md E5.1 row note (E1.MC discovery)": 1
+    },
+    "by_verification_method": {
+      "bash docs/release/SD-37-starfinder-1e/artifacts/epic_3/token-mapping/oracle-builds/run_drone_party.sh -> hp=100 var.drone_lvl=10": 1,
+      "grep -n race_trait_picker apps/desktop/src-tauri/src/sf_adapter.rs (only the error-shaped RaceSelectionResponse); E5.1 test race_books_load_through_the_per_system_registry + pf_registry_plant log": 1,
+      "pcgen-run-character.sh -c <sf_mechanic_drone.pcg with chassis Hover, Flight System pick removed> -> flighttaken=2 dronemastertotallvl=0 (artifacts/epic_5/E5.4-oracle/hover_drone_alone.oracle.txt)": 1
+    },
+    "caught_before": {},
+    "recent": [
+      {
+        "actor": "sd37-e5-1",
+        "id": "1791135010560-sd37-e5-1-9e5b9a",
+        "summary": "kanban.md E5.1 row note (E1.MC discovery) claimed Starfinder race loading (E5.1) must route race_trait_picker::race_corpus through the registry; actual Starfinder race traits never reach race_trait_picker: StarfinderAdapter::load_saved_character returns its explicit Pathfinder-only error and prints race traits as package sheet lines (sf_sheet_print); the registry routing is a Pathfinder-only plumbing fix, done in E5.1 anyway",
+        "ts": "2026-10-04T17:30:10Z"
+      },
+      {
+        "actor": "sd37-e5-4",
+        "id": "1791200964516-sd37-e5-4-72f7e1",
+        "summary": "E5.4 attempt-1 receipt (Does not cover: drone HP) claimed no PCGen drone run exists; a drone HP row has no oracle observation; actual PCGen ships its own drone test character code/testsuite/PCGfiles/sf_mechanic_drone.pcg; a party-mode batch export with its master loaded prints DroneLVL 10, hp 100 (= SRD drone table 10th level)",
+        "ts": "2026-10-05T11:49:24Z"
+      },
+      {
+        "actor": "sd37-e5-4",
+        "id": "1791200964653-sd37-e5-4-f4126b",
+        "summary": "E5.4 attempt-1 receipt (Does not cover: Flight System) claimed the hover chassis' Flight System is gated by its own level-11 prerequisite; PCGen's behaviour on AUTOMATIC grants unverified; actual PCGen holds an AUTOMATIC grant's target without its PRE tokens: a hover drone with DroneMasterTotalLVL 0 at character level 1 counts DroneModFlightSystemTaken=2; SRD hover chassis lists flight system (x2) as an initial mod",
+        "ts": "2026-10-05T11:49:24Z"
+      }
+    ],
+    "repeat_subjects": [],
+    "total": 3,
+    "with_blast_radius": 0
+  },
+  "deferrals": {
+    "open": 1,
+    "open_items": [
+      {
+        "actor": "sd37-e5-1",
+        "id": "1791135016991-sd37-e5-1-17436f",
+        "reason": "E5.1 prints features; these rows are one weapon's attack/damage terms and are kept off the feature list by sf_sheet_print; a carried weapon's line is E5.3 (equipment print), its attack total E7.1",
+        "revisit": "E5.3 (equipment print) and E7.1 (attack totals)",
+        "ts": "2026-10-04T17:30:16Z",
+        "what": "per-weapon CATEGORY:Weapon attack/damage rows (package pool 'weapon') printing on the carried weapon's line"
+      }
+    ],
+    "recent": [
+      {
+        "actor": "sd37-e5-1",
+        "id": "1791135016991-sd37-e5-1-17436f",
+        "summary": "deferred per-weapon CATEGORY:Weapon attack/damage rows (package pool 'weapon') printing on the carried weapon's line: E5.1 prints features; these rows are one weapon's attack/damage terms and are kept off the feature list by sf_sheet_print; a carried weapon's line is E5.3 (equipment print), its attack total E7.1",
+        "ts": "2026-10-04T17:30:16Z"
+      }
+    ],
+    "resolved": 0,
+    "total": 1
+  },
+  "events": {
+    "by_actor": {
+      "codex-sd37": 12,
+      "sd37-e0-2": 1,
+      "sd37-e0-4": 1,
+      "sd37-e1-4": 1,
+      "sd37-e5-1": 4,
+      "sd37-e5-2": 2,
+      "sd37-e5-3": 3,
+      "sd37-e5-4": 4
+    },
+    "by_origin": {
+      "agent": 14,
+      "derived": 14
+    },
+    "by_type": {
+      "correction": 3,
+      "deferral": 1,
+      "incident": 8,
+      "rework": 2,
+      "verification": 14
+    },
+    "total": 28
+  },
+  "generated_at": "2026-10-05T14:47:54Z",
+  "generated_by": "scripts/retro.py summary",
+  "git_join": {
+    "authors": 1,
+    "available": true,
+    "commits": 20,
+    "events_per_commit": 1.4,
+    "top_authors": [
+      [
+        "Todd Hintzmann",
+        20
+      ]
+    ]
+  },
+  "incidents": {
+    "by_recurrence_key": {
+      "fenced-file-blocks-criterion": 1,
+      "oracle-misdecoded-text": 1,
+      "pcgen-gradle-network-fetch": 1,
+      "redispatch-of-complete-card": 2,
+      "redispatch-of-completed-card": 1,
+      "rule-id-colon-grammar": 1,
+      "weapon-rows-unset-vars": 1
+    },
+    "recent": [
+      {
+        "actor": "sd37-e5-2",
+        "id": "1791145980557-sd37-e5-2-55f7c3",
+        "summary": "SF package printed UTF-8-read-as-Windows-1252 text from the oracle (e.g. detect_thoughts '\u00e2\u20ac\u0153Listen\u00e2\u20ac'); 87 records (81 spells, 6 deities); 4 seed spells affected; 20 spells also kept a stray '|' and a glued-tokens defect row",
+        "ts": "2026-10-04T20:33:00Z"
+      },
+      {
+        "actor": "sd37-e5-2",
+        "id": "1791145980686-sd37-e5-2-a798c3",
+        "summary": "spell= saved-character line split a rule-id spell (core:spell:magic_missile:core:class:technomancer:known) at the first colon: spell_id 'core'; a saved Starfinder caster would load with no spells",
+        "ts": "2026-10-04T20:33:00Z"
+      },
+      {
+        "actor": "sd37-e5-3",
+        "id": "1791157015670-sd37-e5-3-a71eba",
+        "summary": "per-weapon attack/damage rows evaluate +0 on every seed weapon: their vars (To Hit/Damage Longarms, Small Arms) are set only by weapon_focus_<group>/weapon_specialization_<group> abilities, which no seed holds; SRD gives the Soldier 3's longarm +3 damage (weapon specialization)",
+        "ts": "2026-10-04T23:36:55Z"
+      },
+      {
+        "actor": "sd37-e5-3",
+        "id": "1791157503896-sd37-e5-3-58ec89",
+        "summary": "a Starfinder character carrying any augmentation cannot compute: augmentation records state no bulk (oracle QUALITY:ItemLevel only; 144 augmentation principals) and sf_loadout refuses an item with no bulk (sf_loadout.item_bulk); installed upgrades' price/bulk cannot reach credits/bulk because sf_loadout refuses equipment_modifier records",
+        "ts": "2026-10-04T23:45:03Z"
+      },
+      {
+        "actor": "sd37-e0-4",
+        "id": "1791167378425-sd37-e0-4-593e7e",
+        "summary": "E0.4 transcriber re-dispatched (attempt 1) although E0.4 is complete on origin/tranche/17 (705088c8d7 transcriber, 5f116cd4b9 review 126/126 agree); declined without rewriting",
+        "ts": "2026-10-05T02:29:38Z"
+      },
+      {
+        "actor": "sd37-e1-4",
+        "id": "1791167428729-sd37-e1-4-e92bbf",
+        "summary": "E1.4 re-dispatched (attempt 1 of 3) although it landed complete at 390917267e/520d746125 on origin/tranche/17 and E1.MC plus E2-E5 cards already built on it; one agent turn spent re-verifying (detected by kanban.md E1.4 row = complete; git branch -r --contains 520d746125 -> origin/tranche/17)",
+        "ts": "2026-10-05T02:30:28Z"
+      },
+      {
+        "actor": "sd37-e0-2",
+        "id": "1791167500346-sd37-e0-2-2ea5f5",
+        "summary": "E0.2 re-dispatched (attempt 1 of 3) although kanban row is complete at 2f0bd9d793/bad4e41101 on origin/tranche/17",
+        "ts": "2026-10-05T02:31:40Z"
+      },
+      {
+        "actor": "sd37-e5-3",
+        "id": "1791177420441-sd37-e5-3-d4b149",
+        "summary": "root sweep: v06_wizard_pilot_case_verification full_pipeline failed; PCGen gradlew could not reach api.adoptium.net (downloadJavaFXLocal)",
+        "ts": "2026-10-05T05:17:00Z"
+      }
+    ],
+    "recurring": [
+      {
+        "count": 2,
+        "recurrence_key": "redispatch-of-complete-card"
+      }
+    ],
+    "silent": 4,
+    "time_lost_minutes": 21,
+    "total": 8
+  },
+  "log": {
+    "invalid_lines": 0,
+    "path": "/home/ubuntu/workspace/worktrees/codex-sd37/docs/retro/events",
+    "problems": [],
+    "shards": 8
+  },
+  "near_misses": {
+    "by_caught_by": {},
+    "escaped": 0,
+    "recent": [],
+    "total": 0
+  },
+  "rework": {
+    "by_cause": {
+      "file-order registration let drone skill units take (INTERNAL, COMPUTERS/STEALTH...) name pairs from Skill Synergy / Master Crafter options": 1,
+      "the unnarrowed view gave 4 non-drone records (lashunta_default_student, half_elf_default_adaptability, verthani_default_skill_focus, exocortex_memory_module) new offers, one on a seed's race (SF-Mystic-5)": 1
+    },
+    "recent": [
+      {
+        "actor": "sd37-e5-4",
+        "id": "1791180051758-sd37-e5-4-463deb",
+        "summary": "redid E5.4 converter: ABILITYLIST-category type views first applied to every SF listed category; narrowed to CATEGORY:Internal parents: the unnarrowed view gave 4 non-drone records (lashunta_default_student, half_elf_default_adaptability, verthani_default_skill_focus, exocortex_memory_module) new offers, one on a seed's race (SF-Mystic-5)",
+        "ts": "2026-10-05T06:00:51Z"
+      },
+      {
+        "actor": "sd37-e5-4",
+        "id": "1791180051882-sd37-e5-4-924473",
+        "summary": "redid E5.4 converter: companion pick members registered their (category,name) pairs before older Internal options: file-order registration let drone skill units take (INTERNAL, COMPUTERS/STEALTH...) name pairs from Skill Synergy / Master Crafter options",
+        "ts": "2026-10-05T06:00:51Z"
+      }
+    ],
+    "total": 2
+  },
+  "schema_version": 1,
+  "verification": {
+    "by_failing_stage": {
+      "clippy": 2
+    },
+    "fail_rate": 0.1429,
+    "failed_runs": 2,
+    "runs": 14
+  },
+  "window": {
+    "since": "2026-10-04T17:03:21+00:00",
+    "spec": "2026-10-04T17:03:21Z",
+    "until": null
+  }
+}

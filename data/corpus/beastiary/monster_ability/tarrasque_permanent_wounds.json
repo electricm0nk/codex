@@ -1,0 +1,61 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Tarrasque ~ Permanent Wounds",
+    "delivery": "Extraordinary",
+    "description": "You can never be permanently wounded.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "beastiary:monster_ability:tarrasque_permanent_wounds",
+    "name": "Immunity to Permanent Wounds",
+    "owners": [
+      "beastiary:monster:tarrasque"
+    ],
+    "raw_tokens": [
+      {
+        "key": "ASPECT",
+        "value": "Immunity|Permanent Wounds"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "You can never be permanently wounded."
+      },
+      {
+        "key": "KEY",
+        "value": "Tarrasque ~ Permanent Wounds"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.262"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary.Immunity"
+      }
+    ],
+    "source_page": "p.262",
+    "traits": [
+      "Immunity"
+    ]
+  },
+  "ingested_at": "2026-08-15T01:24:18Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1181,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "record_key": "Tarrasque ~ Permanent Wounds",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

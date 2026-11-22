@@ -1,0 +1,58 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Graveknight ~ Rejuvenation",
+    "delivery": "Supernatural",
+    "description": "One day after a graveknight is destroyed, its armor begins to rebuild the undead horror's body. This process takes 1d10 days-if the body is destroyed before that time passes, the armor merely starts the process anew. After this time has elapsed, the graveknight wakens fully healed.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:graveknight_rejuvenation",
+    "name": "Rejuvenation",
+    "owners": [
+      "bestiary_3:monster:graveknight"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "One day after a graveknight is destroyed, its armor begins to rebuild the undead horror's body. This process takes 1d10 days-if the body is destroyed before that time passes, the armor merely starts the process anew. After this time has elapsed, the graveknight wakens fully healed."
+      },
+      {
+        "key": "KEY",
+        "value": "Graveknight ~ Rejuvenation"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.138"
+      },
+      {
+        "key": "TYPE",
+        "value": "GraveknightRacialAbility.SpecialQuality.Supernatural.Defensive"
+      }
+    ],
+    "source_page": "p.138",
+    "traits": [
+      "GraveknightRacialAbility",
+      "Defensive"
+    ]
+  },
+  "ingested_at": "2026-08-23T10:26:03Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 962,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Graveknight ~ Rejuvenation",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

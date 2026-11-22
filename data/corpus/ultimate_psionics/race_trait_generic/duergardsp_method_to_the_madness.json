@@ -1,0 +1,63 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "Gain a +2 bonus to Will saves and call to mind 1/day.",
+    "key": "DuergarDSP ~ Method to the Madness",
+    "name": "Method to the Madness",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "DuergarDSP ~ Method to the Madness"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.SpecialQuality.DuergarDSPRacialTrait.DuergarDSPHardy"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,DuergarDSP ~ Method to the Madness],[!PREABILITY:1,CATEGORY=Special Ability,TYPE.DuergarDSPHardy]"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=1|CASTERLEVEL=TL|Call to Mind"
+      },
+      {
+        "key": "DESC",
+        "value": "Gain a +2 bonus to Will saves and call to mind 1/day."
+      },
+      {
+        "key": "BONUS",
+        "value": "SAVE|Will|2|TYPE=Racial"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.317"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 107,
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_race.lst",
+    "record_key": "DuergarDSP ~ Method to the Madness",
+    "sha256": "3368f2a5e87f65a202fb5dce31ecbe9bf6a0b8d0b715abc99d8233796131d9c7"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:spells"
+  ]
+}

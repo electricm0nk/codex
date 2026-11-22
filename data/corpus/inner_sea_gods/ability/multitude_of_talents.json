@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Evangelist ~ Multitude of Talents",
+    "name": "Multitude of Talents",
+    "description": "The evangelist finds herself in many strange situations requiring a variety of skills. Starting at 5th level, the evangelist gains a +4 sacred or profane bonus on any skill check attempted with a skill in which the character has no ranks. This bonus applies only to skill checks that can be made untrained.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Evangelist ~ Multitude of Talents"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Evangelist Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "The evangelist finds herself in many strange situations requiring a variety of skills. Starting at 5th level, the evangelist gains a +4 sacred or profane bonus on any skill check attempted with a skill in which the character has no ranks. This bonus applies only to skill checks that can be made untrained."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.199"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities.lst",
+    "sha256": "e31ff7fb4fed812ae719cb19526442b9b9c9575efc25c169c06690f7a236fafd",
+    "line": 19,
+    "record_key": "Evangelist ~ Multitude of Talents"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

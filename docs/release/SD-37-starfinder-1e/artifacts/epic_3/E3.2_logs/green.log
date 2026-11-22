@@ -1,0 +1,17 @@
+   Compiling codex-ingest v0.1.0 (/home/ubuntu/workspace/worktrees/codex-sd37/crates/codex-ingest)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1.29s
+     Running tests/sf_formula_system.rs (/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/sf_formula_system-77109df584310c0d)
+
+running 8 tests
+test every_in_scope_modify_token_is_mapped_or_refused_by_name ... ok
+test variable_names_resolve_case_insensitively_like_pcgen ... ok
+test declarations_channel_function_dynamic_scopes_and_datatables_are_read ... ok
+test modifyother_tokens_are_speed_on_a_declared_movement ... ok
+test the_stat_chain_maps_to_ability_compute_targets ... ok
+test print_roles_cover_equipment_and_race_facts ... ok
+test the_committed_census_is_fresh ... ok
+test an_independent_walk_agrees_on_the_token_counts ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.39s
+
+exit=0

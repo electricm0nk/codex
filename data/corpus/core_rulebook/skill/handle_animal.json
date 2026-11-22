@@ -1,0 +1,49 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "key": "Handle Animal",
+    "name": "Handle Animal",
+    "raw_tokens": [
+      {
+        "key": "KEYSTAT",
+        "value": "CHA"
+      },
+      {
+        "key": "USEUNTRAINED",
+        "value": "NO"
+      },
+      {
+        "key": "TYPE",
+        "value": "Charisma.Base"
+      },
+      {
+        "key": "PREVARLT",
+        "value": "AnimalCompanionSkill,1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.97"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Handle Animal|3|TYPE=ClassSkill|PRECSKILL:1,Handle Animal|PRESKILL:1,Handle Animal=1"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T12:11:34Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 40,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_skills.lst",
+    "record_key": "Handle Animal",
+    "sha256": "4cb379aac1fcb20677623cecf3842a30eef88d79d4fe4fe00fbc0f49f856c9ea"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

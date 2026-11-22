@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Preparation Ritual ~ Sturdy Summoning",
+    "name": "Sturdy Summoning",
+    "description": "A creature you summon gains augmented defenses for a short time. Spend this boon effect as a free action when you cast a conjuration (summoning) wizard spell. The creature you summon with that spell gains a number of temporary hit points equal to your caster level, and as long as the summoned creature has at least 1 of these hit points, it gains a +2 circumstance bonus on saving throws.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Preparation Ritual ~ Sturdy Summoning"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.PreparationRitual"
+      },
+      {
+        "key": "DESC",
+        "value": "A creature you summon gains augmented defenses for a short time. Spend this boon effect as a free action when you cast a conjuration (summoning) wizard spell. The creature you summon with that spell gains a number of temporary hit points equal to your caster level, and as long as the summoned creature has at least 1 of these hit points, it gains a +2 circumstance bonus on saving throws."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.124"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities.lst",
+    "sha256": "a08f7ed509102fe180c11544de6877bffe963ed196ba721f4894c5e4b081a5b6",
+    "line": 40,
+    "record_key": "Preparation Ritual ~ Sturdy Summoning"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

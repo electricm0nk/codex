@@ -1,0 +1,71 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Frightful Moan",
+    "delivery": "Supernatural",
+    "description": "The ghost died in the throes of crippling terror. It can emit a frightful moan as a standard action. All living creatures within a 30-foot spread must succeed on a Will save DC %1 or become panicked for 2d4 rounds. This is a sonic mind-affecting fear effect. A creature that successfully saves against the moan cannot be affected by the same ghost's moan for 24 hours.",
+    "description_variables": [
+      "FrightfulMoanDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:frightful_moan",
+    "name": "Frightful Moan",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Frightful Moan"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FrightfulMoanDC|10+(TL/2)+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FrightfulMoanDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Frightful Moan)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FrightfulMoanDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The ghost died in the throes of crippling terror. It can emit a frightful moan as a standard action. All living creatures within a 30-foot spread must succeed on a Will save DC %1 or become panicked for 2d4 rounds. This is a sonic mind-affecting fear effect. A creature that successfully saves against the moan cannot be affected by the same ghost's moan for 24 hours.|FrightfulMoanDC"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.144"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.GhostAbility.AttackOption.Supernatural"
+      }
+    ],
+    "source_page": "p.144",
+    "traits": [
+      "GhostAbility",
+      "AttackOption"
+    ]
+  },
+  "ingested_at": "2026-08-23T12:58:07Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1305,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "record_key": "Frightful Moan",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

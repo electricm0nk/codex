@@ -1,0 +1,55 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Thriae Soldier ~ Poison",
+    "delivery": "Extraordinary",
+    "description": "Sting or arrow-injury; save Fort DC 15; frequency 1/round for 6 rounds; effect 1d2 Str; cure 1 save. As a free action, a thriae soldier can apply her venom to an arrow as she fires the shot. The save DC is Constitution-based.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:thriae_soldier_poison",
+    "name": "Poison",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Sting or arrow-injury; save Fort DC 15; frequency 1/round for 6 rounds; effect 1d2 Str; cure 1 save. As a free action, a thriae soldier can apply her venom to an arrow as she fires the shot. The save DC is Constitution-based."
+      },
+      {
+        "key": "KEY",
+        "value": "Thriae Soldier ~ Poison"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.267"
+      },
+      {
+        "key": "TYPE",
+        "value": "ThriaeSoldierRacialAbility.SpecialQuality.Extraordinary"
+      }
+    ],
+    "source_page": "p.267",
+    "traits": [
+      "ThriaeSoldierRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T14:09:11Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1612,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Thriae Soldier ~ Poison",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

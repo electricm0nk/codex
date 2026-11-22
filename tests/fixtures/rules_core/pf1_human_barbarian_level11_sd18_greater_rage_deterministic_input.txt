@@ -1,0 +1,42 @@
+# SD18 deterministic Human Barbarian level 11 Greater Rage fixture.
+# Widens the accepted SD13-E5 deterministic PF1 Core Rulebook Human
+# Barbarian level-1..level-10 martial chassis baseline
+# (tests/sd13_barbarian_level10_progression.rs) to level 11 as chosen
+# input only. It names selections; it does not contain derived, computed, or
+# parity values. It preserves the accepted Human race-choice seam
+# (ability-bonus and bonus-feat) and the deterministic
+# ability/feat/skill/equipment posture from the level-1 through level-10
+# fixtures, adding only the level bump this bounded tranche needs. No new
+# rage-power choice-slot line is present: the next rage-power grant level
+# is 12th (2/4/6/8/10 are already granted; 11th is not a rage-power level),
+# so no new choice= line is required beyond the level-1..level-10 baseline.
+#
+# It deliberately avoids every later Barbarian burden surface: no rage
+# execution (activation, round tracking, fatigue), no rage-power
+# recognition or execution, no damage-reduction application engine, and no
+# level-12+ progression. The PF1 Core Rulebook Barbarian class table's
+# level-11 "Special" column reads "Greater rage" only (verified
+# independently against d20pfsrd and legacy.aonprd.com): Greater Rage
+# upgrades the flat while-raging Strength/Constitution morale bonuses from
+# +4 to +6 and the Will-save morale bonus from +2 to +3 (the Armor Class
+# penalty stays -2); it does not add a new rage-power grant, so no
+# rage-power-selection-slot-count engine is invented here.
+case_id=pf1-crb-human-barbarian-level11
+source_package_id=pf1.core_rulebook
+race_id=race:human
+class_level=class:barbarian:11
+ability=strength:16
+ability=dexterity:14
+ability=constitution:16
+ability=intelligence:8
+ability=wisdom:10
+ability=charisma:8
+feat=feat:power_attack
+skill=skill:survival:1
+equipment=item:chain_shirt:equipped_worn_active
+equipment=item:longsword:equipped_primary_active
+equipment=item:shield:absent
+choice=choice:level_1_character_feat:feat:power_attack
+choice=choice:human_bonus_feat:feat:dodge
+choice=choice:human_ability_bonus:ability:strength
+provenance=programs/codex/requirements/SD-18-core-rules-breadth/artifacts/core-roster-and-support-state-matrix.md

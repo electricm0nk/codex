@@ -1,0 +1,15 @@
+{
+  "completeness": "full",
+  "data": {
+    "key": "Claw Blades (Catfolk)",
+    "name": "Claw Blades (Catfolk)"
+  },
+  "license": "OGL",
+  "population": "in_scope",
+  "source": {
+    "kind": "desktop_ui_fixture",
+    "line": 1,
+    "path": "apps/desktop/src-tauri/fixtures_src/equip_claw_blades_catfolk.txt",
+    "record_key": "Claw Blades (Catfolk)"
+  }
+}

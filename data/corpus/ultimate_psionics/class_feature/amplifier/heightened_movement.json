@@ -1,0 +1,72 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Amplifier ~ Heightened Movement",
+    "name": "Heightened Movement",
+    "class": "Amplifier",
+    "description": "As a swift action, you can grant one member of your collective a +%1 insight bonus to AC and Reflex saves, as well as a %2 ft. bonus to movement speed.  This effect lasts %3 rounds and counts as a use of your strategies ability.|HeightenedMovementBonus|HeightenedMovementExtraSpeed|HeightenedMovementDuration",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Amplifier ~ Heightened Movement"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "TacticianClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "HeightenedMovementBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "HeightenedMovementExtraSpeed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "HeightenedMovementDuration|0"
+      },
+      {
+        "key": "DESC",
+        "value": "As a swift action, you can grant one member of your collective a +%1 insight bonus to AC and Reflex saves, as well as a %2 ft. bonus to movement speed.  This effect lasts %3 rounds and counts as a use of your strategies ability.|HeightenedMovementBonus|HeightenedMovementExtraSpeed|HeightenedMovementDuration"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HeightenedMovementBonus|min(3,floor((TacticianLVL+1)/6))"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HeightenedMovementExtraSpeed|5*min(3,floor((TacticianLVL+1)/6))"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HeightenedMovementDuration|TacticianPrimeStat"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.285"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2238,
+    "record_key": "Amplifier ~ Heightened Movement"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

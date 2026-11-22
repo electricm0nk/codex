@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-24T03:51:47Z",
+  "data": {
+    "key": "Sorcerer Bonus Spell L2 ~ Slipstream",
+    "name": "Slipstream",
+    "class": "Sorcerer",
+    "description": "You create a low-cresting wave of water that carries the target along the surface of water or the ground. When moving across level ground, the target's speed increases by 10 feet.  If going downhill, speed increases by 20 feet instead, but slipstream provides no movement bonus when going uphill.  While swimming, the slipstream increases the target's swim speed by 20 feet-if the target does not have a swim speed, this spell grants a swim speed of 20 ft.|PRERULE:1,DisplayFullSpell",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sorcerer Bonus Spell L2 ~ Slipstream"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "TYPE",
+        "value": "Sorcerer Bloodline Bonus Spell"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Sorcerer_BonusSpell_Slipstream_L2,1"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "BloodlineCasterLVL,5"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Sorcerer=2|Slipstream"
+      },
+      {
+        "key": "DOMAINS",
+        "value": "Oceans Subdomain=2"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "WaterSchool"
+      },
+      {
+        "key": "DESC",
+        "value": "You create a low-cresting wave of water that carries the target along the surface of water or the ground. When moving across level ground, the target's speed increases by 10 feet.  If going downhill, speed increases by 20 feet instead, but slipstream provides no movement bonus when going uphill.  While swimming, the slipstream increases the target's swim speed by 20 feet-if the target does not have a swim speed, this spell grants a swim speed of 20 ft.|PRERULE:1,DisplayFullSpell"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 3077,
+    "record_key": "Sorcerer Bonus Spell L2 ~ Slipstream"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

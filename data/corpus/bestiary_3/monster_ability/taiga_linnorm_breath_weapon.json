@@ -1,0 +1,55 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Taiga Linnorm ~ Breath Weapon",
+    "delivery": "Supernatural",
+    "description": "Once every 1d4 rounds as a standard action, a taiga linnorm can expel a 60-foot cone of electrified vapor, dealing 21d8 points of electricity damage to all creatures struck (Reflex DC 30 for half). The vapor itself persists for 1d4 rounds, filling its cone-shaped area with electrified mist that deals 4d6 points of electricity damage (no save) to any creature that ends its turn in the mist. The mist does not hinder vision. The save DC is Constitution-based.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:taiga_linnorm_breath_weapon",
+    "name": "Breath Weapon",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Once every 1d4 rounds as a standard action, a taiga linnorm can expel a 60-foot cone of electrified vapor, dealing 21d8 points of electricity damage to all creatures struck (Reflex DC 30 for half). The vapor itself persists for 1d4 rounds, filling its cone-shaped area with electrified mist that deals 4d6 points of electricity damage (no save) to any creature that ends its turn in the mist. The mist does not hinder vision. The save DC is Constitution-based."
+      },
+      {
+        "key": "KEY",
+        "value": "Taiga Linnorm ~ Breath Weapon"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.184"
+      },
+      {
+        "key": "TYPE",
+        "value": "TaigaLinnormRacialAbility.SpecialQuality.Supernatural"
+      }
+    ],
+    "source_page": "p.184",
+    "traits": [
+      "TaigaLinnormRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T14:09:11Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1222,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Taiga Linnorm ~ Breath Weapon",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

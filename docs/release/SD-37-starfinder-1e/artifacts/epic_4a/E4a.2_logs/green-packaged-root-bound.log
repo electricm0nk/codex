@@ -1,0 +1,14 @@
+test authoring_workbench::tests::first_candidate_root_carrying_corpus_is_none_when_no_candidate_carries_it ... ok
+test authoring_workbench::tests::baseline_armor_class_wire_shape_matches_the_ts_boundary ... ok
+test authoring_workbench::tests::rules_tables_from_a_packaged_resource_root_probe ... ignored, child process of a_packaged_app_reads_the_rules_tables_from_its_resource_root
+test authoring_workbench::tests::the_desktop_startup_binds_the_rules_tables_package_root ... ok
+test authoring_workbench::tests::first_candidate_root_carrying_corpus_picks_the_one_with_a_real_data_corpus_dir ... ok
+test authoring_workbench::tests::packaged_guard_stance_resource_yields_success_without_repo_fixture_path ... ok
+test authoring_workbench::tests::missing_effect_yields_blocked_with_diagnostics ... ok
+test authoring_workbench::tests::valid_guard_stance_package_yields_success ... ok
+test authoring_workbench::tests::widened_package_yields_unsupported ... ok
+test authoring_workbench::tests::lifecycle_gates_prevent_export_when_invalid ... ok
+test authoring_workbench::tests::a_packaged_app_reads_the_rules_tables_from_its_resource_root ... ok
+
+test result: ok. 10 passed; 0 failed; 1 ignored; 0 measured; 690 filtered out; finished in 0.02s
+

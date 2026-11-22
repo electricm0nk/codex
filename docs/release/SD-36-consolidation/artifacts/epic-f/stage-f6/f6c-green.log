@@ -1,0 +1,21 @@
+# F6c GREEN (targeted runs; the full one-pass verification is f6c-verify.log)
+
+## (b) cargo test --locked -j 8 --lib no_prestige_requirement_line_prints_a_raw_id -- --test-threads=8 --nocapture
+prestige gates 74, printed requirement lines 286, lines with a raw id 0
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 2747 filtered out; finished in 4.07s
+
+## (a) desktop level_up_options_name_the_engines_mix_refusal_before_accept (Accept taken for real on every option)
+build_level_up_class_options(fighter 6): 90.310241991s
+fighter 6, each of 133 level-up options (advance 1, add_base 58, add_prestige 74) taken for real: computed 123, refused with the blocker shown 10, refused by something other than the mix gate 0: []
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 625 filtered out; finished in 245.78s
+
+## (a) frontend tsx src/characterHub/classRoster.test.ts on the regenerated wire
+classRoster: all assertions passed
+
+## (c)+(d) after the converter step, from f6c-verify.log's root lib run (2744 passed); the scan line:
+domain-count lines 47, offering a domain 46; on a class record 4: [("advanced_class_guide:class:shaman#bonus1", false, true), ("core_rulebook:class:cleric#bonus1", true, false), ("core_rulebook:class:paladin#bonus1", true, false), ("inner_sea_world_guide:class:daughter_of_urgathoa#bonus5", true, false)]; classes whose own DOMAIN: rows grant domains 4: {"druid", "ex_antipaladin", "magus", "shaman"}; printed and filled by the class's own grants 0
+domain records only a withheld-count class grants: 10 (0 printing): [("advanced_class_guide:domain:battle_spirit", false), ("advanced_class_guide:domain:bones_spirit", false), ("advanced_class_guide:domain:flame_spirit", false), ("advanced_class_guide:domain:heavens_spirit", false), ("advanced_class_guide:domain:life_spirit", false), ("advanced_class_guide:domain:lore_spirit", false), ("advanced_class_guide:domain:nature_spirit", false), ("advanced_class_guide:domain:stone_spirit", false), ("advanced_class_guide:domain:waves_spirit", false), ("advanced_class_guide:domain:wind_spirit", false)]
+prestige gates 74, printed requirement lines 286, lines with a raw id 0
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 2747 filtered out; finished in 3.92s
+
+## (d) the_chassis_cites_the_newest_printing_in_any_order: included in the 3 passed above (cyphermage, hellknight, red_mantis_assassin cite adventurers_guide in either input order)

@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:20:31Z",
+  "data": {
+    "key": "Egotist ~ Receive Touch Spells",
+    "name": "Receive Touch Spells",
+    "description": "An egotist can demand a particular touch spell as a standard action. If it does so, until the egotist's next turn, its master can cast that spell on the egotist once as a ranged touch within close range, as if using Reach Spell.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Egotist ~ Receive Touch Spells"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "FamiliarClassFeatures.ArchetypeAbility.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "An egotist can demand a particular touch spell as a standard action. If it does so, until the egotist's next turn, its master can cast that spell on the egotist once as a ranged touch within close range, as if using Reach Spell."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.210"
+      }
+    ],
+    "origin": "declared",
+    "owners": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5",
+    "line": 560,
+    "record_key": "Egotist ~ Receive Touch Spells"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

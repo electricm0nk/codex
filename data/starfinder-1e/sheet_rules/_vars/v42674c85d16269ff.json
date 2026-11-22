@@ -1,0 +1,1 @@
+{"var":"v42674c85d16269ff","label":"Skill Cap Profession Artist","declared_by":["core:ability:default"],"contributions":[{"rule_id":"core:ability:default","expr":{"Var":"v5b16698d87ebd3f5"},"when":"Always"}],"provenance":{"outside_corpus_rows":["starfinder/paizo/core/scr_abilities.lst:30"]}}

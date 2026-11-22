@@ -1,0 +1,80 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Soulknife Archetype ~ Deadly Fist",
+    "name": "Deadly Fist",
+    "class": "Soulknife",
+    "description": "Some soulknives learn to channel the psionic energy of a mind blade into their unarmed strikes, making them lethal without the need for a weapon.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Soulknife Archetype ~ Deadly Fist"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.SoulknifeArchetype.SoulknifeFormMindBlade.SoulknifeEnhancedMindBlade.SoulknifeBonusFeat.SoulknifeThrowMindBlade.SoulkifeQuickDraw"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Soulknife=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Soulknife Archetype ~ Deadly Fist],[!PREABILITY:1,CATEGORY=Archetype,TYPE.SoulknifeFormMindBlade,TYPE.SoulknifeEnhancedMindBlade,TYPE.SoulknifeBonusFeat,TYPE.SoulknifeThrowMindBlade,TYPE.SoulknifeQuickDraw]"
+      },
+      {
+        "key": "DESC",
+        "value": "Some soulknives learn to channel the psionic energy of a mind blade into their unarmed strikes, making them lethal without the need for a weapon."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Soulknife Class Feature|AUTOMATIC|Deadly Fist ~ Empowered Strikes|PRECLASS:1,Soulknife=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Soulknife Class Feature|AUTOMATIC|Deadly Fist ~ Enhanced Strikes|PREVARGTEQ:MndBladeLVL,3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Soulknife Class Feature|AUTOMATIC|Deadly Fist ~ Unarmed Assault|PRECLASS:1,Soulknife=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Soulknife Class Feature|AUTOMATIC|Deadly Fist ~ Psychokinetic Discharge|PRECLASS:1,Soulknife=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Soulknife Class Feature|AUTOMATIC|Deadly Fist ~ Quick Empower|PRECLASS:1,Soulknife=5"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.280"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2135,
+    "record_key": "Soulknife Archetype ~ Deadly Fist"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

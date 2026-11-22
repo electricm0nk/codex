@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Serpent Lord ~ Wild Empathy",
+    "name": "Wild Empathy",
+    "class": "Serpent Lord",
+    "description": "You gain a +4 bonus when using wild empathy on serpents and the time it takes is reduced to one round.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Serpent Lord ~ Wild Empathy"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "DruidClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a +4 bonus when using wild empathy on serpents and the time it takes is reduced to one round."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.338"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2469,
+    "record_key": "Serpent Lord ~ Wild Empathy"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

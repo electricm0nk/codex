@@ -1,0 +1,82 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Universal Monster Rule ~ Unnatural Aura",
+    "delivery": "Supernatural",
+    "description": "Animals do not willingly approach the creature unless the animal's master succeeds at a DC %1 Handle Animal, Ride, or wild empathy check.",
+    "description_variables": [
+      "UMR_UnnaturalAura_DC"
+    ],
+    "facet": "SpecialQuality",
+    "key": "bestiary_5:monster_ability:universal_monster_rule_unnatural_aura",
+    "name": "Unnatural Aura",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(%1 ft.)|UMR_UnnaturalAura_Range"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|UMR_UnnaturalAura_DC|25"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|UMR_UnnaturalAura_Range|30"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "UMR_UnnaturalAura_DC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "UMR_UnnaturalAura_Range|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "UMR_UnnaturalAura_SpecificDesc|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Animals do not willingly approach the creature unless the animal's master succeeds at a DC %1 Handle Animal, Ride, or wild empathy check.|UMR_UnnaturalAura_DC|PREVAREQ:UMR_UnnaturalAura_SpecificDesc,0"
+      },
+      {
+        "key": "KEY",
+        "value": "Universal Monster Rule ~ Unnatural Aura"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.301"
+      },
+      {
+        "key": "TYPE",
+        "value": "Universal Monster Rule.SpecialQuality.Supernatural.Aura"
+      }
+    ],
+    "source_page": "p.301",
+    "traits": [
+      "Universal Monster Rule",
+      "Aura"
+    ]
+  },
+  "ingested_at": "2026-08-23T15:23:07Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 2439,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "record_key": "Universal Monster Rule ~ Unnatural Aura",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

@@ -1,0 +1,124 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Unchained Monk Archetype ~ Perfect Scholar",
+    "name": "Perfect Scholar",
+    "class": "Unchained Monk Archetype",
+    "description": "[redacted PI]",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Unchained Monk Archetype ~ Perfect Scholar"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.Unchained Monk Archetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Monk=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Unchained Monk Archetype ~ Perfect Scholar],[!PREFACT:1,ABILITIES,Monk_Archetype_ClassSkills=True,Monk_Archetype_StillMind=True,Monk_Archetype_KiPowers4=True,Monk_Archetype_TongueOfTheSunAndMoon=True,Monk_Archetype_PerfectSelf=True]"
+      },
+      {
+        "key": "DESCISPI",
+        "value": "YES"
+      },
+      {
+        "key": "DESC",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Perfect Scholar ~ Class Skills|PRECLASS:1,Monk=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Perfect Scholar ~ Lore|PRECLASS:1,Monk=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Perfect Scholar ~ Learn from Failure|PRECLASS:1,Monk=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Perfect Scholar ~ Eye of the Sun and Moon|PRECLASS:1,Monk=13"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Perfect Scholar ~ Walk with the Master|PRECLASS:1,Monk=1"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.44"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_Archetype_ClassSkills|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_Archetype_StillMind|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_Archetype_KiPowers4|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_Archetype_TongueOfTheSunAndMoon|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_Archetype_PerfectSelf|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_CF_ClassSkills|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_CF_StillMind|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_CF_KiPowers4|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_CF_TongueOfTheSunAndMoon|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_CF_PerfectSelf|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_intrigue/support/isi_abilities_class_pu.lst",
+    "sha256": "f06f8aa69cf4e95df6148d887b127ee7cccc06607a736a2872439432d4d1ccb0",
+    "line": 12,
+    "record_key": "Unchained Monk Archetype ~ Perfect Scholar"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted",
+  "codex_generated_name": false
+}

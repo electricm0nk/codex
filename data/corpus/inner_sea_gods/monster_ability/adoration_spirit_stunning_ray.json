@@ -1,0 +1,38 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T10:26:11Z",
+  "data": {
+    "corpus_key": "Adoration Spirit ~ Stunning Ray",
+    "delivery": "Supernatural",
+    "description": "The Spirit can make a ranged attack with a ray of brilliant energy as a standard action (180 feet ranged touch). The target takes 1d8 points of damage and is stunned for 1d6 rounds (Will DC %1 reduces this to dazzled).",
+    "description_variables": [
+      "StunningRayDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "inner_sea_gods:monster_ability:adoration_spirit_stunning_ray",
+    "name": "Stunning Ray",
+    "owners": [
+      "inner_sea_gods:monster:the_spirit_of_adoration"
+    ],
+    "source_page": null,
+    "traits": [
+      "AttackOption"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities_races.lst",
+    "sha256": "b309f3f779ee8d564aacff977e2a9119410a70844107ecd3e6bdc0170fe79ea8",
+    "line": 255,
+    "record_key": "Adoration Spirit ~ Stunning Ray"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

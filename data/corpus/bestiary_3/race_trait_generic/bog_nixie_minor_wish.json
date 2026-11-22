@@ -1,0 +1,46 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Bog Nixie ~ Minor Wish",
+    "name": "Minor Wish",
+    "description": "Once per day, a bog nixie can create a magical effect in exchange for a gift or service from a humanoid. The power of this \"wish\" is no greater than what can be done with a 3rd-level spell.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bog Nixie ~ Minor Wish"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "BogNixieRacialAbility.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "DESC",
+        "value": "Once per day, a bog nixie can create a magical effect in exchange for a gift or service from a humanoid. The power of this \"wish\" is no greater than what can be done with a 3rd-level spell."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.201"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f",
+    "line": 1318,
+    "record_key": "Bog Nixie ~ Minor Wish"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

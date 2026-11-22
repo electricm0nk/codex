@@ -1,0 +1,182 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "ability_keys": [
+      "ultimate_magic:companion:companion_susceptible_to_salt",
+      "ultimate_magic:companion:giant_slug_companion_acid",
+      "ultimate_magic:companion:giant_slug_companion_spit_acid",
+      "ultimate_magic:companion:companion_advancement_slug_giant"
+    ],
+    "corpus_key": "Companion (Slug (Giant))",
+    "external_ability_refs": [
+      "Can't Be Tripped"
+    ],
+    "key": "ultimate_magic:companion:companion_slug_giant",
+    "monster_class": "Companion:2",
+    "name": "Companion (Slug (Giant))",
+    "natural_armor": 4,
+    "natural_attacks": [
+      {
+        "damage_dice": "1d4",
+        "name": "Tongue"
+      },
+      {
+        "damage_dice": null,
+        "name": "Giant Slug Blindsense"
+      }
+    ],
+    "race_subtype": null,
+    "race_type": "Companion",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Giant Slug Blindsense|!PREABILITY:1,CATEGORY=Special Ability,Companion Advancement"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Can't Be Tripped|Companion ~ Susceptible to Salt|Giant Slug Companion ~ Acid|Giant Slug Companion ~ Spit Acid"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Companion Advancement ~ Slug (Giant)|PREABILITY:1,CATEGORY=Special Ability,Companion Advancement"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Companion Level Increase Choice|1|PREVARGTEQ:MasterLevel,7"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CHA|-9"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|-2"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT|-10"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR,CON|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|4|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Mindless|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|NoTypeTraits|1"
+      },
+      {
+        "key": "DEFINE",
+        "value": "NoTypeTraits|0"
+      },
+      {
+        "key": "DR",
+        "value": "5/slashing or piercing"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|M"
+      },
+      {
+        "key": "HANDS",
+        "value": "0"
+      },
+      {
+        "key": "KIT",
+        "value": "1|Companion ~ Giant Slug"
+      },
+      {
+        "key": "LEGS",
+        "value": "0"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Companion:2"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,20"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Tongue,Weapon.Natural.Melee.Finesseable.Bludgeoning.Acid,*1,1d4"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "Giant Slug"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Companion"
+      },
+      {
+        "key": "REACH",
+        "value": "5"
+      },
+      {
+        "key": "SIZE",
+        "value": "M"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.37"
+      }
+    ],
+    "reach_feet": 5,
+    "record_type": "creature",
+    "size": "M",
+    "source_page": "p.37",
+    "speeds": [
+      {
+        "feet": 20,
+        "mode": "Walk"
+      }
+    ],
+    "stat_adjustments": [
+      {
+        "ability": "STR",
+        "amount": 2
+      },
+      {
+        "ability": "CON",
+        "amount": 2
+      },
+      {
+        "ability": "DEX",
+        "amount": -2
+      },
+      {
+        "ability": "INT",
+        "amount": -10
+      },
+      {
+        "ability": "CHA",
+        "amount": -9
+      }
+    ],
+    "type_segments": []
+  },
+  "ingested_at": "2026-08-18T22:35:20Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 16,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_races_companion.lst",
+    "record_key": "Companion (Slug (Giant))",
+    "sha256": "61005c5cf385d4bb7f86d9a1432f07457aa33a9fa415023aafa2649fa520f950"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

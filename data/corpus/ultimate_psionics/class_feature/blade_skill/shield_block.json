@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Blade Skill ~ Shield Block",
+    "name": "Shield Block",
+    "class": "Blade Skill",
+    "description": "As an immediate action and by expending psionic focus, you may block one melee attack, but not touch attack, against you by making an attack roll.  If your attack roll is higher than the attack roll you are attempting to block, the attack misses.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Blade Skill ~ Shield Block"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "BladeSkill.SpecialQuality"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Shielded Blade ~ Form Mind Shield"
+      },
+      {
+        "key": "DESC",
+        "value": "As an immediate action and by expending psionic focus, you may block one melee attack, but not touch attack, against you by making an attack roll.  If your attack roll is higher than the attack roll you are attempting to block, the attack misses."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.279"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 824,
+    "record_key": "Blade Skill ~ Shield Block"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

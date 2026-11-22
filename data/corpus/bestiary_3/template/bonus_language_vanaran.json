@@ -1,0 +1,35 @@
+{
+  "codex_generated_name": false,
+  "completeness": "chassis_only",
+  "data": {
+    "key": "Bonus Language ~ Vanaran",
+    "name": "Bonus Language ~ Vanaran",
+    "raw_tokens": [
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "LANGBONUS",
+        "value": "Vanaran"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T16:43:16Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 6,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/vanara/vanara_templates_language.lst",
+    "record_key": "Bonus Language ~ Vanaran",
+    "sha256": "c52a886b0089dd0a79ff197483317c1ddd9c8805a0729c905092bc62e6867688"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

@@ -1,0 +1,4 @@
+Quoted from the first run of `cargo test --locked -j 8 --bins market_shell` in apps/desktop/src-tauri, before the reader changed:
+
+thread 'sf_adapter::tests::market_shell_a_copy_sells_with_what_is_on_it' panicked at src/sf_adapter.rs:2003:49:
+called `Result::unwrap()` on an `Err` value: "authoritative_character_input.txt failed to parse: invalid character input equipment modifier 'core:equipment:second_skin:alien_archive_2:equipment_modifier:pet_carrier' has no matching equipment selection for 'core:equipment:second_skin:alien_archive_2:equipment_modifier' -- the 'equipment_modifier' line must come after its 'equipment' line"

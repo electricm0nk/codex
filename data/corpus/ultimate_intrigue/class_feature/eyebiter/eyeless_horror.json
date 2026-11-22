@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Eyebiter ~ Eyeless Horror",
+    "name": "Eyeless Horror",
+    "class": "Mesmerist",
+    "description": "At 10th level, the eyebiter can use this ocular occlusion to create a powerful illusion that causes the target's eyes to appear as if they have been ripped out, with blood pouring from the sockets. The target is blinded and shaken for %1 rounds, taking 1d4 points of nonlethal damage each round. The target can attempt a second Will save when attacked to negate the shaken effect and the nonlethal damage.|MesmeristLVL",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Eyebiter ~ Eyeless Horror"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "OcularOcclusion_LVL_3"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mesmerist Class Features.EyebiterClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 10th level, the eyebiter can use this ocular occlusion to create a powerful illusion that causes the target's eyes to appear as if they have been ripped out, with blood pouring from the sockets. The target is blinded and shaken for %1 rounds, taking 1d4 points of nonlethal damage each round. The target can attempt a second Will save when attacked to negate the shaken effect and the nonlethal damage.|MesmeristLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.37"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Ocular Occlusion"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/support/ui_abilities_class_oa.lst",
+    "sha256": "123f008e9a2f31828861df9025f48f5c2f7c78a648553f22dba96a8d8a2e24dc",
+    "line": 65,
+    "record_key": "Eyebiter ~ Eyeless Horror"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

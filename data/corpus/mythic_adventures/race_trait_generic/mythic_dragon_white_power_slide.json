@@ -1,0 +1,46 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Mythic Dragon (White) ~ Power Slide",
+    "name": "Power Slide",
+    "description": "If a mythic juvenile white dragon deals trample damage to one or more opponents on ice, snow, frozen tundra, or a similar slippery surface, it can expend one use of mythic power to attempt an awesome blow combat maneuver against each damaged target, as if it had the Awesome Blow monster feat (Bestiary 314).",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Dragon (White) ~ Power Slide"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Dragon (White) Trait.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "If a mythic juvenile white dragon deals trample damage to one or more opponents on ice, snow, frozen tundra, or a similar slippery surface, it can expend one use of mythic power to attempt an awesome blow combat maneuver against each damaged target, as if it had the Awesome Blow monster feat (Bestiary 314)."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities_race.lst",
+    "sha256": "9dc17c2fc1ba84d040fb04d6175b48b6ff52cc30ad113933d5dff3d75ea2652a",
+    "line": 133,
+    "record_key": "Mythic Dragon (White) ~ Power Slide"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

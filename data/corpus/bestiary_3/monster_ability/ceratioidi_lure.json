@@ -1,0 +1,57 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Ceratioidi ~ Lure",
+    "delivery": "Supernatural",
+    "description": "As a free action, a ceratioidi can light the dangling lure on its forehead, forcing all non-ceratioidi within a 20-foot radius to make a DC 15 Will save or become fascinated for 1 round. Regardless of the preceding interaction between the ceratioidi and its target, a creature affected by this ability does not view the ceratioidi who has fascinated it as a potential threat until that ceratioidi actually attacks-allowing it to approach without breaking the fascination. Once a creature successfully saves against this effect, it is immune to the same ceratioidi's lure ability for 24 hours. The save DC is Charisma-based.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:ceratioidi_lure",
+    "name": "Lure",
+    "owners": [
+      "bestiary_3:monster:ceratioidi"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "As a free action, a ceratioidi can light the dangling lure on its forehead, forcing all non-ceratioidi within a 20-foot radius to make a DC 15 Will save or become fascinated for 1 round. Regardless of the preceding interaction between the ceratioidi and its target, a creature affected by this ability does not view the ceratioidi who has fascinated it as a potential threat until that ceratioidi actually attacks-allowing it to approach without breaking the fascination. Once a creature successfully saves against this effect, it is immune to the same ceratioidi's lure ability for 24 hours. The save DC is Charisma-based."
+      },
+      {
+        "key": "KEY",
+        "value": "Ceratioidi ~ Lure"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.50"
+      },
+      {
+        "key": "TYPE",
+        "value": "CeratioidiRacialAbility.SpecialQuality.Supernatural"
+      }
+    ],
+    "source_page": "p.50",
+    "traits": [
+      "CeratioidiRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T10:26:03Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 551,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Ceratioidi ~ Lure",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

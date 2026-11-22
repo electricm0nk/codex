@@ -1,0 +1,74 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "Equipmods",
+    "cost_gp": null,
+    "description": "%CHOICE weapons have +2 enhancement bonus and deal +2d6 bonus damage against the chosen foe",
+    "key": "BANE",
+    "name": "BANE",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "KEY",
+        "value": "Special Ability ~ Bane ~ Weapon"
+      },
+      {
+        "key": "FORMATCAT",
+        "value": "FRONT"
+      },
+      {
+        "key": "NAMEOPT",
+        "value": "NONAME"
+      },
+      {
+        "key": "TYPE",
+        "value": "Ammunition.Weapon"
+      },
+      {
+        "key": "PLUS",
+        "value": "1"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "QUALIFY"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.469"
+      },
+      {
+        "key": "PREMULT",
+        "value": "2,[PRETYPE:1,WeaponEnhancement],[PRETYPE:1,Weapon,Ammunition]"
+      },
+      {
+        "key": "SPROP",
+        "value": "%CHOICE weapons have +2 enhancement bonus and deal +2d6 bonus damage against the chosen foe"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "STRING|Aberration Bane|Animal Bane|Construct Bane|Dragon Bane|Fey Bane|Aquatic Humanoid Bane|Dwarf Bane|Elf Bane|Giant Bane|Gnoll Bane|Gnome Bane|Goblinoid Bane|Halfling Bane|Human Bane|Reptilian Bane|Orc Bane|Magical Beast Bane|Monstrous Humanoid Bane|Ooze Bane|Air Outsider Bane|Chaotic Outsider Bane|Earth Outsider Bane|Evil Outsider Bane|Fire Outsider Bane|Good Outsider Bane|Lawful Outsider Bane|Water Outsider Bane|Plant Bane|Undead Bane|Vermin Bane|TITLE=Designated Foe"
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-16T19:47:11Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 681,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equipmods.lst",
+    "record_key": "BANE",
+    "sha256": "a777d51860c355f8cda2e042e3e6353d275db5bb705590850c1db7358aa565df"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

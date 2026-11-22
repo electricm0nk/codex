@@ -1,0 +1,58 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "General",
+    "cost_gp": 5000.0,
+    "description": "These sturdy leather dwarven boots have soles made of thick gray marble. As a move action, the wearer can plant her feet and draw strength from the earth, gaining fast healing 1 and a +4 bonus to CMD to resist bull rush, reposition, and trip combat maneuver attempts. These effects end if the wearer moves or is moved, knocked prone, or rendered unconscious.",
+    "key": "Boots Of The Earth",
+    "name": "Boots Of The Earth",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous Item.SLOT_Feet.Boot"
+      },
+      {
+        "key": "COST",
+        "value": "5000"
+      },
+      {
+        "key": "WT",
+        "value": "5"
+      },
+      {
+        "key": "SOURCELONG",
+        "value": "Inner Sea Gods"
+      },
+      {
+        "key": "SOURCESHORT",
+        "value": "isg"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.261"
+      },
+      {
+        "key": "DESC",
+        "value": "These sturdy leather dwarven boots have soles made of thick gray marble. As a move action, the wearer can plant her feet and draw strength from the earth, gaining fast healing 1 and a +4 bonus to CMD to resist bull rush, reposition, and trip combat maneuver attempts. These effects end if the wearer moves or is moved, knocked prone, or rendered unconscious."
+      }
+    ],
+    "weight_lbs": 5.0
+  },
+  "ingested_at": "2026-08-17T12:09:37Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 179,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_equip.lst",
+    "record_key": "Boots Of The Earth",
+    "sha256": "cde6e3e0acd33edb906c404430e39a375d0721c6e136c5faf0cde575c7c27c74"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

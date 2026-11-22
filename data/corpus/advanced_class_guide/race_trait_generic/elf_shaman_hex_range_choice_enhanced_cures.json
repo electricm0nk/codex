@@ -1,0 +1,67 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "Add %1 feet to the range of Enhanced Cures.|min(30,ElfShamanHexRangefEnhancedCuresBonus)",
+    "key": "Elf Shaman Hex Range Choice ~ Enhanced Cures",
+    "name": "Enhanced Cures",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Elf Shaman Hex Range Choice ~ Enhanced Cures"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.ElfShamanHexRangeChoice"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "YES"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ElfShamanHexRangefEnhancedCuresBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Add %1 feet to the range of Enhanced Cures.|min(30,ElfShamanHexRangefEnhancedCuresBonus)"
+      },
+      {
+        "key": "STACK",
+        "value": "YES"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "NOCHOICE"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ElfShamanHexRangefEnhancedCuresBonus|5"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 422,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_race.lst",
+    "record_key": "Elf Shaman Hex Range Choice ~ Enhanced Cures",
+    "sha256": "f57e4d6123c356c9af9b493e691f7224a98998d8cb76dddf894009af4c84820d"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice",
+    "derived:prose_formula_segment"
+  ]
+}

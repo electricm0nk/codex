@@ -1,0 +1,40 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "description": null,
+    "key": "Weasel (Celestial)",
+    "name": "Weasel (Celestial)",
+    "origin": "copy",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "OUTPUTNAME",
+        "value": "Weasel"
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "Celestial Creature"
+      },
+      {
+        "key": "KIT",
+        "value": "1|NG"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T12:25:21Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 43,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_races_familiar_cr.lst",
+    "record_key": "Weasel (Celestial)",
+    "sha256": "d702c902a162f7e319b0aff6bed67c2611c6790c629a8dc30de1e503e1fe0a87"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

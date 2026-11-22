@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T10:26:11Z",
+  "data": {
+    "corpus_key": "Iophanite Angel ~ Radiance",
+    "delivery": "SpellLike",
+    "description": "An iophanite usually glows with a golden light equivalent to that of a candle. In battle, its glow increases, filling the area within 5 feet. An iophanite can suppress or resume this glow as a free action. Additionally, as a standard action at will an iophanite can intensify its glow to reproduce the effects of the spell Flare. A creature can resist this effect with a DC %1 Fortitude save, though evil creatures take a -4 penalty on their saves.",
+    "description_variables": [
+      "RadianceDC"
+    ],
+    "facet": "SpecialQuality",
+    "key": "inner_sea_gods:monster_ability:iophanite_angel_radiance",
+    "name": "Radiance",
+    "owners": [
+      "inner_sea_gods:monster:angel_iophanite"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities_races.lst",
+    "sha256": "b309f3f779ee8d564aacff977e2a9119410a70844107ecd3e6bdc0170fe79ea8",
+    "line": 186,
+    "record_key": "Iophanite Angel ~ Radiance"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

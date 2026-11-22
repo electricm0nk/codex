@@ -1,0 +1,78 @@
+{
+  "codex_generated_name": false,
+  "completeness": "full",
+  "data": {
+    "description": "Attuned to Disruptor",
+    "key": "Disruptor Attunement",
+    "name": "Disruptor Attunement",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=ATWILL|Detect Psionics|PREVARGTEQ:TL,4"
+      },
+      {
+        "key": "DESC",
+        "value": "Attuned to Disruptor"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Evasion|PREVARGTEQ:TL,6"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Disruptor ~ Block Ray|PREVARGTEQ:TL,8"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Disruptor ~ Power Resistance|PREVARGTEQ:TL,12"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Improved Evasion|PREVARGTEQ:TL,14"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Disruptor ~ Absorb Energy|PREVARGTEQ:TL,16"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Disruptor ~ Nullify Power|PREVARGTEQ:TL,20"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DisruptorShieldBonus|max(0,floor((TL-2)/8))"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.434"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 185,
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities.lst",
+    "record_key": "Disruptor Attunement",
+    "sha256": "ecfd0b8c0786d65416067452f4b648e30acff9d0e8c9c70fb4e4fc6dc0f9723d"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus",
+    "derived:spells"
+  ]
+}

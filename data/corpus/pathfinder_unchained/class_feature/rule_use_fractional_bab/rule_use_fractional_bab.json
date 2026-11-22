@@ -1,0 +1,72 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Rule - Use Fractional BAB",
+    "name": "Rule - Use Fractional BAB",
+    "class": null,
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "TYPE",
+        "value": "OptionalRules"
+      },
+      {
+        "key": "DEFINE",
+        "value": "UseFractionalBAB|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ClassBABFull|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ClassBABModerate|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ClassBABPoor|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "UseAlternateBABProgression|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|BASEAB|ClassBABFull+(ClassBABModerate*3/4)+(ClassBABPoor*1/2)|TYPE=Class"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|UseFractionalBAB|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|UseAlternateBABProgression|1"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst",
+    "sha256": "2becbb0524bd4c367cc1273434c20bcd8e42e3e08abd372f99b005e69e8c4725",
+    "line": 14,
+    "record_key": "Rule - Use Fractional BAB"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

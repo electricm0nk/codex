@@ -1,0 +1,78 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-03T17:43:07Z",
+  "data": {
+    "key": "Unchained Barbarian ~ Mighty Rage",
+    "name": "Mighty Rage",
+    "class_key": "Barbarian ~ Unchained Class",
+    "base_class_key": "Barbarian",
+    "category": "Special Ability",
+    "type_tokens": [
+      "Unchained Barbarian Class Feature",
+      "ClassFeatures",
+      "Internal",
+      "ClassFeatures",
+      "Rage",
+      "Mighty Rage"
+    ],
+    "min_level": 20,
+    "is_granted": true,
+    "visible": "NO",
+    "class_skills": [],
+    "description": null,
+    "source_page": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Unchained Barbarian ~ Mighty Rage"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Unchained Barbarian Class Feature.ClassFeatures.Internal.ClassFeatures.Rage.Mighty Rage"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "SERVESAS",
+        "value": "ABILITY=Special Ability|Barbarian ~ Mighty Rage"
+      }
+    ],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "VAR",
+          "RageBonus",
+          "1"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "RageBonusHP",
+          "TL"
+        ]
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst",
+    "sha256": "2becbb0524bd4c367cc1273434c20bcd8e42e3e08abd372f99b005e69e8c4725",
+    "line": 296,
+    "record_key": "Unchained Barbarian ~ Mighty Rage"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

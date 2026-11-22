@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Magical Child ~ Weapon and Armor Proficiencies",
+    "name": "Weapon and Armor Proficiencies",
+    "class": "Vigilante",
+    "description": "A magical child is not proficient with medium armor. She can cast summoner spells (see spellcasting below) while wearing light armor without incurring the normal arcane spell failure chance. This alters the vigilante's armor and weapon proficiencies.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Magical Child ~ Weapon and Armor Proficiencies"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Vigilante Class Features.MagicalChildClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "A magical child is not proficient with medium armor. She can cast summoner spells (see spellcasting below) while wearing light armor without incurring the normal arcane spell failure chance. This alters the vigilante's armor and weapon proficiencies."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|TYPE=ArmorProfLight"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.57"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/support/ui_abilities_class_pu.lst",
+    "sha256": "31facfcea3534d72c26bfbfeebc7af50e80e79157eda459e9afb16f184a93aaf",
+    "line": 96,
+    "record_key": "Magical Child ~ Weapon and Armor Proficiencies"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

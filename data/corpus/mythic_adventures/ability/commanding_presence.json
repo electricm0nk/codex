@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Mythic Path Ability ~ Commanding Presence",
+    "name": "Commanding Presence",
+    "description": "Your force of presence is so overwhelming that others know what you want and can comprehend what you are saying even if they don't understand the words you speak. You can use your body language and tone of voice alone to ask questions and make statements to those who don't know your language. When they answer or respond to your communications, you must succeed at a DC 20 Sense Motive check to get the general idea of what they are saying in return. Furthermore, when you use a spell or ability with the language-dependent descriptor, you can still affect creatures that cannot understand the language you are using, but they must be able to hear you and must have an Intelligence score of 1 or higher.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Path Ability ~ Commanding Presence"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Path Ability.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Mythic Path ~ Marshal"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "MythicTierLevel,3"
+      },
+      {
+        "key": "DESC",
+        "value": "Your force of presence is so overwhelming that others know what you want and can comprehend what you are saying even if they don't understand the words you speak. You can use your body language and tone of voice alone to ask questions and make statements to those who don't know your language. When they answer or respond to your communications, you must succeed at a DC 20 Sense Motive check to get the general idea of what they are saying in return. Furthermore, when you use a spell or ability with the language-dependent descriptor, you can still affect creatures that cannot understand the language you are using, but they must be able to hear you and must have an Intelligence score of 1 or higher."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
+    "line": 299,
+    "record_key": "Mythic Path Ability ~ Commanding Presence"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

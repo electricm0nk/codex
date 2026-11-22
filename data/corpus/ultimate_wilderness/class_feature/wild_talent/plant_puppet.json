@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Wild Talent ~ Plant Puppet",
+    "name": "Plant Puppet",
+    "class": "Kineticist",
+    "description": "Element wood; Type utility (Sp); Level 5; Burn 0",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wild Talent ~ Plant Puppet"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Wild Talent.Utility Wild Talent.Utility Wild Talent Wood"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "KineticistLVL_Wood,5"
+      },
+      {
+        "key": "DESC",
+        "value": "Element wood; Type utility (Sp); Level 5; Burn 0"
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;You can control plants, causing them to attack your foes. This functions as the aether puppet wild talent, except it controls plants instead of objects. At 12th level, you can grant hardness 5 to Large and larger animated plants."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.59"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/support/uw_abilities_class_oa.lst",
+    "sha256": "26a03f73c3534cd6bae0bcda9581b3a89fa28ce5f78f854e009fc8110c477568",
+    "line": 80,
+    "record_key": "Wild Talent ~ Plant Puppet"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

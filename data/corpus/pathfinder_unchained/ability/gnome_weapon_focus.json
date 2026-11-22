@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Combat Trick ~ Gnome Weapon Focus",
+    "name": "Gnome Weapon Focus",
+    "description": "When you make a successful attack with a gnome weapon against an opponent that is at least one size category larger than you, you can spend up to 5 stamina points. If you do, you gain a bonus on the damage roll equal to double the number of stamina points you spent.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Combat Trick ~ Gnome Weapon Focus"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Combat Trick"
+      },
+      {
+        "key": "DESC",
+        "value": "When you make a successful attack with a gnome weapon against an opponent that is at least one size category larger than you, you can spend up to 5 stamina points. If you do, you gain a bonus on the damage roll equal to double the number of stamina points you spent."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "120"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SourceBook|ARG"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/support/ability_arg.lst",
+    "sha256": "b41ac3a17891f22fc0609b12ce383abe454fb693714e9e3d5dc8e4481b7f6965",
+    "line": 26,
+    "record_key": "Combat Trick ~ Gnome Weapon Focus"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

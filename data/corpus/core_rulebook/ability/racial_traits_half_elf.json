@@ -1,0 +1,36 @@
+{
+  "codex_generated_name": false,
+  "completeness": "chassis_only",
+  "data": {
+    "description": null,
+    "key": "Racial Traits ~ Half-Elf",
+    "name": "Racial Traits ~ Half-Elf",
+    "raw_tokens": [
+      {
+        "key": "DEFINE",
+        "value": "HalfElf_ReplaceAbilityScores|0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Half-Elf Racial Trait|AUTOMATIC|Half-Elf ~ Ability Scores|PREVAREQ:HalfElf_ReplaceAbilityScores,0"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 10,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/half_elf/halfelf_abilities_globalvar.lst",
+    "record_key": "Racial Traits ~ Half-Elf",
+    "sha256": "720260e89d68764193c9d3bf1efc38c114c53678942ea061d12452a06e0c5928"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

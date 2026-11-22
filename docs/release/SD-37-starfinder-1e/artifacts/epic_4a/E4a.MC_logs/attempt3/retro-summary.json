@@ -1,0 +1,246 @@
+{
+  "corrections": {
+    "by_corrector": {
+      "sd37-e4a-2": 2,
+      "sd37-e4a-3": 1,
+      "sd37-e4a-4a": 3,
+      "sd37-e4a-mc": 1
+    },
+    "by_subject": {
+      "E4a.1 receipt (bundle path proof)": 1,
+      "E4a.1 receipt (rules_data_package every_collection_function_is_a_table_or_a_named_view)": 1,
+      "decisions.md \u00a719 / epic-breakdown E4a.3 'elsewhere' .lst count": 1,
+      "ingest_spells (SD-32 c27375ee1d .COPY= mechanism) vs shipped spell_list tables": 1,
+      "sd37-e4a-4a": 1,
+      "transcribe_companion_tables.py vs shipped companion_data tables": 1,
+      "transcribe_monster_tables.py vs shipped monster_data tables": 1
+    },
+    "by_verification_method": {
+      "cargo test --bins authoring_workbench::tests::a_packaged_app_reads_the_rules_tables_from_its_resource_root: RED with the binding removed (probe child read the checkout: left 1, right 77), GREEN with it; artifacts/epic_4a/E4a.2_logs/red-packaged-root-unbound.log + green-packaged-root-bound.log": 1,
+      "cargo test --lib every_collection_function (RED with the scanner joining split signatures and the two ids removed: 'collection functions neither a table nor a named view' lists both); artifacts/epic_4a/E4a.2_logs/red-collection-scanner.log": 1,
+      "git diff of data/rules_tables after re-running the ported transcriber for all 22 books before folding the rewrite in (3 files, 23+/23-)": 1,
+      "grep -rcF '.lst' src/rules_core --exclude-dir=rules_tables | awk -F: '{s+=$2} END{print s+0}' -> 1117 ; Python os.walk agrees": 1,
+      "ingest_spells re-run on the unported mechanism, git diff --stat data/rules_tables (artifacts/epic_4a/E4a.4a_logs/rerun1-spell-drift.stat); per-book count = awk over rerun-ingest_spells.log 'not ingested' lines = 411, Python agrees": 1,
+      "package row shapes (python json over data/rules_tables/*/companion_data/*.json) vs the transcriber's pre-port emission code; post-port re-run of 16 books: git status --porcelain data/rules_tables empty": 1,
+      "sed -n 30,40p apps/desktop/src-tauri/Cargo.toml": 1
+    },
+    "caught_before": {},
+    "recent": [
+      {
+        "actor": "sd37-e4a-2",
+        "id": "1791321088652-sd37-e4a-2-e15c9d",
+        "summary": "E4a.1 receipt (rules_data_package every_collection_function_is_a_table_or_a_named_view) claimed every zero-argument collection function of rules_tables is a registered table or a named view (279 tables + 170 views); actual 2 were neither: pathfinder_unchained/{rogue,summoner}_features/class_skills, whose signature rustfmt splits as 'fn class_skills(\\n) -> ...' so the line scanner never saw it; package is now 281 tables",
+        "ts": "2026-10-06T21:11:28Z"
+      },
+      {
+        "actor": "sd37-e4a-2",
+        "id": "1791322850661-sd37-e4a-2-b9a79d",
+        "summary": "E4a.1 receipt (bundle path proof) claimed the bundle path is proven by tauri.conf.json resources + tauri-resources-tracked; the loader reads the package at runtime_package_root(); actual runtime_package_root() read only CODEX_REPO_ROOT or the compile-time checkout, so a packaged app on a tester machine (no checkout, no env) would have panicked on its first table read once importers read the package; fixed by use_repo_root + authoring_workbench::bind_rules_tables_package_root called from main's setup",
+        "ts": "2026-10-06T21:40:50Z"
+      },
+      {
+        "actor": "sd37-e4a-3",
+        "id": "1791349560749-sd37-e4a-3-c8d228",
+        "summary": "decisions.md \u00a719 / epic-breakdown E4a.3 'elsewhere' .lst count claimed 1098 .lst lines elsewhere in src/rules_core (2026-10-02); actual 1117 at E4a.3 start (tranche/17 615ce41338); 1110 at 5cbee570e1~1; 1117 after E4a.3",
+        "ts": "2026-10-07T05:06:00Z"
+      },
+      {
+        "actor": "sd37-e4a-4a",
+        "id": "1791369776899-sd37-e4a-4a-cf7a44",
+        "summary": "ingest_spells (SD-32 c27375ee1d .COPY= mechanism) vs shipped spell_list tables claimed generator re-run reproduces every book's shipped SPELL_LIST (mechanism 'fixed as a class'); actual only bestiary + book_of_the_damned_volume_1 were regenerated; a re-run adds 411 .COPY= rows to 7 books (AG 7, HA 4, ISM 1, ISWG 2, OA 369, UM 19, UW 9) and reverts 1 SD-34 hand edit (U+00AD soft hyphens in monster_codex Spellsteal)",
+        "ts": "2026-10-07T10:42:56Z"
+      },
+      {
+        "actor": "sd37-e4a-4a",
+        "id": "1791369777028-sd37-e4a-4a-1b2699",
+        "summary": "transcribe_monster_tables.py vs shipped monster_data tables claimed the transcriber's output is the shipped table; actual SD-35 AT-35-E6-003-SWEEP cycle 11 (208ebf1e21) hand-edited 3 generated tables (%CHOICE x5/%LIST x15 -> 'the chosen option', TYPE=Base x2 -> Base, ' DESC:&nl; ' x4); a re-run reverted them in bestiary, bestiary_3, inner_sea_world_guide",
+        "ts": "2026-10-07T10:42:57Z"
+      },
+      {
+        "actor": "sd37-e4a-4a",
+        "id": "1791369777152-sd37-e4a-4a-d9cb1f",
+        "summary": "transcribe_companion_tables.py vs shipped companion_data tables claimed the transcriber emits the shipped shape; actual SD-35 cycles 9 (f4583db504) and 13 (88b4490e16) converted guard strings to typed EffectCondition / CompanionAbilityGrant / ExternalAbilityRefCondition by hand in the generated tables; the transcriber still emitted strings",
+        "ts": "2026-10-07T10:42:57Z"
+      },
+      {
+        "actor": "sd37-e4a-mc",
+        "id": "1791379511132-sd37-e4a-mc-7d6f0a",
+        "summary": "sd37-e4a-4a claimed the desktop does not depend on codex-ingest (so desktop suite not run; PF pair only); actual codex-ingest is a dev-dependency of apps/desktop/src-tauri (Cargo.toml line 40, [dev-dependencies]); E4a.4a's new pub mod rules_package_out is compiled into the desktop test build",
+        "ts": "2026-10-07T13:25:11Z"
+      }
+    ],
+    "repeat_subjects": [],
+    "total": 7,
+    "with_blast_radius": 2
+  },
+  "deferrals": {
+    "open": 1,
+    "open_items": [
+      {
+        "actor": "sd37-e4a-4a",
+        "id": "1791369784650-sd37-e4a-4a-fc217e",
+        "reason": "E4a.4a's criterion is a byte-identical port; the shipped package (the tables' source since E4a.4) never carried them, and the census does not count them as missing records. Shipping them is a PF content + census change outside SD-37 (Starfinder) scope",
+        "revisit": "a PF content bundle that re-derives v06_work_inventory's treatment of bare .COPY= spell rows",
+        "ts": "2026-10-07T10:43:04Z",
+        "what": "Whether the 411 .COPY= spell variant rows ingest_spells resolves for 7 books (copy_variants=false) should ship: 388 are origin mod_only in docs/work-inventory.json (OA 369, UM 19); 23 are absent from the inventory entirely (AG 7, HA 4, ISM 1, ISWG 2, UW 9)"
+      }
+    ],
+    "recent": [
+      {
+        "actor": "sd37-e4a-2",
+        "id": "1791328034641-sd37-e4a-2-399125",
+        "summary": "deferred Compiled code that stays in the rules_tables module after E4a.2 and is re-exported by the catalog by name: 112 structs + 66 enums (row/id types, whose impl methods stay compiled, incl. the two enums UnchainedRogueFeature/UnchainedSummonerFeature whose per-variant facts the package also carries), 186 pure functions (formulas over their arguments, 295 plain fns in the module minus those the catalog replaces), 78 scalar consts (71 u8 + 7 i16), 2 inline modules: types, impl methods and formulas are code, not table rows; E4a.4 'no .rs left in rules_tables' must place every one of them (move to a non-table module), and the package carries only table rows",
+        "ts": "2026-10-06T23:07:14Z"
+      },
+      {
+        "actor": "sd37-e4a-4",
+        "id": "1791361210108-sd37-e4a-4-8bb4cd",
+        "summary": "deferred Six codegen tools still emit compiled table source into the removed src/rules_core/rules_tables (gen_feat_gap_tables, gen_equipment_gap_tables, ingest_class_spell_levels_arg, ingest_spells, scripts/transcribe_monster_tables.py, scripts/transcribe_companion_tables.py); they must write data/rules_tables/<id>.json instead: not in E4a.4's criterion (PF parity, catalog parity, Bestiary count, no .rs left); porting ~8.6k lines and proving each against the pinned oracle is its own card",
+        "ts": "2026-10-07T08:20:10Z"
+      },
+      {
+        "actor": "sd37-e4a-4a",
+        "id": "1791369784650-sd37-e4a-4a-fc217e",
+        "summary": "deferred Whether the 411 .COPY= spell variant rows ingest_spells resolves for 7 books (copy_variants=false) should ship: 388 are origin mod_only in docs/work-inventory.json (OA 369, UM 19); 23 are absent from the inventory entirely (AG 7, HA 4, ISM 1, ISWG 2, UW 9): E4a.4a's criterion is a byte-identical port; the shipped package (the tables' source since E4a.4) never carried them, and the census does not count them as missing records. Shipping them is a PF content + census change outside SD-37 (Starfinder) scope",
+        "ts": "2026-10-07T10:43:04Z"
+      }
+    ],
+    "resolved": 2,
+    "total": 3
+  },
+  "events": {
+    "by_actor": {
+      "codex-sd37": 3,
+      "sd37-e4a-1": 1,
+      "sd37-e4a-2": 8,
+      "sd37-e4a-3": 2,
+      "sd37-e4a-4": 2,
+      "sd37-e4a-4a": 6,
+      "sd37-e4a-mc": 10
+    },
+    "by_origin": {
+      "agent": 22,
+      "derived": 10
+    },
+    "by_type": {
+      "correction": 7,
+      "deferral": 3,
+      "incident": 3,
+      "note": 3,
+      "resolution": 2,
+      "rework": 4,
+      "verification": 10
+    },
+    "total": 32
+  },
+  "generated_at": "2026-10-07T13:54:41Z",
+  "generated_by": "scripts/retro.py summary",
+  "git_join": {
+    "authors": 1,
+    "available": true,
+    "commits": 14,
+    "events_per_commit": 2.2857,
+    "top_authors": [
+      [
+        "Todd Hintzmann",
+        14
+      ]
+    ]
+  },
+  "incidents": {
+    "by_recurrence_key": {
+      "dispatch-before-discovered-dependency": 2,
+      "verify-without-cargo-target-dir": 1
+    },
+    "recent": [
+      {
+        "actor": "sd37-e4a-2",
+        "id": "1791322580133-sd37-e4a-2-ce5b77",
+        "summary": "verify.sh launched without CARGO_TARGET_DIR exported: cargo built into ./target inside the tree",
+        "ts": "2026-10-06T21:36:20Z"
+      },
+      {
+        "actor": "sd37-e4a-mc",
+        "id": "1791366771518-sd37-e4a-mc-b14f76",
+        "summary": "E4a.MC dispatched while its kanban dependency E4a.4a (discovered by E4a.4) is 'ready', not complete; the workflow step list [E4a1..E4a4, E4aMC] predates the discovered card",
+        "ts": "2026-10-07T09:52:51Z"
+      },
+      {
+        "actor": "sd37-e4a-mc",
+        "id": "1791367386209-sd37-e4a-mc-88cd81",
+        "summary": "E4a.MC re-dispatched (attempt 2) while E4a.4a is still 'ready' and origin/tranche/17 has not moved since attempt 1 (949a8dbf62); second firing of this key \u2014 the workflow's E4a step list does not read kanban Depends-on, so a warning in a receipt does not stop it",
+        "ts": "2026-10-07T10:03:06Z"
+      }
+    ],
+    "recurring": [
+      {
+        "count": 2,
+        "recurrence_key": "dispatch-before-discovered-dependency"
+      }
+    ],
+    "silent": 0,
+    "time_lost_minutes": 3,
+    "total": 3
+  },
+  "log": {
+    "invalid_lines": 0,
+    "path": "/home/ubuntu/workspace/worktrees/codex-sd37/docs/retro/events",
+    "problems": [],
+    "shards": 7
+  },
+  "near_misses": {
+    "by_caught_by": {},
+    "escaped": 0,
+    "recent": [],
+    "total": 0
+  },
+  "rework": {
+    "by_cause": {
+      "a textual substitution over source treated string literals like paths; the acceptance command counts the literal, the render counts the bytes, and nothing tied the two together before the sweep": 1,
+      "comment rewrite in the move reached doc comments that schemars publishes as descriptions": 1,
+      "ran the ingest sweep on a tree whose generators (gen_book_cache, equipment_gap, gen_equipment_gap_tables) still joined table citations by the old extension; the join sites were found by reading, after the sweep had started": 1,
+      "the verify script rm -rf'd SF_SEED_LINES_OUT and did not mkdir it (E7.1_verify.sh does); harness error, not a code defect; re-run of the --bins sf_sheet_print set with the dir created: 13 passed 0 failed": 1
+    },
+    "recent": [
+      {
+        "actor": "sd37-e4a-2",
+        "id": "1791328034415-sd37-e4a-2-2085ae",
+        "summary": "redid The first re-point pass rewrote every rules_tables:: in the 253 importers to rules_catalog::, string literals included; 41 literals in 16 files are provenance text (Elowen's base attack bonus line, hit-die source labels, feat-prerequisite reasons) whose bytes the PF render hash and fixtures pin; root full run: 1 FAILED suite (sd20_feat_prereqs_parity). Redone as E4a.2_split_provenance_strings.py: the literals keep their bytes (concat! or the COMPILED_MODULE_CITATION constant), the source names no compiled path: a textual substitution over source treated string literals like paths; the acceptance command counts the literal, the render counts the bytes, and nothing tied the two together before the sweep",
+        "ts": "2026-10-06T23:07:14Z"
+      },
+      {
+        "actor": "sd37-e4a-3",
+        "id": "1791349574274-sd37-e4a-3-639beb",
+        "summary": "redid first codex-ingest full run (about 25 min) aborted and redone after the generator fixes landed: ran the ingest sweep on a tree whose generators (gen_book_cache, equipment_gap, gen_equipment_gap_tables) still joined table citations by the old extension; the join sites were found by reading, after the sweep had started",
+        "ts": "2026-10-07T05:06:14Z"
+      },
+      {
+        "actor": "sd37-e4a-4",
+        "id": "1791361210286-sd37-e4a-4-eba3d9",
+        "summary": "redid rules_tables.schema.json regenerated: 18 description lines changed rules_tables:: to rules_catalog:: after moved doc comments were path-rewritten: comment rewrite in the move reached doc comments that schemars publishes as descriptions",
+        "ts": "2026-10-07T08:20:10Z"
+      },
+      {
+        "actor": "sd37-e4a-mc",
+        "id": "1791381240687-sd37-e4a-mc-60afc2",
+        "summary": "redid E4a.MC attempt-3 desktop full suite: 1 failure sf_seed_printed_features_equal_the_features_the_converted_records_grant (writes the seed's lines: NotFound): the verify script rm -rf'd SF_SEED_LINES_OUT and did not mkdir it (E7.1_verify.sh does); harness error, not a code defect; re-run of the --bins sf_sheet_print set with the dir created: 13 passed 0 failed",
+        "ts": "2026-10-07T13:54:00Z"
+      }
+    ],
+    "total": 4
+  },
+  "schema_version": 1,
+  "verification": {
+    "by_failing_stage": {
+      "clippy": 1
+    },
+    "fail_rate": 0.1,
+    "failed_runs": 1,
+    "runs": 10
+  },
+  "window": {
+    "since": "2026-10-06T16:38:00-04:00",
+    "spec": "2026-10-06T16:38:00-04:00",
+    "until": null
+  }
+}

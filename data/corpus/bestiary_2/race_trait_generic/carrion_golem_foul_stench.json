@@ -1,0 +1,67 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "This functions as the stench ability, but causes affected creatures to be nauseated rather than sickened.",
+    "key": "Carrion Golem ~ Foul Stench",
+    "name": "Foul Stench",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Carrion Golem ~ Foul Stench"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Aura.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CarrionGolemFoulStenchDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "This functions as the stench ability, but causes affected creatures to be nauseated rather than sickened."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Foul Stench"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CarrionGolemFoulStenchDC|10+TL/2+CON"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CarrionGolemFoulStenchDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Foul Stench)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.136"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(DC %1, 1 round)|CarrionGolemFoulStenchDC"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 601,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Carrion Golem ~ Foul Stench",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

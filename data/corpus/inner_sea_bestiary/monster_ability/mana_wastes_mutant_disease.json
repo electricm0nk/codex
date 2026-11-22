@@ -1,0 +1,72 @@
+{
+  "completeness": "full",
+  "data": {
+    "codex_generated_name": false,
+    "corpus_key": "Mana Wastes Mutant ~ Disease",
+    "delivery": "Supernatural",
+    "description": "Mana Fever, Injury; Fort DC %1, onset 1d4 min, 1/day, cure 2 consecutive saves;  1d2 Con damage, 1d2 Cha drain. 1d3 Con Damage, 1d3 Cha drain. Anyone who lives with mana fever for a week straight without dying becomes immune to the disease, but also becomes a Mana Wastes mutant.",
+    "description_variables": [
+      "10+HD/2+CON"
+    ],
+    "facet": "SpecialAttack",
+    "key": "inner_sea_bestiary:monster_ability:mana_wastes_mutant_disease",
+    "name": "Disease",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "1d2 Con damage, 1d2 Cha drain.|PREHD:MAX=7"
+      },
+      {
+        "key": "DESC",
+        "value": "1d3 Con Damage, 1d3 Cha drain.|PREHD:MIN=8"
+      },
+      {
+        "key": "DESC",
+        "value": "Anyone who lives with mana fever for a week straight without dying becomes immune to the disease, but also becomes a Mana Wastes mutant."
+      },
+      {
+        "key": "DESC",
+        "value": "Mana Fever, Injury; Fort DC %1, onset 1d4 min, 1/day, cure 2 consecutive saves; |10+HD/2+CON"
+      },
+      {
+        "key": "KEY",
+        "value": "Mana Wastes Mutant ~ Disease"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.29"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural.MutantSpecialAbility"
+      }
+    ],
+    "rename": null,
+    "source_page": "p.29",
+    "traits": [
+      "MutantSpecialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T22:59:17Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 206,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_bestiary/isb_abilities_race.lst",
+    "record_key": "Mana Wastes Mutant ~ Disease",
+    "sha256": "d7e5ffd6c7f0421a33b7e7c67872d9364a3f1e5ad82daa9b7f727b64ab71c595"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ]
+}

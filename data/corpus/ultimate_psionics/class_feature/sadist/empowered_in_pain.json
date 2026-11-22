@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Sadist ~ Empowered in Pain",
+    "name": "Empowered in Pain",
+    "class": "Sadist",
+    "description": "You can treat any power you manifest of the healing subdiscipline as if affected by the Empower Power feat by expending your psionic focus and causing a number of hit points in damage to one member of your collective equal to the total number of power points spent on the power.  The member targeted by this damage cannot be the recipient of the healing (whether directly or through effects such as collective healing) and may attempt a Will save (DC %1) to negate the effect, but doing so means the power is not empowered and psionic focus is still expended.  You cannot inflict this damage upon yourself.|EmpoweredInPainDC",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sadist ~ Empowered in Pain"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "VitalistClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "EmpoweredInPainDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can treat any power you manifest of the healing subdiscipline as if affected by the Empower Power feat by expending your psionic focus and causing a number of hit points in damage to one member of your collective equal to the total number of power points spent on the power.  The member targeted by this damage cannot be the recipient of the healing (whether directly or through effects such as collective healing) and may attempt a Will save (DC %1) to negate the effect, but doing so means the power is not empowered and psionic focus is still expended.  You cannot inflict this damage upon yourself.|EmpoweredInPainDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EmpoweredInPainDC|10+VitalistLVL/2+WIS"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.289"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2331,
+    "record_key": "Sadist ~ Empowered in Pain"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

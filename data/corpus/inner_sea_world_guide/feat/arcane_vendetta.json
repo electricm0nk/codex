@@ -1,0 +1,28 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Arcane Vendetta",
+    "category": "General",
+    "name": "Arcane Vendetta",
+    "description": "The mistreatment of your people by an arcane society has made you particularly eager to inflict harm on those who use arcane magic. +2 bonus on damage vs. arcane spellcaster. The mistreatment of your people by an arcane society has made you particularly eager to inflict harm on those who use arcane magic. You deal +2 damage with weapon attacks made against any target you hsve witnessed casting an arcane spell (not using a spell-like ability) in the last 5 rounds. You must have successfully identified the spell with a Spellcraft check to know without a doubt that the spell is arcane.",
+    "prerequisites": [
+      "PRESKILL:1,Spellcraft=1"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_feats.lst",
+    "sha256": "b6435a0a073ef6f3e3cb6731b705dbbeffa5089deab97f66b98525036034a4a8",
+    "line": 11,
+    "record_key": "Arcane Vendetta"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,58 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "Wayangs add 1 to the DC of any saving throws to resist spells of the shadow subschool that they cast. Wayangs with a Charisma score of 11 or higher also gain the following spell-like abilities: 1/day--ghost sound, pass without trace, and ventriloquism. The caster level for these effects is equal to the wayang's character level. The DCs of these spells are equal to 10 + the spell's level + the wayang's Charisma modifier.",
+    "key": "Wayang ~ Shadow Magic",
+    "name": "Shadow Magic",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wayang ~ Shadow Magic"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Wayang Racial Trait.Wayang Racial Default.SpecialQuality.Special Quality"
+      },
+      {
+        "key": "!PREFACT",
+        "value": "1,ABILITIES,Wayang_ReplaceShadowMagic=True"
+      },
+      {
+        "key": "DESC",
+        "value": "Wayangs add 1 to the DC of any saving throws to resist spells of the shadow subschool that they cast. Wayangs with a Charisma score of 11 or higher also gain the following spell-like abilities: 1/day--ghost sound, pass without trace, and ventriloquism. The caster level for these effects is equal to the wayang's character level. The DCs of these spells are equal to 10 + the spell's level + the wayang's Charisma modifier."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Spell-Like Ability|AUTOMATIC|Racial SLA ~ Ghost Sound|Racial SLA ~ Pass without Trace|Racial SLA ~ Ventriloquism|PRESTAT:1,CHA=11"
+      },
+      {
+        "key": "BONUS",
+        "value": "DC|SUBSCHOOL.Shadow|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.xx"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 21,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/wayang/wayang_abilities_race.lst",
+    "record_key": "Wayang ~ Shadow Magic",
+    "sha256": "33833b276238c5e31406ea770c9134c3f519d96ef698baa0248514a46a77977a"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

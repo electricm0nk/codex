@@ -1,0 +1,55 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Unknown ~ Victimize",
+    "delivery": "Supernatural",
+    "description": "As a swift action, an unknown can target a single creature within line of sight with this ability. After designating a target, the unknown can't change the target of this ability for 24 hours, or until the target dies or succeeds at its save against the unknown's psyche erosion ability. An unknown always knows the exact location of a victimized creature and the shortest route to reach it, even if it is on another plane (similar to a combined discern location and find the path); this is a divination effect and can only be prevented by mind blank and similar effects. A creature can be the target of only one unknown's victimize ability at a time, and an unknown can victimize only one creature at a time.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "horror_adventures:monster_ability:unknown_victimize",
+    "name": "Victimize",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "As a swift action, an unknown can target a single creature within line of sight with this ability. After designating a target, the unknown can't change the target of this ability for 24 hours, or until the target dies or succeeds at its save against the unknown's psyche erosion ability. An unknown always knows the exact location of a victimized creature and the shortest route to reach it, even if it is on another plane (similar to a combined discern location and find the path); this is a divination effect and can only be prevented by mind blank and similar effects. A creature can be the target of only one unknown's victimize ability at a time, and an unknown can victimize only one creature at a time."
+      },
+      {
+        "key": "KEY",
+        "value": "Unknown ~ Victimize"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.245"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural.UnknownTemplate"
+      }
+    ],
+    "source_page": "p.245",
+    "traits": [
+      "UnknownTemplate"
+    ]
+  },
+  "ingested_at": "2026-08-23T14:10:27Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 338,
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_race.lst",
+    "record_key": "Unknown ~ Victimize",
+    "sha256": "63d4d7024f3fea15adb5b626c17f3f1dc4c40e4fc4bef4616a1d36be77a9fe00"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

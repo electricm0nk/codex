@@ -1,0 +1,17 @@
+===== reclaim.sh — orphaned codex-target-* self-test =====
+  PASS  workspace orphan reported in dry run
+  PASS  dry run deleted nothing
+  PASS  workspace orphan removed with --apply
+  PASS  tmp-root orphan removed with --apply
+  PASS  young dir (2h) skipped even with --apply
+  PASS  old dir with live-PID claim skipped
+  PASS  old dir with dead-PID claim removed
+  PASS  old dir with open file handle skipped
+  PASS  non-codex-target-* name in workspace root untouched
+  PASS  non-cargo-shaped codex-target-* dir untouched
+  PASS  cargo-shaped dir with no CACHEDIR.TAG still found and removed
+  PASS  considered-count reports all name-matched candidates
+  PASS  non-cargo candidate gets an explicit disposition line
+---------------------------------------------------------------
+passed: 13  failed: 0
+SELF-TEST PASSED.

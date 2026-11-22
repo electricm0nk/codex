@@ -1,0 +1,2 @@
+# Fixture for desktop Market +N (AC and attack rows), source: apg_equip_arms_armor.lst, KEY: Sword Cane
+Sword Cane																PROFICIENCY:WEAPON|Sword Cane			TYPE:Weapon.Resizable.Melee.OneHanded.Martial.Standard.Piercing.Sword												COST:45	WT:4		CRITMULT:x2	CRITRANGE:1	DAMAGE:1d6				EQMOD:Material ~ Steel													WIELD:OneHanded						SIZE:M	SOURCEPAGE:p.177	BONUS:WEAPON|DAMAGEMULT:2|-0.5

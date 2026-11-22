@@ -1,0 +1,31 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:38:17Z",
+  "data": {
+    "key": "Greater Intuitive Shot",
+    "category": "Psionic",
+    "name": "Greater Intuitive Shot",
+    "description": "Expend focus to gain +%1 damage per attack on full attack with ranged weapon.|WIS",
+    "prerequisites": [
+      "PREABILITY:3,CATEGORY=FEAT,Intuitive Shot,Point-Blank Shot,Psionic Shot",
+      "PREMULT:1,[PRETOTALAB:6],[PREVARGTEQ:PrereqBAB,6]",
+      "PRESTAT:1,WIS=13"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_feats.lst",
+    "sha256": "528096cb97ebe8255b9f9fe67682dd7e045f53b65e32295cd57967002eccb137",
+    "line": 143,
+    "record_key": "Greater Intuitive Shot"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,20 @@
+{
+  "data": {
+    "category": "Weapon",
+    "key": "Anacite ion cannon (tempest)",
+    "name": "Anacite ion cannon (tempest)",
+    "type": "Weapon Proficiency"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 235,
+    "path": "starfinder/paizo/pact_worlds/spw_abilities.lst",
+    "record_key": "Anacite ion cannon (tempest)",
+    "sha256": "00d61896ff6203e4fcc2cf8ccd79362a17739e63386a2b188fa2e9f5ccac9e2d"
+  },
+  "unit_id": "pact_worlds:ability:anacite_ion_cannon_tempest"
+}

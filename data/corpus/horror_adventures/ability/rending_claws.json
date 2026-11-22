@@ -1,0 +1,56 @@
+{
+  "codex_generated_name": false,
+  "completeness": "full",
+  "data": {
+    "description": "You grow vicious claws, perfect for stripping flesh from bone.",
+    "key": "Ghoul Corruption ~ Rending Claws",
+    "name": "Rending Claws",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ghoul Corruption ~ Rending Claws"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "GhoulManifestation"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.21"
+      },
+      {
+        "key": "DESC",
+        "value": "You grow vicious claws, perfect for stripping flesh from bone."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Ghoul Rending Claws Stain Choice|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Ghoul Rending Claws Gift Choice|1"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 265,
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
+    "record_key": "Ghoul Corruption ~ Rending Claws",
+    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

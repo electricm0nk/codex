@@ -1,0 +1,15 @@
+{
+  "completeness": "full",
+  "data": {
+    "key": "Four-mirror Armor",
+    "name": "Four-mirror Armor"
+  },
+  "license": "OGL",
+  "population": "in_scope",
+  "source": {
+    "kind": "desktop_ui_fixture",
+    "line": 1,
+    "path": "apps/desktop/src-tauri/fixtures_src/equip_four_mirror_armor.txt",
+    "record_key": "Four-mirror Armor"
+  }
+}

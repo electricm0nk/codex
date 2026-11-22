@@ -1,0 +1,76 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Feral Heart ~ Enhanced Claws",
+    "name": "Enhanced Claws",
+    "class": "Feral Heart",
+    "description": "Your claws gain +%1 in enhancement bonuses and abilities; maximum enhancement bonus +%2.|MndBladeEnhancement|MndBladeMxEnhancement",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Feral Heart ~ Enhanced Claws"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SoulknifeClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "SERVESAS",
+        "value": "ABILITY=Special Ability|Soulknife ~ Enhanced Mind Blade"
+      },
+      {
+        "key": "DEFINE",
+        "value": "EnhancedMndBladeLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MndBladeEnhancement|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MndBladeMxEnhancement|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Your claws gain +%1 in enhancement bonuses and abilities; maximum enhancement bonus +%2.|MndBladeEnhancement|MndBladeMxEnhancement"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EnhancedMndBladeLVL|MndBladeLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MndBladeEnhancement|max(0,(EnhancedMndBladeLVL-1)/2)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MndBladeMxEnhancement|min((EnhancedMndBladeLVL/3),5)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.281"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2171,
+    "record_key": "Feral Heart ~ Enhanced Claws"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

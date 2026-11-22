@@ -1,0 +1,84 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T02:49:29Z",
+  "data": {
+    "key": "Dhampir ~ Speed",
+    "name": "Normal Speed",
+    "race_key": "Dhampir",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Dhampir Racial Trait",
+      "Dhampir Racial Default",
+      "SpecialQuality",
+      "Racial Speed"
+    ],
+    "is_racial_default": true,
+    "suppressed_by_flag": "Dhampir_ReplaceSpeed",
+    "sets_replace_flags": [],
+    "description": "Dhampirs have a base speed of 30 feet.",
+    "source_page": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Dhampir ~ Speed"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Dhampir Racial Trait.Dhampir Racial Default.SpecialQuality.Racial Speed"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      },
+      {
+        "key": "!PREFACT",
+        "value": "1,ABILITIES,Dhampir_ReplaceSpeed=True"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MOVEBASE|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Dhampirs have a base speed of 30 feet."
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,30"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.xx"
+      }
+    ],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "VAR",
+          "MOVEBASE",
+          "30"
+        ]
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/dhampir/dhampir_abilities_race.lst",
+    "sha256": "faeeb2800b2a75f92e1f2c7b02ee3d2c253bc3599735699d8bca0acaf00742c5",
+    "line": 16,
+    "record_key": "Dhampir ~ Speed"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

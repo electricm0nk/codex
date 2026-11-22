@@ -1,0 +1,22 @@
+failures:
+    authoring_workbench::tests::rules_tables_from_a_packaged_resource_root_probe
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 700 filtered out; finished in 0.01s
+
+
+
+thread 'authoring_workbench::tests::rules_tables_from_a_packaged_resource_root_probe' (3457327) panicked at src/authoring_workbench.rs:535:9:
+assertion `left == right` failed: the first row is the staged resource root's, not the checkout's
+  left: 1
+ right: 77
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    authoring_workbench::tests::a_packaged_app_reads_the_rules_tables_from_its_resource_root
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 700 filtered out; finished in 0.02s
+
+error: test failed, to rerun pass `--bin codex-desktop`

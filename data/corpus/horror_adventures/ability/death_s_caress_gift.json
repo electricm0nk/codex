@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Lich Corruption ~ Death's Caress Gift",
+    "name": "Death's Caress Gift",
+    "description": "You can make a touch attack as a standard action that deals 1d4+%1 cold damage.|LichManifestationLevel",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Lich Corruption ~ Death's Caress Gift"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.LichDeathsCaressGift"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.26"
+      },
+      {
+        "key": "DESC",
+        "value": "You can make a touch attack as a standard action that deals 1d4+%1 cold damage.|LichManifestationLevel"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
+    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381",
+    "line": 501,
+    "record_key": "Lich Corruption ~ Death's Caress Gift"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

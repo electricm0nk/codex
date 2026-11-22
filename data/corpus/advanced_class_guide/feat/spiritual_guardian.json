@@ -1,0 +1,29 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:38:17Z",
+  "data": {
+    "key": "Spiritual Guardian",
+    "category": "General",
+    "name": "Spiritual Guardian",
+    "description": "Your spiritual guardians are more powerful than those of most others.",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=Special Ability,Shaman ~ Spirit Magic",
+      "PRESPELL:1,Spiritual Weapon,Spiritual Ally"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_feats.lst",
+    "sha256": "a71dc625f64f057c38365b3c3a2c6b58b75170fb8ffeb5eb23d3b29c74b7edc3",
+    "line": 149,
+    "record_key": "Spiritual Guardian"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

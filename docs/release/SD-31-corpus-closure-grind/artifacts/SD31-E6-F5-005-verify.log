@@ -1,0 +1,119 @@
+codex verify — mode: full, jobs: 2
+repo:  /home/ubuntu/workspace/repos/codex/.claude/worktrees/wf_1ad13e3b-085-6
+logs:  /tmp/codex-verify-Fh2iI8
+---------------------------------------------------------------
+==> preflight-disk — disk budget check before any build starts
+    repo filesystem (/home/ubuntu/workspace/repos/codex/.claude/worktrees/wf_1ad13e3b-085-6, mounted at /): 42% used, 570G available
+    scratch-log filesystem (/tmp/codex-verify-Fh2iI8, mounted at /): 42% used, 570G available
+    PASS  preflight-disk  (disk budget OK)
+---------------------------------------------------------------
+==> preflight-oracle — scripts/fetch-pcgen-oracle.sh --check
+    PASS  preflight-oracle  (oracle at pin 7f818006e371188e5717fd18d74d18a420747fc6)
+---------------------------------------------------------------
+==> oracle-pin-selftest — scripts/tests/test_fetch_pcgen_oracle.sh
+    PASS  oracle-pin-selftest  (11 passed, 0 failed)
+---------------------------------------------------------------
+==> producer-selftest — python3 -m unittest scripts/tests/test_pf1e_dashboard_producer.py
+    PASS  producer-selftest  (8 cases passed)
+---------------------------------------------------------------
+==> pi-redaction-selftest — python3 -m unittest scripts/tests/test_pi_redaction.py
+    PASS  pi-redaction-selftest  (49 cases passed)
+---------------------------------------------------------------
+==> provenance-selftest — python3 -m unittest scripts/tests/test_provenance.py
+    PASS  provenance-selftest  (32 cases passed)
+---------------------------------------------------------------
+==> site-dashboard-selftest — bash scripts/tests/test_publish_site_dashboard.sh
+    PASS  site-dashboard-selftest  (6 passed, 0 failed)
+---------------------------------------------------------------
+==> site-dashboard-check — scripts/publish-site-dashboard.sh --check
+    PASS  site-dashboard-check  (site/dashboard/PF1e-dashboard.json is current)
+---------------------------------------------------------------
+==> site-dashboard-pi-gate — declared-PI names vs. what is committed under site/dashboard/
+    PASS  site-dashboard-pi-gate  (13 file(s) scanned against 1612 declared-PI name(s), zero leaked)
+---------------------------------------------------------------
+==> build-public-status-selftest — python3 -m unittest scripts/tests/test_build_public_status.py
+    PASS  build-public-status-selftest  (28 cases passed)
+---------------------------------------------------------------
+==> site-public-status-check — scripts/site/build_public_status.py --check
+    PASS  site-public-status-check  (site/status-data.json and site/status-data/*.json are current)
+---------------------------------------------------------------
+==> site-public-status-pi-gate — declared-PI names vs. what is committed under site/status-data*
+    PASS  site-public-status-pi-gate  (31 file(s) scanned against 1612 declared-PI name(s), zero leaked)
+---------------------------------------------------------------
+==> site-asset-stamp-check — scripts/site/stamp_asset_versions.py --check
+    PASS  site-asset-stamp-check  (site/*.html cache-busting stamps match site/styles.css)
+---------------------------------------------------------------
+==> reachability-audit-selftest — python3 -m unittest scripts/tests/test_reachability_audit.py
+    PASS  reachability-audit-selftest  (11 cases passed)
+---------------------------------------------------------------
+==> reachability-audit — python3 scripts/reachability_audit.py
+    PASS  reachability-audit  (reachable ceiling 98.95%)
+---------------------------------------------------------------
+==> groundtruth-guard-selftest — python3 -m unittest scripts/tests/test_ground_truth_evidence_guard.py scripts/tests/test_sample_ground_truth_units.py
+    PASS  groundtruth-guard-selftest  (17 cases passed)
+---------------------------------------------------------------
+==> supersession-gate-selftest — python3 -m unittest scripts/tests/test_supersession_register_gate.py
+    PASS  supersession-gate-selftest  (16 cases passed)
+---------------------------------------------------------------
+==> pi-sweep — Product-Identity blacklist over src/rules_core/rules_tables
+    PASS  pi-sweep  (10 hits over src/rules_core/rules_tables, 10 baseline rows)
+---------------------------------------------------------------
+==> declared-pi-audit — corpus NAMEISPI:/DESCISPI: declarations vs. what shipped
+    PASS  declared-pi-audit  (clean)
+---------------------------------------------------------------
+==> audit-selftest — scripts/tests/test_identifier_discipline_audit.sh
+    PASS  audit-selftest  (28 passed, 0 failed)
+---------------------------------------------------------------
+==> reclaim-selftest — scripts/tests/test_reclaim_orphan_targets.sh
+    PASS  reclaim-selftest  (13 passed, 0 failed)
+---------------------------------------------------------------
+==> driver-selftest — scripts/tests/test_run_desktop_driver.sh
+    PASS  driver-selftest  (7 passed, 0 failed)
+---------------------------------------------------------------
+==> corpus-sweep-selftest — scripts/tests/test_corpus_literal_sweep.sh
+    PASS  corpus-sweep-selftest  (15 passed, 0 failed)
+---------------------------------------------------------------
+==> root-lib — cargo test --locked --lib -j 2  (repo root)
+    PASS  root-lib  (2032 passed)
+---------------------------------------------------------------
+==> root-full — cargo test --locked --no-fail-fast -j 2  (repo root)
+    building ~490 test binaries; this is the slow one
+    FAIL  root-full  (cargo exit 101; 7014 passed across 567 suites — /tmp/codex-verify-Fh2iI8/root-full.log)
+---------------------------------------------------------------
+==> desktop — cargo test --locked -j 2  (apps/desktop/src-tauri)
+    FAIL  desktop  (cargo exit 101 — /tmp/codex-verify-Fh2iI8/desktop.log)
+---------------------------------------------------------------
+==> reach — cargo test --locked -j 2 reach_gate  (apps/desktop/src-tauri)
+    FAIL  reach  (cargo exit 101 — /tmp/codex-verify-Fh2iI8/reach.log)
+---------------------------------------------------------------
+==> corpus-sweep — cargo run --locked --bin corpus_literal_sweep  (repo root)
+    PASS  corpus-sweep  (26100 records examined of 26736 read, 252102 tokens compared (9 synthesized), 26723 digests checked, 0 findings)
+---------------------------------------------------------------
+==> supersession-gate — python3 scripts/supersession_register_gate.py
+    PASS  supersession-gate  (116 objects, all clean)
+---------------------------------------------------------------
+==> frontend-install — npm ci if node_modules is absent  (apps/desktop)
+    PASS  frontend-install  (node_modules present)
+---------------------------------------------------------------
+==> frontend-test — npm test  (apps/desktop)
+    FAIL  frontend-test  (npm test exit 1; 98/99 files passed — /tmp/codex-verify-Fh2iI8/frontend-test.log)
+---------------------------------------------------------------
+==> frontend-typecheck — npm run typecheck  (apps/desktop)
+    PASS  frontend-typecheck  (tsc --noEmit clean)
+---------------------------------------------------------------
+==> clippy — cargo clippy --locked --tests -j 2  (BOTH crates)
+    PASS  clippy  (root:51 desktop:7 warnings, 0 errors)
+---------------------------------------------------------------
+==> class-dump — cargo run --locked --bin v06_class_state_dump  (repo root)
+    PASS  class-dump  (31/31 computing)
+---------------------------------------------------------------
+SUMMARY
+  passed:  30  preflight-disk preflight-oracle oracle-pin-selftest producer-selftest pi-redaction-selftest provenance-selftest site-dashboard-selftest site-dashboard-check site-dashboard-pi-gate build-public-status-selftest site-public-status-check site-public-status-pi-gate site-asset-stamp-check reachability-audit-selftest reachability-audit groundtruth-guard-selftest supersession-gate-selftest pi-sweep declared-pi-audit audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest root-lib corpus-sweep supersession-gate frontend-install frontend-typecheck clippy class-dump
+  FAILED:  4  root-full desktop reach frontend-test
+
+BASELINE NOTES (not failures — update deliberately):
+  - BASELINE_ROOT_LIB_TESTS baseline is stale: 2025 recorded, 2032 measured. Update /home/ubuntu/workspace/repos/codex/.claude/worktrees/wf_1ad13e3b-085-6/scripts/verify-baselines.env.
+  - BASELINE_CORPUS_LITERAL_RECORDS=26100 (was 25688)
+
+RESULT: FAIL — logs in /tmp/codex-verify-Fh2iI8
+VERIFY_EXIT=1

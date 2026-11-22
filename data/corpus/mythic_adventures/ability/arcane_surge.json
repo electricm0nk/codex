@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Mythic Path Feature ~ Arcane Surge",
+    "name": "Arcane Surge",
+    "description": "As a swift action, you can expend one use of mythic power to cast any one arcane spell without expending a prepared spell or spell slot. If you prepare spells, this spell must be one you prepared today (even if you have already cast it); if you're a spontaneous caster, this spell must be one of your spells known. If the spell requires a saving throw, any non-mythic creatures affected by the spell roll twice and take the lower result. If you must attempt a caster level check for the spell to overcome a creature's spell resistance, you can roll your caster level check twice (adding %1 to each) and take the higher result. You can't add a metamagic feat to a spell you cast using this ability.|MythicLevel",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Path Feature ~ Arcane Surge"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Path Feature.Archmage Path Feature.SpecialAttack"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Mythic Path ~ Archmage"
+      },
+      {
+        "key": "DESC",
+        "value": "As a swift action, you can expend one use of mythic power to cast any one arcane spell without expending a prepared spell or spell slot. If you prepare spells, this spell must be one you prepared today (even if you have already cast it); if you're a spontaneous caster, this spell must be one of your spells known. If the spell requires a saving throw, any non-mythic creatures affected by the spell roll twice and take the lower result. If you must attempt a caster level check for the spell to overcome a creature's spell resistance, you can roll your caster level check twice (adding %1 to each) and take the higher result. You can't add a metamagic feat to a spell you cast using this ability.|MythicLevel"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.14"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Mythic Power"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
+    "line": 81,
+    "record_key": "Mythic Path Feature ~ Arcane Surge"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

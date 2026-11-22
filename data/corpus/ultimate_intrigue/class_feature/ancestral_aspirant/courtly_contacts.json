@@ -1,0 +1,53 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Ancestral Aspirant ~ Courtly Contacts",
+    "name": "Courtly Contacts",
+    "class": "Occultist",
+    "description": "Ancestral aspirants have contacts among courtly circles rather than otherworldly circles. This works similarly to outside contact except for the following differences; First, he doesn't need to use a magic circle or make a payment (though he still expends 1 point of mental focus from his enchantment implement). Second, he can use those contacts to gather information for him (as per the Diplomacy skill to gather information) without spending the time himself, rather than asking a question and receiving a result similar to a divination. He can ask more questions over the same time period as normal with outside contact, for a total of %1 questions that are in some way related to one another.|(OccultistLVL-4)/4",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ancestral Aspirant ~ Courtly Contacts"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Occultist Class Features.AncestralAspirantClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "Ancestral aspirants have contacts among courtly circles rather than otherworldly circles. This works similarly to outside contact except for the following differences; First, he doesn't need to use a magic circle or make a payment (though he still expends 1 point of mental focus from his enchantment implement). Second, he can use those contacts to gather information for him (as per the Diplomacy skill to gather information) without spending the time himself, rather than asking a question and receiving a result similar to a divination. He can ask more questions over the same time period as normal with outside contact, for a total of %1 questions that are in some way related to one another.|(OccultistLVL-4)/4"
+      },
+      {
+        "key": "DESC",
+        "value": " Instead of delivering messages and objects, the courtly contacts can spread vicious rumors and gossip about a target throughout a settlement, causing any creatures in the settlement whose attitude toward the target wasn't helpful to have its attitude toward the target worsened by one step. These baseless rumors last 1 week or until the target spends 8 hours refuting them and succeeds at a Diplomacy check (DC %1).|10+OccultistLVL+INT|PRECLASS:1,Occultist=16"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.68"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/support/ui_abilities_class_oa.lst",
+    "sha256": "123f008e9a2f31828861df9025f48f5c2f7c78a648553f22dba96a8d8a2e24dc",
+    "line": 103,
+    "record_key": "Ancestral Aspirant ~ Courtly Contacts"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

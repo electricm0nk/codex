@@ -1,0 +1,2 @@
+# Fixture for desktop Market +N (AC and attack rows), source: ue_equip_arms_armor.lst, KEY: Earth Breaker
+Earth Breaker																			PROFICIENCY:WEAPON|Earth Breaker							TYPE:Weapon.Resizable.Melee.TwoHanded.Martial.Bludgeoning.Hammer																																			COST:40	WT:14										CRITMULT:x3	CRITRANGE:1							DAMAGE:2d6					EQMOD:Material ~ Steel																																									WIELD:TwoHanded							SIZE:M	SOURCEPAGE:p.27

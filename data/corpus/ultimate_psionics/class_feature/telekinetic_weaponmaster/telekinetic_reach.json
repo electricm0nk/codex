@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Telekinetic Weaponmaster ~ Telekinetic Reach",
+    "name": "Telekinetic Reach",
+    "class": "Telekinetic Weaponmaster",
+    "description": "When focused, you gain reach or increase existing reach by 5 ft.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Telekinetic Weaponmaster ~ Telekinetic Reach"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "TelekineticWeaponmasterClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "When focused, you gain reach or increase existing reach by 5 ft."
+      },
+      {
+        "key": "DESC",
+        "value": "You can effect two weapons when dual wielding.|PRECLASS:1,Telekinetic Weaponmaster=3"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.381"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1519,
+    "record_key": "Telekinetic Weaponmaster ~ Telekinetic Reach"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

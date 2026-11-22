@@ -1,0 +1,53 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Nightmare Creature ~ Feign Death",
+    "delivery": "Extraordinary",
+    "description": "Whenever a nightmare creature is unconscious, it appears dead. A conscious nightmare creature can also make itself appear dead as an immediate action. Any creature that physically interacts with a nightmare creature feigning death must succeed at a Heal check or Will saving throw (DC %1) to recognize it is actually alive.",
+    "description_variables": [
+      "10+HD/2+max(CHA,INT)"
+    ],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:nightmare_creature_feign_death",
+    "name": "Feign Death",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Whenever a nightmare creature is unconscious, it appears dead. A conscious nightmare creature can also make itself appear dead as an immediate action. Any creature that physically interacts with a nightmare creature feigning death must succeed at a Heal check or Will saving throw (DC %1) to recognize it is actually alive.|10+HD/2+max(CHA,INT)"
+      },
+      {
+        "key": "KEY",
+        "value": "Nightmare Creature ~ Feign Death"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary"
+      }
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T14:10:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1118,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "record_key": "Nightmare Creature ~ Feign Death",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ]
+}

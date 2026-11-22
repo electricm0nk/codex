@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Psychic Bloodline ~ Feat Tracker",
+    "name": "Psychic Bloodline ~ Feat Tracker",
+    "class": "Sorcerer",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_BloodlineFeat_FocusedSpell|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_BloodlineFeat_HeightenSpell|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_BloodlineFeat_IntuitiveSpell|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_BloodlineFeat_IronWill|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_BloodlineFeat_LogicalSpell|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_BloodlineFeat_Persuasive|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_BloodlineFeat_QuickenSpell|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_BloodlineFeat_SkillFocusSenseMotive|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_BloodlineFeat_SpellFocus|1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1874,
+    "record_key": "Psychic Bloodline ~ Feat Tracker"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

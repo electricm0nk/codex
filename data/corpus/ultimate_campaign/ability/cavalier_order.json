@@ -1,0 +1,44 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Retraining ~ Class Feature ~ Cavalier Order",
+    "name": "Cavalier Order",
+    "description": "You retrained your cavalier order.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Retraining ~ Class Feature ~ Cavalier Order"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RetrainingClassFeature"
+      },
+      {
+        "key": "DESC",
+        "value": "You retrained your cavalier order."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_campaign/uca_abilities_retraining_apg.lst",
+    "sha256": "8aafd3214cd658a813da4806155ee538aadc836ef05463badb574de5ec570cdc",
+    "line": 12,
+    "record_key": "Retraining ~ Class Feature ~ Cavalier Order"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

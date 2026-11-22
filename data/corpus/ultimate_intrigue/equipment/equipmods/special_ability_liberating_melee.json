@@ -1,0 +1,58 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "Equipmods",
+    "cost_gp": null,
+    "description": "Aids wielder in detecting when a creature is under an enchantment. Striking a mentally controlled deals nonlethal damage, grants new save with a bonus.",
+    "key": "Special Ability ~ Liberating ~ Melee",
+    "name": "Liberating",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Special Ability ~ Liberating ~ Melee"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weapon.Melee"
+      },
+      {
+        "key": "PLUS",
+        "value": "2"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "QUALIFY"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.237"
+      },
+      {
+        "key": "PRETYPE",
+        "value": "3,WeaponEnhancement,Weapon,Melee"
+      },
+      {
+        "key": "SPROP",
+        "value": "Aids wielder in detecting when a creature is under an enchantment. Striking a mentally controlled deals nonlethal damage, grants new save with a bonus."
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-23T15:10:33Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 12,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_equipmods.lst",
+    "record_key": "Special Ability ~ Liberating ~ Melee",
+    "sha256": "5bc2ad2638890d74716a60fb31681d23ec188d9c540e2e662a31e696f3fcd056"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

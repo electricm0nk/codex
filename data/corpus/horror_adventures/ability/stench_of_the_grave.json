@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Ghoul Corruption ~ Stench of the Grave",
+    "name": "Stench of the Grave",
+    "description": "Your body exudes a stench of decay.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ghoul Corruption ~ Stench of the Grave"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "GhoulManifestation"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Ghoul Corruption ~ Corpse Armor"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.21"
+      },
+      {
+        "key": "DESC",
+        "value": "Your body exudes a stench of decay."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Ghoul Corruption ~ Stench of the Grave Gift|Ghoul Corruption ~ Stench of the Grave Stain"
+      },
+      {
+        "key": "DESC",
+        "value": "[Special] Upon taking this manifestation, you must take both the gift and the stain, even with the useful corruption or vile corruption variants.|PREABILITY:1,CATEGORY=Internal,Rules ~ Use Corruption (Useful),Rules ~ Use Corruption (Vile)"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
+    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381",
+    "line": 281,
+    "record_key": "Ghoul Corruption ~ Stench of the Grave"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

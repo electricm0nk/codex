@@ -1,0 +1,159 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "ability_keys": [
+      "bestiary_2:monster_ability:dragon_horse_breath_weapons",
+      "bestiary_2:monster_ability:dragon_horse_electricity",
+      "bestiary_2:monster_ability:dragon_horse_flying_charge",
+      "bestiary_2:monster_ability:dragon_horse_shift_planes"
+    ],
+    "challenge_rating": "9",
+    "corpus_key": "Dragon Horse",
+    "external_ability_refs": [
+      "Dragon Horse ~ Know Alignment",
+      "Flight Maneuverability",
+      "Telepathy"
+    ],
+    "key": "bestiary_2:monster:dragon_horse",
+    "monster_class": "Magical Beast:10",
+    "name": "Dragon Horse",
+    "natural_attacks": [
+      {
+        "damage_dice": "2d6",
+        "name": "Hoof"
+      }
+    ],
+    "race_subtype": "Air",
+    "race_type": "Magical Beast",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Dragon Horse ~ Breath Weapons|Dragon Horse ~ Electricity|Dragon Horse ~ Flying Charge|Dragon Horse ~ Know Alignment|Dragon Horse ~ Shift Planes|Flight Maneuverability|Telepathy"
+      },
+      {
+        "key": "AUTO",
+        "value": "LANG|Auran|Common|Draconic"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CON,CHA|10"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX,INT|6"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|14"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|WIS|8"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|10|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Maneuverability|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RaceSizeIsLong|1|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VISION|Darkvision|60"
+      },
+      {
+        "key": "CR",
+        "value": "9"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|L"
+      },
+      {
+        "key": "HANDS",
+        "value": "0"
+      },
+      {
+        "key": "KIT",
+        "value": "1|NG"
+      },
+      {
+        "key": "LEGS",
+        "value": "4"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Magical Beast:10"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,60,Fly,120"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Hoof,Weapon.Natural.Weapon Group Natural.Melee.Finesseable.Bludgeoning.Electricity,*2,2d6"
+      },
+      {
+        "key": "RACESUBTYPE",
+        "value": "Air"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Magical Beast"
+      },
+      {
+        "key": "REACH",
+        "value": "10"
+      },
+      {
+        "key": "ROLE",
+        "value": "Combat"
+      },
+      {
+        "key": "SIZE",
+        "value": "L"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.104"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      }
+    ],
+    "size": "L",
+    "source_page": "p.104",
+    "speeds": [
+      {
+        "feet": 60,
+        "mode": "Walk"
+      },
+      {
+        "feet": 120,
+        "mode": "Fly"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-15T01:24:19Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 296,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+    "record_key": "Dragon Horse",
+    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

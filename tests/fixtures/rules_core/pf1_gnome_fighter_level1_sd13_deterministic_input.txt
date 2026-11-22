@@ -1,0 +1,26 @@
+# SD13-E2 bounded Gnome race-semantics deterministic fixture.
+#
+# Represents a deterministic PF1 Core Rulebook Gnome Fighter level 1 chassis as
+# chosen input only. It names selections; it does not contain derived, computed,
+# or parity values. It deliberately omits every Human-specific race selection
+# (no `choice:human_ability_bonus`, no `choice:human_bonus_feat`) so the bounded
+# Gnome race-semantics classification is honest: the Gnome pilot exercises the
+# deterministic compute seam through a non-Human race without claiming any
+# Gnome-specific trait math.
+#
+# It grounds nothing about Gnome small-size, slow-speed, low-light vision,
+# gnome racial traits, defensive training, illusion resistance, hatred, or
+# keen senses. Those remain explicitly out of proof for this slice.
+case_id=pf1-crb-gnome-fighter-level1
+source_package_id=pf1.core_rulebook
+race_id=race:gnome
+class_level=class:fighter:1
+ability=strength:14
+ability=dexterity:14
+ability=constitution:12
+ability=intelligence:12
+ability=wisdom:10
+ability=charisma:8
+feat=feat:power_attack
+skill=skill:perception:1
+equipment=item:scale_mail:equipped_worn_active

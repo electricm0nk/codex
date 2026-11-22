@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Cryptic Ranger Trap ~ Alarm Trap",
+    "name": "Alarm Trap",
+    "class": "Cryptic",
+    "description": "When the trap is triggered, it also creates a momentary loud noise equivalent to the audible alarm version of alarm.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Cryptic Ranger Trap ~ Alarm Trap"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.CrypticRangerTrap.Extraordinary.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "When the trap is triggered, it also creates a momentary loud noise equivalent to the audible alarm version of alarm."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.41"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 243,
+    "record_key": "Cryptic Ranger Trap ~ Alarm Trap"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

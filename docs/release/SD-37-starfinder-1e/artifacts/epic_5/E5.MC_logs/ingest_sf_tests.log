@@ -1,0 +1,59 @@
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.07s
+     Running tests/sf_core_proof.rs (/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/sf_core_proof-4e9dcbaa34dab5f7)
+
+running 11 tests
+test the_converted_books_are_every_registered_book_and_never_an_excluded_book ... ok
+test the_package_report_counts_every_inventory_unit_and_names_every_refusal ... ok
+test the_starfinder_tree_reads_exactly_the_converted_books_includes ... ok
+test the_corpus_holds_one_screened_record_per_unit ... ok
+test the_starfinder_population_is_the_inventory_units_of_the_converted_books ... ok
+test armor_class_bonuses_split_into_eac_and_kac ... ok
+test the_package_prints_no_product_identity_term ... ok
+test class_hit_point_pools_route_by_the_sf_mapping_table ... ok
+test a_hit_point_token_no_table_term_claims_is_a_named_degradation ... ok
+test glued_tokens_split_and_product_identity_names_never_print ... ok
+test the_wide_books_prerequisites_and_race_body_rows_convert_without_degrading ... ok
+
+test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 36.96s
+
+     Running tests/sf_formula_system.rs (/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/sf_formula_system-cf6bb4d9540cadbd)
+
+running 8 tests
+test modifyother_tokens_are_speed_on_a_declared_movement ... ok
+test variable_names_resolve_case_insensitively_like_pcgen ... ok
+test print_roles_cover_equipment_and_race_facts ... ok
+test declarations_channel_function_dynamic_scopes_and_datatables_are_read ... ok
+test every_in_scope_modify_token_is_mapped_or_refused_by_name ... ok
+test the_stat_chain_maps_to_ability_compute_targets ... ok
+test the_committed_census_is_fresh ... ok
+test an_independent_walk_agrees_on_the_token_counts ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.37s
+
+     Running tests/sf_license_registry.rs (/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/sf_license_registry-caa8a3040bcb42bb)
+
+running 7 tests
+test sf_pathfinder_has_no_pcc_registry_and_is_refused_by_name ... ok
+test sf_excluded_pccs_are_absent_from_the_registry_and_named_in_the_exclusion_record ... ok
+test sf_registry_lists_exactly_the_eight_in_scope_books ... ok
+test sf_registry_agrees_with_the_licence_matrix ... ok
+test sf_game_mode_loads_ten_lst ... ok
+test sf_registry_books_resolve_to_123_in_scope_lst ... ok
+test sf_all_twelve_pccs_parse_and_every_include_resolves ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+
+     Running tests/sf_mapping_table.rs (/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/sf_mapping_table-7cb30a34ca44c2e4)
+
+running 7 tests
+test key_ability_fact_forms_parse_fixed_and_choice ... ok
+test the_pathfinder_ac_total_is_neither_eac_nor_kac ... ok
+test a_choice_key_ability_without_a_choice_is_refused ... ok
+test every_row_cites_the_srd_and_an_oracle_observation_that_matches_the_run ... ok
+test every_key_ability_fact_in_the_oracle_parses ... ok
+test pcgen_test_characters_match_the_oracle ... ok
+test seed_fixtures_match_the_srd_hand_values_and_the_oracle ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.49s
+
+exit=0

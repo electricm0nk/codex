@@ -1,0 +1,57 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Globster ~ Nausea",
+    "delivery": "Extraordinary",
+    "description": "Any creature struck by a globster must make a DC 18 Fortitude save to avoid being nauseated for 1 round. Once a creature makes this saving throw, it is immune to further nausea effects from that particular globster for 24 hours. This is a poison effect. The save DC is Constitution-based.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:globster_nausea",
+    "name": "Nausea",
+    "owners": [
+      "bestiary_3:monster:globster"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Any creature struck by a globster must make a DC 18 Fortitude save to avoid being nauseated for 1 round. Once a creature makes this saving throw, it is immune to further nausea effects from that particular globster for 24 hours. This is a poison effect. The save DC is Constitution-based."
+      },
+      {
+        "key": "KEY",
+        "value": "Globster ~ Nausea"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.131"
+      },
+      {
+        "key": "TYPE",
+        "value": "GlobsterRacialAbility.SpecialQuality.Extraordinary"
+      }
+    ],
+    "source_page": "p.131",
+    "traits": [
+      "GlobsterRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T10:26:03Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 928,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Globster ~ Nausea",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

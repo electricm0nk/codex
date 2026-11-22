@@ -1,0 +1,4 @@
+# cargo test --locked -j 8 --no-fail-fast --manifest-path apps/desktop/src-tauri/Cargo.toml -- --test-threads=8 at f4b4de1e21; condensed: Running + test result lines
+     Running unittests src/main.rs (/home/ubuntu/workspace/worktrees/codex-epic-f6-target/debug/deps/codex_desktop-6d87602443bc0111)
+test result: ok. 626 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 408.67s
+EXIT=0

@@ -1,0 +1,34 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "description": null,
+    "key": "Universal Monster Rule ~ Breath Weapon",
+    "name": "Universal Monster Rule ~ Breath Weapon",
+    "raw_tokens": [
+      {
+        "key": "DEFINE",
+        "value": "bBreathWeaponAcid|0"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(%1-ft. cone, %2d%3 acid damage, Reflex DC %4 for half, usable every %5d%6 rounds)|BreathWeaponCone|BreathWeaponDice|BreathWeaponDamageDie|BreathWeaponDC|BreathWeaponRechargeDice|BreathWeaponRechargeDieType|PREVAREQ:bBreathWeaponAcid,1|PREVAREQ:BreathWeaponRechargeRounds,0|PREVARGTEQ:BreathWeaponCone,1"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 2388,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "record_key": "Universal Monster Rule ~ Breath Weapon",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

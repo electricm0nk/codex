@@ -1,0 +1,18 @@
+{
+  "data": {
+    "key": "Hearing and Sighted Vlaka",
+    "name": "Hearing and Sighted Vlaka"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 6,
+    "path": "starfinder/paizo/alien_archive_2/saa2_templates.lst",
+    "record_key": "Hearing and Sighted Vlaka",
+    "sha256": "54af4c3ff2c55ab401362d679e853d6d4cf6591ac2f8385b48e17ddd95d29ae4"
+  },
+  "unit_id": "alien_archive_2:template:hearing_and_sighted_vlaka"
+}

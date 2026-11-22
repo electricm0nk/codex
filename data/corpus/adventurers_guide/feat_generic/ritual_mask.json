@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:16:16Z",
+  "data": {
+    "key": "Ritual Mask",
+    "name": "Ritual Mask",
+    "description": "You can use your mask to enhance your occult powers.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "FEAT"
+      },
+      {
+        "key": "TYPE",
+        "value": "General"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=FEAT,Nameless One"
+      },
+      {
+        "key": "PRETEXT",
+        "value": "Ability to cast one or more occult rituals (Occult Adventures)"
+      },
+      {
+        "key": "DESC",
+        "value": "You can use your mask to enhance your occult powers."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.125"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "While benefiting from the Nameless One feat, your masked identity affords you a greater spiritual connection when you act as the primary caster for an occult ritual you know. For any such occult ritual, you can attempt all required skill checks even if untrained in such a skill. If you are trained in such a skill, you instead gain a +3 bonus on your skill check.&nl; In addition, if you have the spirit class feature (as per the shaman or medium class), you can use the ritualistic focus afforded by this feat to enhance your connection to any spirits with which you have communed. Once per day, when you use a supernatural ability granted to you by your spirit (such as a shaman spirit's hex or spirit abilities or a medium's spirit powers), you can increase your effective class level by 1 when determining the effects of that supernatural ability."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_feats.lst",
+    "sha256": "e3c7767bc0491cf56909e0ded972ef6b70ae228bed3266f7f52ace170084756a",
+    "line": 51,
+    "record_key": "Ritual Mask"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

@@ -1,0 +1,55 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "General",
+    "cost_gp": 90000.0,
+    "description": "Once per day as an immediate action, the owner can make the head absorb a mind-affecting spell of up to 5th level that was targeting the owner. As a standard action, the wielder can unleash this energy as enervation, with the ray imposing 1 negative level per level of spell absorbed. used as an additional focus component for a spell with the fear subtype, increases any save DC associated with the spell by 1.",
+    "key": "Shrunken Head",
+    "name": "Shrunken Head",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shrunken Head"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.GreaterMajor"
+      },
+      {
+        "key": "COST",
+        "value": "90000"
+      },
+      {
+        "key": "WT",
+        "value": "1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.262"
+      },
+      {
+        "key": "SPROP",
+        "value": "Once per day as an immediate action, the owner can make the head absorb a mind-affecting spell of up to 5th level that was targeting the owner. As a standard action, the wielder can unleash this energy as enervation, with the ray imposing 1 negative level per level of spell absorbed. used as an additional focus component for a spell with the fear subtype, increases any save DC associated with the spell by 1."
+      }
+    ],
+    "weight_lbs": 1.0
+  },
+  "ingested_at": "2026-08-17T08:18:39Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 99,
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_equip.lst",
+    "record_key": "Shrunken Head",
+    "sha256": "48877b9621bd36c3812d91cc603838c92eda6199fd2bd116d16d47523cbc1cbc"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "static:literal_magnitudes_only"
+  ]
+}

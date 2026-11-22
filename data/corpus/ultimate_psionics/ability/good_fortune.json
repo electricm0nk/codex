@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Crown of Chaos ~ Good Fortune",
+    "name": "Good Fortune",
+    "description": "1/day, roll twice and take the highest result on a skill check, attack roll, ability check, or saving throw.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Crown of Chaos ~ Good Fortune"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "1/day, roll twice and take the highest result on a skill check, attack roll, ability check, or saving throw."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.433"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities.lst",
+    "sha256": "ecfd0b8c0786d65416067452f4b648e30acff9d0e8c9c70fb4e4fc6dc0f9723d",
+    "line": 173,
+    "record_key": "Crown of Chaos ~ Good Fortune"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

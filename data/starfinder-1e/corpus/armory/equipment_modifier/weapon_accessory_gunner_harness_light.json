@@ -1,0 +1,19 @@
+{
+  "data": {
+    "key": "Weapon Accessory ~ Gunner harness (light)",
+    "name": "Gunner harness, light",
+    "type": "Weapon.Heavy weapon"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 154,
+    "path": "starfinder/paizo/armory/sa_equipmods.lst",
+    "record_key": "Weapon Accessory ~ Gunner harness (light)",
+    "sha256": "45d1786127bbd4c729444e697f4e3f3cce3eae08c444afe9040bb53c28b02235"
+  },
+  "unit_id": "armory:equipment_modifier:weapon_accessory_gunner_harness_light"
+}

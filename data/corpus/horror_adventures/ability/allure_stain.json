@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Vampirism Corruption ~ Allure Stain",
+    "name": "Allure Stain",
+    "description": "You cast no reflection. While you're within 10 feet of a mirror or reflective surface, nearby creatures may notice something amiss (Perception DC 20). If they succeed by 5 or more, they notice your lack of reflection.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Vampirism Corruption ~ Allure Stain"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.VampirismAllureStain"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.37"
+      },
+      {
+        "key": "DESC",
+        "value": "You cast no reflection. While you're within 10 feet of a mirror or reflective surface, nearby creatures may notice something amiss (Perception DC 20). If they succeed by 5 or more, they notice your lack of reflection."
+      },
+      {
+        "key": "DESC",
+        "value": "A creature can present a mirror to you as a standard action to repel you. You must stay at least 5 feet away from the mirror and can't touch or make melee attacks against that creature. After 1 round, if the creature continues presenting the mirror, you can attempt a DC 25 Will save each round to ignore the repulsion for that round.|PREVARGTEQ:VampirismManifestationLevel,3"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
+    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381",
+    "line": 888,
+    "record_key": "Vampirism Corruption ~ Allure Stain"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

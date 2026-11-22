@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:22:10Z",
+  "data": {
+    "corpus_key": "Mockingfey ~ Mock",
+    "delivery": "Supernatural",
+    "description": "As a standard action, a mockingfey can take on the appearance of any creature it can see. This functions like veil, but affects only the mockingfey. The mockingfey does not change size, and if the creature it's mimicking is larger than itself, the mockingfey simply appears to be a miniature version of it. Anyone interacting with this effect can attempt a DC %1 Will save to see through the ruse. A mockingfey can maintain a guise indefinitely, but can't change to a form other than its own without a visual reference-once a given disguise has ended, the fey must see the subject again to resume that form.",
+    "description_variables": [
+      "10+HD/2+CHA"
+    ],
+    "facet": "SpecialQuality",
+    "key": "bestiary_6:monster_ability:mockingfey_mock",
+    "name": "Mock",
+    "owners": [],
+    "source_page": "p.189",
+    "traits": [
+      "MockingfeyRacialTrait"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_6/b6_abilities_race.lst",
+    "sha256": "d60128d0229b23016cc603e691bb97cc6bf568f5e504e5bd32b57f2504fdd8f0",
+    "line": 25,
+    "record_key": "Mockingfey ~ Mock"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ]
+}

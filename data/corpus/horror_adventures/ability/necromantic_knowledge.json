@@ -1,0 +1,77 @@
+{
+  "codex_generated_name": false,
+  "completeness": "full",
+  "data": {
+    "description": "You have gained unusual insights into necromancy.",
+    "key": "Lich Corruption ~ Necromantic Knowledge",
+    "name": "Necromantic Knowledge",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Lich Corruption ~ Necromantic Knowledge"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "LichManifestation"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "LichManifestationLevel,2"
+      },
+      {
+        "key": "PRESPELLCAST",
+        "value": "TYPE=Arcane,TYPE=Divine,TYPE=Psychic"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.27"
+      },
+      {
+        "key": "DESC",
+        "value": "You have gained unusual insights into necromancy."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Lich Necromantic Knowledge Gift Choice|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Lich Necromantic Knowledge Stain Choice|1"
+      },
+      {
+        "key": "STACK",
+        "value": "YES"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "NOCHOICE"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 531,
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
+    "record_key": "Lich Corruption ~ Necromantic Knowledge",
+    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice",
+    "computed:pre_guard"
+  ]
+}

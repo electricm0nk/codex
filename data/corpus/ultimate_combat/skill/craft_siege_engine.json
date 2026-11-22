@@ -1,0 +1,41 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "key": "Craft (Siege Engine)",
+    "name": "Craft (Siege Engine)",
+    "raw_tokens": [
+      {
+        "key": "KEYSTAT",
+        "value": "INT"
+      },
+      {
+        "key": "USEUNTRAINED",
+        "value": "NO"
+      },
+      {
+        "key": "TYPE",
+        "value": "Intelligence.Craft"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Craft (Siege Engine)|3|TYPE=ClassSkill|PRECSKILL:1,Craft (Siege Engine)|PRESKILL:1,Craft (Siege Engine)=1"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T12:11:35Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 6,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_skills.lst",
+    "record_key": "Craft (Siege Engine)",
+    "sha256": "b92371b758e8bb88a0ed5d9daf5cd8aeac424d52cd998a7483fba7d2b150b206"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

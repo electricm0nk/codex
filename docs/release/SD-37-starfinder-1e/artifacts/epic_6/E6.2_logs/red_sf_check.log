@@ -1,0 +1,4 @@
+  stale on disk: _report.json
+  stale on disk: core/ability/human.json
+records=8582 converted=8582 refused=0 rules=11319 var_tables=236 verdict=FAIL problems=2
+exit=1

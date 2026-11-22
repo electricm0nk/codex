@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Body Snatcher ~ Death Is Only the Beginning",
+    "name": "Death Is Only the Beginning",
+    "class": "Body Snatcher",
+    "description": "Common folklore suggests that many people see their lives flash before their eyes just before they die. In some ways, this is literal truth for you, although you tend to see only opportunity. Immediately upon being reduced to -1 hit points or lower, or failing a saving throw against an effect that would kill you, you may expend your psionic focus to manifest true mind switch as an immediate action at the same manifester level you manifest mind switch. You may only target your killer with this effect (thus, if the killer is out of range, this ability is worthless), and the save DC is reduced by 4 due to the desperate nature of this technique. If successful, your mind switches places with your killer's just before dying. You suffer level loss as normal for losing your previous body after a true mind switch.  You may apply all your body snatcher class features (except seal the host) to any manifestation of true mind switch, even one made at the moment of death.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Body Snatcher ~ Death Is Only the Beginning"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "BodySnatcherClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "Common folklore suggests that many people see their lives flash before their eyes just before they die. In some ways, this is literal truth for you, although you tend to see only opportunity. Immediately upon being reduced to -1 hit points or lower, or failing a saving throw against an effect that would kill you, you may expend your psionic focus to manifest true mind switch as an immediate action at the same manifester level you manifest mind switch. You may only target your killer with this effect (thus, if the killer is out of range, this ability is worthless), and the save DC is reduced by 4 due to the desperate nature of this technique. If successful, your mind switches places with your killer's just before dying. You suffer level loss as normal for losing your previous body after a true mind switch.  You may apply all your body snatcher class features (except seal the host) to any manifestation of true mind switch, even one made at the moment of death."
+      },
+      {
+        "key": "BONUS",
+        "value": "CASTERLEVEL|SPELL.Mind Switch (True)|BodySnatcherLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.353"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1160,
+    "record_key": "Body Snatcher ~ Death Is Only the Beginning"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

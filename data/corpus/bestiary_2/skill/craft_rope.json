@@ -1,0 +1,54 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "key": "Craft (Rope)",
+    "name": "Craft (Rope)",
+    "raw_tokens": [
+      {
+        "key": "KEYSTAT",
+        "value": "INT"
+      },
+      {
+        "key": "USEUNTRAINED",
+        "value": "NO"
+      },
+      {
+        "key": "TYPE",
+        "value": "Intelligence.Craft"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.91"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Craft (Rope)|3|TYPE=ClassSkill|PRECSKILL:1,Craft (Rope)|PRESKILL:1,Craft (Rope)=1"
+      },
+      {
+        "key": "TEMPDESC",
+        "value": "Craft skill checks are made with a -2 circumstance penalty if improvised tools are used"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|SKILL|Craft (Rope)|-2|TYPE=Circumstance|!PREITEM:1,TYPE=CraftToolsRope"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T12:11:33Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 8,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_skills.lst",
+    "record_key": "Craft (Rope)",
+    "sha256": "b7391ac7ce33a999b036f3fddbaca99bfae96d32a79b6fea96d90f00df4486ae"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "computed:tempbonus"
+  ]
+}

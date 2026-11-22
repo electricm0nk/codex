@@ -1,0 +1,39 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "description": null,
+    "key": "Elf Barbarian Counter",
+    "name": "Elf Barbarian Counter",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "BONUS",
+        "value": "MOVEADD|TYPE.Walk|ElfBarbarianFastMovementBonus*5|PREMULT:2,[PREVARLT:ENCUMBERANCE,2,var(\"COUNT[EQTYPE.ARMOR.EQUIPPED.IS.HEAVY]\"),1],[PREVARGTEQ:ElfBarbarianFastMovement,5]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ElfBarbarianFastMovementBonus|ElfBarbarianFastMovement/5"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 252,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_race.lst",
+    "record_key": "Elf Barbarian Counter",
+    "sha256": "50f01990edfb0f144b0188746acb06ff18ee798b5a699c6a0bf69d2bec4eb253"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

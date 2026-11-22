@@ -1,0 +1,104 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "description": null,
+    "key": "Racial SLA ~ Speak with Plants (trees only)",
+    "name": "Speak with Plants (trees only)",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Racial SLA ~ Speak with Plants (trees only)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Spell-Like Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Racial Spell-Like Ability"
+      },
+      {
+        "key": "SERVESAS",
+        "value": "ABILITY=Spell-Like Ability|Speak with Plants"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RacialSLA_SpeakWithPlantsTreesOnly_LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RacialSLA_SpeakWithPlantsTreesOnly_SpellLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RacialSLA_SpeakWithPlantsTreesOnly_Times|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RacialSLA_SpeakWithPlantsTreesOnly_DCMod|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RacialSLA_SpeakWithPlantsTreesOnly_DC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RacialSLA_SpeakWithPlantsTreesOnly_AtWill|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RacialSLA_SpeakWithPlantsTreesOnly_Constant|0"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Racial|TIMES=RacialSLA_SpeakWithPlantsTreesOnly_Times|TIMEUNIT=Day|CASTERLEVEL=RacialSLA_SpeakWithPlantsTreesOnly_LVL|Speak with Plants (trees only),RacialSLA_SpeakWithPlantsTreesOnly_DC|PREVAREQ:RacialSLA_SpeakWithPlantsTreesOnly_AtWill,0|PREVAREQ:RacialSLA_SpeakWithPlantsTreesOnly_Constant,0"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Racial|TIMES=ATWILL|TIMEUNIT=Day|CASTERLEVEL=RacialSLA_SpeakWithPlantsTreesOnly_LVL|Speak with Plants (trees only),RacialSLA_SpeakWithPlantsTreesOnly_DC|PREVAREQ:RacialSLA_SpeakWithPlantsTreesOnly_AtWill,1|PREVAREQ:RacialSLA_SpeakWithPlantsTreesOnly_Constant,0"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Racial|TIMES=ATWILL|TIMEUNIT=Constant|CASTERLEVEL=RacialSLA_SpeakWithPlantsTreesOnly_LVL|Speak with Plants (trees only),RacialSLA_SpeakWithPlantsTreesOnly_DC|PREVAREQ:RacialSLA_SpeakWithPlantsTreesOnly_Constant,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RacialSLA_SpeakWithPlantsTreesOnly_LVL|TL|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RacialSLA_SpeakWithPlantsTreesOnly_SpellLVL|3"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RacialSLA_SpeakWithPlantsTreesOnly_Times|1|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RacialSLA_SpeakWithPlantsTreesOnly_DCMod|CHA|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RacialSLA_SpeakWithPlantsTreesOnly_DC|10+RacialSLA_SpeakWithPlantsTreesOnly_SpellLVL+RacialSLA_SpeakWithPlantsTreesOnly_DCMod"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 296,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_race.lst",
+    "record_key": "Racial SLA ~ Speak with Plants (trees only)",
+    "sha256": "0c4ae15128009d48586ea7794a6aeae96d492e10d49f8200529fca2dbb801284"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus",
+    "derived:spells"
+  ]
+}

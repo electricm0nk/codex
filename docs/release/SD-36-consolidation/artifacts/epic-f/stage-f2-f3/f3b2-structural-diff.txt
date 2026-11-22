@@ -1,0 +1,45 @@
+== file set ==
+  rule files:  +0 -0  (+0 -0 rule ids)
+  _vars/:      +1 -0
+  _defects/:   +1 -0
+  other:       +0 -0  []
+
+== counts (baseline -> fresh) ==
+  records: 49450 -> 49450
+  converted: 49450 -> 49450
+  refused: 0 -> 0
+  rules_written: 73016 -> 73016
+  var_tables: 6204 -> 6205
+
+== added granted_by edges by TARGET kind ==
+  ability: 257
+  class_feature: 53
+  TOTAL: 310
+  added grants (total): 0
+
+== expected delta classes (named, counted, explained -- never a blanket allowance) ==
+  added granted_by edges: 310  (F1's own declared purpose -- a bare AUTO reference now resolving through its parent ability category; SS3.5 permits growth)
+  added grants: 0  (F1-2 GatedFactGrant wrapping / F1-3 WeaponSet expansion of a previously-bare selector; see grant_signature/grant_covers)
+  added _vars/ tables: 1  (condition variables an added GatedFactGrant's `when` now references, and the pool variables a D8 pick's `count` references)
+  added _defects/ files: 1
+  provenance deltas on the pinned current_class-fix record list: 0 of 30 pinned records (see structural_diff_expected_provenance_deltas.json)
+  naturalattacks suffix-fix rename: 0 of 1290 pinned old ids -> 0 of 1659 pinned new ids (net +0), plus 0 field deltas on 0 of 6 pinned same-id content-shift ids (see structural_diff_naturalattacks_renames.json -- content-preserved per file, not a genuine loss)
+  bonus_var_index comma-split fix (stage5 §1a): 0 of 35 pinned (rule id, field) record deltas -- a flattened Const/Never/bare-AbilityMod now resolving to its real multi-contribution Var (see structural_diff_bonus_var_split_record_deltas.json for the per-family mechanism and reachability)
+  F1c d2_line_split: 0 field deltas on 0 records, 0 added rule ids -- D2: a record's first line carried its own condition; the record gets a Text principal with only the record's gates and the line moves, condition intact, to a new #<suffix> sibling (see structural_diff_f1c_deltas.json)
+  F1c d4_closure_complete: 0 field deltas on 0 records, 0 added rule ids -- D4: closure_complete=true attested on a class principal whose whole closure is defect-free (sheet_rule/attest.rs) (see structural_diff_f1c_deltas.json)
+  F1c d4_pi_reclosure: 0 field deltas on 0 records, 0 added rule ids -- D4 soundness: 21 product-identity class records re-keyed from the codex-named placeholder to the class's own base row, so their continuation rows, level lines and .MOD rows convert (see structural_diff_f1c_deltas.json)
+  F1c d3_unchained_class: 0 field deltas on 0 records, 0 added rule ids -- D3: a Pathfinder Unchained class principal (TakenOnClass <base>), one per class-selection ability (see structural_diff_f1c_deltas.json)
+  F1c d6_weapon_choice: 0 field deltas on 0 records, 0 added rule ids -- D6: a CHOOSE:WEAPONPROFICIENCY option list resolved to oracle weapon names, or a pick linked to its child pool's one member (see structural_diff_f1c_deltas.json)
+  F1c f1c3_preability_bracket: 0 field deltas on 0 records, 0 added rule ids -- F1c-3: a PREABILITY `[<key>]` item no longer converts to an unholdable MissingRule alternative (see structural_diff_f1c_deltas.json)
+  F1c d7_always_held: 0 field deltas on 0 records, 0 added rule ids -- D7: always_held=true attested on the principal of a record every character holds unconditionally -- the target of an unconditional ABILITY|AUTOMATIC grant on a STAT/SAVE row (sheet_rule/always_held.rs) (see structural_diff_f1c_deltas.json)
+  F1c d8_pool_pick: 0 field deltas on 0 records, 0 added rule ids -- D8: a record that raises an ability category's POOL variable offers the pick -- offers {id: <the record>, count: Var(<pool variable>), from: Rules {pool, tags}} on its principal (sheet_rule/pool_pick.rs) (see structural_diff_f1c_deltas.json)
+  F3b2 f3b2_skill_ranks: 176 of 176 pinned field deltas on 176 records -- F3b2 (1): a class line's STARTSKILLPTS is written as the principal's StatBlock "Skill ranks per level" prose row (one added row, a plain number) (see structural_diff_f3b2_deltas.json)
+  F3b2 f3b2_closure_complete: 8 of 8 pinned field deltas on 8 records -- F3b2 (2): closure_complete=true attested on a class principal whose closure is now defect-free because its references to placeholder-keyed records resolve (see structural_diff_f3b2_deltas.json)
+  F3b2 f3b2_placeholder_key_resolved: 73 of 73 pinned field deltas on 73 records -- F3b2 (2): a reference to a product-identity record by the KEY its oracle row declares resolves (the record was indexed only under its codex-named placeholder corpus key): MissingRule -> Rule, nothing else in the field moves (see structural_diff_f3b2_deltas.json)
+
+unexpected field deltas: 0
+
+removed granted_by edges: 0  (never allowed -- SS3.5 permits growth only)
+removed grants: 0  (a grant SIGNATURE lost with no replacement of the same target -- gating-wrapper and WeaponGroup/WeaponTag/WeaponAllOf/WeaponSet-tag-case changes are NOT counted here, only a genuine loss or a fabricated replacement)
+
+verdict=PASS

@@ -1,0 +1,80 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Vitalist Archetype ~ Pacifist",
+    "name": "Pacifist",
+    "class": "Vitalist",
+    "description": "You are focused on keeping people alive.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Vitalist Archetype ~ Pacifist"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.VitalistArchetype.VitalistMethod.VitalistStealHealth.VitalistRequestAid.VitalistSwiftAid"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Vitalist=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Vitalist Archetype ~ Pacifist],[!PREABILITY:1,CATEGORY=Archetype,TYPE.VitalistMethod,TYPE.VitalistStealHealth,TYPE.VitalistRequestAid,TYPE.VitalistSwiftAid]"
+      },
+      {
+        "key": "PRERACE",
+        "value": "1,Noral"
+      },
+      {
+        "key": "DESC",
+        "value": "You are focused on keeping people alive."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Pacifist ~ Vitalist Method|PRECLASS:1,Vitalist=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Vitalist Class Feature|AUTOMATIC|Pacifist ~ Touch of Pacifism|PRECLASS:1,Vitalist=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Vitalist Class Feature|AUTOMATIC|Pacifist ~ Let's Talk|PRECLASS:1,Vitalist=5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Vitalist Class Feature|AUTOMATIC|Pacifist ~ Lessen Wounds|PRECLASS:1,Vitalist=8"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.334"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2311,
+    "record_key": "Vitalist Archetype ~ Pacifist"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

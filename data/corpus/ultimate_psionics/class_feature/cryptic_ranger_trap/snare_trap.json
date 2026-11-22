@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Cryptic Ranger Trap ~ Snare Trap",
+    "name": "Snare Trap",
+    "class": "Cryptic",
+    "description": "The trap constricts around a limb or other part of the triggering creature's body (Reflex avoids). The creature cannot move from the location of the trap, unless you included a \"leash\" when setting the trap, in which case the creature is limited to the length of the leash. The trapped creature can escape with an Escape Artist check (DC equal to the trap's DC) as a full round action. The trap or its leash has %1 hit points, or can be burst as a full-round action with a DC 25 Strength check. The trap can hold up to a Medium creature; each extra daily use of the ranger's trap ability spent when the trap is set increases the maximum size of creature the trap can hold. At your option, if there is a tall object or structure nearby, you can have the trap lift the creature.|SnareTrapHP",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Cryptic Ranger Trap ~ Snare Trap"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.CrypticRangerTrap.Extraordinary.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SnareTrapHP|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The trap constricts around a limb or other part of the triggering creature's body (Reflex avoids). The creature cannot move from the location of the trap, unless you included a \"leash\" when setting the trap, in which case the creature is limited to the length of the leash. The trapped creature can escape with an Escape Artist check (DC equal to the trap's DC) as a full round action. The trap or its leash has %1 hit points, or can be burst as a full-round action with a DC 25 Strength check. The trap can hold up to a Medium creature; each extra daily use of the ranger's trap ability spent when the trap is set increases the maximum size of creature the trap can hold. At your option, if there is a tall object or structure nearby, you can have the trap lift the creature.|SnareTrapHP"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SnareTrapHP|floor(CrypticInsightLVL/2)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.41"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 251,
+    "record_key": "Cryptic Ranger Trap ~ Snare Trap"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

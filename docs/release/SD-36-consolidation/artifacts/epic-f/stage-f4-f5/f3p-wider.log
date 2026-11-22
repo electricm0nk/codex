@@ -1,0 +1,29 @@
+== root lib (all)
+test rules_core::pilot_compute::prestige_class_entry_gate::prestige_class_entry_gate_tests::arcane_archer_with_the_real_feats_qualifies ... FAILED
+test rules_core::pilot_compute::prestige_class_features::prestige_class_entry_gate_wiring_tests::real_feats_surface_the_met_entry_gate_diagnostic ... FAILED
+test result: FAILED. 2723 passed; 2 failed; 6 ignored; 0 measured; 0 filtered out; finished in 260.58s
+EXIT[root lib]=101
+== sheet_rule_book_collision_census
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 5.98s
+EXIT[sheet_rule_book_collision_census]=0
+== sd20_damage_feat_effect
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+EXIT[sd20_damage_feat_effect]=0
+== sd20_contract_level_up_preview
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.84s
+EXIT[sd20_contract_level_up_preview]=0
+== sd21_wizard_chassis_computes
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 10.60s
+EXIT[sd21_wizard_chassis_computes]=0
+== sd21_epic6b_full_completion_reproducer
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.51s
+EXIT[sd21_epic6b_full_completion_reproducer]=0
+== sd20_levelup_fighter
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 15.98s
+EXIT[sd20_levelup_fighter]=0
+== sd27_arg_and_pu_feat_effects
+test result: ok. 27 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.67s
+EXIT[sd27_arg_and_pu_feat_effects]=0
+== ge06_pilot_input_contract
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+EXIT[ge06_pilot_input_contract]=0

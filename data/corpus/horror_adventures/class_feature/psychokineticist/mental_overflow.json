@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Psychokineticist ~ Mental Overflow",
+    "name": "Mental Overflow",
+    "class": "Kineticist",
+    "description": "A psychokineticist's elemental energy sends strange elemental humors and planar echoes through his brain instead of reshaping his body with matter from his element. Instead of gaining size bonuses to physical ability scores from elemental overflow, he gains alchemical bonuses to his mental ability scores in equal amounts (a +2 alchemical bonus to two mental ability scores at 6th level if he has at least 3 points of burn; a +4 alchemical bonus to one mental ability score and a +2 alchemical bonus to the other two at 11th level if he has at least 5 points of burn; and a +6 alchemical bonus to one mental ability score, a +4 alchemical bonus to another, and a +2 alchemical bonus to the last at 16th level if he has at least 7 points of burn). A psychokineticist doesn't gain a chance to negate critical hits and sneak attacks based on his burn. Otherwise, his elemental overflow works just like a normal kineticist's. This ability alters elemental overflow.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Psychokineticist ~ Mental Overflow"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Kineticist Class Feature.PsychokineticistClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.57"
+      },
+      {
+        "key": "DESC",
+        "value": "A psychokineticist's elemental energy sends strange elemental humors and planar echoes through his brain instead of reshaping his body with matter from his element. Instead of gaining size bonuses to physical ability scores from elemental overflow, he gains alchemical bonuses to his mental ability scores in equal amounts (a +2 alchemical bonus to two mental ability scores at 6th level if he has at least 3 points of burn; a +4 alchemical bonus to one mental ability score and a +2 alchemical bonus to the other two at 11th level if he has at least 5 points of burn; and a +6 alchemical bonus to one mental ability score, a +4 alchemical bonus to another, and a +2 alchemical bonus to the last at 16th level if he has at least 7 points of burn). A psychokineticist doesn't gain a chance to negate critical hits and sneak attacks based on his burn. Otherwise, his elemental overflow works just like a normal kineticist's. This ability alters elemental overflow."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/support/ha_abilities_class_oa.lst",
+    "sha256": "9c111f652f8442433ea215fa11e67258c7e6c15c75d1c1753fa6fef34827f46c",
+    "line": 76,
+    "record_key": "Psychokineticist ~ Mental Overflow"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

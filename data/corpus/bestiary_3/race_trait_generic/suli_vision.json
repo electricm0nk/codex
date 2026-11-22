@@ -1,0 +1,62 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "Sulis can see twice as far as humans in dim light.",
+    "key": "Suli ~ Vision",
+    "name": "Low-Light Vision",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Suli ~ Vision"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Suli Racial Trait.Suli Racial Default.SpecialQuality.Racial Vision"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      },
+      {
+        "key": "!PREFACT",
+        "value": "1,ABILITIES,Suli_ReplaceVision=True"
+      },
+      {
+        "key": "DESC",
+        "value": "Sulis can see twice as far as humans in dim light."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HasRacialVision|1"
+      },
+      {
+        "key": "VISION",
+        "value": "Low-Light Vision"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.xx"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 18,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/suli/suli_abilities_race.lst",
+    "record_key": "Suli ~ Vision",
+    "sha256": "1317e47fdc666a257d8aae0d1a390b0eaab3fb63ecfa0e54ce7cccbf3dfcfdb6"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

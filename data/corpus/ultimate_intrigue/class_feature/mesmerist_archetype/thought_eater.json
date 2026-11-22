@@ -1,0 +1,108 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Mesmerist Archetype ~ Thought Eater",
+    "name": "Thought Eater",
+    "class": "Mesmerist",
+    "description": "Mesmerists that learn to pierce deep into the minds of their victims are known as thought eaters, dangerous individuals capable of devouring thoughts and assuming the knowledge those notions represent for themselves.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mesmerist Archetype ~ Thought Eater"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.MesmeristArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Mesmerist=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Mesmerist Archetype ~ Thought Eater],[!PREFACT:1,ABILITIES,Mesmerist_Archetype_ConsummateLiar=True,Mesmerist_Archetype_ToweringEgo=True,Mesmerist_Archetype_TouchTreatment=True,Mesmerist_Archetype_RuleMinds=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Mesmerists that learn to pierce deep into the minds of their victims are known as thought eaters, dangerous individuals capable of devouring thoughts and assuming the knowledge those notions represent for themselves."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Thought Eater ~ Assume Identity|PRECLASS:1,Mesmerist=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Thought Eater ~ Assume Morality|PRECLASS:1,Mesmerist=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Thought Eater ~ Assume Knowledge|PRECLASS:1,Mesmerist=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Thought Eater ~ Consume Identity|PRECLASS:1,Mesmerist=20"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.38"
+      },
+      {
+        "key": "FACT",
+        "value": "Mesmerist_Archetype_ConsummateLiar|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Mesmerist_Archetype_ToweringEgo|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Mesmerist_Archetype_TouchTreatment|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Mesmerist_Archetype_RuleMinds|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Mesmerist_CF_ConsummateLiar|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Mesmerist_CF_ToweringEgo|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Mesmerist_CF_TouchTreatment|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Mesmerist_CF_RuleMinds|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/support/ui_abilities_class_oa.lst",
+    "sha256": "123f008e9a2f31828861df9025f48f5c2f7c78a648553f22dba96a8d8a2e24dc",
+    "line": 47,
+    "record_key": "Mesmerist Archetype ~ Thought Eater"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

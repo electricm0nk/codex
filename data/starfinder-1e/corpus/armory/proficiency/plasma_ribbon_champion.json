@@ -1,0 +1,19 @@
+{
+  "data": {
+    "key": "Plasma ribbon (champion)",
+    "name": "Plasma ribbon (champion)",
+    "type": "ADVANCED MELEE.ADVANCED MELEE WEAPONS"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 239,
+    "path": "starfinder/paizo/armory/sa_profs_weapon.lst",
+    "record_key": "Plasma ribbon (champion)",
+    "sha256": "6ba2601d94f6148c7b2a9869726ee868116de1ac2f7dcc21ea8d58922604c426"
+  },
+  "unit_id": "armory:proficiency:plasma_ribbon_champion"
+}

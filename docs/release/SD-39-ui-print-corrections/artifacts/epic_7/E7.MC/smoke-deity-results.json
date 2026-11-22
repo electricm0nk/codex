@@ -1,0 +1,20 @@
+[
+  {
+    "id": "sheet-bio-deity-moves-melee",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/a7402d70-3d8d-427c-820e-a54d598e3dda/scratchpad/smoke5/sheet-bio-deity-moves-melee.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nDeity Smoke Cleric — Cleric 1\nCHARACTER DETAILS\n«\n\nLevel\n1\n+\nCaster Level\n1\nRACE\nHuman\nCLASS\nCleric 1\nCHARACTER DETAILS\n\nALIGNMENT\n\nDEITY\n\nSEX\n\nAGE\n\nHEIGHT\n\nWEIGHT\n\nHAIR\n\nEYES\n\nVISION\nNormal\nSIZE\nMedium\nVision and Size are calculated from race and aren't editable — a race this build has no profile for reads \"Unknown\" rather than a guessed value. The other fields save automatically when ",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd39-e7mc-8CMYAi/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [
+        "64bc7f52-e4f8-4376-9931-780a1061fee1"
+      ],
+      "deleted": [
+        "64bc7f52-e4f8-4376-9931-780a1061fee1"
+      ],
+      "leftover": [],
+      "errors": {}
+    }
+  }
+]

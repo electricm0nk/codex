@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Composite Blast ~ Verdant Blast",
+    "name": "Verdant Blast",
+    "class": "Composite Blast",
+    "description": "Element wood; Type composite blast (Sp); Level -; Burn 2",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Composite Blast ~ Verdant Blast"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Composite Blast"
+      },
+      {
+        "key": "PRETEXT",
+        "value": "Prerequisites primary element (wood), expanded element (wood)"
+      },
+      {
+        "key": "DESC",
+        "value": "Element wood; Type composite blast (Sp); Level -; Burn 2"
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;Blast Type physical; Damage bludgeoning, piercing, slashing, and optionally positive energy; You blast your foes with fanciful wild growth overflowing with positive energy from the First World. Verdant blast's damage counts as positive energy damage only when it would be beneficial for you."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.61"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/support/uw_abilities_class_oa.lst",
+    "sha256": "26a03f73c3534cd6bae0bcda9581b3a89fa28ce5f78f854e009fc8110c477568",
+    "line": 58,
+    "record_key": "Composite Blast ~ Verdant Blast"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

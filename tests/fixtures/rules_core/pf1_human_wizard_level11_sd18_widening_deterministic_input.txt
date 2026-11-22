@@ -1,0 +1,50 @@
+# SD18 deterministic Human Wizard level 11 progression fixture.
+# Widens the accepted SD13-E4-R3/E5 deterministic PF1 Core Rulebook Human Wizard
+# level-1..level-10 prepared arcane spell-bearing baseline
+# (tests/fixtures/rules_core/pf1_human_wizard_level10_sd13_deterministic_input.txt)
+# to level 11 as chosen input only. It names selections; it does not contain
+# derived, computed, or parity values. It preserves the accepted Human
+# race-choice seam (ability-bonus and bonus-feat), the deterministic
+# ability/feat posture from the level-1 through level-10 fixtures, and the
+# same canonical school specialization selections (Evocation chosen,
+# Necromancy/Transmutation opposed), adding only the level bump this bounded
+# slice needs.
+#
+# It deliberately avoids every later Wizard burden surface: no evocation
+# spell-damage application, no force-missile casting execution, no
+# opposed-school preparation cost, no spellbook, no spells prepared, no spell
+# slots, no spell DCs, no bonus-feat selection/execution for the still-unproven
+# 5th/10th-level "Bonus feat" grants, and no level-12+ progression. Both PF1
+# CRB primary sources (d20pfsrd and the Archives of Nethys aonprd.com mirror)
+# were read directly before writing this fixture: the level-11 base attack
+# bonus/base saves are numerically IDENTICAL to level 10 (+5 base attack,
+# +3/+3/+7 Fortitude/Reflex/Will — integer-division coincidences, not a sign
+# any formula stopped scaling), and the raw Wizard spells-per-day table's
+# level-11 row is "4/4/4/4/3/2/1" — the first non-"-" 6th-level column, up
+# from the level-10 row "4/4/4/3/3/2" whose 6th-level column is still "-" —
+# so a level-11 specialist wizard casts 6th-level spells for the first time
+# and the specialist bonus-slot flat count genuinely rises to 6 (one bonus
+# slot of each spell level 1st through 6th); Intense Spells' bonus-damage
+# magnitude stays 5 (max(11/2, 1) = 5, another integer-division coincidence);
+# Force Missile's uses-per-day pool stays level-independent and unchanged;
+# Scribe Scroll stays recognized as an already-held grant. The level-11
+# "Special" column is genuinely blank on both primary sources (the Wizard's
+# bonus feats land only at levels 5/10/15/20), so no new pillar is added at
+# level 11 — only the existing specialist-bonus-slot pillar is widened.
+case_id=pf1-crb-human-wizard-level11
+source_package_id=pf1.core_rulebook
+race_id=race:human
+class_level=class:wizard:11
+ability=strength:8
+ability=dexterity:14
+ability=constitution:13
+ability=intelligence:17
+ability=wisdom:12
+ability=charisma:10
+feat=feat:dodge
+choice=choice:wizard_school_specialization:school:evocation
+choice=choice:wizard_opposed_schools:school:necromancy
+choice=choice:wizard_opposed_schools:school:transmutation
+choice=choice:human_bonus_feat:feat:dodge
+choice=choice:human_ability_bonus:ability:intelligence
+provenance=programs/codex/requirements/SD-18-core-rules-breadth/scope-draft.md

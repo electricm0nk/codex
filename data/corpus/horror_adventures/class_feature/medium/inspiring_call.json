@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Medium ~ Warmonger ~ Inspiring Call",
+    "name": "Inspiring Call",
+    "class": "Medium",
+    "description": "(Greater) As a",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Medium ~ Warmonger ~ Inspiring Call"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MediumClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.59"
+      },
+      {
+        "key": "DESC",
+        "value": "(Greater) As a"
+      },
+      {
+        "key": "DESC",
+        "value": "move|!PREABILITY:1,CATEGORY=Special Ability,Medium ~ Legendary Marshal"
+      },
+      {
+        "key": "DESC",
+        "value": "swift|PREABILITY:1,CATEGORY=Special Ability,Medium ~ Legendary Marshal"
+      },
+      {
+        "key": "DESC",
+        "value": "action, you can grant all allies who can see and hear you a %1 competence bonus on either saving throws or attack and damage rolls. You choose which bonus to grant each time you use inspiring call. This ability lasts for 1 round.|SpiritBonus"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/support/ha_abilities_class_oa.lst",
+    "sha256": "9c111f652f8442433ea215fa11e67258c7e6c15c75d1c1753fa6fef34827f46c",
+    "line": 129,
+    "record_key": "Medium ~ Warmonger ~ Inspiring Call"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

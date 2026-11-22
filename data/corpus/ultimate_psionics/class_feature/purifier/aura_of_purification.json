@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Purifier ~ Aura of Purification",
+    "name": "Aura of Purification",
+    "class": "Purifier",
+    "description": "You and all allies within %1 ft. gain a +%2 deflection bonus to AC against attacks made by aberrations or psionic creatures, and a +%2 insight bonus to their Will saves against attacks from these sources.|AuraOfPurificationRange|AuraOfPurificationBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Purifier ~ Aura of Purification"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "PaladinClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AuraOfPurificationRange|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AuraOfPurificationBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You and all allies within %1 ft. gain a +%2 deflection bonus to AC against attacks made by aberrations or psionic creatures, and a +%2 insight bonus to their Will saves against attacks from these sources.|AuraOfPurificationRange|AuraOfPurificationBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AuraOfPurificationRange|10"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AuraOfPurificationBonus|min(5,floor((PaladinLVL+2)/4))"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.296"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2543,
+    "record_key": "Purifier ~ Aura of Purification"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

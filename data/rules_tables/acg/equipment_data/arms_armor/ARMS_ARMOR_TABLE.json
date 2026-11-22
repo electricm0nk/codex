@@ -1,0 +1,173 @@
+{
+  "format": "codex.rules_tables/1",
+  "table": "acg/equipment_data/arms_armor/ARMS_ARMOR_TABLE",
+  "licence": {
+    "license": "OGL",
+    "book": "acg",
+    "screen": "pi_screening::classify_field",
+    "pi_hits": [],
+    "redacted": []
+  },
+  "rows": [
+    {
+      "key": "Fake Rapier",
+      "category": "ArmsArmor",
+      "name": "Fake Rapier",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Tests"
+    },
+    {
+      "key": "Brawler's Flurry",
+      "category": "ArmsArmor",
+      "name": "Brawler's Flurry",
+      "cost_gp": 0.0,
+      "weight_lbs": 0.0,
+      "description": "Use unarmed damage"
+    },
+    {
+      "key": "Clawhand Shield",
+      "category": "ArmsArmor",
+      "name": "Clawhand Shield",
+      "cost_gp": 150.0,
+      "weight_lbs": 8.0,
+      "description": "use claw attack when grappled, pinned, or swallowed whole (1d8+STR for medium character)"
+    },
+    {
+      "key": "Full Plate of the Corpse",
+      "category": "ArmsArmor",
+      "name": "Full Plate of the Corpse",
+      "cost_gp": 1500.0,
+      "weight_lbs": 50.0,
+      "description": "wearer hidden from non-intelligent undead; intelligent undead can save (Will DC 14) to see wearer"
+    },
+    {
+      "key": "Hero's Hauberk",
+      "category": "ArmsArmor",
+      "name": "Hero's Hauberk",
+      "cost_gp": 100.0,
+      "weight_lbs": 25.0,
+      "description": "DR 1/- of armor stacks with wearer's DR; gain light fortification when raging or maintaining raging song; +1 luck bonus on all ability and skill checks, and the total penalties to attack rolls, ability and skill checks, and saving throws are reduced by 1, while maintaining bardic performance"
+    },
+    {
+      "key": "Stalking Armor (Cold)",
+      "category": "ArmsArmor",
+      "name": "Stalking Armor (Cold)",
+      "cost_gp": 25.0,
+      "weight_lbs": 20.0,
+      "description": "+5 bonus on Stealth and Perception when in cold terrain"
+    },
+    {
+      "key": "Stalking Armor (Desert)",
+      "category": "ArmsArmor",
+      "name": "Stalking Armor (Desert)",
+      "cost_gp": 25.0,
+      "weight_lbs": 20.0,
+      "description": "+5 bonus on Stealth and Perception when in desert terrain"
+    },
+    {
+      "key": "Stalking Armor (Forest)",
+      "category": "ArmsArmor",
+      "name": "Stalking Armor (Forest)",
+      "cost_gp": 25.0,
+      "weight_lbs": 20.0,
+      "description": "+5 bonus on Stealth and Perception when in forest terrain"
+    },
+    {
+      "key": "Stalking Armor (Jungle)",
+      "category": "ArmsArmor",
+      "name": "Stalking Armor (Jungle)",
+      "cost_gp": 25.0,
+      "weight_lbs": 20.0,
+      "description": "+5 bonus on Stealth and Perception when in jungle terrain"
+    },
+    {
+      "key": "Stalking Armor (Mountain)",
+      "category": "ArmsArmor",
+      "name": "Stalking Armor (Mountain)",
+      "cost_gp": 25.0,
+      "weight_lbs": 20.0,
+      "description": "+5 bonus on Stealth and Perception when in mountain terrain"
+    },
+    {
+      "key": "Stalking Armor (Plains)",
+      "category": "ArmsArmor",
+      "name": "Stalking Armor (Plains)",
+      "cost_gp": 25.0,
+      "weight_lbs": 20.0,
+      "description": "+5 bonus on Stealth and Perception when in plains terrain"
+    },
+    {
+      "key": "Stalking Armor (Swamp)",
+      "category": "ArmsArmor",
+      "name": "Stalking Armor (Swamp)",
+      "cost_gp": 25.0,
+      "weight_lbs": 20.0,
+      "description": "+5 bonus on Stealth and Perception when in swamp terrain"
+    },
+    {
+      "key": "Stalking Armor (Underground)",
+      "category": "ArmsArmor",
+      "name": "Stalking Armor (Underground)",
+      "cost_gp": 25.0,
+      "weight_lbs": 20.0,
+      "description": "+5 bonus on Stealth and Perception when in underground terrain"
+    },
+    {
+      "key": "Stalking Armor (Urban)",
+      "category": "ArmsArmor",
+      "name": "Stalking Armor (Urban)",
+      "cost_gp": 25.0,
+      "weight_lbs": 20.0,
+      "description": "+5 bonus on Stealth and Perception when in urban terrain"
+    },
+    {
+      "key": "Stalking Armor (Water)",
+      "category": "ArmsArmor",
+      "name": "Stalking Armor (Water)",
+      "cost_gp": 25.0,
+      "weight_lbs": 20.0,
+      "description": "+5 bonus on Stealth and Perception when in water terrain"
+    },
+    {
+      "key": "Tireless Tracking Hide",
+      "category": "ArmsArmor",
+      "name": "Tireless Tracking Hide",
+      "cost_gp": 15.0,
+      "weight_lbs": 25.0,
+      "description": "can hustle for 8 hours without growing fatigued, replenished after a full night's rest"
+    },
+    {
+      "key": "Duelist's Comate",
+      "category": "ArmsArmor",
+      "name": "Duelist's Comate",
+      "cost_gp": 20.0,
+      "weight_lbs": 2.0,
+      "description": "3/day surprise attack with pommel (1d6+2 bludgeoning, 20/x2 crit)"
+    },
+    {
+      "key": "Headsman's Blade",
+      "category": "ArmsArmor",
+      "name": "Headsman's Blade",
+      "cost_gp": 50.0,
+      "weight_lbs": 8.0,
+      "description": "1/day assassinate (as slayer advanced talent); full-round action to study, DC 15 to avoid death; +2 to enhancement bonus vs. studied darget, +2 to assassination attempt DC, target decapitated instead of merely slain"
+    },
+    {
+      "key": "Rapier of Battlefield Movement",
+      "category": "ArmsArmor",
+      "name": "Rapier of Battlefield Movement",
+      "cost_gp": 20.0,
+      "weight_lbs": 2.0,
+      "description": "+5 to Acrobatics checks made to move through an enemy's threatened area or through its space; after hitting with a melee attack with this weapon, spend 1 panache point to move 10 feet without provoking attacks of opportunity"
+    },
+    {
+      "key": "Swashbuckler's Rapier",
+      "category": "ArmsArmor",
+      "name": "Swashbuckler's Rapier",
+      "cost_gp": 20.0,
+      "weight_lbs": 2.0,
+      "description": "Spend 1 panache point, as a swift action, to give this weapon the bane property for 1 round against any subtype of humanoid"
+    }
+  ]
+}

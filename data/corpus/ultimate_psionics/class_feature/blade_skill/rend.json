@@ -1,0 +1,61 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Blade Skill ~ Rend",
+    "name": "Rend",
+    "class": "Blade Skill",
+    "description": "When both claws strike against a single creature, you can cause additional damage equal to one claw attack +%1.  This blade skill can only be used once per round.|FeralHeartRendDamageBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Blade Skill ~ Rend"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "FeralHeartBladeSkill.SpecialAttack"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "BladeSkillPrereqLVL,12"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FeralHeartRendDamageBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "When both claws strike against a single creature, you can cause additional damage equal to one claw attack +%1.  This blade skill can only be used once per round.|FeralHeartRendDamageBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FeralHeartRendDamageBonus|STR*1.5"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.282"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 889,
+    "record_key": "Blade Skill ~ Rend"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

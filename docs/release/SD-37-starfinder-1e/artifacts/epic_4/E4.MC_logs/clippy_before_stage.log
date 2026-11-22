@@ -1,0 +1,14 @@
+codex verify — mode: --only, jobs: 2
+repo:  /home/ubuntu/workspace/worktrees/codex-sd37
+logs:  /home/ubuntu/workspace/worktrees/cargo-target/e4mc-scratch/clippy
+---------------------------------------------------------------
+==> clippy — cargo clippy --locked --tests -j 2  (THREE crates)
+    root: cargo exit 101 — /home/ubuntu/workspace/worktrees/cargo-target/e4mc-scratch/clippy/clippy-root.log
+    ingest: cargo exit 101 — /home/ubuntu/workspace/worktrees/cargo-target/e4mc-scratch/clippy/clippy-ingest.log
+    FAIL  clippy  (root:0 desktop:0 ingest:1 — logs in /home/ubuntu/workspace/worktrees/cargo-target/e4mc-scratch/clippy)
+---------------------------------------------------------------
+SUMMARY
+  passed:  0  
+  FAILED:  1  clippy
+
+RESULT: FAIL — logs in /home/ubuntu/workspace/worktrees/cargo-target/e4mc-scratch/clippy

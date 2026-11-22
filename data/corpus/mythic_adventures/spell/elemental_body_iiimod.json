@@ -1,0 +1,25 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:34:12Z",
+  "data": {
+    "key": "Elemental Body IIIMOD",
+    "school": null,
+    "level": null,
+    "description": "Mythic: The spell's bonuses to ability scores increase by 2, the natural armor bonus increases by 1, and the ability score penalties decrease by 2 (minimum penalty of 0). There is a 50%% chance any critical hit or sneak attack against you is treated as a normal hit, as if you were wearing medium fortification armor. Augmented (3rd): If you expend two uses of mythic power, the ability score bonuses increase by an additional 2. You can also, a number of times equal to your tier, add half your tier to the DC of one spell you cast with an energy descriptor that matches your elemental type (air: electricity, earth: acid, fire: fire, water: cold)."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_spells.lst",
+    "sha256": "d62f0bb802aab15dde7b963773c586cb539a4571e3c404ead1b76788b0546374",
+    "line": 98,
+    "record_key": "Elemental Body IIIMOD"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

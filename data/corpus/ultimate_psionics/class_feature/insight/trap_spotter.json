@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Insight ~ Trap Spotter",
+    "name": "Trap Spotter",
+    "class": "Insight",
+    "description": "Whenever you come within 10 feet of a trap, you receive an immediate Perception skill check to notice the trap.  This check should be made in secret by the GM.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Insight ~ Trap Spotter"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary.CrypticInsight"
+      },
+      {
+        "key": "DESC",
+        "value": "Whenever you come within 10 feet of a trap, you receive an immediate Perception skill check to notice the trap.  This check should be made in secret by the GM."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.39"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 226,
+    "record_key": "Insight ~ Trap Spotter"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

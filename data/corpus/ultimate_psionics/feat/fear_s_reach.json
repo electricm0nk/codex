@@ -1,0 +1,31 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:38:17Z",
+  "data": {
+    "key": "Fear's Reach",
+    "category": "Psionic",
+    "name": "Fear's Reach",
+    "description": "Your devastating touch ability may now be used as a ranged touch attack with a range of close (%1 ft.).|FearsReachRange",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=Special Ability,Dread ~ Devastating Touch",
+      "PREABILITY:1,CATEGORY=FEAT,Psionic Shot",
+      "PREVARGTEQ:IsPsionic,1"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_feats.lst",
+    "sha256": "528096cb97ebe8255b9f9fe67682dd7e045f53b65e32295cd57967002eccb137",
+    "line": 126,
+    "record_key": "Fear's Reach"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,20 @@
+{
+  "data": {
+    "category": "Class Feature",
+    "key": "Armor Storm FIGHTING STYLE ~ On the Bounce",
+    "name": "On the Bounce",
+    "type": "Class Feature.Armor Storm FIGHTING STYLE.Armor Storm FIGHTING STYLE LVL 17.Extraordinary"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1992,
+    "path": "starfinder/paizo/core/scr_abilities.lst",
+    "record_key": "Armor Storm FIGHTING STYLE ~ On the Bounce",
+    "sha256": "dfd415e1ab4cbef3c0417edecd59e13a7a116cad2086fcf2773dbafcb78711f5"
+  },
+  "unit_id": "core:ability:armor_storm_fighting_style_on_the_bounce"
+}

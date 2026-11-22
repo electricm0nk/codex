@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Insight ~ Disrupt and Dismay",
+    "name": "Disrupt and Dismay",
+    "class": "Insight",
+    "description": "Creature struck with disrupt pattern must save (Will DC %1) or be shaken for %2 rounds.|DisruptAndDismayDC|DisruptAndDismayDuration",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Insight ~ Disrupt and Dismay"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.CrypticInsight"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "CanTakeVoidInsights,1"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DisruptAndDismayDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DisruptAndDismayDuration|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Creature struck with disrupt pattern must save (Will DC %1) or be shaken for %2 rounds.|DisruptAndDismayDC|DisruptAndDismayDuration"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DisruptAndDismayDC|CrypticInsightDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DisruptAndDismayDuration|CrypticInsightStat"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.266"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1830,
+    "record_key": "Insight ~ Disrupt and Dismay"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

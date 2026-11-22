@@ -1,0 +1,62 @@
+{
+  "codex_generated_name": false,
+  "completeness": "full",
+  "data": {
+    "description": "When you are shifted, you gain DR %1/Silver.|LycanthropyCorruptionDR",
+    "key": "Lycanthropy Corruption ~ Silver Allergy Gift",
+    "name": "Silver Allergy Gift",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Lycanthropy Corruption ~ Silver Allergy Gift"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.LycanthropySilverAllergyGift"
+      },
+      {
+        "key": "DEFINE",
+        "value": "LycanthropyCorruptionDR|0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.29"
+      },
+      {
+        "key": "DESC",
+        "value": "When you are shifted, you gain DR %1/Silver.|LycanthropyCorruptionDR"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|LycanthropyCorruptionDR|LycanthropyManifestationLevel/4"
+      },
+      {
+        "key": "DR",
+        "value": "LycanthropyCorruptionDR/Silver|PREVARGTEQ:LycanthropyCorruptionShifted,1"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 614,
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
+    "record_key": "Lycanthropy Corruption ~ Silver Allergy Gift",
+    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus",
+    "derived:dr"
+  ]
+}

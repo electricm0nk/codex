@@ -1,0 +1,113 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "Equipmods",
+    "cost_gp": 0.0,
+    "description": "30hp/inch and 10 hardness;Weapon may be charged with 2 Psionic Power Points for +2d6 damage",
+    "key": "Material ~ Crystal / Deep",
+    "name": "Crystal (Deep)",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "EQMARMOR",
+          "ACCHECK",
+          "1",
+          "TYPE=Enhancement",
+          "PRETYPE:1,Armor"
+        ]
+      },
+      {
+        "qualifiers": [
+          "ITEMCOST",
+          "TYPE.Weapon",
+          "1300"
+        ]
+      },
+      {
+        "qualifiers": [
+          "ITEMCOST",
+          "TYPE.Armor",
+          "150"
+        ]
+      },
+      {
+        "qualifiers": [
+          "ITEMCOST",
+          "TYPE.Shield",
+          "150"
+        ]
+      },
+      {
+        "qualifiers": [
+          "ITEMCOST",
+          "TYPE.Ammunition",
+          "6"
+        ]
+      },
+      {
+        "qualifiers": [
+          "WEAPON",
+          "TOHIT",
+          "1",
+          "TYPE=Enhancement",
+          "PRETYPE:1,Weapon,Ammunition"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Material ~ Crystal / Deep"
+      },
+      {
+        "key": "TYPE",
+        "value": "MasterworkQuality.Weapon.Armor.Shield.Ammunition.BaseMaterial"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "QUALIFY"
+      },
+      {
+        "key": "ITYPE",
+        "value": "Metal.Crystal.Masterwork"
+      },
+      {
+        "key": "REPLACES",
+        "value": "Special Quality ~ Masterwork ~ Weapon,Special Quality ~ Masterwork ~ Armor"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.431"
+      },
+      {
+        "key": "SPROP",
+        "value": "30hp/inch and 10 hardness;Weapon may be charged with 2 Psionic Power Points for +2d6 damage"
+      },
+      {
+        "key": "ASSIGNTOALL",
+        "value": "YES"
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-23T15:10:33Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 18,
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_equipmods.lst",
+    "record_key": "Material ~ Crystal / Deep",
+    "sha256": "39d2ad30eb09d1df38e192ab448e0c4dfd5f1cb9790a3d4049a4b4ee838a6968"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

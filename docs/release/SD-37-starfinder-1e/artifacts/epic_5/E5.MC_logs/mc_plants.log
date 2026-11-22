@@ -1,0 +1,19 @@
+MC1 SF-Mystic-5: Healing Touch loses every grant edge: desktop exit=101 intended_reason=True fixture_check exit=1 -> RED (as required)
+     SF-Mystic-5: printed 30 feature records, granted 31; not printed ["core:ability:mystic_class_feature_healing_touch"]; printed but not granted (first 20) []
+     fixture: DIFFERS: fixture 116 rows, walk 115 rows
+     fixture: | SF-Mystic-5 | `core:ability:mystic_class_feature_healing_touch` | Healing Touch | Class mystic 1 |
+MC2 SF-Technomancer-5: Spell Cache granted at level 6, not 1: desktop exit=101 intended_reason=True fixture_check exit=1 -> RED (as required)
+     SF-Technomancer-5: printed 25 feature records, granted 26; not printed ["core:ability:technomancer_class_feature_spell_cache"]; printed but not granted (first 20) []
+     fixture: DIFFERS: fixture 116 rows, walk 115 rows
+     fixture: | SF-Technomancer-5 | `core:ability:technomancer_class_feature_spell_cache` | Spell Cache | Class technomancer 1 |
+MC3 SF-Envoy-3: Envoy Improvisation record file deleted: desktop exit=101 intended_reason=True fixture_check exit=1 -> RED (as required)
+     SF-Envoy-3: printed 23 feature records, granted 24; not printed ["core:ability:envoy_class_feature_envoy_improvisation"]; printed but not granted (first 20) []
+     fixture: DIFFERS: fixture 116 rows, walk 115 rows
+     fixture: | SF-Envoy-3 | `core:ability:envoy_class_feature_envoy_improvisation` | Envoy Improvisation | Class envoy 1 |
+MC4 SF-Soldier-3: Combat Feat grant re-attributed to operative: desktop exit=101 intended_reason=True fixture_check exit=1 -> RED (as required)
+     SF-Soldier-3: printed 34 feature records, granted 35; not printed ["core:ability:soldier_class_feature_combat_feat"]; printed but not granted (first 20) []
+     fixture: DIFFERS: fixture 116 rows, walk 115 rows
+     fixture: | SF-Soldier-3 | `core:ability:soldier_class_feature_combat_feat` | Combat Feat | Class soldier 2 |
+restored: desktop exit=0 ['test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 664 filtered out; finished in 1.19s'] fixture_check exit=0
+plants_red=4/4 verdict=PASS
+exit=0

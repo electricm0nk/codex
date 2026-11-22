@@ -1,0 +1,55 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Clockwork Familiar ~ Wand Installation",
+    "delivery": null,
+    "description": "The clockwork familiar gains the ability to spit a glob of acid up to 30 feet as a ranged touch attack, dealing 1d4 points of damage. Draining a charge increases the damage to 2d4 points for a single attack. This charge is spent before the attack is rolled.",
+    "description_variables": [],
+    "facet": null,
+    "key": "inner_sea_intrigue:companion:clockwork_familiar_wand_installation",
+    "name": "Wand Installation",
+    "owners": [
+      "inner_sea_intrigue:companion:familiar_clockwork_familiar"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "The clockwork familiar gains the ability to spit a glob of acid up to 30 feet as a ranged touch attack, dealing 1d4 points of damage. Draining a charge increases the damage to 2d4 points for a single attack. This charge is spent before the attack is rolled."
+      },
+      {
+        "key": "KEY",
+        "value": "Clockwork Familiar ~ Wand Installation"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClockworkFamiliarInstalledItem"
+      }
+    ],
+    "record_type": "ability",
+    "source_page": null,
+    "stat_adjustments": [],
+    "type_segments": [
+      "ClockworkFamiliarInstalledItem"
+    ]
+  },
+  "ingested_at": "2026-08-12T13:12:30Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 32,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_intrigue/isi_abilities_race_companion.lst",
+    "record_key": "Clockwork Familiar ~ Wand Installation",
+    "sha256": "cc2db65754b883c24c83cdd077e7cb20965af4f6264b754c3f028de73d41896f"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

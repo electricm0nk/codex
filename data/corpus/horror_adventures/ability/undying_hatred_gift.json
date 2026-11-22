@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Accursed Corruption ~ Undying Hatred Gift",
+    "name": "Undying Hatred Gift",
+    "description": "Once per day, if you would die from hit point damage, instead your hit point total becomes -1 and you stabilize. This ability doesn't work against death effects. Observers believe you to be dead unless they study you closely and succeed at a DC 25 Heal check. After 1 minute, you regain 1 hit point and regain consciousness.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Accursed Corruption ~ Undying Hatred Gift"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.AccursedUndyingHatredGift"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.17"
+      },
+      {
+        "key": "DESC",
+        "value": "Once per day, if you would die from hit point damage, instead your hit point total becomes -1 and you stabilize. This ability doesn't work against death effects. Observers believe you to be dead unless they study you closely and succeed at a DC 25 Heal check. After 1 minute, you regain 1 hit point and regain consciousness."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
+    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381",
+    "line": 82,
+    "record_key": "Accursed Corruption ~ Undying Hatred Gift"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

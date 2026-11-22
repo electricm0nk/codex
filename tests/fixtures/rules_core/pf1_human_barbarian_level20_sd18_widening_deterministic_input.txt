@@ -1,0 +1,56 @@
+# SD18 deterministic Human Barbarian level 20 widening fixture.
+# Widens the accepted SD18 deterministic PF1 Core Rulebook Human Barbarian
+# level-1..level-19 martial chassis baseline
+# (tests/sd18_barbarian_level19_widening.rs) to level 20 — the FINAL level
+# within PF1's 1-20 character-level cap — as chosen input only. It names
+# selections; it does not contain derived, computed, or parity values. It
+# preserves the accepted Human race-choice seam (ability-bonus and
+# bonus-feat) and the deterministic ability/feat/skill/equipment posture
+# from the level-1 through level-19 fixtures, adding only the level bump
+# this bounded tranche needs plus the tenth Rage Power slot (20th level IS
+# a rage-power level per "she gains another rage power for every two levels
+# of barbarian attained after 2nd level": 2/4/6/8/10/12/14/16/18/20).
+#
+# It deliberately avoids every later Barbarian burden surface: no rage
+# execution (activation, round tracking, fatigue), no rage-power EFFECT
+# recognition or execution beyond the bounded numbered-slot idiom, no
+# damage-reduction application engine, and no saving-throw-resolution
+# engine for Indomitable Will. The PF1 Core Rulebook Barbarian class
+# table's level-20 "Special" column reads "Mighty rage, Rage power"
+# (verified independently against d20pfsrd and the Archives of Nethys
+# aonprd.com mirror, byte-for-byte agreement): base attack genuinely rises
+# to +20 (full BAB) and good Fortitude genuinely rises to +12 (20/2+2, up
+# from +11) while poor Reflex/Will both stay +6 (20/3, an integer-division
+# coincidence with level 19); the rage rounds-per-day pool genuinely rises
+# to 45 (4 + Constitution modifier 3 + 2 x (20 - 1)); Damage Reduction
+# stays 5/- (next rise would be 22nd, outside the PF1 1-20 level range);
+# Trap Sense stays +6 (20/3, next rise would be 21st, also outside range);
+# Indomitable Will's flat +4 magnitude carries over unchanged; Tireless
+# Rage carries over unchanged from level 17. Mighty Rage is a genuine THIRD
+# tier on the same flat rage-surface constants: the Strength/Constitution
+# morale bonus rises from +6 to +8 and the Will-save morale bonus rises
+# from +3 to +4 (up from the Greater Rage tier established at level 11).
+case_id=pf1-crb-human-barbarian-level20
+source_package_id=pf1.core_rulebook
+race_id=race:human
+class_level=class:barbarian:20
+ability=strength:16
+ability=dexterity:14
+ability=constitution:16
+ability=intelligence:8
+ability=wisdom:10
+ability=charisma:8
+feat=feat:power_attack
+skill=skill:survival:1
+equipment=item:chain_shirt:equipped_worn_active
+equipment=item:longsword:equipped_primary_active
+equipment=item:shield:absent
+choice=choice:level_1_character_feat:feat:power_attack
+choice=choice:human_bonus_feat:feat:dodge
+choice=choice:barbarian_rage_power_6:power:superstition
+choice=choice:barbarian_rage_power_7:power:guarded_stance
+choice=choice:barbarian_rage_power_8:power:roused_anger
+choice=choice:barbarian_rage_power_9:power:knockback
+choice=choice:barbarian_rage_power_10:power:surprise_accuracy
+choice=choice:human_ability_bonus:ability:strength
+provenance=programs/codex/requirements/SD-18-core-rules-breadth/artifacts/core-roster-and-support-state-matrix.md

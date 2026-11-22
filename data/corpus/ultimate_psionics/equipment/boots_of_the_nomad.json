@@ -1,0 +1,70 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "MagicItems",
+    "cost_gp": 10000.0,
+    "description": "Gain Nomad's Step as 4th-level Nomad, or add 4 to Nomad level for Nomad's Step",
+    "key": "Boots of the Nomad",
+    "name": "Boots of the Nomad",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "VAR",
+          "NomadsStepLVL",
+          "4"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Psionic.Wondrous.Boot"
+      },
+      {
+        "key": "COST",
+        "value": "10000"
+      },
+      {
+        "key": "WT",
+        "value": "1"
+      },
+      {
+        "key": "SLOTS",
+        "value": "2"
+      },
+      {
+        "key": "DEFINE",
+        "value": "NomadsStepLVL|0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.405"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Psychoportation ~ Nomad's Step"
+      },
+      {
+        "key": "SPROP",
+        "value": "Gain Nomad's Step as 4th-level Nomad, or add 4 to Nomad level for Nomad's Step"
+      }
+    ],
+    "weight_lbs": 1.0
+  },
+  "ingested_at": "2026-08-16T05:06:54Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 189,
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_equipment.lst",
+    "record_key": "Boots of the Nomad",
+    "sha256": "ffdbcf81cb0f2d832299a9c6e4c6b124f35fd447a720b0fdda11cf88fe1ca371"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

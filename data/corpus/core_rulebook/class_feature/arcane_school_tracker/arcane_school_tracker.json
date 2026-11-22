@@ -1,0 +1,61 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-24T03:51:47Z",
+  "data": {
+    "key": "Arcane School Tracker",
+    "name": "Arcane School Tracker",
+    "class": null,
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "DEFINE",
+        "value": "ArcaneSchoolLVL|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ArcaneSchoolLVL|WizardLVL"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ArcaneSchoolLVL|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ArcaneSchoolLVL|WizardLVL"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ArcaneSchoolProgressionLVL|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ArcaneSchoolProgressionLVL|WizardLVL"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ArcaneSchoolPowerTimes|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ArcaneSchoolPowerTimes|INT+3"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 2591,
+    "record_key": "Arcane School Tracker"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

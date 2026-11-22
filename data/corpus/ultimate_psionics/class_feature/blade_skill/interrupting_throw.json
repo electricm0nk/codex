@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Blade Skill ~ Interrupting Throw",
+    "name": "Interrupting Throw",
+    "class": "Blade Skill",
+    "description": "If an enemy within 10 feet of you performs an action that would provoke an attack of opportunity, such as casting a spell without casting on the defensive, you may, as an immedate action and by expending psionic focus, throw your mind shield at an enemy as an attack of opportunity.  You may not use this blade skill if your mind shield is in the form of a tower shield.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Blade Skill ~ Interrupting Throw"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "BladeSkill.SpecialAttack"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Shielded Blade ~ Form Mind Shield"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "BladeSkillPrereqLVL,12"
+      },
+      {
+        "key": "DESC",
+        "value": "If an enemy within 10 feet of you performs an action that would provoke an attack of opportunity, such as casting a spell without casting on the defensive, you may, as an immedate action and by expending psionic focus, throw your mind shield at an enemy as an attack of opportunity.  You may not use this blade skill if your mind shield is in the form of a tower shield."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.279"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 820,
+    "record_key": "Blade Skill ~ Interrupting Throw"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

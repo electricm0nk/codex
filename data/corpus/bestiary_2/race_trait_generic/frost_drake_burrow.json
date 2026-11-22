@@ -1,0 +1,50 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Frost Drake ~ Burrow",
+    "name": "Burrow",
+    "description": "The frost drake has a burrow speed of 20 feet in snow.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Frost Drake ~ Burrow"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ModifyMovement.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "The frost drake has a burrow speed of 20 feet in snow."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.108"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(20 ft., snow only)"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 452,
+    "record_key": "Frost Drake ~ Burrow"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

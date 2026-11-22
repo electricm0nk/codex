@@ -1,0 +1,181 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "ability_keys": [
+      "bestiary_4:monster_ability:fleshwarp_irnakurse_mind_lash",
+      "bestiary_4:monster_ability:fleshwarp_irnakurse_soul_scream"
+    ],
+    "challenge_rating": "9",
+    "corpus_key": "Fleshwarp (Irnakurse)",
+    "external_ability_refs": [],
+    "key": "bestiary_4:monster:fleshwarp_irnakurse",
+    "monster_class": "Aberration:10",
+    "name": "Irnakurse",
+    "natural_attacks": [
+      {
+        "damage_dice": null,
+        "name": "Bite"
+      },
+      {
+        "damage_dice": null,
+        "name": "Tentacle"
+      }
+    ],
+    "race_subtype": null,
+    "race_type": "Aberration",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Bite|Tentacle|Racial Traits ~ Fleshwarp (Irnakurse)"
+      },
+      {
+        "key": "AUTO",
+        "value": "LANG|Elven (cannot speak)"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CHA|8"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CON|12"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|6"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT|-2"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|14"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|WIS|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|11|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DarkvisionRange|60|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RendBonusDamage|10"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RendDamageDice|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RendDamageDieSize|6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TentacleAttacks|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Tentacle|REACH|5"
+      },
+      {
+        "key": "CR",
+        "value": "9"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|L"
+      },
+      {
+        "key": "HANDS",
+        "value": "2"
+      },
+      {
+        "key": "KEY",
+        "value": "Fleshwarp (Irnakurse)"
+      },
+      {
+        "key": "KIT",
+        "value": "1|CE"
+      },
+      {
+        "key": "LEGS",
+        "value": "0"
+      },
+      {
+        "key": "MONCSKILL",
+        "value": "Acrobatics|Climb|Escape Artist|Fly|Intimidate|Perception|Spellcraft|Stealth|Survival|Swim"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Aberration:10"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,10"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "[NAME]"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Aberration"
+      },
+      {
+        "key": "REACH",
+        "value": "10"
+      },
+      {
+        "key": "SIZE",
+        "value": "L"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Fleshwarp"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.105"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      },
+      {
+        "key": "TYPE",
+        "value": "Aberration"
+      }
+    ],
+    "size": "L",
+    "source_page": "p.105",
+    "speeds": [
+      {
+        "feet": 10,
+        "mode": "Walk"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-15T01:24:20Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 84,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_races.lst",
+    "record_key": "Fleshwarp (Irnakurse)",
+    "sha256": "94fe7d7506ee86a8ff84127d7adecbb3d04939a26e573f418547eff3f0be52d1"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

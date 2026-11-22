@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T10:26:11Z",
+  "data": {
+    "corpus_key": "Prince in Chains ~ Howl of Despair",
+    "delivery": "Supernatural",
+    "description": "The Prince in Chains can loose a howl of immortal agony once every 1d4 rounds. All nonevil creatures within 60 feet must succeed at a DC %1 Will saving throw or take 6d6 points of sonic damage. Any within 10 feet who fail their saves are also affected as per the Insanity spell. This is a sonic, mind-affecting effect.",
+    "description_variables": [
+      "HowlDespairDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "inner_sea_gods:monster_ability:prince_in_chains_howl_of_despair",
+    "name": "Howl of Despair",
+    "owners": [
+      "inner_sea_gods:monster:the_prince_in_chains"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities_races.lst",
+    "sha256": "b309f3f779ee8d564aacff977e2a9119410a70844107ecd3e6bdc0170fe79ea8",
+    "line": 295,
+    "record_key": "Prince in Chains ~ Howl of Despair"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

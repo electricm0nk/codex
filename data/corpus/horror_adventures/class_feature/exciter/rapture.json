@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Exciter ~ Rapture",
+    "name": "Rapture",
+    "class": "Spiritualist",
+    "description": "An exciter gains the ability to enter an ecstatic state in which he's consumed and overwhelmed by his passions and driven into a fighting fury. This functions similarly to a bloodrager's bloodrage (Pathfinder RPG Advanced Class Guide 15), treating his spiritualist level as his bloodrager level, though he doesn't qualify for feats or other elements that require rage or bloodrage. When entering a rapture, the exciter loses all other benefits from having his phantom confined in his consciousness (such as the Skill Focus feats and bonus against mind-affecting effects), but he can choose to exchange the normal +4 morale bonus to his Strength and Constitution scores normally gained from bloodrage for a +4 morale bonus to his Dexterity and Charisma scores or a +2 morale bonus to his Strength, Dexterity, Constitution, and Charisma scores. In addition to the fatigue for ending a bloodrage, an exciter can't enter a rapture again for 1 minute after ending his last rapture.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Exciter ~ Rapture"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Spiritualist Class Feature.ExciterClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.68"
+      },
+      {
+        "key": "DESC",
+        "value": "An exciter gains the ability to enter an ecstatic state in which he's consumed and overwhelmed by his passions and driven into a fighting fury. This functions similarly to a bloodrager's bloodrage (Pathfinder RPG Advanced Class Guide 15), treating his spiritualist level as his bloodrager level, though he doesn't qualify for feats or other elements that require rage or bloodrage. When entering a rapture, the exciter loses all other benefits from having his phantom confined in his consciousness (such as the Skill Focus feats and bonus against mind-affecting effects), but he can choose to exchange the normal +4 morale bonus to his Strength and Constitution scores normally gained from bloodrage for a +4 morale bonus to his Dexterity and Charisma scores or a +2 morale bonus to his Strength, Dexterity, Constitution, and Charisma scores. In addition to the fatigue for ending a bloodrage, an exciter can't enter a rapture again for 1 minute after ending his last rapture."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RaptureLVL|SpiritualistLVL"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Rapture ~ STR/CON|Rapture ~ DEX/CHA|Rapture ~ STR/CON/DEX/CHA"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Rounds per Day"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|RaptureDuration"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/support/ha_abilities_class_oa.lst",
+    "sha256": "9c111f652f8442433ea215fa11e67258c7e6c15c75d1c1753fa6fef34827f46c",
+    "line": 302,
+    "record_key": "Exciter ~ Rapture"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

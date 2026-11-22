@@ -1,0 +1,88 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "This spell creates a towering mansion. While casting the spell, you hold an image of the mansion and its desired appearance in your mind. The mansion can contain as many or as few rooms as you desire, and is decorated to match your image. You can imagine a purpose for each room of the mansion, and the proper accouterments appear within. Any furniture or other mundane fixtures function normally for anyone inside the mansion, but cease to exist if taken beyond its walls. No fixture created with this spell can create magical effects, but magical devices brought into the mansion function normally. A resplendent mansion contains the same types of foodstuffs and servants as a mage's magnificent mansion. Each of the mansion's exterior doorways and windows are protected by alarm spells. You choose whether each alarm is audible or mental as you cast the spell, and each alarm has a different sound (for an audible alarm) or sensation (for a mental one), allowing you to instantly determine which portal has been used. The mansion must be created on a plot of land free of other structures. It adapts to the natural terrain, adopting all structural requirements for being built on, for example, a mountainside. The mansion adjusts around small features such as ponds or spires of rock, but can't be created on water or other nonsolid surfaces. If created on snow, sand dunes, or other soft surfaces with a solid surface underneath, the foundation reaches the solid ground. If created on a solid but unstable surface, such as a swamp or an area plagued by tremors, there's a 10%% chance each day that the mansion begins to sink or collapse. The mansion doesn't harm creatures within the area when it appears, and can't be created among a crowd or in a densely populated area. Any creature inadvertently caught inside the mansion when the spell is cast ends up unharmed inside the complete mansion. Focus; a miniature cornerstone carved from precious gemstones worth 500 gp|PRERULE:1,DisplayFullSpell",
+    "key": "Resplendent Mansion",
+    "level": 9,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 minute"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Psychic,Sorcerer,Wizard=9"
+      },
+      {
+        "key": "COMPS",
+        "value": "V,S,F"
+      },
+      {
+        "key": "DESC",
+        "value": "Conjure an opulent mansion several stories tall.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "This spell creates a towering mansion. While casting the spell, you hold an image of the mansion and its desired appearance in your mind. The mansion can contain as many or as few rooms as you desire, and is decorated to match your image. You can imagine a purpose for each room of the mansion, and the proper accouterments appear within. Any furniture or other mundane fixtures function normally for anyone inside the mansion, but cease to exist if taken beyond its walls. No fixture created with this spell can create magical effects, but magical devices brought into the mansion function normally. A resplendent mansion contains the same types of foodstuffs and servants as a mage's magnificent mansion. Each of the mansion's exterior doorways and windows are protected by alarm spells. You choose whether each alarm is audible or mental as you cast the spell, and each alarm has a different sound (for an audible alarm) or sensation (for a mental one), allowing you to instantly determine which portal has been used. The mansion must be created on a plot of land free of other structures. It adapts to the natural terrain, adopting all structural requirements for being built on, for example, a mountainside. The mansion adjusts around small features such as ponds or spires of rock, but can't be created on water or other nonsolid surfaces. If created on snow, sand dunes, or other soft surfaces with a solid surface underneath, the foundation reaches the solid ground. If created on a solid but unstable surface, such as a swamp or an area plagued by tremors, there's a 10%% chance each day that the mansion begins to sink or collapse. The mansion doesn't harm creatures within the area when it appears, and can't be created among a crowd or in a densely populated area. Any creature inadvertently caught inside the mansion when the spell is cast ends up unharmed inside the complete mansion. Focus; a miniature cornerstone carved from precious gemstones worth 500 gp|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) days [D]"
+      },
+      {
+        "key": "RANGE",
+        "value": "Long"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "None"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Conjuration"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://aonprd.com/SpellDisplay.aspx?ItemName=Resplendent Mansion"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.224"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "No"
+      },
+      {
+        "key": "SUBSCHOOL",
+        "value": "Creation"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "Opulent mansion, up to 300 feet on a side and (CASTERLEVEL/4) stories tall"
+      },
+      {
+        "key": "TYPE",
+        "value": "Arcane.Psychic"
+      }
+    ],
+    "school": "Conjuration"
+  },
+  "ingested_at": "2026-08-16T12:10:17Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 94,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_spells.lst",
+    "record_key": "Resplendent Mansion",
+    "sha256": "5f4a23b7b02b3d3b2cd4a20d8f06ec24f49e39592d0822d32cdb80d13f3e6324"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "derived:range_keyword"
+  ]
+}

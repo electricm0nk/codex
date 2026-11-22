@@ -1,0 +1,42 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "description": null,
+    "key": "Mystic Past Life Base ~ Ranger",
+    "name": "Ranger",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mystic Past Life Base ~ Ranger"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Samsaran Spell Casting Class"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Mystic Past Life Add Spells|1+MysticPastLifeWISBonus"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1104,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+    "record_key": "Mystic Past Life Base ~ Ranger",
+    "sha256": "ea475d7c207e2c4b182019997689ca48a090019620250e43bc4e85b0ff77c3a3"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

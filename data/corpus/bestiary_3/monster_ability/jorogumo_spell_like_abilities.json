@@ -1,0 +1,54 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Jorogumo ~ Spell-Like Abilities",
+    "delivery": "SpellLike",
+    "description": "(CL 12th; concentration +19) At will-charm person (DC 18), detect thoughts (DC 19) 3/day-bestow curse (DC 21), suggestion (DC 19) 1/day-hold monster (DC 22), summon nature's ally V (1 ogre spider or 1d3 giant black widow spiders or 1d4+1 giant spiders)",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:jorogumo_spell_like_abilities",
+    "name": "Spell-Like Abilities",
+    "owners": [
+      "bestiary_3:monster:jorogumo"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "(CL 12th; concentration +19) At will-charm person (DC 18), detect thoughts (DC 19) 3/day-bestow curse (DC 21), suggestion (DC 19) 1/day-hold monster (DC 22), summon nature's ally V (1 ogre spider or 1d3 giant black widow spiders or 1d4+1 giant spiders)"
+      },
+      {
+        "key": "KEY",
+        "value": "Jorogumo ~ Spell-Like Abilities"
+      },
+      {
+        "key": "TYPE",
+        "value": "JorogumoRacialAbility.SpecialQuality.SpellLike"
+      }
+    ],
+    "source_page": null,
+    "traits": [
+      "JorogumoRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T10:26:03Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1093,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Jorogumo ~ Spell-Like Abilities",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "display:no_magnitude_token"
+  ]
+}

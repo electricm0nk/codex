@@ -1,0 +1,62 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "Equipmods",
+    "cost_gp": null,
+    "description": "3/day, when the wearer expends at least one use of mythic power on his turn, this armor surges with sympathetic power. Its enhancement bonus increases by 2, and any damage reduction the wearer has increases by 5. This lasts for a number of rounds equal to the wearer's tier, and doesn't stack with itself.",
+    "key": "Special Ability ~ Resonating ~ Armor",
+    "name": "Resonating",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Special Ability ~ Resonating ~ Armor"
+      },
+      {
+        "key": "TYPE",
+        "value": "Armor"
+      },
+      {
+        "key": "PLUS",
+        "value": "1"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "QUALIFY"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.142"
+      },
+      {
+        "key": "PRETYPE",
+        "value": "1,ArmorEnhancement"
+      },
+      {
+        "key": "PRETYPE",
+        "value": "1,Armor"
+      },
+      {
+        "key": "SPROP",
+        "value": "3/day, when the wearer expends at least one use of mythic power on his turn, this armor surges with sympathetic power. Its enhancement bonus increases by 2, and any damage reduction the wearer has increases by 5. This lasts for a number of rounds equal to the wearer's tier, and doesn't stack with itself."
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-17T12:09:37Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 9,
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_equipmods.lst",
+    "record_key": "Special Ability ~ Resonating ~ Armor",
+    "sha256": "abb04fbe2a924fe90ce1d2a6517e423141d9b79b24642f5ac76878f2e7e43876"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

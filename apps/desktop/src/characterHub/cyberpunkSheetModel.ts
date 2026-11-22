@@ -1,0 +1,546 @@
+import type { CyberpunkCritical } from '../boundary/cprSheet';
+import type { CyberpunkRecord } from '../boundary/loadCyberpunkCatalog';
+import type { ExplanationDto, LoadSavedCharacterResponse, SheetLineDto } from '../boundary/loadSavedCharacterDetail';
+import type { CharacterSummaryDto } from '../boundary/loadListSavedCharacters';
+import type { DiagnosticDto } from '../boundary/loadCreateCharacter';
+import type { CyberpunkSheetBoxId } from './cyberpunkSheetLayout';
+
+/**
+ * The Cyberpunk RED sheet's content (`CyberpunkCharacterSheet.tsx`).
+ *
+ * Every number this model hands the sheet is one engine explanation row's `value` and nothing
+ * else: `CyberpunkAdapter::load_saved_character` (`cpr_adapter.rs`) sends the composed sheet's
+ * `cpr.` rows (`compose_sheet`, `src/rules_core/cpr/sheet.rs`). This file holds labels and the
+ * order they appear in -- no rule numbers. A row the boxes below do not name still appears, in
+ * the `other` box under its row id, so an engine row is never dropped; a printed line the boxes do
+ * not place (the rule lines `cpr_sheet_print.rs` prints) is in `rules`, so no line is dropped.
+ */
+
+/** The `game_system` a Cyberpunk RED save envelope carries (`GameSystem::CyberpunkRed`). */
+export const CYBERPUNK_GAME_SYSTEM = 'cyberpunk-red';
+
+/** Whether a saved character is a Cyberpunk RED character (it opens the Cyberpunk RED sheet). */
+export function isCyberpunkCharacter(summary: Pick<CharacterSummaryDto, 'gameSystem'>): boolean {
+  return summary.gameSystem === CYBERPUNK_GAME_SYSTEM;
+}
+
+/** One figure on the sheet: an engine row's value, or (`printed`) an engine printed line's
+ * text -- dice as written, a weapon's name, "N/A". */
+export interface CyberpunkSheetCell {
+  rowId: string;
+  value: string;
+  /** The engine's own derivation text for the row (a printed line's prose), verbatim. */
+  detail: string;
+  /** A printed line (`sheetLines`), not a computed number. */
+  printed?: boolean;
+}
+
+export interface CyberpunkSheetRow {
+  label: string;
+  /** One cell per column; `null` where the engine sent no row for it. */
+  cells: (CyberpunkSheetCell | null)[];
+  /** The heading the row sits under inside its box (a skill's category); `null` when the
+   * catalog that names it has not arrived. */
+  group?: string | null;
+  /** A short text tag printed after the label (a skill's linked STAT; "Autofire"). */
+  tag?: string;
+  /** The label as an engine printed line (a weapon's name), shown in place of `label`. */
+  labelCell?: CyberpunkSheetCell;
+}
+
+export interface CyberpunkSheetBox {
+  id: CyberpunkSheetBoxId;
+  title: string;
+  /** Column headings when each row has one value per column -- words, or an engine row when the
+   * heading is a number (a range band's m/yds); `null` when a row's values read as one figure
+   * ("current / max"). */
+  columns: (string | CyberpunkSheetCell)[] | null;
+  rows: CyberpunkSheetRow[];
+}
+
+export interface CyberpunkSheet {
+  name: string;
+  /** The boxes that hold at least one engine row, keyed by layout id. */
+  boxes: CyberpunkSheetBox[];
+  /** Diagnostics that stop the build from computing. */
+  blocking: DiagnosticDto[];
+  /** Other diagnostics worth showing. */
+  notes: DiagnosticDto[];
+  /** The engine's printed lines no box places -- the rule lines (Role Ability, cyberware
+   * effects, Humanity Loss, weapon specials, brain damage) -- in the engine's order, rendered
+   * under "Rules and features". */
+  rules: SheetLineDto[];
+}
+
+/**
+ * The ten STATs in book order (`CprStat::ALL`): the entered value's row, and the row of the
+ * current value where the engine adjusts it (armour on REF, DEX and MOVE; the cyberware BODY;
+ * EMP after Humanity Loss).
+ */
+const STATS: readonly { id: string; label: string; current: string | null }[] = [
+  { id: 'int', label: 'INT', current: null },
+  { id: 'ref', label: 'REF', current: 'cpr.armor.ref' },
+  { id: 'dex', label: 'DEX', current: 'cpr.armor.dex' },
+  { id: 'tech', label: 'TECH', current: null },
+  { id: 'cool', label: 'COOL', current: null },
+  { id: 'will', label: 'WILL', current: null },
+  { id: 'luck', label: 'LUCK', current: null },
+  { id: 'move', label: 'MOVE', current: 'cpr.armor.move' },
+  { id: 'body', label: 'BODY', current: 'cpr.cyberware.body' },
+  { id: 'emp', label: 'EMP', current: 'cpr.derived.emp_current' },
+];
+
+/** The vitals box: label -> the row ids read as one figure (Humanity is "current / max"). */
+const VITALS: readonly { label: string; ids: readonly string[] }[] = [
+  { label: 'Hit Points', ids: ['cpr.derived.hit_points'] },
+  { label: 'Seriously Wounded', ids: ['cpr.derived.seriously_wounded'] },
+  { label: 'Death Save', ids: ['cpr.derived.death_save'] },
+  { label: 'Humanity', ids: ['cpr.derived.humanity_current', 'cpr.derived.humanity_max'] },
+  { label: 'MOVE', ids: ['cpr.derived.move'] },
+  { label: 'LUCK', ids: ['cpr.derived.luck_pool'] },
+];
+
+const WOUND_PREFIX = 'cpr.wound.';
+/** The wound-track rows that are not a Wound State threshold. */
+const WOUND_SINGLES: readonly { id: string; label: string }[] = [
+  { id: 'cpr.wound.death_save', label: 'Death Save' },
+  { id: 'cpr.wound.base_death_save_penalty', label: 'Base Death Save Penalty' },
+];
+
+/** The armour box: label -> its SP (or shield HP) row and its penalty row. */
+const ARMOUR: readonly { label: string; ids: readonly [string | null, string] }[] = [
+  { label: 'Head', ids: ['cpr.armor.sp_head', 'cpr.armor.penalty_head'] },
+  { label: 'Body', ids: ['cpr.armor.sp_body', 'cpr.armor.penalty_body'] },
+  { label: 'Shield (HP)', ids: ['cpr.armor.shield_hp', 'cpr.armor.shield_penalty'] },
+  { label: 'Armor Penalty (REF, DEX, MOVE)', ids: [null, 'cpr.armor.penalty'] },
+];
+
+/** The weapon box's columns: heading -> the field of `cpr.weapon.<n>.<field>` (row or line). */
+const WEAPON_FIELDS: readonly { heading: string; field: string }[] = [
+  { heading: 'DMG', field: 'damage' },
+  { heading: 'ROF', field: 'rof' },
+  { heading: 'Hands', field: 'hands' },
+  { heading: 'Concealable', field: 'concealable' },
+  { heading: 'Magazine', field: 'magazine' },
+  { heading: 'Skill Base', field: 'skill_base' },
+];
+const WEAPON_ID = /^cpr\.weapon\.(\d+)\./;
+const RANGE_BAND_PREFIX = 'cpr.range_band.';
+
+/** The cyberware box's single rows: label -> the row ids read as one figure. */
+const CYBERWARE_TOTALS: readonly { label: string; ids: readonly string[] }[] = [
+  { label: 'Humanity Loss', ids: ['cpr.cyberware.humanity_loss'] },
+  { label: 'Maximum Humanity', ids: ['cpr.cyberware.humanity_cap'] },
+  { label: 'Head SP (cyberware)', ids: ['cpr.cyberware.sp_head'] },
+  { label: 'Body SP (cyberware)', ids: ['cpr.cyberware.sp_body'] },
+  { label: 'Initiative bonus', ids: ['cpr.cyberware.initiative_bonus'] },
+];
+const CYBERWARE_PIECE_NAME = /^cpr\.cyberware\.piece\.(\d+)\.name$/;
+const CYBERWARE_SLOTS = /^cpr\.cyberware\.slots\.(.+)\.used$/;
+/** Option-slot container names (`CprContainer::label`); a numbered foundation ("cyberarm_1")
+ * reads from its id. */
+const CONTAINER_LABELS: Readonly<Record<string, string>> = {
+  fashionware: 'Fashionware',
+  internal: 'Internal Body',
+  external: 'External Body',
+  neural_link: 'Neural Link',
+  cyberaudio_suite: 'Cyberaudio Suite',
+};
+
+const ROLE_ROW = /^cpr\.role\.([a-z_]+)\.([a-z_]+)$/;
+const NET_ACTIONS = 'cpr.netrunning.net_actions';
+const DECK_LINE = 'cpr.netrunning.deck';
+const DECK_ITEM_LINE = /^cpr\.netrunning\.(program|hardware)\.(\d+)$/;
+
+const FACEDOWN_ROLL = 'cpr.reputation.facedown_roll';
+const REPUTATION_EVENT = /^cpr\.reputation\.event\.(\d+)$/;
+const LIFEPATH_LINE = /^cpr\.lifepath\.(\d+)$/;
+/** A recorded Critical Injury's printed line: its table and its place in the saved list. */
+const CRITICAL_LINE = /^cpr\.critical\.(body|head)\.(\d+)$/;
+/** The two Critical Injury tables (p. 221-222), in the order the checklist lists them. */
+const CRITICAL_TABLES: Readonly<Record<CyberpunkCritical['location'], string>> = {
+  body: 'Critical Injuries to the Body',
+  head: 'Critical Injuries to the Head',
+};
+
+/** An ammunition stack's count row; its name is the printed line `<row id>.name`. */
+const AMMO_ROW = /^cpr\.ammo\.(\d+)$/;
+
+const SKILL_PREFIX = 'cpr.skill.';
+const SKILL_LEVEL_PREFIX = 'cpr.skill_level.';
+
+/** The engine's id fragment of a skill name (`slug`, `src/rules_core/cpr/skills.rs`): lower
+ * case, every run of other characters one `_`. `Conceal/Reveal Object` -> `conceal_reveal_object`. */
+export function cyberpunkSkillSlug(name: string): string {
+  return name
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '_')
+    .replace(/^_+|_+$/g, '');
+}
+
+/** `seriously_wounded` -> `Seriously Wounded`. */
+function humanise(slug: string): string {
+  return slug
+    .split('_')
+    .filter((word) => word.length > 0)
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ');
+}
+
+/** Lines matching `pattern` (whose first group is a number), in that number's order. */
+function numberedLines(ids: Iterable<string>, pattern: RegExp, group = 1): string[] {
+  return [...ids]
+    .filter((id) => pattern.test(id))
+    .sort((a, b) => Number((pattern.exec(a) as RegExpExecArray)[group]) - Number((pattern.exec(b) as RegExpExecArray)[group]));
+}
+
+/**
+ * The Critical Injuries the character has, as the engine printed them (`cpr.critical.<table>.<n>`),
+ * in the order they were recorded: the list the checklist saves back, ticked or unticked.
+ */
+export function recordedCyberpunkCriticals(detail: LoadSavedCharacterResponse): CyberpunkCritical[] {
+  const lines = new Map(detail.sheetLines.map((line) => [line.id, line]));
+  return numberedLines(lines.keys(), CRITICAL_LINE, 2).map((id) => ({
+    location: (CRITICAL_LINE.exec(id) as RegExpExecArray)[1] as CyberpunkCritical['location'],
+    name: (lines.get(id) as { value: string }).value,
+  }));
+}
+
+/** The list to save when `critical` is ticked or unticked: unticking removes that injury (its
+ * table and name), ticking adds it at the end. */
+export function toggleCyberpunkCritical(recorded: readonly CyberpunkCritical[], critical: CyberpunkCritical): CyberpunkCritical[] {
+  const same = (c: CyberpunkCritical) => c.location === critical.location && c.name === critical.name;
+  return recorded.some(same) ? recorded.filter((c) => !same(c)) : [...recorded, { location: critical.location, name: critical.name }];
+}
+
+/** One checklist entry's injury, read back from its row (`criticalInjuries` box). */
+export function cyberpunkCriticalOfRow(row: CyberpunkSheetRow): CyberpunkCritical {
+  const location = (Object.keys(CRITICAL_TABLES) as CyberpunkCritical['location'][]).find((key) => CRITICAL_TABLES[key] === row.group);
+  return { location: location ?? 'body', name: row.label };
+}
+
+/**
+ * Lays out one loaded Cyberpunk RED character. Every cell is one explanation row.
+ *
+ * `skillCatalog` is the skill catalog (`list_cyberpunk_catalog('skill')`): it names each skill,
+ * its category and its linked STAT. Until it arrives (`null`) the skills still render, ungrouped
+ * and labelled from their row ids. `criticalCatalog` is the Critical Injury catalog
+ * (`list_cyberpunk_catalog('critical_injury')`): the checklist lists every injury of both tables;
+ * until it arrives only the recorded injuries are listed.
+ */
+export function buildCyberpunkSheet(
+  detail: LoadSavedCharacterResponse,
+  skillCatalog: readonly CyberpunkRecord[] | null,
+  criticalCatalog: readonly CyberpunkRecord[] | null = null,
+): CyberpunkSheet {
+  const rows = new Map<string, ExplanationDto>(detail.explanations.map((row) => [row.id, row]));
+  const placed = new Set<string>();
+  const cell = (id: string | null): CyberpunkSheetCell | null => {
+    if (id === null) {
+      return null;
+    }
+    const row = rows.get(id);
+    if (row === undefined || placed.has(id)) {
+      return null;
+    }
+    placed.add(id);
+    return { rowId: id, value: String(row.value), detail: row.detail };
+  };
+  // A build that did not compute lays out nothing, its printed lines included.
+  const computed = !detail.diagnostics.some((d) => d.claimBlocking);
+  const lines = new Map((computed ? detail.sheetLines : []).map((line) => [line.id, line]));
+  const placedLines = new Set<string>();
+  /** An engine row when the engine computed one, else its printed line (dice, words, "N/A"). */
+  const figure = (id: string): CyberpunkSheetCell | null => {
+    const computed = cell(id);
+    if (computed !== null) {
+      return computed;
+    }
+    const line = lines.get(id);
+    if (line === undefined) {
+      return null;
+    }
+    placedLines.add(id);
+    return { rowId: id, value: line.value === '' ? line.prose : line.value, detail: line.prose, printed: true };
+  };
+  const boxes: CyberpunkSheetBox[] = [];
+  const push = (box: CyberpunkSheetBox) => {
+    const kept = box.rows.filter((row) => row.cells.some((c) => c !== null));
+    if (kept.length > 0) {
+      boxes.push({ ...box, rows: kept });
+    }
+  };
+
+  push({
+    id: 'stats',
+    title: 'STATs',
+    columns: ['STAT', 'Current'],
+    rows: STATS.map((stat) => ({ label: stat.label, cells: [cell(`cpr.stat.${stat.id}`), cell(stat.current)] })),
+  });
+  push({
+    id: 'skills',
+    title: 'Skills',
+    columns: ['Level', 'Base'],
+    rows: skillRows(detail, skillCatalog, cell),
+  });
+  push({
+    id: 'vitals',
+    title: 'Hit Points, Humanity, MOVE and LUCK',
+    columns: null,
+    rows: VITALS.map((vital) => ({ label: vital.label, cells: vital.ids.map((id) => cell(id)) })),
+  });
+
+  // `cpr.wound.<state>` and `cpr.wound.<state>_dv`, in the engine's order (the Wound States as
+  // the corpus lists them), then the Death Save and the Base Death Save Penalty.
+  const singles = new Set(WOUND_SINGLES.map((single) => single.id));
+  const states = detail.explanations
+    .map((row) => row.id)
+    .filter((id) => id.startsWith(WOUND_PREFIX) && !id.endsWith('_dv') && !singles.has(id));
+  push({
+    id: 'woundTrack',
+    title: 'Wound track',
+    columns: ['Below HP', 'Stabilize DV'],
+    rows: [
+      ...states.map((id) => ({ label: humanise(id.slice(WOUND_PREFIX.length)), cells: [cell(id), cell(`${id}_dv`)] })),
+      ...WOUND_SINGLES.map((single) => ({ label: single.label, cells: [cell(single.id), null] })),
+    ],
+  });
+
+  push({
+    id: 'armour',
+    title: 'Armor',
+    columns: ['SP', 'Penalty'],
+    rows: ARMOUR.map((piece) => ({ label: piece.label, cells: piece.ids.map((id) => cell(id)) })),
+  });
+
+  // The weapons, in the engine's order (`cpr.weapon.<n>.`), each labelled by its printed name.
+  const weaponIndexes = [
+    ...new Set([...detail.explanations.map((row) => row.id), ...lines.keys()].flatMap((id) => {
+      const match = WEAPON_ID.exec(id);
+      return match === null ? [] : [Number(match[1])];
+    })),
+  ].sort((a, b) => a - b);
+  const weaponName = (n: number) => figure(`cpr.weapon.${n}.name`) ?? undefined;
+  push({
+    id: 'weapons',
+    title: 'Weapons',
+    columns: WEAPON_FIELDS.map((column) => column.heading),
+    rows: weaponIndexes.map((n) => ({
+      label: `cpr.weapon.${n}`,
+      labelCell: weaponName(n),
+      cells: WEAPON_FIELDS.map((column) => figure(`cpr.weapon.${n}.${column.field}`)),
+    })),
+  });
+
+  // Range DV: the engine's range bands head the columns; each weapon's single-shot row (D-1),
+  // then its Autofire row; a band the book prints N/A is the engine's printed "N/A".
+  const bandIds = detail.explanations.map((row) => row.id).filter((id) => id.startsWith(RANGE_BAND_PREFIX));
+  const dvRows = (n: number, field: string, tag?: string): CyberpunkSheetRow[] => {
+    const cells = bandIds.map((_band, b) => figure(`cpr.weapon.${n}.${field}.${b}`));
+    return cells.every((c) => c === null) ? [] : [{ label: `cpr.weapon.${n}.${field}`, labelCell: weaponName(n), ...(tag === undefined ? {} : { tag }), cells }];
+  };
+  const rangeRows = weaponIndexes.flatMap((n) => [...dvRows(n, 'range_dv'), ...dvRows(n, 'autofire_dv', 'Autofire')]);
+  if (rangeRows.length > 0) {
+    push({
+      id: 'rangeDv',
+      title: 'Range DV (m/yds up to)',
+      columns: bandIds.map((id) => cell(id) ?? id),
+      rows: rangeRows,
+    });
+  }
+
+  // The Role Ability: each Role's Rank row, then the values its Rank gives, in the engine's order.
+  const roleIds = detail.explanations.map((row) => row.id).filter((id) => ROLE_ROW.test(id));
+  const roles = [...new Set(roleIds.map((id) => (ROLE_ROW.exec(id) as RegExpExecArray)[1]))];
+  push({
+    id: 'roleAbility',
+    title: 'Role Ability',
+    columns: null,
+    rows: roles.flatMap((role) => {
+      const ids = roleIds.filter((id) => (ROLE_ROW.exec(id) as RegExpExecArray)[1] === role);
+      const rank = `cpr.role.${role}.rank`;
+      return [rank, ...ids.filter((id) => id !== rank)].map((id) => ({
+        label: humanise((ROLE_ROW.exec(id) as RegExpExecArray)[2]),
+        group: humanise(role),
+        cells: [cell(id)],
+      }));
+    }),
+  });
+
+  // Cyberware: each installed piece by its printed name with its Humanity Loss row, then the
+  // totals, then each option-slot container as "used / total".
+  const pieceIds = [...lines.keys()].filter((id) => CYBERWARE_PIECE_NAME.test(id));
+  const containers = detail.explanations.flatMap((row) => {
+    const match = CYBERWARE_SLOTS.exec(row.id);
+    return match === null ? [] : [match[1]];
+  });
+  push({
+    id: 'cyberware',
+    title: 'Cyberware',
+    columns: null,
+    rows: [
+      ...pieceIds.map((id) => ({
+        label: id,
+        labelCell: figure(id) ?? undefined,
+        cells: [cell(id.replace(/\.name$/, '.humanity_loss'))],
+      })),
+      ...CYBERWARE_TOTALS.map((total) => ({ label: total.label, cells: total.ids.map((id) => cell(id)) })),
+      ...containers.map((container) => ({
+        label: `${CONTAINER_LABELS[container] ?? humanise(container)} slots`,
+        cells: [cell(`cpr.cyberware.slots.${container}.used`), cell(`cpr.cyberware.slots.${container}.capacity`)],
+      })),
+    ],
+  });
+
+  // A Netrunner's deck: NET Actions, slots used / available, the deck and what it holds by name.
+  const deckItems = [...lines.keys()].filter((id) => DECK_ITEM_LINE.test(id));
+  push({
+    id: 'netrunning',
+    title: 'Cyberdeck and NET Actions',
+    columns: null,
+    rows: [
+      { label: 'NET Actions', cells: [cell(NET_ACTIONS)] },
+      { label: 'Deck slots (used / available)', cells: [cell('cpr.netrunning.deck_slots_used'), cell('cpr.netrunning.deck_slots_available')] },
+      { label: 'Cyberdeck', cells: [lines.has(DECK_LINE) ? figure(DECK_LINE) : null] },
+      ...deckItems.map((id) => ({
+        label: (DECK_ITEM_LINE.exec(id) as RegExpExecArray)[1] === 'program' ? 'Program' : 'Hardware',
+        cells: [figure(id)],
+      })),
+    ],
+  });
+
+  // Reputation: the Level, the Facedown base and its roll (the die stays literal), then every
+  // recorded event as the engine printed it (the defining one marked).
+  push({
+    id: 'reputation',
+    title: 'Reputation',
+    columns: null,
+    rows: [
+      { label: 'Reputation Level', cells: [cell('cpr.reputation.level')] },
+      { label: 'Facedown (COOL + Reputation)', cells: [cell('cpr.reputation.facedown')] },
+      { label: 'Facedown roll', cells: [lines.has(FACEDOWN_ROLL) ? figure(FACEDOWN_ROLL) : null] },
+      ...numberedLines(lines.keys(), REPUTATION_EVENT).map((id) => ({ label: (lines.get(id) as { label: string }).label, cells: [figure(id)] })),
+    ],
+  });
+  push({
+    id: 'improvementPoints',
+    title: 'Improvement Points',
+    columns: null,
+    rows: [{ label: 'Improvement Points (current / total)', cells: [cell('cpr.ip.current'), cell('cpr.ip.total')] }],
+  });
+  // The Lifepath answers as saved, each labelled by its table and column.
+  push({
+    id: 'lifepath',
+    title: 'Lifepath',
+    columns: null,
+    rows: numberedLines(lines.keys(), LIFEPATH_LINE).map((id) => ({ label: (lines.get(id) as { label: string }).label, cells: [figure(id)] })),
+  });
+
+  // The critical-injuries checklist: every injury of both tables (catalog order), each ticked
+  // (its cell the engine's printed line) when the character has it; an unticked entry has no
+  // cell. Without the catalog, the recorded injuries alone.
+  const recordedIds = new Map(
+    numberedLines(lines.keys(), CRITICAL_LINE, 2).map((id) => [
+      `${(CRITICAL_LINE.exec(id) as RegExpExecArray)[1]}:${(lines.get(id) as { value: string }).value}`,
+      id,
+    ]),
+  );
+  const injuries: CyberpunkCritical[] =
+    criticalCatalog === null
+      ? recordedCyberpunkCriticals(detail)
+      : (['body', 'head'] as const).flatMap((location) =>
+          criticalCatalog.filter((record) => record.location === location).map((record) => ({ location, name: String(record.name) })),
+        );
+  const checklist: CyberpunkSheetRow[] = injuries.map((injury) => {
+    const lineId = recordedIds.get(`${injury.location}:${injury.name}`);
+    return { label: injury.name, group: CRITICAL_TABLES[injury.location], cells: [lineId === undefined ? null : figure(lineId)] };
+  });
+  if (computed && checklist.length > 0) {
+    boxes.push({ id: 'criticalInjuries', title: 'Critical Injuries', columns: null, rows: checklist });
+  }
+
+  // The p121 sheet's Cash, Ammunition and Rent fields: the cash, each ammunition stack's count
+  // under its ammunition's name (the engine's printed `cpr.ammo.<n>.name` line), and the housing's
+  // rent (a row in eb, or the engine's printed words where the book gives no figure).
+  push({
+    id: 'ledger',
+    title: 'Cash, Ammunition and Rent',
+    columns: null,
+    rows: [
+      { label: 'Cash', cells: [cell('cpr.cash')] },
+      ...numberedLines(rows.keys(), AMMO_ROW).map((id) => ({
+        label: 'Ammunition',
+        group: 'Ammunition',
+        labelCell: figure(`${id}.name`) ?? undefined,
+        cells: [cell(id)],
+      })),
+      { label: 'Rent', cells: [figure('cpr.housing.rent')] },
+    ],
+  });
+
+  // Any `cpr.` row the boxes above do not name: shown under its id, never dropped.
+  push({
+    id: 'other',
+    title: 'Other totals',
+    columns: null,
+    rows: detail.explanations
+      .filter((row) => !placed.has(row.id))
+      .map((row) => ({ label: row.id, cells: [cell(row.id)] })),
+  });
+
+  return {
+    name: detail.summary.displayLabel,
+    boxes,
+    blocking: detail.diagnostics.filter((d) => d.claimBlocking),
+    notes: detail.diagnostics.filter((d) => !d.claimBlocking),
+    rules: [...lines.values()].filter((line) => !placedLines.has(line.id)),
+  };
+}
+
+/**
+ * The skills box: one row per `cpr.skill.<skill>` (or `cpr.skill.<skill>.<specialty>`) row, in
+ * the engine's order, with its `cpr.skill_level.` twin. With the catalog, rows sit under their
+ * skill's category (the categories in catalog order) and name their linked STAT; a row whose
+ * skill the catalog does not hold is left for Other totals. The Base is the engine's: a REF or
+ * DEX skill's already carries the armour penalty (`compose_sheet`, step 5).
+ */
+function skillRows(
+  detail: LoadSavedCharacterResponse,
+  skillCatalog: readonly CyberpunkRecord[] | null,
+  cell: (id: string | null) => CyberpunkSheetCell | null,
+): CyberpunkSheetRow[] {
+  const bases = detail.explanations.map((row) => row.id).filter((id) => id.startsWith(SKILL_PREFIX));
+  const split = (id: string) => {
+    const rest = id.slice(SKILL_PREFIX.length);
+    const dot = rest.indexOf('.');
+    return { rest, skill: dot < 0 ? rest : rest.slice(0, dot), specialty: dot < 0 ? null : rest.slice(dot + 1) };
+  };
+  const named = (name: string, specialty: string | null) => (specialty === null ? name : `${name} (${humanise(specialty)})`);
+  const rowOf = (id: string, label: string, group: string | null, tag?: string): CyberpunkSheetRow => ({
+    label,
+    group,
+    ...(tag === undefined ? {} : { tag }),
+    cells: [cell(`${SKILL_LEVEL_PREFIX}${split(id).rest}`), cell(id)],
+  });
+
+  if (skillCatalog === null) {
+    return bases.map((id) => rowOf(id, named(humanise(split(id).skill), split(id).specialty), null));
+  }
+  const bySlug = new Map(skillCatalog.map((record) => [cyberpunkSkillSlug(String(record.name)), record]));
+  const categories: string[] = [];
+  for (const record of skillCatalog) {
+    const category = String(record.category);
+    if (!categories.includes(category)) {
+      categories.push(category);
+    }
+  }
+  return categories.flatMap((category) =>
+    bases.flatMap((id) => {
+      const { skill, specialty } = split(id);
+      const record = bySlug.get(skill);
+      return record === undefined || String(record.category) !== category
+        ? []
+        : [rowOf(id, named(String(record.name), specialty), category, String(record.stat))];
+    }),
+  );
+}

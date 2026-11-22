@@ -1,0 +1,3 @@
+$ grep -rln 'appendToCharacter\|addFeatSelection\|addSpellSelection' apps/desktop/src --include=*.tsx
+apps/desktop/src/characterHub/CharacterSheet.tsx
+exit 0

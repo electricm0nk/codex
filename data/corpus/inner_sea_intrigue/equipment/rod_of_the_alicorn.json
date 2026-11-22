@@ -1,0 +1,54 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "category": "MagicItems",
+    "cost_gp": 25000.0,
+    "description": null,
+    "key": "Rod of the Alicorn",
+    "name": "Rod of the Alicorn",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous"
+      },
+      {
+        "key": "COST",
+        "value": "25000"
+      },
+      {
+        "key": "WT",
+        "value": "5"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.55"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Rod of the Alicorn|TIMES=3|CASTERLEVEL=9|Cure Light Wounds"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Rod of the Alicorn|CASTERLEVEL=9|Cure Moderate Wounds|Neutralize Poison"
+      }
+    ],
+    "weight_lbs": 5.0
+  },
+  "ingested_at": "2026-08-17T12:09:37Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 29,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_intrigue/isi_equip_magic_items.lst",
+    "record_key": "Rod of the Alicorn",
+    "sha256": "911512820caf3697f1fed49d28429a875dfbcbef65379a1c2860607afd200546"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

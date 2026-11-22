@@ -1,0 +1,67 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Agathion ~ Unchained Eidolon LVL16",
+    "delivery": null,
+    "description": "At 16th level, agathion eidolons lose the resistance (electricity) evolution, and instead gain the immunity (electricity) evolution. They also gain the agathion's speak with animals ability (see the agathion subtype on page 306 of Bestiary 2).",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "pathfinder_unchained:monster_ability:agathion_unchained_eidolon_lvl16",
+    "name": "Eidolon Progession Lv.16",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Unchained Eidolon Evolution|AUTOMATIC|Unchained Evolution ~ Immunity"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Unchained Eidolon Immunity|AUTOMATIC|Eidolon Immunity to electricity"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Pool_EidolonImmunity|-1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RemoveEidolonResistanceForImmunity|1"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "At 16th level, agathion eidolons lose the resistance (electricity) evolution, and instead gain the immunity (electricity) evolution. They also gain the agathion's speak with animals ability (see the agathion subtype on page 306 of Bestiary 2)."
+      },
+      {
+        "key": "KEY",
+        "value": "Agathion ~ Unchained Eidolon LVL16"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.AgathionLVL16"
+      }
+    ],
+    "source_page": null,
+    "traits": [
+      "AgathionLVL16"
+    ]
+  },
+  "ingested_at": "2026-08-23T16:17:34Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 102,
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_race.lst",
+    "record_key": "Agathion ~ Unchained Eidolon LVL16",
+    "sha256": "700bcd41e1ee925d0a727c86097de8fa37bed2768529e4a750bdb8249c4d8b8d"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

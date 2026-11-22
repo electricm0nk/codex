@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:22:49Z",
+  "data": {
+    "key": "Trait ~ Failed Apprentice",
+    "name": "Failed Apprentice",
+    "description": "As a child, your parents sent you to a distant wizard's tower as an apprentice so that you might learn the arcane arts. Unfortunately, you had no arcane talent whatsoever, though you did learn a great deal about the workings of spells and how to resist them. You gain a +1 trait bonus on saves against arcane spells.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Trait ~ Failed Apprentice"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Trait.RaceTrait.Half-Elf Race Trait"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Trait ~ Failed Apprentice],[PREVAREQ:BypassTraitRestriction,1],[!PREABILITY:1,CATEGORY=Special Ability,TYPE.RaceTrait]"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREFACT:1,TEMPLATES,IsHalfElf=true],[PREABILITY:1,CATEGORY=Special Ability,Adoptive Race ~ Half-Elf]"
+      },
+      {
+        "key": "DESC",
+        "value": "As a child, your parents sent you to a distant wizard's tower as an apprentice so that you might learn the arcane arts. Unfortunately, you had no arcane talent whatsoever, though you did learn a great deal about the workings of spells and how to resist them. You gain a +1 trait bonus on saves against arcane spells."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.331"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SaveBonus|+1 trait bonus on saves against arcane spells."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities.lst",
+    "sha256": "cd6801105b5c58cc069a49da65453b388503754e3b3731fac1cab813d0fc97a0",
+    "line": 195,
+    "record_key": "Trait ~ Failed Apprentice"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

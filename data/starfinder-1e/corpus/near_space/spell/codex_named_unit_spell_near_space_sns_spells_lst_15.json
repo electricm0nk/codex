@@ -1,0 +1,24 @@
+{
+  "codex_generated_name": true,
+  "data": {
+    "key": "Codex-Named Unit (spell_near_space_sns_spells_lst_15)",
+    "name": "Codex-Named Unit (spell_near_space_sns_spells_lst_15)",
+    "type": "Spell"
+  },
+  "license": "PI-REDACTED",
+  "pi_field": "description,name",
+  "pi_marker": "redacted",
+  "population": "in_scope",
+  "rename": {
+    "coordinate": "near_space:sns_spells.lst:15",
+    "reason": "name_pi_blocked"
+  },
+  "source": {
+    "kind": "lst_token",
+    "line": 15,
+    "path": "starfinder/paizo/near_space/sns_spells.lst",
+    "record_key": "Codex-Named Unit (spell_near_space_sns_spells_lst_15)",
+    "sha256": "7f0b36cdb7ec66e5fe36ec77bd471ebdf999625c72731e5cc00b07ba0365b501"
+  },
+  "unit_id": "near_space:spell:summon_drift_beacons"
+}

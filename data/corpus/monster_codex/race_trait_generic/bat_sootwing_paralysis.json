@@ -1,0 +1,50 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "description": null,
+    "key": "Bat (Sootwing) ~ Paralysis",
+    "name": "Bat (Sootwing) ~ Paralysis",
+    "raw_tokens": [
+      {
+        "key": "OUTPUTNAME",
+        "value": "Paralysis"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|UMR_Paralysis_DurationDice|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|UMR_Paralysis_DurationDieSize|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|UMR_Paralysis_DurationBonus|1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(%1d%2+%3 rounds, DC %4, elves are immune to this effect)|UMR_Paralysis_DurationDice|UMR_Paralysis_DurationDieSize|UMR_Paralysis_DurationBonus|UMR_Paralysis_DC"
+      },
+      {
+        "key": "ASPECT",
+        "value": "NaturalAttackBonus|Bite"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 72,
+    "path": "pathfinder/paizo/roleplaying_game/monster_codex/mc_abilities_race.lst",
+    "record_key": "Bat (Sootwing) ~ Paralysis",
+    "sha256": "2cde87583641aec61ec0da397064c651fefd27d679ac0cc6368930ded84e5e30"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

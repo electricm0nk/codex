@@ -1,0 +1,15 @@
+
+------------------------------------------------------------
+Gradle 9.5.1
+------------------------------------------------------------
+
+Build time:    2026-05-12 13:19:42 UTC
+Revision:      fd78213f09782e62ca4957f9cfd3d90c6c3f1767
+
+Kotlin:        2.3.20
+Groovy:        4.0.29
+Ant:           Apache Ant(TM) version 1.10.15 compiled on August 25 2024
+Launcher JVM:  25 (Eclipse Adoptium 25+36-LTS)
+Daemon JVM:    /home/ubuntu/.sdkman/candidates/java/25-tem (no Daemon JVM specified, using current Java home)
+OS:            Linux 6.8.0-138-generic amd64
+

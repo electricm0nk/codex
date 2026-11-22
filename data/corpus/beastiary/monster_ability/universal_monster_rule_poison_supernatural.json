@@ -1,0 +1,105 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Universal Monster Rule ~ Poison (Supernatural)",
+    "delivery": "Supernatural",
+    "description": "A creature with this ability can poison those it attacks. The effects of the poison, including its save, frequency, and cure, are included in the creature's description. The saving throw to resist a poison is usually a Fort save (DC 10 + 1/2 poisoning creature's racial HD + creature's Con modifier; the exact DC is given in the creature's descriptive text). Poisons can be removed through neutralize poison and similar effects.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:universal_monster_rule_poison_supernatural",
+    "name": "Poison",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Poison"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(DC %1)|UMR_Poison_DC"
+      },
+      {
+        "key": "ASPECT",
+        "value": "NaturalAttackBonus|Bite|PREVAREQ:UMR_Poison_ApplyBite,1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "NaturalAttackBonus|Claw|PREVAREQ:UMR_Poison_ApplyClaw,1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "NaturalAttackBonus|Sting|PREVAREQ:UMR_Poison_ApplySting,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PoisonSaveDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Poison)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|UMR_Poison_DC|PoisonSaveDC"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "UMR_Poison_ApplyBite|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "UMR_Poison_ApplyClaw|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "UMR_Poison_ApplySting|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "UMR_Poison_DC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "UMR_Poison_SpecificDesc|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A creature with this ability can poison those it attacks. The effects of the poison, including its save, frequency, and cure, are included in the creature's description. The saving throw to resist a poison is usually a Fort save (DC 10 + 1/2 poisoning creature's racial HD + creature's Con modifier; the exact DC is given in the creature's descriptive text). Poisons can be removed through neutralize poison and similar effects.|PREVAREQ:UMR_Poison_SpecificDesc,0"
+      },
+      {
+        "key": "KEY",
+        "value": "Universal Monster Rule ~ Poison (Supernatural)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.302"
+      },
+      {
+        "key": "TYPE",
+        "value": "Universal Monster Rule.Special Ability.SpecialAttack.Supernatural"
+      }
+    ],
+    "source_page": "p.302",
+    "traits": [
+      "Universal Monster Rule",
+      "Special Ability"
+    ]
+  },
+  "ingested_at": "2026-08-23T12:58:07Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 2379,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "record_key": "Universal Monster Rule ~ Poison (Supernatural)",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:prose_expr"
+  ]
+}

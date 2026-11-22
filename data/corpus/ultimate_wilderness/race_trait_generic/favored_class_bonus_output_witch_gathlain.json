@@ -1,0 +1,50 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Favored Class Bonus Output ~ Witch ~ Gathlain",
+    "name": "Bonus Druid Spell",
+    "description": "[Witch] [NOT IMPLEMENTED] Add %1 spell(s) from the druid spell list to the witch's familiar. This spell must be at least one level below the highest spell level the witch can cast. If the familiar is ever replaced, the new familiar knows these bonus spells.|GathlainWitchBonusDruidSpellCount",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Favored Class Bonus Output ~ Witch ~ Gathlain"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "EXPORT"
+      },
+      {
+        "key": "DESC",
+        "value": "[Witch] [NOT IMPLEMENTED] Add %1 spell(s) from the druid spell list to the witch's familiar. This spell must be at least one level below the highest spell level the witch can cast. If the familiar is ever replaced, the new familiar knows these bonus spells.|GathlainWitchBonusDruidSpellCount"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.10"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_race.lst",
+    "sha256": "0c4ae15128009d48586ea7794a6aeae96d492e10d49f8200529fca2dbb801284",
+    "line": 245,
+    "record_key": "Favored Class Bonus Output ~ Witch ~ Gathlain"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

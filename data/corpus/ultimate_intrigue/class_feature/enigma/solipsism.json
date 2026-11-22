@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Enigma ~ Solipsism",
+    "name": "Solipsism",
+    "class": "Mesmerist",
+    "description": "Whenever the enigma uses hypnotic stare on a creature, instead of applying a penalty on the creature's saving throws, the enigma begins to fade from the creature's view. Until the enigma's next turn, the enigma gains the effects of concealment against that creature (unless it can see invisible creatures). Starting on the enigma's next turn, he gains the effect of",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Enigma ~ Solipsism"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mesmerist Class Features.EnigmaClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "Whenever the enigma uses hypnotic stare on a creature, instead of applying a penalty on the creature's saving throws, the enigma begins to fade from the creature's view. Until the enigma's next turn, the enigma gains the effects of concealment against that creature (unless it can see invisible creatures). Starting on the enigma's next turn, he gains the effect of"
+      },
+      {
+        "key": "DESC",
+        "value": " invisibility|!PRECLASS:1,Mesmerist=8"
+      },
+      {
+        "key": "DESC",
+        "value": " invisibility|PRECLASS:1,Mesmerist=8"
+      },
+      {
+        "key": "DESC",
+        "value": " against that creature. These effects last as long as the enigma continues to use his hypnotic stare"
+      },
+      {
+        "key": "DESC",
+        "value": " , but if he takes an action that would end invisibility, it ends his hypnotic stare immediately. The enigma can reinstate this effect whenever he wishes, but each time it begins with 1 round of concealment|!PRECLASS:1,Mesmerist=8"
+      },
+      {
+        "key": "DESC",
+        "value": ". For the purpose of bold stare improvements, the enigma's hypnotic stare always has a penalty of -1. This ability alters hypnotic stare."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.36"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/support/ui_abilities_class_oa.lst",
+    "sha256": "123f008e9a2f31828861df9025f48f5c2f7c78a648553f22dba96a8d8a2e24dc",
+    "line": 52,
+    "record_key": "Enigma ~ Solipsism"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

@@ -1,0 +1,72 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Terror ~ Paranoia",
+    "name": "Paranoia",
+    "class": "Terror",
+    "description": "Your attack causes the target to treat all creatures as enemies (Will DC %1 negates) for %2 minutes.  This is a mind-affecting fear effect.|ParanoiaDC|ParanoiaDuration",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Terror ~ Paranoia"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural.DreadTerror"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "TerrorsPrereqLVL,14"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ParanoiaDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ParanoiaDuration|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Your attack causes the target to treat all creatures as enemies (Will DC %1 negates) for %2 minutes.  This is a mind-affecting fear effect.|ParanoiaDC|ParanoiaDuration"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ParanoiaDC|TerrorDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ParanoiaDuration|TerrorAugmentLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ParanoiaDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Paranoia)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.42"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 305,
+    "record_key": "Terror ~ Paranoia"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

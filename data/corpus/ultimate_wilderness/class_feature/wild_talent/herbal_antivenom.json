@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Wild Talent ~ Herbal Antivenom",
+    "name": "Herbal Antivenom",
+    "class": "Kineticist",
+    "description": "Element wood; Type utility (Sp); Level 4; Burn 0",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wild Talent ~ Herbal Antivenom"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Wild Talent.Utility Wild Talent.Utility Wild Talent Wood"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "KineticistLVL_Wood,4"
+      },
+      {
+        "key": "DESC",
+        "value": "Element wood; Type utility (Sp); Level 4; Burn 0"
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;Your body can produce the herbal remedies necessary to counter almost any poison. You gain a +5 alchemical bonus on saving throws against poison, as if you were always under the effect of antitoxin. You can use the treat poison action from the Heal skill as a standard action with a mere touch, without a healer's kit, and even on yourself; if you succeed, you grant the touched creature a +5 alchemical bonus against that specific instance of poison in addition to the normal +4 bonus from treat poison. You can accept 1 point of burn while using the treat poison action in this way to also produce the effects of neutralize poison."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.59"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/support/uw_abilities_class_oa.lst",
+    "sha256": "26a03f73c3534cd6bae0bcda9581b3a89fa28ce5f78f854e009fc8110c477568",
+    "line": 77,
+    "record_key": "Wild Talent ~ Herbal Antivenom"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

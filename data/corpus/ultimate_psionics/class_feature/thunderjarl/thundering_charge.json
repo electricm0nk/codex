@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Thunderjarl ~ Thundering Charge",
+    "name": "Thundering Charge",
+    "class": "Thunderjarl",
+    "description": "You can spend a daily use of your stomp psi-like ability when making a charge attack.  The target of the charge must make a save (Reflex DC %1) before the charge.  If the target fails the save, the target is knocked prone.  You must then charge the target regardless of the outcome of the stomp as long as the target is still eligible to be charged, otherwise, your charge action is wasted.|ThunderingChargeDC",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Thunderjarl ~ Thundering Charge"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "PsychicWarriorClassFeatures.SpecialAttack.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ThunderingChargeDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can spend a daily use of your stomp psi-like ability when making a charge attack.  The target of the charge must make a save (Reflex DC %1) before the charge.  If the target fails the save, the target is knocked prone.  You must then charge the target regardless of the outcome of the stomp as long as the target is still eligible to be charged, otherwise, your charge action is wasted.|ThunderingChargeDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ThunderingChargeDC|10+PsychicWarriorLVL/2+PsychicWarriorPrimeStat"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.329"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2118,
+    "record_key": "Thunderjarl ~ Thundering Charge"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

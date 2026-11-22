@@ -1,0 +1,156 @@
+   Compiling codex v0.1.0 (/home/ubuntu/workspace/repos/codex/.worktrees/sd38-e3)
+error[E0432]: unresolved imports `crate::rules_core::cpr::input::CprKit`, `crate::rules_core::cpr::input::CprKitEntry`
+   --> src/rules_core/cpr/store.rs:423:45
+    |
+423 |         use crate::rules_core::cpr::input::{CprKit, CprKitEntry};
+    |                                             ^^^^^^  ^^^^^^^^^^^ no `CprKitEntry` in `rules_core::cpr::input`
+    |                                             |
+    |                                             no `CprKit` in `rules_core::cpr::input`
+
+error[E0422]: cannot find struct, variant or union type `CprKit` in this scope
+   --> src/rules_core/cpr/input.rs:751:19
+    |
+751 |         let kit = CprKit {
+    |                   ^^^^^^ not found in this scope
+
+error[E0422]: cannot find struct, variant or union type `CprKitEntry` in this scope
+   --> src/rules_core/cpr/input.rs:753:17
+    |
+753 | ...   CprKitEntry { section: "weapons_armor".to_owned(), name: "Light Armorjack Body Armor (SP11)".to_owned(), quantity: 1 },
+    |       ^^^^^^^^^^^ not found in this scope
+
+error[E0422]: cannot find struct, variant or union type `CprKitEntry` in this scope
+   --> src/rules_core/cpr/input.rs:754:17
+    |
+754 |                 CprKitEntry { section: "bought".to_owned(), name: "Basic Rifle Ammunition".to_owned(), quantity: 70 },
+    |                 ^^^^^^^^^^^ not found in this scope
+
+error[E0425]: cannot find function `render_cpr_kit` in this scope
+   --> src/rules_core/cpr/input.rs:757:20
+    |
+757 |         let text = render_cpr_kit(&kit);
+    |                    ^^^^^^^^^^^^^^ not found in this scope
+
+error[E0425]: cannot find function `parse_cpr_kit` in this scope
+   --> src/rules_core/cpr/input.rs:759:20
+    |
+759 |         assert_eq!(parse_cpr_kit(&text), Ok(kit));
+    |                    ^^^^^^^^^^^^^ not found in this scope
+
+error[E0433]: cannot find type `CprKit` in this scope
+   --> src/rules_core/cpr/input.rs:760:36
+    |
+760 |         assert_eq!(render_cpr_kit(&CprKit::default()), "");
+    |                                    ^^^^^^ use of undeclared type `CprKit`
+
+error[E0425]: cannot find function `render_cpr_kit` in this scope
+   --> src/rules_core/cpr/input.rs:760:20
+    |
+760 |         assert_eq!(render_cpr_kit(&CprKit::default()), "");
+    |                    ^^^^^^^^^^^^^^ not found in this scope
+
+error[E0425]: cannot find function `parse_cpr_kit` in this scope
+   --> src/rules_core/cpr/input.rs:761:20
+    |
+761 |         assert_eq!(parse_cpr_kit(""), Ok(CprKit::default()));
+    |                    ^^^^^^^^^^^^^ not found in this scope
+
+error[E0433]: cannot find type `CprKit` in this scope
+   --> src/rules_core/cpr/input.rs:761:42
+    |
+761 |         assert_eq!(parse_cpr_kit(""), Ok(CprKit::default()));
+    |                                          ^^^^^^ use of undeclared type `CprKit`
+
+error[E0425]: cannot find function `parse_cpr_kit` in this scope
+   --> src/rules_core/cpr/input.rs:763:36
+    |
+763 |         let refused = |text: &str| parse_cpr_kit(text).unwrap_err();
+    |                                    ^^^^^^^^^^^^^ not found in this scope
+
+error[E0425]: cannot find function `kit_text_ok` in this scope
+   --> src/rules_core/cpr/input.rs:768:17
+    |
+768 |         assert!(kit_text_ok("Radio Scanner/Music Player") && !kit_text_ok("a | b") && !kit_text_ok("x\ny") && !kit_text_ok(" "));
+    |                 ^^^^^^^^^^^ not found in this scope
+
+error[E0425]: cannot find function `kit_text_ok` in this scope
+   --> src/rules_core/cpr/input.rs:768:63
+    |
+768 |         assert!(kit_text_ok("Radio Scanner/Music Player") && !kit_text_ok("a | b") && !kit_text_ok("x\ny") && !kit_text_ok(" "));
+    |                                                               ^^^^^^^^^^^ not found in this scope
+
+error[E0425]: cannot find function `kit_text_ok` in this scope
+   --> src/rules_core/cpr/input.rs:768:88
+    |
+768 |         assert!(kit_text_ok("Radio Scanner/Music Player") && !kit_text_ok("a | b") && !kit_text_ok("x\ny") && !kit_text_ok(" "));
+    |                                                                                        ^^^^^^^^^^^ not found in this scope
+
+error[E0425]: cannot find function `kit_text_ok` in this scope
+   --> src/rules_core/cpr/input.rs:768:112
+    |
+768 |         assert!(kit_text_ok("Radio Scanner/Music Player") && !kit_text_ok("a | b") && !kit_text_ok("x\ny") && !kit_text_ok(" "));
+    |                                                                                                                ^^^^^^^^^^^ not found in this scope
+
+error[E0599]: no associated function or constant named `load_kit` found for struct `store::CprCharacterStore` in the current scope
+   --> src/rules_core/cpr/store.rs:427:39
+    |
+ 60 | pub struct CprCharacterStore;
+    | ---------------------------- associated function or constant `load_kit` not found for this struct
+...
+427 |         assert_eq!(CprCharacterStore::load_kit(&root), Ok(CprKit::default()));
+    |                                       ^^^^^^^^ associated function or constant not found in `store::CprCharacterStore`
+    |
+help: there is an associated function `load` with a similar name
+    |
+427 -         assert_eq!(CprCharacterStore::load_kit(&root), Ok(CprKit::default()));
+427 +         assert_eq!(CprCharacterStore::load(&root), Ok(CprKit::default()));
+    |
+
+error[E0599]: no associated function or constant named `save_kit` found for struct `store::CprCharacterStore` in the current scope
+   --> src/rules_core/cpr/store.rs:429:28
+    |
+ 60 | pub struct CprCharacterStore;
+    | ---------------------------- associated function or constant `save_kit` not found for this struct
+...
+429 |         CprCharacterStore::save_kit(&kit, &root).expect("saves the kit");
+    |                            ^^^^^^^^ associated function or constant not found in `store::CprCharacterStore`
+    |
+help: there is an associated function `save` with a similar name
+    |
+429 -         CprCharacterStore::save_kit(&kit, &root).expect("saves the kit");
+429 +         CprCharacterStore::save(&kit, &root).expect("saves the kit");
+    |
+
+error[E0599]: no associated function or constant named `load_kit` found for struct `store::CprCharacterStore` in the current scope
+   --> src/rules_core/cpr/store.rs:432:39
+    |
+ 60 | pub struct CprCharacterStore;
+    | ---------------------------- associated function or constant `load_kit` not found for this struct
+...
+432 |         assert_eq!(CprCharacterStore::load_kit(&root), Ok(kit.clone()));
+    |                                       ^^^^^^^^ associated function or constant not found in `store::CprCharacterStore`
+    |
+help: there is an associated function `load` with a similar name
+    |
+432 -         assert_eq!(CprCharacterStore::load_kit(&root), Ok(kit.clone()));
+432 +         assert_eq!(CprCharacterStore::load(&root), Ok(kit.clone()));
+    |
+
+error[E0599]: no associated function or constant named `save_kit` found for struct `store::CprCharacterStore` in the current scope
+   --> src/rules_core/cpr/store.rs:435:36
+    |
+ 60 | pub struct CprCharacterStore;
+    | ---------------------------- associated function or constant `save_kit` not found for this struct
+...
+435 |         assert!(CprCharacterStore::save_kit(&kit, &empty).is_err_and(|e| e.contains("envelope.txt")));
+    |                                    ^^^^^^^^ associated function or constant not found in `store::CprCharacterStore`
+    |
+help: there is an associated function `save` with a similar name
+    |
+435 -         assert!(CprCharacterStore::save_kit(&kit, &empty).is_err_and(|e| e.contains("envelope.txt")));
+435 +         assert!(CprCharacterStore::save(&kit, &empty).is_err_and(|e| e.contains("envelope.txt")));
+    |
+
+Some errors have detailed explanations: E0422, E0425, E0432, E0433, E0599.
+For more information about an error, try `rustc --explain E0422`.
+error: could not compile `codex` (lib test) due to 19 previous errors

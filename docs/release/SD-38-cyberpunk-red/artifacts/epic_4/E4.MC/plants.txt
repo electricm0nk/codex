@@ -1,0 +1,77 @@
+## baseline
+cyberpunkSheetModel: 4 characters, 909 engine rows rendered, each = its row; 264 skill rows in 9 groups; 13 weapons, 111 range DV cells; 5 cyberware pieces, 14 slot containers, 6 Role Ability rows, 8 deck lines; 2 Reputation events, 5 Lifepath answers, 2 ticked injuries of 22; 99 printed lines on the sheet, 18 under Rules and features
+exit=0
+
+## P1a hand-kept number in TSX: a literal 'Humanity cap 80' printed in the vitals box title
+$ git diff -U0 -- src/characterHub/CyberpunkCharacterSheet.tsx
+@@ -213,0 +214 @@ function SheetBox(props: { box: CyberpunkSheetBox; style: CSSProperties }) {
++        {box.id === 'vitals' ? ' (Humanity cap 80)' : null}
+$ npx tsx src/characterHub/cyberpunkSheetModel.test.ts
+exit=1
+/home/ubuntu/workspace/repos/codex/.worktrees/sd38-e4/apps/desktop/src/testSupport/asserts.ts:16
+    throw new Error(message);
+Error: cpr-solo-streetrat: numbers on the sheet that are no engine row: ["80)"]
+reverted; git diff --stat: 0 lines
+
+## P1b hand-kept number in TSX: the Seriously Wounded cell renders a literal 20 instead of its row
+$ git diff -U0 -- src/characterHub/CyberpunkCharacterSheet.tsx
+@@ -348 +348 @@ function Value(props: { cell: CyberpunkSheetCell }) {
+-      {props.cell.value}
++      {props.cell.rowId === 'cpr.derived.seriously_wounded' ? '20' : props.cell.value}
+$ npx tsx src/characterHub/cyberpunkSheetModel.test.ts
+exit=1
+/home/ubuntu/workspace/repos/codex/.worktrees/sd38-e4/apps/desktop/src/testSupport/asserts.ts:10
+    throw new Error(`${message}: expected ${String(expected)}, got ${String(actual)}`);
+Error: cpr-solo-streetrat: cpr.derived.seriously_wounded follows its row: expected 1020, got 20
+reverted; git diff --stat: 0 lines
+
+## P2a missing range row (sheet model): weapon 0's single-shot range DV row (D-1) is not laid out
+$ git diff -U0 -- src/characterHub/cyberpunkSheetModel.ts
+@@ -339 +339 @@ export function buildCyberpunkSheet(
+-  const rangeRows = weaponIndexes.flatMap((n) => [...dvRows(n, 'range_dv'), ...dvRows(n, 'autofire_dv', 'Autofire')]);
++  const rangeRows = weaponIndexes.flatMap((n) => [...(n === 0 ? [] : dvRows(n, 'range_dv')), ...dvRows(n, 'autofire_dv', 'Autofire')]);
+$ npx tsx src/characterHub/cyberpunkSheetModel.test.ts
+exit=1
+Error: cpr-solo-kitted: rule line cpr.weapon.0.range_dv.6 prints "N/A"
+reverted; git diff --stat: 0 lines
+
+## P2b missing range row (sheet model): the last range band's DV cell dropped from every weapon's row
+$ git diff -U0 -- src/characterHub/cyberpunkSheetModel.ts
+@@ -336 +336 @@ export function buildCyberpunkSheet(
+-    const cells = bandIds.map((_band, b) => figure(`cpr.weapon.${n}.${field}.${b}`));
++    const cells = bandIds.slice(0, -1).map((_band, b) => figure(`cpr.weapon.${n}.${field}.${b}`));
+$ npx tsx src/characterHub/cyberpunkSheetModel.test.ts
+exit=1
+Error: cpr-solo-kitted: rule line cpr.weapon.0.range_dv.7 prints "N/A"
+reverted; git diff --stat: 0 lines
+
+## P2c missing range row (sheet model): a weapon whose D-1 row is all computed cells (no N/A band) loses that row; its rows are released, as if no box named them
+$ git diff -U0 -- src/characterHub/cyberpunkSheetModel.ts
+@@ -336,0 +337 @@ export function buildCyberpunkSheet(
++    if (field === 'range_dv' && cells.every((c) => c !== null && c.printed !== true)) { cells.forEach((c) => c !== null && placed.delete(c.rowId)); return []; }
+$ npx tsx src/characterHub/cyberpunkSheetModel.test.ts
+exit=1
+Error: cpr-solo-arsenal: no weapon, armour or range row is left in Other totals: cpr.weapon.6.range_dv.0,cpr.weapon.6.range_dv.1,cpr.weapon.6.range_dv.2,cpr.weapon.6.range_dv.3,cpr.weapon.6.range_dv.4,cpr.weapon.6.range_dv.5,cpr.weapon.6.range_dv.6,cpr.weapon.6.range_dv.7,cpr.weapon.7.range_dv.0,cpr.weapon.7.range_dv.1,cpr.weapon.7.range_dv.2,cpr.weapon.7.range_dv.3,cpr.weapon.7.range_dv.4,cpr.wea
+reverted; git diff --stat: 0 lines
+
+## P2d missing range row (engine): compose_sheet skips band 0 of every weapon's single-shot D-1 row
+$ git diff -U0 -- src/rules_core/cpr/sheet.rs
+@@ -341,0 +342 @@ fn weapon_block<'a>(
++            if field == "range_dv" && b == 0 { continue; }
+$ cd apps/desktop/src-tauri && cargo test --locked -j 8 --bins cpr_adapter -- --test-threads=8
+exit=101
+test cpr_adapter::tests::the_frontend_cyberpunk_sheet_fixtures_are_the_adapters_load_responses ... FAILED
+test result: FAILED. 7 passed; 1 failed; 0 ignored; 0 measured; 855 filtered out; finished in 0.20s
+thread 'cpr_adapter::tests::the_frontend_cyberpunk_sheet_fixtures_are_the_adapters_load_responses' (2526037) panicked at src/cpr_adapter.rs:597:9:
+stale or missing Cyberpunk RED sheet fixtures ["/home/ubuntu/workspace/repos/codex/.worktrees/sd38-e4/apps/desktop/src-tauri/../src/characterHub/__tests__/cyberpunkSheetFixtures/cpr-solo-kitted.json", "/home/ubuntu/workspace/repos/codex/.worktrees/sd38-e4/apps/desktop/src-tauri/../src/characterHub/__tests__/cyberpunkSheetFixtures/cpr-solo-arsenal.json"]; regenerate with CPR_SHEET_FIXTURES_WRITE=1 cargo test --bin codex-desktop the_frontend_cyberpunk_sheet_fixtures_are_the_adapters_load_responses
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+  P2d continued (same plant): the planted fixtures regenerated, as a card that regenerates without reading would, then the frontend test:
+$ CPR_SHEET_FIXTURES_WRITE=1 cargo test --locked -j 8 --bin codex-desktop the_frontend_cyberpunk_sheet_fixtures_are_the_adapters_load_responses -- --test-threads=8
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 862 filtered out; finished in 0.12s
+  git diff --stat:  3 files changed, 1 insertion(+), 60 deletions(-)
+$ cd apps/desktop && npx tsx src/characterHub/cyberpunkSheetModel.test.ts
+exit=1
+Error: cpr-solo-kitted: Heavy Pistol single_shot band 0 cell: expected cpr.weapon.0.range_dv.0, got undefined
+reverted sheet.rs + fixtures; git diff --stat: 0 lines
+

@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Student of Perfection ~ Diamond Body",
+    "name": "Diamond Body",
+    "description": "By spending 1 point from his ki pool, a student of perfection with this power can remove one toxin from his body as if using neutralize poison, using his student of perfection level as his caster level. He can remove only one poison in this way per use of this ability.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Student of Perfection ~ Diamond Body"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.StudentOfPerfectionKiPower"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "UntwistingIronStudent,1"
+      },
+      {
+        "key": "SOURCELONG",
+        "value": "Pathfinder Unchained"
+      },
+      {
+        "key": "SOURCESHORT",
+        "value": "PU"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.16"
+      },
+      {
+        "key": "DESC",
+        "value": "By spending 1 point from his ki pool, a student of perfection with this power can remove one toxin from his body as if using neutralize poison, using his student of perfection level as his caster level. He can remove only one poison in this way per use of this ability."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/support/ag_abilities_pu.lst",
+    "sha256": "5ec588e897907d739c5b66f29ef8486385ceb24c1ef86a3d43bdbfd8b0ead09f",
+    "line": 14,
+    "record_key": "Student of Perfection ~ Diamond Body"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

@@ -1,0 +1,167 @@
+[
+  {
+    "key": "Aldori Defender ~ Counterattack",
+    "class": "Fighter",
+    "level": 10,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+      "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+      "line": 834
+    }
+  },
+  {
+    "key": "Aldori Defender ~ Defensive Parry",
+    "class": "Fighter",
+    "level": 3,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+      "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+      "line": 834
+    }
+  },
+  {
+    "key": "Aldori Defender ~ Disarming Strike",
+    "class": "Fighter",
+    "level": 6,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+      "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+      "line": 834
+    }
+  },
+  {
+    "key": "Aldori Defender ~ Steel Net",
+    "class": "Fighter",
+    "level": 8,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+      "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+      "line": 834
+    }
+  },
+  {
+    "key": "Armiger ~ Ardent",
+    "class": "Fighter",
+    "level": 2,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+      "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+      "line": 835
+    }
+  },
+  {
+    "key": "Armiger ~ Bonus Feats",
+    "class": "Fighter",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+      "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+      "line": 835
+    }
+  },
+  {
+    "key": "Armiger ~ Hellknight Order",
+    "class": "Fighter",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": false,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+      "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+      "line": 835
+    }
+  },
+  {
+    "key": "Armiger ~ Studious Squire",
+    "class": "Fighter",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+      "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+      "line": 835
+    }
+  },
+  {
+    "key": "Lore Warden ~ Scholastic ~ AG",
+    "class": "Fighter",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+      "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+      "line": 836
+    }
+  },
+  {
+    "key": "Lore Warden ~ Skill Over Strength ~ AG",
+    "class": "Fighter",
+    "level": 2,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+      "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+      "line": 836
+    }
+  },
+  {
+    "key": "Lore Warden ~ Swords Secret ~ AG",
+    "class": "Fighter",
+    "level": 3,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+      "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+      "line": 836
+    }
+  }
+]

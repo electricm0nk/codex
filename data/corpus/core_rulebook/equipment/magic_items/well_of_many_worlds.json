@@ -1,0 +1,78 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "magic_items",
+    "cost_gp": 82000.0,
+    "description": "This strange, interdimensional device looks just like a portable hole. Anything placed within it is immediately cast to another world--a parallel world, another planet, or a different plane (chosen randomly). If the well is moved, it opens to a new plane (also randomly determined). It can be picked up, folded, or rolled, just as a portable hole can be. Objects from the world the well touches can come through the opening just as easily--it is a twoway portal.",
+    "key": "Well of Many Worlds",
+    "name": "Well of Many Worlds",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Well of Many Worlds"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Well of Many Worlds"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous"
+      },
+      {
+        "key": "COST",
+        "value": "82000"
+      },
+      {
+        "key": "WT",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.532"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Aura|strong conjuration"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Caster Level|17th"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Slot|none"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Cost|41,000 gp"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Requirements|Craft Wondrous Item, gate"
+      },
+      {
+        "key": "DESC",
+        "value": "This strange, interdimensional device looks just like a portable hole. Anything placed within it is immediately cast to another world--a parallel world, another planet, or a different plane (chosen randomly). If the well is moved, it opens to a new plane (also randomly determined). It can be picked up, folded, or rolled, just as a portable hole can be. Objects from the world the well touches can come through the opening just as easily--it is a twoway portal."
+      }
+    ],
+    "weight_lbs": 0.0
+  },
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 354,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "record_key": "Well of Many Worlds",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

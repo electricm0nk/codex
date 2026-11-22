@@ -1,0 +1,140 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "ability_keys": [
+      "bestiary_2:monster_ability:jellyfish_poison"
+    ],
+    "challenge_rating": "4",
+    "corpus_key": "Jellyfish (Crimson)",
+    "external_ability_refs": [
+      "Amorphous",
+      "Can't Be Tripped",
+      "Compression"
+    ],
+    "key": "bestiary_2:monster:jellyfish_crimson",
+    "monster_class": "Vermin:5",
+    "name": "Jellyfish (Crimson)",
+    "natural_attacks": [
+      {
+        "damage_dice": "1d4",
+        "name": "Tentacle"
+      }
+    ],
+    "race_subtype": "Aquatic",
+    "race_type": "Vermin",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Amorphous|Can't Be Tripped|Compression|Jellyfish ~ Poison"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CHA|-9"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CON|8"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|6"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Mindless|1"
+      },
+      {
+        "key": "CR",
+        "value": "4"
+      },
+      {
+        "key": "DR",
+        "value": "10/piercing or slashing"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|M"
+      },
+      {
+        "key": "HANDS",
+        "value": "0"
+      },
+      {
+        "key": "KIT",
+        "value": "1|TN"
+      },
+      {
+        "key": "LEGS",
+        "value": "0"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Vermin:5"
+      },
+      {
+        "key": "MOVE",
+        "value": "Swim,20"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Tentacle,Weapon.Natural.Weapon Group Natural.Melee.Finesseable.Bludgeoning.Poison,*4,1d4"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "[NAME] Jellyfish"
+      },
+      {
+        "key": "RACESUBTYPE",
+        "value": "Aquatic"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Vermin"
+      },
+      {
+        "key": "REACH",
+        "value": "10"
+      },
+      {
+        "key": "SIZE",
+        "value": "M"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.170"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "0"
+      }
+    ],
+    "size": "M",
+    "source_page": "p.170",
+    "speeds": [
+      {
+        "feet": 20,
+        "mode": "Swim"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-15T01:24:19Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 532,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+    "record_key": "Jellyfish (Crimson)",
+    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

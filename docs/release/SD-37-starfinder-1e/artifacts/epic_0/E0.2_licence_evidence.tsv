@@ -1,0 +1,13 @@
+dir	pcc	PUBNAMELONG	active_COPYRIGHT_lines	OGL1.0a_in_COPYRIGHT	ISOGL	EXTRAFILE	OGL.txt	OGL.txt_lines	All_Rights_Reserved	Community_Use_INFOTEXT	PI_declaration_in_OGL.txt	data_rows
+paizo/core	paizo/core/_starfinder_core_rulebook.pcc	Paizo	4	True	-	# Do not remove the EXTRAFILE comment.,#EXTRAFILE:OGL.txt	True	103	False	True	False	5959
+paizo/core/_society	paizo/core/_society/_.pcc	-	0	False	-	-	False	0	False	False	False	15
+paizo/armory	paizo/armory/_starfinder_armory.pcc	Paizo	6	True	-	-	True	42	False	True	False	2977
+paizo/character_operations_manual	paizo/character_operations_manual/_character_operations_manual.pcc	Paizo	5	True	-	-	True	41	False	True	False	1507
+paizo/pact_worlds	paizo/pact_worlds/_starfinder_pact_worlds.pcc	Paizo	8	True	-	#EXTRAFILE:OGL.txt	True	22	False	True	False	527
+paizo/near_space	paizo/near_space/_near_space.pcc	Paizo	5	True	-	-	True	40	False	True	False	396
+paizo/alien_archive	paizo/alien_archive/_starfinder_alien_archive.pcc	Paizo	4	True	-	-	True	40	False	True	False	488
+paizo/alien_archive_2	paizo/alien_archive_2/_starfinder_alien_archive_2.pcc	Paizo	4	True	-	-	True	40	False	True	False	519
+paizo/alien_archive_3	paizo/alien_archive_3/_starfinder_alien_archive_3.pcc	Paizo	4	True	-	-	True	39	False	True	False	345
+paizo/starfinder_society_rules	paizo/starfinder_society_rules/_sfs.pcc	Paizo	5	True	-	# Do not remove the EXTRAFILE comment.,#EXTRAFILE:OGL.txt,#EXTRAFILE:additionalResources.txt	True	122	True	True	True	177
+lpj_design/infinite_space	lpj_design/infinite_space/themes/theme_outlaw_crew/_lpj9304.pcc	Louis Porter Jr. Design, Inc.	15	True	-	-	True	60	False	False	False	37
+TOTAL_ROWS 12947

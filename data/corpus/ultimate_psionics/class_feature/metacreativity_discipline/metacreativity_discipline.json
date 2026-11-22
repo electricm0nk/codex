@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Metacreativity Discipline",
+    "name": "Metacreativity Discipline",
+    "class": null,
+    "description": "You have chosen to specialize in Metacreativity powers.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "PsionClassFeatures.SpecialQuality.ClassSpecialization.PsionicDiscipline"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MetacreativityDisciplineLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You have chosen to specialize in Metacreativity powers."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Psion Class Feature|AUTOMATIC|Metacreativity ~ Summoner's Call|PREVARGTEQ:MetacreativityDisciplineLVL,2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Psion Class Feature|AUTOMATIC|Metacreativity ~ Ectoplasmic Protection|PREVARGTEQ:MetacreativityDisciplineLVL,8"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Psion Class Feature|AUTOMATIC|Metacreativity ~ Maestro of Ectoplasm|PREVARGTEQ:MetacreativityDisciplineLVL,14"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Psion Class Feature|AUTOMATIC|Metacreativity ~ Astral Ally|PREVARGTEQ:MetacreativityDisciplineLVL,20"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.51"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 397,
+    "record_key": "Metacreativity Discipline"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

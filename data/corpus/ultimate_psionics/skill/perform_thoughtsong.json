@@ -1,0 +1,45 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "key": "Perform (Thoughtsong)",
+    "name": "Perform (Thoughtsong)",
+    "raw_tokens": [
+      {
+        "key": "KEYSTAT",
+        "value": "CHA"
+      },
+      {
+        "key": "USEUNTRAINED",
+        "value": "NO"
+      },
+      {
+        "key": "TYPE",
+        "value": "Charisma.Perform.Base"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.297"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Perform (Thoughtsong)|3|TYPE=ClassSkill|PRECSKILL:1,Perform (Thoughtsong)|PRESKILL:1,Perform (Thoughtsong)=1"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T12:11:35Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 11,
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_skills.lst",
+    "record_key": "Perform (Thoughtsong)",
+    "sha256": "0f4493199e7e13bab58c63551160be3ef872e131fba5999d3996db197af5bd49"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

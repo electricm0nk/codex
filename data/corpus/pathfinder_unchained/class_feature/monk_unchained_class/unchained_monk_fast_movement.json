@@ -1,0 +1,98 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-03T17:43:07Z",
+  "data": {
+    "key": "Unchained Monk ~ Fast Movement",
+    "name": "Fast Movement",
+    "class_key": "Monk ~ Unchained Class",
+    "base_class_key": "Monk",
+    "category": "Special Ability",
+    "type_tokens": [
+      "Unchained Monk Class Feature",
+      "SpecialQuality",
+      "Extraordinary",
+      "Fast Movement"
+    ],
+    "min_level": 3,
+    "is_granted": true,
+    "visible": null,
+    "class_skills": [],
+    "description": "At 3rd level, a monk gains an enhancement bonus to his land speed, as shown on Table 1-2. A monk in armor or carrying a medium or heavy load loses this extra speed.",
+    "source_page": "p.15",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Unchained Monk ~ Fast Movement"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Unchained Monk Class Feature.SpecialQuality.Extraordinary.Fast Movement"
+      },
+      {
+        "key": "SERVESAS",
+        "value": "ABILITY=Special Ability|Monk ~ Fast Movement"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MonkFastMovementLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MonkFastMovementBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "At 3rd level, a monk gains an enhancement bonus to his land speed, as shown on Table 1-2. A monk in armor or carrying a medium or heavy load loses this extra speed."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.15"
+      }
+    ],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "MOVEADD",
+          "TYPE=Walk",
+          "MonkFastMovementBonus",
+          "TYPE=Enhancement",
+          "PREVAREQ:ENCUMBERANCE,0,var(\"COUNT[EQTYPE.ARMOR.EQUIPPED]\"),0"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "MonkFastMovementBonus",
+          "10*floor(MonkFastMovementLVL/3)"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "MonkFastMovementLVL",
+          "MonkLVL"
+        ]
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst",
+    "sha256": "2becbb0524bd4c367cc1273434c20bcd8e42e3e08abd372f99b005e69e8c4725",
+    "line": 466,
+    "record_key": "Unchained Monk ~ Fast Movement"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

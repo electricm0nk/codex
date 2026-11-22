@@ -1,0 +1,43 @@
+{
+  "codex_generated_name": false,
+  "completeness": "chassis_only",
+  "data": {
+    "key": "Racial Heritage ~ Samsaran",
+    "name": "Samsaran",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Racial Heritage ~ Samsaran"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "IsSamsaran|Samsaran"
+      },
+      {
+        "key": "TYPE",
+        "value": "Racial Heritage"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T16:43:17Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 9,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/samsaran/samsaran_templates.lst",
+    "record_key": "Racial Heritage ~ Samsaran",
+    "sha256": "dc3f5aa945914ac8f09ee1285d438eb683fd1d66cd0374436732514c8213bee0"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

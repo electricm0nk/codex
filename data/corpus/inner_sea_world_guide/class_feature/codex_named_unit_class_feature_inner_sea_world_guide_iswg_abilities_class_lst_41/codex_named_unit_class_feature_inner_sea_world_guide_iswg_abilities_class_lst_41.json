@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Codex-Named Unit (class_feature_inner_sea_world_guide_iswg_abilities_class_lst_41)",
+    "name": "Codex-Named Unit (class_feature_inner_sea_world_guide_iswg_abilities_class_lst_41)",
+    "class": null,
+    "description": "1/day, you may perform a harrowing for yourself and all allies within 20 ft. This harrowing takes 10 minutes, and allies to be affected by it must remain within 20 ft. for the entire time. This harrowing provides an insight bonus for 24 hrs based upon the suit with the most cards showing (in case of a tie, choose one). The suit bonuses are as follows. Strength: +1 on attack rolls; Dexterity: +1 to AC; Constitution: +1 on weapon damage rolls; Intelligence: +1 on all skill checks; Wisdom: +1 on all saving throws; Charisma: +1 on caster level and concentration checks.",
+    "raw_tokens": [
+      {
+        "key": "NAMEISPI",
+        "value": "YES"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "1/day, you may perform a harrowing for yourself and all allies within 20 ft. This harrowing takes 10 minutes, and allies to be affected by it must remain within 20 ft. for the entire time. This harrowing provides an insight bonus for 24 hrs based upon the suit with the most cards showing (in case of a tie, choose one). The suit bonuses are as follows. Strength: +1 on attack rolls; Dexterity: +1 to AC; Constitution: +1 on weapon damage rolls; Intelligence: +1 on all skill checks; Wisdom: +1 on all saving throws; Charisma: +1 on caster level and concentration checks."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.276"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_abilities_class.lst",
+    "sha256": "5fc5db9e0bcd8ad3313f696cf1b0dd95e58f41d4f8ef141c5562c9b773c7c811",
+    "line": 41,
+    "record_key": "Codex-Named Unit (class_feature_inner_sea_world_guide_iswg_abilities_class_lst_41)"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "name",
+  "pi_marker": "redacted",
+  "codex_generated_name": true,
+  "rename": {
+    "reason": "name_pi_blocked",
+    "coordinate": "inner_sea_world_guide:iswg_abilities_class.lst:41"
+  }
+}

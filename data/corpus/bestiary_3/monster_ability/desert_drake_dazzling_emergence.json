@@ -1,0 +1,55 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Desert Drake ~ Dazzling Emergence",
+    "delivery": "Extraordinary",
+    "description": "During a surprise round, a desert drake can use Dazzling Display as a standard action.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:desert_drake_dazzling_emergence",
+    "name": "Dazzling Emergence",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "During a surprise round, a desert drake can use Dazzling Display as a standard action."
+      },
+      {
+        "key": "KEY",
+        "value": "Desert Drake ~ Dazzling Emergence"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.105"
+      },
+      {
+        "key": "TYPE",
+        "value": "DesertDrakeRacialAbility.SpecialQuality.Extraordinary"
+      }
+    ],
+    "source_page": "p.105",
+    "traits": [
+      "DesertDrakeRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T14:09:11Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 803,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Desert Drake ~ Dazzling Emergence",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

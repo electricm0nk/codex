@@ -1,0 +1,49 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Haunt Collector ~ Spirit Speaker",
+    "name": "Spirit Speaker",
+    "class": "Occultist",
+    "description": "A haunt collector with at least one haunted implement can commune with the spirits %1 times per day. By holding a seance for 10 minutes, he can ask questions of a destroyed undead or a neutralized or destroyed haunt. To use this ability on a corporeal undead, the haunt collector must have the creature's head in his possession. For a haunt or incorporeal undead, this seance must be held in the haunt's location or where the incorporeal undead was destroyed. Treat this ability as speak with haunt (ACG) or as speak with dead (but affecting only destroyed undead rather than only corpses), using the haunt collector's occultist level as the caster level.|(OccultistLVL-4)/4",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Haunt Collector ~ Spirit Speaker"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Occultist Class Feature.HauntCollectorClassFeatures.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.62"
+      },
+      {
+        "key": "DESC",
+        "value": "A haunt collector with at least one haunted implement can commune with the spirits %1 times per day. By holding a seance for 10 minutes, he can ask questions of a destroyed undead or a neutralized or destroyed haunt. To use this ability on a corporeal undead, the haunt collector must have the creature's head in his possession. For a haunt or incorporeal undead, this seance must be held in the haunt's location or where the incorporeal undead was destroyed. Treat this ability as speak with haunt (ACG) or as speak with dead (but affecting only destroyed undead rather than only corpses), using the haunt collector's occultist level as the caster level.|(OccultistLVL-4)/4"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/support/ha_abilities_class_oa.lst",
+    "sha256": "9c111f652f8442433ea215fa11e67258c7e6c15c75d1c1753fa6fef34827f46c",
+    "line": 268,
+    "record_key": "Haunt Collector ~ Spirit Speaker"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

@@ -1,0 +1,100 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Saurian Champion ~ Mount Bonuses",
+    "name": "Saurian Champion ~ Mount Bonuses",
+    "class": "Saurian Champion",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Companion ~ Devotion|PREVARGTEQ:MasterLevel,5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Saurian Champion Mount ~ Medium|PRESIZEEQ:M"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Saurian Champion Mount ~ Large|PRESIZEEQ:L"
+      },
+      {
+        "key": "BONUS",
+        "value": "SAVE|ALL|3|TYPE=Morale|PREVARGTEQ:MasterLevel,14"
+      },
+      {
+        "key": "BONUS",
+        "value": "SIZEMOD|NUMBER|1|PREVARGTEQ:MasterLevel,10"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR,CON|-6"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|2|PREVARGTEQ:MasterLevel,12"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR,CON|2|PREVARGTEQ:MasterLevel,14"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|2|PREVARGTEQ:MasterLevel,16"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR,CON|2|PREVARGTEQ:MasterLevel,18"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|LOADSCORE|8"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|1|TYPE=Base.STACK|PREVARGTEQ:MasterLevel,12"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|1|TYPE=Base.STACK|PREVARGTEQ:MasterLevel,14"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|1|TYPE=Base.STACK|PREVARGTEQ:MasterLevel,16"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|1|TYPE=Base.STACK|PREVARGTEQ:MasterLevel,18"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=TYPE.Natural|REACH|5|PREVARGTEQ:MasterLevel,15"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SaveBonus|+%1 on Will saves vs. enchantment spells and effects (Devotion).|2*(2+(MasterLevel>=14))"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 446,
+    "record_key": "Saurian Champion ~ Mount Bonuses"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

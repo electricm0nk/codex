@@ -1,0 +1,66 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Halfling Racial Subtype ~ Slave Born",
+    "name": "Slave Born",
+    "description": "These halflings come from lineages that have spent countless generations as property. Though usually free themselves, the weight of slavery still bears down on their souls, making them eager to please and prone to sudden fits of fear. These halflings have the craven and ingratiating alternate racial traits.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Halfling Racial Subtype ~ Slave Born"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Halfling Racial Subtype.SpecialQuality"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Halfling Racial Subtype ~ Slave Born],[!PREFACT:1,ABILITIES,Halfling_ReplaceFearless=true,Halfling_ReplaceHalflingLuck=true,Halfling_ReplaceKeenSenses=true,Halfling_ReplaceSureFooted=true]"
+      },
+      {
+        "key": "DESC",
+        "value": "These halflings come from lineages that have spent countless generations as property. Though usually free themselves, the weight of slavery still bears down on their souls, making them eager to please and prone to sudden fits of fear. These halflings have the craven and ingratiating alternate racial traits."
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "SKILL|Perform%"
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "Slave Born"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Halfling Racial Trait|NORMAL|Halfling ~ Craven|Halfling ~ Ingratiating (%LIST)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.62"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+    "sha256": "ea475d7c207e2c4b182019997689ca48a090019620250e43bc4e85b0ff77c3a3",
+    "line": 2187,
+    "record_key": "Halfling Racial Subtype ~ Slave Born"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

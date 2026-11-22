@@ -1,0 +1,47 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "You have a +%1 dodge bonus to Armor Class against the your studied target.|floor(HalflingSlayerFavClassBonus/4)",
+    "key": "Halfling ~ Slayer ~ Studied Target Dodge Bonus",
+    "name": "Studied Target Dodge Bonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Halfling ~ Slayer ~ Studied Target Dodge Bonus"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "You have a +%1 dodge bonus to Armor Class against the your studied target.|floor(HalflingSlayerFavClassBonus/4)"
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|AC|TYPE=Dodge|HalflingSlayerFavClassBonus/4"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 327,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_race.lst",
+    "record_key": "Halfling ~ Slayer ~ Studied Target Dodge Bonus",
+    "sha256": "f57e4d6123c356c9af9b493e691f7224a98998d8cb76dddf894009af4c84820d"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:prose_formula_segment"
+  ]
+}

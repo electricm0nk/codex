@@ -1,0 +1,10 @@
+# identifier
+OK_NO_BUNDLE_TAGS
+# 1 tokens
+847:+              placeholder={preview?.culturalLanguage && !preview.culturalLanguage.picked ? `Rolled: ${preview.culturalLanguage.name}` : ''}
+# 2 noop
+OK_NO_NOOP_HANDLERS
+# 3 mocks
+OK_NO_MOCK_LEAKS
+# 4 would
+OK_NO_WOULD_STRINGS

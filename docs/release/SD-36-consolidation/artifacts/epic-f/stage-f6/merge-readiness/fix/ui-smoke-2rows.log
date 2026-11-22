@@ -1,0 +1,10 @@
+App data root: /tmp/codex-ui-smoke-f6-mr-blockers-SrLBzb/data/io.electricm0nk.codex (isolated; the real store /home/ubuntu/.local/share/io.electricm0nk.codex is never opened)
+Launching app for agent 'f6-mr-blockers'...
+PASS  sheet-tab-actions
+PASS  intelligent-item-catalog-open-and-search
+
+2/2 green, 0 red, 0 blocked, 0 manual, 0 not-run (M = 2 rows)
+Cleanup: 1 character(s) created across 2 row(s) with a cleanup record, 1 deleted, 0 leftover; store /tmp/codex-ui-smoke-f6-mr-blockers-SrLBzb/data/io.electricm0nk.codex now holds: 00000000-0000-0000-0000-000000000001, 00000000-0000-0000-0000-000000000002
+Evidence: /tmp/claude-1000/-home-ubuntu-workspace-repos-codex/6badc5b8-ae3b-4359-80c5-cd0b1598973e/scratchpad/sd36/f6/uismoke-out
+Removed isolated app-data root /tmp/codex-ui-smoke-f6-mr-blockers-SrLBzb (it held 2 character(s) at the end: 00000000-0000-0000-0000-000000000001, 00000000-0000-0000-0000-000000000002).
+EXIT=0

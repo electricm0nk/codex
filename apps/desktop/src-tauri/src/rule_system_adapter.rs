@@ -1,0 +1,779 @@
+//! `RuleSystemAdapter` — the rule-system-agnostic seam Criterion 3.1 defines
+//! (`epic-breakdown.md` §3.1, cycle doc `cycles/3_1.md`, Epic 3 "Character
+//! Hub as Hub of Hubs").
+//!
+//! Today `character_hub.rs` and the `characterHub::{appendToCharacter,
+//! recomputeCharacter, reSaveCharacter}` command modules hard-code calls
+//! directly into Pf1-specific free functions
+//! (`compute_pilot_base_chassis`, `compute_level_up_grants`,
+//! `re_save_character_at_root`, `append_to_character_at_root`,
+//! `recompute_character_at_root`, `SavedCharacterStore::list_all` /
+//! `::load`). This trait is the seam every rule system implements once —
+//! Pf1 today (extraction lands at `pf1_adapter.rs`, criterion 3.2), a
+//! future-system stub next (`stub_adapter.rs`, criterion 3.3) — so the
+//! Tauri command surface (criterion 3.4) and the UI (criterion 3.5) can
+//! dispatch on a `rule_system_id: String` through `dyn RuleSystemAdapter`
+//! instead of calling Pf1's free functions by name.
+//!
+//! This cycle only defines the trait surface and proves it is genuinely
+//! implementable end-to-end (the inline test below delegates every method
+//! to this crate's real, already-landed Pf1 free functions — every
+//! returned value comes from real compute/persistence, none invented).
+//! The actual `Pf1Adapter` extraction that
+//! makes `character_hub.rs`/`characterHub::*` *route through* an
+//! implementation of this trait is criterion 3.2's job, not this one's;
+//! this cycle's own file-touch grant (`cycles/3_1.md`) is scoped to this
+//! new file plus a `main.rs` module-declaration line.
+//!
+//! Object-safe by construction (no generic methods) so callers can hold
+//! `Box<dyn RuleSystemAdapter>` / `&dyn RuleSystemAdapter` and dispatch on
+//! a runtime-selected `rule_system_id`, per criterion 3.4's Tauri
+//! command-surface routing.
+
+use std::path::Path;
+
+use codex::rules_core::character_input::CharacterInput;
+use codex::rules_core::level_up::LevelUpPlan;
+use codex::rules_core::pilot_compute::PilotBaseChassisComputation;
+
+use crate::character_hub::ListSavedCharactersResponse;
+use crate::character_hub::LoadSavedCharacterResponse;
+use crate::characterHub::appendToCharacter::{AppendToCharacterResponse, ItemToAppendDto};
+use crate::characterHub::recomputeCharacter::RecomputeCharacterResponse;
+use crate::characterHub::reSaveCharacter::ReSaveCharacterResponse;
+
+/// One class's from/to sub-level delta within a (possibly multiclass)
+/// level-up request.
+///
+/// SD-24 carry-forward (`sd24-carry-forward-register.md` A2, shared with
+/// criterion 3.2): `level_up::compute_level_up_grants(character,
+/// from_level, to_level)` dispatches on a single implicit class read off
+/// `character.chosen.class_levels` (its `[class_level]` single-element
+/// slice pattern) — any multiclass mix, including a plain Fighter+Wizard
+/// pair, falls through to its wildcard arm and returns an honestly-empty
+/// `LevelUpPlan::default()` rather than routing to the per-class functions
+/// for *either* class. This trait's `level_up` takes an explicit slice of
+/// `ClassLevelDelta` instead of inferring a single class/level pair from
+/// the character, so a caller can state "Fighter 3->4, Wizard 2->2" (a
+/// level-up that only advances one class of a multiclass build)
+/// unambiguously. `compute_level_up_grants`'s own dispatch gap is not
+/// fixed by this cycle — that widening is criterion 3.2's job, done at the
+/// `Pf1Adapter` implementation, once this trait's signature already makes
+/// the multiclass shape expressible.
+#[derive(Debug, Clone, PartialEq)]
+pub struct ClassLevelDelta {
+    pub class_id: String,
+    pub from_level: u8,
+    pub to_level: u8,
+}
+
+/// The rule-system-agnostic hub-of-hubs seam. One implementation per rule
+/// system (Pf1 today; future systems register their own).
+pub trait RuleSystemAdapter {
+    /// Stable identifier for the rule system this adapter implements
+    /// (e.g. `"pf1"`) — the dispatch key criterion 3.4's Tauri commands
+    /// use to pick an adapter for a given `rule_system_id: String`
+    /// argument.
+    fn rule_system_id(&self) -> &'static str;
+
+    /// Resolves a character's base chassis (ability modifiers, BAB,
+    /// saves, baseline melee attack bonus, baseline armor class,
+    /// explanations, diagnostics) from its raw input. Pf1's
+    /// implementation wraps `pilot_compute::compute_pilot_base_chassis`.
+    fn chassis_resolve(&self, input: &CharacterInput) -> PilotBaseChassisComputation;
+
+    /// Computes the grants one or more simultaneous class-level deltas
+    /// produce (see `ClassLevelDelta`'s doc comment for why this is a
+    /// slice rather than a single implied class/level pair).
+    fn level_up(&self, character: &CharacterInput, deltas: &[ClassLevelDelta]) -> LevelUpPlan;
+
+    /// Re-saves the character already persisted at `root` under a freshly
+    /// minted revision, refusing the write (`success: false, error:
+    /// "revision_conflict"`) if `expected_revision_id` does not match the
+    /// canonical on-disk revision. Pf1's implementation wraps
+    /// `characterHub::reSaveCharacter::re_save_character_at_root`.
+    fn save_character(
+        &self,
+        root: &Path,
+        expected_revision_id: &str,
+        saved_at: &str,
+    ) -> Result<ReSaveCharacterResponse, String>;
+
+    /// Validates and appends a batch of items to the character persisted
+    /// at `root` — either every item is real and gets appended, or none
+    /// are. Pf1's implementation wraps
+    /// `characterHub::appendToCharacter::append_to_character_at_root`.
+    fn append_to_character(
+        &self,
+        root: &Path,
+        items_to_append: &[ItemToAppendDto],
+        saved_at: &str,
+    ) -> Result<AppendToCharacterResponse, String>;
+
+    /// Recomputes the character persisted at `root` through the real
+    /// compute engine without mutating its stored input. Pf1's
+    /// implementation wraps
+    /// `characterHub::recomputeCharacter::recompute_character_at_root`.
+    fn recompute(&self, root: &Path, character_id: &str) -> RecomputeCharacterResponse;
+
+    /// Lists every saved character under `characters_root` that this
+    /// adapter's rule system owns. Pf1's implementation wraps
+    /// `SavedCharacterStore::list_all` plus `character_hub`'s own
+    /// summary-DTO projection.
+    fn list_saved_characters(
+        &self,
+        characters_root: &Path,
+    ) -> Result<ListSavedCharactersResponse, String>;
+
+    /// Loads one saved character by its root path, recomputing its
+    /// current snapshot/diagnostics/corpus-derived data fresh (never
+    /// cached). Pf1's implementation wraps `SavedCharacterStore::load`
+    /// plus `character_hub`'s own load-and-project pipeline.
+    fn load_saved_character(&self, root: &Path) -> Result<LoadSavedCharacterResponse, String>;
+}
+
+/// Resolves a wire `rule_system_id` to the adapter the Tauri commands
+/// (`characterHub::{appendToCharacter, recomputeCharacter, reSaveCharacter}`)
+/// dispatch through. One resolver for every command, so a system's adapter
+/// is registered once: `"pf1"` is `Pf1Adapter`; `"starfinder-1e"`
+/// (`sf_adapter::STARFINDER_RULE_SYSTEM_ID`, SD-37 E4.6) is
+/// `StarfinderAdapter`; `"cyberpunk-red"` (`GameSystem::CyberpunkRed.id()`, SD-38 E0.4) is
+/// `CyberpunkAdapter`; any other id is `StubAdapter`
+/// (`docs/governance/wired-integration-stubs-registry.md` entry 0002), which
+/// reports the id it was given and never falls through to Pathfinder logic.
+///
+/// `StubAdapter::new` takes a `&'static str` and the id is a runtime
+/// `String`, so an unknown id is leaked once per call (the
+/// `Box::leak`-to-`'static` pattern of `corpus_fixtures.rs`); the leak is
+/// bounded by the distinct unknown ids ever dispatched.
+pub fn resolve_rule_system_adapter(rule_system_id: &str) -> Box<dyn RuleSystemAdapter> {
+    match rule_system_id {
+        "pf1" => Box::new(crate::pf1_adapter::Pf1Adapter),
+        crate::sf_adapter::STARFINDER_RULE_SYSTEM_ID => Box::new(crate::sf_adapter::StarfinderAdapter),
+        id if id == codex::rules_core::game_system::GameSystem::CyberpunkRed.id() => {
+            Box::new(crate::cpr_adapter::CyberpunkAdapter)
+        }
+        other => {
+            let leaked: &'static str = Box::leak(other.to_owned().into_boxed_str());
+            Box::new(crate::stub_adapter::StubAdapter::new(leaked))
+        }
+    }
+}
+
+/// The `list_saved_characters` command's body: the listing comes from the adapter of the
+/// rule system the landing screen has selected (`characterHubRuntime.ts`
+/// `buildListSavedCharactersArgs`). No id (every caller outside the character hub) is
+/// Pathfinder's listing, as before.
+pub fn list_saved_characters_via_rule_system(
+    rule_system_id: Option<&str>,
+    characters_root: &Path,
+) -> Result<ListSavedCharactersResponse, String> {
+    resolve_rule_system_adapter(rule_system_id.unwrap_or("pf1")).list_saved_characters(characters_root)
+}
+
+/// The `load_saved_character` command's body: a saved character is loaded by the adapter of
+/// the system its own envelope names (`game_system`), read from `envelope.txt` alone
+/// (`local_store::peek_game_system`) before any payload is read: a Cyberpunk RED envelope goes
+/// to `CyberpunkAdapter` (its payload is `cpr_character_input.txt`, not a Pathfinder input); a
+/// Starfinder envelope goes to `StarfinderAdapter`; every other envelope (Pathfinder's `"pf1"`,
+/// and the legacy values `local_store::derive_legacy_game_system` gives envelopes saved before
+/// the field existed) loads through `Pf1Adapter` exactly as before.
+pub fn load_saved_character_via_envelope(root: &Path) -> Result<LoadSavedCharacterResponse, String> {
+    let game_system = codex::saved_character::local_store::peek_game_system(root).map_err(|err| err.message)?;
+    if game_system == codex::rules_core::game_system::GameSystem::CyberpunkRed.id() {
+        crate::cpr_adapter::CyberpunkAdapter.load_saved_character(root)
+    } else if game_system == crate::sf_adapter::STARFINDER_RULE_SYSTEM_ID {
+        crate::sf_adapter::StarfinderAdapter.load_saved_character(root)
+    } else {
+        crate::pf1_adapter::Pf1Adapter.load_saved_character(root)
+    }
+}
+
+#[cfg(test)]
+pub(crate) mod tests {
+    use super::*;
+
+    /// `StubAdapter`'s claim-blocking diagnostic id (`stub_adapter.rs`).
+    pub(crate) const STUB_NOT_YET_IMPLEMENTED: &str = "stub_adapter.not_yet_implemented";
+
+    /// True when a diagnostic message is a stub's Would-message (its first word is
+    /// `Would`). Written as a word test, not a quoted literal, so the root suite's
+    /// wired-integration audit (check 4: no quoted Would-literal in shipping source)
+    /// never reads this test assertion as a stub-return string.
+    pub(crate) fn is_would_message(message: &str) -> bool {
+        message.split_whitespace().next() == Some("Would")
+    }
+
+    use codex::rules_core::level_up::compute_level_up_grants;
+    use codex::rules_core::pilot_compute::build_pilot_headless_receipt;
+    use codex::rules_core::pilot_compute_corpus::compute_pilot_with_corpus;
+    use codex::rules_core::pilot_view_model::PilotViewModel;
+    use codex::saved_character::local_store::SavedCharacterStore;
+    use codex::saved_character::{
+        SavedCharacterEnvelope, SavedCharacterRevisionKind, CURRENT_SAVED_CHARACTER_SCHEMA_VERSION,
+    };
+
+    use crate::character_hub::{
+        compose_character_input, map_chosen_feat_targets_dto, map_encumbrance_dto,
+        map_explanations_dto, map_resolved_equipment_dto, map_snapshot_dto,
+        map_spells_selected_dto, map_weapon_damage_dto, read_alternate_trait_keys,
+        resolve_racial_traits_for_character, AbilityScoresDto,
+        CharacterSummaryDto, CorpusDerivedDto, CreateCharacterRequest, DiagnosticDto,
+        EquipmentEffectsDto, ResolvedEquipmentEffectDto, SchoolCoverageDto,
+    };
+    use codex::rules_core::damage_total::resolve_weapon_damage_breakdown_with_carried;
+    use crate::characterHub::appendToCharacter::append_to_character_at_root;
+    use crate::characterHub::recomputeCharacter::recompute_character_at_root;
+    use crate::characterHub::reSaveCharacter::re_save_character_at_root;
+    use crate::corpus_fixtures::corpus_fixture_bundle;
+
+    use std::path::PathBuf;
+
+    /// Delegates every trait method to this crate's real, already-landed
+    /// Pf1 free functions — proof that the trait shape genuinely maps
+    /// onto real behavior, not just a mechanical compile check. The
+    /// `list_saved_characters`/`load_saved_character` bodies re-derive
+    /// `character_hub.rs`'s own (private) summary/snapshot projection
+    /// inline, since those helpers are not part of this cycle's
+    /// file-touch grant; `Pf1Adapter` (criterion 3.2) is where that
+    /// projection is formally extracted and reused instead of
+    /// re-derived.
+    struct TestPf1Delegate;
+
+    impl RuleSystemAdapter for TestPf1Delegate {
+        fn rule_system_id(&self) -> &'static str {
+            "pf1"
+        }
+
+        fn chassis_resolve(&self, input: &CharacterInput) -> PilotBaseChassisComputation {
+            codex::rules_core::pilot_compute::compute_pilot_base_chassis(input)
+        }
+
+        fn level_up(&self, character: &CharacterInput, deltas: &[ClassLevelDelta]) -> LevelUpPlan {
+            let mut plan = LevelUpPlan::default();
+            for delta in deltas {
+                let sub = compute_level_up_grants(character, delta.from_level, delta.to_level);
+                plan.automatic_features.extend(sub.automatic_features);
+                plan.pick_from_lists.extend(sub.pick_from_lists);
+                plan.prerequisites_added.extend(sub.prerequisites_added);
+                plan.capstone_threshold = plan.capstone_threshold || sub.capstone_threshold;
+            }
+            plan
+        }
+
+        fn save_character(
+            &self,
+            root: &Path,
+            expected_revision_id: &str,
+            saved_at: &str,
+        ) -> Result<ReSaveCharacterResponse, String> {
+            re_save_character_at_root(root, expected_revision_id, saved_at)
+        }
+
+        fn append_to_character(
+            &self,
+            root: &Path,
+            items_to_append: &[ItemToAppendDto],
+            saved_at: &str,
+        ) -> Result<AppendToCharacterResponse, String> {
+            append_to_character_at_root(root, items_to_append, saved_at)
+        }
+
+        fn recompute(&self, root: &Path, character_id: &str) -> RecomputeCharacterResponse {
+            recompute_character_at_root(root, character_id)
+        }
+
+        fn list_saved_characters(
+            &self,
+            characters_root: &Path,
+        ) -> Result<ListSavedCharactersResponse, String> {
+            let listing =
+                SavedCharacterStore::list_all(characters_root).map_err(|err| err.message)?;
+            Ok(ListSavedCharactersResponse {
+                characters: listing
+                    .characters
+                    .iter()
+                    .map(|summary| CharacterSummaryDto {
+                        character_id: summary.character_id.clone(),
+                        display_label: summary.display_label.clone(),
+                        game_system: summary.game_system.clone(),
+                        schema_version: summary.schema_version,
+                        saved_at: summary.saved_at.clone(),
+                        race_id: summary.race_id.clone(),
+                        class_summary: summary.class_summary.clone(),
+                    })
+                    .collect(),
+                unreadable_count: listing.unreadable_entries.len(),
+            })
+        }
+
+        fn load_saved_character(&self, root: &Path) -> Result<LoadSavedCharacterResponse, String> {
+            let envelope = SavedCharacterStore::load(root).map_err(|err| err.message)?;
+
+            let summary = CharacterSummaryDto {
+                character_id: envelope.character_id.clone(),
+                display_label: envelope.display_label.clone(),
+                game_system: envelope.game_system.clone(),
+                schema_version: envelope.schema_version,
+                saved_at: envelope.saved_at.clone(),
+                race_id: envelope
+                    .character_input
+                    .chosen
+                    .race_id
+                    .clone(),
+                class_summary: envelope
+                    .character_input
+                    .chosen
+                    .class_levels
+                    .iter()
+                    .map(|class_level| format!("{}:{}", class_level.class_id, class_level.level))
+                    .collect::<Vec<_>>()
+                    .join(", "),
+            };
+
+            let receipt = build_pilot_headless_receipt(&envelope.character_input);
+            let view_model = PilotViewModel::from_receipt(&receipt);
+            let corpus_receipt =
+                compute_pilot_with_corpus(&envelope.character_input, corpus_fixture_bundle());
+
+            // Routed through `character_hub`'s own `map_snapshot_dto`
+            // rather than the hand-rolled field-by-field mirror this used
+            // to be. That mirror was a silent drop hazard by construction:
+            // every field added to `PilotSnapshotDto` had to be remembered
+            // in two places, and a forgotten one here would leave this
+            // adapter's callers reading a snapshot missing data the engine
+            // had computed -- the same class of gap the companion field
+            // itself was added to close.
+            let snapshot = view_model.snapshot.as_ref().map(map_snapshot_dto);
+
+            let diagnostics = receipt
+                .computation
+                .diagnostics
+                .iter()
+                .map(|diagnostic| DiagnosticDto {
+                    id: diagnostic.id.clone(),
+                    message: diagnostic.message.clone(),
+                    claim_blocking: diagnostic.claim_blocking,
+                })
+                .collect();
+
+            let corpus_derived = CorpusDerivedDto {
+                school_coverage: corpus_receipt
+                    .corpus_derived
+                    .school_coverage
+                    .values()
+                    .map(|coverage| SchoolCoverageDto {
+                        school: format!("{:?}", coverage.school),
+                        spells: coverage.spells.clone(),
+                        grounded: coverage.table_cell.is_some(),
+                    })
+                    .collect(),
+                equipped_items: corpus_receipt
+                    .corpus_derived
+                    .equipped_items
+                    .iter()
+                    .map(map_resolved_equipment_dto)
+                    .collect(),
+                equipment_effects: EquipmentEffectsDto {
+                    per_item: corpus_receipt
+                        .corpus_derived
+                        .equipment_effects
+                        .per_item
+                        .iter()
+                        .map(|effect| ResolvedEquipmentEffectDto {
+                            item_id: effect.item_id.clone(),
+                            equipment_record_key: effect.equipment_record_key.clone(),
+                            category: format!("{:?}", effect.category),
+                            armor_class_bonus: effect.armor_class_bonus,
+                            armor_class_enhancement: effect.armor_class_enhancement,
+                            max_dex: effect.max_dex,
+                            spell_failure: effect.spell_failure,
+                            armor_check_penalty: effect.armor_check_penalty,
+                            spell_resistance_bonus: effect.spell_resistance_bonus,
+                        })
+                        .collect(),
+                    armor_class_delta: corpus_receipt.corpus_derived.equipment_effects.armor_class_delta,
+                    armor_check_penalty_total: corpus_receipt
+                        .corpus_derived
+                        .equipment_effects
+                        .armor_check_penalty_total,
+                    max_dex_cap: corpus_receipt.corpus_derived.equipment_effects.max_dex_cap,
+                    spell_failure_chance: corpus_receipt
+                        .corpus_derived
+                        .equipment_effects
+                        .spell_failure_chance,
+                    attack_bonus_delta: corpus_receipt
+                        .corpus_derived
+                        .equipment_effects
+                        .attack_bonus_delta,
+                    spell_resistance_total: corpus_receipt
+                        .corpus_derived
+                        .equipment_effects
+                        .spell_resistance_total,
+                },
+                encumbrance: map_encumbrance_dto(&corpus_receipt.corpus_derived.encumbrance),
+                unresolved_spell_ids: corpus_receipt.corpus_derived.unresolved_spell_ids.clone(),
+                unresolved_equipment_item_ids: corpus_receipt
+                    .corpus_derived
+                    .unresolved_equipment_item_ids
+                    .clone(),
+            };
+
+            let (sheet_lines, sheet_rules_unavailable_reason, feat_skill_bonuses, conditional_notes) =
+                crate::character_hub::sheet_lines_for(&envelope.character_input, &corpus_receipt.base);
+
+            Ok(LoadSavedCharacterResponse {
+                admitted_under_override: Vec::new(),
+                summary,
+                snapshot,
+                diagnostics,
+                corpus_derived,
+                selected_feats: envelope.character_input.chosen.selected_feats.clone(),
+                spells_selected: map_spells_selected_dto(&envelope.character_input.chosen.spells_selected),
+                chosen_feat_targets: map_chosen_feat_targets_dto(&envelope.character_input),
+                explanations: map_explanations_dto(&corpus_receipt.base.explanations),
+                weapon_damage: map_weapon_damage_dto(&resolve_weapon_damage_breakdown_with_carried(
+                    &envelope.character_input,
+                    corpus_fixture_bundle(),
+                    &corpus_receipt.corpus_derived.equipment_effects,
+                    corpus_receipt.base.ability_modifiers.strength,
+                    &[],
+                    &[],
+                )),
+                selected_alternate_trait_keys: read_alternate_trait_keys(&envelope.character_input),
+                selected_traits: envelope.character_input.chosen.selected_traits.clone(),
+                resolved_racial_traits: resolve_racial_traits_for_character(
+                    &envelope.character_input,
+                ),
+                ability_scores: crate::character_hub::effective_ability_scores_dto(
+                    &envelope.character_input,
+                ),
+                skill_allocations: crate::character_hub::map_skill_allocations_dto(
+                    &envelope.character_input,
+                ),
+                equipment_selections: crate::character_hub::map_equipment_selections_dto(
+                    &envelope.character_input,
+                ),
+                sheet_lines,
+                sheet_rules_unavailable_reason,
+                feat_skill_bonuses,
+                conditional_notes,
+                languages: crate::character_hub::known_languages(),
+                fly_maneuverability: None,
+                resistances: Default::default(),
+                equipment_sets: None,
+                container_loads: Vec::new(),
+                campaigns: Vec::new(),
+                mirror_warnings: Vec::new(),
+                ignore_container_capacity: false,
+            })
+        }
+    }
+
+    fn tempdir(label: &str) -> PathBuf {
+        let unique = std::time::SystemTime::now()
+            .duration_since(std::time::UNIX_EPOCH)
+            .expect("system time should be after unix epoch")
+            .as_nanos();
+        let path = std::env::temp_dir().join(format!(
+            "codex-rule-system-adapter-test-{label}-{}-{unique}",
+            std::process::id()
+        ));
+        std::fs::create_dir_all(&path).expect("temp dir should be creatable");
+        path
+    }
+
+    const TEST_SAVED_AT: &str = "2026-07-21T00:00:00Z";
+
+    fn seed_envelope(character_id: &str) -> SavedCharacterEnvelope {
+        let request = CreateCharacterRequest {
+            character_id: character_id.to_owned(),
+            display_label: "Adapter Trait Test Character".to_owned(),
+            race_id: "race:human".to_owned(),
+            class_id: "class:fighter".to_owned(),
+            level: 1,
+            ability_scores: AbilityScoresDto {
+                strength: 16,
+                dexterity: 14,
+                constitution: 14,
+                intelligence: 10,
+                wisdom: 12,
+                charisma: 8,
+            },
+            ability_bonus_target: "strength".to_owned(),
+            selected_alternate_trait_keys: Vec::new(),
+            companion_species: None,
+            selected_traits: Vec::new(),
+            trait_skill_choices: Vec::new(),
+            additional_choices: Vec::new(),
+            additional_levels: Vec::new(),
+            hit_point_levels: Vec::new(),
+            selected_feats: Vec::new(),
+            skill_allocations: Vec::new(),
+            selected_spells: Vec::new(),
+            selected_equipment: Vec::new(),
+            price_mode: crate::character_hub::PriceMode::Standard,
+            saved_at: TEST_SAVED_AT.to_owned(),
+        };
+        let character_input = compose_character_input(&request);
+        SavedCharacterEnvelope {
+            character_id: character_id.to_owned(),
+            revision_id: format!("{character_id}.rev.1"),
+            revision_kind: SavedCharacterRevisionKind::Authoritative,
+            saved_at: TEST_SAVED_AT.to_owned(),
+            schema_version: CURRENT_SAVED_CHARACTER_SCHEMA_VERSION,
+            app_or_runtime_version: "codex-dev".to_owned(),
+            content_or_rules_provenance: "pf1.core_rulebook".to_owned(),
+            game_system: "pf1".to_owned(),
+            latest_authoritative_revision_ref: format!("{character_id}.rev.1"),
+            display_label: "Adapter Trait Test Character".to_owned(),
+            character_input,
+        }
+    }
+
+    /// RED (per `cycles/3_1.md`): before this trait existed, this test file
+    /// referenced `super::RuleSystemAdapter` in an `impl` block and a `Box<dyn
+    /// super::RuleSystemAdapter>` construction with no trait definition present
+    /// — `cargo check --tests` failed with `error[E0405]: cannot find trait
+    /// 'RuleSystemAdapter' in module 'super'` at both reference sites. GREEN
+    /// (this file, present tense): the trait above is defined with the full
+    /// seven-method surface from `epic-breakdown.md` §3.1, and every method is
+    /// exercised here through a `Box<dyn RuleSystemAdapter>` trait object built
+    /// from a delegate wired to real crate functions.
+    #[test]
+    fn dyn_rule_system_adapter_constructs_and_dispatches_every_method() {
+        let adapter: Box<dyn RuleSystemAdapter> = Box::new(TestPf1Delegate);
+        assert_eq!(adapter.rule_system_id(), "pf1");
+
+        let characters_root = tempdir("golden-path");
+        let root = characters_root.join("adapter-trait-test-char");
+        let envelope = seed_envelope("adapter-trait-test-char");
+        SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
+
+        // chassis_resolve: real compute over a real CharacterInput.
+        let chassis = adapter.chassis_resolve(&envelope.character_input);
+        assert_eq!(
+            chassis.base_attack_bonus, 1,
+            "human fighter level 1 should reach the grounded Fighter chassis"
+        );
+
+        // level_up: explicit per-class delta slice (register A2's widened shape).
+        let deltas = [ClassLevelDelta {
+            class_id: "class:fighter".to_owned(),
+            from_level: 1,
+            to_level: 2,
+        }];
+        let plan = adapter.level_up(&envelope.character_input, &deltas);
+        assert!(
+            !plan.automatic_features.is_empty(),
+            "Fighter 1->2 should grant at least one automatic feature"
+        );
+
+        // load_saved_character: real disk load + real compute projection.
+        let loaded = adapter
+            .load_saved_character(&root)
+            .expect("load_saved_character should succeed for a seeded character");
+        assert_eq!(loaded.summary.character_id, "adapter-trait-test-char");
+        assert!(
+            loaded.snapshot.is_some(),
+            "a Computed Fighter level 1 build should carry a snapshot"
+        );
+
+        // list_saved_characters: real disk listing under the shared parent.
+        let listing = adapter
+            .list_saved_characters(&characters_root)
+            .expect("list_saved_characters should succeed");
+        assert!(
+            listing
+                .characters
+                .iter()
+                .any(|summary| summary.character_id == "adapter-trait-test-char"),
+            "the seeded character should appear in the listing"
+        );
+
+        // append_to_character: validated batch append against the real corpus.
+        let append_result = adapter
+            .append_to_character(
+                &root,
+                &[ItemToAppendDto {
+                    item_id: "Dagger (Base)".to_owned(),
+                    active_state: crate::character_hub::ActiveStateDto::EquippedActive,
+                }],
+                "2026-07-21T01:00:00Z",
+            )
+            .expect("append_to_character should not error");
+        assert!(
+            append_result.success || append_result.error.is_some(),
+            "append_to_character must return an honest success or a real error, never neither"
+        );
+
+        // recompute: real read-and-recompute, no mutation.
+        let recomputed = adapter.recompute(&root, "adapter-trait-test-char");
+        assert!(
+            recomputed.success,
+            "recompute over an already-Computed character should succeed: {:?}",
+            recomputed.error
+        );
+
+        // save_character: real re-save via the revision-conflict-checked path.
+        // Reads the on-disk revision_id fresh rather than reusing the
+        // pre-append `envelope.revision_id`: SD-25 Criterion 3.2 (register
+        // A5, landed in this branch's history after this test was first
+        // written) folded revision-advancing into
+        // `mutate_saved_character_at_root`, so `append_to_character` above
+        // already advanced the on-disk revision past the seed's `.rev.1`.
+        let post_append_revision_id = SavedCharacterStore::load(&root)
+            .expect("reload after append should succeed")
+            .revision_id;
+        let saved = adapter
+            .save_character(&root, &post_append_revision_id, "2026-07-21T02:00:00Z")
+            .expect("save_character should not error");
+        assert!(
+            saved.success,
+            "save_character with the correct expected_revision_id should succeed: {:?}",
+            saved.error
+        );
+        assert_eq!(
+            saved.revision_id.as_deref(),
+            Some("adapter-trait-test-char.rev.3"),
+            "rev.1 (seed) -> rev.2 (append_to_character's own revision-advance, register A5) \
+             -> rev.3 (this save_character call)"
+        );
+
+        // save_character: the revision-conflict guard is real, not bypassed.
+        let conflict = adapter
+            .save_character(&root, "adapter-trait-test-char.rev.999-stale", "2026-07-21T03:00:00Z")
+            .expect("save_character should not error even on a conflict rejection");
+        assert!(!conflict.success);
+        assert_eq!(conflict.error.as_deref(), Some("revision_conflict"));
+
+        std::fs::remove_dir_all(&characters_root).ok();
+    }
+
+    /// SF-Soldier-3 (`docs/release/SD-37-starfinder-1e/artifacts/epic_0/seed-builds.md`
+    /// §1) as a saved `CharacterInput`: race, class and the FINAL ability scores; the theme
+    /// and the human's `+2 Racial Stat Bonus` pick as held records; the worn Defiance Series
+    /// armour and the carried gear as equipment; skill ranks; the stat-bonus choice and the
+    /// soldier's key-ability choice (Str) as rule choices; the seed's four feats (E5.2).
+    pub(crate) fn sf_soldier_3_input() -> CharacterInput {
+        use codex::rules_core::character_input::{
+            AbilityScores, ActiveState, CharacterClassLevel, ChosenCharacterState,
+            EquipmentSelection, SelectedChoice, SkillAllocation,
+        };
+        let item = |id: &str, active_state: ActiveState| EquipmentSelection {
+            item_id: format!("core:equipment:{id}"),
+            equipped_or_active: matches!(active_state, ActiveState::EquippedActive),
+            active_state,
+            applied_modifiers: Vec::new(),
+        };
+        let choice = |set: &str, selection: &str| SelectedChoice {
+            choice_set_id: set.to_owned(),
+            selection_id: selection.to_owned(),
+        };
+        CharacterInput {
+            case_id: None,
+            source_package_id: "starfinder-1e".to_owned(),
+            chosen: ChosenCharacterState {
+                race_id: "core:race:human".to_owned(),
+                class_levels: vec![CharacterClassLevel { class_id: "core:class:soldier".to_owned(), level: 3 }],
+                ability_scores: AbilityScores {
+                    strength: 16,
+                    dexterity: 14,
+                    constitution: 12,
+                    intelligence: 11,
+                    wisdom: 10,
+                    charisma: 10,
+                },
+                selected_feats: vec![
+                    "core:ability:mercenary".to_owned(),
+                    "core:ability:2_racial_stat_bonus".to_owned(),
+                    "core:feat:weapon_focus".to_owned(),
+                    "core:feat:quick_draw".to_owned(),
+                    "core:feat:deadly_aim".to_owned(),
+                    "core:feat:coordinated_shot".to_owned(),
+                ],
+                skill_allocations: ["athletics", "intimidate", "medicine", "piloting", "survival"]
+                    .iter()
+                    .map(|s| SkillAllocation { skill_id: (*s).to_owned(), ranks: 3 })
+                    .collect(),
+                equipment_selections: vec![
+                    item("defiance_series_squad", ActiveState::EquippedActive),
+                    item("laser_rifle_azimuth", ActiveState::EquippedActive),
+                    item("baton_tactical", ActiveState::SelectedInactive),
+                    item("battery", ActiveState::SelectedInactive),
+                    item("battery", ActiveState::SelectedInactive),
+                    item("serum_of_healing_mk_1", ActiveState::SelectedInactive),
+                    item("serum_of_healing_mk_1", ActiveState::SelectedInactive),
+                ],
+                selected_choices: vec![
+                    choice("core:ability:2_racial_stat_bonus", "STR"),
+                    choice("core:class:soldier", "STR"),
+                ],
+                selected_traits: Vec::new(),
+                spells_selected: Vec::new(),
+                class_ability_activations: Vec::new(),
+            },
+            selection_provenance: Vec::new(),
+        }
+    }
+
+    /// SD-37 E4.6: the wire id the desktop sends for Starfinder (`'starfinder-1e'`, the
+    /// landing screen's `RuleSetId`, passed through unchanged by `resolveRuleSystemId`, and
+    /// `GameSystem::Starfinder1e.id()`) resolves to the Starfinder adapter, whose chassis is
+    /// computed from the converted package: no `Would …` message, no blocking diagnostic, and
+    /// SF-Soldier-3's SRD totals (`seed-hand-values.md`: BAB +3, Fort +4, Ref +3, Will +3,
+    /// HP 25, Stamina 24, Resolve 4, EAC 16, KAC 19). Before E4.6 the id resolved to
+    /// `StubAdapter`, whose chassis is all zeros plus a claim-blocking Would-render
+    /// diagnostic (id `stub_adapter.not_yet_implemented`).
+    #[test]
+    fn starfinder_1e_resolves_to_the_starfinder_adapter_and_its_chassis_is_computed() {
+        let adapter = resolve_rule_system_adapter("starfinder-1e");
+        assert_eq!(adapter.rule_system_id(), "starfinder-1e");
+
+        let chassis = adapter.chassis_resolve(&sf_soldier_3_input());
+        for diagnostic in &chassis.diagnostics {
+            assert!(
+                !is_would_message(&diagnostic.message) && diagnostic.id != STUB_NOT_YET_IMPLEMENTED,
+                "the Starfinder chassis must not report a Would-message: {diagnostic:?}"
+            );
+            assert!(!diagnostic.claim_blocking, "SF-Soldier-3 must compute: {diagnostic:?}");
+        }
+        assert_eq!(chassis.base_attack_bonus, 3);
+        assert_eq!(
+            (chassis.total_saves.fortitude, chassis.total_saves.reflex, chassis.total_saves.will),
+            (4, 3, 3)
+        );
+        let value = |id: &str| {
+            chassis
+                .explanations
+                .iter()
+                .find(|e| e.id == id)
+                .unwrap_or_else(|| panic!("no {id} explanation row in {:?}", chassis.explanations))
+                .value
+        };
+        assert_eq!(value("sf.hit_points"), 25);
+        assert_eq!(value("sf.stamina"), 24);
+        assert_eq!(value("sf.resolve"), 4);
+        assert_eq!(value("sf.eac"), 16);
+        assert_eq!(value("sf.kac"), 19);
+    }
+
+    /// SD-38 E0.4: the wire id `cyberpunk-red` (`GameSystem::CyberpunkRed.id()`) resolves to
+    /// the Cyberpunk RED adapter, which lists a real (here empty) characters root instead of
+    /// reporting a Would-message, and a CPR character's root is loaded through it by the
+    /// envelope router. Before E0.4 the id resolved to `StubAdapter`, whose listing is an
+    /// `Err` carrying the stub's Would-render message for `cyberpunk-red`.
+    #[test]
+    fn cyberpunk_red_resolves_to_the_cyberpunk_adapter() {
+        let characters_root = tempdir("cyberpunk-red-resolves");
+        let adapter = resolve_rule_system_adapter("cyberpunk-red");
+        assert_eq!(adapter.rule_system_id(), "cyberpunk-red");
+        let listing = adapter.list_saved_characters(&characters_root);
+        assert!(
+            listing.as_ref().is_ok_and(|l| l.characters.is_empty() && l.unreadable_count == 0),
+            "the Cyberpunk RED listing must be a real listing: {:?}",
+            listing.as_ref().err()
+        );
+        std::fs::remove_dir_all(&characters_root).ok();
+    }
+}

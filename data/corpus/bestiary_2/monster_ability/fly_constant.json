@@ -1,0 +1,90 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Fly ~ Constant",
+    "delivery": "SpellLike",
+    "description": "You can Fly, as per the spell, as a constant ability. Constant spell-like abilities function at all times but can be dispelled. Constant spell-like abilities can be reactivated a as a swift action.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_2:monster_ability:fly_constant",
+    "name": "Fly",
+    "owners": [
+      "bestiary_2:monster:daemon_meladaemon",
+      "bestiary_2:monster:daemon_purrodaemon",
+      "bestiary_2:monster:demon_shemhazian",
+      "bestiary_2:monster:devil_handmaiden",
+      "bestiary_2:monster:nightshade_nightwave",
+      "bestiary_2:monster:qlippoth_cythnigot",
+      "bestiary_2:monster:qlippoth_thulgant",
+      "bestiary_2:monster:scylla"
+    ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Flight Maneuverability"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Maneuverability|4"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Maneuverability|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SLA_CL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can Fly, as per the spell, as a constant ability. Constant spell-like abilities function at all times but can be dispelled. Constant spell-like abilities can be reactivated a as a swift action.|PRERULE:1,DisplayFullAbility"
+      },
+      {
+        "key": "DESC",
+        "value": "You can Fly, as per the spell, as a constant ability.|!PRERULE:1,DisplayFullAbility"
+      },
+      {
+        "key": "KEY",
+        "value": "Fly ~ Constant"
+      },
+      {
+        "key": "MOVE",
+        "value": "Fly,60"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.284"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=ATWILL|TIMEUNIT=Constant|CASTERLEVEL=SLA_CL|Fly,13+CHA"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.SpellLike"
+      }
+    ],
+    "source_page": "p.284",
+    "traits": []
+  },
+  "ingested_at": "2026-08-17T12:26:27Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 2208,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "record_key": "Fly ~ Constant",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:spells"
+  ]
+}

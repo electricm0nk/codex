@@ -1,0 +1,25 @@
+   Compiling codex v0.1.0 (/home/ubuntu/workspace/worktrees/codex-sd37)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1m 27s
+     Running unittests src/lib.rs (/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/codex-ce0bccb9212d3fe1)
+
+running 1 test
+test rules_core::rules_data_package::tests::every_collection_function_is_a_table_or_a_named_view ... FAILED
+
+failures:
+
+---- rules_core::rules_data_package::tests::every_collection_function_is_a_table_or_a_named_view stdout ----
+
+thread 'rules_core::rules_data_package::tests::every_collection_function_is_a_table_or_a_named_view' (3402600) panicked at src/rules_core/rules_data_package.rs:1738:9:
+collection functions neither a table nor a named view: [
+    "pathfinder_unchained/rogue_features/class_skills -> &'static [crate::rules_core::rules_tables::crb::class_skill_tables::ClassSkillEntry]",
+    "pathfinder_unchained/summoner_features/class_skills -> &'static [crate::rules_core::rules_tables::crb::class_skill_tables::ClassSkillEntry]",
+]
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    rules_core::rules_data_package::tests::every_collection_function_is_a_table_or_a_named_view
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 2839 filtered out; finished in 0.29s
+
+error: test failed, to rerun pass `--lib`

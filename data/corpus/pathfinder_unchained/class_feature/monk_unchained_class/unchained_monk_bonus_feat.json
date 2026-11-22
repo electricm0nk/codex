@@ -1,0 +1,90 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-03T17:43:07Z",
+  "data": {
+    "key": "Unchained Monk ~ Bonus Feat",
+    "name": "Bonus Feat",
+    "class_key": "Monk ~ Unchained Class",
+    "base_class_key": "Monk",
+    "category": "Special Ability",
+    "type_tokens": [
+      "Unchained Monk Class Feature",
+      "SpecialQuality"
+    ],
+    "min_level": 1,
+    "is_granted": true,
+    "visible": null,
+    "class_skills": [],
+    "description": "At 1st level, 2nd level, and every 4 levels thereafter, a monk can select a bonus feat. These feats must be taken from the following list: Catch Off-Guard, Combat Reflexes, Deflect Arrows, Dodge, Improved Grapple, Scorpion Style, and Throw Anything. At 6th level, the following feats are added to the list: Gorgon's Fist, Improved Bull Rush, Improved Disarm, Improved Feint, Improved Trip, and Mobility. At 10th level, the following feats are added to the list: Improved Critical, Medusa's Wrath, Snatch Arrows, and Spring Attack. A monk need not have any of the prerequisites normally required for these feats to select them.",
+    "source_page": "p.14",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Unchained Monk ~ Bonus Feat"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Unchained Monk Class Feature.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MonkBonusFeatLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MonkBonusFeatLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "At 1st level, 2nd level, and every 4 levels thereafter, a monk can select a bonus feat. These feats must be taken from the following list: Catch Off-Guard, Combat Reflexes, Deflect Arrows, Dodge, Improved Grapple, Scorpion Style, and Throw Anything. At 6th level, the following feats are added to the list: Gorgon's Fist, Improved Bull Rush, Improved Disarm, Improved Feint, Improved Trip, and Mobility. At 10th level, the following feats are added to the list: Improved Critical, Medusa's Wrath, Snatch Arrows, and Spring Attack. A monk need not have any of the prerequisites normally required for these feats to select them."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.14"
+      }
+    ],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "ABILITYPOOL",
+          "Unchained Monk Bonus Feat",
+          "1+max((MonkBonusFeatLVL+2)/4,0)"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "MonkFeatQualify",
+          "MonkLVL"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "MonkBonusFeatLVL",
+          "MonkLVL"
+        ]
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst",
+    "sha256": "2becbb0524bd4c367cc1273434c20bcd8e42e3e08abd372f99b005e69e8c4725",
+    "line": 461,
+    "record_key": "Unchained Monk ~ Bonus Feat"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "derived:bonus"
+  ]
+}

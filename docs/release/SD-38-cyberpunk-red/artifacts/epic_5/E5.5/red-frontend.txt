@@ -1,0 +1,7 @@
+src/boundary/cprImprove.test.ts(146,11): error TS2322: Type '"reputation"' is not assignable to type '"cyberware" | "skill" | "therapy" | "roleRank" | "roleSwitch"'.
+src/boundary/cprImprove.test.ts(147,11): error TS2322: Type '"reputation"' is not assignable to type '"cyberware" | "skill" | "therapy" | "roleRank" | "roleSwitch"'.
+src/characterHub/cyberpunkImproveModel.test.ts(17,3): error TS2305: Module '"./cyberpunkImproveModel"' has no exported member 'purchaseReputationLevel'.
+src/characterHub/cyberpunkImproveModel.test.ts(18,3): error TS2305: Module '"./cyberpunkImproveModel"' has no exported member 'improveReputation'.
+src/characterHub/cyberpunkImproveModel.test.ts(19,3): error TS2305: Module '"./cyberpunkImproveModel"' has no exported member 'reputationLevelFromText'.
+src/characterHub/cyberpunkImproveModel.test.ts(210,56): error TS2322: Type '"reputation"' is not assignable to type '"cyberware" | "skill" | "therapy" | "roleRank" | "roleSwitch"'.
+src/characterHub/cyberpunkImproveModel.test.ts(211,28): error TS2322: Type '"reputation"' is not assignable to type '"cyberware" | "skill" | "therapy" | "roleRank" | "roleSwitch"'.

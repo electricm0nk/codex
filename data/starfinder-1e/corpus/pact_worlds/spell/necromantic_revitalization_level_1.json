@@ -1,0 +1,19 @@
+{
+  "data": {
+    "key": "Necromantic Revitalization (Level 1)",
+    "name": "Necromantic Revitalization (Level 1)",
+    "type": "Spell"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 23,
+    "path": "starfinder/paizo/pact_worlds/spw_spells.lst",
+    "record_key": "Necromantic Revitalization (Level 1)",
+    "sha256": "531d8922d0207ebdae6d0bce534a2d20b605c2032418308cdea64df89e52cbd5"
+  },
+  "unit_id": "pact_worlds:spell:necromantic_revitalization_level_1"
+}

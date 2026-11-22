@@ -1,0 +1,85 @@
+{
+  "completeness": "full",
+  "data": {
+    "codex_generated_name": false,
+    "corpus_key": "Hellbound Creature ~ Hellbound Summon",
+    "delivery": "SpellLike",
+    "description": "Once per day, the hellbound creature can summon one lemure one bearded devil or 1d3 lemures one erinyes, 1d3 bearded devils, or 1d4+1 lemures one bone devil, 1d3 erinyes, or 1d4+1 bearded devils one barbed devil, 1d3 bone devils, or 1d4+1 erinyes one ice devil, 1d3 barbed devils, or 1d4+1 bone devils with a 100%% chance of success.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "horror_adventures:monster_ability:hellbound_creature_hellbound_summon",
+    "name": "Hellbound Summon",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Once per day, the hellbound creature can summon"
+      },
+      {
+        "key": "DESC",
+        "value": "one barbed devil, 1d3 bone devils, or 1d4+1 erinyes|PREHD:MIN=15,MAX=16"
+      },
+      {
+        "key": "DESC",
+        "value": "one bearded devil or 1d3 lemures|PREHD:MIN=9,MAX=10"
+      },
+      {
+        "key": "DESC",
+        "value": "one bone devil, 1d3 erinyes, or 1d4+1 bearded devils|PREHD:MIN=13,MAX=14"
+      },
+      {
+        "key": "DESC",
+        "value": "one erinyes, 1d3 bearded devils, or 1d4+1 lemures|PREHD:MIN=11,MAX=12"
+      },
+      {
+        "key": "DESC",
+        "value": "one ice devil, 1d3 barbed devils, or 1d4+1 bone devils|PREHD:MIN=15,MAX=16"
+      },
+      {
+        "key": "DESC",
+        "value": "one lemure|PREHD:MAX=8"
+      },
+      {
+        "key": "DESC",
+        "value": "with a 100%% chance of success."
+      },
+      {
+        "key": "KEY",
+        "value": "Hellbound Creature ~ Hellbound Summon"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.249"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.SpellLike.HellboundCreature"
+      }
+    ],
+    "rename": null,
+    "source_page": "p.249",
+    "traits": [
+      "HellboundCreature"
+    ]
+  },
+  "ingested_at": "2026-08-23T22:59:13Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 274,
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_race.lst",
+    "record_key": "Hellbound Creature ~ Hellbound Summon",
+    "sha256": "63d4d7024f3fea15adb5b626c17f3f1dc4c40e4fc4bef4616a1d36be77a9fe00"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

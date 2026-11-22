@@ -1,0 +1,31 @@
+{
+  "codex_generated_name": false,
+  "completeness": "chassis_only",
+  "data": {
+    "key": "Rougarou",
+    "name": "Rougarou",
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Spoken.Written.Read"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T15:18:09Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 6,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/rougarou/rougarou_languages.lst",
+    "record_key": "Rougarou",
+    "sha256": "50dc08c7bb53ceac18ec9f17677febab6f4dabcb453345cf2df40c785ecd5022"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

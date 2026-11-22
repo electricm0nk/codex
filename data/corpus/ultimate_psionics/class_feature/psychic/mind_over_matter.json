@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Psychic ~ Mind over Matter",
+    "name": "Mind over Matter",
+    "class": "Sorcerer",
+    "description": "You ascend the weakness that is the flesh and become in truth a psionic individual.  You gain DR 10/magic, telepathy 120 ft., and are always treated as if under the effect of a Mind Blank spell.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Psychic ~ Mind over Matter"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Sorcerer Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "You ascend the weakness that is the flesh and become in truth a psionic individual.  You gain DR 10/magic, telepathy 120 ft., and are always treated as if under the effect of a Mind Blank spell."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Telepathy"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TelepathyRange|120"
+      },
+      {
+        "key": "DR",
+        "value": "10/magic"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.295"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1113,
+    "record_key": "Psychic ~ Mind over Matter"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

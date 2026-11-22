@@ -1,0 +1,36 @@
+{
+  "codex_generated_name": false,
+  "completeness": "chassis_only",
+  "data": {
+    "description": null,
+    "key": "Racial Traits ~ Ratfolk",
+    "name": "Racial Traits ~ Ratfolk",
+    "raw_tokens": [
+      {
+        "key": "DEFINE",
+        "value": "Ratfolk_ReplaceAbilityScores|0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Ratfolk Racial Trait|AUTOMATIC|Ratfolk ~ Ability Scores|PREVAREQ:Ratfolk_ReplaceAbilityScores,0"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 10,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/ratfolk/ratfolk_abilities_globalvar.lst",
+    "record_key": "Racial Traits ~ Ratfolk",
+    "sha256": "d98b55a75b3fe19356e6f38b4a7eedb124065bd19f05259307eb612fd265fd3f"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

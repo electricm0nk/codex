@@ -1,0 +1,1 @@
+{"var":"va1ea4959283a91ef","label":"Pa SSpellcasting Master Rounds","declared_by":[],"contributions":[{"rule_id":"adventurers_guide:class:pathfinder_savant","expr":{"Max":[{"Max":[{"AbilityMod":"Int"},{"AbilityMod":"Wis"}]},{"AbilityMod":"Cha"}]},"when":{"Compare":{"lhs":{"ClassLevel":"pathfinder_savant"},"op":"Gte","rhs":{"Const":9}}}}],"provenance":{}}

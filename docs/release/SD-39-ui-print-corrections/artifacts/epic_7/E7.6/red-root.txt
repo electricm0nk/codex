@@ -1,0 +1,26 @@
+test rules_core::pilot_compute::feat_pillar_and_pool_aggregation::race_weapon_proficiency_tests::race_weapon_proficiency_an_alternate_trait_replacing_it_takes_it_away ... ok
+test rules_core::pilot_compute::feat_pillar_and_pool_aggregation::race_weapon_proficiency_tests::race_weapon_proficiency_every_named_weapon_of_the_core_familiarities ... FAILED
+test rules_core::pilot_compute::feat_pillar_and_pool_aggregation::race_weapon_proficiency_tests::race_weapon_proficiency_a_cleric_with_no_deity_the_rules_hold_is_told_so ... FAILED
+test rules_core::pilot_compute::feat_pillar_and_pool_aggregation::race_weapon_proficiency_tests::race_weapon_proficiency_a_deitys_favored_weapon_is_the_clerics ... FAILED
+test rules_core::pilot_compute::feat_pillar_and_pool_aggregation::race_weapon_proficiency_tests::race_weapon_proficiency_a_familiar_weapon_is_martial_for_that_race ... FAILED
+test rules_core::pilot_compute::feat_pillar_and_pool_aggregation::race_weapon_proficiency_tests::race_weapon_proficiency_reaches_the_attack_row ... FAILED
+test rules_core::pilot_compute::feat_pillar_and_pool_aggregation::race_weapon_proficiency_tests::race_weapon_proficiency_reaches_the_melee_total ... FAILED
+thread 'rules_core::pilot_compute::feat_pillar_and_pool_aggregation::race_weapon_proficiency_tests::race_weapon_proficiency_every_named_weapon_of_the_core_familiarities' (2207315) panicked at src/rules_core/pilot_compute
+assertion `left == right` failed: race:elf Longsword
+  left: Some(false)
+ right: Some(true)
+thread 'rules_core::pilot_compute::feat_pillar_and_pool_aggregation::race_weapon_proficiency_tests::race_weapon_proficiency_a_cleric_with_no_deity_the_rules_hold_is_told_so' (2207311) panicked at src/rules_core/pilot_com
+thread 'rules_core::pilot_compute::feat_pillar_and_pool_aggregation::race_weapon_proficiency_tests::race_weapon_proficiency_a_deitys_favored_weapon_is_the_clerics' (2207312) panicked at src/rules_core/pilot_compute/feat_
+assertion `left == right` failed: deity:iomedae Longsword
+  left: Some(false)
+ right: Some(true)
+thread 'rules_core::pilot_compute::feat_pillar_and_pool_aggregation::race_weapon_proficiency_tests::race_weapon_proficiency_a_familiar_weapon_is_martial_for_that_race' (2207313) panicked at src/rules_core/pilot_compute/f
+assertion `left == right` failed: race:dwarf fighter Dwarven Urgrosh
+  left: Some(false)
+ right: Some(true)
+thread 'rules_core::pilot_compute::feat_pillar_and_pool_aggregation::race_weapon_proficiency_tests::race_weapon_proficiency_reaches_the_attack_row' (2207316) panicked at src/rules_core/pilot_compute/feat_pillar_and_pool_
+thread 'rules_core::pilot_compute::feat_pillar_and_pool_aggregation::race_weapon_proficiency_tests::race_weapon_proficiency_reaches_the_melee_total' (2207317) panicked at src/rules_core/pilot_compute/feat_pillar_and_pool
+assertion `left == right` failed
+  left: 0
+ right: 5
+test result: FAILED. 1 passed; 6 failed; 0 ignored; 0 measured; 3065 filtered out; finished in 13.63s

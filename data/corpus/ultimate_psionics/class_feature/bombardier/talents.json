@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Bombardier ~ Talents",
+    "name": "Talents",
+    "class": "Bombardier",
+    "description": "You gain energy splash as a talent usable at will as long as you maintain psionic focus.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bombardier ~ Talents"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "PsionClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain energy splash as a talent usable at will as long as you maintain psionic focus."
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLKNOWN|CLASS=Psion;LEVEL=0|-3"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.274"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Psion=0|Energy Splash"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1957,
+    "record_key": "Bombardier ~ Talents"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

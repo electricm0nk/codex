@@ -1,0 +1,59 @@
+{
+ "_purpose": "SD-36 Epic F6c (converter step): class principals several books state carry provenance.printing (reprint::stamp_class_printings); a class's BONUS:DOMAIN|NUMBER count its own DOMAIN: grants fill keeps no offers and prints no line (pool_link::withhold_class_granted_domain_counts), and the domain records only that class grants print no line; structural_diff.py undoes each pin first (f6c_apply).",
+ "_command": "python3 f6c_delta_pins.py <tranche/16 package, git archive> <fresh package dir> structural_diff_f6c_deltas.json",
+ "owner": "adventurers_guide:class:hellknight",
+ "class_printing": {
+  "_count": 6,
+  "by_verdict": {
+   "not proved": 4,
+   "proved one object": 2
+  },
+  "pins": [
+   [
+    "adventurers_guide:class:cyphermage",
+    "aa99495418aa19139683cda22056e4ad7c681e0e91f365e430f778ae84aea792"
+   ],
+   [
+    "adventurers_guide:class:hellknight",
+    "08dad2661d251c298688c82bfc77acd06bc5487700d8a34e3a772b36c325cc2d"
+   ],
+   [
+    "adventurers_guide:class:red_mantis_assassin",
+    "3bac1feb465ac56c7c064f53d6c8a078deed10ab9a35381f07b5e67c7aabd21b"
+   ],
+   [
+    "inner_sea_magic:class:cyphermage",
+    "f3404110c105c83d0454d8dc2c17feb4c8691b5d4031cb4c9f3e2ced96287e14"
+   ],
+   [
+    "inner_sea_world_guide:class:hellknight",
+    "1ed0b9db654102792a2ec1b309491f5f8f0e2ee742779837e99b3587222d9fd1"
+   ],
+   [
+    "inner_sea_world_guide:class:red_mantis_assassin",
+    "595b3968364658a9ac07b222a20552893cd053346d3c8e17ad0dde859a210791"
+   ]
+  ]
+ },
+ "class_granted_domain_count": {
+  "_count": 1,
+  "pins": [
+   "advanced_class_guide:class:shaman#bonus1"
+  ]
+ },
+ "class_granted_domain_record": {
+  "_count": 10,
+  "pins": [
+   "advanced_class_guide:domain:battle_spirit",
+   "advanced_class_guide:domain:bones_spirit",
+   "advanced_class_guide:domain:flame_spirit",
+   "advanced_class_guide:domain:heavens_spirit",
+   "advanced_class_guide:domain:life_spirit",
+   "advanced_class_guide:domain:lore_spirit",
+   "advanced_class_guide:domain:nature_spirit",
+   "advanced_class_guide:domain:stone_spirit",
+   "advanced_class_guide:domain:waves_spirit",
+   "advanced_class_guide:domain:wind_spirit"
+  ]
+ }
+}

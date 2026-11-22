@@ -1,0 +1,88 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "You conjure a beautiful and delicious feast with hors d'oeuvres, four courses worth of food, and plentiful drink. The food appears on ornate serving trays or in exquisite covered tureens, as appropriate to each type of dish. Place settings and serving utensils also appear-enough for each creature that will participate in the feast-along with elegant tablecloths and table linens. The spell doesn't create furniture, but the feast does adapt to appear on top of existing tables (or similar objects in the environment). Though the feast and all the finery last only 1 hour, creatures that partake remain nourished and sated for 24 hours.|PRERULE:1,DisplayFullSpell",
+    "key": "Bountiful Banquet",
+    "level": 4,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "10 minutes"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Bard,Cleric,Druid,Shaman=4"
+      },
+      {
+        "key": "COMPS",
+        "value": "V,S,M"
+      },
+      {
+        "key": "DESC",
+        "value": "Create a luxurious feast for (CASTERLEVEL*2) creatures.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "You conjure a beautiful and delicious feast with hors d'oeuvres, four courses worth of food, and plentiful drink. The food appears on ornate serving trays or in exquisite covered tureens, as appropriate to each type of dish. Place settings and serving utensils also appear-enough for each creature that will participate in the feast-along with elegant tablecloths and table linens. The spell doesn't create furniture, but the feast does adapt to appear on top of existing tables (or similar objects in the environment). Though the feast and all the finery last only 1 hour, creatures that partake remain nourished and sated for 24 hours.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "1 hour; see text"
+      },
+      {
+        "key": "RANGE",
+        "value": "Close"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "None"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Conjuration"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://aonprd.com/SpellDisplay.aspx?ItemName=Bountiful Banquet"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.205"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "No"
+      },
+      {
+        "key": "SUBSCHOOL",
+        "value": "Creation"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "Feast for (CASTERLEVEL*2) creatures"
+      },
+      {
+        "key": "TYPE",
+        "value": "Arcane.Divine"
+      }
+    ],
+    "school": "Conjuration"
+  },
+  "ingested_at": "2026-08-16T12:10:17Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 19,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_spells.lst",
+    "record_key": "Bountiful Banquet",
+    "sha256": "5f4a23b7b02b3d3b2cd4a20d8f06ec24f49e39592d0822d32cdb80d13f3e6324"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "derived:range_keyword"
+  ]
+}

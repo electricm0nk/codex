@@ -1,0 +1,25 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:46:05Z",
+  "data": {
+    "key": "Spell Absorption",
+    "school": "Abjuration",
+    "level": 5,
+    "description": "If you successfully counterspell a 3rd-level or lower level spell (through either dispel magic or normal means) while spell absorption is in effect, you absorb the countered spell and use it to regain spells you have already cast. If you're a Wizard, you regain the use of any single spell that you have cast since the last time you prepared spells. If you're a Sorcerer, you regain a single spell slot. The spell recovered or spell slot regained must be of an equal level or lower than the spell you counterspelled."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_spells.lst",
+    "sha256": "e1e7d1aab79b5fe0bb7d8ae8f77ac908fbb327e81c81a9482c0da6b673892661",
+    "line": 38,
+    "record_key": "Spell Absorption"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

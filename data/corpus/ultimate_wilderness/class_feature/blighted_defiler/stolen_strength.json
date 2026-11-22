@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Blighted Defiler ~ Stolen Strength",
+    "name": "Stolen Strength",
+    "class": "Kineticist",
+    "description": "A blighted defiler gains the ability to collect unused portions of the life she's stolen throughout the day to bolster herself. After the third time she successfully uses steal power in a given day, she gains a +2 size bonus to Strength and to either Dexterity or Constitution until she recovers uses of steal power.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Blighted Defiler ~ Stolen Strength"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Kineticist Class Features.BlightedDefilerClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "A blighted defiler gains the ability to collect unused portions of the life she's stolen throughout the day to bolster herself. After the third time she successfully uses steal power in a given day, she gains a +2 size bonus to Strength and to either Dexterity or Constitution until she recovers uses of steal power."
+      },
+      {
+        "key": "DESC",
+        "value": "After the fifth time the blighted defender successfully uses steal power in a day, she instead gains a +4 size bonus to Strength and a +2 size bonus to Dexterity and Constitution, and she can use the life energy to increase her size category by one (to a maximum of Large).|PRECLASS:1,Kineticist=11"
+      },
+      {
+        "key": "DESC",
+        "value": "After the seventh time the blighted defender successfully uses steal power in a day, her size bonuses increase to +6 to Strength, +4 to either Dexterity or Constitution, and +2 to the remaining ability score, and she can also grow to Huge.|PRECLASS:1,Kineticist=16"
+      },
+      {
+        "key": "DESC",
+        "value": "Finally, after the 9th time she successfully uses steal power in a day, she can also grow to Gargantuan.|PRECLASS:1,Kineticist=20"
+      },
+      {
+        "key": "DESC",
+        "value": "All of these size increases function as kinetic form, meaning they don't change her ability scores in any way. A blighted defiler can never gain an elemental defense, even from expanded defense."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.62"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/support/uw_abilities_class_oa.lst",
+    "sha256": "26a03f73c3534cd6bae0bcda9581b3a89fa28ce5f78f854e009fc8110c477568",
+    "line": 18,
+    "record_key": "Blighted Defiler ~ Stolen Strength"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

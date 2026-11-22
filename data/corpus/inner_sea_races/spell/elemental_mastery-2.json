@@ -1,0 +1,26 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:34:12Z",
+  "data": {
+    "key": "Elemental Mastery",
+    "school": "Transmutation",
+    "level": 4,
+    "description": "You gain mastery over the element matching the elemental essence in your blood. Your mastery gives you a burrow speed of 15 ft., and a +1 circumstance bonus on attack rolls when both you and your foe are touching the ground."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_spells.lst",
+    "sha256": "03a2e5e296f66a797d40d633aee1e6f08144e807e49c9923f72def8a78bab996",
+    "line": 18,
+    "record_key": "Elemental Mastery"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:prose_expr"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,50 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "category": "General",
+    "cost_gp": 17500.0,
+    "description": null,
+    "key": "Spyglass of Discovery",
+    "name": "Spyglass of Discovery",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous"
+      },
+      {
+        "key": "COST",
+        "value": "17500"
+      },
+      {
+        "key": "WT",
+        "value": "1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "234"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Spyglass of Discovery|TIMES=3|CASTERLEVEL=8|Clairaudience/Clairvoyance"
+      }
+    ],
+    "weight_lbs": 1.0
+  },
+  "ingested_at": "2026-08-17T08:18:39Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 55,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_equip_general.lst",
+    "record_key": "Spyglass of Discovery",
+    "sha256": "84a3e01dc08eb0973262e16a2d9b0fa29512085f2dbc2f6087f0edf2697f0a6f"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

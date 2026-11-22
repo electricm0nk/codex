@@ -1,0 +1,27 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:34:12Z",
+  "data": {
+    "key": "Zephyr's Fleetness",
+    "school": "Transmutation",
+    "level": 3,
+    "description": "You can call upon the spirits of the air to grant agility to your allies. Each target gains a +30 foot enhancement bonus to its land speed and fly speed (if any). Each target can also move (and charge) through difficult terrain without penalty."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_spells.lst",
+    "sha256": "03a2e5e296f66a797d40d633aee1e6f08144e807e49c9923f72def8a78bab996",
+    "line": 44,
+    "record_key": "Zephyr's Fleetness"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:prose_expr",
+    "derived:range_keyword"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

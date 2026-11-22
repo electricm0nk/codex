@@ -1,0 +1,57 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Spider Eater ~ Implant",
+    "delivery": "Extraordinary",
+    "description": "A spider eaters grows its eggs inside of a living host. Implanting an egg in a host is a full-round action that provokes attacks of opportunity, and the target must be helpless but alive. Once an egg is implanted, it exudes paralytic enzymes that not only keep the victim in state of perpetual paralysis, but also keep it nourished and alive in its comatose but fully aware state. This condition lasts until the egg hatches in 1d6 weeks, at which point the young spider eater consumes most of its host, killing it. An egg can be surgically removed with a DC 25 Heal check (this check deals 2d6 points of damage to the host regardless of success), at which point the host recovers from the paralysis in 1d6 rounds. Any magical effect that removes paralysis or disease (such as remove paralysis, remove disease, or heal) also destroys the egg, but mere immunity to paralysis or disease does not offer protection.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:spider_eater_implant",
+    "name": "Implant",
+    "owners": [
+      "bestiary_3:monster:spider_eater"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A spider eaters grows its eggs inside of a living host. Implanting an egg in a host is a full-round action that provokes attacks of opportunity, and the target must be helpless but alive. Once an egg is implanted, it exudes paralytic enzymes that not only keep the victim in state of perpetual paralysis, but also keep it nourished and alive in its comatose but fully aware state. This condition lasts until the egg hatches in 1d6 weeks, at which point the young spider eater consumes most of its host, killing it. An egg can be surgically removed with a DC 25 Heal check (this check deals 2d6 points of damage to the host regardless of success), at which point the host recovers from the paralysis in 1d6 rounds. Any magical effect that removes paralysis or disease (such as remove paralysis, remove disease, or heal) also destroys the egg, but mere immunity to paralysis or disease does not offer protection."
+      },
+      {
+        "key": "KEY",
+        "value": "Spider Eater ~ Implant"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.255"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpiderEaterRacialAbility.SpecialQuality.Extraordinary"
+      }
+    ],
+    "source_page": "p.255",
+    "traits": [
+      "SpiderEaterRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T10:26:03Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1571,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Spider Eater ~ Implant",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

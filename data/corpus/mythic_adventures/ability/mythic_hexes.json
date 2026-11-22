@@ -1,0 +1,76 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Mythic Path Ability ~ Mythic Hexes",
+    "name": "Mythic Hexes",
+    "description": "Your hexes are more effective against non-mythic targets. When you use a hex that requires a saving throw against a non-mythic target, that target is automatically affected for 1 round (which doesn't count toward the hex's duration) and can't attempt a saving throw to resist the hex. On your turn the next round, the creature attempts its saving throw as normal. If it succeeds at this saving throw, it breaks free of the hex; otherwise, it's affected as normal. You must have the hex class feature to select this ability. You can select this ability twice. If you select it a second time, it also affects your major hexes.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Path Ability ~ Mythic Hexes"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Path Ability.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Mythic Path ~ Archmage"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,TYPE.WitchHex"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "MythicTierLevel,1"
+      },
+      {
+        "key": "PREVARLT",
+        "value": "count(\"ABILITIES\",\"CATEGORY=Special Ability\",\"KEY=Mythic Path Ability ~ Mythic Hexes\"),2"
+      },
+      {
+        "key": "DESC",
+        "value": "Your hexes are more effective against non-mythic targets. When you use a hex that requires a saving throw against a non-mythic target, that target is automatically affected for 1 round (which doesn't count toward the hex's duration) and can't attempt a saving throw to resist the hex. On your turn the next round, the creature attempts its saving throw as normal. If it succeeds at this saving throw, it breaks free of the hex; otherwise, it's affected as normal. You must have the hex class feature to select this ability. You can select this ability twice. If you select it a second time, it also affects your major hexes."
+      },
+      {
+        "key": "STACK",
+        "value": "YES"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "NOCHOICE"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.17"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
+    "line": 214,
+    "record_key": "Mythic Path Ability ~ Mythic Hexes"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

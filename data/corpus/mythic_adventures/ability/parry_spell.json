@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Mythic Path Ability ~ Parry Spell",
+    "name": "Parry Spell",
+    "description": "As an immediate action, you can expend one use of mythic power to block a spell targeting you or an ally adjacent to you. The spell must be a ray, a single-target spell, or a spell that creates an effect targeting one creature (such as acid arrow), and the level of the spell's spell slot must be equal to or lower than your tier. Make an attack roll as if making an attack of opportunity. If the result of the attack roll is greater than the spell's attack roll or save DC, the spell has no effect on the intended target (though other targets from the same spell, such as multiple targets of scorching ray, are affected normally). A spell that has neither a DC nor an attack roll (such as magic missile) can't be affected by this ability. You must declare using spell parry after the spellcaster's target is announced, but before the target's saving throw or attack roll is made.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Path Ability ~ Parry Spell"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Path Ability.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Mythic Path ~ Guardian"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "MythicTierLevel,3"
+      },
+      {
+        "key": "DESC",
+        "value": "As an immediate action, you can expend one use of mythic power to block a spell targeting you or an ally adjacent to you. The spell must be a ray, a single-target spell, or a spell that creates an effect targeting one creature (such as acid arrow), and the level of the spell's spell slot must be equal to or lower than your tier. Make an attack roll as if making an attack of opportunity. If the result of the attack roll is greater than the spell's attack roll or save DC, the spell has no effect on the intended target (though other targets from the same spell, such as multiple targets of scorching ray, are affected normally). A spell that has neither a DC nor an attack roll (such as magic missile) can't be affected by this ability. You must declare using spell parry after the spellcaster's target is announced, but before the target's saving throw or attack roll is made."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
+    "line": 341,
+    "record_key": "Mythic Path Ability ~ Parry Spell"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

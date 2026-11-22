@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Exalted Boon ~ Gyronna ~ Come by Night",
+    "name": "Come by Night",
+    "description": "If you have performed your daily obedience, you gain darkvision 30 feet and are immune to any magical sleep effects (this functions identically to an elf's immunity to magical sleep effects).",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Exalted Boon ~ Gyronna ~ Come by Night"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Faith Based Boon.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "If you have performed your daily obedience, you gain darkvision 30 feet and are immune to any magical sleep effects (this functions identically to an elf's immunity to magical sleep effects)."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.53"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_faiths/isf_abilities_faith.lst",
+    "sha256": "e3a3596c61200c9e94e7975a4b1c250cdfb843673360c5ae3f11c00895c44a04",
+    "line": 208,
+    "record_key": "Exalted Boon ~ Gyronna ~ Come by Night"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

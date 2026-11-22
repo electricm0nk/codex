@@ -1,0 +1,55 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Redcap ~ Irreligious",
+    "delivery": "Extraordinary",
+    "description": "Bitter and blasphemous, redcaps cannot stand the symbols of good-aligned religions.  If a foe spends a standard action presenting such a holy symbol, any redcap that can see the creature must make a DC 15 Will save or become frightened for 1 minute and attempt to flee.  A redcap who successfully saves is shaken for 1 minute.",
+    "description_variables": [],
+    "facet": "Weakness",
+    "key": "bestiary_2:monster_ability:redcap_irreligious",
+    "name": "Irreligious",
+    "owners": [
+      "bestiary_2:monster:redcap"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Bitter and blasphemous, redcaps cannot stand the symbols of good-aligned religions.  If a foe spends a standard action presenting such a holy symbol, any redcap that can see the creature must make a DC 15 Will save or become frightened for 1 minute and attempt to flee.  A redcap who successfully saves is shaken for 1 minute."
+      },
+      {
+        "key": "KEY",
+        "value": "Redcap ~ Irreligious"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.233"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weakness.Extraordinary"
+      }
+    ],
+    "source_page": "p.233",
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T10:25:56Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1067,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Redcap ~ Irreligious",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

@@ -1,0 +1,64 @@
+{
+  "codex_generated_name": false,
+  "completeness": "full",
+  "data": {
+    "description": "As a swift action, you can boost your capabilities, gaining one of the follow effects until the end of your next turn: make one additional attack at your highest attack bonus when making a full attack, but all attacks suffer a -2 penalty to attack rolls; increase your speed by a +10 ft. enhancement bonus; give yourself a +2 dodge bonus to AC; or give yourself a +2 resistance bonus on saving throws.  You can use this ability %1 times per day.|MindOverBodyTimes",
+    "key": "Discipline Subdomain ~ Mind over Body",
+    "name": "Mind over Body",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Discipline Subdomain ~ Mind over Body"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClericClassFeatures.SpecialQuality.Supernatural.DomainPower"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MindOverBodyTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "As a swift action, you can boost your capabilities, gaining one of the follow effects until the end of your next turn: make one additional attack at your highest attack bonus when making a full attack, but all attacks suffer a -2 penalty to attack rolls; increase your speed by a +10 ft. enhancement bonus; give yourself a +2 dodge bonus to AC; or give yourself a +2 resistance bonus on saving throws.  You can use this ability %1 times per day.|MindOverBodyTimes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MindOverBodyTimes|DomainPsionicsTimes"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.294"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|MindOverBodyTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per day"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 19,
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_um.lst",
+    "record_key": "Discipline Subdomain ~ Mind over Body",
+    "sha256": "dbd6f422e0e3106db6759299ddad5770b0038d66d7c34ed615f7838b632fdad3"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

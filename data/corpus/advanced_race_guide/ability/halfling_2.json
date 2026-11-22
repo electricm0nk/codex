@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Racial Weapon Group ~ Halfling",
+    "name": "Halfling",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Racial Weapon Group ~ Halfling"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialWeaponGroup.Weapon Familiarity"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=Internal,TYPE.RacialWeaponGroup"
+      },
+      {
+        "key": "AUTO",
+        "value": "WEAPONPROF|TYPE=Halfling"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_builder.lst",
+    "sha256": "a028d62d1281055c61ef830d0bbe5aafffa4c33970173c421d936a2d3371b3ff",
+    "line": 516,
+    "record_key": "Racial Weapon Group ~ Halfling"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Life Leech ~ Unwilling Participant",
+    "name": "Unwilling Participant",
+    "class": "Life Leech",
+    "description": "When any creature in the collective against their will makes a save against an effect from over the collective, they suffer a -2 penalty on the save to resist the effect.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Life Leech ~ Unwilling Participant"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "VitalistClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "When any creature in the collective against their will makes a save against an effect from over the collective, they suffer a -2 penalty on the save to resist the effect."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Unwilling Participant"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.288"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2316,
+    "record_key": "Life Leech ~ Unwilling Participant"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

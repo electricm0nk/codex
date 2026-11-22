@@ -1,0 +1,2 @@
+# Fixture for desktop Market +N (AC and attack rows), source: ue_equip_arms_armor.lst, KEY: Lasso
+Lasso																					PROFICIENCY:WEAPON|Lasso								TYPE:Weapon.Resizable.Ranged.Exotic.Thrown																																						COST:0.1	WT:5																										EQMOD:Material ~ Rope																																																				SOURCEPAGE:p.31

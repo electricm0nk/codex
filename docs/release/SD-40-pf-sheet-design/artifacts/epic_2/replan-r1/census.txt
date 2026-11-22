@@ -1,0 +1,19 @@
+files 49768 rules 73363
+situational rules by target (target count first-example):
+  Hp 15 core_rulebook:class_feature:sorcerer_bonus_spell_l2_false_life#bonus0
+  Initiative 10 advanced_class_guide:class_feature:bolt_ace_gunslinger_initiative
+  Ac 178 advanced_class_guide:class_feature:bloodrager_bloodrage#bonus1
+  Save:Fortitude 52 advanced_class_guide:class_feature:magus_spellblend_shield_companion#bonus1
+  Save:Reflex 58 advanced_class_guide:class_feature:magus_spellblend_shield_companion#bonus2
+  Save:Will 78 advanced_class_guide:class_feature:bloodrager_bloodrage#bonus0
+  Cmd 0 -
+  Cmb 0 -
+  Speed 39 advanced_class_guide:class_feature:magus_spellblend_air_step#bonus0
+aspect prose entries (save/combat/AC families):
+  SaveBonus 407
+  AllSaveBonus 3
+  Save Bonus 2
+  WillSaveBonus 3
+  RefSaveBonus 2
+  CombatBonus 314
+  ModifyAC 6

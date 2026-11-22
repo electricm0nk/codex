@@ -1,0 +1,28 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Spiritualist's Call",
+    "category": "General",
+    "name": "Spiritualist's Call",
+    "description": "Whenever you summon your phantom, it is more powerful for a brief period of time. Whenever you summon your phantom, you can give it a +2 enhancement bonus to its Strength, Dexterity, or Charisma. This bonus lasts for 10 minutes after the summoning ritual is complete.",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=Special Ability,Spiritualist ~ Phantom"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_feats.lst",
+    "sha256": "eff885715102905735a080776def2406d112a05b5c00c518dd7d5a11964f2889",
+    "line": 69,
+    "record_key": "Spiritualist's Call"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

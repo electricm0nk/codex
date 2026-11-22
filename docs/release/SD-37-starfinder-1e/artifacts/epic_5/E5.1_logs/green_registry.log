@@ -1,0 +1,29 @@
+   Compiling codex-desktop v0.17.0 (/home/ubuntu/workspace/worktrees/codex-sd37/apps/desktop/src-tauri)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 28.67s
+     Running unittests src/main.rs (/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/codex_desktop-f9c244288bc1271e)
+
+running 21 tests
+test race_trait_picker::tests::a_loose_race_identifier_reaches_the_same_race_as_the_menu_key ... ok
+test race_trait_picker::tests::a_bad_selection_or_race_reports_rather_than_returning_a_quiet_empty_payload ... ok
+test race_trait_picker::tests::an_ordinary_feat_moves_no_sentence_and_is_not_reported_as_a_display_value_feat ... ok
+test race_trait_picker::tests::a_standard_traits_stated_bonus_moves_in_the_payload_for_a_character_holding_great_hatred ... ok
+test race_trait_picker::tests::race_books_load_through_the_per_system_registry ... ok
+test race_trait_picker::tests::plagueborn_really_suppresses_both_standard_traits_its_flags_name_so_8b_is_not_a_backend_gap ... ok
+test race_trait_picker::tests::every_alternate_carries_real_book_attribution_and_prose ... ok
+test race_trait_picker::tests::every_alternate_has_a_readable_exclusion_guard_including_the_preability_spelling ... ok
+test race_trait_picker::tests::every_alternate_from_every_race_corpus_book_reaches_the_menu_across_every_in_scope_race ... ok
+test race_trait_picker::tests::saltbeard_replaces_the_four_standard_traits_its_flags_name_and_grants_its_replacement ... ok
+test race_trait_picker::tests::selecting_an_alternate_blocks_every_sibling_whose_guard_names_a_fired_flag ... ok
+test race_trait_picker::tests::the_menu_command_carries_all_nine_skinwalker_change_shape_kin_pools_with_real_grants ... ok
+test race_trait_picker::tests::the_menu_command_itself_carries_all_seven_adoptive_parentage_options_with_real_grants ... ok
+test race_trait_picker::tests::the_menu_command_carries_all_twentyone_adopted_race_options_twenty_with_real_grants ... ok
+test race_trait_picker::tests::the_two_multi_flag_gate_rows_are_reported_as_their_own_distinct_finding ... ok
+test race_trait_picker::tests::two_alternates_that_exclude_each_other_are_reported_as_conflicting ... ok
+test race_trait_picker::tests::selecting_saltbeard_suppresses_the_four_standard_traits_and_swaps_in_its_own_greed ... ok
+test race_trait_picker::tests::the_payload_renders_a_different_sentence_for_a_character_holding_the_feats ... ok
+test race_trait_picker::tests::every_menu_row_has_a_rendered_description_and_none_leaks_pcgen_syntax ... ok
+test race_trait_picker::tests::no_alternate_in_the_menu_can_ever_be_refused_for_an_unmatched_flag ... ok
+test race_trait_picker::tests::every_menu_key_round_trips_through_the_resolve_command ... ok
+
+test result: ok. 21 passed; 0 failed; 0 ignored; 0 measured; 629 filtered out; finished in 22.22s
+

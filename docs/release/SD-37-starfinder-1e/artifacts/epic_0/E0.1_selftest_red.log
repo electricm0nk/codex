@@ -1,0 +1,31 @@
+  PASS  --check on an absent DEST exits 1 and names the fetch script
+  PASS  fresh fetch: exit 0, OK token, exports, HEAD at pin, cone present, out-of-cone absent
+  PASS  re-run on an already-on-pin DEST is idempotent (exit 0)
+  PASS  off-pin checkout: --check exits 1 and names both SHAs
+  PASS  --force moves an off-pin checkout back to the pin
+  PASS  dirty tracked cone file: --check exits 1 naming the file
+  PASS  dirty tracked cone file: --force refuses too, naming the file
+  PASS  DEST exists but is not a git checkout -> exit 1
+  PASS  pin file missing PCGEN_ORACLE_SHA -> exit 2
+  PASS  a full (non-sparse) clone at the pin passes --check
+  PASS  successful --check emits the exact pcgen-oracle: OK token
+  PASS  SF pin: fresh fetch brings data/starfinder/paizo/core and the SF game mode
+  FAIL  SF cone removed: --check exits 1 naming data/starfinder/paizo/core
+        --- output ---
+        pcgen-oracle: OK 76adee4ec57f0791e3ba832b43de93cbb0834ca3 /tmp/tmp.urP4ftnPrZ/d11-sf
+        export PCGEN_CORPUS_ROOT=/tmp/tmp.urP4ftnPrZ/d11-sf/data
+        export PCGEN_REPO_DIR=/tmp/tmp.urP4ftnPrZ/d11-sf (exit 0)
+  FAIL  SF game mode removed: --check exits 1 naming system/gameModes/Starfinder
+        --- output ---
+        pcgen-oracle: OK 76adee4ec57f0791e3ba832b43de93cbb0834ca3 /tmp/tmp.urP4ftnPrZ/d11-sf
+        export PCGEN_CORPUS_ROOT=/tmp/tmp.urP4ftnPrZ/d11-sf/data
+        export PCGEN_REPO_DIR=/tmp/tmp.urP4ftnPrZ/d11-sf (exit 0)
+  FAIL  --force re-applies the SF cone and repairs the checkout
+        --- output ---
+        pcgen-oracle: OK 76adee4ec57f0791e3ba832b43de93cbb0834ca3 /tmp/tmp.urP4ftnPrZ/d11-sf
+        export PCGEN_CORPUS_ROOT=/tmp/tmp.urP4ftnPrZ/d11-sf/data
+        export PCGEN_REPO_DIR=/tmp/tmp.urP4ftnPrZ/d11-sf (exit 0)
+  PASS  PF-only pin does not demand the SF cone
+---------------------------------------------------------------
+passed: 13  failed: 3
+SELF-TEST FAILED.

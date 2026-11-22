@@ -1,0 +1,10 @@
+test_doneness_values_matches_the_producer (scripts.tests.test_doneness.TestDonenessMatchesProducer.test_doneness_values_matches_the_producer) ... ok
+test_every_combination_matches_the_producer (scripts.tests.test_doneness.TestDonenessMatchesProducer.test_every_combination_matches_the_producer) ... ok
+test_excluded_books_matches_the_producer (scripts.tests.test_doneness.TestDonenessMatchesProducer.test_excluded_books_matches_the_producer) ... ok
+test_no_grounding_probe_matches_the_producer (scripts.tests.test_doneness.TestDonenessMatchesProducer.test_no_grounding_probe_matches_the_producer) ... ok
+test_unknown_wiring_class_raises_in_both (scripts.tests.test_doneness.TestDonenessMatchesProducer.test_unknown_wiring_class_raises_in_both) ... ok
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.001s
+
+OK

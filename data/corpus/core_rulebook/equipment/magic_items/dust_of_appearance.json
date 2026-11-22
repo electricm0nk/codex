@@ -1,0 +1,82 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "magic_items",
+    "cost_gp": 1800.0,
+    "description": "This powder appears to be a very fine, very light metallic dust. A single handful of this substance flung into the air coats objects within a 10-foot radius, making them visible even if they are invisible. It likewise negates the effects of blur and displacement. In this, it works just like the faerie fire spell. The dust also reveals figments, mirror images, and projected images for what they are. A creature coated with the dust takes a -30 penalty on its Stealth checks. The dust's effect lasts for 5 minutes.\nDust of appearance is typically stored in small silk packets or hollow bone tubes.",
+    "key": "Dust of Appearance",
+    "name": "Dust of Appearance",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Dust of Appearance"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Dust of Appearance"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.Consumable"
+      },
+      {
+        "key": "COST",
+        "value": "1800"
+      },
+      {
+        "key": "WT",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.510"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Aura|faint conjuration"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Caster Level|5th"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Slot|none"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Cost|900 gp"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Requirements|Craft Wondrous Item, glitterdust"
+      },
+      {
+        "key": "DESC",
+        "value": "This powder appears to be a very fine, very light metallic dust. A single handful of this substance flung into the air coats objects within a 10-foot radius, making them visible even if they are invisible. It likewise negates the effects of blur and displacement. In this, it works just like the faerie fire spell. The dust also reveals figments, mirror images, and projected images for what they are. A creature coated with the dust takes a -30 penalty on its Stealth checks. The dust's effect lasts for 5 minutes.&nl;Dust of appearance is typically stored in small silk packets or hollow bone tubes."
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "ANYPC|SKILL|Stealth|-30"
+      }
+    ],
+    "weight_lbs": 0.0
+  },
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 132,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "record_key": "Dust of Appearance",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:tempbonus"
+  ]
+}

@@ -1,0 +1,93 @@
+{
+  "source": "Hand-transcribed from docs/release/SD-38-cyberpunk-red/artifacts/cycle_0/inventory/roles.md §2 (sheet-visible computed values) and §1h (Lawman Backup table, p159-p160), never from data/cyberpunk-red/corpus/. Each array holds the value at Role Ability Rank 1, 2, ..., 10. Every Role starts at Rank 4 (p143-p144). Rank-band prose (venues, Reach, Grease, housing, Motorpool vehicles) is printed, not computed, and is absent here.",
+  "rank_min": 1,
+  "rank_max": 10,
+  "roles": [
+    {
+      "role": "Rockerboy",
+      "role_ability": "Charismatic Impact",
+      "starting_rank": 4,
+      "values": {
+        "charismatic_impact_check": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+      }
+    },
+    {
+      "role": "Solo",
+      "role_ability": "Combat Awareness",
+      "starting_rank": 4,
+      "values": {
+        "combat_awareness_points": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+      }
+    },
+    {
+      "role": "Netrunner",
+      "role_ability": "Interface",
+      "starting_rank": 4,
+      "values": {
+        "net_actions": [2, 2, 2, 3, 3, 3, 4, 4, 4, 5]
+      }
+    },
+    {
+      "role": "Tech",
+      "role_ability": "Maker",
+      "starting_rank": 4,
+      "values": {
+        "maker_specialty_ranks": [2, 4, 6, 8, 10, 12, 14, 16, 18, 20]
+      }
+    },
+    {
+      "role": "Medtech",
+      "role_ability": "Medicine",
+      "starting_rank": 4,
+      "values": {
+        "medicine_specialty_points": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+      }
+    },
+    {
+      "role": "Media",
+      "role_ability": "Credibility",
+      "starting_rank": 4,
+      "values": {
+        "credibility_rumor_check": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+        "believability": [2, 2, 3, 3, 4, 4, 5, 5, 6, 7]
+      }
+    },
+    {
+      "role": "Exec",
+      "role_ability": "Teamwork",
+      "starting_rank": 4,
+      "values": {
+        "team_members": [0, 0, 1, 1, 2, 2, 2, 2, 3, 3]
+      }
+    },
+    {
+      "role": "Lawman",
+      "role_ability": "Backup",
+      "starting_rank": 4,
+      "values": {
+        "backup_call_threshold": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+        "backup_combat_number": [8, 8, 10, 10, 14, 14, 14, 16, 15, 14],
+        "backup_sp": [7, 7, 7, 7, 13, 13, 13, 15, 18, 11],
+        "backup_hp": [20, 20, 25, 25, 35, 35, 35, 50, 35, 35],
+        "backup_move_and_body": [4, 4, 5, 5, 4, 4, 4, 6, 4, 6]
+      }
+    },
+    {
+      "role": "Fixer",
+      "role_ability": "Operator",
+      "starting_rank": 4,
+      "values": {
+        "haggle_bonus": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+      }
+    },
+    {
+      "role": "Nomad",
+      "role_ability": "Moto",
+      "starting_rank": 4,
+      "values": {
+        "vehicle_familiarity_bonus": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+        "motorpool_picks": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+      }
+    }
+  ]
+}

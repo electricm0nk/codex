@@ -1,0 +1,20 @@
+{
+  "data": {
+    "category": "Theme",
+    "key": "Themeless Theme Benefit ~ General Knowledge",
+    "name": "General Knowledge",
+    "type": "Theme.Theme Benefit.Themeless Theme Benefit.Themeless Theme Benefit Lvl 1"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 617,
+    "path": "starfinder/paizo/core/scr_abilities.lst",
+    "record_key": "Themeless Theme Benefit ~ General Knowledge",
+    "sha256": "dfd415e1ab4cbef3c0417edecd59e13a7a116cad2086fcf2773dbafcb78711f5"
+  },
+  "unit_id": "core:ability:themeless_theme_benefit_general_knowledge"
+}

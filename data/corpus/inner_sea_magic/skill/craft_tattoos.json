@@ -1,0 +1,49 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "key": "Craft (Tattoos)",
+    "name": "Craft (Tattoos)",
+    "raw_tokens": [
+      {
+        "key": "KEYSTAT",
+        "value": "INT"
+      },
+      {
+        "key": "USEUNTRAINED",
+        "value": "NO"
+      },
+      {
+        "key": "TYPE",
+        "value": "Intelligence.Craft.Base"
+      },
+      {
+        "key": "PREVARLT",
+        "value": "AnimalCompanionSkill,1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.16"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Craft (Alchemy)|3|TYPE=ClassSkill|PRECSKILL:1,Craft (Alchemy)|PRESKILL:1,Craft (Alchemy)=1"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T12:11:34Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 5,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_skills.lst",
+    "record_key": "Craft (Tattoos)",
+    "sha256": "1e1506519dc7506657e359a26bbf8e7f0b950bc3db32cc95891fd44bedce2c55"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

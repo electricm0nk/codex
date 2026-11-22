@@ -1,0 +1,67 @@
+{
+  "lane": "PC9",
+  "findings": [
+    {
+      "id": "PC9-1",
+      "file": "src/rules_core/pilot_compute/mod.rs",
+      "line_start": 60432,
+      "line_end": 61795,
+      "severity": "P2",
+      "category": "duplication",
+      "title": "Per-class fixture-builder helper is copy-pasted verbatim into multiple sibling test modules in this chunk",
+      "evidence": "`fn human_barbarian_input(level: u8) -> CharacterInput` is defined identically 3 times in this chunk (line 60432 in `barbarian_dispatch_widening_safety_tests`, line 61594 in `raging_climber_and_swimmer_tests`, line 61789 in `barbarian_rage_power_superstition_tests`) -- each body is the same 6-line `load_character_input_fixture(...) -> assert diagnostics empty -> set class_levels -> return input`. `fn human_skald_input` is duplicated at lines 60688 and 61603. `fn human_alchemist_input` is duplicated at lines 63531 and 63991. `fn human_inquisitor_input` is duplicated at lines 64326 and 65330. That is 4 of 20 fixture-builder-owning modules in this chunk (4 of 20) whose builder body already exists elsewhere in the same file.",
+      "proposed_action": "report_only",
+      "confidence": "high",
+      "risk_notes": "Each copy lives in a separate #[cfg(test)] mod with its own `use super::{...}` import list, so collapsing them is a real refactor (shared test-support module + re-export), not a mechanical cargo-check-provable deletion."
+    },
+    {
+      "id": "PC9-2",
+      "file": "src/rules_core/pilot_compute/mod.rs",
+      "line_start": 60006,
+      "line_end": 69571,
+      "severity": "P2",
+      "category": "structure",
+      "title": "Repo-wide test-boilerplate pattern (per-class fixture const + builder fn) is a natural extraction seam",
+      "evidence": "The 3-line `const FIGHTER_LEVEL_1_FIXTURE: &str = include_str!(\"../../../tests/fixtures/.../pf1_human_fighter_level1_ge06_deterministic_input.txt\")` block appears 74 times in the whole 78,506-line file, 20 of those 74 inside this chunk (lines 60006-69571), one per `#[cfg(test)] mod <class>_..._tests`. Each module also redeclares its own `human_<class>_input(level) -> CharacterInput` builder (20 in this chunk, listed in lane_summary.cross_chunk). None of these differ except the class-id constant they set.",
+      "proposed_action": "report_only",
+      "confidence": "high",
+      "risk_notes": "Consolidating into one shared `pilot_compute::test_support` module (one fixture const, one `human_class_input(class_id, level)` builder used by every class module) would cut roughly 10-15 boilerplate lines per module across dozens of modules file-wide without touching any assertion logic. Out of auto-fix scope per ground rules (not a pure deletion), but low-risk to do by hand since each site is mechanically identical."
+    },
+    {
+      "id": "PC9-3",
+      "file": "src/rules_core/pilot_compute/mod.rs",
+      "line_start": 1,
+      "line_end": 78506,
+      "severity": "P3",
+      "category": "structure",
+      "title": "Roughly a quarter of this 78.5k-line 'production surface' file is inline #[cfg(test)] modules",
+      "evidence": "This chunk alone (60006-69571, 9,566 of 78,506 total lines = 12% of the file) contains 20 `#[cfg(test)] mod` blocks and zero non-test top-level items (no `fn`/`struct`/`enum`/`impl` starting at column 0 in the whole 60000-70000 line band). The `_dispatch_widening_safety_tests` naming convention alone recurs 38 times file-wide (grep count), suggesting the test-module fraction of the file is large well beyond this chunk.",
+      "proposed_action": "report_only",
+      "confidence": "medium",
+      "risk_notes": "Moving these to `tests/` integration files (one per class, or grouped by era) would shrink mod.rs substantially and make the production-vs-test boundary of this 78.5k-line accretion file legible again; needs a companion audit of what `super::{...}` imports actually require (some reach private items only visible via inline placement)."
+    },
+    {
+      "id": "PC9-4",
+      "file": "src/rules_core/pilot_compute/mod.rs",
+      "line_start": 64390,
+      "line_end": 64931,
+      "severity": "P3",
+      "category": "bloat",
+      "title": "Nine near-identical 'actively judging <type>' Inquisitor tests could partly collapse into a data-driven case list",
+      "evidence": "single_class_inquisitor_actively_judging_{justice,protection,purity,smiting,destruction,healing,piercing,resiliency,resistance}_with_recognized_choice_applies_real_bonus (9 functions spanning lines 64390-64931) share identical setup (push a judgment SelectedChoice + push an EquippedActive ability activation, call build_pilot_headless_receipt, assert Blocked on other_features_deferred) and differ only in which selection id is pushed and which explanation/total field is asserted afterward.",
+      "proposed_action": "report_only",
+      "confidence": "medium",
+      "risk_notes": "Not a clean 1:1 table collapse like the oracle module's own `each_new_mystery_reaches_computed_with_a_curse` loop (line 68469) achieved, because each arm also asserts a different negative-leak check on a different sibling total (attack bonus vs AC vs saves) -- a naive loop would need a richer per-case struct (selection id, positive-check id+value, negative-check id+value) to avoid losing that per-judgment-specific leak guard."
+    }
+  ],
+  "lane_summary": {
+    "files_reviewed": 1,
+    "files_skipped_generated": 0,
+    "cross_chunk": [
+      "Duplicate-candidate helper: `fn human_<class>_input(level: u8) -> CharacterInput` -- identical 6-line body (load_character_input_fixture -> assert diagnostics empty -> set chosen.class_levels to one entry at `level` -> return input), redeclared once per #[cfg(test)] mod. In this chunk: human_barbarian_input (x3: 60432, 61594, 61789), human_skald_input (x2: 60688, 61603), human_unchained_barbarian_input (61983), human_bloodrager_input (62159), human_hunter_input (62732), human_alchemist_input (x2: 63531, 63991), human_fighter_input (64096), human_inquisitor_input (x2: 64326, 65330), human_arcanist_input (65479), human_warpriest_input (66023), human_slayer_input (66835), human_oracle_input (67000), human_witch_input (68774), human_swashbuckler_input (69169). 22 total occurrences of this exact signature shape in the whole file (grep count), 20 of them in this chunk -- other lanes covering the remaining ~56.5k lines should grep `fn human_[a-z_]*_input(level: u8) -> CharacterInput` and `FIGHTER_LEVEL_1_FIXTURE: &str = include_str!` (74 occurrences file-wide) to find the rest.",
+      "Duplicate-candidate const: `const FIGHTER_LEVEL_1_FIXTURE: &str = include_str!(\"../../../tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt\")` -- 74 occurrences file-wide, 20 in this chunk, one per test module. Same extraction seam as the builder-fn finding above.",
+      "Naming-convention family for correlation: `<class>_dispatch_widening_safety_tests` (38 occurrences file-wide of the substring; this chunk holds druid/barbarian/skald/bloodrager/hunter/alchemist/inquisitor/arcanist/warpriest/slayer/oracle/witch/swashbuckler/investigator's own modules) and the companion `non_<class>_characters_spoofed_<feature>_(activation|entry|choice)_is_ignored` test-name pattern (13 instances in this chunk alone) -- useful anchors if other lanes are inventorying the same two conventions elsewhere in the file."
+    ],
+    "notes": "Assigned range 60500-69500 snapped outward to the enclosing #[cfg(test)] module boundaries actually read: 60006 (start of `druid_dispatch_widening_safety_tests`, the first mod fully containing line 60500) through 69571 (end of `swashbuckler_dispatch_widening_safety_tests`, the last mod boundary before line 69500's neighbor `investigator_dispatch_widening_safety_tests` begins at 69579). File does not begin with 'GENERATED FILE' (checked first line), so nothing was skipped as generated. The ENTIRE assigned chunk is #[cfg(test)] test code -- a grep for top-level `pub fn|fn|pub struct|struct|pub enum|enum|impl|mod|pub mod` at column 0 across lines 60000-70200 matched only `mod <name>_tests {` declarations, zero production items. No correctness bugs, unchecked-unwrap hazards, or dead/unreachable branches were found in production logic because none of this chunk is production logic; the few `.unwrap()` calls present (lines 62533, 62535) are test-only calls on an internal deterministic table lookup, not on external data, and are low risk. No #[ignore], todo!/unimplemented!, FIXME/XXX/HACK markers found in range. Sampled roughly 20 of 20 modules' structure and read ~15% of total lines in the range in full detail (druid, barbarian, bloodrager, inquisitor-judgment, oracle-mystery, swashbuckler in depth; skald/hunter/alchemist/arcanist/warpriest/slayer/witch/unchained-barbarian skimmed by function-signature listing plus spot reads) per the 'skim structure, sample a few tests' guidance for inline test modules."
+  }
+}

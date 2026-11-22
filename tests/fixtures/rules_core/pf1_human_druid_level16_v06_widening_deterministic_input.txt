@@ -1,0 +1,56 @@
+# v0.6 deterministic Human Druid level 16 progression fixture.
+# Widens the accepted deterministic PF1 Core Rulebook Human Druid
+# level-1..level-15 prepared divine spell-bearing baseline
+# (tests/fixtures/rules_core/pf1_human_druid_level15_sd18_widening_deterministic_input.txt)
+# to level 16 as chosen input only. It names selections; it does not
+# contain derived, computed, or parity values. It preserves the accepted
+# Human race-choice seam (ability-bonus and bonus-feat), the deterministic
+# ability/feat posture from the level-1 through level-15 fixtures, and the
+# same canonical nature-bond selection (animal companion), adding only the
+# level bump this bounded slice needs.
+#
+# Corpus grounding, read directly from the PCGen PF1 Core Rulebook data set
+# rather than assumed to continue the pattern:
+#   - Base attack bonus +12 (16 * 3 / 4 = 12), good Fortitude/Will +10
+#     (16 / 2 + 2 = 10), poor Reflex +5 (16 / 3 = 5) -- all three from the
+#     CLASS:Druid BONUS:COMBAT / BONUS:SAVE formulas on
+#     data/pathfinder/paizo/roleplaying_game/core_rulebook/cr_classes.lst
+#     line 93. Reflex STAYS +5 (an integer-division coincidence with level
+#     15), checked rather than assumed.
+#   - Wild Empathy 17 (druid level 16 + Charisma modifier 1), from
+#     cr_abilities_class.lst line 2864's BONUS:VAR|WildEmpathy|WildEmpathyLVL+CHA.
+#   - Spells per day CAST:4,4,4,4,4,4,3,3,2 -- cr_classes.lst line 131.
+#     Nine columns only: 9th-level druid spells do NOT begin until class
+#     level 17 (cr_classes.lst line 132 is the first Druid row with a tenth
+#     column), confirmed directly.
+#   - The PF1 CRB Druid class table's level-16 "Special" column reads
+#     "Wild shape (7/day)" ONLY. The whole CATEGORY=Class|Druid.MOD feature
+#     block (cr_abilities_class.lst lines 223-234) tops out at
+#     PREVARGTEQ:Druid_CFP_Level,15 (Timeless Body) -- there is NO new named
+#     Druid class feature at 16, 17, 18, 19, or 20. The only level-16 change
+#     is the Wild Shape frequency increment from
+#     cr_abilities_class.lst line 853's
+#     BONUS:VAR|WildShapeTimes|(DruidLVL>=4)+...+(DruidLVL>=16)+... formula.
+#     Wild Shape stays deliberately named-but-unproven here exactly as at
+#     levels 4/6/8/10/12/14 -- no shapeshifting execution engine exists in
+#     this codebase to ground it against.
+#
+# It deliberately avoids every later Druid burden surface: no animal
+# companion stat block/advancement/link-share-spells, no Wild Shape
+# execution (form list, duration tracking), no spellbook, no spells
+# prepared, no spell slots, and no spell DCs.
+case_id=pf1-crb-human-druid-level16
+source_package_id=pf1.core_rulebook
+race_id=race:human
+class_level=class:druid:16
+ability=strength:10
+ability=dexterity:14
+ability=constitution:13
+ability=intelligence:8
+ability=wisdom:17
+ability=charisma:12
+feat=feat:dodge
+choice=choice:druid_nature_bond:bond:animal_companion
+choice=choice:human_bonus_feat:feat:dodge
+choice=choice:human_ability_bonus:ability:wisdom
+provenance=programs/codex/requirements/SD-18-core-rules-breadth/scope-draft.md

@@ -1,0 +1,11 @@
+{
+  "schema_version": "1.0.0",
+  "channel": "alpha",
+  "version": "0.0.0-beta.20260704.1",
+  "tag": "beta/0.0.0-beta.20260704.1",
+  "release_url": "https://github.com/electricm0nk/codex/releases/tag/beta/0.0.0-beta.20260704.1",
+  "manifest_url": "https://raw.githubusercontent.com/electricm0nk/codex/update-index/update-manifest.json",
+  "publication_timestamp": "2026-07-04T08:45:00Z",
+  "tranche_id": "STC-CODEX-SD-16",
+  "signature": null
+}

@@ -1,0 +1,80 @@
+{
+  "_meta": {
+    "purpose": "Tranche 2.7 (tranche/2-7) branch protection ruleset, source-of-truth artifact. Operator must apply this to GitHub via either the Rulesets API or the web admin -- this file alone is not enforced automatically. See README.md in this directory for the apply path.",
+    "schema_url": "https://docs.github.com/en/rest/rulesets",
+    "mirrors_doctrine": "devops/tranche-branch-governance + devops/worktree-and-branch-hygiene (slice work pushes directly to tranche/2-7 per operator decision 2026-07-12; PR-required only at develop and higher). The branch shape is documented at programs/codex/requirements/tranche-2-7-pcgen-corpus-ingestion/README.md 'Branch shape (operator doctrine, 2026-07-12)'.",
+    "branch": "tranche/2-7",
+    "baseline_sha": "15d073a91233f8361b1544f4c6afc12a92e6d5ea"
+  },
+  "name": "tranche-2-7-protection",
+  "target": "branch",
+  "enforcement": "active",
+  "conditions": {
+    "ref_name": {
+      "include": ["refs/heads/tranche/2-7"],
+      "exclude": []
+    }
+  },
+  "rules": [
+    {
+      "type": "deletion",
+      "parameters": { "deletions": false }
+    },
+    {
+      "type": "non_fast_forward",
+      "parameters": { "blocks_force_pushes": true }
+    },
+    {
+      "type": "required_signatures",
+      "parameters": { "required_signatures": false },
+      "_note": "GPG signing not enabled by default. Enable separately if/when operator wants signed-tranche policy. Left false here to match the develop baseline and the tranche-3 precedent."
+    },
+    {
+      "type": "pull_request",
+      "parameters": {
+        "require_code_owner_review": false,
+        "require_approve_review": false,
+        "dismiss_stale_reviews_on_push": true,
+        "require_last_push_approval": false,
+        "required_review_thread_resolution": false
+      },
+      "_note": "Pull-request reviews are explicitly NOT required on tranche/2-7 -- slices push directly per operator decision 2026-07-12. The promotion PR (tranche/2-7 -> develop) is governed by the develop-side ruleset, not this one."
+    },
+    {
+      "type": "required_status_checks",
+      "parameters": {
+        "strict_required_status_checks_policy": true,
+        "required_status_checks": [
+          {
+            "context": "Tranche 2.7 CI / desktop-typecheck-and-test",
+            "integration_id": null,
+            "_note": "Primary push-time gate on tranche/2-7. Mirrors the tranche-3 ci: cargo test + npm typecheck + npm test. The .github/workflows/tranche-2-7-ci.yml file (parallel to tranche-3-ci.yml) has not been authored yet; until it exists, this check is enforced as 'no-op pending workflow' and should be created before tranche/2-7 is dispatchable. The operator owns the workflow authoring."
+          },
+          {
+            "context": "Tranche 2.7 CI / tranche-manifest-coverage",
+            "integration_id": null,
+            "_note": "Manifest + release-notes validator. Fires from the tranche-2-7 ci workflow (no path filter). Runs tools/release/check_release_manifest.py against any touched manifest.yaml or release-notes.md under docs/release/... (relocated 2026-07-20; programs/codex/requirements/ no longer holds any of this). The .github/workflows/tranche-2-7-ci.yml file (parallel to tranche-3-ci.yml) has not been authored yet; this is contingent on the workflow existing first."
+          }
+        ],
+        "do_enforcement_for_required_status_checks": true
+      }
+    },
+    {
+      "type": "restrict_pushes",
+      "_note": "Restrict pushes to a list of actor ids. Operators should fill in their actual maintainer github user ids here. Names/slack handles are documentation; the API requires numeric ids.",
+      "parameters": {
+        "push_actors": [],
+        "restrict_pushes": true
+      }
+    },
+    {
+      "type": "block_creations",
+      "parameters": { "block_creations": false },
+      "_note": "Branch exists already; creation blocked is irrelevant until the branch is deleted/recreated."
+    },
+    {
+      "type": "update_allowances",
+      "_note": "If the operator wants to allow specific actors to bypass the rules above (e.g. an autofix workflow bot), populate push_actors in the restrict_pushes rule and/or add them here. By default no bypass."
+    }
+  ]
+}

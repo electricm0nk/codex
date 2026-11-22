@@ -1,0 +1,128 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Occultist Archetype ~ Talisman Crafter",
+    "name": "Talisman Crafter",
+    "class": "Occultist",
+    "description": "Talisman crafters specialize in the creation of seals, constructing master talismans to use as implements and inscribing wards with esoteric geometry.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Occultist Archetype ~ Talisman Crafter"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.OccultistArchetype"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.63"
+      },
+      {
+        "key": "DESC",
+        "value": "Talisman crafters specialize in the creation of seals, constructing master talismans to use as implements and inscribing wards with esoteric geometry."
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Occultist=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Occultist Archetype ~ Talisman Crafter],[!PREFACT:1,ABILITIES,Occultist_Archetype_Implements=True,Occultist_Archetype_MagicItemSkill=True,Occultist_Archetype_ObjectReading=True,Occultist_Archetype_ShiftFocus=True,Occultist_Archetype_AuraSight=True,Occultist_Archetype_FocusPowers5=True,Occultist_Archetype_FocusPowers17=True]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Occultist Class Feature|AUTOMATIC|Talisman Crafter ~ Talismanic Implements|PRECLASS:1,Occultist=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Occultist Class Feature|AUTOMATIC|Talisman Crafter ~ Spellbound Talisman|PRECLASS:1,Occultist=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Occultist Class Feature|AUTOMATIC|Talisman Crafter ~ Shared Talisman|PRECLASS:1,Occultist=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Occultist Class Feature|AUTOMATIC|Talisman Crafter ~ Warding Seal|PRECLASS:1,Occultist=5"
+      },
+      {
+        "key": "FACT",
+        "value": "Occultist_Archetype_Implements|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Occultist_Archetype_MagicItemSkill|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Occultist_Archetype_ObjectReading|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Occultist_Archetype_ShiftFocus|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Occultist_Archetype_AuraSight|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Occultist_Archetype_FocusPowers5|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Occultist_Archetype_FocusPowers17|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Occultist_CF_MagicItemSkill|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Occultist_CF_ObjectReading|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Occultist_CF_ShiftFocus|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Occultist_CF_AuraSight|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Occultist_CF_FocusPowers5|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Occultist_CF_FocusPowers17|true"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/support/ha_abilities_class_oa.lst",
+    "sha256": "9c111f652f8442433ea215fa11e67258c7e6c15c75d1c1753fa6fef34827f46c",
+    "line": 263,
+    "record_key": "Occultist Archetype ~ Talisman Crafter"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

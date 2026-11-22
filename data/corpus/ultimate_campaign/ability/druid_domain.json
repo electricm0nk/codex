@@ -1,0 +1,44 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Retraining ~ Class Feature ~ Druid Domain",
+    "name": "Druid Domain",
+    "description": "You retrained a druid domain.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Retraining ~ Class Feature ~ Druid Domain"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RetrainingClassFeature"
+      },
+      {
+        "key": "DESC",
+        "value": "You retrained a druid domain."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_campaign/uca_abilities_retraining.lst",
+    "sha256": "2a7a5c3921a0b079d19ac48eea38f66d6cd6672279557f8272d05e825ed8b643",
+    "line": 93,
+    "record_key": "Retraining ~ Class Feature ~ Druid Domain"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

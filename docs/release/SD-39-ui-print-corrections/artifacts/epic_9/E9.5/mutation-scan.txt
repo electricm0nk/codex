@@ -1,0 +1,4 @@
+$ (mutation) exemption narrowed to E9.6-E9.11, pre-change kanban
+ E9.5 | waiting 
+$ (mutation) row count against 65
+ROW_COUNT 66

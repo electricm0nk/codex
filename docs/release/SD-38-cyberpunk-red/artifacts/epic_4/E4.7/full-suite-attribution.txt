@@ -1,0 +1,57 @@
+Full suite: RUN_DESKTOP_AGENT=sd38-e4.7 node scripts/ui-smoke/run.mjs (all 115 rows), stopped by the card after 40 rows had run (~45 min; every Pathfinder create row stalls ~2.5 min on a missing target):
+PASS  landing-render
+PASS  landing-ruleset-chips
+PASS  settings-tab-google-drive-disconnect
+PASS  landing-campaign-gate
+PASS  settings-open
+PASS  settings-tab-appearance
+PASS  settings-theme-select-and-manage-themes-modal
+PASS  settings-tab-google-drive
+PASS  settings-tab-update
+PASS  settings-tab-bug
+PASS  settings-tab-enhancement
+PASS  settings-tab-developer
+PASS  settings-close-esc
+PASS  settings-tab-google-drive-save
+PASS  equipment-catalog-open-and-search
+FAIL  equipment-catalog-chip-filter-and-back  -- target not found: 'Magic Items (no element named 'Magic Items')' at row step 2/3 (click "Magic Items")
+PASS  spell-catalog-open-and-search
+PASS  spell-catalog-chip-filter-and-back
+PASS  class-catalog-open-and-search
+PASS  class-catalog-back
+PASS  race-catalog-open-and-search
+PASS  race-catalog-alternate-traits-tab
+PASS  race-catalog-back
+PASS  monster-catalog-open-and-search
+PASS  monster-catalog-back
+PASS  companion-catalog-open-and-search
+PASS  companion-catalog-back
+PASS  intelligent-item-catalog-open-and-search
+PASS  intelligent-item-catalog-back
+PASS  corpus-ingest-diagnostic
+FAIL  create-character-render  -- select not found: 'character-class'
+PASS  create-character-fill-and-submit
+PASS  create-character-back
+FAIL  create-character-samurai  -- target not found: 'F4 Smoke Alpha (no element named 'F4 Smoke Alpha')' at row step 13/14 (click "F4 Smoke Alpha")
+run.mjs: 2 consecutive rows stalled on the command channel -- relaunching the app (auto-relaunch 1/3) and retrying 'create-character-magus'.
+FAIL  create-character-magus  -- target not found: 'F4 Smoke Bravo (no element named 'F4 Smoke Bravo')' at row step 13/14 (click "F4 Smoke Bravo")
+run.mjs: 2 consecutive rows stalled on the command channel -- relaunching the app (auto-relaunch 2/3) and retrying 'create-character-warrior'.
+FAIL  create-character-warrior  -- target not found: 'F4 Smoke Charlie (no element named 'F4 Smoke Charlie')' at row step 13/14 (click "F4 Smoke Charlie")
+run.mjs: 2 consecutive rows stalled on the command channel -- relaunching the app (auto-relaunch 3/3) and retrying 'sheet-f6a-samurai-weapons'.
+FAIL  sheet-f6a-samurai-weapons  -- target not found: 'F4 Smoke Alpha (no element named 'F4 Smoke Alpha')' at setup create-character-samurai step 13/14 (click "F4 Smoke Alpha")
+FAIL  sheet-f6a-warrior-weapons  -- target not found: 'F4 Smoke Charlie (no element named 'F4 Smoke Charlie')' at setup create-character-warrior step 13/14 (click "F4 Smoke Charlie")
+FAIL  sheet-f6a-magus-caster-level  -- target not found: 'F4 Smoke Bravo (no element named 'F4 Smoke Bravo')' at setup create-character-magus step 13/14 (click "F4 Smoke Bravo")
+FAIL  sheet-f6c-shaman-no-domain-line  -- target not found: 'F6 Smoke India (no element named 'F6 Smoke India')' at row step 13/15 (click "F6 Smoke India")
+results.json status counts: {'green': 31, 'red': 9, 'not-run': 75} of 115
+
+Every red row precedes the first CPR row (spec index 101) and the rows this card adds (109-111); the runner executes spec order, so no added row ran before them.
+
+In isolation: node scripts/ui-smoke/run.mjs --only create-character-render,equipment-catalog-chip-filter-and-back:
+FAIL  create-character-render  -- expected string missing: 'Character name'; expected string missing: 'Player name'; expected string missing: 'Race'; expected string missing: 'Levels'; expected string missing: 'Add level'; expected string missing: 'Create character'; 'Loading' still present after th
+FAIL  equipment-catalog-chip-filter-and-back  -- target not found: 'Magic Items (no element named 'Magic Items')' at row step 2/3 (click "Magic Items")
+0/2 green, 2 red, 0 blocked, 0 manual, 0 not-run (M = 2 rows)
+
+Causes (pre-SD-38, ancestors of #398 head bb6107aee0):
+  13c387b7ef 2026-10-07 feat(create): a Levels column with per-level hit points
+  afff7a621f 2026-10-07 feat(equipment-catalog): browse by the new categories
+  git log -S'No levels yet' -- apps/desktop/src -> 13c387b7ef; git log -S'Magic Items' -- apps/desktop/src -> afff7a621f (newest)

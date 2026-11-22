@@ -1,0 +1,51 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Night Monarch ~ Poison Flesh",
+    "delivery": "Extraordinary",
+    "description": "Any creature that bites the Night Monarch is exposed to Black Lotus Extract poison (see Core Rulebook p.558). Eating its flesh gives the attacker a -4 penalty on the poison's saving throw.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "inner_sea_gods:monster_ability:night_monarch_poison_flesh",
+    "name": "Poison Flesh",
+    "owners": [
+      "inner_sea_gods:monster:night_monarch"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Any creature that bites the Night Monarch is exposed to Black Lotus Extract poison (see Core Rulebook p.558). Eating its flesh gives the attacker a -4 penalty on the poison's saving throw."
+      },
+      {
+        "key": "KEY",
+        "value": "Night Monarch ~ Poison Flesh"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary"
+      }
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "ingested_at": "2026-08-15T02:34:27Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 138,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities_races.lst",
+    "record_key": "Night Monarch ~ Poison Flesh",
+    "sha256": "b309f3f779ee8d564aacff977e2a9119410a70844107ecd3e6bdc0170fe79ea8"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

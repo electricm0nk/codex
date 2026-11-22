@@ -1,0 +1,76 @@
+{
+  "codex_generated_name": false,
+  "completeness": "chassis_only",
+  "data": {
+    "key": "Cursed Lord",
+    "name": "Cursed Lord",
+    "raw_tokens": [
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.235"
+      },
+      {
+        "key": "PRESTAT",
+        "value": "2,INT=6,CHA=6"
+      },
+      {
+        "key": "PREALIGN",
+        "value": "LE,NE,CE"
+      },
+      {
+        "key": "CR",
+        "value": "2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Race Traits ~ Cursed Lord"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Dread Lord Special Power|TL/3"
+      },
+      {
+        "key": "DR",
+        "value": "5/good or silver"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DarkvisionRange|120|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FastHealingRate|5"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FastHealingRate|5|PREHD:MIN=10"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT,CHA|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|WIS|-4"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T16:43:18Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 15,
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_templates.lst",
+    "record_key": "Cursed Lord",
+    "sha256": "2bdc330c9f1d4fcc2fd799ba7dd02a4511dab172cf39abefcd480a3a0f9d2edb"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

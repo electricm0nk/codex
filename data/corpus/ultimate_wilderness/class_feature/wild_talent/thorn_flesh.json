@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Wild Talent ~ Thorn Flesh",
+    "name": "Thorn Flesh",
+    "class": "Kineticist",
+    "description": "Element wood; Type utility (Sp); Level 3; Burn 1",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wild Talent ~ Thorn Flesh"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Wild Talent.Utility Wild Talent.Utility Wild Talent Wood"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Elemental Defense ~ Flesh of Wood"
+      },
+      {
+        "key": "PRETEXT",
+        "value": "Prerequisite flesh of wood"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "KineticistLVL_Wood,3"
+      },
+      {
+        "key": "DESC",
+        "value": "Element wood; Type utility (Sp); Level 3; Burn 1"
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;You cover your body in barbed thorns that injure foes who strike you. This functions as the jagged flesh wild talent (Occult Adventures 25)."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.60"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/support/uw_abilities_class_oa.lst",
+    "sha256": "26a03f73c3534cd6bae0bcda9581b3a89fa28ce5f78f854e009fc8110c477568",
+    "line": 83,
+    "record_key": "Wild Talent ~ Thorn Flesh"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

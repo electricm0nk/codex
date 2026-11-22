@@ -1,0 +1,101 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Monk AC Tracker",
+    "name": "Monk AC Tracker",
+    "class": "Monk",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|AC|MonkACBonus|TYPE=MonkAC|PREVAREQ:MonkRestricted,0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MonkACBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MonkACLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "IsMonk|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MonkACStatBonus|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkACBonus|min((MonkACLVL)/4,5)|TYPE=level"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkACBonus|MonkACStatBonus"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MonkRestricted|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MonkHasArmor|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MonkIsEncumbered|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MonkHasShield|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkRestricted|MonkHasArmor+MonkIsEncumbered+MonkHasShield|TYPE=Boolean"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkHasArmor|1|PREVARGTEQ:var(\"COUNT[EQTYPE.ARMOR.EQUIPPED]\"),1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkIsEncumbered|1|PREVARGTEQ:ENCUMBERANCE,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkHasShield|1|PREVARGTEQ:var(\"COUNT[EQTYPE.SHIELD.EQUIPPED]\"),1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CMD|MonkACBonus|PREVAREQ:MonkRestricted,0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkACStatBonus|max(WIS,0)|TYPE=Class|PREVARGTEQ:IsMonk,1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 1090,
+    "record_key": "Monk AC Tracker"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

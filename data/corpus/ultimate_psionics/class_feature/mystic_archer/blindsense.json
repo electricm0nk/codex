@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Mystic Archer ~ Blindsense",
+    "name": "Blindsense",
+    "class": "Mystic Archer",
+    "description": "Gain blindsense, %1 ft. range, when focused.|BlindsenseRange",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mystic Archer ~ Blindsense"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MysticArcherClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BlindsenseRange|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Gain blindsense, %1 ft. range, when focused.|BlindsenseRange"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BlindsenseRange|30"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BlindsenseRange|HeightenedSensesRange"
+      },
+      {
+        "key": "BONUS",
+        "value": "VISION|Blindsense|BlindsenseRange"
+      },
+      {
+        "key": "VISION",
+        "value": "Blindsense"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.364"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1316,
+    "record_key": "Mystic Archer ~ Blindsense"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

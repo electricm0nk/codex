@@ -1,0 +1,71 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Greensting Scorpion ~ Poison",
+    "delivery": "Extraordinary",
+    "description": "Sting-injury; save Fort DC %1; frequency 1/round for 6 rounds; effect sickened for 1 round; cure 1 save.",
+    "description_variables": [
+      "PoisonSaveDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:greensting_scorpion_poison",
+    "name": "Poison",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Poison"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(DC %1)|PoisonSaveDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PoisonSaveDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Poison)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PoisonSaveDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Sting-injury; save Fort DC %1; frequency 1/round for 6 rounds; effect sickened for 1 round; cure 1 save.|PoisonSaveDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Greensting Scorpion ~ Poison"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.118"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary"
+      }
+    ],
+    "source_page": "p.118",
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T14:07:19Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 2181,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "record_key": "Greensting Scorpion ~ Poison",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

@@ -1,0 +1,49 @@
+   Compiling codex-desktop v0.17.0 (/home/ubuntu/workspace/worktrees/codex-sd37/apps/desktop/src-tauri)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 47.21s
+     Running unittests src/main.rs (/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/codex_desktop-f9c244288bc1271e)
+
+running 7 tests
+test sf_catalog::tests::no_starfinder_catalog_imports_the_pathfinder_tables ... ok
+test sf_catalog::tests::a_rows_description_is_the_engines_catalog_prose ... FAILED
+test sf_catalog::tests::no_starfinder_catalog_prints_a_hit_die ... FAILED
+test sf_catalog::tests::a_rows_totals_are_the_records_own_rows_that_feed_a_sheet_total ... ok
+test sf_catalog::tests::the_catalogs_carry_core_rulebook_records_by_name_and_no_pathfinder_record ... ok
+test sf_catalog::tests::the_command_serves_each_catalog ... ok
+test sf_catalog::tests::every_starfinder_catalog_lists_the_records_of_its_kind_from_the_starfinder_package ... ok
+
+failures:
+
+---- sf_catalog::tests::a_rows_description_is_the_engines_catalog_prose stdout ----
+
+thread 'sf_catalog::tests::a_rows_description_is_the_engines_catalog_prose' (795024) panicked at src/sf_catalog.rs:296:17:
+assertion `left == right` failed: character_operations_manual:class:biohacker
+  left: Some("Hit die: d1\nSkill ranks per level: 4")
+ right: Some("Skill ranks per level: 4")
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- sf_catalog::tests::no_starfinder_catalog_prints_a_hit_die stdout ----
+
+thread 'sf_catalog::tests::no_starfinder_catalog_prints_a_hit_die' (795028) panicked at src/sf_catalog.rs:316:17:
+character_operations_manual:class:biohacker: Hit die: d1
+Skill ranks per level: 4
+Biohacker
+Value: biohacker level times 3 divided by 4; Adds to the base attack bonus as a Base bonus; Tags: Base, PC; Applies if biohacker level at most 20; Declares KeyAbilityScore as INT or WIS; Declares Abb as Bio; Declares ClassType as PC; Grants bluff as a class skill; Grants computers as a class skill; Grants culture as a class skill; Grants diplomacy as a class skill; Grants engineering as a class skill; Grants life science as a class skill; Grants medicine as a class skill; Grants perception as a class skill; Grants physical science as a class skill; Grants every Profession skill as a class skill; Grants sense motive as a class skill; Grants sleight of hand as a class skill; Grants Class ~ Biohacker
+Biohacker (hit points)
+Value: 5 times biohacker level; Adds to hit points; Tags: Base, PC; Applies if biohacker level at most 20
+Biohacker (Stamina Points)
+Value: 6 times biohacker level; Adds to Stamina Points; Tags: Base, PC; Applies if biohacker level at most 20
+Biohacker (base Fortitude save)
+Value: biohacker level divided by 2 plus 2; Adds to the base Fortitude save; Tags: Base, PC; Applies if biohacker level at most 20
+Biohacker (base Reflex save)
+Value: biohacker level divided by 3; Adds to the base Reflex save; Tags: Base, PC; Applies if biohacker level at most 20
+Biohacker (base Will save)
+Value: biohacker level divided by 3; Adds to the base Will save; Tags: Base, PC; Applies if biohacker level at most 20
+
+
+failures:
+    sf_catalog::tests::a_rows_description_is_the_engines_catalog_prose
+    sf_catalog::tests::no_starfinder_catalog_prints_a_hit_die
+
+test result: FAILED. 5 passed; 2 failed; 0 ignored; 0 measured; 677 filtered out; finished in 1.74s
+
+error: test failed, to rerun pass `--bin codex-desktop`

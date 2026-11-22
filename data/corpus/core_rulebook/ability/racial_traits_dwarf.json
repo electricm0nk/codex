@@ -1,0 +1,36 @@
+{
+  "codex_generated_name": false,
+  "completeness": "chassis_only",
+  "data": {
+    "description": null,
+    "key": "Racial Traits ~ Dwarf",
+    "name": "Racial Traits ~ Dwarf",
+    "raw_tokens": [
+      {
+        "key": "DEFINE",
+        "value": "Dwarf_ReplaceAbilityScores|0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Dwarf Racial Trait|AUTOMATIC|Dwarf ~ Ability Scores|PREVAREQ:Dwarf_ReplaceAbilityScores,0"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 9,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/dwarf/dwarf_abilities_globalvar.lst",
+    "record_key": "Racial Traits ~ Dwarf",
+    "sha256": "c8cb664c3e5cf4f42bfd2eebb42479e78d3d3227b50f2343c98fe247b31c11e6"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

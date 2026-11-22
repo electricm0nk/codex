@@ -1,0 +1,70 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "description": null,
+    "key": "Incorporeal Traits",
+    "name": "Incorporeal Traits",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CanNotGrapple|0"
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "No Strength Score"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Incorporeal Traits Output|PRERULE:1,DISPLAYTYPETRAITS"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Incorporeal"
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|AC|max(1,CHA)|TYPE=Deflection"
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|TOHIT.MELEE|DEX"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CanNotGrapple|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CMB|DEX"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.311"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1722,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "record_key": "Incorporeal Traits",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

@@ -1,0 +1,70 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "key": "Spirit Naga",
+    "name": "Spirit Naga",
+    "raw_tokens": [
+      {
+        "key": "HD",
+        "value": "8"
+      },
+      {
+        "key": "TYPE",
+        "value": "Monster"
+      },
+      {
+        "key": "MAXLEVEL",
+        "value": "NOLIMIT"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.215"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|CMB Output"
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|BASEAB|classlevel(\"APPLIEDAS=NONEPIC\")*3/4|TYPE=Base.REPLACE|PREVAREQ:UseAlternateBABProgression,0"
+      },
+      {
+        "key": "BONUS",
+        "value": "SAVE|BASE.Will|classlevel(\"APPLIEDAS=NONEPIC\")/2+2|PREVAREQ:UseAlternateSaveProgression,0"
+      },
+      {
+        "key": "BONUS",
+        "value": "SAVE|BASE.Fortitude,BASE.Reflex|classlevel(\"APPLIEDAS=NONEPIC\")/3|PREVAREQ:UseAlternateSaveProgression,0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ClassBABModerate|classlevel(\"APPLIEDAS=NONEPIC\")|PREVAREQ:UseFractionalBAB,1"
+      },
+      {
+        "key": "FACT",
+        "value": "ClassType|Monster"
+      },
+      {
+        "key": "FACT",
+        "value": "SpellType|Arcane"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T12:36:05Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 54,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_classes_race.lst",
+    "record_key": "Spirit Naga",
+    "sha256": "3c3a1a97b391c1cc6d4fcb38b1e8cddc0c497b6db20f1d6a720ae0380e07e7ad"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

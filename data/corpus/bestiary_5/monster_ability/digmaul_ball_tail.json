@@ -1,0 +1,55 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Digmaul ~ Ball Tail",
+    "delivery": "Extraordinary",
+    "description": "A digmaul has a spiked ball at the end of its tail, which it can use as a secondary natural attack that deals 1d4 points of bludgeoning and piercing damage. The digmaul can substitute a trip or bull rush combat maneuver check for its normal tail attack. Such a combat maneuver check doesn't provoke attacks of opportunity and receives a +4 racial bonus; a digmaul that fails its trip attempt by 10 or more in this way is not tripped.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "bestiary_5:monster_ability:digmaul_ball_tail",
+    "name": "Ball Tail",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A digmaul has a spiked ball at the end of its tail, which it can use as a secondary natural attack that deals 1d4 points of bludgeoning and piercing damage. The digmaul can substitute a trip or bull rush combat maneuver check for its normal tail attack. Such a combat maneuver check doesn't provoke attacks of opportunity and receives a +4 racial bonus; a digmaul that fails its trip attempt by 10 or more in this way is not tripped."
+      },
+      {
+        "key": "KEY",
+        "value": "Digmaul ~ Ball Tail"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.82"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary.DigmaulRacialTrait"
+      }
+    ],
+    "source_page": "p.82",
+    "traits": [
+      "DigmaulRacialTrait"
+    ]
+  },
+  "ingested_at": "2026-08-23T15:23:07Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 33,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_5/b5_abilities_race.lst",
+    "record_key": "Digmaul ~ Ball Tail",
+    "sha256": "da3b63848f2dea0a3cc2088f288e93a85921513ab30d601d05330ceac6db664c"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

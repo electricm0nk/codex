@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Unchained Rage Power ~ Reckless Stance",
+    "name": "Reckless Stance",
+    "class": "Unchained Barbarian",
+    "description": "You can attack with abandon at the expense of your defense. You gain a +%1 bonus on attack rolls, but take a -%1 penalty to AC. This is a stance rage power.|RecklessStanceBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Unchained Rage Power ~ Reckless Stance"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Unchained Rage Power.SpecialAttack.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RecklessStanceBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can attack with abandon at the expense of your defense. You gain a +%1 bonus on attack rolls, but take a -%1 penalty to AC. This is a stance rage power.|RecklessStanceBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RecklessStanceBonus|1+floor(RagePowersLVL/4)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.12"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Rage"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst",
+    "sha256": "2becbb0524bd4c367cc1273434c20bcd8e42e3e08abd372f99b005e69e8c4725",
+    "line": 360,
+    "record_key": "Unchained Rage Power ~ Reckless Stance"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

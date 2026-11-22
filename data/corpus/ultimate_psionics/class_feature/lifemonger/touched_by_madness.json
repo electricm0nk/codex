@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Lifemonger ~ Touched by Madness",
+    "name": "Touched by Madness",
+    "class": "Lifemonger",
+    "description": "Once every ten minutes, when you use steal health, you can cause the affected creature to permanently take no other action but babbling incoherently (Will DC %1) instead of taking damage.  A creature affected by this ability can be cured through the use of powerful healing such as greater restoration or heal.|TouchedByMadnessDC",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Lifemonger ~ Touched by Madness"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "VitalistClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "TouchedByMadnessDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Once every ten minutes, when you use steal health, you can cause the affected creature to permanently take no other action but babbling incoherently (Will DC %1) instead of taking damage.  A creature affected by this ability can be cured through the use of powerful healing such as greater restoration or heal.|TouchedByMadnessDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TouchedByMadnessDC|10+floor(VitalistLVL/2)+VitalistPrimeStat"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.318"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2339,
+    "record_key": "Lifemonger ~ Touched by Madness"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

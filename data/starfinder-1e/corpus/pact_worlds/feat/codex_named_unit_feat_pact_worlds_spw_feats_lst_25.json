@@ -1,0 +1,25 @@
+{
+  "codex_generated_name": true,
+  "data": {
+    "category": "FEAT",
+    "key": "Codex-Named Unit (feat_pact_worlds_spw_feats_lst_25)",
+    "name": "Codex-Named Unit (feat_pact_worlds_spw_feats_lst_25)",
+    "type": "General"
+  },
+  "license": "PI-REDACTED",
+  "pi_field": "description,name",
+  "pi_marker": "redacted",
+  "population": "in_scope",
+  "rename": {
+    "coordinate": "pact_worlds:spw_feats.lst:25",
+    "reason": "name_pi_blocked"
+  },
+  "source": {
+    "kind": "lst_token",
+    "line": 25,
+    "path": "starfinder/paizo/pact_worlds/spw_feats.lst",
+    "record_key": "Codex-Named Unit (feat_pact_worlds_spw_feats_lst_25)",
+    "sha256": "4271608e5d933a18415cf0cad28e421308738be99d54d179628e72442dd424ed"
+  },
+  "unit_id": "pact_worlds:feat:divine_blessing_of_weydan"
+}

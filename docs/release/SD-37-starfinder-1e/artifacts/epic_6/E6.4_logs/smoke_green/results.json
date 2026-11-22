@@ -1,0 +1,30 @@
+[
+  {
+    "id": "browse-starfinder-catalog",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/33627023-04e6-4757-9afa-d5c1463408f3/scratchpad/e64/smoke_green/browse-starfinder-catalog.png",
+    "rendered_excerpt": "⚙\nStarfinder 1e — Classes\nClose\nRaces\nThemes\nClasses\nFeats\nSpells\nEquipment\nSearch by name, book, tag or text\n11 classes from 2 books\nBiohacker\nCharacter Operations Manual\nBase · PC\nSkill ranks per level: 4\nBiohacker: Value: biohacker level times 3 divided by 4; Adds to the base attack bonus as a Base bonus; Tags: Base, PC; Applies if biohacker level at most 20; Declares KeyAbilityScore as INT or ",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd37-e6-4-green-OPXAky/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "landing-select-pathfinder",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/33627023-04e6-4757-9afa-d5c1463408f3/scratchpad/e64/smoke_green/landing-select-pathfinder.png",
+    "rendered_excerpt": "⚙\n\nP1\nPathfinder 1e\nFantasy d20\n\nSA\nSolarus Arcanum\nComing soon\n\nTM\nTraveller MGT 2e\nComing soon\n\nCR\nCyberpunk Red\nComing soon\n\nS1\nStarfinder 1e\nSci-fi fantasy\n\nWOD\nWorld of Darkness\nComing soon\n\nNEW CHARACTER\n\nLOAD CHARACTER\n\nCAMPAIGN MANAGER\nChoose a local Drive-synced folder under ⚙ Settings → Google Drive to enable the Campaign Manager.\n\nDM TOOLKIT\nBrowse Equipment Catalog\nBrowse Spell Catalog",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd37-e6-4-green-OPXAky/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  }
+]

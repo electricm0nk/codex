@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Unchained Ki Power ~ Elemental Burst",
+    "name": "Elemental Burst",
+    "class": "Unchained Ki Power",
+    "description": "A monk with this ability can spend 4 ki points to unleash a gout of energy in a 30-foot cone. Creatures within the cone take 20d6 points of damage of the same type as the monk's elemental fury ki power. A Ref lex save (DC = 10 + 1/2 the monk's level + his Wisdom modifier) halves the damage. A monk must be at least 18th level and must possess the elemental fury ki power before selecting this ki power.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Unchained Ki Power ~ Elemental Burst"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Unchained Ki Power.SpecialQuality.Supernatural.Elemental Burst"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Unchained Ki Power ~ Elemental Fury"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "KiPowerLVL,18"
+      },
+      {
+        "key": "DESC",
+        "value": "A monk with this ability can spend 4 ki points to unleash a gout of energy in a 30-foot cone. Creatures within the cone take 20d6 points of damage of the same type as the monk's elemental fury ki power. A Ref lex save (DC = 10 + 1/2 the monk's level + his Wisdom modifier) halves the damage. A monk must be at least 18th level and must possess the elemental fury ki power before selecting this ki power."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.16"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst",
+    "sha256": "2becbb0524bd4c367cc1273434c20bcd8e42e3e08abd372f99b005e69e8c4725",
+    "line": 535,
+    "record_key": "Unchained Ki Power ~ Elemental Burst"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

@@ -1,0 +1,74 @@
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.07s
+     Running unittests src/lib.rs (/home/ubuntu/workspace/worktrees/codex-epic-f7-target/debug/deps/codex-a13c5cad8ad2bb59)
+
+running 65 tests
+test rules_core::level_up_option_filter::tests::a_narrowing_tag_bounds_the_pool ... ok
+test rules_core::level_up_option_filter::tests::a_compound_gate_names_only_the_failing_term ... ok
+test rules_core::level_up_option_filter::tests::a_situational_gate_is_offered_and_carries_its_condition ... ok
+test rules_core::level_up_option_filter::tests::an_option_whose_prerequisite_is_unmet_is_refused_with_the_requirement_in_words ... ok
+test rules_core::level_up_option_filter::tests::an_option_whose_prerequisite_is_met_is_offered ... ok
+test rules_core::level_up_option_filter::tests::an_ability_score_one_point_short_refuses_and_names_the_score ... ok
+test rules_core::level_up_option_filter::tests::a_placeholder_label_is_resolved_to_the_source_derived_name_not_printed_raw ... ok
+test rules_core::level_up_option_filter::tests::describe_prof_prints_a_camel_case_weapon_set_label_as_words ... ok
+test rules_core::level_up_option_filter::tests::describe_prof_prints_a_dotted_weapon_set_label_as_words ... ok
+test rules_core::level_up_option_filter::tests::describe_prof_prints_a_second_camel_case_weapon_set_label_as_words ... ok
+test rules_core::level_up_option_filter::tests::describe_prof_prints_auto_weapon_set_as_its_member_list_not_the_bookkeeping_word ... ok
+test rules_core::level_up_option_filter::tests::describe_prof_prints_every_book_spelling_of_the_picaroon_selector_identically ... ok
+test rules_core::level_up_option_filter::tests::describe_prof_prints_kobold_tail_attachment_as_words_not_raw_casing ... ok
+test rules_core::level_up_option_filter::tests::describe_prof_prints_siege_engine_the_same_as_siege_weapon ... ok
+test rules_core::level_up_option_filter::tests::describe_prof_prints_weapon_all_of_with_the_weapons_noun_like_its_siblings ... ok
+test rules_core::level_up_option_filter::tests::describe_prof_prints_siege_weapon_without_the_weapons_stutter ... ok
+test rules_core::level_up_option_filter::tests::every_pool_option_is_either_offered_or_refused ... ok
+test rules_core::level_up_option_filter::tests::label_of_resolves_a_placeholder_label_to_the_source_derived_name ... ok
+test rules_core::level_up_option_filter::tests::a_skill_term_prints_the_skill_label ... ok
+test rules_core::pilot_compute::class_facts_sheet_rules::tests::monk_prints_only_weapon_records ... ok
+test rules_core::pilot_compute::class_facts_sheet_rules::tests::magus_prints_no_pseudo_weapons ... ok
+test rules_core::pilot_compute::class_facts_sheet_rules::tests::class_skills_are_the_class_skill_reader_verbatim ... ok
+test rules_core::pilot_compute::class_proficiency_sheet_rules::tests::a_complete_closure_with_no_weapon_grant_answers_known_empty ... ok
+test rules_core::pilot_compute::class_proficiency_sheet_rules::tests::a_gate_on_a_variable_nobody_sets_stays_unknown ... ok
+test rules_core::pilot_compute::class_proficiency_sheet_rules::tests::a_linked_weapon_pick_is_a_weapon_pick_with_its_options ... ok
+test rules_core::pilot_compute::class_proficiency_sheet_rules::tests::a_race_or_missing_record_gate_is_not_class_decidable_but_an_archetype_off_gate_is ... ok
+test rules_core::pilot_compute::class_proficiency_sheet_rules::tests::a_seeded_weapon_pick_prints_labels_and_the_default_pick_marker ... ok
+test rules_core::pilot_compute::class_proficiency_sheet_rules::tests::an_always_held_global_seeds_every_walk ... ok
+test rules_core::pilot_compute::class_proficiency_sheet_rules::tests::an_empty_walk_is_unknown_not_proficient_with_nothing ... ok
+test rules_core::pilot_compute::class_proficiency_sheet_rules::tests::an_incomplete_closure_still_answers_unknown ... ok
+test rules_core::pilot_compute::class_proficiency_sheet_rules::tests::an_unadmitted_class_line_weapon_grant_is_unknown ... ok
+test rules_core::pilot_compute::class_proficiency_sheet_rules::tests::an_unconverted_class_is_unknown_not_empty ... ok
+test rules_core::pilot_compute::class_proficiency_sheet_rules::tests::an_unlinked_proficiency_pick_is_an_unresolved_pick ... ok
+test rules_core::pilot_compute::class_proficiency_sheet_rules::tests::an_unrecorded_member_pick_is_unresolved_until_a_member_is_held ... ok
+test rules_core::pilot_compute::class_proficiency_sheet_rules::tests::gated_facts_count_skip_or_print_by_decidability ... ok
+test rules_core::pilot_compute::class_proficiency_sheet_rules::tests::summoner_standard_summoner_gate_opens_from_the_always_held_base_state ... ok
+test rules_core::pilot_compute::class_facts_sheet_rules::tests::samurai_warrior_and_magus_are_martial ... ok
+test rules_core::sheet_rule_catalog::tests::a_constant_slot_still_prints_its_number ... ok
+test rules_core::sheet_rule_catalog::tests::a_dice_modifier_on_a_character_term_reads_as_words_beside_the_dice ... ok
+test rules_core::sheet_rule_catalog::tests::a_field_summary_names_the_choice_offered_and_the_facts_granted ... ok
+test rules_core::sheet_rule_catalog::tests::a_field_summary_names_the_sheet_total_and_the_stacking_type ... ok
+test rules_core::sheet_rule_catalog::tests::a_gated_segment_prints_its_condition_in_words ... ok
+test rules_core::sheet_rule_catalog::tests::a_line_decided_never_prints_once_and_never_as_a_condition ... ok
+test rules_core::sheet_rule_catalog::tests::a_percentage_whose_number_is_words_says_percent ... ok
+test rules_core::sheet_rule_catalog::tests::a_record_with_no_descriptive_prose_serves_no_description ... ok
+test rules_core::sheet_rule_catalog::tests::a_rule_stating_nothing_beyond_its_identity_has_no_field_summary ... ok
+test rules_core::sheet_rule_catalog::tests::a_rule_with_no_prose_renders_its_typed_fields_as_words ... ok
+test rules_core::sheet_rule_catalog::tests::a_slot_mixing_a_constant_and_a_character_term_is_words ... ok
+test rules_core::sheet_rule_catalog::tests::an_unsettled_slot_prints_the_rules_words_where_the_evaluator_prints_zero ... ok
+test rules_core::sheet_rule_catalog::tests::an_unsettled_value_in_a_field_summary_is_words_not_zero ... ok
+test rules_core::sheet_rule_catalog::tests::const_value_refuses_an_inexact_division_rather_than_rounding_it ... ok
+test rules_core::sheet_rule_catalog::tests::counted_dice_print_per_level_with_their_cap ... ok
+test rules_core::sheet_rule_catalog::tests::dice_stay_dice_and_a_constant_modifier_folds ... ok
+test rules_core::pilot_compute::class_facts_sheet_rules::tests::wizard_caster_level_equals_wizard_level ... ok
+test rules_core::sheet_rule_catalog::tests::lookup_is_by_kind_and_the_names_slug ... ok
+test rules_core::pilot_compute::class_proficiency_sheet_rules::tests::wizard_reads_five_named_weapons_and_no_tier ... ok
+test rules_core::sheet_rule_catalog::tests::the_description_families_exclude_the_stat_block ... ok
+test rules_core::sheet_rule_catalog::tests::the_three_description_tiers_are_tried_in_order_and_are_distinguishable ... ok
+test rules_core::pilot_compute::class_facts_sheet_rules::tests::bloodrager_casts_nothing_before_four_then_at_class_level ... ok
+test rules_core::pilot_compute::class_facts_sheet_rules::tests::magus_caster_level_equals_magus_level ... ok
+test rules_core::pilot_compute::class_facts_sheet_rules::tests::fighter_and_samurai_cast_nothing_and_paladin_casts_from_four ... ok
+test rules_core::sheet_rule_catalog::tests::every_unsettled_slot_in_the_live_package_renders_as_words_not_as_the_characterless_zero ... ok
+test rules_core::sheet_rule_catalog::tests::no_reference_library_description_carries_ingest_format_vocabulary ... ok
+test rules_core::pilot_compute::class_facts_sheet_rules::tests::every_roster_class_answer_is_counted has been running for over 60 seconds
+test rules_core::pilot_compute::class_facts_sheet_rules::tests::every_roster_class_prints_only_weapon_records has been running for over 60 seconds
+test rules_core::pilot_compute::class_facts_sheet_rules::tests::every_roster_class_prints_only_weapon_records ... ok
+test rules_core::pilot_compute::class_facts_sheet_rules::tests::every_roster_class_answer_is_counted ... ok
+
+test result: ok. 65 passed; 0 failed; 0 ignored; 0 measured; 2699 filtered out; finished in 341.35s
+

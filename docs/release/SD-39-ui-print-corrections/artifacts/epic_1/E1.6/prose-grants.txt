@@ -1,0 +1,14 @@
+Grants the record holds only as prose: no Pool row, no offer. Floor: a regex over prose on special_ability
+records with a granted_by (30 hits at count-bearing wording, read by hand; 170 at "bonus feat", mostly named feats).
+
+Read by name, reading no pool today, a generic count:
+  core_rulebook:class_feature:dragon_disciple_bloodline_feat        2nd, 5th, 8th; gates say >=2 twice. Census class.
+  inner_sea_gods:ability:sentinel_bonus_feat                        2nd, 7th; one gate, at_level 2. Census class.
+  inner_sea_combat:class_feature:spellscar_drifter_bonus_feats      6th and every 6; archetype
+  occult_adventures:class_feature:psychic_discipline_rapport_team_player   5th, 13th; a discipline choice
+  ultimate_wilderness:class_feature:boaster_greater_endurance       one; archetype
+
+Offers with an empty tag list, read as choosers by the predicate, though prose says a feat is gained:
+  ultimate_combat:class_feature:ninja_trick_style_master            a picked ninja trick; no granted_by
+  mythic_adventures:ability:mythic_path_ability_tactical_genius     a mythic pick; no granted_by
+  core_rulebook:ability:add_a_feat_ignoring_restrictions            GM award; no granted_by

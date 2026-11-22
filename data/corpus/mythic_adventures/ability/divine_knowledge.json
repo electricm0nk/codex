@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Mythic Path Ability ~ Divine Knowledge",
+    "name": "Divine Knowledge",
+    "description": "You can use arcane power to cast a small number of divine spells. Choose three 1stlevel spells from the cleric spell list or three 1st-level spells from the druid spell list. You can add those spells to your spellbook (if you're a magus or wizard) or familiar (if you're a witch) for free and can cast those spells as if they were arcane spells on your class list. You can select this ability up to three times. Each time you select it, you choose three more spells from the same class's spell list (cleric or druid), and the highest spell level you can select from increases by 1 (up to 2nd level the second time and up to 3rd level the third time). You must be a magus, witch, or wizard to select this ability.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Path Ability ~ Divine Knowledge"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Path Ability.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Mythic Path ~ Archmage"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Magus=1,Witch=1,Wizard=1"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "MythicTierLevel,6"
+      },
+      {
+        "key": "DESC",
+        "value": "You can use arcane power to cast a small number of divine spells. Choose three 1stlevel spells from the cleric spell list or three 1st-level spells from the druid spell list. You can add those spells to your spellbook (if you're a magus or wizard) or familiar (if you're a witch) for free and can cast those spells as if they were arcane spells on your class list. You can select this ability up to three times. Each time you select it, you choose three more spells from the same class's spell list (cleric or druid), and the highest spell level you can select from increases by 1 (up to 2nd level the second time and up to 3rd level the third time). You must be a magus, witch, or wizard to select this ability."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
+    "line": 382,
+    "record_key": "Mythic Path Ability ~ Divine Knowledge"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

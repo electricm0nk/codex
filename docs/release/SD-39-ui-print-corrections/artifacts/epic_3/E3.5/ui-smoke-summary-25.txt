@@ -1,0 +1,26 @@
+PASS  sheet-market-cyberpunk-open
+PASS  sheet-market-cyberpunk-buy
+PASS  sheet-market-cyberpunk-sell
+PASS  sheet-market-cyberpunk-refused
+PASS  sheet-market-cyberpunk-cashless
+PASS  sheet-market-starfinder-open
+PASS  sheet-market-starfinder-buy
+PASS  sheet-market-starfinder-sell
+PASS  sheet-market-starfinder-cashless
+PASS  sheet-market-starfinder-refused
+PASS  choices-starfinder-soldier-loadout
+PASS  build-starfinder-soldier
+PASS  open-starfinder-soldier
+PASS  build-starfinder-mystic
+PASS  open-starfinder-mystic
+PASS  build-starfinder-technomancer
+PASS  open-starfinder-technomancer
+PASS  build-starfinder-envoy
+PASS  open-starfinder-envoy
+PASS  create-starfinder-soldier
+PASS  open-starfinder-sheet
+PASS  level-up-starfinder-soldier-preview
+PASS  level-up-starfinder-soldier-accept
+PASS  open-cyberpunk-seed-netrunner
+FAIL  sheet-market-open-weapons  -- target not found: 'Aldric Ironhand (no element named 'Aldric Ironhand')' at row step 2/8 (click "Aldric Ironhand")
+24/25 green, 1 red, 0 blocked, 0 manual, 0 not-run (M = 25 rows)

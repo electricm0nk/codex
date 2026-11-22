@@ -1,0 +1,40 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Cleric Archetype ~ Cloistered Cleric ~ PFS Replace Scribe Scroll",
+    "name": "Cleric Archetype ~ Cloistered Cleric ~ PFS Replace Scribe Scroll",
+    "class": "Cleric",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "REMOVE",
+        "value": "FEAT|Scribe Scroll"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Spell Focus|1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/_pfs/pfs_um_abilities_class.lst",
+    "sha256": "70c079f8f9c2f7fa52d1febd53464a94c2ca924c1293beb56003d9744bf9725c",
+    "line": 41,
+    "record_key": "Cleric Archetype ~ Cloistered Cleric ~ PFS Replace Scribe Scroll"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

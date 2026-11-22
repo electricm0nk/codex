@@ -1,0 +1,36 @@
+{
+  "codex_generated_name": false,
+  "completeness": "chassis_only",
+  "data": {
+    "description": null,
+    "key": "Racial Traits ~ Elf",
+    "name": "Racial Traits ~ Elf",
+    "raw_tokens": [
+      {
+        "key": "DEFINE",
+        "value": "Elf_ReplaceAbilityScores|0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Elf Racial Trait|AUTOMATIC|Elf ~ Ability Scores|PREVAREQ:Elf_ReplaceAbilityScores,0"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 10,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/elf/elf_abilities_globalvar.lst",
+    "record_key": "Racial Traits ~ Elf",
+    "sha256": "1f40dfa7b937c9f6afb8713ac76cc5660f171e7932adafa95d72880e370bcac5"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

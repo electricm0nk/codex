@@ -1,0 +1,25 @@
+e21_sheet_rule 0
+e21_roundtrip 0
+e22_list 1
+e22_stage 0
+e22_regen_diff 0
+convert_check 0
+mA_vars_reformat 101
+mA_restore 0
+mB_serde_attr not-run
+mB_roundtrip 101
+mB_stage 1
+mB_restore 0
+mC_type_variant not-run
+mC_stage 1
+mC_restore 0
+mD_extra_file 1
+mD_restore 0
+mE_vartable_edit 1
+mE_restore 0
+post_restore_stage 0
+seeds 0
+root_sweep 0
+desktop_sweep 0
+DONE
+mC2_stage 1

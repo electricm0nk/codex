@@ -1,0 +1,120 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Dhampir ~ Jiang-shi-Born",
+    "name": "Jiang-shi-Born (Ru-shi)",
+    "description": "[redacted PI]",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Dhampir ~ Jiang-shi-Born"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Dhampir Subrace"
+      },
+      {
+        "key": "!PREFACT",
+        "value": "1,ABILITIES,Dhampir_ReplaceAbilityScores=True,Dhampir_ReplaceSkilled=True,Dhampir_ReplaceWeakness=True,Dhampir_ReplaceSpellLikeAbility=True"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[!PREABILITY:1,CATEGORY=Internal,TYPE.Dhampir Subrace],[PREABILITY:1,CATEGORY=Special Ability,Dhampir Jiang-shi-Born]"
+      },
+      {
+        "key": "DESC",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "Dhampir ~ Jiang-shi-Born"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Dhampir Racial Trait|AUTOMATIC|Jiang-shi-Born ~ Ability Scores|Jiang-shi-Born ~ Skilled|Jiang-shi-Born ~ Spell-Like Ability|Jiang-shi-Born ~ Weakness"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.xx"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ancestry|Jiang-shi"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Alternate Ability Modifiers|+2 Dex, +2 Int, -2 Wis."
+      },
+      {
+        "key": "ASPECT",
+        "value": "Alternate Skill Modifiers|Acrobatics, Knowledge (engineering)."
+      },
+      {
+        "key": "ASPECT",
+        "value": "Alternate Spell-Like Ability|Ru-shi gain erase as a spell-like ability."
+      },
+      {
+        "key": "ASPECT",
+        "value": "Alternate Weakness|Ru-shi take a -1 penalty on saves against sonic effects and spells."
+      },
+      {
+        "key": "FACT",
+        "value": "Dhampir_ReplaceAbilityScores|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Dhampir_ReplaceSkilled|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Dhampir_ReplaceWeakness|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Dhampir_ReplaceSpellLikeAbility|True"
+      },
+      {
+        "key": "INFO",
+        "value": "Ancestry|Jiang-shi"
+      },
+      {
+        "key": "INFO",
+        "value": "Alternate Ability Modifiers|+2 Dex, +2 Int, -2 Wis."
+      },
+      {
+        "key": "INFO",
+        "value": "Alternate Skill Modifiers|Acrobatics, Knowledge (engineering)."
+      },
+      {
+        "key": "INFO",
+        "value": "Alternate Spell-Like Ability|Ru-shi gain erase as a spell-like ability."
+      },
+      {
+        "key": "INFO",
+        "value": "Alternate Weakness|Ru-shi take a -1 penalty on saves against sonic effects and spells."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/dhampir/dhampir_abilities_subrace.lst",
+    "sha256": "71afaf7b793e2ca59120fc8b23853175447b8ebe8ac592cdfcba5e7aab31e207",
+    "line": 21,
+    "record_key": "Dhampir ~ Jiang-shi-Born"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted",
+  "codex_generated_name": false,
+  "rename": null
+}

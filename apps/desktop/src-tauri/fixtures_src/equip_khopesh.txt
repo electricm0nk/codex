@@ -1,0 +1,2 @@
+# Fixture for desktop Market +N (AC and attack rows), source: apg_equip_arms_armor.lst, KEY: Khopesh
+Khopesh																PROFICIENCY:WEAPON|Khopesh			TYPE:Weapon.Resizable.Melee.OneHanded.Exotic.Standard.Slashing.HeavyBlade.Tengu										COST:20	WT:8		CRITMULT:x2	CRITRANGE:2	DAMAGE:1d8				EQMOD:Material ~ Steel.Special Quality ~ Trip									WIELD:OneHanded						SIZE:M	SOURCEPAGE:p.177

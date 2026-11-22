@@ -26,11 +26,11 @@ use super::{PackageDiagnostic, SourcePackage};
 
 /// Fixed GE08-E1 proof binding the bridge is allowed to honour. The bridge must
 /// not infer a different pilot case or slot substitution than this closure fixed.
-const GE08_E1_CASE_ID: &str = "pf1-crb-human-fighter-level1-homebrew-feat-proof";
-const GE08_E1_BASE_CASE_ID: &str = "pf1-crb-human-fighter-level1";
-const GE08_E1_SLOT: &str = "human_bonus_feat";
-const GE08_E1_REMOVE: &str = "dodge";
-const GE08_E1_ADD: &str = "homebrew_guard_stance";
+const HOMEBREW_PROOF_CASE_ID: &str = "pf1-crb-human-fighter-level1-homebrew-feat-proof";
+const HOMEBREW_PROOF_BASE_CASE_ID: &str = "pf1-crb-human-fighter-level1";
+const HOMEBREW_PROOF_SLOT: &str = "human_bonus_feat";
+const HOMEBREW_PROOF_REMOVE: &str = "dodge";
+const HOMEBREW_PROOF_ADD: &str = "homebrew_guard_stance";
 
 /// The bounded first-proof posture supports only the armor-class derived family.
 const BOUNDED_TARGET_FAMILY: &str = "armor_class";
@@ -56,7 +56,7 @@ const SELECTED_FEATS_DIMENSION: &str = "character.selected_feats_and_choice_slot
 /// Dodge (+1); this slice substitutes that slot, so the slot contribution comes
 /// from the authored effect instead. Grounded in
 /// `src/rules_core/pilot_compute.rs` baseline armor-class derivation.
-const GE06_BASE_ARMOR_CLASS_WITHOUT_BONUS_FEAT_SLOT: i16 = 16;
+const BASE_ARMOR_CLASS_WITHOUT_BONUS_FEAT_SLOT: i16 = 16;
 
 /// Distinguishes the three honest preview outcomes for the first proof package.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -168,48 +168,53 @@ impl PreviewBridge {
 
         let posture = classify_posture(package, package_state, binding);
 
-        let (preview_status, baseline_armor_class, explanation_refs, oracle_dimension_status, blocked_claims) =
-            match posture {
-                Posture::Supported => {
-                    let effect = package
-                        .effect
-                        .as_ref()
-                        .expect("supported posture guarantees an authored effect");
-                    let armor_class =
-                        GE06_BASE_ARMOR_CLASS_WITHOUT_BONUS_FEAT_SLOT + effect.modifier_value;
-                    (
-                        PreviewStatus::Success,
-                        ArmorClassPreview::Computed(armor_class),
-                        supported_explanation_refs(package, binding, armor_class),
-                        dimension_status("previewed"),
-                        Vec::new(),
-                    )
-                }
-                Posture::Unsupported(reason) => (
-                    PreviewStatus::Unsupported,
-                    ArmorClassPreview::Blocked(reason.clone()),
-                    blocked_explanation_refs(package, binding, &reason),
-                    dimension_status("unsupported"),
-                    vec![
-                        "preview".to_owned(),
-                        "explanation".to_owned(),
-                        "export".to_owned(),
-                        "proof".to_owned(),
-                    ],
-                ),
-                Posture::Blocked(reason) => (
-                    PreviewStatus::Blocked,
-                    ArmorClassPreview::Blocked(reason.clone()),
-                    blocked_explanation_refs(package, binding, &reason),
-                    dimension_status("blocked"),
-                    vec![
-                        "preview".to_owned(),
-                        "explanation".to_owned(),
-                        "export".to_owned(),
-                        "proof".to_owned(),
-                    ],
-                ),
-            };
+        let (
+            preview_status,
+            baseline_armor_class,
+            explanation_refs,
+            oracle_dimension_status,
+            blocked_claims,
+        ) = match posture {
+            Posture::Supported => {
+                let effect = package
+                    .effect
+                    .as_ref()
+                    .expect("supported posture guarantees an authored effect");
+                let armor_class =
+                    BASE_ARMOR_CLASS_WITHOUT_BONUS_FEAT_SLOT + effect.modifier_value;
+                (
+                    PreviewStatus::Success,
+                    ArmorClassPreview::Computed(armor_class),
+                    supported_explanation_refs(package, binding, armor_class),
+                    dimension_status("previewed"),
+                    Vec::new(),
+                )
+            }
+            Posture::Unsupported(reason) => (
+                PreviewStatus::Unsupported,
+                ArmorClassPreview::Blocked(reason.clone()),
+                blocked_explanation_refs(package, binding, &reason),
+                dimension_status("unsupported"),
+                vec![
+                    "preview".to_owned(),
+                    "explanation".to_owned(),
+                    "export".to_owned(),
+                    "proof".to_owned(),
+                ],
+            ),
+            Posture::Blocked(reason) => (
+                PreviewStatus::Blocked,
+                ArmorClassPreview::Blocked(reason.clone()),
+                blocked_explanation_refs(package, binding, &reason),
+                dimension_status("blocked"),
+                vec![
+                    "preview".to_owned(),
+                    "explanation".to_owned(),
+                    "export".to_owned(),
+                    "proof".to_owned(),
+                ],
+            ),
+        };
 
         PreviewEnvelope {
             case_id: binding.case_id.clone(),
@@ -242,10 +247,10 @@ fn classify_posture(
 ) -> Posture {
     // The bridge may only honour the exact fixed GE08-E1 proof binding. A
     // different case or slot substitution is refused rather than guessed.
-    if binding.case_id != GE08_E1_CASE_ID
-        || binding.slot != GE08_E1_SLOT
-        || binding.remove != GE08_E1_REMOVE
-        || binding.add != GE08_E1_ADD
+    if binding.case_id != HOMEBREW_PROOF_CASE_ID
+        || binding.slot != HOMEBREW_PROOF_SLOT
+        || binding.remove != HOMEBREW_PROOF_REMOVE
+        || binding.add != HOMEBREW_PROOF_ADD
     {
         return Posture::Blocked(format!(
             "proof binding (case '{}', slot '{}', remove '{}', add '{}') does not match the fixed \
@@ -294,7 +299,7 @@ fn base_explanation_refs(package: &SourcePackage, binding: &ProofBinding) -> Vec
             node_kind: "character_input".to_owned(),
             ref_id: binding.slot.clone(),
             detail: format!(
-                "Human bonus feat slot in inherited pilot case {GE08_E1_BASE_CASE_ID}; removes '{}' and adds '{}'",
+                "Human bonus feat slot in inherited pilot case {HOMEBREW_PROOF_BASE_CASE_ID}; removes '{}' and adds '{}'",
                 binding.remove, binding.add
             ),
         },
@@ -309,7 +314,10 @@ fn base_explanation_refs(package: &SourcePackage, binding: &ProofBinding) -> Vec
         refs.push(ExplanationRef {
             node_kind: "canonical_object".to_owned(),
             ref_id: feat.stable_id.clone(),
-            detail: format!("authored feat '{}' selected into the Human bonus feat slot", feat.display_name),
+            detail: format!(
+                "authored feat '{}' selected into the Human bonus feat slot",
+                feat.display_name
+            ),
         });
     }
     if let Some(effect) = &package.effect {
@@ -352,7 +360,7 @@ fn supported_explanation_refs(
         node_kind: "derived_value".to_owned(),
         ref_id: ARMOR_CLASS_DIMENSION.to_owned(),
         detail: format!(
-            "bounded armor class = GE-06 baseline without the bonus feat slot ({GE06_BASE_ARMOR_CLASS_WITHOUT_BONUS_FEAT_SLOT}) \
+            "bounded armor class = GE-06 baseline without the bonus feat slot ({BASE_ARMOR_CLASS_WITHOUT_BONUS_FEAT_SLOT}) \
              + authored effect contribution = {armor_class}"
         ),
     });

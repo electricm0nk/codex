@@ -1,0 +1,59 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Implacable Stalker ~ Terrifying Inevitability",
+    "delivery": "Supernatural",
+    "description": "An implacable stalker is even more difficult to kill when in the presence of fear. As long as the implacable stalker is able to see or hear a creature currently experiencing any level of fear ranging from spooked to horrified (see page 10), it gains fast healing %1, its damage reduction increases to 10/-, and it gains spell resistance %2.",
+    "description_variables": [
+      "HD",
+      "16+CR"
+    ],
+    "facet": "SpecialQuality",
+    "key": "horror_adventures:monster_ability:implacable_stalker_terrifying_inevitability",
+    "name": "Terrifying Inevitability",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "An implacable stalker is even more difficult to kill when in the presence of fear. As long as the implacable stalker is able to see or hear a creature currently experiencing any level of fear ranging from spooked to horrified (see page 10), it gains fast healing %1, its damage reduction increases to 10/-, and it gains spell resistance %2.|HD|16+CR"
+      },
+      {
+        "key": "KEY",
+        "value": "Implacable Stalker ~ Terrifying Inevitability"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.238"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.ImplacableStalker"
+      }
+    ],
+    "source_page": "p.238",
+    "traits": [
+      "ImplacableStalker"
+    ]
+  },
+  "ingested_at": "2026-08-23T14:10:27Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 290,
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_race.lst",
+    "record_key": "Implacable Stalker ~ Terrifying Inevitability",
+    "sha256": "63d4d7024f3fea15adb5b626c17f3f1dc4c40e4fc4bef4616a1d36be77a9fe00"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ]
+}

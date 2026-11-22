@@ -1,0 +1,5 @@
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.12s
+     Running `/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/class_census --json /tmp/claude-1000/-home-ubuntu-workspace-repos-codex/33627023-04e6-4757-9afa-d5c1463408f3/scratchpad/census-e73.json`
+ids=137 computed=63 blocked=0
+prestige_swept=74 prestige_alone_blocked=74 prestige_mix_computed=68 prestige_mix_unknown=0
+mix_panel_swept=185 mix_panel_computed=185 mix_panel_blocked=0

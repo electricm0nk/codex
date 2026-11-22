@@ -1,0 +1,43 @@
+{
+  "codex_generated_name": false,
+  "completeness": "chassis_only",
+  "data": {
+    "key": "Martyr Subdomain",
+    "name": "Martyr Subdomain",
+    "raw_tokens": [
+      {
+        "key": "PREMULT",
+        "value": "1,[PREDOMAIN:1,Martyr Subdomain],[PREVARLT:NobilityDomain,1]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Core Domain ~ Martyr Subdomain"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.93"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Martyr Subdomain=1|Divine Favor|Martyr Subdomain=2|Shield Other|Martyr Subdomain=3|Magic Vestment|Martyr Subdomain=4|Discern Lies|Martyr Subdomain=5|Command (Greater)|Martyr Subdomain=6|Sacrificial Oath|Martyr Subdomain=7|Repulsion|Martyr Subdomain=8|Demand|Martyr Subdomain=9|Storm of Vengeance"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T15:18:05Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 51,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_domains.lst",
+    "record_key": "Martyr Subdomain",
+    "sha256": "a5c270c30b0caee73d7ae2b9b45bfa4e26da0d52f99c6d1a8787f3d7cc73098e"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

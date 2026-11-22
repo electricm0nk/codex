@@ -1,0 +1,16 @@
+App data root: /tmp/codex-ui-smoke-sd38-e5_mc-y0K8Rc/data/io.electricm0nk.codex (isolated; the real store /home/ubuntu/.local/share/io.electricm0nk.codex is never opened)
+Real store before: 15379 entries, sha256 ddfc4461e3f278447373d61e1eff268905da65d3894566b68ab1bc2cbdf9b8bf
+Launching app for agent 'sd38-e5.mc'...
+PASS  improve-cyberpunk-skill
+PASS  improve-cyberpunk-role-switch
+PASS  improve-cyberpunk-cyberware
+PASS  improve-cyberpunk-therapy
+PASS  improve-cyberpunk-reputation
+PASS  improve-cyberpunk-reputation-lower-deed
+PASS  improve-cyberpunk-skip-refused
+Real store after:  15379 entries, sha256 ddfc4461e3f278447373d61e1eff268905da65d3894566b68ab1bc2cbdf9b8bf -- UNTOUCHED (count and sha256 equal)
+
+7/7 green, 0 red, 0 blocked, 0 manual, 0 not-run (M = 7 rows)
+Cleanup: 7 character(s) created across 7 row(s) with a cleanup record, 7 deleted, 0 leftover; store /tmp/codex-ui-smoke-sd38-e5_mc-y0K8Rc/data/io.electricm0nk.codex now holds: 00000000-0000-0000-0000-000000000001, 00000000-0000-0000-0000-000000000002, 00000000-0000-0000-0000-000000000003
+Evidence: /home/ubuntu/cargo-target/sd38-main/verify-e5mc/ui-green
+Removed isolated app-data root /tmp/codex-ui-smoke-sd38-e5_mc-y0K8Rc (it held 3 character(s) at the end: 00000000-0000-0000-0000-000000000001, 00000000-0000-0000-0000-000000000002, 00000000-0000-0000-0000-000000000003).

@@ -1,0 +1,64 @@
+{
+  "codex_generated_name": false,
+  "completeness": "full",
+  "data": {
+    "description": "1/day, for %1 hours, join yourself and collective members into enhanced form of doom.|MonstrousFusionDuration",
+    "key": "Helm of the Hydra ~ Monstrous Fusion",
+    "name": "Monstrous Fusion",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Helm of the Hydra ~ Monstrous Fusion"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Psilike"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MonstrousFusionDuration|0"
+      },
+      {
+        "key": "DESC",
+        "value": "1/day, for %1 hours, join yourself and collective members into enhanced form of doom.|MonstrousFusionDuration"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonstrousFusionDuration|TL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.439"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per day"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 227,
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities.lst",
+    "record_key": "Helm of the Hydra ~ Monstrous Fusion",
+    "sha256": "ecfd0b8c0786d65416067452f4b648e30acff9d0e8c9c70fb4e4fc6dc0f9723d"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

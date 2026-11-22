@@ -1,0 +1,20 @@
+{
+  "data": {
+    "category": "FEAT",
+    "key": "Steady Footing",
+    "name": "Steady Footing",
+    "type": "General"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 7,
+    "path": "starfinder/paizo/near_space/sns_feats.lst",
+    "record_key": "Steady Footing",
+    "sha256": "ebe91f260d8e9a5a3f864cdbd82278b5c7ca0d05979490b12e0be9227001c525"
+  },
+  "unit_id": "near_space:feat:steady_footing"
+}

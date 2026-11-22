@@ -1,0 +1,8 @@
+1675:---- character_hub::tests::race_weapon_proficiency_a_deity_survives_export_then_import stdout ----
+1676-
+1677-thread 'character_hub::tests::race_weapon_proficiency_a_deity_survives_export_then_import' (2323546) panicked at src/character_hub.rs:16585:9:
+1678-assertion `left == right` failed
+1679-  left: ""
+1680- right: "Iomedae"
+test character_hub::tests::race_weapon_proficiency_a_deity_survives_export_then_import ... FAILED
+2 1172 1

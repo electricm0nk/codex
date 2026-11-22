@@ -1,0 +1,57 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Bronze Dragon ~ Tidal Wave",
+    "delivery": "Supernatural",
+    "description": "A great wyrm bronze dragon can cause the sea to rise up and crush his enemies once per day as a standard action. This affects an area of coastline 120 feet in length and targets all creatures within 40 feet of the shore--treat the targets as if struck by an avalanche. Treat all creatures as if they were in the bury zone. The save DC to halve this damage is %1. Those who fail their saves take full damage and are drawn 60 feet off shore and deposited 20 feet under the surface on the round after the wave hits.",
+    "description_variables": [
+      "BreathWeaponDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:bronze_dragon_tidal_wave",
+    "name": "Tidal Wave",
+    "owners": [
+      "beastiary:monster:dragon_bronze"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A great wyrm bronze dragon can cause the sea to rise up and crush his enemies once per day as a standard action. This affects an area of coastline 120 feet in length and targets all creatures within 40 feet of the shore--treat the targets as if struck by an avalanche. Treat all creatures as if they were in the bury zone. The save DC to halve this damage is %1. Those who fail their saves take full damage and are drawn 60 feet off shore and deposited 20 feet under the surface on the round after the wave hits.|BreathWeaponDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Bronze Dragon ~ Tidal Wave"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.104"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
+    "source_page": "p.104",
+    "traits": []
+  },
+  "ingested_at": "2026-08-20T15:15:41Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 469,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "record_key": "Bronze Dragon ~ Tidal Wave",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Psychometrist ~ Implements and Focus Powers",
+    "name": "Implements and Focus Powers",
+    "class": "Occultist",
+    "description": "[NOT IMPLEMENTED] A psychometrist learns to use the powers of one implement school from the occultist class (Occult Adventures p47); the conjuration implement school is not available to a psychometrist. This implement school does not allow the psychometrist to cast any spells of that school of magic, though, and he can't use spell-trigger or spell-completion magic items from any schools without succeeding at the appropriate Use Magic Device check. A psychometrist can't select an implement school more than once. The psychometrist treats his vigilante level as his occultist level for purposes of determining how his implements' focus powers work, and for determining at what level he may choose certain focus powers. Unlike an occultist, each of a psychometrist's focus powers has its own associated implement or gadget. For example, a psychometrist might own a scabbard implement to use the legacy weapon focus power and an implement that is a pair of boots to use the sudden speed focus power. The psychometrist must assign mental focus separately to each implement each day, and he doesn't gain resonant powers from his implements. Otherwise, this ability acts like the occultist's implements class feature. At 6th, 12th, and 18th levels, the psychometrist learns to use one additional implement school. &nl;Each time a psychometrist learns an implement school, he learns the base focus power from that school, plus one focus power from each implement school he has previously learned (but not from the new school he just learned). The psychometrist can use focus powers only by expending mental focus (see below). Unless otherwise noted, the DC for any saving throw against a focus power equals 10 + 1/2 the psychometrist's vigilante level + the psychometrist's Intelligence modifier. The psychometrist can select a school he already knows, and in this case, he gains a total of two new focus powers from that school (instead of learning the base focus power from the new school).",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Psychometrist ~ Implements and Focus Powers"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Occultist Class Features.PsychometristClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "[NOT IMPLEMENTED] A psychometrist learns to use the powers of one implement school from the occultist class (Occult Adventures p47); the conjuration implement school is not available to a psychometrist. This implement school does not allow the psychometrist to cast any spells of that school of magic, though, and he can't use spell-trigger or spell-completion magic items from any schools without succeeding at the appropriate Use Magic Device check. A psychometrist can't select an implement school more than once. The psychometrist treats his vigilante level as his occultist level for purposes of determining how his implements' focus powers work, and for determining at what level he may choose certain focus powers. Unlike an occultist, each of a psychometrist's focus powers has its own associated implement or gadget. For example, a psychometrist might own a scabbard implement to use the legacy weapon focus power and an implement that is a pair of boots to use the sudden speed focus power. The psychometrist must assign mental focus separately to each implement each day, and he doesn't gain resonant powers from his implements. Otherwise, this ability acts like the occultist's implements class feature. At 6th, 12th, and 18th levels, the psychometrist learns to use one additional implement school. &nl;Each time a psychometrist learns an implement school, he learns the base focus power from that school, plus one focus power from each implement school he has previously learned (but not from the new school he just learned). The psychometrist can use focus powers only by expending mental focus (see below). Unless otherwise noted, the DC for any saving throw against a focus power equals 10 + 1/2 the psychometrist's vigilante level + the psychometrist's Intelligence modifier. The psychometrist can select a school he already knows, and in this case, he gains a total of two new focus powers from that school (instead of learning the base focus power from the new school)."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.59"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/support/ui_abilities_class_oa.lst",
+    "sha256": "123f008e9a2f31828861df9025f48f5c2f7c78a648553f22dba96a8d8a2e24dc",
+    "line": 152,
+    "record_key": "Psychometrist ~ Implements and Focus Powers"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

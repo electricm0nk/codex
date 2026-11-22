@@ -1,0 +1,78 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Disease ~ Filth Fever",
+    "delivery": "Extraordinary",
+    "description": "Filth Fever-Bite injury; Save Fort DC %1; Onset 1d3 days; Frequency 1/day; Effect 1d3 Dex damage and 1d3 Con damage; Cure 2 consecutive saves.",
+    "description_variables": [
+      "DiseaseDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:disease_filth_fever",
+    "name": "Disease",
+    "owners": [
+      "beastiary:monster:otyugh"
+    ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Disease"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DiseaseDC|10+(HD/2)+CON|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DiseaseDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Disease)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DiseaseDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Filth Fever-Bite injury; Save Fort DC %1; Onset 1d3 days; Frequency 1/day; Effect 1d3 Dex damage and 1d3 Con damage; Cure 2 consecutive saves.|DiseaseDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Disease ~ Filth Fever"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.232"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "YES"
+      }
+    ],
+    "source_page": "p.232",
+    "traits": []
+  },
+  "ingested_at": "2026-08-17T12:26:26Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1354,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "record_key": "Disease ~ Filth Fever",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

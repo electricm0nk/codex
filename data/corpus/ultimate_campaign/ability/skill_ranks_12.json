@@ -1,0 +1,48 @@
+{
+  "codex_generated_name": false,
+  "completeness": "full",
+  "data": {
+    "description": "You retrained 12 skill ranks.",
+    "key": "Retrain ~ 12 Skill Rank",
+    "name": "Skill Ranks 12",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Retrain ~ 12 Skill Rank"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Skill Ranks 12"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "YES"
+      },
+      {
+        "key": "DESC",
+        "value": "You retrained 12 skill ranks."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Retraining Skill Ranks Removed|12"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 82,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_campaign/uca_abilities_retraining.lst",
+    "record_key": "Retrain ~ 12 Skill Rank",
+    "sha256": "2a7a5c3921a0b079d19ac48eea38f66d6cd6672279557f8272d05e825ed8b643"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

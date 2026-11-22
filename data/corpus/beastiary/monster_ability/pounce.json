@@ -1,0 +1,61 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Pounce",
+    "delivery": "Extraordinary",
+    "description": "When you make a charge, you can make a full attack (including rake attacks if you also have the rake ability).",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:pounce",
+    "name": "Pounce",
+    "owners": [
+      "beastiary:monster:cat_leopard",
+      "beastiary:monster:demon_shadow",
+      "beastiary:monster:dinosaur_deinonychus",
+      "beastiary:monster:griffon",
+      "beastiary:monster:hydra",
+      "beastiary:monster:lion_dire",
+      "beastiary:monster:sphinx_gynosphinx",
+      "beastiary:monster:tiger",
+      "beastiary:monster:tiger_dire"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "When you make a charge, you can make a full attack (including rake attacks if you also have the rake ability)."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.302"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary.AttackOption"
+      }
+    ],
+    "source_page": "p.302",
+    "traits": [
+      "AttackOption"
+    ]
+  },
+  "ingested_at": "2026-08-17T12:26:26Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1458,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "record_key": "Pounce",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

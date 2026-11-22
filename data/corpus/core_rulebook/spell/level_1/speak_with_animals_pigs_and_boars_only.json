@@ -1,0 +1,33 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "You can ask questions of and receive answers from animals, but the spell doesn't make them any more friendly than normal. Wary and cunning animals are likely to be terse and evasive, while the more stupid ones make inane comments. If an animal is friendly toward you, it may do some favor or service for you.",
+    "key": "Speak with Animals (pigs and boars only)",
+    "level": 1,
+    "raw_tokens": [
+      {
+        "key": "CLASSES",
+        "value": ".CLEARALL"
+      }
+    ],
+    "school": "Divination"
+  },
+  "ingested_at": "2026-08-17T00:00:00Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1475,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+    "record_key": "Speak with Animals.COPY=Speak with Animals (pigs and boars only)",
+    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus",
+    "derived:spells"
+  ]
+}

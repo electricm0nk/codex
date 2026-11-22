@@ -1,0 +1,78 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Cythnigot ~ Spores",
+    "delivery": "Supernatural",
+    "description": "Any creature bitten by a Cythnigot must make a DC %1 Fortitude save or become infested by the creature's otherworldly spores.  These spores cause twitching spikes and hideous pallid growths of hair-like fibers to erupt from the bite wound and to writhe and wrap around the target's limbs.  A creatures suffering from these spores is entangled, and can attempt a new DC %1 Fortitude save in later rounds as a standard action to rip the tendrils free and escape the entangled condition.  The effects of multiple Cythnigot bites on a creature do not stack.  Plant creatures take a -4 penalty on saves against this effect.  This is a disease effect.",
+    "description_variables": [
+      "CythnigotSporesDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:cythnigot_spores",
+    "name": "Spores",
+    "owners": [
+      "bestiary_2:monster:qlippoth_cythnigot"
+    ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Spores"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(bite)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CythnigotSporesDC|10+TL/2+CON"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CythnigotSporesDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Spores)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CythnigotSporesDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Any creature bitten by a Cythnigot must make a DC %1 Fortitude save or become infested by the creature's otherworldly spores.  These spores cause twitching spikes and hideous pallid growths of hair-like fibers to erupt from the bite wound and to writhe and wrap around the target's limbs.  A creatures suffering from these spores is entangled, and can attempt a new DC %1 Fortitude save in later rounds as a standard action to rip the tendrils free and escape the entangled condition.  The effects of multiple Cythnigot bites on a creature do not stack.  Plant creatures take a -4 penalty on saves against this effect.  This is a disease effect.|CythnigotSporesDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Cythnigot ~ Spores"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.220"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
+    "source_page": "p.220",
+    "traits": []
+  },
+  "ingested_at": "2026-08-17T12:26:27Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 2046,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "record_key": "Cythnigot ~ Spores",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

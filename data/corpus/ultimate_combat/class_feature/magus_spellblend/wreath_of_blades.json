@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-24T03:51:47Z",
+  "data": {
+    "key": "Magus Spellblend ~ Wreath of Blades",
+    "name": "Wreath of Blades",
+    "class": "Magus",
+    "description": "Four mithral daggers speed around you, attacking nearby creatures and protecting your spellcasting from attacks of opportunity.|!PRERULE:1,DisplayFullSpell",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Magus Spellblend ~ Wreath of Blades"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "TYPE",
+        "value": "MagusSpellblend.MagusSpellBlendLVL5"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Magus=5|Wreath of Blades"
+      },
+      {
+        "key": "DESC",
+        "value": "Four mithral daggers speed around you, attacking nearby creatures and protecting your spellcasting from attacks of opportunity.|!PRERULE:1,DisplayFullSpell"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 1867,
+    "record_key": "Magus Spellblend ~ Wreath of Blades"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

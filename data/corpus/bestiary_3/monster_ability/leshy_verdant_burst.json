@@ -1,0 +1,50 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Leshy ~ Verdant Burst",
+    "delivery": "Supernatural",
+    "description": "When slain, a leshy explodes in a burst of fertile energies. All plant creatures within 30 feet of a slain leshy heal 1d8 points of damage plus 1 point per HD of the slain leshy, and plant life of the same type as the leshy itself quickly infests the area. If the terrain can support this type of plant, the undergrowth is dense enough to make the region into difficult terrain for 24 hours, after which the plant life diminishes to a normal level; otherwise, the plant life has no significant effect on movement and withers and dies within an hour.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:leshy_verdant_burst",
+    "name": "Verdant Burst",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "When slain, a leshy explodes in a burst of fertile energies. All plant creatures within 30 feet of a slain leshy heal 1d8 points of damage plus 1 point per HD of the slain leshy, and plant life of the same type as the leshy itself quickly infests the area. If the terrain can support this type of plant, the undergrowth is dense enough to make the region into difficult terrain for 24 hours, after which the plant life diminishes to a normal level; otherwise, the plant life has no significant effect on movement and withers and dies within an hour."
+      },
+      {
+        "key": "KEY",
+        "value": "Leshy ~ Verdant Burst"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      }
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T14:09:34Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 2337,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "record_key": "Leshy ~ Verdant Burst",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "display:no_magnitude_token"
+  ]
+}

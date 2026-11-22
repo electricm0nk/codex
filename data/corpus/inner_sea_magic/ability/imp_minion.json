@@ -1,0 +1,61 @@
+{
+  "codex_generated_name": false,
+  "completeness": "full",
+  "data": {
+    "description": "You gain an imp minion that will serve you for %1 minutes per day. You must cast a summon monster spell to summon your imp minion-this special casting of summon monster does not summon any other monsters when you cast it in this way, but you can choose your imp minion as a favorite summons.|TL*10",
+    "key": "Imp Minion ~ Academy",
+    "name": "Imp Minion",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Imp Minion ~ Academy"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.AcadamaeReward"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Acadamae ~ Academy"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "AcadamaeFame,20"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain an imp minion that will serve you for %1 minutes per day. You must cast a summon monster spell to summon your imp minion-this special casting of summon monster does not summon any other monsters when you cast it in this way, but you can choose your imp minion as a favorite summons.|TL*10"
+      },
+      {
+        "key": "COST",
+        "value": "5"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.20"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 90,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_abilities_other.lst",
+    "record_key": "Imp Minion ~ Academy",
+    "sha256": "6ea35a2432c9b609f27926d9492f1d85c599eb18e81adf36154ae594b89072db"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:prose_formula_segment"
+  ]
+}

@@ -1,0 +1,70 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "General",
+    "cost_gp": 21215.0,
+    "description": "Level 18 Conjurer; Protection - magic aura (spellbook appears nonmagical), secret page hides the notes on constructing a lich's phylactery, sepia snake sigil (Reflex DC 17); Opposition Schools - Abjuration, enchantment; Spells - 9.gate(S), soul bind, summon monster IX(S), time stop, wish; 8.create greater undead, horrid wilting, greater planar binding(S), maze(S), screen; 7.banishment(OP), finger of death, grasping hand, greater teleport(S), reverse gravity, summon monster VII(S); 6.contagious flames, disintegrate(S), greater dispel magic(OP), legend lore, planar binding(S), wall of iron(S); 5.cloudkill(S), cone of cold, contact other plane, hungry pit(S), magic jar, overland flight, permanency, secret chest(S), symbol of pain; 4.ball lightning, black tentacles(S), detect scrying, dimension door(S), enervation, greater invisibility, resilient sphere, remove curse(OP); 3.blink, daylight, enter image, fireball, gentle repose, secret page, sepia snake sigil(S), stinking cloud(S); 2.darkvision, false life, glitterdust(S), make whole, mirror image, resist energy(OP), see invisibility, summon swarm(S), web(S); 1.burning hands, detect undead, disguise self, grease(S), mage armor(S), magic aura, magic missile, ray of enfeeblement, unseen servant(S); Preparation Ritual - Revivifying Contingency",
+    "key": "Manual of Binding",
+    "name": "Manual of Binding",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "NUMPAGES",
+        "value": "300"
+      },
+      {
+        "key": "COST",
+        "value": "21215"
+      },
+      {
+        "key": "WT",
+        "value": "9"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.126"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Preparation Ritual ~ Revivifying Contingency"
+      },
+      {
+        "key": "SPROP",
+        "value": "Level 18 Conjurer"
+      },
+      {
+        "key": "SPROP",
+        "value": "Protection - magic aura (spellbook appears nonmagical), secret page hides the notes on constructing a lich's phylactery, sepia snake sigil (Reflex DC 17)"
+      },
+      {
+        "key": "SPROP",
+        "value": "Opposition Schools - Abjuration, enchantment"
+      },
+      {
+        "key": "SPROP",
+        "value": "Spells - 9.gate(S), soul bind, summon monster IX(S), time stop, wish; 8.create greater undead, horrid wilting, greater planar binding(S), maze(S), screen; 7.banishment(OP), finger of death, grasping hand, greater teleport(S), reverse gravity, summon monster VII(S); 6.contagious flames, disintegrate(S), greater dispel magic(OP), legend lore, planar binding(S), wall of iron(S); 5.cloudkill(S), cone of cold, contact other plane, hungry pit(S), magic jar, overland flight, permanency, secret chest(S), symbol of pain; 4.ball lightning, black tentacles(S), detect scrying, dimension door(S), enervation, greater invisibility, resilient sphere, remove curse(OP); 3.blink, daylight, enter image, fireball, gentle repose, secret page, sepia snake sigil(S), stinking cloud(S); 2.darkvision, false life, glitterdust(S), make whole, mirror image, resist energy(OP), see invisibility, summon swarm(S), web(S); 1.burning hands, detect undead, disguise self, grease(S), mage armor(S), magic aura, magic missile, ray of enfeeblement, unseen servant(S)"
+      },
+      {
+        "key": "SPROP",
+        "value": "Preparation Ritual - Revivifying Contingency"
+      }
+    ],
+    "weight_lbs": 9.0
+  },
+  "ingested_at": "2026-08-16T05:06:54Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 32,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_equip_general.lst",
+    "record_key": "Manual of Binding",
+    "sha256": "9b2e23c56f9f7c79d3b52169c9fc786a3bad00c8587abc03796c306d122de9f5"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

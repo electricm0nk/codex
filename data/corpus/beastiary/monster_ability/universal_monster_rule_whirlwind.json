@@ -1,0 +1,118 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Universal Monster Rule ~ Whirlwind",
+    "delivery": "Supernatural",
+    "description": "Some creatures can transform themselves into whirlwinds and remain in that form for up to 1 round for every 2 HD they have. If the creature has a fly speed, it can continue to fly at that same speed while in whirlwind form, otherwise it gains a fly speed equal to its base land speed (average maneuverability) while in whirlwind form.&nl;The whirlwind is always 5 feet wide at its base, but its height and width at the top vary from creature to creature (minimum 10 feet high). A whirlwind's width at its peak is always equal to half of its height. The creature controls the exact height, but it must be at least 10 feet high.&nl;The whirlwind form does not provoke attacks of opportunity, even if the creature enters the space another creature occupies. Another creature might be caught in the whirlwind if it touches or enters the whirlwind, or if the whirlwind moves into or through a creature's space. A creature in whirlwind form cannot make its normal attacks and does not threaten the area around it.&nl;Creatures one or more size categories smaller than the whirlwind might take damage when caught in the whirlwind (generally damage equal to the monster's slam attack for a creature of its size) and may be lifted into the air. An affected creature must succeed on a Reflex save (DC 10 + half monster's HD + the monster's Strength modifier) when it comes into contact with the whirlwind or take damage as if it were hit by the whirlwind creature's slam attack. It must also succeed on a second Reflex save or be picked up bodily and held suspended in the powerful winds, automatically taking the indicated damage each round. A creature that can fly is allowed a Reflex save each round to escape the whirlwind. The creature still takes damage but can leave if the save is successful.&nl;Creatures trapped in the whirlwind cannot move except to go where the whirlwind carries them or to escape the whirlwind. Trapped creatures can otherwise act normally, but must succeed on a concentration check (DC 15 + spell level) to cast a spell. Creatures caught in the whirlwind take a -4 penalty to Dexterity and a -2 penalty on attack rolls. The whirlwind can have only as many creatures trapped inside at one time as will fit inside the whirlwind's volume. The whirlwind can eject any carried creatures whenever it wishes as a free action, depositing them in its space.&nl;If the whirlwind's base touches the ground, it creates a swirling cloud of debris. This cloud is centered on the creature and has a diameter equal to half the whirlwind's height. The cloud obscures all vision, including darkvision, beyond 5 feet. Creatures 5 feet away have concealment, while those farther away have total concealment. Those caught in the cloud of debris must succeed on a concentration check (DC 15 + spell level) to cast a spell.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:universal_monster_rule_whirlwind",
+    "name": "Whirlwind",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Whirlwind"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(%1/day, 10-%2 ft. high, %3d%4+%5 damage, DC %6)|UMR_Whirlwind_Times|UMR_Whirlwind_Height|UMR_Whirlwind_DamageDice|UMR_Whirlwind_DamageDieSize|UMR_Whirlwind_DamageBonus|UMR_Whirlwind_DC|PREVARGTEQ:UMR_Whirlwind_Times,1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(DC %5)|UMR_Whirlwind_DC|PREVAREQ:UMR_Whirlwind_Times,0|PREVAREQ:UMR_Whirlwind_DamageDice,0"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(at will, 10-%1 ft. high, %2d%3+%4 damage, DC %5)|UMR_Whirlwind_Height|UMR_Whirlwind_DamageDice|UMR_Whirlwind_DamageDieSize|UMR_Whirlwind_DamageBonus|UMR_Whirlwind_DC|PREVAREQ:UMR_Whirlwind_Times,0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|UMR_Whirlwind_DC|10+(max(HD,CompanionHD)/2)+STR"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|UMR_Whirlwind_DC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Whirlwind)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|UMR_Whirlwind_Duration|max(HD,CompanionHD)/2"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "UMR_Whirlwind_DC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "UMR_Whirlwind_DamageBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "UMR_Whirlwind_DamageDice|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "UMR_Whirlwind_DamageDieSize|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "UMR_Whirlwind_Duration|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "UMR_Whirlwind_Height|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "UMR_Whirlwind_SpecificDesc|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "UMR_Whirlwind_Times|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Some creatures can transform themselves into whirlwinds and remain in that form for up to 1 round for every 2 HD they have. If the creature has a fly speed, it can continue to fly at that same speed while in whirlwind form, otherwise it gains a fly speed equal to its base land speed (average maneuverability) while in whirlwind form.&nl;The whirlwind is always 5 feet wide at its base, but its height and width at the top vary from creature to creature (minimum 10 feet high). A whirlwind's width at its peak is always equal to half of its height. The creature controls the exact height, but it must be at least 10 feet high.&nl;The whirlwind form does not provoke attacks of opportunity, even if the creature enters the space another creature occupies. Another creature might be caught in the whirlwind if it touches or enters the whirlwind, or if the whirlwind moves into or through a creature's space. A creature in whirlwind form cannot make its normal attacks and does not threaten the area around it.&nl;Creatures one or more size categories smaller than the whirlwind might take damage when caught in the whirlwind (generally damage equal to the monster's slam attack for a creature of its size) and may be lifted into the air. An affected creature must succeed on a Reflex save (DC 10 + half monster's HD + the monster's Strength modifier) when it comes into contact with the whirlwind or take damage as if it were hit by the whirlwind creature's slam attack. It must also succeed on a second Reflex save or be picked up bodily and held suspended in the powerful winds, automatically taking the indicated damage each round. A creature that can fly is allowed a Reflex save each round to escape the whirlwind. The creature still takes damage but can leave if the save is successful.&nl;Creatures trapped in the whirlwind cannot move except to go where the whirlwind carries them or to escape the whirlwind. Trapped creatures can otherwise act normally, but must succeed on a concentration check (DC 15 + spell level) to cast a spell. Creatures caught in the whirlwind take a -4 penalty to Dexterity and a -2 penalty on attack rolls. The whirlwind can have only as many creatures trapped inside at one time as will fit inside the whirlwind's volume. The whirlwind can eject any carried creatures whenever it wishes as a free action, depositing them in its space.&nl;If the whirlwind's base touches the ground, it creates a swirling cloud of debris. This cloud is centered on the creature and has a diameter equal to half the whirlwind's height. The cloud obscures all vision, including darkvision, beyond 5 feet. Creatures 5 feet away have concealment, while those farther away have total concealment. Those caught in the cloud of debris must succeed on a concentration check (DC 15 + spell level) to cast a spell.|PREVAREQ:UMR_Whirlwind_SpecificDesc,0"
+      },
+      {
+        "key": "KEY",
+        "value": "Universal Monster Rule ~ Whirlwind"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.307"
+      },
+      {
+        "key": "TYPE",
+        "value": "Universal Monster Rule.SpecialAttack.Special Attack.Supernatural"
+      }
+    ],
+    "source_page": "p.307",
+    "traits": [
+      "Universal Monster Rule",
+      "Special Attack"
+    ]
+  },
+  "ingested_at": "2026-08-23T12:58:07Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 2384,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "record_key": "Universal Monster Rule ~ Whirlwind",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus",
+    "derived:prose_expr"
+  ]
+}

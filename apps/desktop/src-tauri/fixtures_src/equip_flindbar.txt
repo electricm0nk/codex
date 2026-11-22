@@ -1,0 +1,2 @@
+# Fixture for desktop Market +N (AC and attack rows), source: mc_equip_arms_armor.lst, KEY: Flindbar
+Flindbar													PROFICIENCY:WEAPON|Flindbar				TYPE:Weapon.Resizable.Melee.OneHanded.Exotic.Standard.Bludgeoning.Piercing.Flail.Gnoll					COST:9	WT:6					CRITMULT:x2	CRITRANGE:1	DAMAGE:1d8	EQMOD:Special Quality ~ Disarm.Special Quality ~ Trip.Material ~ Steel														WIELD:OneHanded								SIZE:M	SOURCEPAGE:p.93

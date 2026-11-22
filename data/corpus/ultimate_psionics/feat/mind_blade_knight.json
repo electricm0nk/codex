@@ -1,0 +1,31 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:38:17Z",
+  "data": {
+    "key": "Mind Blade Knight",
+    "category": "Psionic",
+    "name": "Mind Blade Knight",
+    "description": "Add weapon special abilities to summoned weapons.",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=Special Ability,First ~ Mind Knight Path,Mind Knight Path ~ Second",
+      "PREVARGTEQ:IsPsionic,1",
+      "PREVARGTEQ:WarriorPathLVL,3"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_feats.lst",
+    "sha256": "528096cb97ebe8255b9f9fe67682dd7e045f53b65e32295cd57967002eccb137",
+    "line": 210,
+    "record_key": "Mind Blade Knight"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

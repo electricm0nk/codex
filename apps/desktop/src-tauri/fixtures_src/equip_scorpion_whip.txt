@@ -1,0 +1,2 @@
+# Fixture for desktop Market +N (AC and attack rows), source: ue_equip_arms_armor.lst, KEY: Scorpion Whip
+Scorpion Whip																			PROFICIENCY:WEAPON|Scorpion Whip							TYPE:Weapon.Resizable.Melee.Light.Finesseable.Exotic.Slashing.Flail																																		COST:5	WT:3										CRITMULT:x2	CRITRANGE:1							DAMAGE:1d4					EQMOD:Material ~ Steel																																									WIELD:Light								SIZE:M	SOURCEPAGE:p.36

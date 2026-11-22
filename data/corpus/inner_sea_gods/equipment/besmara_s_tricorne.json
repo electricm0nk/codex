@@ -1,0 +1,67 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "General",
+    "cost_gp": 2600.0,
+    "description": "This black leather tricorne hat is weather-beaten and salt-stained. It grants its wearer a +2 competence bonus on Profession (Sailor) and Swim checks. If Besmara is the wearer's patron, once per day the wearer can speak a command word to transform the hat into a small ship's boat such as a cutter, jolly boat, or longboat. The boat is 20 feet long, has two pairs of oars and a single mast with a square sail, and can carry up to 12 passengers and crew. Upon command, or after 8 hours, the boat returns to its hat form, dumping out any occupants.",
+    "key": "Besmara's Tricorne",
+    "name": "Besmara's Tricorne",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "SKILL",
+          "Profession (Sailor),Swim",
+          "2",
+          "TYPE=Competence"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous Item.SLOT_Head.Headgear"
+      },
+      {
+        "key": "COST",
+        "value": "2600"
+      },
+      {
+        "key": "WT",
+        "value": "1"
+      },
+      {
+        "key": "SOURCELONG",
+        "value": "Inner Sea Gods"
+      },
+      {
+        "key": "SOURCESHORT",
+        "value": "isg"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.261"
+      },
+      {
+        "key": "DESC",
+        "value": "This black leather tricorne hat is weather-beaten and salt-stained. It grants its wearer a +2 competence bonus on Profession (Sailor) and Swim checks. If Besmara is the wearer's patron, once per day the wearer can speak a command word to transform the hat into a small ship's boat such as a cutter, jolly boat, or longboat. The boat is 20 feet long, has two pairs of oars and a single mast with a square sail, and can carry up to 12 passengers and crew. Upon command, or after 8 hours, the boat returns to its hat form, dumping out any occupants."
+      }
+    ],
+    "weight_lbs": 1.0
+  },
+  "ingested_at": "2026-08-17T12:09:37Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 177,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_equip.lst",
+    "record_key": "Besmara's Tricorne",
+    "sha256": "cde6e3e0acd33edb906c404430e39a375d0721c6e136c5faf0cde575c7c27c74"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

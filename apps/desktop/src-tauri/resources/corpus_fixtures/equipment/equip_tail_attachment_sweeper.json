@@ -1,0 +1,15 @@
+{
+  "completeness": "full",
+  "data": {
+    "key": "Tail Attachment (Sweeper)",
+    "name": "Tail Attachment (Sweeper)"
+  },
+  "license": "OGL",
+  "population": "in_scope",
+  "source": {
+    "kind": "desktop_ui_fixture",
+    "line": 1,
+    "path": "apps/desktop/src-tauri/fixtures_src/equip_tail_attachment_sweeper.txt",
+    "record_key": "Tail Attachment (Sweeper)"
+  }
+}

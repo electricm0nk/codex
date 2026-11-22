@@ -1,0 +1,72 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-24T03:51:47Z",
+  "data": {
+    "key": "Eagle Shaman ~ Wild Shape",
+    "name": "Wild Shape",
+    "class": "Druid",
+    "description": "At 6th level, an eagle shaman's wild shape ability functions at her druid level - 2. If she takes on the form of an eagle or roc, she instead uses her druid level + 2.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Eagle Shaman ~ Wild Shape"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.DruidClassFeatures.ArchetypeDruid.SpecialQuality.Supernatural.DruidWildShape"
+      },
+      {
+        "key": "DESC",
+        "value": "At 6th level, an eagle shaman's wild shape ability functions at her druid level - 2. If she takes on the form of an eagle or roc, she instead uses her druid level + 2."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.102"
+      },
+      {
+        "key": "DESC",
+        "value": "can assume the form of a Small or Medium ooze as if using beast shape III (treating the ooze as if it were a magical beast without a natural armor bonus).|PREABILITY:1,CATEGORY=Archetype,Druid Archetype ~ Cave Druid|PREVAREQ:WildShapeProgression,4"
+      },
+      {
+        "key": "DESC",
+        "value": "can assume the form of a Tiny or Large ooze as if using beast shape IV (treating the ooze as if it were a magical beast without a natural armor bonus).|PREVAREQ:WildShapeProgression,5"
+      },
+      {
+        "key": "DESC",
+        "value": "can assume the form of a Small or Medium vermin as if using beast shape IV (treating the vermin as an animal to determine its ability and natural armor modifiers).|PREABILITY:1,CATEGORY=Archetype,Druid Archetype ~ Desert Druid|PREVAREQ:WildShapeProgression,4"
+      },
+      {
+        "key": "DESC",
+        "value": "can assume the form of a Tiny or Large vermin as if using beast shape IV (treating the vermin as an animal to determine its ability and natural armor modifiers).|PREABILITY:1,CATEGORY=Archetype,Druid Archetype ~ Desert Druid|PREVAREQ:WildShapeProgression,5"
+      },
+      {
+        "key": "DESC",
+        "value": "can assume the form of a Large giant as if using giant form I.|PREABILITY:1,CATEGORY=Archetype,Druid Archetype ~ Mountain Druid|PREVAREQ:WildShapeProgression,5"
+      },
+      {
+        "key": "DESC",
+        "value": "can assume the form of a Huge giant as if using giant form II.|PREABILITY:1,CATEGORY=Archetype,Druid Archetype ~ Mountain Druid|PREVAREQ:WildShapeProgression,7"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 2037,
+    "record_key": "Eagle Shaman ~ Wild Shape"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

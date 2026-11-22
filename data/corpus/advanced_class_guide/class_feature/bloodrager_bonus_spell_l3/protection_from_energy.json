@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-24T03:51:47Z",
+  "data": {
+    "key": "Bloodrager Bonus Spell L3 ~ Protection from Energy",
+    "name": "Protection from Energy",
+    "class": "Bloodrager",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bloodrager Bonus Spell L3 ~ Protection from Energy"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "TYPE",
+        "value": "Bloodrager Bloodline Bonus Spell"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Bloodrager_BonusSpell_L3_ProtectionFromEnergy,1"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "BloodragerBloodlineCasterLVL,13"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Bloodrager=3|Protection from Energy"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Bloodrager=3"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Shaman=3"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 533,
+    "record_key": "Bloodrager Bonus Spell L3 ~ Protection from Energy"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

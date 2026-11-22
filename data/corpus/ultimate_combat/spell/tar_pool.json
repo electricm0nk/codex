@@ -1,0 +1,88 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "You convert a layer of the ground to hot tar. Creatures in the area when the tar appears take 1d6 points of fire damage per two caster levels (maximum of 10d6) and must succeed at a Reflex save or become entangled. An entangled creature receives a saving throw each round to free itself from the tar, and can also attempt to free itself by spending a move action to attempt a Strength check or Escape Artist check (DC = spell saving throw DC). It costs 2 squares of movement to enter a square in the area of effect, and the DC of Acrobatics checks within the area of effect increases by 5. The area is difficult terrain. A creature that moves into or starts its turn in the area takes 2d6 points of fire damage and must reattempt this Reflex save or become entangled. A creature that falls prone in the area takes a -4 penalty on its Reflex save against the tar and on Strength and Escape Artist checks to escape the tar. A creature that escapes the tar still takes fire damage from the tar until the spell ends or that creature spends a full-round action removing the tar. A creature with tar on it takes a -4 penalty on Acrobatics and Fly checks made to fly with wings or similar appendages.",
+    "key": "Tar Pool",
+    "level": 6,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Druid,Sorcerer,Wizard=6"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, M/DF"
+      },
+      {
+        "key": "DESC",
+        "value": "Converts the top layer of the ground into hot tar.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "You convert a layer of the ground to hot tar. Creatures in the area when the tar appears take 1d6 points of fire damage per two caster levels (maximum of 10d6) and must succeed at a Reflex save or become entangled. An entangled creature receives a saving throw each round to free itself from the tar, and can also attempt to free itself by spending a move action to attempt a Strength check or Escape Artist check (DC = spell saving throw DC). It costs 2 squares of movement to enter a square in the area of effect, and the DC of Acrobatics checks within the area of effect increases by 5. The area is difficult terrain. A creature that moves into or starts its turn in the area takes 2d6 points of fire damage and must reattempt this Reflex save or become entangled. A creature that falls prone in the area takes a -4 penalty on its Reflex save against the tar and on Strength and Escape Artist checks to escape the tar. A creature that escapes the tar still takes fire damage from the tar until the spell ends or that creature spends a full-round action removing the tar. A creature with tar on it takes a -4 penalty on Acrobatics and Fly checks made to fly with wings or similar appendages.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESCRIPTOR",
+        "value": "Earth|Fire"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) rounds"
+      },
+      {
+        "key": "FACT",
+        "value": "CompMaterial|(a ball of hardened tar)"
+      },
+      {
+        "key": "RANGE",
+        "value": "Close"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Reflex partial, see text"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Transmutation"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/ultimateCombat/spells/tarPool.html#_tar-pool"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.246"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "No"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "20-ft.-radius burst"
+      }
+    ],
+    "school": "Transmutation"
+  },
+  "ingested_at": "2026-08-16T12:10:17Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 136,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_spells.lst",
+    "record_key": "Tar Pool",
+    "sha256": "b3621f212f8bdde1d0e9a8861c43f7587bb493909a46c372ca0616b37f0706a0"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "derived:range_keyword"
+  ]
+}

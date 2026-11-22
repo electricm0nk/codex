@@ -1,0 +1,78 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Umbral Dragon ~ Energy Drain",
+    "delivery": "Supernatural",
+    "description": "A great wyrm umbral dragon deals 1 negative level with each successful bite or claw attack (1 level, DC %1).",
+    "description_variables": [
+      "UmbralDragonEnergyDrainDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:umbral_dragon_energy_drain",
+    "name": "Energy Drain",
+    "owners": [
+      "bestiary_2:monster:dragon_umbral"
+    ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Energy Drain"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(bite/claw, 1 level, DC %1)|UmbralDragonEnergyDrainDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|UmbralDragonEnergyDrainDC|10+TL/2+CON"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|UmbralDragonEnergyDrainDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Energy Drain)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "UmbralDragonEnergyDrainDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A great wyrm umbral dragon deals 1 negative level with each successful bite or claw attack (1 level, DC %1).|UmbralDragonEnergyDrainDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Umbral Dragon ~ Energy Drain"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.102"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
+    "source_page": "p.102",
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T10:25:56Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 503,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Umbral Dragon ~ Energy Drain",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

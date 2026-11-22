@@ -1,0 +1,13 @@
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.06s
+     Running unittests src/lib.rs (/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/codex-ce0bccb9212d3fe1)
+
+running 5 tests
+test rules_core::pilot_compute::sf_chassis::sf_seed::sf_seed_a_choice_key_ability_without_a_legal_choice_is_refused ... ok
+test rules_core::pilot_compute::sf_chassis::sf_seed::sf_seed_key_ability_is_read_from_the_class ... ok
+test rules_core::pilot_compute::sf_chassis::sf_seed::sf_seed_every_term_names_its_source ... ok
+test rules_core::pilot_compute::sf_chassis::sf_seed::sf_seed_chassis_totals_match_the_srd_hand_values ... ok
+test rules_core::pilot_compute::sf_chassis::sf_seed::sf_seed_every_core_player_class_has_a_chassis_at_level_1 ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 2789 filtered out; finished in 0.50s
+
+exit=0

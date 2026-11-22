@@ -1,0 +1,8 @@
+    Checking codex v0.1.0 (/home/ubuntu/workspace/worktrees/codex-epic-f7)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 46.95s
+ROOT_EXIT=0
+    Checking codex v0.1.0 (/home/ubuntu/workspace/worktrees/codex-epic-f7)
+   Compiling codex-desktop v0.16.0 (apps/desktop/src-tauri)
+    Checking codex-ingest v0.1.0 (crates/codex-ingest)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 37.01s
+DESKTOP_EXIT=0

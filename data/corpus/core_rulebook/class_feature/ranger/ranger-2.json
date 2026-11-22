@@ -1,0 +1,517 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-24T03:51:47Z",
+  "data": {
+    "key": "Ranger ~ Class",
+    "name": "Ranger",
+    "class": "Ranger",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Class"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_CFP_Level|0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Ranger Archetype|AUTOMATIC|Archetype Ranger"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Class Skills ~ Ranger|PREVAREQ:Ranger_CF_ClassSkills,0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Ranger_CFP_Level|RangerLVL|TYPE=Base"
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "PFS Starting Gold"
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "Starting Gold ~ CRB.REMOVE"
+      },
+      {
+        "key": "!PREALIGN",
+        "value": "CE,NE,LE"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Ranger Class Feature|AUTOMATIC|Ranger ~ Favored Enemy|PREVAREQ:Ranger_CF_FavoredEnemy,0|PREVARGTEQ:Ranger_CFP_Level,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Ranger Class Feature|AUTOMATIC|Ranger ~ Favored Terrain|PREVAREQ:Ranger_CF_FavoredTerrain,0|PREVARGTEQ:Ranger_CFP_Level,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Ranger Class Feature|AUTOMATIC|Ranger ~ Track|PREVAREQ:Ranger_CF_Track,0|PREVARGTEQ:Ranger_CFP_Level,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Ranger Class Feature|AUTOMATIC|Ranger ~ Wild Empathy|PREVAREQ:Ranger_CF_WildEmpathy,0|PREVARGTEQ:Ranger_CFP_Level,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Ranger Class Feature|AUTOMATIC|Ranger ~ Combat Style Feat|PREVAREQ:Ranger_CF_CombatStyleFeat,0|PREVARGTEQ:Ranger_CFP_Level,2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Ranger Class Feature|AUTOMATIC|Ranger ~ Hunter's Bond|PREVAREQ:Ranger_CF_HuntersBond,0|PREVARGTEQ:Ranger_CFP_Level,4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Ranger Class Feature|AUTOMATIC|Ranger ~ Woodland Stride|PREVAREQ:Ranger_CF_WoodlandStride,0|PREVARGTEQ:Ranger_CFP_Level,7"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Ranger Class Feature|AUTOMATIC|Ranger ~ Swift Tracker|PREVAREQ:Ranger_CF_SwiftTracker,0|PREVARGTEQ:Ranger_CFP_Level,8"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Ranger Class Feature|AUTOMATIC|Ranger ~ Evasion|PREVAREQ:Ranger_CF_Evasion,0|PREVARGTEQ:Ranger_CFP_Level,9"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Ranger Class Feature|AUTOMATIC|Ranger ~ Quarry|PREVAREQ:Ranger_CF_Quarry,0|PREVARGTEQ:Ranger_CFP_Level,11"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Ranger Class Feature|AUTOMATIC|Ranger ~ Camouflage|PREVAREQ:Ranger_CF_Camouflage,0|PREVARGTEQ:Ranger_CFP_Level,12"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Ranger Class Feature|AUTOMATIC|Ranger ~ Improved Evasion|PREVAREQ:Ranger_CF_Evasion,0|PREVARGTEQ:Ranger_CFP_Level,16"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Ranger Class Feature|AUTOMATIC|Ranger ~ Hide in Plain Sight|PREVAREQ:Ranger_CF_HideInPlainSight,0|PREVARGTEQ:Ranger_CFP_Level,17"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Ranger Class Feature|AUTOMATIC|Ranger ~ Improved Quarry|PREVAREQ:Ranger_CF_Quarry,0|PREVARGTEQ:Ranger_CFP_Level,19"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Ranger Class Feature|AUTOMATIC|Ranger ~ Master Hunter|PREVAREQ:Ranger_CF_MasterHunter,0|PREVARGTEQ:Ranger_CFP_Level,20"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Endurance|PREVAREQ:Ranger_CF_Endurance,0|PREVARGTEQ:Ranger_CFP_Level,3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Weapon and Armor Proficiency ~ Ranger|PREVAREQ:Ranger_CF_Proficiencies,0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Weapon Prof ~ Martial|Weapon Prof ~ Simple|PREVAREQ:Ranger_CF_WeaponProficiencies,0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Armor Prof ~ Light|PREVAREQ:Ranger_CF_LightArmorProficiency,0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Armor Prof ~ Medium|PREVAREQ:Ranger_CF_MediumArmorProficiency,0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Shield Prof|PREVAREQ:Ranger_CF_ShieldProficiency,0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_CF_Proficiencies|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_CF_WeaponProficiencies|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_CF_LightArmorProficiency|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_CF_MediumArmorProficiency|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_CF_ShieldProficiency|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_CF_HuntersBond|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_CF_FavoredEnemy|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_CF_FavoredTerrain|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_CF_Track|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_CF_WildEmpathy|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_CF_CombatStyleFeat|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_CF_WoodlandStride|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_CF_SwiftTracker|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_CF_Evasion|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_CF_Quarry|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_CF_Camouflage|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_CF_Evasion|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_CF_HideInPlainSight|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_CF_Quarry|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_CF_MasterHunter|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_CF_Endurance|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_CF_ImprovedEvasion|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_CF_ImprovedQuarry|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_CF_CombatStyleFeat2|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_CF_CombatStyleFeat6|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_CF_CombatStyleFeat10|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_CF_CombatStyleFeat14|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_CF_CombatStyleFeat18|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_CF_FavoredEnemy1|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_CF_FavoredEnemy2|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_CF_FavoredEnemy3|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_CF_FavoredEnemy4|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_CF_AnimalCompanion|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_CF_ClassSkills|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Ranger_CF_Proficiencies|1|TYPE=Boolean|PREFACT:1,ABILITIES,Ranger_CF_Proficiencies=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Ranger_CF_WeaponProficiencies|1|TYPE=Boolean|PREFACT:1,ABILITIES,Ranger_CF_WeaponProficiencies=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Ranger_CF_LightArmorProficiency|1|TYPE=Boolean|PREFACT:1,ABILITIES,Ranger_CF_LightArmorProficiency=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Ranger_CF_MediumArmorProficiency|1|TYPE=Boolean|PREFACT:1,ABILITIES,Ranger_CF_MediumArmorProficiency=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Ranger_CF_ShieldProficiency|1|TYPE=Boolean|PREFACT:1,ABILITIES,Ranger_CF_ShieldProficiency=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Ranger_CF_ClassSkills|1|TYPE=Boolean|PREFACT:1,ABILITIES,Ranger_CF_ClassSkills=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Ranger_CF_ImprovedEvasion|1|TYPE=Boolean|PREFACT:1,ABILITIES,Ranger_CF_ImprovedEvasion=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Ranger_CF_ImprovedQuarry|1|TYPE=Boolean|PREFACT:1,ABILITIES,Ranger_CF_ImprovedQuarry=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Ranger_CF_CombatStyleFeat2|1|TYPE=Boolean|PREFACT:1,ABILITIES,Ranger_CF_CombatStyleFeat2=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Ranger_CF_CombatStyleFeat6|1|TYPE=Boolean|PREFACT:1,ABILITIES,Ranger_CF_CombatStyleFeat6=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Ranger_CF_CombatStyleFeat10|1|TYPE=Boolean|PREFACT:1,ABILITIES,Ranger_CF_CombatStyleFeat10=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Ranger_CF_CombatStyleFeat14|1|TYPE=Boolean|PREFACT:1,ABILITIES,Ranger_CF_CombatStyleFeat14=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Ranger_CF_CombatStyleFeat18|1|TYPE=Boolean|PREFACT:1,ABILITIES,Ranger_CF_CombatStyleFeat18=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Ranger_CF_FavoredEnemy1|1|TYPE=Boolean|PREFACT:1,ABILITIES,Ranger_CF_FavoredEnemy1=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Ranger_CF_FavoredEnemy2|1|TYPE=Boolean|PREFACT:1,ABILITIES,Ranger_CF_FavoredEnemy2=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Ranger_CF_FavoredEnemy3|1|TYPE=Boolean|PREFACT:1,ABILITIES,Ranger_CF_FavoredEnemy3=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Ranger_CF_FavoredEnemy4|1|TYPE=Boolean|PREFACT:1,ABILITIES,Ranger_CF_FavoredEnemy4=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Ranger_CF_AnimalCompanion|1|TYPE=Boolean|PREFACT:1,ABILITIES,Ranger_CF_AnimalCompanion=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Ranger_CF_HuntersBond|1|TYPE=Boolean|PREFACT:1,ABILITIES,Ranger_CF_HuntersBond=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Ranger_CF_FavoredEnemy|1|TYPE=Boolean|PREFACT:1,ABILITIES,Ranger_CF_FavoredEnemy=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Ranger_CF_FavoredTerrain|1|TYPE=Boolean|PREFACT:1,ABILITIES,Ranger_CF_FavoredTerrain=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Ranger_CF_Track|1|TYPE=Boolean|PREFACT:1,ABILITIES,Ranger_CF_Track=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Ranger_CF_WildEmpathy|1|TYPE=Boolean|PREFACT:1,ABILITIES,Ranger_CF_WildEmpathy=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Ranger_CF_CombatStyleFeat|1|TYPE=Boolean|PREFACT:1,ABILITIES,Ranger_CF_CombatStyleFeat=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Ranger_CF_WoodlandStride|1|TYPE=Boolean|PREFACT:1,ABILITIES,Ranger_CF_WoodlandStride=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Ranger_CF_SwiftTracker|1|TYPE=Boolean|PREFACT:1,ABILITIES,Ranger_CF_SwiftTracker=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Ranger_CF_Evasion|1|TYPE=Boolean|PREFACT:1,ABILITIES,Ranger_CF_Evasion=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Ranger_CF_Quarry|1|TYPE=Boolean|PREFACT:1,ABILITIES,Ranger_CF_Quarry=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Ranger_CF_Camouflage|1|TYPE=Boolean|PREFACT:1,ABILITIES,Ranger_CF_Camouflage=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Ranger_CF_Evasion|1|TYPE=Boolean|PREFACT:1,ABILITIES,Ranger_CF_Evasion=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Ranger_CF_HideInPlainSight|1|TYPE=Boolean|PREFACT:1,ABILITIES,Ranger_CF_HideInPlainSight=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Ranger_CF_Quarry|1|TYPE=Boolean|PREFACT:1,ABILITIES,Ranger_CF_Quarry=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Ranger_CF_MasterHunter|1|TYPE=Boolean|PREFACT:1,ABILITIES,Ranger_CF_MasterHunter=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Ranger_CF_Endurance|1|TYPE=Boolean|PREFACT:1,ABILITIES,Ranger_CF_Endurance=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Ranger_CF_HuntersBond|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.RangerHuntersBond"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Ranger_CF_FavoredEnemy|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.RangerFavoredEnemy"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Ranger_CF_FavoredTerrain|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.RangerFavoredTerrain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Ranger_CF_Track|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.RangerTrack"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Ranger_CF_WildEmpathy|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.RangerWildEmpathy"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Ranger_CF_CombatStyleFeat|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.RangerCombatStyle"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Ranger_CF_WoodlandStride|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.RangerWoodlandStride"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Ranger_CF_SwiftTracker|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.RangerSwiftTracker"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Ranger_CF_Evasion|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.RangerEvasion"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Ranger_CF_Quarry|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.RangerQuarry"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Ranger_CF_Camouflage|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.RangerCamoflage,TYPE.RangerCamouflage"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Ranger_CF_Evasion|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.RangerEvasion"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Ranger_CF_HideInPlainSight|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.RangerHideInPlainSight"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Ranger_CF_Quarry|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.RangerQuarry"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Ranger_CF_MasterHunter|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.RangerMasterHunter"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Ranger_CF_Endurance|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.RangerEndurance"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Ranger_CF_CombatStyleFeat2|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.RangerCombatStyleFeat2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Ranger_CF_CombatStyleFeat6|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.RangerCombatStyleFeat6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Ranger_CF_CombatStyleFeat10|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.RangerCombatStyleFeat10"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Ranger_CF_CombatStyleFeat14|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.RangerCombatStyleFeat14"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Ranger_CF_CombatStyleFeat18|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.RangerCombatStyleFeat18"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Ranger_CF_FavoredEnemy1|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.RangerFavoredEnemy1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Ranger_CF_FavoredEnemy2|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.RangerFavoredEnemy2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Ranger_CF_FavoredEnemy3|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.RangerFavoredEnemy3"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Ranger_CF_FavoredEnemy4|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.RangerFavoredEnemy4"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 105,
+    "record_key": "Ranger ~ Class"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

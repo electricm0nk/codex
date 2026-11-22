@@ -1,0 +1,438 @@
+{
+  "corrections": {
+    "by_corrector": {
+      "sd38-c1": 1,
+      "sd38-e0.1": 1,
+      "sd38-e0.4": 1,
+      "sd38-e1.4": 1,
+      "sd38-e1.6": 1,
+      "sd38-e1.v": 2,
+      "sd38-e2.4": 1,
+      "sd38-e2.5": 1,
+      "sd38-e3.1": 1,
+      "sd38-e3.3": 1,
+      "sd38-e3.4": 1,
+      "sd38-e3.5": 1,
+      "sd38-e3.6": 1,
+      "sd38-e3.7": 1,
+      "sd38-e4.3": 1,
+      "sd38-e4.4": 1,
+      "sd38-e4.5": 1,
+      "sd38-e4.6": 1,
+      "sd38-e5.4": 1,
+      "sd38-e6.mc": 1,
+      "sd38-e7.5": 1
+    },
+    "by_subject": {
+      "CUI F-53/F-54 and MANIFEST gear (content-unit-inventory.md section 2.5, section 3)": 1,
+      "CUI F-71 (content-unit-inventory.md section 2.6)": 1,
+      "E1 lanes' text-layer transcription (armor, skill, encounter, gear, cyberpsychosis_band)": 1,
+      "E3.1 test the_preview_carries_the_engines_stat_and_derived_rows allocation": 1,
+      "E7.3 discovery commit 43e9dcdb27 (E7.5 closure-scan row constant)": 1,
+      "SD-38 progress.md Summary C row": 1,
+      "acceptance-and-verification.md G-1 SF command": 1,
+      "acceptance-and-verification.md G-1 SF seed-lines command": 1,
+      "critical.rs page citations (sd38-e2.4 first draft)": 1,
+      "decisions.md A-11 + epic-breakdown E0.4 FILES YOU OWN": 1,
+      "decisions.md \u00a72 (C1 acceptance predicate)": 1,
+      "decisions.md \u00a720.6 D-6 enforcement command": 1,
+      "epic-breakdown.md E3.4 FILES YOU OWN": 1,
+      "epic-breakdown.md E3.5 FILES YOU OWN": 1,
+      "epic-breakdown.md E3.6 FILES YOU OWN": 1,
+      "epic-breakdown.md E3.7 FILES YOU OWN": 1,
+      "epic-breakdown.md \u00a70 E4.4 row + workflow-instruction.md \u00a76 step 6": 1,
+      "progress.md Summary Total and E4 rows": 1,
+      "sd38-e1.7 net_architecture.json [3] text (Home Security 2045)": 1,
+      "sd38-e4.5 own test premise": 1,
+      "sd38-e4.6-own-code": 1,
+      "src/rules_core/cpr/cyberware.rs (E2.5) and corpus therapy.json source_page": 1
+    },
+    "by_verification_method": {
+      "SF_SEED_LINES_OUT=<dir> cargo test --bins <each name>; ls <dir>": 1,
+      "SF_SEED_LINES_OUT=<dir> run of the G-1 test: 1 passed, ls <dir> empty; sed -n 395,440p apps/desktop/src-tauri/src/sf_sheet_print.rs": 1,
+      "awk 'NF{l=$0} END{print l}' on $P/p187.txt p188.txt p222.txt p223.txt -> 186 187 221 222": 1,
+      "awk 'index($0,\"(-2 EMP)\"){n++} END{print n+0}' data/cyberpunk-red/corpus/starting_kit.json -> 1; grep -n -F '(-2 EMP)' shows line 249 transcription_note": 1,
+      "awk '{n=gsub(/[0-9]e?b ?\\(/,\"&\"); c+=n} END{print c}' p101.txt p102.txt -> 48 (the CUI predicate [0-9]eb ?( -> 47) and python3 -I docs/release/SD-38-cyberpunk-red/artifacts/epic_1/E1.4_checks.py (gear records 54, in_starter_table 48, in_master 53)": 1,
+      "awk -F'|' '$2 ~ /^ (C|E)[0-9]/ && $5 ~ /^ complete *$/' kanban.md | awk 'END{print NR}' and the Python split count, both 39 at f5fa482a72": 1,
+      "awk -F'|' '$2 ~ /^ C[0-9]/ && $5 ~ /^ complete *$/' docs/release/SD-38-cyberpunk-red/kanban.md | awk 'END{print NR}' -> 2": 1,
+      "cargo test --lib rules_core::cpr::sheet: left 0 right 1, then green with Whiplash": 1,
+      "cd docs/release/SD-38-cyberpunk-red && awk -F'|' '$2 ~ /^ (C|E)[0-9]/ { n++ } END { print n }' kanban.md -> 70; python3 kanban row parse -> 70; diff of IDs vs 1102f34aab adds only E4.8, E7.3a": 1,
+      "git diff --stat 3e72af7f7a HEAD -- apps src (9 files); kanban.md E0.MC/E2.MC rows = complete": 1,
+      "git diff --stat 453d6d10c5 9418fb634c (7 files); kanban.md E2.MC row = complete": 1,
+      "git diff --stat b605f79e09 9070539fe2 -- apps/desktop/src/boundary/cprCreation.ts": 1,
+      "git diff --stat ba53234115 HEAD -- apps src (8 files); kanban.md E0.MC/E2.MC rows = complete": 1,
+      "grep -rln '0\\.17\\.' --include=*.json --include=*.toml --include=*.lock --include=*.ts --include=*.yml --include=*.py apps .github tools docs/architecture docs/release/current-release.json | sort; grep -n -A1 'name = \"codex-desktop\"' apps/desktop/src-tauri/Cargo.lock": 1,
+      "grep -rn 'SavedCharacterEnvelope {' --include=*.rs src apps/desktop/src-tauri crates tests | awk -F: '{f[$1]++;n++} END{print n, length(f)}' -> 40 14 (incl. the struct definition); python3 pathlib re-count -> 40 sites in 14 files; grep -n 'Serialize\\|serde' src/saved_character/mod.rs -> none": 1,
+      "p218/p219/p213 page images at 150 dpi (E1.V_verdicts.tsv net_architecture 3) and python3 -I docs/release/SD-38-cyberpunk-red/artifacts/epic_1/E1.V_fixes.py --check": 1,
+      "page images p351 (300 dpi crop), p141, p418 (300 dpi crop), p420, p422, p353 (300 dpi crop), p233; python3 -I docs/release/SD-38-cyberpunk-red/artifacts/epic_1/E1.V_fixes.py (occurrence counts asserted per fix)": 1,
+      "python3 -I -c \"import json,collections;print(collections.Counter(repr(w.get('alt_fire_modes')) for w in json.load(open('data/cyberpunk-red/corpus/weapon.json'))))\"": 1,
+      "python3 -I docs/release/SD-38-cyberpunk-red/artifacts/epic_1/E1.6_checks.py (F-71 A) and the p174 image at 150 dpi": 1,
+      "python3 -c 'print(sum([6,7,7,5,7,6,6,7,8,5]))' -> 64": 1,
+      "python3 scan of the 3 E4.3 fixtures: 0 sheetLines matching cpr.cyberware.piece.* or cpr.netrunning.program.*; RED: cargo test --lib rules_core::cpr::sheet -> \"no printed line cpr.cyberware.piece.0.name\"": 1,
+      "tail -1 of /home/ubuntu/workspace/inbox/cyberpunk-red/pages/p231.txt prints '230'": 1
+    },
+    "caught_before": {
+      "implementation": 1
+    },
+    "recent": [
+      {
+        "actor": "sd38-e3.3",
+        "id": "1792003499602-sd38-e3.3-8896ce",
+        "summary": "progress.md Summary Total and E4 rows claimed Total 37 of 68; E4 0 of 8; actual 39 of 68 complete in kanban.md before E3.3 (E4.1, E4.2 complete); 40 after E3.3",
+        "ts": "2026-10-14T18:44:59Z"
+      },
+      {
+        "actor": "sd38-e3.4",
+        "id": "1792005778157-sd38-e3.4-f13b15",
+        "summary": "epic-breakdown.md E3.4 FILES YOU OWN claimed same three files (CyberpunkCreateForm.tsx, cyberpunkCreationModel.ts, cpr_creation.rs); actual four: apps/desktop/src/boundary/cprCreation.ts wire() lists every request field, so the skills payload cannot reach Rust without it (second recurrence after E3.3)",
+        "ts": "2026-10-14T19:22:58Z"
+      },
+      {
+        "actor": "sd38-e3.5",
+        "id": "1792007078789-sd38-e3.5-b036f1",
+        "summary": "epic-breakdown.md E3.5 FILES YOU OWN claimed same three files (CyberpunkCreateForm.tsx, cyberpunkCreationModel.ts, cpr_creation.rs); actual the criterion also needs apps/desktop/src/boundary/cprCreation.ts (wire() lists every request field) and the engine files src/rules_core/cpr/{roles,input,store}.rs (validation 'by the engine' + a saved home for the sub-choices); taken as fence exits, E0.MC and E2.MC complete",
+        "ts": "2026-10-14T19:44:38Z"
+      },
+      {
+        "actor": "sd38-e4.4",
+        "id": "1792013605405-sd38-e4.4-d9fae8",
+        "summary": "epic-breakdown.md \u00a70 E4.4 row + workflow-instruction.md \u00a76 step 6 claimed E4.4 is a TS/TSX-only card, Cargo? no; actual E4.4 needs engine rows/lines: no per-piece Humanity Loss row, no cyberware name and no deck/Program/Hardware name line existed; sheet.rs + cyberware.rs fence exit and a 4th adapter fixture (cargo) were required, as at E4.3",
+        "ts": "2026-10-14T21:33:25Z"
+      },
+      {
+        "actor": "sd38-e3.6",
+        "id": "1792015363382-sd38-e3.6-eada18",
+        "summary": "epic-breakdown.md E3.6 FILES YOU OWN claimed same three files (CyberpunkCreateForm.tsx, cyberpunkCreationModel.ts, cpr_creation.rs); actual the criterion also needs apps/desktop/src/boundary/cprCreation.ts (wire() and the preview types) and engine files src/rules_core/cpr/{kit.rs (new), mod.rs, input.rs, store.rs} (the cash is 'an engine row' and the kit needs a saved home); taken as fence exits, E0.MC and E2.MC complete",
+        "ts": "2026-10-14T22:02:43Z"
+      },
+      {
+        "actor": "sd38-e4.5",
+        "id": "1792020523434-sd38-e4.5-19eb91",
+        "summary": "sd38-e4.5 own test premise claimed Foreign Object (Head) raises the Base Death Save Penalty; actual it does not (p. 222; critical.rs CRITICAL_INJURIES_P222 Head 7 false); test switched to Whiplash",
+        "ts": "2026-10-14T23:28:43Z"
+      },
+      {
+        "actor": "sd38-e4.6",
+        "id": "1792022692242-sd38-e4.6-5df922",
+        "summary": "sd38-e4.6-own-code claimed weapon.json alt_fire_modes is null when a weapon has no alternate fire; actual 4 of 29 weapons hold the string \"None\" (18 null); the first GREEN run printed \"alternate fire None\" lines for 4 arsenal pistols/rifles",
+        "ts": "2026-10-15T00:04:52Z"
+      },
+      {
+        "actor": "sd38-e3.7",
+        "id": "1792023470457-sd38-e3.7-729d26",
+        "summary": "epic-breakdown.md E3.7 FILES YOU OWN claimed same three files (CyberpunkCreateForm.tsx, cyberpunkCreationModel.ts, cpr_creation.rs); actual the criterion also needs apps/desktop/src/boundary/cprCreation.ts (the preview's cyberware type) and engine files src/rules_core/cpr/kit.rs (pack lines, cyberware shop, Fashionware on the fashion budget) and src/rules_core/cpr/cyberware.rs (printed-name resolution, placement); taken as fence exits, E2.MC complete and kit.rs is the E3 chain's own",
+        "ts": "2026-10-15T00:17:50Z"
+      },
+      {
+        "actor": "sd38-e5.4",
+        "id": "1792057430832-sd38-e5.4-d88d01",
+        "summary": "src/rules_core/cpr/cyberware.rs (E2.5) and corpus therapy.json source_page claimed therapy table and D-5 cap cited as p. 231; actual printed page 230 (file pages/p231.txt; pNNN = printed page + 1)",
+        "ts": "2026-10-15T09:43:50Z"
+      },
+      {
+        "actor": "sd38-e7.5",
+        "id": "1792095163477-sd38-e7.5-88e83b",
+        "summary": "E7.3 discovery commit 43e9dcdb27 (E7.5 closure-scan row constant) claimed 69 rows (68 authored + E4.8); actual 70 rows (68 authored + E4.8 + E7.3a)",
+        "ts": "2026-10-15T20:12:43Z"
+      }
+    ],
+    "repeat_subjects": [],
+    "total": 22,
+    "with_blast_radius": 7
+  },
+  "deferrals": {
+    "open": 0,
+    "open_items": [],
+    "recent": [
+      {
+        "actor": "sd38-e1.8",
+        "id": "1791953327678-sd38-e1.8-432687",
+        "summary": "deferred Verbatim prose text field on encounter (55) and beat_chart (64) records not transcribed; records carry structured fields plus a paraphrased summary: Corebook prose is not copied verbatim by this lane; decisions.md section 11 asks for verbatim text",
+        "ts": "2026-10-14T04:48:47Z"
+      }
+    ],
+    "resolved": 1,
+    "total": 1
+  },
+  "events": {
+    "by_actor": {
+      "sd38-a": 5,
+      "sd38-b": 2,
+      "sd38-c": 1,
+      "sd38-c1": 1,
+      "sd38-e0.1": 6,
+      "sd38-e0.3": 1,
+      "sd38-e0.4": 3,
+      "sd38-e0.mc": 5,
+      "sd38-e1.4": 1,
+      "sd38-e1.6": 1,
+      "sd38-e1.8": 2,
+      "sd38-e1.v": 3,
+      "sd38-e2.10": 3,
+      "sd38-e2.2": 2,
+      "sd38-e2.3": 3,
+      "sd38-e2.4": 2,
+      "sd38-e2.5": 2,
+      "sd38-e2.6": 1,
+      "sd38-e2.7": 1,
+      "sd38-e2.8": 2,
+      "sd38-e2.9": 2,
+      "sd38-e3": 1,
+      "sd38-e3.1": 1,
+      "sd38-e3.3": 3,
+      "sd38-e3.4": 2,
+      "sd38-e3.5": 3,
+      "sd38-e3.6": 4,
+      "sd38-e3.7": 3,
+      "sd38-e3.mc": 1,
+      "sd38-e4": 3,
+      "sd38-e4.1": 2,
+      "sd38-e4.3": 2,
+      "sd38-e4.4": 2,
+      "sd38-e4.5": 3,
+      "sd38-e4.6": 3,
+      "sd38-e4.7": 2,
+      "sd38-e4.mc": 3,
+      "sd38-e5.1": 2,
+      "sd38-e5.2": 1,
+      "sd38-e5.3": 2,
+      "sd38-e5.4": 1,
+      "sd38-e5.mc": 2,
+      "sd38-e6.1": 1,
+      "sd38-e6.mc": 1,
+      "sd38-e7.1": 2,
+      "sd38-e7.2": 2,
+      "sd38-e7.4": 1,
+      "sd38-e7.5": 2,
+      "sd38-main": 18
+    },
+    "by_origin": {
+      "agent": 55,
+      "derived": 67
+    },
+    "by_type": {
+      "correction": 22,
+      "deferral": 1,
+      "incident": 10,
+      "resolution": 1,
+      "rework": 21,
+      "verification": 67
+    },
+    "total": 122
+  },
+  "generated_at": "2026-10-15T20:17:56Z",
+  "generated_by": "scripts/retro.py summary",
+  "git_join": {
+    "authors": 1,
+    "available": true,
+    "commits": 164,
+    "events_per_commit": 0.7439,
+    "top_authors": [
+      [
+        "Todd Hintzmann",
+        164
+      ]
+    ]
+  },
+  "incidents": {
+    "by_recurrence_key": {
+      "clippy-red-on-base": 1,
+      "discovery-rule-count-not-raised": 1,
+      "fixture-narrower-than-live": 2,
+      "sf-seed-lines-out-dir-missing": 3,
+      "shared-tree-two-writers": 1,
+      "stale-ui-smoke-rows": 1,
+      "tdd-red-not-observed": 1
+    },
+    "recent": [
+      {
+        "actor": "sd38-e0.1",
+        "id": "1791929087089-sd38-e0.1-c85a45",
+        "summary": "clippy stage red on tranche-18 base 67c589c5f5 before E0.1: dead_code wizard_spellbook_size_rows (test-only since 01cc6a1085) and doc_lazy_continuation character_hub.rs:2152-2153 (fec287a994)",
+        "ts": "2026-10-13T22:04:47Z"
+      },
+      {
+        "actor": "sd38-e0.4",
+        "id": "1791938931518-sd38-e0.4-93be42",
+        "summary": "E0.4 and E0.2 dispatched concurrently into the one serial tree .worktrees/sd38-main (both depend only on E0.1); a second writer created docs/governance/license-matrix.md edits + data/cyberpunk-red/corpus/ during E0.4 read phase",
+        "ts": "2026-10-14T00:48:51Z"
+      },
+      {
+        "actor": "sd38-e4.5",
+        "id": "1792020523300-sd38-e4.5-91dc9c",
+        "summary": "E4.5 verify script's SF seed-lines stage exited 101: SF_SEED_LINES_OUT dir did not exist (the writer test does not create it); stage re-run after mkdir, 1 passed, lines unchanged (detected by verify-e45/sf.log: writes the seed's lines: Os { code: 2, NotFound })",
+        "ts": "2026-10-14T23:28:43Z"
+      },
+      {
+        "actor": "sd38-e4.7",
+        "id": "1792038254911-sd38-e4.7-0e181a",
+        "summary": "Full ui-smoke run on tranche-18: 9 red of the first 40 executed rows, all Pathfinder rows predating SD-38 (PF create form gained a Levels column in 13c387b7ef; equipment catalog chips renamed in afff7a621f, both tranche-17-ui); every PF create row now stalls ~2.5 min, so the 115-row suite cannot finish in one turn",
+        "ts": "2026-10-15T04:24:14Z"
+      },
+      {
+        "actor": "sd38-e4.7",
+        "id": "1792038259474-sd38-e4.7-272c20",
+        "summary": "Live CPR sheet shows raw engine ids as labels under OTHER TOTALS (cpr.cash 500, cpr.ammo.0 30, cpr.ammo.1 70) for every created character; the E4.5 fixtures had none, so no frontend test saw it",
+        "ts": "2026-10-15T04:24:19Z"
+      },
+      {
+        "actor": "sd38-e4.mc",
+        "id": "1792039004620-sd38-e4.mc-4414dc",
+        "summary": "SF_SEED_LINES_OUT / CPR_SHEET_LINES_OUT writer tests panic NotFound when the out dir is absent; third occurrence in E4 (E4.1 rework, E4.5 incident, E4.MC rework)",
+        "ts": "2026-10-15T04:36:44Z"
+      },
+      {
+        "actor": "sd38-e4.mc",
+        "id": "1792039009086-sd38-e4.mc-a76ca7",
+        "summary": "E4 sheet test asserts 'Other totals is empty' over 4 adapter fixtures that carry no cpr.cash/cpr.ammo/cpr.housing row; every character saved through the real form (6 of 6 live sheets in E3.MC + E4.7 evidence) shows an Other totals box with 1-3 rows labelled by raw row id (11 rows)",
+        "ts": "2026-10-15T04:36:49Z"
+      },
+      {
+        "actor": "sd38-e5.3",
+        "id": "1792049396150-sd38-e5.3-293e85",
+        "summary": "E5.3 desktop cpr_improve tests were written before the implementation but first run after it, so their RED was not observed directly",
+        "ts": "2026-10-15T07:29:56Z"
+      },
+      {
+        "actor": "sd38-e7.1",
+        "id": "1792069772655-sd38-e7.1-66d68c",
+        "summary": "SF_SEED_LINES_OUT pointed at a directory that did not exist; the SF seed-lines test panicked at sf_sheet_print.rs:438 (fs::write) instead of writing the four seed files",
+        "ts": "2026-10-15T13:09:32Z"
+      },
+      {
+        "actor": "sd38-e7.5",
+        "id": "1792095163599-sd38-e7.5-e1b8bd",
+        "summary": "E7.5 closure scan printed ROW_COUNT 70; bundle closure stops at E7.5 (no retro, sweep, notes, graphify, PR) until the lead raises the constant (detected by E7.5 closure scan (epic-breakdown.md E7.5 block))",
+        "ts": "2026-10-15T20:12:43Z"
+      }
+    ],
+    "recurring": [
+      {
+        "count": 3,
+        "recurrence_key": "sf-seed-lines-out-dir-missing"
+      },
+      {
+        "count": 2,
+        "recurrence_key": "fixture-narrower-than-live"
+      }
+    ],
+    "silent": 2,
+    "time_lost_minutes": 48,
+    "total": 10
+  },
+  "log": {
+    "invalid_lines": 0,
+    "path": "/home/ubuntu/workspace/repos/codex/.worktrees/sd38-main/docs/retro/events",
+    "problems": [],
+    "shards": 49
+  },
+  "near_misses": {
+    "by_caught_by": {},
+    "escaped": 0,
+    "recent": [],
+    "total": 0
+  },
+  "rework": {
+    "by_cause": {
+      "3b0592252d reworded the cpr.derived.humanity_current and cpr.cyberware.humanity_loss detail text (p. 111 rolled loss) and was pushed before the desktop full sweep ran; the targeted --bins cpr_improve run does not hold the fixture test": 1,
+      "SF_SEED_LINES_OUT directory did not exist (test panicked: writes the seed's lines: NotFound); the copied E2.7 run.sh relied on a pre-created sf/ dir": 1,
+      "a 3-tuple return type added without running clippy before commit (same lint E5.1 hit on PricedPlan)": 1,
+      "a 6-field tuple array type in a test; clippy runs only in the full verify, not in the targeted cargo test": 1,
+      "a test doc comment inside a shipping .rs file is in the four-check audit's scope": 1,
+      "attempt 1 paraphrased summaries instead of copying page text; the text layer was extractable with pdftotext -bbox-layout, so no operator ruling was needed": 1,
+      "clippy collapsible_if failed the clippy stage after the local commit": 1,
+      "clippy::collapsible_if on a nested if-let in skills.rs (validate_creation_skills); targeted cpr::skills tests do not run clippy": 1,
+      "clippy::enum_variant_names: three variants shared the Below prefix; targeted cargo test does not run clippy": 1,
+      "expected refusal text written from improvement.rs Display alone; cpr_improve.rs prefixes the skill name and the table reads 'Typical Skill Improvement'": 1,
+      "four-check token audit matches the HTML attribute name in added TSX lines": 1,
+      "iter().any(|h| *h == x) on a Vec<String> where Vec::contains applies": 1,
+      "nested Result tuple return type; targeted cargo test does not run clippy": 1,
+      "nested if-let/if written instead of edition-2024 let-chains": 1,
+      "new enum added without running clippy before the first verify.sh clippy stage": 1,
+      "plant 3 (adapter adds 1 to cpr.derived.hit_points) left 'Hit Points 40' on screen once via the printed netrunning rule line, so set-based A passed 115/115; only B caught 'Hit Points 41'": 1,
+      "test fixture never exercised the shape where the cyberware source wins a location": 1,
+      "the row's final screen is the reloaded sheet, not the dialog; the plant is red on the unsaved Handgun/IP rows": 1,
+      "the run script rm -rf'd the CPR_SHEET_LINES_OUT / SF_SEED_LINES_OUT dirs without recreating them; both tests panic NotFound writing lines (the PF test creates its own dir)": 1,
+      "the token audit matches the HTML attribute name, not only stub text": 1,
+      "verify script rm -rf'd the SF_SEED_LINES_OUT dir before the run; sf_sheet_print writes into it without creating it (NotFound at sf_sheet_print.rs:438)": 1
+    },
+    "recent": [
+      {
+        "actor": "sd38-e4.3",
+        "id": "1792001597579-sd38-e4.3-5b7056",
+        "summary": "redid verify run stopped and clippy re-run after E4.3's new sheet.rs test tripped clippy::type_complexity: a 6-field tuple array type in a test; clippy runs only in the full verify, not in the targeted cargo test",
+        "ts": "2026-10-14T18:13:17Z"
+      },
+      {
+        "actor": "sd38-e3.mc",
+        "id": "1792031545466-sd38-e3.mc-231271",
+        "summary": "redid E3.MC compare.mts check A (computed rows on the live sheet) rewritten from set membership to multiset counts: plant 3 (adapter adds 1 to cpr.derived.hit_points) left 'Hit Points 40' on screen once via the printed netrunning rule line, so set-based A passed 115/115; only B caught 'Hit Points 41'",
+        "ts": "2026-10-15T02:32:25Z"
+      },
+      {
+        "actor": "sd38-e4.mc",
+        "id": "1792038675261-sd38-e4.mc-3c6824",
+        "summary": "redid E4.MC re-run of --bins cpr_sheet_print and the SF seed-lines test: the run script rm -rf'd the CPR_SHEET_LINES_OUT / SF_SEED_LINES_OUT dirs without recreating them; both tests panic NotFound writing lines (the PF test creates its own dir)",
+        "ts": "2026-10-15T04:31:15Z"
+      },
+      {
+        "actor": "sd38-e5.1",
+        "id": "1792040639119-sd38-e5.1-1bfc79",
+        "summary": "redid CyberpunkImproveDialog inputs carried HTML placeholder attributes; the four-check token audit (check 1, word 'placeholder') printed 4 lines: the token audit matches the HTML attribute name, not only stub text",
+        "ts": "2026-10-15T05:03:59Z"
+      },
+      {
+        "actor": "sd38-e5.1",
+        "id": "1792041054581-sd38-e5.1-e928dd",
+        "summary": "redid cpr_improve.rs priced_at_root return type failed clippy type_complexity under verify.sh --only clippy: nested Result tuple return type; targeted cargo test does not run clippy",
+        "ts": "2026-10-15T05:10:54Z"
+      },
+      {
+        "actor": "sd38-e5.2",
+        "id": "1792043311394-sd38-e5.2-ec2372",
+        "summary": "redid cpr_improve.rs options() return type failed clippy type_complexity; factored into type ImproveOptions: a 3-tuple return type added without running clippy before commit (same lint E5.1 hit on PricedPlan)",
+        "ts": "2026-10-15T05:48:31Z"
+      },
+      {
+        "actor": "sd38-e5.3",
+        "id": "1792055644068-sd38-e5.3-b22e09",
+        "summary": "E5.3 pushed a detail-text change without regenerating the CPR sheet fixtures",
+        "ts": "2026-10-15T09:14:04Z"
+      },
+      {
+        "actor": "sd38-e5.mc",
+        "id": "1792067143012-sd38-e5.mc-7be01c",
+        "summary": "redid ui-smoke row improve-cyberpunk-skip-refused expect string: expected refusal text written from improvement.rs Display alone; cpr_improve.rs prefixes the skill name and the table reads 'Typical Skill Improvement'",
+        "ts": "2026-10-15T12:25:43Z"
+      },
+      {
+        "actor": "sd38-e5.mc",
+        "id": "1792067143147-sd38-e5.mc-2b86af",
+        "summary": "redid skip-refused row note claimed the cost plant turns improve-cyberpunk-skill red on 'Overspend': the row's final screen is the reloaded sheet, not the dialog; the plant is red on the unsaved Handgun/IP rows",
+        "ts": "2026-10-15T12:25:43Z"
+      },
+      {
+        "actor": "sd38-e7.1",
+        "id": "1792069772799-sd38-e7.1-4a6968",
+        "summary": "StarterBuild enum failed clippy large_enum_variant (Pathfinder variant 488 bytes vs boxed CPR 8)",
+        "ts": "2026-10-15T13:09:32Z"
+      }
+    ],
+    "total": 21
+  },
+  "schema_version": 1,
+  "verification": {
+    "by_failing_stage": {
+      "clippy": 13,
+      "tauri-resources-tracked": 3
+    },
+    "fail_rate": 0.2388,
+    "failed_runs": 16,
+    "runs": 67
+  },
+  "window": {
+    "since": "2026-10-13T00:00:00+00:00",
+    "spec": "2026-10-13",
+    "until": null
+  }
+}

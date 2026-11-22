@@ -1,0 +1,61 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Water Dancer ~ Nereid's Grace",
+    "name": "Nereid's Grace",
+    "class": "Monk",
+    "description": "When unarmored and unencumbered, a water dancer adds %1 to his Armor Class as a dodge bonus. If he is caught flat-footed or otherwise denied his Dexterity bonus, he also loses this bonus. He uses his Charisma score instead of his Wisdom score to determine the size of his ki pool and the DC and effects of monk class features.|min(CHA,MonkLVL)",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Water Dancer ~ Nereid's Grace"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Monk Class Features.WaterDancerClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "When unarmored and unencumbered, a water dancer adds %1 to his Armor Class as a dodge bonus. If he is caught flat-footed or otherwise denied his Dexterity bonus, he also loses this bonus. He uses his Charisma score instead of his Wisdom score to determine the size of his ki pool and the DC and effects of monk class features.|min(CHA,MonkLVL)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|KiPoolWis|-1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|KiPoolCha|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.65"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CombatBonus|+%1 to AC unless flat-footed or otherwise denied Dexterity bonus|min(CHA,MonkLVL)"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/support/uw_abilities_class_oa.lst",
+    "sha256": "26a03f73c3534cd6bae0bcda9581b3a89fa28ce5f78f854e009fc8110c477568",
+    "line": 115,
+    "record_key": "Water Dancer ~ Nereid's Grace"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "derived:prose_formula_segment"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

@@ -1,0 +1,91 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-24T03:51:47Z",
+  "data": {
+    "key": "Sorcerer Bonus Spell L3 ~ Fly",
+    "name": "Fly",
+    "class": "Sorcerer",
+    "description": "The subject can fly at a speed of 60 feet [or 40 feet if it wears medium or heavy armor, or if it carries a medium or heavy load]. It can ascend at half speed and descend at double speed, and its maneuverability is good. Using a fly spell requires only as much concentration as walking, so the subject can attack or cast spells normally. The subject of a fly spell can charge but not run, and it cannot carry aloft more weight than its maximum load, plus any armor it wears. The subject gains a bonus on Fly skill checks equal to 1/2 your caster level. Should the spell duration expire while the subject is still aloft, the magic fails slowly. The subject floats downward 60 feet per round for 1d6 rounds. If it reaches the ground in that amount of time, it lands safely. If not, it falls the rest of the distance, taking 1d6 points of damage per 10 feet of fall. Since dispelling a spell effectively ends it, the subject also descends safely in this way if the fly spell is dispelled, but not if it is negated by an antimagic field.|PRERULE:1,DisplayFullSpell",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sorcerer Bonus Spell L3 ~ Fly"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "TYPE",
+        "value": "Sorcerer Bloodline Bonus Spell"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Sorcerer_BonusSpell_Fly_L3,1"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "BloodlineCasterLVL,7"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Sorcerer=3|Fly"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Fly|3|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Skill Focus (Fly)"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Fly|6|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Skill Focus (Fly)|PRESKILL:1,Fly=10"
+      },
+      {
+        "key": "TEMPDESC",
+        "value": "Grants 60 Fly speed, or 40 if Medium Armor. Adds half Caster Level to Fly Skill."
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "ANYPC|MOVEADD|TYPE.Fly|60"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "ANYPC|MOVEADD|TYPE.Fly|-20|PREVARGTEQ:ENCUMBRANCE,1,var(\"COUNT[EQTYPE.ARMOR.EQUIPPED.IS.MEDIUM]\"),1,var(\"COUNT[EQTYPE.ARMOR.EQUIPPED.IS.HEAVY]\"),1"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "ANYPC|SKILL|Fly|4+(%CHOICE/2)"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "ANYPC|SKILL|Fly|3|TYPE=ClassSkill|PRESKILL:1,Fly=1"
+      },
+      {
+        "key": "TEMPVALUE",
+        "value": "MIN=1|MAX=20|TITLE=Choose spell caster level"
+      },
+      {
+        "key": "DESC",
+        "value": "The subject can fly at a speed of 60 feet [or 40 feet if it wears medium or heavy armor, or if it carries a medium or heavy load]. It can ascend at half speed and descend at double speed, and its maneuverability is good. Using a fly spell requires only as much concentration as walking, so the subject can attack or cast spells normally. The subject of a fly spell can charge but not run, and it cannot carry aloft more weight than its maximum load, plus any armor it wears. The subject gains a bonus on Fly skill checks equal to 1/2 your caster level. Should the spell duration expire while the subject is still aloft, the magic fails slowly. The subject floats downward 60 feet per round for 1d6 rounds. If it reaches the ground in that amount of time, it lands safely. If not, it falls the rest of the distance, taking 1d6 points of damage per 10 feet of fall. Since dispelling a spell effectively ends it, the subject also descends safely in this way if the fly spell is dispelled, but not if it is negated by an antimagic field.|PRERULE:1,DisplayFullSpell"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 2180,
+    "record_key": "Sorcerer Bonus Spell L3 ~ Fly"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice",
+    "computed:pre_guard",
+    "computed:tempbonus",
+    "derived:tempbonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

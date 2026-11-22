@@ -1,0 +1,790 @@
+{
+  "format": "codex.rules_tables/1",
+  "table": "bestiary/spell_list/SPELL_LIST",
+  "licence": {
+    "license": "OGL",
+    "book": "bestiary",
+    "screen": "pi_screening::classify_field",
+    "pi_hits": [],
+    "redacted": []
+  },
+  "rows": [
+    {
+      "key": "Commune (six questions)",
+      "name_pi_line": null,
+      "school": "Divination",
+      "level": null,
+      "description": "You contact your deity--or agents thereof--and ask questions that can be answered by a simple yes or no."
+    },
+    {
+      "key": "Confusion (single target only)",
+      "name_pi_line": null,
+      "school": "Enchantment",
+      "level": null,
+      "description": "This spell causes confusion in the targets, making them unable to determine their actions."
+    },
+    {
+      "key": "Create Wine",
+      "name_pi_line": null,
+      "school": "Conjuration",
+      "level": null,
+      "description": "The food that this spell creates is simple fare of your choice--highly nourishing, if rather bland."
+    },
+    {
+      "key": "Enlarge Person (self only)",
+      "name_pi_line": null,
+      "school": "Transmutation",
+      "level": null,
+      "description": "This spell causes instant growth of a humanoid creature, doubling its height and multiplying its weight by 8."
+    },
+    {
+      "key": "Ethereal Jaunt (self plus objects)",
+      "name_pi_line": null,
+      "school": "Transmutation",
+      "level": null,
+      "description": "You become ethereal, along with your equipment."
+    },
+    {
+      "key": "Ethereal Jaunt ~ Cauchemar Nightmare",
+      "name_pi_line": null,
+      "school": "Transmutation",
+      "level": null,
+      "description": "You become ethereal, along with your equipment and one rider."
+    },
+    {
+      "key": "Fear (single target)",
+      "name_pi_line": null,
+      "school": "Necromancy",
+      "level": null,
+      "description": "An invisible cone of terror causes one living creature in the area to become panicked unless it succeeds on a Will save."
+    },
+    {
+      "key": "Invisibility (self only)",
+      "name_pi_line": null,
+      "school": "Illusion",
+      "level": null,
+      "description": "The creature or object touched becomes invisible."
+    },
+    {
+      "key": "Invisibility (Greater/self only)",
+      "name_pi_line": null,
+      "school": "Illusion",
+      "level": null,
+      "description": "This spell functions like invisibility, except that it doesn't end if the subject attacks."
+    },
+    {
+      "key": "Plane Shift (willing targets only)",
+      "name_pi_line": null,
+      "school": "Conjuration",
+      "level": null,
+      "description": "You move yourself or some other creature to another plane of existence or alternate dimension."
+    },
+    {
+      "key": "Plane Shift (self only)",
+      "name_pi_line": null,
+      "school": "Conjuration",
+      "level": null,
+      "description": "You move yourself or some other creature to another plane of existence or alternate dimension."
+    },
+    {
+      "key": "Plane Shift ~ Nightmare",
+      "name_pi_line": null,
+      "school": "Conjuration",
+      "level": null,
+      "description": "You move yourself and one rider to another plane of existence or alternate dimension."
+    },
+    {
+      "key": "Purify Food and Drink (liquids only)",
+      "name_pi_line": null,
+      "school": "Transmutation",
+      "level": null,
+      "description": "This spell makes spoiled, rotten, diseased, poisonous, or otherwise contaminated food and water pure and suitable for eating and drinking."
+    },
+    {
+      "key": "Pyroclastic Storm",
+      "name_pi_line": null,
+      "school": "Evocation",
+      "level": null,
+      "description": "Cinders deal 5d6 damage in cylinder 40 ft. across."
+    },
+    {
+      "key": "Quickened Fireball",
+      "name_pi_line": null,
+      "school": "Evocation",
+      "level": null,
+      "description": "A fireball spell generates a searing explosion of flame that detonates with a low roar and deals (min(10,CASTERLEVEL))d6 points of fire damage to every creature within the area."
+    },
+    {
+      "key": "Quickened Invisibility (self only)",
+      "name_pi_line": null,
+      "school": "Illusion",
+      "level": null,
+      "description": "The creature or object touched becomes invisible."
+    },
+    {
+      "key": "Quickened Suggestion",
+      "name_pi_line": null,
+      "school": "Enchantment",
+      "level": null,
+      "description": "You influence the actions of the target creature by suggesting a course of activity."
+    },
+    {
+      "key": "Quickened Telekinesis",
+      "name_pi_line": null,
+      "school": "Transmutation",
+      "level": null,
+      "description": "You move objects or creatures by concentrating on them."
+    },
+    {
+      "key": "Quickened Wall of Fire",
+      "name_pi_line": null,
+      "school": "Evocation",
+      "level": null,
+      "description": "An immobile, blazing curtain of shimmering violet fire springs into existence."
+    },
+    {
+      "key": "Reduce Person (self only)",
+      "name_pi_line": null,
+      "school": "Transmutation",
+      "level": null,
+      "description": "This spell causes instant diminution of a humanoid creature, halving its height, length, and width and dividing its weight by 8."
+    },
+    {
+      "key": "Scorching Ray (2 rays only)",
+      "name_pi_line": null,
+      "school": "Evocation",
+      "level": null,
+      "description": "You blast your enemies with up to (min(3,1+(floor(CASTERLEVEL/4)))) searing beams of fire dealing 4d6 points of fire damage."
+    },
+    {
+      "key": "Summon Monster I (Dretch)",
+      "name_pi_line": null,
+      "school": "Conjuration",
+      "level": null,
+      "description": "This spell summons an extraplanar creature."
+    },
+    {
+      "key": "Summon Monster III (Babau)",
+      "name_pi_line": null,
+      "school": "Conjuration",
+      "level": null,
+      "description": "This spell functions like summon monster I, except that you can  summon one creature from the 3rd-level list, 1d3 creatures of the same kind from the 2nd-level list, or 1d4+1 creatures of the same kind from the 1st-level list."
+    },
+    {
+      "key": "Summon Monster III (Shadow Demon)",
+      "name_pi_line": null,
+      "school": "Conjuration",
+      "level": null,
+      "description": "This spell functions like summon monster I, except that you can  summon one creature from the 3rd-level list, 1d3 creatures of the same kind from the 2nd-level list, or 1d4+1 creatures of the same kind from the 1st-level list."
+    },
+    {
+      "key": "Summon Monster III (Succubus)",
+      "name_pi_line": null,
+      "school": "Conjuration",
+      "level": null,
+      "description": "This spell functions like summon monster I, except that you can  summon one creature from the 3rd-level list, 1d3 creatures of the same kind from the 2nd-level list, or 1d4+1 creatures of the same kind from the 1st-level list."
+    },
+    {
+      "key": "Summon Monster III (Vrock)",
+      "name_pi_line": null,
+      "school": "Conjuration",
+      "level": null,
+      "description": "This spell functions like summon monster I, except that you can  summon one creature from the 3rd-level list, 1d3 creatures of the same kind from the 2nd-level list, or 1d4+1 creatures of the same kind from the 1st-level list."
+    },
+    {
+      "key": "Summon Monster III (Bearded Devil)",
+      "name_pi_line": null,
+      "school": "Conjuration",
+      "level": null,
+      "description": "This spell functions like summon monster I, except that you can  summon one creature from the 3rd-level list, 1d3 creatures of the same kind from the 2nd-level list, or 1d4+1 creatures of the same kind from the 1st-level list."
+    },
+    {
+      "key": "Summon Monster III (Erinyes)",
+      "name_pi_line": null,
+      "school": "Conjuration",
+      "level": null,
+      "description": "This spell functions like summon monster I, except that you can  summon one creature from the 3rd-level list, 1d3 creatures of the same kind from the 2nd-level list, or 1d4+1 creatures of the same kind from the 1st-level list."
+    },
+    {
+      "key": "Summon Monster IV (Glabrezu)",
+      "name_pi_line": null,
+      "school": "Conjuration",
+      "level": null,
+      "description": "This spell functions like summon monster I, except that you can summon one creature from the 4th-level list, 1d3 creatures of the same kind from the 3rd-level list, or 1d4+1 creatures of the same kind from a lower-level list."
+    },
+    {
+      "key": "Summon Monster IV (Hezrou)",
+      "name_pi_line": null,
+      "school": "Conjuration",
+      "level": null,
+      "description": "This spell functions like summon monster I, except that you can summon one creature from the 4th-level list, 1d3 creatures of the same kind from the 3rd-level list, or 1d4+1 creatures of the same kind from a lower-level list."
+    },
+    {
+      "key": "Summon Monster IV (Nabasu)",
+      "name_pi_line": null,
+      "school": "Conjuration",
+      "level": null,
+      "description": "This spell functions like summon monster I, except that you can summon one creature from the 4th-level list, 1d3 creatures of the same kind from the 3rd-level list, or 1d4+1 creatures of the same kind from a lower-level list."
+    },
+    {
+      "key": "Summon Monster IV (Barbed Devil)",
+      "name_pi_line": null,
+      "school": "Conjuration",
+      "level": null,
+      "description": "This spell functions like summon monster I, except that you can summon one creature from the 4th-level list, 1d3 creatures of the same kind from the 3rd-level list, or 1d4+1 creatures of the same kind from a lower-level list."
+    },
+    {
+      "key": "Summon Monster IV (Bone Devil)",
+      "name_pi_line": null,
+      "school": "Conjuration",
+      "level": null,
+      "description": "This spell functions like summon monster I, except that you can summon one creature from the 4th-level list, 1d3 creatures of the same kind from the 3rd-level list, or 1d4+1 creatures of the same kind from a lower-level list."
+    },
+    {
+      "key": "Summon Monster IV (Ice Devil)",
+      "name_pi_line": null,
+      "school": "Conjuration",
+      "level": null,
+      "description": "This spell functions like summon monster I, except that you can summon one creature from the 4th-level list, 1d3 creatures of the same kind from the 3rd-level list, or 1d4+1 creatures of the same kind from a lower-level list."
+    },
+    {
+      "key": "Summon Monster V (Marilith)",
+      "name_pi_line": null,
+      "school": "Conjuration",
+      "level": null,
+      "description": "This spell functions like summon monster I, except that you can summon one creature from the 5th-level list, 1d3 creatures of the same kind from the 4th-level list, or 1d4+1 creatures of the same kind from a lower-level list."
+    },
+    {
+      "key": "Summon Monster V (Nalfeshnee)",
+      "name_pi_line": null,
+      "school": "Conjuration",
+      "level": null,
+      "description": "This spell functions like summon monster I, except that you can summon one creature from the 5th-level list, 1d3 creatures of the same kind from the 4th-level list, or 1d4+1 creatures of the same kind from a lower-level list."
+    },
+    {
+      "key": "Summon Monster VI (Horned Devil)",
+      "name_pi_line": null,
+      "school": "Conjuration",
+      "level": null,
+      "description": "This spell functions like summon monster I, except you can summon one creature from the 6th-level list, 1d3 creatures of thesame kind from the 5th-level list, or 1d4+1 creatures of the same kind from a lower-level list."
+    },
+    {
+      "key": "Summon Monster IX (Pit Fiend)",
+      "name_pi_line": null,
+      "school": "Conjuration",
+      "level": null,
+      "description": "Calls evil extraplanar creature to fight for you."
+    },
+    {
+      "key": "Summon Monster IX (Celestials Only)",
+      "name_pi_line": null,
+      "school": "Conjuration",
+      "level": null,
+      "description": "Calls good extraplanar creature to fight for you."
+    },
+    {
+      "key": "Summon Monster IX (Fiends Only)",
+      "name_pi_line": null,
+      "school": "Conjuration",
+      "level": null,
+      "description": "Calls evil extraplanar creature to fight for you."
+    },
+    {
+      "key": "Summon Monster VIII (Balor)",
+      "name_pi_line": null,
+      "school": "Conjuration",
+      "level": null,
+      "description": "This spell functions like summon monster I, except that you can summon one creature from the 8th-level list, 1d3 creatures of the same kind from the 7th-level list, or 1d4+1 creatures of the same kind from a lower-level list."
+    },
+    {
+      "key": "Teleport (Greater/Within its forest territory)",
+      "name_pi_line": null,
+      "school": "Conjuration",
+      "level": null,
+      "description": "This spell functions like teleport, except that there is no range limit and there is no chance you arrive off target."
+    },
+    {
+      "key": "Teleport (Greater/self plus objects)",
+      "name_pi_line": null,
+      "school": "Conjuration",
+      "level": null,
+      "description": "This spell functions like teleport, except that there is no range limit and there is no chance you arrive off target."
+    },
+    {
+      "key": "Veil (self only)",
+      "name_pi_line": null,
+      "school": "Illusion",
+      "level": 6,
+      "description": "You instantly change the appearance of the subjects and then maintain that appearance for the spell's duration."
+    },
+    {
+      "key": "Wish (granted to a mortal humanoid only)",
+      "name_pi_line": null,
+      "school": "Universal",
+      "level": null,
+      "description": "Wish is the mightiest spell a wizard or sorcerer can cast. By simply speaking aloud, you can alter reality to better suit you."
+    },
+    {
+      "key": "Wood Shape (1 lb only)",
+      "name_pi_line": null,
+      "school": "Transmutation",
+      "level": null,
+      "description": "Wood shape enables you to form one existing piece of wood into any shape that suits your purpose."
+    },
+    {
+      "key": "Mothman Spell ~ Agent of Fate",
+      "name_pi_line": null,
+      "school": null,
+      "level": null,
+      "description": null
+    },
+    {
+      "key": "Blur (self only)",
+      "name_pi_line": null,
+      "school": "Illusion",
+      "level": null,
+      "description": "Your outline appears blurred, shifting, and wavering granting you concealment (20%% miss chance)."
+    },
+    {
+      "key": "Charm Monster (elementals only)",
+      "name_pi_line": null,
+      "school": "Enchantment",
+      "level": null,
+      "description": "This spell functions like charm person, except that the effect is restricted to elementals."
+    },
+    {
+      "key": "Dimension Door (self only)",
+      "name_pi_line": null,
+      "school": "Conjuration",
+      "level": null,
+      "description": "You instantly transfer yourself from your current location to any other spot within range."
+    },
+    {
+      "key": "Dimension Door (self plus objects)",
+      "name_pi_line": null,
+      "school": "Conjuration",
+      "level": null,
+      "description": "You instantly transfer yourself from your current location to any other spot within range."
+    },
+    {
+      "key": "Dimension Door (self plus 5 lbs.)",
+      "name_pi_line": null,
+      "school": "Conjuration",
+      "level": null,
+      "description": "You instantly transfer yourself from your current location to any other spot within range."
+    },
+    {
+      "key": "Elemental Body III (air/water)",
+      "name_pi_line": null,
+      "school": "Transmutation",
+      "level": null,
+      "description": "This spell functions as elemental body II, except that it also allows you to assume the form of a Large air or water elemental."
+    },
+    {
+      "key": "Empowered Chaos Hammer",
+      "name_pi_line": null,
+      "school": "Evocation",
+      "level": null,
+      "description": "You unleash chaotic power to smite your enemies in the form of a multicolored explosion of leaping, ricocheting energy."
+    },
+    {
+      "key": "Empowered Magic Missile",
+      "name_pi_line": null,
+      "school": "Evocation",
+      "level": null,
+      "description": "A missile of magical energy darts forth from your fingertip and strikes its target, dealing 1d4+1 points of force damage."
+    },
+    {
+      "key": "Empowered Order's Wrath",
+      "name_pi_line": null,
+      "school": "Evocation",
+      "level": null,
+      "description": "You channel lawful power to smite enemies."
+    },
+    {
+      "key": "Fabricate (Leng Spider)",
+      "name_pi_line": null,
+      "school": "Transmutation",
+      "level": null,
+      "description": "You convert material of one sort into a product that is of the same material."
+    },
+    {
+      "key": "Fabricate (1 cu ft)",
+      "name_pi_line": null,
+      "school": "Transmutation",
+      "level": null,
+      "description": "You convert material of one sort into a product that is of the same material."
+    },
+    {
+      "key": "Fire Shield (warm)",
+      "name_pi_line": null,
+      "school": "Evocation",
+      "level": null,
+      "description": "This spell wreathes you in flame and causes damage to each creature that attacks you in melee protecting you from either cold-based or fire-based attacks."
+    },
+    {
+      "key": "Magic Circle against Evil (self only)",
+      "name_pi_line": null,
+      "school": "Abjuration",
+      "level": null,
+      "description": "All creatures within the area gain the effects of a protection from evil spell, and evil summoned creatures cannot enter the area either."
+    },
+    {
+      "key": "Major Image (visual and auditory only)",
+      "name_pi_line": null,
+      "school": "Illusion",
+      "level": null,
+      "description": "This spell functions like silent image, except that sound illusions are included in the spell effect."
+    },
+    {
+      "key": "Meld into Stone (self only)",
+      "name_pi_line": null,
+      "school": "Transmutation",
+      "level": null,
+      "description": "Meld into stone enables you to meld your body and possessions into a single block of stone."
+    },
+    {
+      "key": "Plane Shift (self/shadow only)",
+      "name_pi_line": null,
+      "school": "Conjuration",
+      "level": null,
+      "description": "You move yourself or some other creature to another plane of existence or alternate dimension."
+    },
+    {
+      "key": "Plane Shift (self plus skiff)",
+      "name_pi_line": null,
+      "school": "Conjuration",
+      "level": null,
+      "description": "You move yourself or some other creature to another plane of existence or alternate dimension."
+    },
+    {
+      "key": "Quickened Confusion",
+      "name_pi_line": null,
+      "school": "Enchantment",
+      "level": null,
+      "description": "This spell causes confusion in the targets, making them unable to determine their actions."
+    },
+    {
+      "key": "Quickened Cone of Cold",
+      "name_pi_line": null,
+      "school": "Evocation",
+      "level": null,
+      "description": "Cone of cold creates an area of extreme cold, originating at your hand and extending outward in a cone, dealing (min(15,CASTERLEVEL))d6 points of cold damage."
+    },
+    {
+      "key": "Quickened Darkness",
+      "name_pi_line": null,
+      "school": "Evocation",
+      "level": null,
+      "description": "This spell causes an object to radiate darkness out to a 20-foot radius."
+    },
+    {
+      "key": "Quickened Dimension Door",
+      "name_pi_line": null,
+      "school": "Conjuration",
+      "level": null,
+      "description": "You instantly transfer yourself from your current location to any other spot within range."
+    },
+    {
+      "key": "Quickened Dimension Door (self only)",
+      "name_pi_line": null,
+      "school": "Conjuration",
+      "level": null,
+      "description": "You instantly transfer yourself from your current location to any other spot within range."
+    },
+    {
+      "key": "Quickened Disintegrate",
+      "name_pi_line": null,
+      "school": "Transmutation",
+      "level": null,
+      "description": "A thin, green ray springs from your pointing finger dealing (min(40,CASTERLEVEL*2))d6 points of damage."
+    },
+    {
+      "key": "Quickened Enervation",
+      "name_pi_line": null,
+      "school": "Necromancy",
+      "level": null,
+      "description": "You point your finger and fire a black ray of negative energy that suppresses the life force of any living creature it strikes dealing 1d4 temporary negative levels if you hit."
+    },
+    {
+      "key": "Quickened Heal",
+      "name_pi_line": null,
+      "school": "Conjuration",
+      "level": null,
+      "description": "Heal enables you to channel positive energy into a creature to wipe away injury and afflictions."
+    },
+    {
+      "key": "Quickened Lightning Bolt",
+      "name_pi_line": null,
+      "school": "Evocation",
+      "level": null,
+      "description": "You release a powerful stroke of electrical energy that deals (min(10,CASTERLEVEL))d6 points of electricity damage to each creature within its area."
+    },
+    {
+      "key": "Quickened Magic Missile",
+      "name_pi_line": null,
+      "school": "Evocation",
+      "level": null,
+      "description": "A missile of magical energy darts forth from your fingertip and strikes its target, dealing 1d4+1 points of force damage."
+    },
+    {
+      "key": "Quickened Summon Swarm",
+      "name_pi_line": null,
+      "school": "Conjuration",
+      "level": null,
+      "description": "You summon a swarm of bats, rats, or spiders (your choice), which attacks all other creatures within its area."
+    },
+    {
+      "key": "Quickened Unholy Blight",
+      "name_pi_line": null,
+      "school": "Evocation",
+      "level": null,
+      "description": "You call up unholy power to smite your enemies."
+    },
+    {
+      "key": "Keketar Spell ~ Reshape Reality",
+      "name_pi_line": null,
+      "school": null,
+      "level": null,
+      "description": null
+    },
+    {
+      "key": "Shadow Walk (self only)",
+      "name_pi_line": null,
+      "school": "Illusion",
+      "level": null,
+      "description": "You and any creature you touch are transported along a coiling path of shadowstuff to the edge of the Material Plane where it borders the Plane of Shadow."
+    },
+    {
+      "key": "Speak with Animals (fish only)",
+      "name_pi_line": null,
+      "school": "Divination",
+      "level": null,
+      "description": "You can ask questions of and receive answers from fish, but the spell doesn't make them any more friendly than normal."
+    },
+    {
+      "key": "Suggestion (Nereid)",
+      "name_pi_line": null,
+      "school": "Enchantment",
+      "level": null,
+      "description": "You influence the actions of the target creature by suggesting a course of activity."
+    },
+    {
+      "key": "Summon Monster III (Hydrodaemon)",
+      "name_pi_line": null,
+      "school": "Conjuration",
+      "level": null,
+      "description": "This spell functions like summon monster I, except that you can summon one creature from the 3rd-level list, 1d3 creatures of the same kind from the 2nd-level list, or 1d4+1 creatures of the same kind from the 1st-level list."
+    },
+    {
+      "key": "Summon Monster III (Leukodaemon)",
+      "name_pi_line": null,
+      "school": "Conjuration",
+      "level": null,
+      "description": "This spell functions like summon monster I, except that you can summon one creature from the 3rd-level list, 1d3 creatures of the same kind from the 2nd-level list, or 1d4+1 creatures of the same kind from the 1st-level list."
+    },
+    {
+      "key": "Summon Monster III (Accuser Devil)",
+      "name_pi_line": null,
+      "school": "Conjuration",
+      "level": null,
+      "description": "This spell functions like summon monster I, except that you can summon one creature from the 3rd-level list, 1d3 creatures of the same kind from the 2nd-level list, or 1d4+1 creatures of the same kind from the 1st-level list."
+    },
+    {
+      "key": "Summon Monster IV (Derghodaemon)",
+      "name_pi_line": null,
+      "school": "Conjuration",
+      "level": null,
+      "description": "This spell functions like summon monster I, except that you can summon one creature from the 4th-level list, 1d3 creatures of the same kind from the 3rd-level list, or 1d4+1 creatures of the same kind from the 2nd-level list."
+    },
+    {
+      "key": "Summon Monster IV (Piscodaemon)",
+      "name_pi_line": null,
+      "school": "Conjuration",
+      "level": null,
+      "description": "This spell functions like summon monster I, except that you can summon one creature from the 4th-level list, 1d3 creatures of the same kind from the 3rd-level list, or 1d4+1 creatures of the same kind from the 2nd-level list."
+    },
+    {
+      "key": "Summon Monster IV (Thanadaemon)",
+      "name_pi_line": null,
+      "school": "Conjuration",
+      "level": null,
+      "description": "This spell functions like summon monster I, except that you can summon one creature from the 4th-level list, 1d3 creatures of the same kind from the 3rd-level list, or 1d4+1 creatures of the same kind from the 2nd-level list."
+    },
+    {
+      "key": "Summon Monster IV (Kalavakus)",
+      "name_pi_line": null,
+      "school": "Conjuration",
+      "level": null,
+      "description": "This spell functions like summon monster I, except that you can summon one creature from the 4th-level list, 1d3 creatures of the same kind from the 3rd-level list, or 1d4+1 creatures of the same kind from the 2nd-level list."
+    },
+    {
+      "key": "Summon Monster IV (Omox)",
+      "name_pi_line": null,
+      "school": "Conjuration",
+      "level": null,
+      "description": "This spell functions like summon monster I, except that you can summon one creature from the 4th-level list, 1d3 creatures of the same kind from the 3rd-level list, or 1d4+1 creatures of the same kind from the 2nd-level list."
+    },
+    {
+      "key": "Summon Monster IV (Witchfire)",
+      "name_pi_line": null,
+      "school": "Conjuration",
+      "level": null,
+      "description": "This spell functions like summon monster I, except that you can summon one creature from the 4th-level list, 1d3 creatures of the same kind from the 3rd-level list, or 1d4+1 creatures of the same kind from the 2nd-level list."
+    },
+    {
+      "key": "Summon Monster V (Purrodaemon)",
+      "name_pi_line": null,
+      "school": "Conjuration",
+      "level": null,
+      "description": "This spell functions like summon monster I, except that you can summon one creature from the 5th-level list, 1d3 creatures of the same kind from the 4th-level list, or 1d4+1 creatures of the same kind from the 3rd-level list."
+    },
+    {
+      "key": "Summon Monster V (Shemhazian)",
+      "name_pi_line": null,
+      "school": "Conjuration",
+      "level": null,
+      "description": "This spell functions like summon monster I, except that you can summon one creature from the 5th-level list, 1d3 creatures of the same kind from the 4th-level list, or 1d4+1 creatures of the same kind from the 3rd-level list."
+    },
+    {
+      "key": "Summon Monster V (Handmaiden Devil)",
+      "name_pi_line": null,
+      "school": "Conjuration",
+      "level": null,
+      "description": "This spell functions like summon monster I, except that you can summon one creature from the 5th-level list, 1d3 creatures of the same kind from the 4th-level list, or 1d4+1 creatures of the same kind from the 3rd-level list."
+    },
+    {
+      "key": "Summon Monster V (Large water elemental)",
+      "name_pi_line": null,
+      "school": "Conjuration",
+      "level": null,
+      "description": "This spell functions like summon monster I, except that you can summon one creature from the 5th-level list, 1d3 creatures of the same kind from the 4th-level list, or 1d4+1 creatures of the same kind from the 3rd-level list."
+    },
+    {
+      "key": "Summon Monster V (Xacarba)",
+      "name_pi_line": null,
+      "school": "Conjuration",
+      "level": null,
+      "description": "This spell functions like summon monster I, except that you can summon one creature from the 5th-level list, 1d3 creatures of the same kind from the 4th-level list, or 1d4+1 creatures of the same kind from the 3rd-level list."
+    },
+    {
+      "key": "Summon Monster VI (Astradaemon)",
+      "name_pi_line": null,
+      "school": "Conjuration",
+      "level": null,
+      "description": "This spell functions like summon monster I, except you can summon one creature from the 6th-level list, 1d3 creatures of thesame kind from the 5th-level list, or 1d4+1 creatures of the same kind from a lower-level list."
+    },
+    {
+      "key": "Summon Monster VI (Vrolikai)",
+      "name_pi_line": null,
+      "school": "Conjuration",
+      "level": null,
+      "description": "This spell functions like summon monster I, except you can summon one creature from the 6th-level list, 1d3 creatures of thesame kind from the 5th-level list, or 1d4+1 creatures of the same kind from a lower-level list."
+    },
+    {
+      "key": "Summon Monster VI (Belier Devil)",
+      "name_pi_line": null,
+      "school": "Conjuration",
+      "level": null,
+      "description": "This spell functions like summon monster I, except you can summon one creature from the 6th-level list, 1d3 creatures of thesame kind from the 5th-level list, or 1d4+1 creatures of the same kind from a lower-level list."
+    },
+    {
+      "key": "Summon Monster VI (Nereid)",
+      "name_pi_line": null,
+      "school": "Conjuration",
+      "level": null,
+      "description": "This spell functions like summon monster I, except you can summon one creature from the 6th-level list, 1d3 creatures of thesame kind from the 5th-level list, or 1d4+1 creatures of the same kind from a lower-level list."
+    },
+    {
+      "key": "Summon Monster VI (Nightwing)",
+      "name_pi_line": null,
+      "school": "Conjuration",
+      "level": null,
+      "description": "This spell functions like summon monster I, except you can summon one creature from the 6th-level list, 1d3 creatures of thesame kind from the 5th-level list, or 1d4+1 creatures of the same kind from a lower-level list."
+    },
+    {
+      "key": "Summon Monster VII (Nightwalker)",
+      "name_pi_line": null,
+      "school": "Conjuration",
+      "level": null,
+      "description": "This spell functions like summon monster I, except that you can summon one creature from the 7th-level list, 1d3 creatures of the same kind from the 6th-level list, or 1d4+1 creatures of the same kind from a lower-level list."
+    },
+    {
+      "key": "Summon Monster VIII (water elementals)",
+      "name_pi_line": null,
+      "school": "Conjuration",
+      "level": null,
+      "description": "This spell functions like summon monster I, except that you can summon one creature from the 8th-level list, 1d3 creatures of the same kind from the 7th-level list, or 1d4+1 creatures of the same kind from the 6th-level list."
+    },
+    {
+      "key": "Summon Monster VIII (Nightcrawler)",
+      "name_pi_line": null,
+      "school": "Conjuration",
+      "level": null,
+      "description": "This spell functions like summon monster I, except that you can summon one creature from the 8th-level list, 1d3 creatures of the same kind from the 7th-level list, or 1d4+1 creatures of the same kind from the 6th-level list."
+    },
+    {
+      "key": "Summon Monster VIII (Scylla)",
+      "name_pi_line": null,
+      "school": "Conjuration",
+      "level": null,
+      "description": "This spell functions like summon monster I, except that you can summon one creature from the 8th-level list, 1d3 creatures of the same kind from the 7th-level list, or 1d4+1 creatures of the same kind from the 6th-level list."
+    },
+    {
+      "key": "Summon Monster IX (Immolation Devil)",
+      "name_pi_line": null,
+      "school": "Conjuration",
+      "level": null,
+      "description": "This spell functions like summon monster I, except that you can summon one creature from the 9th-level list, 1d3 creatures of the same kind from the 8th-level list, or 1d4+1 creatures of the same kind from a lower-level list."
+    },
+    {
+      "key": "Summon Monster IX (Nightwave)",
+      "name_pi_line": null,
+      "school": "Conjuration",
+      "level": null,
+      "description": "This spell functions like summon monster I, except that you can summon one creature from the 9th-level list, 1d3 creatures of the same kind from the 8th-level list, or 1d4+1 creatures of the same kind from a lower-level list."
+    },
+    {
+      "key": "Summon (Olethrodaemon)",
+      "name_pi_line": null,
+      "school": "Conjuration",
+      "level": null,
+      "description": "This spell summons any one CR 19 or lower daemon."
+    },
+    {
+      "key": "Summon Nature's Ally II (Triton)",
+      "name_pi_line": null,
+      "school": "Conjuration",
+      "level": null,
+      "description": "This spell functions as summon nature's ally I, except that you summon one 2nd-level creature or 1d3 1st-level creatures of the same kind."
+    },
+    {
+      "key": "Summon Nature's Ally V (earth/fire elementals)",
+      "name_pi_line": null,
+      "school": "Conjuration",
+      "level": null,
+      "description": "This spell functions like summon nature's ally I, except that you can summon one 5th-level creature, 1d3 4th-level creatures of the same kind, or 1d4+1 lower-level creatures of the same kind."
+    },
+    {
+      "key": "Teleport (Greater/self plus entrapped)",
+      "name_pi_line": null,
+      "school": "Conjuration",
+      "level": null,
+      "description": "This spell functions like teleport, except that there is no range limit and there is no chance you arrive off target."
+    },
+    {
+      "key": "Teleport (Greater/self plus skiff)",
+      "name_pi_line": null,
+      "school": "Conjuration",
+      "level": null,
+      "description": "This spell functions like teleport, except that there is no range limit and there is no chance you arrive off target."
+    },
+    {
+      "key": "Tree Shape (Colossal tree)",
+      "name_pi_line": null,
+      "school": "Transmutation",
+      "level": null,
+      "description": "This spell allows you to assume the form of a Colossal living tree or shrub or a Colossal dead tree trunk with a small number of limbs."
+    }
+  ]
+}

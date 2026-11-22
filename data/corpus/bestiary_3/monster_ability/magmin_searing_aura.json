@@ -1,0 +1,57 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Magmin ~ Searing Aura",
+    "delivery": "Extraordinary",
+    "description": "A magmin radiates extremely high temperatures, and any creature that starts its turn within 20 feet of a magmin must succeed at a DC 14 Fortitude save or take 1d6 points of fire damage. The save DC is Constitution-based.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:magmin_searing_aura",
+    "name": "Searing Aura",
+    "owners": [
+      "bestiary_3:monster:magmin"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A magmin radiates extremely high temperatures, and any creature that starts its turn within 20 feet of a magmin must succeed at a DC 14 Fortitude save or take 1d6 points of fire damage. The save DC is Constitution-based."
+      },
+      {
+        "key": "KEY",
+        "value": "Magmin ~ Searing Aura"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.189"
+      },
+      {
+        "key": "TYPE",
+        "value": "MagminRacialAbility.SpecialQuality.Extraordinary"
+      }
+    ],
+    "source_page": "p.189",
+    "traits": [
+      "MagminRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T10:26:03Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1253,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Magmin ~ Searing Aura",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

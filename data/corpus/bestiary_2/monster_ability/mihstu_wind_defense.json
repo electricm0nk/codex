@@ -1,0 +1,55 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Mihstu ~ Wind Defense",
+    "delivery": "Extraordinary",
+    "description": "The churning winds of a mihstu's body automatically deflect nonmagical projectiles (such as arrows, bolts, and sling stones).  All other ranged weapons (including magical projectiles and thrown weapons) have a 20%% miss chance.  Weapons of significant size, such as giant-thrown boulders, siege engine projectiles, and other massive ranged weapons are not affected by this ability.",
+    "description_variables": [],
+    "facet": "Defensive",
+    "key": "bestiary_2:monster_ability:mihstu_wind_defense",
+    "name": "Wind Defense",
+    "owners": [
+      "bestiary_2:monster:mihstu"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "The churning winds of a mihstu's body automatically deflect nonmagical projectiles (such as arrows, bolts, and sling stones).  All other ranged weapons (including magical projectiles and thrown weapons) have a 20%% miss chance.  Weapons of significant size, such as giant-thrown boulders, siege engine projectiles, and other massive ranged weapons are not affected by this ability."
+      },
+      {
+        "key": "KEY",
+        "value": "Mihstu ~ Wind Defense"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.190"
+      },
+      {
+        "key": "TYPE",
+        "value": "Defensive.Extraordinary"
+      }
+    ],
+    "source_page": "p.190",
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T10:25:56Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 830,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Mihstu ~ Wind Defense",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

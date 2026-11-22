@@ -1,0 +1,14 @@
+   Compiling codex v0.1.0 (/home/ubuntu/workspace/worktrees/codex-sd37)
+   Compiling codex-desktop v0.17.0 (/home/ubuntu/workspace/worktrees/codex-sd37/apps/desktop/src-tauri)
+   Compiling codex-ingest v0.1.0 (/home/ubuntu/workspace/worktrees/codex-sd37/crates/codex-ingest)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 31.46s
+     Running unittests src/main.rs (/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/codex_desktop-f9c244288bc1271e)
+
+running 2 tests
+sf_oracle_parity: 15 builds, 782 oracle fields compared, 36 differ, 36 explained
+test sf_oracle_parity::tests::sf_oracle_parity_every_difference_is_explained ... ok
+test sf_oracle_parity::tests::sf_oracle_parity_the_not_in_oracle_list_is_current ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 696 filtered out; finished in 3.09s
+
+exit=0

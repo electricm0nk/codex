@@ -1,0 +1,46 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "category": "General",
+    "cost_gp": 300.0,
+    "description": null,
+    "key": "Rack",
+    "name": "Rack",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Goods.Torture"
+      },
+      {
+        "key": "COST",
+        "value": "300"
+      },
+      {
+        "key": "WT",
+        "value": "500"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.212"
+      }
+    ],
+    "weight_lbs": 500.0
+  },
+  "ingested_at": "2026-08-17T08:18:39Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 6,
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_equip_general.lst",
+    "record_key": "Rack",
+    "sha256": "c3b1f93e745a26d696153fe0257e290c17638f8b8a04972c336e935902ddcb0b"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

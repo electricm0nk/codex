@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Unchained Rage Power ~ Ground Breaker",
+    "name": "Ground Breaker",
+    "class": "Unchained Barbarian",
+    "description": "You can attack the floor around you as a full-round action. This attack automatically hits and deals damage normally. If you deal more damage than the floor's hardness, the space you occupy and all of the squares adjacent to you become difficult terrain. Creatures in those squares, except you, must succeed at DC 15 Reflex saves or be knocked prone.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Unchained Rage Power ~ Ground Breaker"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Unchained Rage Power.SpecialAttack.Extraordinary"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "RagePowersPrereqLVL,6"
+      },
+      {
+        "key": "SERVESAS",
+        "value": "ABILITY=Special Ability|Rage Power ~ Ground Breaker"
+      },
+      {
+        "key": "DESC",
+        "value": "You can attack the floor around you as a full-round action. This attack automatically hits and deals damage normally. If you deal more damage than the floor's hardness, the space you occupy and all of the squares adjacent to you become difficult terrain. Creatures in those squares, except you, must succeed at DC 15 Reflex saves or be knocked prone."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.11"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Rage"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst",
+    "sha256": "2becbb0524bd4c367cc1273434c20bcd8e42e3e08abd372f99b005e69e8c4725",
+    "line": 355,
+    "record_key": "Unchained Rage Power ~ Ground Breaker"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

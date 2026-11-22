@@ -1,0 +1,69 @@
+{
+  "completeness": "full",
+  "data": {
+    "codex_generated_name": false,
+    "corpus_key": "Traits Output ~ Leshy",
+    "delivery": "Extraordinary",
+    "description": "Immunity to electricity and sonic. &nl; Spell-Like Abilities: All leshys have pass without trace as a constant spell-like ability (CL equal to twice the leshy's HD). &nl; Change Shape (Su) All leshys can transform into plants, with results similar to the tree shape spell. Unlike that spell, this ability only allows transformation into Small plants of the same type of growth the leshy is related to. In this form, the leshy appears as a particularly healthy specimen of that particular plant. A leshy can assume plant form or revert to its true form as a swift action. &nl; Plantspeech (Ex) All leshys can speak with plants as if subject to a continual speak with plants spell, but only with species they are related to. &nl; Verdant Burst (Su) When slain, a leshy explodes in a burst of fertile energies. All plant creatures within 30 feet of a slain leshy heal 1d8 points of damage plus 1 point per HD of the slain leshy, and plant life of the same type as the leshy itself quickly infests the area. If the terrain can support this type of plant, the undergrowth is dense enough to make the region into difficult terrain for 24 hours, after which the plant life diminishes to a normal level; otherwise, the plant life has no significant effect on movement and withers and dies within an hour.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:traits_output_leshy",
+    "name": "Leshy Traits",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "&nl; Change Shape (Su) All leshys can transform into plants, with results similar to the tree shape spell. Unlike that spell, this ability only allows transformation into Small plants of the same type of growth the leshy is related to. In this form, the leshy appears as a particularly healthy specimen of that particular plant. A leshy can assume plant form or revert to its true form as a swift action."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl; Plantspeech (Ex) All leshys can speak with plants as if subject to a continual speak with plants spell, but only with species they are related to."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl; Spell-Like Abilities: All leshys have pass without trace as a constant spell-like ability (CL equal to twice the leshy's HD)."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl; Verdant Burst (Su) When slain, a leshy explodes in a burst of fertile energies. All plant creatures within 30 feet of a slain leshy heal 1d8 points of damage plus 1 point per HD of the slain leshy, and plant life of the same type as the leshy itself quickly infests the area. If the terrain can support this type of plant, the undergrowth is dense enough to make the region into difficult terrain for 24 hours, after which the plant life diminishes to a normal level; otherwise, the plant life has no significant effect on movement and withers and dies within an hour."
+      },
+      {
+        "key": "DESC",
+        "value": "Immunity to electricity and sonic."
+      },
+      {
+        "key": "KEY",
+        "value": "Traits Output ~ Leshy"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary"
+      }
+    ],
+    "rename": null,
+    "source_page": null,
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T22:59:00Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 2312,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "record_key": "Traits Output ~ Leshy",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "derived:prose_expr",
+    "display:no_magnitude_token"
+  ]
+}

@@ -1,0 +1,55 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Aether Wysp ~ Lesser Telekinesis",
+    "delivery": "Extraordinary",
+    "description": "By extending its strands of aether, an aether wysp can move small objects at a distance, as per mage hand except that lesser telekinesis is a supernatural ability and can move magical or nonmagical objects weighing up to 10 pounds.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_5:monster_ability:aether_wysp_lesser_telekinesis",
+    "name": "Lesser Telekinesis",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "By extending its strands of aether, an aether wysp can move small objects at a distance, as per mage hand except that lesser telekinesis is a supernatural ability and can move magical or nonmagical objects weighing up to 10 pounds."
+      },
+      {
+        "key": "KEY",
+        "value": "Aether Wysp ~ Lesser Telekinesis"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.282"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary.AetherWyspRacialTrait"
+      }
+    ],
+    "source_page": "p.282",
+    "traits": [
+      "AetherWyspRacialTrait"
+    ]
+  },
+  "ingested_at": "2026-08-23T15:23:07Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 75,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_5/b5_abilities_race.lst",
+    "record_key": "Aether Wysp ~ Lesser Telekinesis",
+    "sha256": "da3b63848f2dea0a3cc2088f288e93a85921513ab30d601d05330ceac6db664c"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

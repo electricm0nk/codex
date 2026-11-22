@@ -1,0 +1,61 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Isitoq ~ Tears of Anguish",
+    "delivery": "Supernatural",
+    "description": "As a full-round action, an isitoq can make a ranged touch attack to squirt tears into the eyes of a creature within 30 feet. If the target fails a DC %1 saving throw, it experiences the effect of the isitoq's daze ability.",
+    "description_variables": [
+      "11+CHA"
+    ],
+    "description_variants": [],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:companion:isitoq_tears_of_anguish",
+    "name": "Tears of Anguish",
+    "owners": [
+      "bestiary_4:companion:familiar_isitoq",
+      "bestiary_4:companion:isitoq"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "As a full-round action, an isitoq can make a ranged touch attack to squirt tears into the eyes of a creature within 30 feet. If the target fails a DC %1 saving throw, it experiences the effect of the isitoq's daze ability.|11+CHA"
+      },
+      {
+        "key": "KEY",
+        "value": "Isitoq ~ Tears of Anguish"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
+    "record_type": "ability",
+    "source_page": null,
+    "stat_adjustments": [],
+    "type_segments": [
+      "SpecialAttack",
+      "Supernatural"
+    ]
+  },
+  "ingested_at": "2026-08-15T01:24:10Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 89,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_companion.lst",
+    "record_key": "Isitoq ~ Tears of Anguish",
+    "sha256": "a20b914fee043cb2fb0e74d11f954c8decf967b343c34e6ffe12c4258026eae6"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ]
+}

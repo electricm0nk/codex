@@ -1,0 +1,99 @@
+{
+  "codex_generated_name": false,
+  "completeness": "chassis_only",
+  "data": {
+    "description": null,
+    "key": "Animate Dead",
+    "name": "Animate Dead",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Spell-Like Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Innate Spell-Like Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SLA_AnimateDead_LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SLA_AnimateDead_SpellLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SLA_AnimateDead_Times|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SLA_AnimateDead_DCMod|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SLA_AnimateDead_DC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SLA_AnimateDead_AtWill|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SLA_AnimateDead_Constant|0"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=SLA_AnimateDead_Times|TIMEUNIT=Day|CASTERLEVEL=SLA_AnimateDead_LVL|Animate Dead,SLA_AnimateDead_DC|PREVAREQ:SLA_AnimateDead_AtWill,0|PREVAREQ:SLA_AnimateDead_Constant,0"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=ATWILL|TIMEUNIT=Day|CASTERLEVEL=SLA_AnimateDead_LVL|Animate Dead,SLA_AnimateDead_DC|PREVAREQ:SLA_AnimateDead_AtWill,1|PREVAREQ:SLA_AnimateDead_Constant,0"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=ATWILL|TIMEUNIT=Constant|CASTERLEVEL=SLA_AnimateDead_LVL|Animate Dead,SLA_AnimateDead_DC|PREVAREQ:SLA_AnimateDead_Constant,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SLA_AnimateDead_LVL|TL|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SLA_AnimateDead_SpellLVL|3"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SLA_AnimateDead_Times|1|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SLA_AnimateDead_DCMod|CHA|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SLA_AnimateDead_DC|10+SLA_AnimateDead_SpellLVL+SLA_AnimateDead_DCMod"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 805,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities.lst",
+    "record_key": "Animate Dead",
+    "sha256": "ab77788e05536453a16a22bef8a5e74c209e536cb5b8cdcdb1130f712cc2402f"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "computed:pre_guard",
+    "derived:bonus",
+    "derived:spells"
+  ]
+}

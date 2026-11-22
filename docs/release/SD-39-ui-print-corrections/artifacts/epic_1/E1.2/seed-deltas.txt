@@ -1,0 +1,9 @@
+# Seed deltas, E1.2. Base 0446c374b0 vs head 073780a2bb, rendered in this card's tree.
+# G-1 commands: PF_SEED_RENDER_OUT, SF_SEED_LINES_OUT, CPR_SHEET_LINES_OUT; then diff -r base head
+diff -r: empty
+pf: 4 files
+sf: 4 files
+cpr: 5 files
+5899256d25977ecb5619f6a344d87ff8714be7dc2b85de082ee5805177c2735f  aldric.json
+4a8499271eb99ec138fdf648794b2eb305ff44e4475799fd1161652fa4e1bde6  elowen.json
+f05cb10df5310aa3c8f16a42c0780f574024f81a918006fb7c7273f886a1468f  tomas.json

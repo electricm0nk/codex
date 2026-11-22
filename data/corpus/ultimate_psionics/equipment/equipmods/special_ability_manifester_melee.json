@@ -1,0 +1,62 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "Equipmods",
+    "cost_gp": 16000.0,
+    "description": "generates 5 power points per day that the wielder can use when manifesting a power; all must be used at once",
+    "key": "Special Ability ~ Manifester ~ Melee",
+    "name": "Manifester",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Special Ability ~ Manifester ~ Melee"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weapon.Melee.Thrown"
+      },
+      {
+        "key": "COST",
+        "value": "16000"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "QUALIFY"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.395"
+      },
+      {
+        "key": "PRETYPE",
+        "value": "2,WeaponEnhancement,Weapon"
+      },
+      {
+        "key": "PRETYPE",
+        "value": "1,Melee,Thrown"
+      },
+      {
+        "key": "SPROP",
+        "value": "generates 5 power points per day that the wielder can use when manifesting a power; all must be used at once"
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-23T15:10:33Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 89,
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_equipmods.lst",
+    "record_key": "Special Ability ~ Manifester ~ Melee",
+    "sha256": "39d2ad30eb09d1df38e192ab448e0c4dfd5f1cb9790a3d4049a4b4ee838a6968"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Insight ~ Bypass Pattern",
+    "name": "Bypass Pattern",
+    "class": "Insight",
+    "description": "As a standard action, you can treat one trap or lock as if it did not exist for %1 rounds, although the object to be affected must have a weight under %2 lbs. and you must make a successful Disable Device check on the trap or lock to be affected.  When you successfully use this ability, your allies also ignore that trap or lock.  After the effect expires, the lock or trap functions as normal, although if the trap would have been triggered due to you not returning everything to its original state, such as a trap triggered by a door opening, the trap immediately activates.  Otherwise, the trap is left untriggered.|BypassPatternDuration|BypassPatternWeight",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Insight ~ Bypass Pattern"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.CrypticInsight"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BypassPatternDuration|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BypassPatternWeight|0"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action, you can treat one trap or lock as if it did not exist for %1 rounds, although the object to be affected must have a weight under %2 lbs. and you must make a successful Disable Device check on the trap or lock to be affected.  When you successfully use this ability, your allies also ignore that trap or lock.  After the effect expires, the lock or trap functions as normal, although if the trap would have been triggered due to you not returning everything to its original state, such as a trap triggered by a door opening, the trap immediately activates.  Otherwise, the trap is left untriggered.|BypassPatternDuration|BypassPatternWeight"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BypassPatternWeight|100"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BypassPatternDuration|CrypticInsightStat"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.37"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 193,
+    "record_key": "Insight ~ Bypass Pattern"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

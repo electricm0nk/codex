@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Soul Forger ~ Magus Arcana",
+    "name": "Magus Arcana",
+    "class": "Soul Forger",
+    "description": "The following magus arcana complement the soul forger archetype - arcane accuracy*, bane blade, devoted blade, dispelling strike*, enduring blade, and ghost blade.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Soul Forger ~ Magus Arcana"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MagusClassFeatures.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "The following magus arcana complement the soul forger archetype - arcane accuracy*, bane blade, devoted blade, dispelling strike*, enduring blade, and ghost blade."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.57"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/support/uc_abilities_class_um.lst",
+    "sha256": "b8cff28b7be84f4f3c6b650c3e375a3027ff13bf4226233a514d34385bdfb67a",
+    "line": 69,
+    "record_key": "Soul Forger ~ Magus Arcana"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

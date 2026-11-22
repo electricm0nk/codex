@@ -1,0 +1,57 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-24T03:51:47Z",
+  "data": {
+    "key": "Sorcerer Bonus Spell L2 ~ Augury",
+    "name": "Augury",
+    "class": "Sorcerer",
+    "description": "An augury can tell you whether a particular action will bring good or bad results for you in the immediate future. The base chance for receiving a meaningful reply is 70%% + 1%% per caster level, to a maximum of 90%%; this roll is made secretly. A question may be so straightforward that a successful result is automatic, or so vague as to have no chance of success. If the augury succeeds, you get one of four results: . Weal [if the action will probably bring good results]. . Woe [for bad results]. . Weal and woe [for both]. . Nothing [for actions that don't have especially good or bad results]. If the spell fails, you get the \"nothing\" result. A cleric who gets the \"nothing\" result has no way to tell whether it was the consequence of a failed or successful augury. The augury can see into the future only about half an hour, so anything that might happen after that does not affect the result. Thus, the result might not take into account the longterm consequences of a contemplated action. All auguries cast by the same person about the same topic use the same die result as the first casting.|PRERULE:1,DisplayFullSpell",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sorcerer Bonus Spell L2 ~ Augury"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "TYPE",
+        "value": "Sorcerer Bloodline Bonus Spell"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Sorcerer_BonusSpell_Augury_L2,1"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "BloodlineCasterLVL,5"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Sorcerer=2|Augury"
+      },
+      {
+        "key": "DESC",
+        "value": "An augury can tell you whether a particular action will bring good or bad results for you in the immediate future. The base chance for receiving a meaningful reply is 70%% + 1%% per caster level, to a maximum of 90%%; this roll is made secretly. A question may be so straightforward that a successful result is automatic, or so vague as to have no chance of success. If the augury succeeds, you get one of four results: . Weal [if the action will probably bring good results]. . Woe [for bad results]. . Weal and woe [for both]. . Nothing [for actions that don't have especially good or bad results]. If the spell fails, you get the \"nothing\" result. A cleric who gets the \"nothing\" result has no way to tell whether it was the consequence of a failed or successful augury. The augury can see into the future only about half an hour, so anything that might happen after that does not affect the result. Thus, the result might not take into account the longterm consequences of a contemplated action. All auguries cast by the same person about the same topic use the same die result as the first casting.|PRERULE:1,DisplayFullSpell"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 2109,
+    "record_key": "Sorcerer Bonus Spell L2 ~ Augury"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

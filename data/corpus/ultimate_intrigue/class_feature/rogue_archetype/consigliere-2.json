@@ -1,0 +1,140 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Rogue Archetype ~ Unchained Consigliere",
+    "name": "Consigliere",
+    "class": "Rogue",
+    "description": "Consiglieres act as trusted mediators and administrators for crime families and various criminal organizations, and many serve as the right hand to the leaders of such groups. Other consiglieres prefer to work as independent operators and sell their advice and expertise to the highest bidder. Though some consiglieres insulate themselves from violence and criminal activities, many enjoy getting their hands dirty leading strike teams or gangs of hardened thugs.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Rogue Archetype ~ Unchained Consigliere"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.RogueArchetype"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=CLASS,Rogue ~ Unchained Class"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Rogue=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Rogue Archetype ~ Consigliere],[!PREFACT:1,ABILITIES,Rogue_Archetype_ClassSkills=True,Rogue_Archetype_Trapfinding=True,Rogue_Archetype_Evasion=True,Rogue_Archetype_UncannyDodge=True,Rogue_Archetype_ImprovedUncannyDodge=True,Rogue_Archetype_TrapSense=True,Rogue_Archetype_RogueTalent10=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Consiglieres act as trusted mediators and administrators for crime families and various criminal organizations, and many serve as the right hand to the leaders of such groups. Other consiglieres prefer to work as independent operators and sell their advice and expertise to the highest bidder. Though some consiglieres insulate themselves from violence and criminal activities, many enjoy getting their hands dirty leading strike teams or gangs of hardened thugs."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Consigliere ~ Class Skills|PRECLASS:1,Rogue=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Unchained Consigliere ~ Convincing Attitude|PRECLASS:1,Rogue=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Consigliere ~ Combat Advisor|PRECLASS:1,Rogue=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Consigliere ~ Bonus Feats|PRECLASS:1,Rogue=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Consigliere ~ Field Boss|PRECLASS:1,Rogue=10"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.44"
+      },
+      {
+        "key": "FACT",
+        "value": "Rogue_Archetype_ClassSkills|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Rogue_Archetype_Trapfinding|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Rogue_Archetype_Evasion|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Rogue_Archetype_UncannyDodge|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Rogue_Archetype_ImprovedUncannyDodge|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Rogue_Archetype_TrapSense|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Rogue_Archetype_RogueTalent10|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Rogue_CF_ClassSkills|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Rogue_CF_Trapfinding|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Rogue_CF_Evasion|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Rogue_CF_UncannyDodge|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Rogue_CF_ImprovedUncannyDodge|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Rogue_CF_TrapSense|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Rogue_CF_RogueTalent10|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/support/ui_abilities_class_pu.lst",
+    "sha256": "31facfcea3534d72c26bfbfeebc7af50e80e79157eda459e9afb16f184a93aaf",
+    "line": 27,
+    "record_key": "Rogue Archetype ~ Unchained Consigliere"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

@@ -1,0 +1,137 @@
+[
+  {
+    "key": "Alchemical Trapper ~ Bomb Trap",
+    "class": "Alchemist",
+    "level": 2,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/monster_codex/mc_abilities_class.lst",
+      "sha256": "b143c311cf7414689d98b84441509f56d6155bc7f048e5b2bd34ee5383af6e3d",
+      "line": 11
+    }
+  },
+  {
+    "key": "Alchemical Trapper ~ Trapfinding",
+    "class": "Alchemist",
+    "level": 4,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/monster_codex/mc_abilities_class.lst",
+      "sha256": "b143c311cf7414689d98b84441509f56d6155bc7f048e5b2bd34ee5383af6e3d",
+      "line": 11
+    }
+  },
+  {
+    "key": "Grenadier ~ Alchemical Weapon",
+    "class": "Alchemist",
+    "level": 2,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/monster_codex/mc_abilities_class.lst",
+      "sha256": "b143c311cf7414689d98b84441509f56d6155bc7f048e5b2bd34ee5383af6e3d",
+      "line": 9
+    }
+  },
+  {
+    "key": "Grenadier ~ Directed Blast",
+    "class": "Alchemist",
+    "level": 6,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/monster_codex/mc_abilities_class.lst",
+      "sha256": "b143c311cf7414689d98b84441509f56d6155bc7f048e5b2bd34ee5383af6e3d",
+      "line": 9
+    }
+  },
+  {
+    "key": "Grenadier ~ Martial Weapon Proficiency",
+    "class": "Alchemist",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/monster_codex/mc_abilities_class.lst",
+      "sha256": "b143c311cf7414689d98b84441509f56d6155bc7f048e5b2bd34ee5383af6e3d",
+      "line": 9
+    }
+  },
+  {
+    "key": "Grenadier ~ Precise Bombs",
+    "class": "Alchemist",
+    "level": 2,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/monster_codex/mc_abilities_class.lst",
+      "sha256": "b143c311cf7414689d98b84441509f56d6155bc7f048e5b2bd34ee5383af6e3d",
+      "line": 9
+    }
+  },
+  {
+    "key": "Grenadier ~ Staggering Blast",
+    "class": "Alchemist",
+    "level": 10,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/monster_codex/mc_abilities_class.lst",
+      "sha256": "b143c311cf7414689d98b84441509f56d6155bc7f048e5b2bd34ee5383af6e3d",
+      "line": 9
+    }
+  },
+  {
+    "key": "Winged Marauder ~ Class Skills",
+    "class": "Alchemist",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": false,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/monster_codex/mc_abilities_class.lst",
+      "sha256": "b143c311cf7414689d98b84441509f56d6155bc7f048e5b2bd34ee5383af6e3d",
+      "line": 10
+    }
+  },
+  {
+    "key": "Winged Marauder ~ Flying Beast Tamer",
+    "class": "Alchemist",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/monster_codex/mc_abilities_class.lst",
+      "sha256": "b143c311cf7414689d98b84441509f56d6155bc7f048e5b2bd34ee5383af6e3d",
+      "line": 10
+    }
+  }
+]

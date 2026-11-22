@@ -1,0 +1,69 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Leader's Surge",
+    "name": "Leader's Surge",
+    "class": null,
+    "description": "Psychic enervation: shaken until end of next turn and lose %1 pp; allies in aura must make Will save (DC %2) or be shaken until end of their next turn.|LeaderPPLoss|LeaderDC",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "WilderClassFeatures.SpecialQuality.SurgeType"
+      },
+      {
+        "key": "DEFINE",
+        "value": "LeaderPPLoss|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "LeaderDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Psychic enervation: shaken until end of next turn and lose %1 pp; allies in aura must make Will save (DC %2) or be shaken until end of their next turn.|LeaderPPLoss|LeaderDC"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Surging Aura|!PREABILITY:1,CATEGORY=Archetype,TYPE.WilderSurgeBond|PREABILITY:1,CATEGORY=Special Ability,Leader's Surge"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Wilder Class Feature|AUTOMATIC|Leader's Surge ~ Shared Euphoria|PREABILITY:1,CATEGORY=Internal,Wilder ~ Improved Surge Bond"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|LeaderPPLoss|SurgeLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|LeaderDC|(10+SurgeLVL/2+WilderPrimeStat)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.78"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1052,
+    "record_key": "Leader's Surge"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

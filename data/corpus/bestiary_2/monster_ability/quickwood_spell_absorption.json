@@ -1,0 +1,55 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Quickwood ~ Spell Absorption",
+    "delivery": "Supernatural",
+    "description": "If a quickwood's spell resistance protects it from a magical effect, the creature absorbs that magical energy into its body.  It can release this energy to activate its fear aura ability.  While the plant is storing a spell, its SR decreases by 5.  It can only stone one spell at a time.",
+    "description_variables": [],
+    "facet": "Defensive",
+    "key": "bestiary_2:monster_ability:quickwood_spell_absorption",
+    "name": "Spell Absorption",
+    "owners": [
+      "bestiary_2:monster:quickwood"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "If a quickwood's spell resistance protects it from a magical effect, the creature absorbs that magical energy into its body.  It can release this energy to activate its fear aura ability.  While the plant is storing a spell, its SR decreases by 5.  It can only stone one spell at a time."
+      },
+      {
+        "key": "KEY",
+        "value": "Quickwood ~ Spell Absorption"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.228"
+      },
+      {
+        "key": "TYPE",
+        "value": "Defensive.Supernatural"
+      }
+    ],
+    "source_page": "p.228",
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T10:25:56Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1044,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Quickwood ~ Spell Absorption",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

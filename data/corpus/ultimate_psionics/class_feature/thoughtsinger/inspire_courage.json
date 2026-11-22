@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Thoughtsinger ~ Inspire Courage",
+    "name": "Inspire Courage",
+    "class": "Thoughtsinger",
+    "description": "You can use your performance to inspire courage in your allies (including yourself), bolstering them against fear and improving their combat abilities. To be affected, an ally must be able to perceive your performance. An affected ally receives a +%1 morale bonus on saving throws against charm and fear effects and a +%1 competence bonus on attack and weapon damage rolls. Inspire courage is a mind-affecting ability. Inspire courage can use audible or visual components. The bard must choose which component to use when starting his performance.|InspireCourageBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Thoughtsinger ~ Inspire Courage"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "BardClassFeatures.SpecialQuality.Supernatural.Thoughtsong"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InspireCourageBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can use your performance to inspire courage in your allies (including yourself), bolstering them against fear and improving their combat abilities. To be affected, an ally must be able to perceive your performance. An affected ally receives a +%1 morale bonus on saving throws against charm and fear effects and a +%1 competence bonus on attack and weapon damage rolls. Inspire courage is a mind-affecting ability. Inspire courage can use audible or visual components. The bard must choose which component to use when starting his performance.|InspireCourageBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|InspireCourageBonus|min((ThoughtsongLVL+7)/6,4)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.297"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2442,
+    "record_key": "Thoughtsinger ~ Inspire Courage"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

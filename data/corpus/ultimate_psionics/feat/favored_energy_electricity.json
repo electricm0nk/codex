@@ -1,0 +1,31 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:38:17Z",
+  "data": {
+    "key": "Favored Energy (Electricity)",
+    "category": "Psionic",
+    "name": "Favored Energy (Electricity)",
+    "description": "Any time you manifest a power that deals electricity damage, the damage is increased by +1 per die.",
+    "prerequisites": [
+      "!PREABILITY:1,CATEGORY=FEAT,TYPE=FavoredEnergy",
+      "PRETEXT:Able to manifest any power that deals electricity damage.",
+      "PREVARGTEQ:MaxManifesterLVL,3",
+      "PREVARGTEQ:IsPsionic,1"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_feats.lst",
+    "sha256": "528096cb97ebe8255b9f9fe67682dd7e045f53b65e32295cd57967002eccb137",
+    "line": 122,
+    "record_key": "Favored Energy (Electricity)"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

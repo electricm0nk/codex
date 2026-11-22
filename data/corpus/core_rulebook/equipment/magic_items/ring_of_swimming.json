@@ -1,0 +1,83 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "magic_items",
+    "cost_gp": 2500.0,
+    "description": "This silver ring usually has fish-like designs and motifs etched into the band. It continually grants the wearer a +5 competence bonus on Swim checks.",
+    "key": "Ring of Swimming",
+    "name": "Ring of Swimming",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "SKILL",
+          "Swim",
+          "5",
+          "TYPE=Competence"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ring of Swimming"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Ring of Swimming"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Ring"
+      },
+      {
+        "key": "COST",
+        "value": "2500"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.483"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Aura|faint transmutation"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Caster Level|2nd"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Slot|ring"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Cost|1,250 gp"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Requirements|Forge Ring, creator must have 5 ranks in the Swim skill"
+      },
+      {
+        "key": "DESC",
+        "value": "This silver ring usually has fish-like designs and motifs etched into the band. It continually grants the wearer a +5 competence bonus on Swim checks."
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 409,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "record_key": "Ring of Swimming",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

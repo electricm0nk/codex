@@ -1,0 +1,72 @@
+# SD18 deterministic Human Ranger level 13 third-favored-terrain widening
+# fixture.
+# Widens the accepted SD18 deterministic Human Ranger level-1..level-12
+# hybrid chassis (tests/sd18_ranger_level12_widening.rs, the loop's most
+# recent Ranger ceiling) to Ranger level 13 as chosen input only. It names
+# selections; it does not contain derived, computed, or parity values. It is
+# the level-12 fixture with the class level bumped and three additional
+# chosen selections, exercising the 13th-level "3rd favored terrain"
+# interval (verified independently against d20pfsrd, the Archives of Nethys
+# aonprd.com mirror, and legacy.aonprd.com, all byte-for-byte identical: "At
+# 8th level and every five levels thereafter, the ranger may select an
+# additional favored terrain. In addition, at each such interval, the skill
+# bonus and initiative bonus in any one favored terrain (including the one
+# just selected, if so desired), increases by +2."):
+#
+#   choice=choice:ranger_favored_terrain_2:terrain:mountain
+#     -- the SECOND favored terrain (an 8th-level grant this fixture had not
+#        previously exercised at level 12; included here so the 13th-level
+#        interval's own stacking can be demonstrated across all three
+#        favored terrains)
+#   choice=choice:ranger_favored_terrain_bonus_increase_target:terrain:first
+#     -- the 8th-level interval's own bonus-increase-target choice, naming
+#        the FIRST favored terrain (forest)
+#   choice=choice:ranger_favored_terrain_3:terrain:swamp
+#     -- the additional favored terrain selected at the 13th-level interval,
+#        mirroring choice:ranger_favored_terrain_2's open-ended recognition
+#        idiom
+#   choice=choice:ranger_favored_terrain_bonus_increase_target_2:terrain:first
+#     -- the 13th-level interval's OWN bonus-increase-target choice (each
+#        interval grants its own +2 increase to any one favored terrain),
+#        restricted to terrain:first | terrain:second | terrain:third; this
+#        fixture names the first favored terrain again, STACKING with the
+#        8th-level interval's own increase (2 base + 2 + 2 = +6 on the first
+#        favored terrain)
+#
+# Everything else carries over from the level-12 fixture unchanged. No
+# terrain-detection engine exists in this codebase, so no favored terrain's
+# bonus is ever applied to an Initiative or skill total; the fixture makes
+# no such claim.
+case_id=pf1-crb-human-ranger-level13-sd18-third-favored-terrain
+source_package_id=pf1.core_rulebook
+race_id=race:human
+class_level=class:ranger:13
+ability=strength:16
+ability=dexterity:14
+ability=constitution:14
+ability=intelligence:10
+ability=wisdom:12
+ability=charisma:8
+feat=feat:power_attack
+skill=skill:survival:1
+equipment=item:chain_shirt:equipped_worn_active
+equipment=item:longsword:equipped_primary_active
+equipment=item:shield:absent
+choice=choice:level_1_character_feat:feat:power_attack
+choice=choice:human_bonus_feat:feat:dodge
+choice=choice:human_ability_bonus:ability:strength
+choice=choice:ranger_favored_enemy:enemy:humanoid_orc
+choice=choice:ranger_favored_enemy_2:enemy:undead
+choice=choice:ranger_favored_enemy_bonus_increase_target:enemy:first
+choice=choice:ranger_combat_style:style:archery
+choice=choice:ranger_combat_style_bonus_feat:feat:point_blank_shot
+choice=choice:ranger_combat_style_bonus_feat_2:feat:manyshot
+choice=choice:ranger_combat_style_bonus_feat_3:feat:shot_on_the_run
+choice=choice:ranger_favored_terrain:terrain:forest
+choice=choice:ranger_favored_terrain_2:terrain:mountain
+choice=choice:ranger_favored_terrain_bonus_increase_target:terrain:first
+choice=choice:ranger_favored_terrain_3:terrain:swamp
+choice=choice:ranger_favored_terrain_bonus_increase_target_2:terrain:first
+choice=choice:ranger_hunters_bond:form:bond
+choice=choice:ranger_quarry_target:enemy:humanoid_orc
+provenance=programs/codex/requirements/SD-18-core-rules-breadth/scope-draft.md

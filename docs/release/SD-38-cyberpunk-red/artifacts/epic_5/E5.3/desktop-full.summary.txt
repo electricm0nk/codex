@@ -1,0 +1,8 @@
+desktop: cd apps/desktop/src-tauri && cargo test --locked -j 8 --no-fail-fast -- --test-threads=8 (HEAD 06c93e0e2a)
+450:     Running unittests src/main.rs (/home/ubuntu/cargo-target/sd38-main/debug/deps/codex_desktop-46af3d9082bcf85c)
+1344:test result: ok. 877 passed; 0 failed; 2 ignored; 0 measured; 0 filtered out; finished in 509.90s
+1346:     Running tests/packaged_resources.rs (/home/ubuntu/cargo-target/sd38-main/debug/deps/packaged_resources-9d84901f614e62fd)
+1352:test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 94.59s
+FAILED lines: 0
+py: [('877', '0', '2'), ('1', '0', '0')]
+cpr_improve ok: 16

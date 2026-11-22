@@ -1,0 +1,13 @@
+../../../data/rules_tables/ -> data/rules_tables: tracked_files=279
+../../../data/sheet_rules/ -> data/sheet_rules: tracked_files=56009
+../../../data/starfinder-1e/sheet_rules/ -> data/starfinder-1e/sheet_rules: tracked_files=9126
+resources/authoring_workbench/guard-stance-package/ -> apps/desktop/src-tauri/resources/authoring_workbench/guard-stance-package: tracked_files=6
+resources/corpus_bundle/ -> apps/desktop/src-tauri/resources/corpus_bundle: tracked_files=1
+resources/corpus_fixtures/ -> apps/desktop/src-tauri/resources/corpus_fixtures: tracked_files=5
+resources/corpus_fixtures/_settled/ -> apps/desktop/src-tauri/resources/corpus_fixtures/_settled: tracked_files=1
+resources/corpus_fixtures/equipment/ -> apps/desktop/src-tauri/resources/corpus_fixtures/equipment: tracked_files=2
+resources/corpus_fixtures/spell/ -> apps/desktop/src-tauri/resources/corpus_fixtures/spell: tracked_files=2
+system root data/sheet_rules: bundled_as=data/sheet_rules
+system root data/starfinder-1e/sheet_rules: bundled_as=data/starfinder-1e/sheet_rules
+system_roots_bundled=2
+resources_checked=9 verdict=PASS

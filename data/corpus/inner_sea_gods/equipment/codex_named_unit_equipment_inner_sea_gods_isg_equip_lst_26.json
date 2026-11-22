@@ -1,0 +1,32 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:26:33Z",
+  "data": {
+    "key": "Codex-Named Unit (equipment_inner_sea_gods_isg_equip_lst_26)",
+    "category": "General",
+    "name": "Codex-Named Unit (equipment_inner_sea_gods_isg_equip_lst_26)",
+    "cost_gp": 5380.0,
+    "weight_lbs": 1000.0,
+    "description": "This altar is an ornate marble memorial to the dead and unborn, featuring abstract sculptures of the Lady of graves in each of her aspects as midwife, prophet, and judge of souls. Instead of a Magic Circle, it is warded by a Hallow effect. Praying at the altar grants a +2 circumstance bonus on Heal and Knowledge (religion) checks, as well as the undead-bane magic weapon special ability to one weapon carried or wielded by the worshiper; this effect is suppressed if the weapon leaves the worshiper's grasp but resumes if the weapon is returned to the worshiper."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_equip.lst",
+    "sha256": "cde6e3e0acd33edb906c404430e39a375d0721c6e136c5faf0cde575c7c27c74",
+    "line": 26,
+    "record_key": "Codex-Named Unit (equipment_inner_sea_gods_isg_equip_lst_26)"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "name",
+  "pi_marker": "redacted",
+  "codex_generated_name": true,
+  "rename": {
+    "reason": "name_pi_blocked",
+    "coordinate": "inner_sea_gods:isg_equip.lst:26"
+  }
+}

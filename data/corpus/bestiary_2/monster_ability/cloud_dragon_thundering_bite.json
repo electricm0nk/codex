@@ -1,0 +1,71 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Cloud Dragon ~ Thundering Bite",
+    "delivery": "Supernatural",
+    "description": "An ancient or older cloud dragon's bite makes a thundering crash whenever it attacks, dealing an additional 2d6 points of sonic damage.  A great wyrm's thundering bite deals an additional 4d6 sonic damage.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:cloud_dragon_thundering_bite",
+    "name": "Thundering Bite",
+    "owners": [
+      "bestiary_2:monster:dragon_cloud"
+    ],
+    "raw_tokens": [
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(bite, %1d6 sonic)|ThunderingBiteDamage"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ThunderingBiteDamage|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ThunderingBiteDamage|2|PREVARGTEQ:DragonAgeCategory,12"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ThunderingBiteDamage|0"
+      },
+      {
+        "key": "DESC",
+        "value": "An ancient or older cloud dragon's bite makes a thundering crash whenever it attacks, dealing an additional 2d6 points of sonic damage.  A great wyrm's thundering bite deals an additional 4d6 sonic damage."
+      },
+      {
+        "key": "KEY",
+        "value": "Cloud Dragon ~ Thundering Bite"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.96"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
+    "source_page": "p.96",
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T10:25:56Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 482,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Cloud Dragon ~ Thundering Bite",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

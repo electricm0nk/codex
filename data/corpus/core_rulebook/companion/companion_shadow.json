@@ -1,0 +1,168 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "ability_keys": [
+      "core_rulebook:companion:shadow_companion_resistance",
+      "core_rulebook:companion:shadow_companion_saves",
+      "core_rulebook:companion:strength_damage"
+    ],
+    "corpus_key": "Companion (Shadow)",
+    "external_ability_refs": [
+      "Channel Resistance",
+      "Flight Maneuverability"
+    ],
+    "key": "core_rulebook:companion:companion_shadow",
+    "monster_class": "Shadow Companion:3",
+    "name": "Companion (Shadow)",
+    "natural_armor": null,
+    "natural_attacks": [
+      {
+        "damage_dice": "1d6",
+        "name": "Incorporeal Touch"
+      }
+    ],
+    "race_subtype": "Incorporeal|Undead",
+    "race_type": "Undead",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Channel Resistance|Flight Maneuverability|Shadow Companion Resistance|Shadow Companion Saves|Strength Damage"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CHA|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT|-4"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|WIS|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ChannelResistance|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Maneuverability|4"
+      },
+      {
+        "key": "CR",
+        "value": "3"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Maneuverability|0"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|M"
+      },
+      {
+        "key": "KIT",
+        "value": "1|Companion (Shadow)"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Shadow Companion:3"
+      },
+      {
+        "key": "MOVE",
+        "value": "Fly,40"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Incorporeal Touch,Melee.Natural.Weapon.Touch,*1,1d6"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "Companion [NAME]"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREVARGTEQ:NotAllowed,1],[PRERACE:1,Companion (Shadow)]"
+      },
+      {
+        "key": "RACESUBTYPE",
+        "value": "Incorporeal|Undead"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Undead"
+      },
+      {
+        "key": "SIZE",
+        "value": "M"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "z_Companion"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.245"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      },
+      {
+        "key": "TYPE",
+        "value": "Companion"
+      }
+    ],
+    "reach_feet": null,
+    "record_type": "creature",
+    "size": "M",
+    "source_page": "p.245",
+    "speeds": [
+      {
+        "feet": 40,
+        "mode": "Fly"
+      }
+    ],
+    "stat_adjustments": [
+      {
+        "ability": "DEX",
+        "amount": 4
+      },
+      {
+        "ability": "INT",
+        "amount": -4
+      },
+      {
+        "ability": "WIS",
+        "amount": 2
+      },
+      {
+        "ability": "CHA",
+        "amount": 4
+      }
+    ],
+    "type_segments": [
+      "Companion"
+    ]
+  },
+  "ingested_at": "2026-08-18T22:35:19Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 42,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_races_companion.lst",
+    "record_key": "Companion (Shadow)",
+    "sha256": "53f972cdc67f22e719a4eda2f38d69c9190464d1a76d4a8cfe870c549bd80815"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

@@ -1,0 +1,49 @@
+{
+  "codex_generated_name": false,
+  "completeness": "full",
+  "data": {
+    "description": "Whenever you take slashing or piercing damage, all adjacent creatures take %1 acid damage (Reflex DC %2 negates).|HiveManifestationLevel/2|10+TL/2+HiveManifestationLevel",
+    "key": "Hive Corruption ~ Greater Acid Blood Gift",
+    "name": "Greater Acid Blood Gift",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Hive Corruption ~ Greater Acid Blood Gift"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.HiveGreaterAcidBloodGift"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.24"
+      },
+      {
+        "key": "DESC",
+        "value": "Whenever you take slashing or piercing damage, all adjacent creatures take %1 acid damage (Reflex DC %2 negates).|HiveManifestationLevel/2|10+TL/2+HiveManifestationLevel"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 406,
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
+    "record_key": "Hive Corruption ~ Greater Acid Blood Gift",
+    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ]
+}

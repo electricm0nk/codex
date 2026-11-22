@@ -1,0 +1,13 @@
+== verify preflight-oracle against PF-only on-pin checkout (expect FAIL)
+    FAIL: the PCGen oracle is absent or off-pin. Remediation from the log:
+        fetch-pcgen-oracle.sh: /tmp/sd37e01/red-fresh is at the pinned SHA but the Starfinder cone is incomplete -- missing:
+            data/starfinder/paizo/core/_starfinder_core_rulebook.pcc
+            system/gameModes/Starfinder
+            fix with: scripts/fetch-pcgen-oracle.sh --dest /tmp/sd37e01/red-fresh --force
+    FAIL  preflight-oracle  (exit 1 — /tmp/codex-verify-pUWn2N/preflight-oracle.log)
+---------------------------------------------------------------
+SUMMARY
+  passed:  0  
+  FAILED:  1  preflight-oracle
+
+RESULT: FAIL — logs in /tmp/codex-verify-pUWn2N

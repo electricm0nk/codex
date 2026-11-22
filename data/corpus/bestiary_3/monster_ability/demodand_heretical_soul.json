@@ -1,0 +1,53 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Demodand ~ Heretical Soul",
+    "delivery": "Extraordinary",
+    "description": "All demodands gain a +4 bonus on saving throws against divine spells. In addition, any attempts to scry on a demodand using divine magic automatically fail. The caster can see the scryed area normally, but the demodand simply does not appear.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:demodand_heretical_soul",
+    "name": "Heretical Soul",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "ASPECT",
+        "value": "SaveBonus|+4 bonus on saving throws against divine spells"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "All demodands gain a +4 bonus on saving throws against divine spells. In addition, any attempts to scry on a demodand using divine magic automatically fail. The caster can see the scryed area normally, but the demodand simply does not appear."
+      },
+      {
+        "key": "KEY",
+        "value": "Demodand ~ Heretical Soul"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary"
+      }
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T14:09:34Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 2327,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "record_key": "Demodand ~ Heretical Soul",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

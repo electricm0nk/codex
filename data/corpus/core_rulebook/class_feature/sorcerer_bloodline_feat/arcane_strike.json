@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-24T03:51:47Z",
+  "data": {
+    "key": "Sorcerer Bloodline Feat ~ Arcane Strike",
+    "name": "Arcane Strike",
+    "class": "Sorcerer",
+    "description": "As a swift action, you can imbue your weapons with a fraction of your power. For 1 round, you gain a +%1 damage bonus and your weapons are treated as magic for the purpose of overcoming damage reduction.|ArcaneStrikeDamageBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sorcerer Bloodline Feat ~ Arcane Strike"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "TYPE",
+        "value": "Sorcerer Bloodline Feat"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREMULT:1,[PRECLASS:1,SPELLCASTER.Arcane=1],[PREVARGTEQ:Caster_Level_Highest__Arcane,1]],[PREABILITY:1,CATEGORY=Special Ability,TYPE.SpellLike]"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Sorcerer_BloodlineFeat_ArcaneStrike,1"
+      },
+      {
+        "key": "DESC",
+        "value": "As a swift action, you can imbue your weapons with a fraction of your power. For 1 round, you gain a +%1 damage bonus and your weapons are treated as magic for the purpose of overcoming damage reduction.|ArcaneStrikeDamageBonus"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Arcane Strike"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.118"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "As a swift action, you can imbue your weapons with a fraction of your power. For 1 round, your weapons deal +1 damage and are treated as magic for the purpose of overcoming damage reduction. For every five caster levels you possess, this bonus increases by +1, to a maximum of +5 at 20th level."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ArcaneStrikeLVL|Caster_Level_Total__Arcane"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 2016,
+    "record_key": "Sorcerer Bloodline Feat ~ Arcane Strike"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

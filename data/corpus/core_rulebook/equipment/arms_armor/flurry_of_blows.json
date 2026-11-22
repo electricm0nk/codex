@@ -1,0 +1,100 @@
+{
+  "completeness": "chassis_plus_extract",
+  "data": {
+    "category": "arms_armor",
+    "cost_gp": 0.0,
+    "description": null,
+    "key": "Flurry of Blows",
+    "name": "Flurry of Blows",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "WEAPON",
+          "WEAPONBAB",
+          "FlurryBABBonus-BAB"
+        ]
+      },
+      {
+        "qualifiers": [
+          "WEAPON",
+          "ATTACKS",
+          "FlurryExtraAttacks"
+        ]
+      },
+      {
+        "qualifiers": [
+          "WEAPON",
+          "TOHIT",
+          "-2"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Flurry of Blows"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "Flurry of Blows"
+      },
+      {
+        "key": "PROFICIENCY",
+        "value": "WEAPON|Unarmed Strike"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weapon.Resizable.Melee.Special.Finesseable.Bludgeoning.Close.Unarmed.Monk.Weapon Group Close.Weapon Group Monk.Weapon Group Natural.Natural.Light"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "WT",
+        "value": "0"
+      },
+      {
+        "key": "CRITMULT",
+        "value": "x2"
+      },
+      {
+        "key": "CRITRANGE",
+        "value": "1"
+      },
+      {
+        "key": "DAMAGE",
+        "value": "1d3"
+      },
+      {
+        "key": "WIELD",
+        "value": "Light"
+      },
+      {
+        "key": "SIZE",
+        "value": "M"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.57"
+      }
+    ],
+    "weight_lbs": 0.0
+  },
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 292,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_arms_armor.lst",
+    "record_key": "Flurry of Blows",
+    "sha256": "93dbb7ca43793137955851a68d745a069885e059f5eed8d77402380fea934f3a"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

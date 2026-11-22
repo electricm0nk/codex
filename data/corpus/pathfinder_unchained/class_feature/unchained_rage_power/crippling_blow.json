@@ -1,0 +1,77 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Unchained Rage Power ~ Crippling Blow",
+    "name": "Crippling Blow",
+    "class": "Unchained Barbarian",
+    "description": "Once per day when you hit with an attack, you can deal %1 point of ability damage to the target's Strength or Dexterity score.|CripplingBlowDamage",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Unchained Rage Power ~ Crippling Blow"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Unchained Rage Power.SpecialAttack.Extraordinary"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "RagePowersPrereqLVL,8"
+      },
+      {
+        "key": "SERVESAS",
+        "value": "ABILITY=Special Ability|Rage Power ~ Crippling Blow"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CripplingBlowDamage|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Once per day when you hit with an attack, you can deal %1 point of ability damage to the target's Strength or Dexterity score.|CripplingBlowDamage"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CripplingBlowDamage|1+floor(RagePowersLVL/4)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.10"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Rage"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per Day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst",
+    "sha256": "2becbb0524bd4c367cc1273434c20bcd8e42e3e08abd372f99b005e69e8c4725",
+    "line": 347,
+    "record_key": "Unchained Rage Power ~ Crippling Blow"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

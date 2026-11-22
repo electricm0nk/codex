@@ -1,0 +1,20 @@
+{
+  "data": {
+    "category": "Racial Trait",
+    "key": "Astrazoan Default ~ RAPID REVIVAL",
+    "name": "RAPID REVIVAL",
+    "type": "Racial Trait.Astrazoan Racial Trait"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 42,
+    "path": "starfinder/paizo/pact_worlds/spw_abilities.lst",
+    "record_key": "Astrazoan Default ~ RAPID REVIVAL",
+    "sha256": "00d61896ff6203e4fcc2cf8ccd79362a17739e63386a2b188fa2e9f5ccac9e2d"
+  },
+  "unit_id": "pact_worlds:ability:astrazoan_default_rapid_revival"
+}

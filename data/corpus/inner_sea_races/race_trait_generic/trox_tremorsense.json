@@ -1,0 +1,70 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "Some trox have developed a closeness to the earth that helps them thwart the invisibility of their duergar enemies. They gain tremorsense to a range of 30 feet.",
+    "key": "Trox ~ Tremorsense",
+    "name": "Tremorsense",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Trox ~ Tremorsense"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Trox Racial Trait.SpecialQuality.Special Quality"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Trox ~ Tremorsense],[!PREFACT:1,ABILITIES,Trox_ReplaceBurrow=True,Trox_ReplaceFrenzy=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Some trox have developed a closeness to the earth that helps them thwart the invisibility of their duergar enemies. They gain tremorsense to a range of 30 feet."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces frenzy and burrow.|!PREABILITY:1,CATEGORY=Special Ability,Trox ~ Tremorsense"
+      },
+      {
+        "key": "VISION",
+        "value": "Tremorsense (30)"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.217"
+      },
+      {
+        "key": "FACT",
+        "value": "Trox_ReplaceBurrow|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Trox_ReplaceFrenzy|True"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1587,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
+    "record_key": "Trox ~ Tremorsense",
+    "sha256": "9f4d653eed18681cf969c75453f2d2dc00707f382e3ed7f9d767a75d1e5776bf"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

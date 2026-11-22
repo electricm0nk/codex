@@ -1,0 +1,101 @@
+{
+  "codex_generated_name": false,
+  "completeness": "chassis_only",
+  "data": {
+    "description": null,
+    "key": "Divine Favor",
+    "name": "Divine Favor",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Spell-Like Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Innate Spell-Like Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SLA_DivineFavor_LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SLA_DivineFavor_SpellLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SLA_DivineFavor_Times|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SLA_DivineFavor_DCMod|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SLA_DivineFavor_DC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SLA_DivineFavor_AtWill|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SLA_DivineFavor_Constant|0"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=SLA_DivineFavor_Times|TIMEUNIT=Day|CASTERLEVEL=SLA_DivineFavor_LVL|Divine Favor,SLA_DivineFavor_DC|PREVAREQ:SLA_DivineFavor_AtWill,0|PREVAREQ:SLA_DivineFavor_Constant,0"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=ATWILL|TIMEUNIT=Day|CASTERLEVEL=SLA_DivineFavor_LVL|Divine Favor,SLA_DivineFavor_DC|PREVAREQ:SLA_DivineFavor_AtWill,1|PREVAREQ:SLA_DivineFavor_Constant,0"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=ATWILL|TIMEUNIT=Constant|CASTERLEVEL=SLA_DivineFavor_LVL|Divine Favor,SLA_DivineFavor_DC|PREVAREQ:SLA_DivineFavor_Constant,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SLA_DivineFavor_LVL|SLA_Base_LVL|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SLA_DivineFavor_SpellLVL|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SLA_DivineFavor_Times|SLA_Base_Times|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SLA_DivineFavor_DCMod|SLA_DC_STAT|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SLA_DivineFavor_DC|10+SLA_DivineFavor_SpellLVL+SLA_DivineFavor_DCMod"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 744,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities.lst",
+    "record_key": "Divine Favor",
+    "sha256": "ab77788e05536453a16a22bef8a5e74c209e536cb5b8cdcdb1130f712cc2402f"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice",
+    "computed:pre_guard",
+    "computed:tempbonus",
+    "derived:bonus",
+    "derived:spells",
+    "derived:tempbonus"
+  ]
+}

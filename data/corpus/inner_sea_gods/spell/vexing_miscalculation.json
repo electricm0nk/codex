@@ -1,0 +1,84 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "You frustrate an opponent with ill fortune that leads even its most accurate attacks astray. The target is unable to score critical threats for the duration of this spell, even if the result of its roll would normally be a critical threat. If the creature rolls a natural 20, the attack still hits regardless of its opponent's AC, but the hit is not eligible for a critical confirmation roll. Once a critical threat has been foiled by vexing miscalculation, the spell is discharged.",
+    "key": "Vexing Miscalculation",
+    "level": 2,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Cleric,Inquisitor,Witch=2"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S"
+      },
+      {
+        "key": "DESC",
+        "value": "You frustrate an opponent with ill fortune that leads even its most accurate attacks astray. The target is unable to score critical threats for the duration of this spell, even if the result of its roll would normally be a critical threat. If the creature rolls a natural 20, the attack still hits regardless of its opponent's AC, but the hit is not eligible for a critical confirmation roll. Once a critical threat has been foiled by vexing miscalculation, the spell is discharged."
+      },
+      {
+        "key": "DESCRIPTOR",
+        "value": "Mind-Affecting"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) minutes or until discharged"
+      },
+      {
+        "key": "KEY",
+        "value": "Vexing Miscalculation"
+      },
+      {
+        "key": "RANGE",
+        "value": "Close"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Will negates"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Enchantment"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.245"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes"
+      },
+      {
+        "key": "SUBSCHOOL",
+        "value": "Compulsion"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "One creature"
+      }
+    ],
+    "school": "Enchantment"
+  },
+  "ingested_at": "2026-08-17T01:45:11Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 70,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_spells.lst",
+    "record_key": "Vexing Miscalculation",
+    "sha256": "48bcb314dbdf8369982b3bc68d10dbe11baa5fe748d4121d6e197ab414406e68"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "derived:range_keyword"
+  ]
+}

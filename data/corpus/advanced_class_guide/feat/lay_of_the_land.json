@@ -1,0 +1,30 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:38:17Z",
+  "data": {
+    "key": "Lay of the Land",
+    "category": "General",
+    "name": "Lay of the Land",
+    "description": "Your affinity to nature grants you greater insight into specific biomes.",
+    "prerequisites": [
+      "PREABILITY:2,CATEGORY=Special Ability,Hunter ~ Animal Focus,Hunter ~ Wild Empathy",
+      "!PREABILITY:4,CHECKMULT,CATEGORY=FEAT,Lay of the Land"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_feats.lst",
+    "sha256": "a71dc625f64f057c38365b3c3a2c6b58b75170fb8ffeb5eb23d3b29c74b7edc3",
+    "line": 109,
+    "record_key": "Lay of the Land"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice",
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

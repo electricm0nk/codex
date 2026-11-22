@@ -1,0 +1,13 @@
+== PF
+PF_HASHES_EQUAL
+== SF sha256
+SF_SHA_EQUAL
+0526f8b4ff07756eab857e3d6cbbd209a7c5b37c697dcab496ba525d29aa74ae  SF-Envoy-3.txt
+eac7ca0c613602ffea8b5ff6687e38bd805fd4ad28ebde68364254142e4a0e61  SF-Mystic-5.txt
+1132b37dbd39dc4f1222485cddb20cd331b2f949168315370782c3b5ff71590e  SF-Soldier-3.txt
+d9ebfa252de3225849e042584f52d2d89c5d3bdb562f85bf4a60113d0017e032  SF-Technomancer-5.txt
+== SF lines (awk / python)
+SF-Envoy-3.txt 42 42
+SF-Mystic-5.txt 72 72
+SF-Soldier-3.txt 51 51
+SF-Technomancer-5.txt 63 63

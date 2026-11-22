@@ -1,0 +1,146 @@
+{
+ "artifact": "derived cost input for AT-34-E3-004 (step-cost-ledger)",
+ "status": "PARTIAL - derived from git by the orchestrator, not produced by AT-34-E3-004 itself",
+ "derivation": {
+  "wall_time": "span between consecutive commits that changed docs/work-inventory.json; attributes queue+dispatch overhead to the cycle that follows, so per-cycle figures are an UPPER bound",
+  "units_closed": "ids whose status moved into {grounded,text-complete} between consecutive versions of docs/work-inventory.json",
+  "denominator": "corpus-wide (49,438 units), NOT core_rulebook-only",
+  "baseline": "ea2b3396f2",
+  "command": "git log --reverse --format=%H ea2b3396f2..HEAD -- docs/work-inventory.json"
+ },
+ "totals": {
+  "inventory_changing_commits": 14,
+  "units_closed_corpus_wide": 2237,
+  "status_moves_corpus_wide": 32110
+ },
+ "by_shape": {
+  "generic_corpus_wide": {
+   "cycles": 2,
+   "units_closed": 2003,
+   "wall_minutes": 348,
+   "units_per_hour": 345
+  },
+  "narrow_book_scoped": {
+   "cycles": 11,
+   "units_closed": 234,
+   "wall_minutes": 703,
+   "units_per_hour": 20.0
+  },
+  "ratio_generic_to_narrow": 17.3
+ },
+ "cycles": [
+  {
+   "sha": "0099df7a1e",
+   "ts": 1787800779,
+   "closed": 0,
+   "moved": 26002,
+   "subject": "fix(sd34): AT-34-E1-005 -- rename not-ingested status to engine-does-not",
+   "wall_min": null
+  },
+  {
+   "sha": "0dd52ccb65",
+   "ts": 1787817464,
+   "closed": 1587,
+   "moved": 4653,
+   "subject": "feat(sd34): AT-34-E2-004 -- wire Epic 2's 8 tables into classify(), buck",
+   "wall_min": 278
+  },
+  {
+   "sha": "a72c6787e6",
+   "ts": 1787820153,
+   "closed": 6,
+   "moved": 67,
+   "subject": "fix(sd34): AT-34-E3-001 cycle 1 -- close the simple-kind-table reattribu",
+   "wall_min": 45
+  },
+  {
+   "sha": "6eab21d761",
+   "ts": 1787822570,
+   "closed": 0,
+   "moved": 2,
+   "subject": "fix(sd34): AT-34-E3-001 domain mechanism -- PI-safe coordinate resolve, ",
+   "wall_min": 40
+  },
+  {
+   "sha": "ae25d75d7d",
+   "ts": 1787825732,
+   "closed": 0,
+   "moved": 0,
+   "subject": "fix(sd34): AT-34-E3-001 race_trait_absent_from_race_traits -- close buck",
+   "wall_min": 53
+  },
+  {
+   "sha": "1eeba6bb4d",
+   "ts": 1787834579,
+   "closed": 56,
+   "moved": 74,
+   "subject": "fix(sd34): AT-34-E3-001 class_absent_from_ClassId_ALL_and_book_class_id_",
+   "wall_min": 147
+  },
+  {
+   "sha": "9934711054",
+   "ts": 1787837143,
+   "closed": 42,
+   "moved": 51,
+   "subject": "fix(sd34): AT-34-E3-001 deity_content_absent_from_deity_table_in_core_ru",
+   "wall_min": 43
+  },
+  {
+   "sha": "8e7aecc855",
+   "ts": 1787841386,
+   "closed": 51,
+   "moved": 51,
+   "subject": "fix(sd34): AT-34-E3-001 class_feature_option_pool_record_not_held_by_eng",
+   "wall_min": 71
+  },
+  {
+   "sha": "f98c6abddc",
+   "ts": 1787844304,
+   "closed": 2,
+   "moved": 2,
+   "subject": "fix(sd34): AT-34-E3-001 class_feature_option_pool -- close multi-DESC in",
+   "wall_min": 49
+  },
+  {
+   "sha": "ae0f387dd3",
+   "ts": 1787847015,
+   "closed": 69,
+   "moved": 72,
+   "subject": "fix(sd34): AT-34-E3-001 companion_absent_from_core_rulebook_companion_ta",
+   "wall_min": 45
+  },
+  {
+   "sha": "04377a287d",
+   "ts": 1787851214,
+   "closed": 416,
+   "moved": 1124,
+   "subject": "fix(sd34): AT-34-E3-001 race_trait_race_not_modelled -- generic race_tra",
+   "wall_min": 70
+  },
+  {
+   "sha": "9a0d75a9b7",
+   "ts": 1787856314,
+   "closed": 4,
+   "moved": 5,
+   "subject": "fix(sd34): AT-34-E3-001 class_feature_option_pool_with_magnitude -- live",
+   "wall_min": 85
+  },
+  {
+   "sha": "6040c33306",
+   "ts": 1787861931,
+   "closed": 0,
+   "moved": 3,
+   "subject": "fix(sd34): AT-34-E3-001 vacuous-placeholder sub-cause -- close 3 PCGen \"",
+   "wall_min": 94
+  },
+  {
+   "sha": "b93fb51a3e",
+   "ts": 1787863817,
+   "closed": 4,
+   "moved": 4,
+   "subject": "fix(sd34): AT-34-E3-001 weapon-training sub-cause -- close 4 Fighter can",
+   "wall_min": 31
+  }
+ ],
+ "note_for_at_34_e3_004": "NOTE FOR AT-34-E3-004 AND THE BUNDLE RETROSPECTIVE\n\nThis file is a DERIVED, PARTIAL input. It does not satisfy AT-34-E3-004, whose bar is a\nper-bucket measured cost recorded by the cycles themselves. It exists because 12 of 13\nbucket-B cycle receipts recorded no wall time at all, and a cost reconstructed later from\nmemory is not a measurement. Deriving it from git while the commits were fresh is the\nclosest honest substitute.\n\nTwo caveats that bound how far it can be pushed:\n  1. Wall time is a commit-to-commit span, so it includes queue and dispatch overhead and\n     is an UPPER bound on any single cycle's real cost.\n  2. units_closed is corpus-wide, not core_rulebook-only. A generic fix closes units in\n     books nobody was working on, which is precisely the effect being measured -- but it\n     means these figures must never be quoted against a single book's denominator.\n\nWhat it establishes, and it is the load-bearing finding for scoping the remaining books:\ncost is per CYCLE, not per unit. 2 generic corpus-wide cycles closed 2,003 units in 348\nminutes (345 units/hour). 11 narrow book-scoped cycles closed 234 units in 703 minutes\n(20 units/hour). The same engineering effort yields roughly 17x more when the cycle is\nscoped to a mechanism corpus-wide rather than to one book's slice of it."
+}

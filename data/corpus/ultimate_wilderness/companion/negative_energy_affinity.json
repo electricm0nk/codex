@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:20:31Z",
+  "data": {
+    "key": "Deathtouched Companion ~ Negative Energy Affinity",
+    "name": "Negative Energy Affinity",
+    "description": "Though a living creature, a deathtouched companion reacts to positive and negative energy as if it were undead-positive energy harms it, while negative energy heals it.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Deathtouched Companion ~ Negative Energy Affinity"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "CompanionClassFeatures.ArchetypeAbility.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "Though a living creature, a deathtouched companion reacts to positive and negative energy as if it were undead-positive energy harms it, while negative energy heals it."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.187"
+      }
+    ],
+    "origin": "declared",
+    "owners": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5",
+    "line": 474,
+    "record_key": "Deathtouched Companion ~ Negative Energy Affinity"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

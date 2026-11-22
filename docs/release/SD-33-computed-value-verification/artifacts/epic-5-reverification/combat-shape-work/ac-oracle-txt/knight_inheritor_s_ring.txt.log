@@ -1,0 +1,81 @@
+2026-08-25T10:12:35.044859720 INFO main Main:105 Starting PCGen v6.09.08.RC1
+2026-08-25T10:12:37.281700919 INFO main LanguageBundle:134 Initialising language bundle with locale en.
+2026-08-25T10:12:44.337648816 INFO main BatchExporter:117 Started export of /home/ubuntu/workspace/repos/codex/.claude/worktrees/wf_1f33bc36-e5f-2/docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/combat-shape-work/ac-pcg/knight_inheritor_s_ring.pcg using /home/ubuntu/workspace/repos/codex/.claude/worktrees/wf_1f33bc36-e5f-2/docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/combat-shape-work/ac-check.txt.ftl to /home/ubuntu/workspace/repos/codex/.claude/worktrees/wf_1f33bc36-e5f-2/docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/combat-shape-work/ac-oracle-txt/knight_inheritor_s_ring.txt
+2026-08-25T10:12:44.412906040 INFO main BatchExporter:122 Loading sources [Core Rulebook, Advanced Player's Guide, Ultimate Magic, Inner Sea World Guide, Bestiary, Ultimate Equipment, Ultimate Combat, Inner Sea Gods] using game mode Pathfinder_RPG
+2026-08-25T10:12:44.475436251 INFO main SourceFileLoader:507 Loading game Pathfinder_RPG and sources [Core Rulebook, Advanced Player's Guide, Ultimate Magic, Inner Sea World Guide, Bestiary, Ultimate Equipment, Ultimate Combat, Inner Sea Gods].
+2026-08-25T10:13:10.076240240 SEVERE main CDOMFactory:105 Unconstructed Reference: Language Protean
+2026-08-25T10:13:10.079190448 SEVERE main TrackingReferenceContext:102   Was used in file:/tmp/pcgen-oracle-sd33-r3-combat/build/install/pcgen/data/pathfinder/paizo/campaign_setting/inner_sea_gods/isg_kits_race.lst in tokens: [plugin.lsttokens.kit.LangBonusToken]
+2026-08-25T10:13:10.080101006 SEVERE main TrackingReferenceContext:102   Was used in file:/tmp/pcgen-oracle-sd33-r3-combat/build/install/pcgen/data/pathfinder/paizo/campaign_setting/inner_sea_gods/isg_races.lst in tokens: [plugin.lsttokens.auto.LangToken]
+Evaluation called on invalid variable: 'CHANNEL*STATSCORE', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'Mod', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'CHANNEL*STATSCORE', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'Mod', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'CHANNEL*STATSCORE', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'Mod', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'CHANNEL*STATSCORE', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'Mod', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'CHANNEL*STATSCORE', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'Mod', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'CHANNEL*STATSCORE', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'Mod', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+2026-08-25T10:13:23.572022878 INFO main CharacterManager:193 Loaded character E5 R3 knight_inheritor_s_ring - /home/ubuntu/workspace/repos/codex/.claude/worktrees/wf_1f33bc36-e5f-2/docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/combat-shape-work/ac-pcg/knight_inheritor_s_ring.pcg
+Evaluation called on invalid variable: 'CHANNEL*STATSCORE', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'Mod', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'CHANNEL*STATSCORE', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'Mod', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'CHANNEL*STATSCORE', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'Mod', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'CHANNEL*STATSCORE', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'Mod', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'CHANNEL*STATSCORE', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'Mod', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'CHANNEL*STATSCORE', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'Mod', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'CHANNEL*STATSCORE', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'Mod', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'CHANNEL*STATSCORE', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'Mod', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'CHANNEL*STATSCORE', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'Mod', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'CHANNEL*STATSCORE', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'Mod', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'CHANNEL*STATSCORE', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'Mod', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'CHANNEL*STATSCORE', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'Mod', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number

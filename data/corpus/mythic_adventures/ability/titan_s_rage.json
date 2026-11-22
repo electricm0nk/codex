@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Mythic Path Ability ~ Titan's Rage",
+    "name": "Titan's Rage",
+    "description": "You can cause yourself to grow in size, becoming a terrifying sight to behold. As a standard action (or a free action if you have the rage class feature), you can expend one use of mythic power to increase your size to one size category larger. This grants you a +4 size bonus to Strength and Constitution, imposes a -2 penalty to Dexterity, grants you a +2 natural armor bonus, increases your natural reach by 5 feet, and increases your weapon damage based on the new size of your weapons. This size increase lasts a number of rounds equal to your tier, and doesn't stack with any other spell or ability that alters your size.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Path Ability ~ Titan's Rage"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Path Ability.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Mythic Path ~ Champion"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "MythicTierLevel,3"
+      },
+      {
+        "key": "DESC",
+        "value": "You can cause yourself to grow in size, becoming a terrifying sight to behold. As a standard action (or a free action if you have the rage class feature), you can expend one use of mythic power to increase your size to one size category larger. This grants you a +4 size bonus to Strength and Constitution, imposes a -2 penalty to Dexterity, grants you a +2 natural armor bonus, increases your natural reach by 5 feet, and increases your weapon damage based on the new size of your weapons. This size increase lasts a number of rounds equal to your tier, and doesn't stack with any other spell or ability that alters your size."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
+    "line": 360,
+    "record_key": "Mythic Path Ability ~ Titan's Rage"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

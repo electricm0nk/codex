@@ -1,0 +1,57 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Blue Dragon ~ Storm Breath",
+    "delivery": "Supernatural",
+    "description": "An ancient or older blue dragon can use its breath weapon to create a storm of lightning. This functions as call lightning storm, but the damage is equal to the dragon's breath weapon. The dragon can call down 1 bolt per round as a free action for 1d6 rounds. The save DC is %1. Additional uses of this ability extend the duration by an additional 1d6 rounds.",
+    "description_variables": [
+      "BreathWeaponDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:blue_dragon_storm_breath",
+    "name": "Storm Breath",
+    "owners": [
+      "beastiary:monster:dragon_blue"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "An ancient or older blue dragon can use its breath weapon to create a storm of lightning. This functions as call lightning storm, but the damage is equal to the dragon's breath weapon. The dragon can call down 1 bolt per round as a free action for 1d6 rounds. The save DC is %1. Additional uses of this ability extend the duration by an additional 1d6 rounds.|BreathWeaponDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Blue Dragon ~ Storm Breath"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.94"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
+    "source_page": "p.94",
+    "traits": []
+  },
+  "ingested_at": "2026-08-20T15:15:41Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 420,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "record_key": "Blue Dragon ~ Storm Breath",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

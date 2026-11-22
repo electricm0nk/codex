@@ -1,0 +1,72 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Insight ~ Insightful Steps",
+    "name": "Insightful Steps",
+    "class": "Insight",
+    "description": "As long as you maintain focus, your insight allows you to know just where to step to keep your footing, allowing you to ignore difficult terrain. You may expend your psionic focus as an immediate action to grant this ability to an ally within %2 ft for %1 rounds. Only %3 creatures, including you, can benefit from this ability at a time.|InsightfulStepsDuration|InsightfulStepsRange|InsightfulStepsTargets",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Insight ~ Insightful Steps"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "PsionClassFeatures.SpecialQuality.Supernatural.PsionicDisciplineTalent"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InsightfulStepsRange|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InsightfulStepsDuration|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InsightfulStepsTargets|0"
+      },
+      {
+        "key": "DESC",
+        "value": "As long as you maintain focus, your insight allows you to know just where to step to keep your footing, allowing you to ignore difficult terrain. You may expend your psionic focus as an immediate action to grant this ability to an ally within %2 ft for %1 rounds. Only %3 creatures, including you, can benefit from this ability at a time.|InsightfulStepsDuration|InsightfulStepsRange|InsightfulStepsTargets"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|InsightfulStepsRange|30"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|InsightfulStepsDuration|INT"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|InsightfulStepsTargets|floor((ClairsentienceDisciplineLVL+2)/4)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.272"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 501,
+    "record_key": "Insight ~ Insightful Steps"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

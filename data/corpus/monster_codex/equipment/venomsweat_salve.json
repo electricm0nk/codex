@@ -1,0 +1,46 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "MagicItems",
+    "cost_gp": 2500.0,
+    "description": "Wearer sweats poison [Venomsweat] Contact or injury; save Fort DC 16; frequency 1/round for 6 rounds; effect 1d3 Dexterity damage; cure 1 save.",
+    "key": "Venomsweat Salve",
+    "name": "Venomsweat Salve",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.Consumable"
+      },
+      {
+        "key": "COST",
+        "value": "2500"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "9"
+      },
+      {
+        "key": "SPROP",
+        "value": "Wearer sweats poison [Venomsweat] Contact or injury; save Fort DC 16; frequency 1/round for 6 rounds; effect 1d3 Dexterity damage; cure 1 save."
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-17T08:18:39Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 24,
+    "path": "pathfinder/paizo/roleplaying_game/monster_codex/mc_equip_magic_items.lst",
+    "record_key": "Venomsweat Salve",
+    "sha256": "4d003130ab6779fb9fb6cc9afbf04b88e568e0eb61fdd5886320c182aea374d9"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

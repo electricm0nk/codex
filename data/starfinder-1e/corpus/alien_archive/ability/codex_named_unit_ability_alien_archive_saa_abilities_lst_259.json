@@ -1,0 +1,25 @@
+{
+  "codex_generated_name": true,
+  "data": {
+    "category": "Weapon",
+    "key": "Codex-Named Unit (ability_alien_archive_saa_abilities_lst_259)",
+    "name": "Codex-Named Unit (ability_alien_archive_saa_abilities_lst_259)",
+    "type": "Weapon Proficiency"
+  },
+  "license": "PI-REDACTED",
+  "pi_field": "name",
+  "pi_marker": "redacted",
+  "population": "in_scope",
+  "rename": {
+    "coordinate": "alien_archive:saa_abilities.lst:259",
+    "reason": "name_pi_blocked"
+  },
+  "source": {
+    "kind": "lst_token",
+    "line": 259,
+    "path": "starfinder/paizo/alien_archive/saa_abilities.lst",
+    "record_key": "Codex-Named Unit (ability_alien_archive_saa_abilities_lst_259)",
+    "sha256": "9fcad77cbc25821e0b51ec260af76336482daea4014e670afbc49ae132a54c3c"
+  },
+  "unit_id": "alien_archive:ability:eoxian_wrackstaff"
+}

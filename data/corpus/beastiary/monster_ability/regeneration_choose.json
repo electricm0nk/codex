@@ -1,0 +1,74 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Regeneration ~ Choose",
+    "delivery": "Extraordinary",
+    "description": "You are difficult to kill. You heal damage at %1 points per round, as with fast healing, but you cannot die as long as your regeneration is still functioning (although you still fall unconscious when their hit points are below 0). %2, causes your regeneration to stop functioning on the round following the attack. During this round, you cannot heal any damage and can die normally. Attack forms that don't deal hit point damage are not healed by regeneration. Regeneration also does not restore hit points lost from starvation, thirst, or suffocation. You can regrow lost portions of you body and can reattach severed limbs or body parts if they are brought together within 1 hour of severing. Severed parts that are not reattached wither and die normally.",
+    "description_variables": [
+      "RegenerationRate",
+      "%LIST"
+    ],
+    "facet": "SpecialQuality",
+    "key": "beastiary:monster_ability:regeneration_choose",
+    "name": "Regeneration ~ Choose",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|%1 (%2)|RegenerationRate|%LIST"
+      },
+      {
+        "key": "ASPECT",
+        "value": "NAME|Regeneration (%1 / %2)|RegenerationRate|%LIST"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "USERINPUT"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RegenerationRate|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You are difficult to kill. You heal damage at %1 points per round, as with fast healing, but you cannot die as long as your regeneration is still functioning (although you still fall unconscious when their hit points are below 0). %2, causes your regeneration to stop functioning on the round following the attack. During this round, you cannot heal any damage and can die normally. Attack forms that don't deal hit point damage are not healed by regeneration. Regeneration also does not restore hit points lost from starvation, thirst, or suffocation. You can regrow lost portions of you body and can reattach severed limbs or body parts if they are brought together within 1 hour of severing. Severed parts that are not reattached wither and die normally.|RegenerationRate|%LIST"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.303"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary.ModifyHP"
+      }
+    ],
+    "source_page": "p.303",
+    "traits": [
+      "ModifyHP"
+    ]
+  },
+  "ingested_at": "2026-08-23T12:58:07Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1490,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "record_key": "Regeneration ~ Choose",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice"
+  ]
+}

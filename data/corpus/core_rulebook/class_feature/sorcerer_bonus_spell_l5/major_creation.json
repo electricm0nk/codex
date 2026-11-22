@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-24T03:51:47Z",
+  "data": {
+    "key": "Sorcerer Bonus Spell L5 ~ Major Creation",
+    "name": "Major Creation",
+    "class": "Sorcerer",
+    "description": "This spell functions like minor creation, except that you can also create an object of mineral nature: stone, crystal, metal, or the like. The duration of the created item varies with its relative hardness and rarity, as indicated on the following table. &nl;Hardness and Rarity &pipe; Examples Duration &nl;Vegetable matter &pipe; 2 hr./level &nl;Stone, crystal, base metals &pipe; 1 hr./level &nl;Precious metals &pipe; 20 min./level &nl;Gems &pipe; 10 min./level &nl;Rare metal* &pipe; 1 round/level &nl;* Includes adamantine, alchemical silver, and mithral. You can't use major creation to create a cold iron item.|PRERULE:1,DisplayFullSpell",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sorcerer Bonus Spell L5 ~ Major Creation"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "TYPE",
+        "value": "Sorcerer Bloodline Bonus Spell"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Sorcerer_BonusSpell_MajorCreation_L5,1"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "BloodlineCasterLVL,11"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Sorcerer=5|Major Creation"
+      },
+      {
+        "key": "DESC",
+        "value": "This spell functions like minor creation, except that you can also create an object of mineral nature: stone, crystal, metal, or the like. The duration of the created item varies with its relative hardness and rarity, as indicated on the following table. &nl;Hardness and Rarity &pipe; Examples Duration &nl;Vegetable matter &pipe; 2 hr./level &nl;Stone, crystal, base metals &pipe; 1 hr./level &nl;Precious metals &pipe; 20 min./level &nl;Gems &pipe; 10 min./level &nl;Rare metal* &pipe; 1 round/level &nl;* Includes adamantine, alchemical silver, and mithral. You can't use major creation to create a cold iron item.|PRERULE:1,DisplayFullSpell"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 2212,
+    "record_key": "Sorcerer Bonus Spell L5 ~ Major Creation"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

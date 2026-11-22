@@ -1,0 +1,19 @@
+{
+  "data": {
+    "key": "Cybernetic ~ X-legs (climbing)",
+    "name": "X-legs, climbing",
+    "type": "Cybernetic.ItemLevel_.12.All legs and feet"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 935,
+    "path": "starfinder/paizo/armory/sa_equip.lst",
+    "record_key": "Cybernetic ~ X-legs (climbing)",
+    "sha256": "16a1e2005f35a11d8cd4257261849d989dc1785163c445080b169de86002c057"
+  },
+  "unit_id": "armory:equipment:cybernetic_x_legs_climbing"
+}

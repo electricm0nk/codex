@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Bloodrager Bonus Spell L3 ~ Displacement",
+    "name": "Displacement",
+    "class": "Bloodrager",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bloodrager Bonus Spell L3 ~ Displacement"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "TYPE",
+        "value": "Bloodrager Bloodline Bonus Spell"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Bloodrager_BonusSpell_L3_Displacement,1"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "BloodragerBloodlineCasterLVL,13"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Bloodrager=3|Displacement"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 517,
+    "record_key": "Bloodrager Bonus Spell L3 ~ Displacement"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

@@ -1,0 +1,103 @@
+{
+  "kind": "race",
+  "records": {
+    "dwarf.json": {
+      "base_move_walk": 20,
+      "base_size": "M",
+      "hands": 2,
+      "key": "Dwarf",
+      "legs": 2,
+      "name": "Dwarf",
+      "race_type": "Humanoid",
+      "type_tokens": [
+        "Humanoid",
+        "Base",
+        "PC"
+      ]
+    },
+    "elf.json": {
+      "base_move_walk": 30,
+      "base_size": "M",
+      "hands": 2,
+      "key": "Elf",
+      "legs": 2,
+      "name": "Elf",
+      "race_type": "Humanoid",
+      "type_tokens": [
+        "Humanoid",
+        "Base",
+        "PC"
+      ]
+    },
+    "gnome.json": {
+      "base_move_walk": 20,
+      "base_size": "S",
+      "hands": 2,
+      "key": "Gnome",
+      "legs": 2,
+      "name": "Gnome",
+      "race_type": "Humanoid",
+      "type_tokens": [
+        "Humanoid",
+        "Base",
+        "PC"
+      ]
+    },
+    "half_elf.json": {
+      "base_move_walk": 30,
+      "base_size": "M",
+      "hands": 2,
+      "key": "Half-Elf",
+      "legs": 2,
+      "name": "Half-Elf",
+      "race_type": "Humanoid",
+      "type_tokens": [
+        "Humanoid",
+        "Base",
+        "PC"
+      ]
+    },
+    "half_orc.json": {
+      "base_move_walk": 30,
+      "base_size": "M",
+      "hands": 2,
+      "key": "Half-Orc",
+      "legs": 2,
+      "name": "Half-Orc",
+      "race_type": "Humanoid",
+      "type_tokens": [
+        "Humanoid",
+        "Base",
+        "PC"
+      ]
+    },
+    "halfling.json": {
+      "base_move_walk": 20,
+      "base_size": "S",
+      "hands": 2,
+      "key": "Halfling",
+      "legs": 2,
+      "name": "Halfling",
+      "race_type": "Humanoid",
+      "type_tokens": [
+        "Humanoid",
+        "Base",
+        "PC"
+      ]
+    },
+    "human.json": {
+      "base_move_walk": 30,
+      "base_size": "M",
+      "hands": 2,
+      "key": "Human",
+      "legs": 2,
+      "name": "Human",
+      "race_type": "Humanoid",
+      "type_tokens": [
+        "Humanoid",
+        "Base",
+        "PC"
+      ]
+    }
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "MagicItems",
+    "cost_gp": 54000.0,
+    "description": "Power Points - 50; Manifester Level - 15; Powers - Astral Traveler, Fold Space, Psychoport (Greater), Psychoport; Recharge Cost 15 pp, Gain 5 pp",
+    "key": "Psicrown (Traveler)",
+    "name": "Lesser Psicrown of the [NAME]",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "OUTPUTNAME",
+        "value": "Lesser Psicrown of the [NAME]"
+      },
+      {
+        "key": "TYPE",
+        "value": "Psionic.Psicrown"
+      },
+      {
+        "key": "COST",
+        "value": "54000"
+      },
+      {
+        "key": "WT",
+        "value": "0"
+      },
+      {
+        "key": "BASEITEM",
+        "value": "Psicrown"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.404"
+      },
+      {
+        "key": "SPROP",
+        "value": "Power Points - 50; Manifester Level - 15; Powers - Astral Traveler, Fold Space, Psychoport (Greater), Psychoport; Recharge Cost 15 pp, Gain 5 pp"
+      }
+    ],
+    "weight_lbs": 0.0
+  },
+  "ingested_at": "2026-08-16T05:06:54Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 167,
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_equipment.lst",
+    "record_key": "Psicrown (Traveler)",
+    "sha256": "ffdbcf81cb0f2d832299a9c6e4c6b124f35fd447a720b0fdda11cf88fe1ca371"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

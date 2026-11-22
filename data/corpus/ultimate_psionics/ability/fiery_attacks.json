@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Cannoneer ~ Fiery Attacks",
+    "name": "Fiery Attacks",
+    "description": "Your culverin is treated as if it had the flaming weapon property.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Cannoneer ~ Fiery Attacks"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MarksmanClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "Your culverin is treated as if it had the flaming weapon property."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.270"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_uc.lst",
+    "sha256": "2c97bc0e551c9846872c03df149c4ecd081e231a9e6753a35271d5f9708f5f80",
+    "line": 27,
+    "record_key": "Cannoneer ~ Fiery Attacks"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

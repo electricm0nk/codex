@@ -1,0 +1,5 @@
+progression cells package=oracle checked=780 (3 classes x 20 levels x (6 per-day + 7 known) columns)
+progression cells package=SRD checked=780
+connection-spell hop rows (oracle, SPELLKNOWN on '<X> Connection Spell - N')=66 spells=230 package #spell_known_ lines=230
+verdict=PASS mismatches=0
+exit=0

@@ -1,0 +1,56 @@
+{
+  "codex_generated_name": false,
+  "completeness": "chassis_only",
+  "data": {
+    "description": null,
+    "key": "Hydra (Cryohydra)",
+    "name": "Hydra (Cryohydra)",
+    "raw_tokens": [
+      {
+        "key": "OUTPUTNAME",
+        "value": "Cryohydra"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BreathWeaponDice|3"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BreathWeaponDamageDie|6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BreathWeaponCone|15"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Breath Weapon ~ Cone of Cold"
+      },
+      {
+        "key": "RACESUBTYPE",
+        "value": "Cold"
+      },
+      {
+        "key": "CR",
+        "value": "6"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T13:40:38Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 239,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
+    "record_key": "Hydra (Cryohydra)",
+    "sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

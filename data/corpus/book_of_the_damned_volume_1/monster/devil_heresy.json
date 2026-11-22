@@ -1,0 +1,169 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "ability_keys": [
+      "book_of_the_damned_volume_1:monster_ability:heresy_devil_blasphemous_bile",
+      "book_of_the_damned_volume_1:monster_ability:heresy_devil_corpulence",
+      "book_of_the_damned_volume_1:monster_ability:heresy_devil_devil_summoner",
+      "book_of_the_damned_volume_1:monster_ability:heresy_devil_searing_word",
+      "book_of_the_damned_volume_1:monster_ability:heresy_devil_spell_like_abilities",
+      "book_of_the_damned_volume_1:monster_ability:heresy_devil_summon_devil",
+      "book_of_the_damned_volume_1:monster_ability:heresy_devil_throne_of_skulls"
+    ],
+    "challenge_rating": "12",
+    "corpus_key": "Devil (Heresy)",
+    "external_ability_refs": [
+      "Fast Healing",
+      "Flight Maneuverability"
+    ],
+    "key": "book_of_the_damned_volume_1:monster:devil_heresy",
+    "monster_class": "Outsider (Fort/Will):13",
+    "name": "Devil, Heresy (Ayngavhaul)",
+    "natural_attacks": [
+      {
+        "damage_dice": null,
+        "name": "Bite"
+      },
+      {
+        "damage_dice": null,
+        "name": "Slam"
+      }
+    ],
+    "race_subtype": "Devil|Evil|Extraplanar|Lawful",
+    "race_type": "Outsider",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Bite|Slam"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Fast Healing|Flight Maneuverability|Heresy Devil ~ Blasphemous Bile|Heresy Devil ~ Corpulence|Heresy Devil ~ Devil Summoner|Heresy Devil ~ Searing Word|Heresy Devil ~ Spell-Like Abilities|Heresy Devil ~ Summon Devil|Heresy Devil ~ Throne of Skulls"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CHA|10"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CON|14"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|-2"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT|12"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|14"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|WIS|10"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|18|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FastHealingRate|5"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Maneuverability|5"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SlamAttacks|1"
+      },
+      {
+        "key": "CR",
+        "value": "12"
+      },
+      {
+        "key": "CSKILL",
+        "value": "Diplomacy|Knowledge (Arcana)|Knowledge (Religion)|Spellcraft"
+      },
+      {
+        "key": "DR",
+        "value": "5/Good"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|H"
+      },
+      {
+        "key": "KEY",
+        "value": "Devil (Heresy)"
+      },
+      {
+        "key": "KIT",
+        "value": "1|LE"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Outsider (Fort/Will):13"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,10,Fly,40"
+      },
+      {
+        "key": "RACESUBTYPE",
+        "value": "Devil|Evil|Extraplanar|Lawful"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Outsider"
+      },
+      {
+        "key": "REACH",
+        "value": "5"
+      },
+      {
+        "key": "SIZE",
+        "value": "H"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.56"
+      },
+      {
+        "key": "SR",
+        "value": "22"
+      }
+    ],
+    "size": "H",
+    "source_page": "p.56",
+    "speeds": [
+      {
+        "feet": 10,
+        "mode": "Walk"
+      },
+      {
+        "feet": 40,
+        "mode": "Fly"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-12T11:18:41Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 10,
+    "path": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_1/botd1_races.lst",
+    "record_key": "Devil (Heresy)",
+    "sha256": "7ac566b98c1300b3c9c5d0be1b6940712c130d79ebaddd5efcb2ab223c27c6d6"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

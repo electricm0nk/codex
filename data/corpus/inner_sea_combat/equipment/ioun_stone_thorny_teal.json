@@ -1,0 +1,46 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "MagicItems",
+    "cost_gp": 8000.0,
+    "description": "+2 competence bonus on disarm attempts",
+    "key": "Ioun Stone (Thorny/Teal)",
+    "name": "Ioun Stone (Thorny/Teal)",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Wondrous.Magic.Thorny Ioun Stone"
+      },
+      {
+        "key": "COST",
+        "value": "8000"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.60"
+      },
+      {
+        "key": "SPROP",
+        "value": "+2 competence bonus on disarm attempts"
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-17T12:09:37Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 22,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_equip_magic.lst",
+    "record_key": "Ioun Stone (Thorny/Teal)",
+    "sha256": "6fc68dc8e7c39e038c3ac499020b7e86f948cf8b9303db583243e19028959f9e"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

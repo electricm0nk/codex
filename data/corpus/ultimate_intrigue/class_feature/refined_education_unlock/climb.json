@@ -1,0 +1,81 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-24T03:53:24Z",
+  "data": {
+    "key": "Refined Education Unlock ~ Climb",
+    "name": "Climb",
+    "class": "Refined Education Unlock",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Refined Education Unlock ~ Climb"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RefinedEducationUnlock"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=CLASS,Rogue ~ Unchained Class"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "ClimbRefinedEducationUnlock,1"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ClimbRefinedEducationUnlockLVL|0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Skill unlock ~ climb 05 Ranks|PREVARGTEQ:ClimbRefinedEducationUnlockLVL,5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Skill unlock ~ climb 10 Ranks|PREVARGTEQ:ClimbRefinedEducationUnlockLVL,10"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Skill unlock ~ climb 15 Ranks|PREVARGTEQ:ClimbRefinedEducationUnlockLVL,15"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Skill unlock ~ climb 20 Ranks|PREVARGTEQ:ClimbRefinedEducationUnlockLVL,20"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ClimbRefinedEducationUnlockLVL|RogueLVL/2+skillinfo(\"RANK\", \"Climb\")"
+      },
+      {
+        "key": "SITUATION",
+        "value": "In forests"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/support/ui_abilities_class_pu.lst",
+    "sha256": "31facfcea3534d72c26bfbfeebc7af50e80e79157eda459e9afb16f184a93aaf",
+    "line": 40,
+    "record_key": "Refined Education Unlock ~ Climb"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

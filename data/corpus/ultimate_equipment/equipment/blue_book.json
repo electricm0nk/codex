@@ -1,0 +1,50 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "General",
+    "cost_gp": 5.0,
+    "description": "By consulting the book for 1 hour, for the next 24 hours you gain a +2 circumstance bonus on Knowledge (local), Bluff, and Diplomacy checks to gather or use information in that city. At the GM's discretion, you can use it in settlements near that city for a +1 bonus.",
+    "key": "Blue Book",
+    "name": "Blue Book",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Goods.Tools.Book"
+      },
+      {
+        "key": "COST",
+        "value": "5"
+      },
+      {
+        "key": "WT",
+        "value": "1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.60"
+      },
+      {
+        "key": "SPROP",
+        "value": "By consulting the book for 1 hour, for the next 24 hours you gain a +2 circumstance bonus on Knowledge (local), Bluff, and Diplomacy checks to gather or use information in that city. At the GM's discretion, you can use it in settlements near that city for a +1 bonus."
+      }
+    ],
+    "weight_lbs": 1.0
+  },
+  "ingested_at": "2026-08-16T01:34:54Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 365,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_equipment/ue_equip_general.lst",
+    "record_key": "Blue Book",
+    "sha256": "76c33612bbb40d7de0515e0e4662ca30129a92b9572e7094e4a9f4379444f690"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

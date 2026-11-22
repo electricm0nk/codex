@@ -1,0 +1,70 @@
+# SD18 deterministic Human Ranger level 20 fifth Favored Enemy / Master
+# Hunter widening fixture.
+# Widens the accepted SD18 deterministic Human Ranger level-1..level-19
+# hybrid chassis (tests/sd18_ranger_level19_widening.rs, the loop's most
+# recent Ranger ceiling) to Ranger level 20 as chosen input only. It names
+# selections; it does not contain derived, computed, or parity values. It
+# is the level-19 fixture with the class level bumped, plus two new choice
+# slots: the fifth favored-enemy TYPE selection (choice:ranger_favored_
+# enemy_5, PF1 Core Rulebook: "At 5th level and every five levels
+# thereafter (10th, 15th, and 20th level), the ranger may select an
+# additional favored enemy") and this 20th-level interval's own
+# bonus-increase TARGET choice
+# (choice:ranger_favored_enemy_bonus_increase_target_4, restricted to the
+# now-five-enemy set), targeting the SECOND favored enemy this time (a
+# deliberately different target than the 5th/15th-level intervals'
+# "first"/"fourth" targets already in the level-19 fixture, so the
+# second favored enemy's own magnitude genuinely rises at level 20 while
+# the first and fourth stay unchanged -- a real, checked test case, not
+# an assumption). The 20th-level "Special" column's other entry, "master
+# hunter" (verified independently against d20pfsrd and the Archives of
+# Nethys aonprd.com mirror, both byte-for-byte identical), is a brand-new
+# capstone ability with no player choice involved, so it needs no new
+# choice slot -- it is grounded purely from the class-level gate.
+#
+# Everything else carries over from the level-19 fixture unchanged. No
+# action-economy engine, no attack-resolution engine, and no
+# saving-throw-resolution engine exists in this codebase, so Master
+# Hunter's own standard-action attack/Fortitude-save-or-die ability is
+# never applied to any actual roll; the fixture makes no such claim.
+case_id=pf1-crb-human-ranger-level20-sd18-fifth-favored-enemy-and-master-hunter
+source_package_id=pf1.core_rulebook
+race_id=race:human
+class_level=class:ranger:20
+ability=strength:16
+ability=dexterity:14
+ability=constitution:14
+ability=intelligence:10
+ability=wisdom:12
+ability=charisma:8
+feat=feat:power_attack
+skill=skill:survival:1
+equipment=item:chain_shirt:equipped_worn_active
+equipment=item:longsword:equipped_primary_active
+equipment=item:shield:absent
+choice=choice:level_1_character_feat:feat:power_attack
+choice=choice:human_bonus_feat:feat:dodge
+choice=choice:human_ability_bonus:ability:strength
+choice=choice:ranger_favored_enemy:enemy:humanoid_orc
+choice=choice:ranger_favored_enemy_2:enemy:undead
+choice=choice:ranger_favored_enemy_bonus_increase_target:enemy:first
+choice=choice:ranger_favored_enemy_4:enemy:construct
+choice=choice:ranger_favored_enemy_bonus_increase_target_3:enemy:fourth
+choice=choice:ranger_favored_enemy_5:enemy:dragon
+choice=choice:ranger_favored_enemy_bonus_increase_target_4:enemy:second
+choice=choice:ranger_combat_style:style:archery
+choice=choice:ranger_combat_style_bonus_feat:feat:point_blank_shot
+choice=choice:ranger_combat_style_bonus_feat_2:feat:manyshot
+choice=choice:ranger_combat_style_bonus_feat_3:feat:shot_on_the_run
+choice=choice:ranger_combat_style_bonus_feat_4:feat:improved_precise_shot
+choice=choice:ranger_combat_style_bonus_feat_5:feat:improved_precise_shot
+choice=choice:ranger_favored_terrain:terrain:forest
+choice=choice:ranger_favored_terrain_2:terrain:mountain
+choice=choice:ranger_favored_terrain_bonus_increase_target:terrain:first
+choice=choice:ranger_favored_terrain_3:terrain:swamp
+choice=choice:ranger_favored_terrain_bonus_increase_target_2:terrain:first
+choice=choice:ranger_favored_terrain_4:terrain:urban
+choice=choice:ranger_favored_terrain_bonus_increase_target_3:terrain:first
+choice=choice:ranger_hunters_bond:form:bond
+choice=choice:ranger_quarry_target:enemy:humanoid_orc
+provenance=programs/codex/requirements/SD-18-core-rules-breadth/scope-draft.md

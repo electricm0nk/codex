@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Variant Multiclass ~ Paladin",
+    "name": "Paladin",
+    "class": "Variant Multiclass",
+    "description": "[Not Implemented]A character who chooses paladin as her secondary class gains the following secondary class features.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Variant Multiclass ~ Paladin"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Variant Multiclass.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "[Not Implemented]A character who chooses paladin as her secondary class gains the following secondary class features."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;Code: At 1st level, she must follow the paladin's code of conduct and gains the paladin's aura of good."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;Detect Evil: At 3rd level, she can detect evil as a 1st-level paladin."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;Lay on Hands: At 7th level, she gains the ability to lay on hands a number of times per day equal to 1/2 her character level, healing as much as a paladin of her character level - 4."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;Smite Evil: At 11th level, she gains the ability to smite evil once per day as a paladin of her character level - 4."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;Mercy: At 15th level, she selects one mercy from the paladin's 3rd-level mercy list."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;Divine Bond: At 19th level, she gains a divine bond to a weapon as a paladin of her character level - 3."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst",
+    "sha256": "2becbb0524bd4c367cc1273434c20bcd8e42e3e08abd372f99b005e69e8c4725",
+    "line": 856,
+    "record_key": "Variant Multiclass ~ Paladin"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

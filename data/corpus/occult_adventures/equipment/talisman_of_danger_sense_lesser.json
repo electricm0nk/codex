@@ -1,0 +1,54 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "General",
+    "cost_gp": 750.0,
+    "description": ". The first time the wearer rolls initiative, she is immediately affected by anticipate peril.",
+    "key": "Talisman of Danger Sense (Lesser)",
+    "name": "Talisman of Danger Sense, Lesser",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Talisman of Danger Sense (Lesser)"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.LesserMinor"
+      },
+      {
+        "key": "COST",
+        "value": "750"
+      },
+      {
+        "key": "WT",
+        "value": "1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.264"
+      },
+      {
+        "key": "SPROP",
+        "value": ". The first time the wearer rolls initiative, she is immediately affected by anticipate peril."
+      }
+    ],
+    "weight_lbs": 1.0
+  },
+  "ingested_at": "2026-08-17T08:18:39Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 109,
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_equip.lst",
+    "record_key": "Talisman of Danger Sense (Lesser)",
+    "sha256": "48877b9621bd36c3812d91cc603838c92eda6199fd2bd116d16d47523cbc1cbc"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

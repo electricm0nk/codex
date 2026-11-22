@@ -1,0 +1,79 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "From a central metal ring, four tapering metal blades extend like points on a compass rose. A wielder can stab with the starknife or throw it.",
+    "key": "Starknife (Base)",
+    "name": "Starknife",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Starknife (Base)"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "zzBase"
+      },
+      {
+        "key": "PROFICIENCY",
+        "value": "WEAPON|Starknife"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weapon.Resizable.Melee.Martial.Light.Finesseable.Ranged.Thrown.Piercing.BladeLight.Weapon Group Blades Light.Weapon Group Thrown"
+      },
+      {
+        "key": "COST",
+        "value": "24"
+      },
+      {
+        "key": "WT",
+        "value": "3"
+      },
+      {
+        "key": "CRITMULT",
+        "value": "x3"
+      },
+      {
+        "key": "CRITRANGE",
+        "value": "1"
+      },
+      {
+        "key": "DAMAGE",
+        "value": "1d4"
+      },
+      {
+        "key": "WIELD",
+        "value": "Light"
+      },
+      {
+        "key": "RANGE",
+        "value": "20"
+      },
+      {
+        "key": "SIZE",
+        "value": "M"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.149"
+      },
+      {
+        "key": "DESC",
+        "value": "From a central metal ring, four tapering metal blades extend like points on a compass rose. A wielder can stab with the starknife or throw it."
+      },
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      }
+    ]
+  },
+  "license": "OGL",
+  "population": "in_scope",
+  "source": {
+    "kind": "desktop_ui_fixture",
+    "line": 1,
+    "path": "apps/desktop/src-tauri/fixtures_src/equip_starknife_base.txt",
+    "record_key": "Starknife (Base)"
+  }
+}

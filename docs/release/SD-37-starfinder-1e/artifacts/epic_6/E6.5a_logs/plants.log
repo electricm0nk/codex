@@ -1,0 +1,41 @@
+P1 every feat reads as eligible (engine verdict ignored): exit=101 RED restored=True
+    test sf_choices::tests::the_feat_list_carries_the_engines_prerequisite_verdict ... FAILED
+    thread 'sf_choices::tests::the_feat_list_carries_the_engines_prerequisite_verdict' (1304994) panicked at src/sf_choices.rs:671:9:
+    test result: FAILED. 4 passed; 1 failed; 0 ignored; 0 measured; 690 filtered out; finished in 26.32s
+P2 the chassis base attack bonus is not fed to the prerequisite: exit=101 RED restored=True
+    test sf_choices::tests::the_feat_list_carries_the_engines_prerequisite_verdict ... FAILED
+    test sf_choices::tests::creation_and_level_up_save_the_choices_they_are_given ... FAILED
+    test sf_choices::tests::the_seeds_given_their_loadout_through_the_dialog_have_their_hand_values ... FAILED
+P3 an equipped item is saved as carried: exit=101 RED restored=True
+    test sf_choices::tests::gear_and_upgrades_come_from_the_package_and_reach_the_engines_totals ... FAILED
+    test sf_choices::tests::the_seeds_given_their_loadout_through_the_dialog_have_their_hand_values ... FAILED
+    thread 'sf_choices::tests::gear_and_upgrades_come_from_the_package_and_reach_the_engines_totals' (1308148) panicked at src/sf_choices.rs:761:9:
+P4 one spell over the engine total is allowed: exit=101 RED restored=True
+    test sf_choices::tests::spells_known_are_offered_per_level_from_the_class_list_up_to_the_engines_total ... FAILED
+    thread 'sf_choices::tests::spells_known_are_offered_per_level_from_the_class_list_up_to_the_engines_total' (1309440) panicked at src/sf_choices.rs:733:9:
+    test result: FAILED. 4 passed; 1 failed; 0 ignored; 0 measured; 690 filtered out; finished in 26.27s
+P5 every modifier offered on every item: exit=101 RED restored=True
+    test sf_choices::tests::gear_and_upgrades_come_from_the_package_and_reach_the_engines_totals ... FAILED
+    thread 'sf_choices::tests::gear_and_upgrades_come_from_the_package_and_reach_the_engines_totals' (1311260) panicked at src/sf_choices.rs:771:9:
+    test result: FAILED. 4 passed; 1 failed; 0 ignored; 0 measured; 690 filtered out; finished in 26.30s
+P6 the preview returns no totals: exit=101 RED restored=True
+    test sf_choices::tests::creation_and_level_up_save_the_choices_they_are_given ... FAILED
+    test sf_choices::tests::gear_and_upgrades_come_from_the_package_and_reach_the_engines_totals ... FAILED
+    test sf_choices::tests::the_seeds_given_their_loadout_through_the_dialog_have_their_hand_values ... FAILED
+P7 creation ignores the choices it is given: exit=101 RED restored=True
+    test sf_choices::tests::creation_and_level_up_save_the_choices_they_are_given ... FAILED
+    thread 'sf_choices::tests::creation_and_level_up_save_the_choices_they_are_given' (1314410) panicked at src/sf_choices.rs:813:9:
+    test result: FAILED. 4 passed; 1 failed; 0 ignored; 0 measured; 690 filtered out; finished in 26.78s
+P8 the level-up ignores the choices it is given: exit=101 RED restored=True
+    test sf_choices::tests::creation_and_level_up_save_the_choices_they_are_given ... FAILED
+    thread 'sf_choices::tests::creation_and_level_up_save_the_choices_they_are_given' (1316222) panicked at src/sf_choices.rs:834:9:
+    test result: FAILED. 4 passed; 1 failed; 0 ignored; 0 measured; 690 filtered out; finished in 27.09s
+P9 a fusion fits armour (modifier_fits): exit=101 RED restored=True
+    test sf_sheet_print::tests::an_unplaceable_upgrade_or_fusion_is_a_named_refusal ... FAILED
+    thread 'sf_sheet_print::tests::an_unplaceable_upgrade_or_fusion_is_a_named_refusal' (1317989) panicked at src/sf_sheet_print.rs:777:13:
+    test result: FAILED. 12 passed; 1 failed; 0 ignored; 0 measured; 682 filtered out; finished in 1.80s
+P10 removing a feat keeps its own pick: exit=1 RED restored=True
+    Error: and its own pick with it: expected 0, got 1
+P11 the totals line prints credits spent, not remaining: exit=1 RED restored=True
+    Error: the engine’s rows, the sheet’s labels: expected Energy Armor Class (EAC) 16 · Kinetic Armor Class (KAC) 19 · Credits remaining 2045 · Bulk carried 4, got Energy Armor Class (EAC) 16 · Kinetic Armor Class (KAC) 19 
+11 of 11 plants red, every file restored

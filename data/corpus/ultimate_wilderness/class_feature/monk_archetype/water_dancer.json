@@ -1,0 +1,160 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Monk Archetype ~ Water Dancer",
+    "name": "Water Dancer",
+    "class": "Monk",
+    "description": "Water dancers derive their martial training from ancient nereid traditions jealously guarded by these enigmatic fey.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Monk Archetype ~ Water Dancer"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.MonkArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Monk=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Monk Archetype ~ Wasteland Meditant],[!PREFACT:1,ABILITIES,Monk_Archetype_FlurryOfBlows=True,Monk_Archetype_StunningFist=True,Monk_Archetype_QuiveringPalm=True,Monk_Archetype_BonusFeats=True,Monk_Archetype_UnarmedStrike=True,Monk_Archetype_Evasion=True,Monk_Archetype_SlowFall=True,Monk_Archetype_ImprovedEvasion=True,Monk_Archetype_AbundantStep=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Water dancers derive their martial training from ancient nereid traditions jealously guarded by these enigmatic fey."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Water Dancer ~ Elemental Focus|PRECLASS:1,Monk=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Water Dancer ~ Nereid's Grace|PRECLASS:1,Monk=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Water Dancer ~ Unarmed Strike|PRECLASS:1,Monk=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Water Dancer ~ Burn|PRECLASS:1,Monk=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Water Dancer ~ Wild Talents|PRECLASS:1,Monk=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Water Dancer ~ Water Dance|PRECLASS:1,Monk=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Water Dancer ~ Metakinesis|PRECLASS:1,Monk=9"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Water Dancer ~ Water Stride|PRECLASS:1,Monk=12"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.65"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_Archetype_FlurryOfBlows|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_Archetype_StunningFist|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_Archetype_QuiveringPalm|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_Archetype_BonusFeats|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_Archetype_UnarmedStrike|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_Archetype_Evasion|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_Archetype_SlowFall|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_Archetype_ImprovedEvasion|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_Archetype_AbundantStep|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_CF_FlurryOfBlows|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_CF_StunningFist|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_CF_QuiveringPalm|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_CF_BonusFeats|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_CF_Evasion|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_CF_SlowFall|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_CF_ImprovedEvasion|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_CF_AbundantStep|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/support/uw_abilities_class_oa.lst",
+    "sha256": "26a03f73c3534cd6bae0bcda9581b3a89fa28ce5f78f854e009fc8110c477568",
+    "line": 112,
+    "record_key": "Monk Archetype ~ Water Dancer"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

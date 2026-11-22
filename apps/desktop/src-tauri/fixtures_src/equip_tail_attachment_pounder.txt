@@ -1,0 +1,2 @@
+# Fixture for desktop Market +N (AC and attack rows), source: arg_equip_arms_armor.lst, KEY: Tail Attachment (Pounder)
+Tail Attachment (Pounder)	OUTPUTNAME:Tail Attachment, Pounder		PROFICIENCY:WEAPON|Kobold Tail Attachment		TYPE:Weapon.Resizable.Melee.Light.KoboldTailAttachment.Bludgeoning.Finesseable								COST:1	WT:4						CRITMULT:x2	CRITRANGE:1	DAMAGE:1d8	EQMOD:Material ~ Steel												WIELD:Light																														SPROP:This squat ball is made from some sort of dull metal.|PRERULE:1,DisplayWeaponDetails

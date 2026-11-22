@@ -1,0 +1,19 @@
+{
+  "data": {
+    "key": "Switchblade (molecular-rift)",
+    "name": "Switchblade, molecular-rift",
+    "type": "RESIZABLE.Slashing.Weapon.Melee.Weapon Group ~ Basic Melee Weapons.Basic Melee Weapons.Uncategorized.ToHit_UseStr.Damage_UseStr.Operative"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 36,
+    "path": "starfinder/paizo/armory/sa_equip.lst",
+    "record_key": "Switchblade (molecular-rift)",
+    "sha256": "16a1e2005f35a11d8cd4257261849d989dc1785163c445080b169de86002c057"
+  },
+  "unit_id": "armory:equipment:switchblade_molecular_rift"
+}

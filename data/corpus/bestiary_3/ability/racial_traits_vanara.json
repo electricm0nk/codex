@@ -1,0 +1,36 @@
+{
+  "codex_generated_name": false,
+  "completeness": "chassis_only",
+  "data": {
+    "description": null,
+    "key": "Racial Traits ~ Vanara",
+    "name": "Racial Traits ~ Vanara",
+    "raw_tokens": [
+      {
+        "key": "DEFINE",
+        "value": "Vanara_ReplaceAbilityScores|0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Vanara Racial Trait|AUTOMATIC|Vanara ~ Ability Scores|PREVAREQ:Vanara_ReplaceAbilityScores,0"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 10,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/vanara/vanara_abilities_globalvar.lst",
+    "record_key": "Racial Traits ~ Vanara",
+    "sha256": "74ba3674c7ea1ea9b1143f6018d0e378efd36e6b5e6255f4f311e32d76dbc09a"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Siphon Channel",
+    "category": "General",
+    "name": "Siphon Channel",
+    "description": "You can channel negative energy to feed off the suffering of others. Once per day when you channel negative energy to damage living creatures, you gain a number oftemporary hit points equal to half the die result of your channeled energy + 1 per creature affected by the channeled energy. For each affected creature that did not succeed at its saving throw against the channeled energy, you gain an additional temporary hit point. These temporary hit points disappear after 1 hour.",
+    "prerequisites": [
+      "PREDEITY:1,Ghlaunder",
+      "PREMULT:1,[PREVARGTEQ:ClericChannelPositiveEnergyDice,3],[PREVARGTEQ:ClericChannelNegativeEnergyDice,3],[PREVARGTEQ:OracleChannelDice,3]",
+      "PRETEXT:Prerequisites: Channel energy 3d6, worshiper of Ghlaunder."
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities_feat.lst",
+    "sha256": "91f53f0051455ec8e7daca4e0286799e397009fe7fdae555ebe342f40085256e",
+    "line": 80,
+    "record_key": "Siphon Channel"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

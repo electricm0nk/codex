@@ -1,0 +1,25 @@
+# SD18 deterministic Human Rogue level 11 sneak-attack widening fixture.
+# Widens the accepted SD13-E5 deterministic Human Rogue pilot from the
+# bounded levels 1-10 tranche to level 11 as chosen input only. It names
+# selections; it does not contain derived, computed, or parity values. It
+# preserves the accepted Human race-choice seam and the deterministic
+# ability/feat/skill posture from the level-10 fixture. Level 11 grants no
+# new rogue talent (talents land at 2/4/6/8/10; the next slot is level 12),
+# so no new talent choice= line is required beyond the level-10 fixture's
+# own set (which itself carries none, mirroring the plain level-10
+# baseline fixture rather than the five-talents variant).
+case_id=pf1-crb-human-rogue-level11-sd18-sneak-attack
+source_package_id=pf1.core_rulebook
+race_id=race:human
+class_level=class:rogue:11
+ability=strength:10
+ability=dexterity:17
+ability=constitution:12
+ability=intelligence:12
+ability=wisdom:10
+ability=charisma:10
+feat=feat:weapon_finesse
+skill=skill:stealth:1
+choice=choice:human_bonus_feat:feat:dodge
+choice=choice:human_ability_bonus:ability:dexterity
+provenance=programs/codex/requirements/SD-18-core-rules-breadth/artifacts/core-roster-and-support-state-matrix.md

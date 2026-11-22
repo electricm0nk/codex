@@ -1,0 +1,52 @@
+{
+  "codex_generated_name": false,
+  "completeness": "chassis_only",
+  "data": {
+    "description": null,
+    "key": "Beastmaster Boon Companion ~ Animal Companion 19",
+    "name": "Animal Companion / XIX",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Beastmaster Boon Companion ~ Animal Companion 19"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "19"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "TYPE",
+        "value": "Select Beast Master Companion"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "AnimalCompanionLVLS,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AnimalCompanionLVLS|BoonCompanionBonus_AnimalCompanion"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 324,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities.lst",
+    "record_key": "Beastmaster Boon Companion ~ Animal Companion 19",
+    "sha256": "cd6801105b5c58cc069a49da65453b388503754e3b3731fac1cab813d0fc97a0"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

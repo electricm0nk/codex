@@ -1,0 +1,57 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Gravedigger Power ~ Spirit Shroud",
+    "name": "Spirit Shroud",
+    "class": "Gravedigger Power",
+    "description": "As a standard action, you can expend 1 point of inspiration to surround yourself with a shroud of spirit energy. You gain 1d6+%1 temporary hit points. This shroud lasts for %1 minutes or until the temporary hit points are expended, whichever comes first. These temporary hit points stack with those from other sources, but not with those gained through multiple uses of this ability.|InvestigatorLVL",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Gravedigger Power ~ Spirit Shroud"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "InvestigatorTalent.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Gravedigger ~ Relic Focus"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "InvestigatorTalentLVL,3"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action, you can expend 1 point of inspiration to surround yourself with a shroud of spirit energy. You gain 1d6+%1 temporary hit points. This shroud lasts for %1 minutes or until the temporary hit points are expended, whichever comes first. These temporary hit points stack with those from other sources, but not with those gained through multiple uses of this ability.|InvestigatorLVL"
+      },
+      {
+        "key": "DESC",
+        "value": "As long as the shroud remains, you also gain a +%1 resistance bonus on all saving throws against death effects, fear effects, and any spells or effects that bestow negative levels or deal negative energy damage (if the spells or effects allow a save).|InvestigatorLVL/4|PRECLASS:1,Investigator=4"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/support/ha_abilities_class_oa.lst",
+    "sha256": "9c111f652f8442433ea215fa11e67258c7e6c15c75d1c1753fa6fef34827f46c",
+    "line": 50,
+    "record_key": "Gravedigger Power ~ Spirit Shroud"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

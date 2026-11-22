@@ -1,0 +1,88 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "This spell increases the virulence of the targeted dose of poison, making the poison more difficult to resist. The poison is unaffected by delay poison, and the DC to remove it with neutralize poison is increased by 5. Additionally, the poison uses its own saving throw DC or overwhelming poison's DC, whichever is higher. If cast on a creature that is currently suffering from exposure to one or more doses of poison, the spell applies to one of the doses of your choice, or a random dose of poison affecting the target if you don't know what poisons are afflicting the target. If cast on a creature that is venomous, this spell affects the first dose of poison that creature delivers before the end of the spell's duration.|PRERULE:1,DisplayFullSpell",
+    "key": "Overwhelming Poison",
+    "level": 4,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Antipaladin,Ranger=4|Cleric,Druid,Shaman,Witch=6"
+      },
+      {
+        "key": "COMPS",
+        "value": "V,S,M"
+      },
+      {
+        "key": "DESC",
+        "value": "Make a poison more difficult to resist.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "This spell increases the virulence of the targeted dose of poison, making the poison more difficult to resist. The poison is unaffected by delay poison, and the DC to remove it with neutralize poison is increased by 5. Additionally, the poison uses its own saving throw DC or overwhelming poison's DC, whichever is higher. If cast on a creature that is currently suffering from exposure to one or more doses of poison, the spell applies to one of the doses of your choice, or a random dose of poison affecting the target if you don't know what poisons are afflicting the target. If cast on a creature that is venomous, this spell affects the first dose of poison that creature delivers before the end of the spell's duration.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESCRIPTOR",
+        "value": "Poison"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL*10) minutes"
+      },
+      {
+        "key": "RANGE",
+        "value": "Close"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "None"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Necromancy"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://aonprd.com/SpellDisplay.aspx?ItemName=Overwhelming Poison"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.221"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "No"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "One creature or one dose of poison; see text"
+      },
+      {
+        "key": "TYPE",
+        "value": "Arcane.Divine"
+      }
+    ],
+    "school": "Necromancy"
+  },
+  "ingested_at": "2026-08-16T12:10:17Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 81,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_spells.lst",
+    "record_key": "Overwhelming Poison",
+    "sha256": "5f4a23b7b02b3d3b2cd4a20d8f06ec24f49e39592d0822d32cdb80d13f3e6324"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "derived:range_keyword"
+  ]
+}

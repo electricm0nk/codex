@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Pattern Wielder ~ Tap Tattoo",
+    "name": "Tap Tattoo",
+    "class": "Pattern Wielder",
+    "description": "When manifesting a power, you can expend your psionic focus to tap a psionic tattoo you are wearing.  Doing so locks out the tattoo so that it cannot be used for 24 hours after being tapped, but the power manifested is treated as if it was affected by either the Empower Power or Extend Power feat.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Pattern Wielder ~ Tap Tattoo"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "CrypticClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "When manifesting a power, you can expend your psionic focus to tap a psionic tattoo you are wearing.  Doing so locks out the tattoo so that it cannot be used for 24 hours after being tapped, but the power manifested is treated as if it was affected by either the Empower Power or Extend Power feat."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.323"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1856,
+    "record_key": "Pattern Wielder ~ Tap Tattoo"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

@@ -1,0 +1,1068 @@
+//! Deterministic local-store boundary for saved-character artifacts.
+//!
+//! A saved-character bundle rooted at a single directory contains exactly two
+//! files:
+//! - `envelope.txt` — identity, revision, and provenance metadata
+//! - `authoritative_character_input.txt` — the authoritative CharacterInput payload
+//!   in the existing fixture grammar
+
+use std::fmt::Write as _;
+use std::fs;
+use std::path::Path;
+
+use crate::rules_core::character_input::{
+    AcquisitionMode, ActiveState, CharacterInput, RULE_CHOICE_SEPARATOR, SelectedChoice,
+    load_character_input_fixture,
+};
+
+use super::campaign_mirror::{self, MirrorWarning};
+use super::{
+    SavedCharacterEnvelope, SavedCharacterListing, SavedCharacterListingError,
+    SavedCharacterRevisionKind, SavedCharacterStoreError, SavedCharacterSummary,
+};
+
+const ENVELOPE_FILE: &str = "envelope.txt";
+const CHARACTER_INPUT_FILE: &str = "authoritative_character_input.txt";
+
+/// SD-36 Epic E desktop-P1-02: write `contents` to a `<name>.tmp` sibling of `path`, never
+/// touching `path` itself, and hand back the temp path for the caller to `fs::rename` into
+/// place. `write` on a temp file that a crash interrupts leaves only the `.tmp` file
+/// corrupted; `path` (and whatever `load()` currently reads from it) is untouched until the
+/// rename, which on every platform this app ships to is a single filesystem metadata update
+/// -- so `path` never observes a torn write. This does NOT add an `fsync` on the temp file
+/// or its parent directory, so the guarantee is a process-crash guarantee, not a power-loss
+/// one: on ext4's default `data=ordered` (and equivalent journaling defaults elsewhere), an
+/// OS crash or power cut before the temp file's dirty pages reach disk can still leave `path`
+/// renamed onto data the filesystem never persisted. Closing that residual window is a
+/// separate, deliberate durability change (two extra `fsync` calls per save), not implied by
+/// "atomic" alone -- review-caught (SD-36 Epic E fix cycle, finding 14) and recorded rather
+/// than silently assumed.
+fn atomic_write_prepare(path: &Path, contents: &[u8]) -> std::io::Result<std::path::PathBuf> {
+    let mut tmp_name = path.file_name().map(|n| n.to_os_string()).unwrap_or_default();
+    tmp_name.push(".tmp");
+    let tmp_path = path.with_file_name(tmp_name);
+    fs::write(&tmp_path, contents)?;
+    Ok(tmp_path)
+}
+
+const PATHFINDER_GAME_SYSTEM: &str = "pf1";
+
+/// The deity is the player's words in the `bio.json` sidecar, and the engine reads only the
+/// character input. So every load writes the input's one deity row from the bio, whatever was
+/// saved: a save from before the row existed, a bio edited since, a deity cleared. An unreadable
+/// bio states no deity, as its own loader's "no bio yet" does.
+fn keep_deity_row_equal_to_the_bio(root: &Path, input: &mut CharacterInput) {
+    use crate::rules_core::pilot_compute::CHARACTER_DEITY_CHOICE_ID;
+    input.chosen.selected_choices.retain(|choice| choice.choice_set_id != CHARACTER_DEITY_CHOICE_ID);
+    let deity = fs::read_to_string(root.join("bio.json"))
+        .ok()
+        .and_then(|text| serde_json::from_str::<serde_json::Value>(&text).ok())
+        .and_then(|bio| bio.get("deity")?.as_str().map(crate::rules_core::sheet_rule::slug))
+        .filter(|deity| !deity.is_empty());
+    if let Some(deity) = deity {
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: CHARACTER_DEITY_CHOICE_ID.to_owned(),
+            selection_id: format!("deity:{deity}"),
+        });
+    }
+}
+
+pub struct SavedCharacterStore;
+
+impl SavedCharacterStore {
+    /// Save a saved-character envelope to a root directory.
+    ///
+    /// Writes `envelope.txt` and `authoritative_character_input.txt` under `root`.
+    /// Creates `root` if it does not exist.
+    pub fn save(
+        envelope: &SavedCharacterEnvelope,
+        root: &Path,
+    ) -> Result<(), SavedCharacterStoreError> {
+        Self::save_with_warnings(envelope, root).map(|_warnings| ())
+    }
+
+    /// `save`, then the campaign write-through (`campaign_mirror`, SD-41 `decisions.md §29`):
+    /// a campaign copy that fails is a warning beside the successful local save, never an error.
+    pub fn save_with_warnings(
+        envelope: &SavedCharacterEnvelope,
+        root: &Path,
+    ) -> Result<Vec<MirrorWarning>, SavedCharacterStoreError> {
+        fs::create_dir_all(root).map_err(|err| io_error(root, err))?;
+
+        let ensure_single_line = |field: &str,
+                                  value: &str|
+         -> Result<(), SavedCharacterStoreError> {
+            if value.contains('\n') || value.contains('\r') {
+                return Err(SavedCharacterStoreError {
+                    message: format!(
+                        "{field} contains a newline/carriage return; cannot be persisted in envelope.txt"
+                    ),
+                });
+            }
+            Ok(())
+        };
+
+        ensure_single_line("character_id", &envelope.character_id)?;
+        ensure_single_line("revision_id", &envelope.revision_id)?;
+        ensure_single_line("saved_at", &envelope.saved_at)?;
+        ensure_single_line("app_or_runtime_version", &envelope.app_or_runtime_version)?;
+        ensure_single_line(
+            "content_or_rules_provenance",
+            &envelope.content_or_rules_provenance,
+        )?;
+        ensure_single_line("game_system", &envelope.game_system)?;
+        ensure_single_line(
+            "latest_authoritative_revision_ref",
+            &envelope.latest_authoritative_revision_ref,
+        )?;
+        ensure_single_line("display_label", &envelope.display_label)?;
+
+        validate_character_input(&envelope.character_input)?;
+
+        // SD-36 Epic E desktop-P1-02 (SD-34 R14-02): write both files to `.tmp` siblings
+        // FIRST, then rename both into place. A crash before either rename leaves the
+        // previous save (if any) completely untouched -- `load()` never sees a half-written
+        // file. The residual window this does NOT close: a crash BETWEEN the two renames
+        // still leaves a fresh envelope paired with a stale character-input file (or vice
+        // versa) if the process is killed mid-way through the second `fs::rename` -- closing
+        // that fully would need a single-file bundle format or a two-phase commit marker,
+        // out of scope for this fix. That window is now nanoseconds-wide (two renames back
+        // to back) rather than however long `render_character_input` takes to run.
+        let envelope_path = root.join(ENVELOPE_FILE);
+        let character_input_path = root.join(CHARACTER_INPUT_FILE);
+        let envelope_tmp = atomic_write_prepare(&envelope_path, render_envelope(envelope).as_bytes())
+            .map_err(|err| io_error(&envelope_path, err))?;
+        let character_input_tmp = atomic_write_prepare(&character_input_path, render_character_input(&envelope.character_input).as_bytes())
+            .map_err(|err| io_error(&character_input_path, err))?;
+        fs::rename(&envelope_tmp, &envelope_path).map_err(|err| io_error(&envelope_path, err))?;
+        fs::rename(&character_input_tmp, &character_input_path).map_err(|err| io_error(&character_input_path, err))?;
+
+        Ok(match campaign_mirror::load_memberships(root) {
+            Ok(memberships) => campaign_mirror::mirror(root, &envelope.display_label, &envelope.character_id, &memberships),
+            Err(err) => vec![MirrorWarning { campaign_dir: root.join(campaign_mirror::MEMBERSHIPS_FILE), reason: err.message }],
+        })
+    }
+
+    /// Load a saved-character envelope from a root directory.
+    ///
+    /// Reads `envelope.txt` and `authoritative_character_input.txt` from `root`.
+    /// Returns `Err` if either file is missing, malformed, or missing required fields.
+    pub fn load(root: &Path) -> Result<SavedCharacterEnvelope, SavedCharacterStoreError> {
+        let envelope_path = root.join(ENVELOPE_FILE);
+        let envelope_text =
+            fs::read_to_string(&envelope_path).map_err(|err| SavedCharacterStoreError {
+                message: format!(
+                    "envelope.txt missing or unreadable at {}: {err}",
+                    envelope_path.display()
+                ),
+            })?;
+
+        let character_input_path = root.join(CHARACTER_INPUT_FILE);
+        let character_input_text =
+            fs::read_to_string(&character_input_path).map_err(|err| SavedCharacterStoreError {
+                message: format!(
+                    "authoritative_character_input.txt missing or unreadable at {}: {err}",
+                    character_input_path.display()
+                ),
+            })?;
+
+        let metadata = parse_envelope(&envelope_text)?;
+        let mut character_input = parse_character_input(&character_input_text)?;
+        if metadata.game_system == PATHFINDER_GAME_SYSTEM {
+            keep_deity_row_equal_to_the_bio(root, &mut character_input);
+        }
+
+        Ok(SavedCharacterEnvelope {
+            character_id: metadata.character_id,
+            revision_id: metadata.revision_id,
+            revision_kind: metadata.revision_kind,
+            saved_at: metadata.saved_at,
+            schema_version: metadata.schema_version,
+            app_or_runtime_version: metadata.app_or_runtime_version,
+            content_or_rules_provenance: metadata.content_or_rules_provenance,
+            game_system: metadata.game_system,
+            latest_authoritative_revision_ref: metadata.latest_authoritative_revision_ref,
+            display_label: metadata.display_label,
+            character_input,
+        })
+    }
+
+    /// List every saved character under `characters_root`.
+    ///
+    /// A nonexistent root returns an empty listing rather than an error — a
+    /// character hub with no characters yet is not a failure. Each
+    /// subdirectory is loaded independently: one corrupt/unreadable saved
+    /// character is reported in `unreadable_entries` without failing the
+    /// rest of the listing.
+    pub fn list_all(characters_root: &Path) -> Result<SavedCharacterListing, SavedCharacterStoreError> {
+        let entries = match fs::read_dir(characters_root) {
+            Ok(entries) => entries,
+            Err(err) if err.kind() == std::io::ErrorKind::NotFound => {
+                return Ok(SavedCharacterListing {
+                    characters: Vec::new(),
+                    unreadable_entries: Vec::new(),
+                });
+            }
+            Err(err) => return Err(io_error(characters_root, err)),
+        };
+
+        let mut subdirectories: Vec<_> = entries
+            .filter_map(Result::ok)
+            .filter(|entry| entry.path().is_dir())
+            .collect();
+        subdirectories.sort_by_key(|entry| entry.file_name());
+
+        let mut characters = Vec::new();
+        let mut unreadable_entries = Vec::new();
+        for entry in subdirectories {
+            // A directory whose envelope names a system this store does not own (a
+            // Cyberpunk RED character, `rules_core::cpr::store`) is that system's to list:
+            // neither a character here nor an unreadable entry.
+            if peek_game_system(&entry.path()).is_ok_and(|system| !owns_payload(&system)) {
+                continue;
+            }
+            match Self::load(&entry.path()) {
+                Ok(envelope) => characters.push(summarize(&envelope)),
+                Err(err) => unreadable_entries.push(SavedCharacterListingError {
+                    entry_name: entry.file_name().to_string_lossy().into_owned(),
+                    message: err.message,
+                }),
+            }
+        }
+
+        Ok(SavedCharacterListing {
+            characters,
+            unreadable_entries,
+        })
+    }
+
+    /// Delete a saved-character bundle by removing its root directory tree.
+    ///
+    /// Deleting a root that does not exist is treated as an idempotent
+    /// success — the caller's postcondition ("nothing saved at this root")
+    /// already holds, mirroring `list_all`'s own not-found handling above.
+    /// Any other I/O failure (permissions, a path component that is a file
+    /// rather than a directory, etc.) is a real error and is not swallowed.
+    pub fn delete(root: &Path) -> Result<(), SavedCharacterStoreError> {
+        match fs::remove_dir_all(root) {
+            Ok(()) => Ok(()),
+            Err(err) if err.kind() == std::io::ErrorKind::NotFound => Ok(()),
+            Err(err) => Err(io_error(root, err)),
+        }
+    }
+}
+
+/// `true` when a saved character of `game_system` is this store's payload (an
+/// `authoritative_character_input.txt` holding a Pathfinder-shaped `CharacterInput`).
+/// Cyberpunk RED keeps its own payload (`cpr_character_input.txt`, owned by
+/// `rules_core::cpr::store`) under the same characters root, so it is the one system
+/// this store does not own.
+pub fn owns_payload(game_system: &str) -> bool {
+    game_system != crate::rules_core::game_system::GameSystem::CyberpunkRed.id()
+}
+
+/// The `game_system` a saved character's `envelope.txt` names, read from that file alone
+/// (no payload read), so a caller can route a root to its system's store before loading.
+/// An envelope with no `game_system` line gets the same legacy default `load` gives it.
+pub fn peek_game_system(root: &Path) -> Result<String, SavedCharacterStoreError> {
+    let envelope_path = root.join(ENVELOPE_FILE);
+    let envelope_text = fs::read_to_string(&envelope_path).map_err(|err| SavedCharacterStoreError {
+        message: format!("envelope.txt missing or unreadable at {}: {err}", envelope_path.display()),
+    })?;
+    Ok(parse_envelope(&envelope_text)?.game_system)
+}
+
+fn summarize(envelope: &SavedCharacterEnvelope) -> SavedCharacterSummary {
+    let class_summary = envelope
+        .character_input
+        .chosen
+        .class_levels
+        .iter()
+        .map(|class_level| format!("{}:{}", class_level.class_id, class_level.level))
+        .collect::<Vec<_>>()
+        .join(",");
+
+    SavedCharacterSummary {
+        character_id: envelope.character_id.clone(),
+        display_label: envelope.display_label.clone(),
+        game_system: envelope.game_system.clone(),
+        schema_version: envelope.schema_version,
+        saved_at: envelope.saved_at.clone(),
+        race_id: envelope.character_input.chosen.race_id.clone(),
+        class_summary,
+    }
+}
+
+// --- Save-time validation ---
+
+/// `true` when a choice set id fits the `choice=` line's colon grammar (exactly two
+/// colon-segments; the loader re-splits the line after the second). Any other set id -- a
+/// converted rule's own `book:kind:slug` id -- is written on a `rule_choice=` line instead.
+fn is_colon_grammar_choice_set(choice_set_id: &str) -> bool {
+    choice_set_id.split(':').count() == 2
+}
+
+/// Rejects a `CharacterInput` whose rendered fixture lines the loader could not
+/// read back as the same record. The fixture grammar is line- and colon-based,
+/// so every persisted string must be single-line, and a selected choice on a
+/// `choice=` line must match the loader's segment shape (`choice_set_id` =
+/// exactly two colon-segments, `selection_id` = at least two) or it would reload
+/// as a different choice — or not at all. A choice on a `rule_choice=` line
+/// must carry no `|` in either id.
+fn validate_character_input(input: &CharacterInput) -> Result<(), SavedCharacterStoreError> {
+    let single_line = |field: &str, value: &str| -> Result<(), SavedCharacterStoreError> {
+        if value.contains('\n') || value.contains('\r') {
+            return Err(SavedCharacterStoreError {
+                message: format!(
+                    "character input {field} contains a newline/carriage return; cannot be \
+                     persisted in authoritative_character_input.txt"
+                ),
+            });
+        }
+        Ok(())
+    };
+
+    if let Some(case_id) = &input.case_id {
+        single_line("case_id", case_id)?;
+    }
+    single_line("source_package_id", &input.source_package_id)?;
+    single_line("race_id", &input.chosen.race_id)?;
+    for cl in &input.chosen.class_levels {
+        single_line("class_level class_id", &cl.class_id)?;
+    }
+    for feat in &input.chosen.selected_feats {
+        single_line("selected feat", feat)?;
+    }
+    for character_trait in &input.chosen.selected_traits {
+        single_line("selected trait", character_trait)?;
+    }
+    for skill in &input.chosen.skill_allocations {
+        single_line("skill allocation skill_id", &skill.skill_id)?;
+    }
+    for eq in &input.chosen.equipment_selections {
+        single_line("equipment selection item_id", &eq.item_id)?;
+        for modifier in &eq.applied_modifiers {
+            single_line("equipment selection applied_modifiers modifier_item_id", modifier)?;
+        }
+    }
+    for spell in &input.chosen.spells_selected {
+        single_line("spell selection spell_id", &spell.spell_id)?;
+        single_line("spell selection source_class_id", &spell.source_class_id)?;
+    }
+    for choice in &input.chosen.selected_choices {
+        single_line("selected choice choice_set_id", &choice.choice_set_id)?;
+        single_line("selected choice selection_id", &choice.selection_id)?;
+        if !is_colon_grammar_choice_set(&choice.choice_set_id) {
+            // A choice recorded under a converted rule's own id (`book:kind:slug`) is written
+            // on a `rule_choice=<set>|<selection>` line, which splits on `|`, not `:`.
+            for (field, value) in [
+                ("choice_set_id", &choice.choice_set_id),
+                ("selection_id", &choice.selection_id),
+            ] {
+                if value.is_empty() || value.contains(RULE_CHOICE_SEPARATOR) {
+                    return Err(SavedCharacterStoreError {
+                        message: format!(
+                            "selected choice {field} '{value}' must be non-empty and must not \
+                             contain '{RULE_CHOICE_SEPARATOR}' to round-trip through the \
+                             rule_choice= line"
+                        ),
+                    });
+                }
+            }
+            continue;
+        }
+        if choice.selection_id.split(':').count() < 2 {
+            return Err(SavedCharacterStoreError {
+                message: format!(
+                    "selected choice selection_id '{}' must have at least two colon-segments \
+                     to round-trip through the fixture grammar",
+                    choice.selection_id
+                ),
+            });
+        }
+    }
+    for prov in &input.selection_provenance {
+        single_line("selection provenance source_ref", &prov.source_ref)?;
+    }
+
+    Ok(())
+}
+
+// --- Rendering ---
+
+fn render_envelope(envelope: &SavedCharacterEnvelope) -> String {
+    let mut out = String::new();
+    let _ = writeln!(out, "character_id = {}", envelope.character_id);
+    let _ = writeln!(out, "revision_id = {}", envelope.revision_id);
+    let _ = writeln!(out, "revision_kind = {}", envelope.revision_kind.as_str());
+    let _ = writeln!(out, "saved_at = {}", envelope.saved_at);
+    let _ = writeln!(out, "schema_version = {}", envelope.schema_version);
+    let _ = writeln!(
+        out,
+        "app_or_runtime_version = {}",
+        envelope.app_or_runtime_version
+    );
+    let _ = writeln!(
+        out,
+        "content_or_rules_provenance = {}",
+        envelope.content_or_rules_provenance
+    );
+    let _ = writeln!(out, "game_system = {}", envelope.game_system);
+    let _ = writeln!(
+        out,
+        "latest_authoritative_revision_ref = {}",
+        envelope.latest_authoritative_revision_ref
+    );
+    let _ = writeln!(out, "display_label = {}", envelope.display_label);
+    out
+}
+
+fn render_character_input(input: &CharacterInput) -> String {
+    let mut out = String::new();
+    if let Some(case_id) = &input.case_id {
+        let _ = writeln!(out, "case_id={case_id}");
+    }
+    let _ = writeln!(out, "source_package_id={}", input.source_package_id);
+    let _ = writeln!(out, "race_id={}", input.chosen.race_id);
+    for cl in &input.chosen.class_levels {
+        let _ = writeln!(out, "class_level={}:{}", cl.class_id, cl.level);
+    }
+    let _ = writeln!(
+        out,
+        "ability=strength:{}",
+        input.chosen.ability_scores.strength
+    );
+    let _ = writeln!(
+        out,
+        "ability=dexterity:{}",
+        input.chosen.ability_scores.dexterity
+    );
+    let _ = writeln!(
+        out,
+        "ability=constitution:{}",
+        input.chosen.ability_scores.constitution
+    );
+    let _ = writeln!(
+        out,
+        "ability=intelligence:{}",
+        input.chosen.ability_scores.intelligence
+    );
+    let _ = writeln!(out, "ability=wisdom:{}", input.chosen.ability_scores.wisdom);
+    let _ = writeln!(
+        out,
+        "ability=charisma:{}",
+        input.chosen.ability_scores.charisma
+    );
+    for feat in &input.chosen.selected_feats {
+        let _ = writeln!(out, "feat={feat}");
+    }
+    for character_trait in &input.chosen.selected_traits {
+        let _ = writeln!(out, "trait={character_trait}");
+    }
+    for skill in &input.chosen.skill_allocations {
+        let _ = writeln!(out, "skill={}:{}", skill.skill_id, skill.ranks);
+    }
+    for eq in &input.chosen.equipment_selections {
+        let state = match eq.active_state {
+            ActiveState::EquippedActive => "equipped",
+            ActiveState::SelectedInactive => "selected_inactive",
+            ActiveState::Absent => "absent",
+        };
+        let _ = writeln!(out, "equipment={}:{}", eq.item_id, state);
+        // Must come after this selection's own `equipment=` line --
+        // `apply_equipment_modifier`'s own parser looks up the matching
+        // selection by `item_id` and requires it to already exist.
+        for modifier in &eq.applied_modifiers {
+            let _ = writeln!(out, "equipment_modifier={}:{}", eq.item_id, modifier);
+        }
+    }
+    for spell in &input.chosen.spells_selected {
+        let mode = match spell.acquisition_mode {
+            AcquisitionMode::Known => "known",
+            AcquisitionMode::Prepared => "prepared",
+            AcquisitionMode::Granted => "granted",
+        };
+        let _ = writeln!(
+            out,
+            "spell={}:{}:{mode}",
+            spell.spell_id, spell.source_class_id
+        );
+    }
+    for choice in &input.chosen.selected_choices {
+        if is_colon_grammar_choice_set(&choice.choice_set_id) {
+            let _ = writeln!(
+                out,
+                "choice={}:{}",
+                choice.choice_set_id, choice.selection_id
+            );
+        } else {
+            let _ = writeln!(
+                out,
+                "rule_choice={}{RULE_CHOICE_SEPARATOR}{}",
+                choice.choice_set_id, choice.selection_id
+            );
+        }
+    }
+    for prov in &input.selection_provenance {
+        let _ = writeln!(out, "provenance={}", prov.source_ref);
+    }
+    out
+}
+
+// --- Parsing ---
+
+#[derive(Default)]
+struct ParsedEnvelopeMetadata {
+    character_id: Option<String>,
+    revision_id: Option<String>,
+    revision_kind: Option<SavedCharacterRevisionKind>,
+    saved_at: Option<String>,
+    schema_version: Option<u16>,
+    app_or_runtime_version: Option<String>,
+    content_or_rules_provenance: Option<String>,
+    game_system: Option<String>,
+    latest_authoritative_revision_ref: Option<String>,
+    display_label: Option<String>,
+}
+
+struct EnvelopeMetadata {
+    character_id: String,
+    revision_id: String,
+    revision_kind: SavedCharacterRevisionKind,
+    saved_at: String,
+    schema_version: u16,
+    app_or_runtime_version: String,
+    content_or_rules_provenance: String,
+    game_system: String,
+    latest_authoritative_revision_ref: String,
+    display_label: String,
+}
+
+/// Back-compat default for schema_version=1 envelopes saved before the
+/// `game_system` field existed. Every pre-existing saved character is PF1e;
+/// this derives the canonical short id from the existing
+/// `content_or_rules_provenance` lineage prefix (e.g. "pf1.core_rulebook" ->
+/// "pf1") instead of fabricating an unrelated default.
+const LEGACY_DEFAULT_GAME_SYSTEM: &str = "pf1";
+
+fn derive_legacy_game_system(content_or_rules_provenance: &str) -> String {
+    content_or_rules_provenance
+        .split('.')
+        .next()
+        .filter(|segment| !segment.is_empty())
+        .unwrap_or(LEGACY_DEFAULT_GAME_SYSTEM)
+        .to_owned()
+}
+
+fn parse_envelope(text: &str) -> Result<EnvelopeMetadata, SavedCharacterStoreError> {
+    let mut parsed = ParsedEnvelopeMetadata::default();
+
+    for raw_line in text.lines() {
+        let line = raw_line.trim();
+        if line.is_empty() || line.starts_with('#') {
+            continue;
+        }
+
+        let Some((key, value)) = line.split_once('=') else {
+            return Err(parse_error(format!(
+                "envelope line missing '=': {raw_line}"
+            )));
+        };
+        let key = key.trim();
+        let value = value.trim();
+
+        match key {
+            "character_id" => parsed.character_id = Some(value.to_owned()),
+            "revision_id" => parsed.revision_id = Some(value.to_owned()),
+            "revision_kind" => {
+                let kind = SavedCharacterRevisionKind::parse(value).ok_or_else(|| {
+                    parse_error(format!("envelope revision_kind '{value}' is unsupported"))
+                })?;
+                parsed.revision_kind = Some(kind);
+            }
+            "saved_at" => parsed.saved_at = Some(value.to_owned()),
+            "schema_version" => {
+                let version = value.parse::<u16>().map_err(|_| {
+                    parse_error(format!(
+                        "envelope schema_version '{value}' is not a valid version number"
+                    ))
+                })?;
+                parsed.schema_version = Some(version);
+            }
+            "app_or_runtime_version" => parsed.app_or_runtime_version = Some(value.to_owned()),
+            "content_or_rules_provenance" => {
+                parsed.content_or_rules_provenance = Some(value.to_owned())
+            }
+            "game_system" => parsed.game_system = Some(value.to_owned()),
+            "latest_authoritative_revision_ref" => {
+                parsed.latest_authoritative_revision_ref = Some(value.to_owned())
+            }
+            "display_label" => parsed.display_label = Some(value.to_owned()),
+            unknown => {
+                return Err(parse_error(format!(
+                    "envelope unsupported field '{unknown}'"
+                )));
+            }
+        }
+    }
+
+    let content_or_rules_provenance = parsed.content_or_rules_provenance.ok_or_else(|| {
+        parse_error("envelope missing required field content_or_rules_provenance")
+    })?;
+    // Pre-existing (schema_version=1) envelopes have no game_system line at
+    // all; derive an honest default from the content/rules lineage rather
+    // than failing to load a legacy artifact.
+    let game_system = parsed
+        .game_system
+        .unwrap_or_else(|| derive_legacy_game_system(&content_or_rules_provenance));
+
+    Ok(EnvelopeMetadata {
+        character_id: parsed
+            .character_id
+            .ok_or_else(|| parse_error("envelope missing required field character_id"))?,
+        revision_id: parsed
+            .revision_id
+            .ok_or_else(|| parse_error("envelope missing required field revision_id"))?,
+        revision_kind: parsed
+            .revision_kind
+            .ok_or_else(|| parse_error("envelope missing required field revision_kind"))?,
+        saved_at: parsed
+            .saved_at
+            .ok_or_else(|| parse_error("envelope missing required field saved_at"))?,
+        schema_version: parsed
+            .schema_version
+            .ok_or_else(|| parse_error("envelope missing required field schema_version"))?,
+        app_or_runtime_version: parsed
+            .app_or_runtime_version
+            .ok_or_else(|| parse_error("envelope missing required field app_or_runtime_version"))?,
+        content_or_rules_provenance,
+        game_system,
+        latest_authoritative_revision_ref: parsed.latest_authoritative_revision_ref.ok_or_else(
+            || parse_error("envelope missing required field latest_authoritative_revision_ref"),
+        )?,
+        display_label: parsed
+            .display_label
+            .ok_or_else(|| parse_error("envelope missing required field display_label"))?,
+    })
+}
+
+fn parse_character_input(text: &str) -> Result<CharacterInput, SavedCharacterStoreError> {
+    let result = load_character_input_fixture(text);
+    if !result.diagnostics.is_empty() {
+        let messages: Vec<&str> = result
+            .diagnostics
+            .iter()
+            .map(|d| d.message.as_str())
+            .collect();
+        return Err(SavedCharacterStoreError {
+            message: format!(
+                "authoritative_character_input.txt failed to parse: {}",
+                messages.join("; ")
+            ),
+        });
+    }
+    result
+        .character_input
+        .ok_or_else(|| SavedCharacterStoreError {
+            message: "authoritative_character_input.txt produced no valid CharacterInput"
+                .to_owned(),
+        })
+}
+
+fn io_error(path: &Path, err: std::io::Error) -> SavedCharacterStoreError {
+    SavedCharacterStoreError {
+        message: format!("{}: {err}", path.display()),
+    }
+}
+
+fn parse_error(message: impl Into<String>) -> SavedCharacterStoreError {
+    SavedCharacterStoreError {
+        message: message.into(),
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::rules_core::character_input::{
+        AbilityScores, CharacterClassLevel, ChosenCharacterState, EquipmentSelection, SelectedChoice,
+    };
+    use crate::saved_character::CURRENT_SAVED_CHARACTER_SCHEMA_VERSION;
+
+    fn tempdir(label: &str) -> std::path::PathBuf {
+        let unique = std::time::SystemTime::now()
+            .duration_since(std::time::UNIX_EPOCH)
+            .expect("system time should be after unix epoch")
+            .as_nanos();
+        let path = std::env::temp_dir().join(format!(
+            "codex-local-store-{label}-{}-{unique}",
+            std::process::id()
+        ));
+        fs::create_dir_all(&path).expect("temp dir should be creatable");
+        path
+    }
+
+    fn envelope_with(equipment_selections: Vec<EquipmentSelection>) -> SavedCharacterEnvelope {
+        SavedCharacterEnvelope {
+            character_id: "char-local-store-test".to_owned(),
+            revision_id: "char-local-store-test.rev.1".to_owned(),
+            revision_kind: SavedCharacterRevisionKind::Authoritative,
+            saved_at: "2026-07-24T00:00:00Z".to_owned(),
+            schema_version: CURRENT_SAVED_CHARACTER_SCHEMA_VERSION,
+            app_or_runtime_version: "codex-dev".to_owned(),
+            content_or_rules_provenance: "pf1.core_rulebook".to_owned(),
+            game_system: "pf1".to_owned(),
+            latest_authoritative_revision_ref: "char-local-store-test.rev.1".to_owned(),
+            display_label: "Local Store Test Character".to_owned(),
+            character_input: CharacterInput {
+                case_id: None,
+                source_package_id: "core_rulebook".to_owned(),
+                chosen: ChosenCharacterState {
+                    race_id: "race:human".to_owned(),
+                    class_levels: vec![CharacterClassLevel {
+                        class_id: "class:fighter".to_owned(),
+                        level: 1,
+                    }],
+                    ability_scores: AbilityScores {
+                        strength: 16,
+                        dexterity: 14,
+                        constitution: 14,
+                        intelligence: 10,
+                        wisdom: 12,
+                        charisma: 8,
+                    },
+                    selected_feats: Vec::new(),
+                    skill_allocations: Vec::new(),
+                    equipment_selections,
+                    selected_choices: Vec::new(),
+                    selected_traits: Vec::new(),
+                    spells_selected: Vec::new(),
+                    class_ability_activations: Vec::new(),
+                },
+                selection_provenance: Vec::new(),
+            },
+        }
+    }
+
+    /// v0.6 alpha swarm items 1+27 sub-task 6: `applied_modifiers` must
+    /// survive a real save/load round-trip through this store, not just
+    /// exist as an in-memory field. Found by an end-to-end desktop test
+    /// (`attach_equipment_modifier_at_root`) reloading empty after a
+    /// reported-successful attach -- traced to this exact gap: the
+    /// fixture-text *parser* (`load_character_input_fixture`) already
+    /// supported `equipment_modifier=` lines (sub-task 1), but this
+    /// store's own *writer* never emitted them, silently dropping every
+    /// attached modifier on save.
+    #[test]
+    fn save_and_load_round_trips_applied_modifiers() {
+        let root = tempdir("applied-modifiers-round-trip");
+        let envelope = envelope_with(vec![EquipmentSelection {
+            item_id: "item:longsword".to_owned(),
+            equipped_or_active: true,
+            active_state: ActiveState::EquippedActive,
+            applied_modifiers: vec![
+                "Special Ability ~ +1 ~ Weapon".to_owned(),
+                "Special Quality ~ Masterwork ~ Weapon".to_owned(),
+            ],
+        }]);
+
+        SavedCharacterStore::save(&envelope, &root).expect("save should succeed");
+        let reloaded = SavedCharacterStore::load(&root).expect("load should succeed");
+
+        assert_eq!(
+            reloaded.character_input.chosen.equipment_selections[0].applied_modifiers,
+            vec![
+                "Special Ability ~ +1 ~ Weapon".to_owned(),
+                "Special Quality ~ Masterwork ~ Weapon".to_owned(),
+            ]
+        );
+
+        fs::remove_dir_all(&root).ok();
+    }
+
+    /// SD-36 Epic E desktop-P1-02 (SD-34 R14-02): a save that fails partway through
+    /// writing must leave the PREVIOUS successful save completely intact -- not a fresh
+    /// envelope paired with a stale/missing character-input file. Forces the failure
+    /// deterministically by pre-creating the second temp file's path as a DIRECTORY, so
+    /// `atomic_write_prepare`'s `fs::write` for the character-input file fails outright,
+    /// after the envelope's own temp file already wrote successfully -- the exact
+    /// "partway through" shape the old two-sequential-`fs::write` code was vulnerable to.
+    #[test]
+    fn a_save_that_fails_partway_through_leaves_the_previous_version_intact() {
+        let root = tempdir("atomic-save-partial-failure");
+        let v1 = envelope_with(vec![]);
+        SavedCharacterStore::save(&v1, &root).expect("the first save should succeed");
+        let loaded_v1 = SavedCharacterStore::load(&root).expect("v1 loads");
+
+        // Sabotage the SECOND file's temp path: a directory can't be `fs::write`n over.
+        let sabotage_path = root.join(format!("{CHARACTER_INPUT_FILE}.tmp"));
+        fs::create_dir_all(&sabotage_path).expect("sabotage directory should be creatable");
+
+        let mut v2 = envelope_with(vec![]);
+        v2.display_label = "Second Save That Must Not Land".to_owned();
+        let result = SavedCharacterStore::save(&v2, &root);
+        assert!(result.is_err(), "the sabotaged save must report failure, not silently half-succeed");
+
+        fs::remove_dir_all(&sabotage_path).ok();
+        let loaded_after_failure = SavedCharacterStore::load(&root).expect("v1 must still load after the failed v2 save");
+        assert_eq!(
+            loaded_after_failure.display_label, loaded_v1.display_label,
+            "a failed save must not touch the previously-saved envelope"
+        );
+        assert_eq!(loaded_after_failure.display_label, "Local Store Test Character", "v2's label must never have landed");
+
+        fs::remove_dir_all(&root).ok();
+    }
+
+    /// A successful save must leave no `.tmp` leftovers -- the atomic-write helper's temp
+    /// files are an implementation detail, never a third file `load()` (or a directory
+    /// listing) has to know to ignore.
+    #[test]
+    fn a_successful_save_leaves_no_tmp_files_behind() {
+        let root = tempdir("atomic-save-no-tmp-leftovers");
+        let envelope = envelope_with(vec![]);
+        SavedCharacterStore::save(&envelope, &root).expect("save should succeed");
+
+        let entries: Vec<String> = fs::read_dir(&root)
+            .expect("root should be readable")
+            .filter_map(|e| e.ok())
+            .map(|e| e.file_name().to_string_lossy().into_owned())
+            .collect();
+        assert!(!entries.iter().any(|n| n.ends_with(".tmp")), "no .tmp file should remain after a successful save: {entries:?}");
+
+        fs::remove_dir_all(&root).ok();
+    }
+
+    /// A selection with no attached modifiers must round-trip to a real
+    /// empty list, not an error or a fabricated entry -- the common case
+    /// every pre-sub-task-1 saved character already exercises.
+    #[test]
+    fn save_and_load_round_trips_an_empty_applied_modifiers_list() {
+        let root = tempdir("applied-modifiers-empty-round-trip");
+        let envelope = envelope_with(vec![EquipmentSelection {
+            item_id: "item:longsword".to_owned(),
+            equipped_or_active: true,
+            active_state: ActiveState::EquippedActive,
+            applied_modifiers: Vec::new(),
+        }]);
+
+        SavedCharacterStore::save(&envelope, &root).expect("save should succeed");
+        let reloaded = SavedCharacterStore::load(&root).expect("load should succeed");
+
+        assert!(reloaded.character_input.chosen.equipment_selections[0].applied_modifiers.is_empty());
+
+        fs::remove_dir_all(&root).ok();
+    }
+
+    /// **AT-34-E4-002**: `selected_traits` must survive a real save/load
+    /// round-trip through this store, the same discipline
+    /// `save_and_load_round_trips_applied_modifiers`' own doc comment
+    /// records finding missing for `applied_modifiers` -- the parser
+    /// (`load_character_input_fixture`) and the writer
+    /// (`render_character_input`) must agree on the `trait=` line, or a
+    /// player's trait selection silently vanishes on save.
+    #[test]
+    fn save_and_load_round_trips_selected_traits() {
+        let root = tempdir("selected-traits-round-trip");
+        let mut envelope = envelope_with(Vec::new());
+        envelope.character_input.chosen.selected_traits = vec![
+            "trait:trait_acrobat".to_owned(),
+            "trait:trait_ease_of_faith".to_owned(),
+        ];
+
+        SavedCharacterStore::save(&envelope, &root).expect("save should succeed");
+        let reloaded = SavedCharacterStore::load(&root).expect("load should succeed");
+
+        assert_eq!(
+            reloaded.character_input.chosen.selected_traits,
+            vec!["trait:trait_acrobat".to_owned(), "trait:trait_ease_of_faith".to_owned()]
+        );
+
+        fs::remove_dir_all(&root).ok();
+    }
+
+    /// SD-36 F1c (f1c:suite-desktop): a pick whose choice is a converted rule records it under
+    /// that rule's own id -- `book:kind:slug`, three colon-segments (the Summoner Class
+    /// Selection, `class_seeds::SUMMONER_CLASS_SELECTION_CHOICE_ID`; the Commoner's one Simple
+    /// weapon, `class_seeds::COMMONER_WEAPON_CHOICE_ID`). The `choice=` line's colon grammar
+    /// cannot carry that id, so a create call for either class failed to save at all. It must
+    /// round-trip beside a legacy two-segment choice, unchanged and in order.
+    #[test]
+    fn save_and_load_round_trips_a_choice_recorded_under_a_converted_rule_id() {
+        let root = tempdir("rule-choice-round-trip");
+        let mut envelope = envelope_with(Vec::new());
+        let choices = vec![
+            SelectedChoice {
+                choice_set_id: "choice:summoner_eidolon_evolution".to_owned(),
+                selection_id: "evolution:improved_natural_armor".to_owned(),
+            },
+            SelectedChoice {
+                choice_set_id: crate::rules_core::class_seeds::SUMMONER_CLASS_SELECTION_CHOICE_ID.to_owned(),
+                selection_id: crate::rules_core::class_seeds::SUMMONER_CANONICAL_CLASS_SELECTION.to_owned(),
+            },
+            SelectedChoice {
+                choice_set_id: crate::rules_core::class_seeds::COMMONER_WEAPON_CHOICE_ID.to_owned(),
+                selection_id: crate::rules_core::class_seeds::COMMONER_CANONICAL_WEAPON.to_owned(),
+            },
+        ];
+        envelope.character_input.chosen.selected_choices = choices.clone();
+
+        SavedCharacterStore::save(&envelope, &root).expect("save should succeed");
+        let reloaded = SavedCharacterStore::load(&root).expect("load should succeed");
+
+        assert_eq!(reloaded.character_input.chosen.selected_choices, choices);
+
+        fs::remove_dir_all(&root).ok();
+    }
+
+    /// The `rule_choice=` line separates the two ids with `|`; an id carrying `|` could not
+    /// reload as the same pick, so the save refuses it rather than writing a different one.
+    #[test]
+    fn a_rule_choice_id_containing_the_separator_is_refused() {
+        let root = tempdir("rule-choice-separator-refused");
+        let mut envelope = envelope_with(Vec::new());
+        envelope.character_input.chosen.selected_choices = vec![SelectedChoice {
+            choice_set_id: "book:class_feature:a|b".to_owned(),
+            selection_id: "book:class_feature:c".to_owned(),
+        }];
+
+        assert!(SavedCharacterStore::save(&envelope, &root).is_err());
+
+        fs::remove_dir_all(&root).ok();
+    }
+
+    /// A Cyberpunk RED character directory as `rules_core::cpr::store` writes it: an
+    /// `envelope.txt` in this store's key=value grammar naming `game_system = cyberpunk-red`,
+    /// and `cpr_character_input.txt` -- no `authoritative_character_input.txt`. Written by
+    /// hand here so this store's tests do not depend on the CPR store.
+    fn write_cyberpunk_red_directory(root: &Path) {
+        fs::create_dir_all(root).expect("cpr dir should be creatable");
+        fs::write(
+            root.join(ENVELOPE_FILE),
+            "character_id = cpr-listing-test\n\
+             revision_id = cpr-listing-test.rev.1\n\
+             revision_kind = authoritative\n\
+             saved_at = 2026-10-13T00:00:00Z\n\
+             schema_version = 1\n\
+             app_or_runtime_version = codex-dev\n\
+             content_or_rules_provenance = cyberpunk-red.corebook\n\
+             game_system = cyberpunk-red\n\
+             latest_authoritative_revision_ref = cpr-listing-test.rev.1\n\
+             display_label = CPR Listing Test\n",
+        )
+        .expect("cpr envelope should be writable");
+        fs::write(root.join("cpr_character_input.txt"), "stat.int = 6\n").expect("cpr input should be writable");
+    }
+
+    fn pf_fixture_root() -> std::path::PathBuf {
+        std::path::Path::new(env!("CARGO_MANIFEST_DIR"))
+            .join("tests/fixtures/sd14/pf1_human_fighter_level1_saved_character")
+    }
+
+    /// A characters root holding one Pathfinder character and one Cyberpunk RED directory
+    /// lists the Pathfinder character and reports NO unreadable entry: the CPR directory is
+    /// a system this store does not own (`owns_payload`), not a corrupt PF save.
+    #[test]
+    fn list_all_skips_a_directory_of_a_system_the_store_does_not_own() {
+        let characters_root = tempdir("list-all-skips-cyberpunk-red");
+        let pf_root = characters_root.join("pf-character");
+        let pf = SavedCharacterStore::load(&pf_fixture_root()).expect("the PF fixture loads");
+        SavedCharacterStore::save(&pf, &pf_root).expect("the PF fixture re-saves");
+        write_cyberpunk_red_directory(&characters_root.join("cpr-character"));
+
+        let listing = SavedCharacterStore::list_all(&characters_root).expect("lists");
+
+        assert_eq!(listing.characters.len(), 1, "{listing:?}");
+        assert_eq!(listing.characters[0].game_system, "pf1");
+        assert_eq!(listing.unreadable_entries.len(), 0, "{listing:?}");
+
+        fs::remove_dir_all(&characters_root).ok();
+    }
+
+    /// `peek_game_system` reads `envelope.txt` alone: it names a CPR directory's system
+    /// (which has no PF payload to load) and a legacy PF fixture's derived `pf1`.
+    #[test]
+    fn peek_game_system_reads_the_envelope_alone() {
+        let characters_root = tempdir("peek-game-system");
+        let cpr_root = characters_root.join("cpr-character");
+        write_cyberpunk_red_directory(&cpr_root);
+
+        assert_eq!(peek_game_system(&cpr_root).expect("peeks"), "cyberpunk-red");
+        assert_eq!(peek_game_system(&pf_fixture_root()).expect("peeks"), "pf1");
+        assert!(peek_game_system(&characters_root.join("absent")).is_err());
+        assert!(!owns_payload("cyberpunk-red"));
+        assert!(owns_payload("pf1") && owns_payload("starfinder-1e"));
+
+        fs::remove_dir_all(&characters_root).ok();
+    }
+
+    /// The `envelope.txt` this store renders for the existing PF fixture is byte-identical to
+    /// what the store rendered before SD-38 (the legacy fixture has no `game_system` line, so
+    /// the render adds `game_system = pf1` from its provenance). Pinned as a literal so any
+    /// change to `render_envelope` turns this red.
+    #[test]
+    fn render_envelope_of_the_pf_fixture_is_unchanged() {
+        let pf = SavedCharacterStore::load(&pf_fixture_root()).expect("the PF fixture loads");
+        assert_eq!(
+            render_envelope(&pf),
+            "character_id = sd14.fixture.pf1-human-fighter-level1\n\
+             revision_id = sd14.fixture.pf1-human-fighter-level1.rev.1\n\
+             revision_kind = authoritative\n\
+             saved_at = 2026-06-30T00:00:00Z\n\
+             schema_version = 1\n\
+             app_or_runtime_version = codex-dev\n\
+             content_or_rules_provenance = pf1.core_rulebook\n\
+             game_system = pf1\n\
+             latest_authoritative_revision_ref = sd14.fixture.pf1-human-fighter-level1.rev.1\n\
+             display_label = PF1 Human Fighter Level 1\n"
+        );
+    }
+
+    /// No trait selections at all must round-trip to a real empty list --
+    /// the common case for every character created before this cycle.
+    #[test]
+    fn save_and_load_round_trips_an_empty_selected_traits_list() {
+        let root = tempdir("selected-traits-empty-round-trip");
+        let envelope = envelope_with(Vec::new());
+
+        SavedCharacterStore::save(&envelope, &root).expect("save should succeed");
+        let reloaded = SavedCharacterStore::load(&root).expect("load should succeed");
+
+        assert!(reloaded.character_input.chosen.selected_traits.is_empty());
+
+        fs::remove_dir_all(&root).ok();
+    }
+
+    #[test]
+    fn race_weapon_proficiency_the_deity_row_follows_the_bio_on_every_load() {
+        use crate::rules_core::pilot_compute::CHARACTER_DEITY_CHOICE_ID;
+        let row = |root: &Path| -> Vec<String> {
+            let input = SavedCharacterStore::load(root).unwrap().character_input;
+            input.chosen.selected_choices.iter().filter(|c| c.choice_set_id == CHARACTER_DEITY_CHOICE_ID).map(|c| c.selection_id.clone()).collect()
+        };
+        let root = tempdir("deity-row");
+        let mut envelope = envelope_with(Vec::new());
+        SavedCharacterStore::save(&envelope, &root).unwrap();
+        assert!(row(&root).is_empty(), "no bio");
+
+        fs::write(root.join("bio.json"), r#"{"deity":"Cayden Cailean"}"#).unwrap();
+        assert_eq!(row(&root), ["deity:cayden_cailean"]);
+
+        // Saved with the row and loaded again, there is still one.
+        SavedCharacterStore::save(&SavedCharacterStore::load(&root).unwrap(), &root).unwrap();
+        assert_eq!(row(&root), ["deity:cayden_cailean"]);
+
+        fs::write(root.join("bio.json"), "{\"deity\":\"Iomedae\\nof the\\nLast Light\"}").unwrap();
+        assert_eq!(row(&root), ["deity:iomedae_of_the_last_light"], "a saved file holds one line per row");
+        SavedCharacterStore::save(&SavedCharacterStore::load(&root).unwrap(), &root).unwrap();
+
+        fs::write(root.join("bio.json"), r#"{"deity":""}"#).unwrap();
+        assert!(row(&root).is_empty(), "cleared, the saved row goes");
+
+        envelope.game_system = "sf1".to_owned();
+        SavedCharacterStore::save(&envelope, &root).unwrap();
+        fs::write(root.join("bio.json"), r#"{"deity":"Iomedae"}"#).unwrap();
+        assert!(row(&root).is_empty(), "another system's input stays as it was saved");
+        fs::remove_dir_all(&root).ok();
+    }
+}

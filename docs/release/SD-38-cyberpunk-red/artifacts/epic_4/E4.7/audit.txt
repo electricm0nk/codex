@@ -1,0 +1,12 @@
+# CARD_BASE=ddabf96527c73aaf6853b8bfd4ae1091de817093 HEAD=a42c8d0723
+OK_NO_BUNDLE_TAGS
+OK_NO_TOKENS
+OK_NO_NOOP_HANDLERS
+OK_NO_MOCK_LEAKS
+OK_NO_WOULD_STRINGS
+# files in diff under src crates apps scripts tests:
+apps/desktop/scripts/ui-smoke/spec.json
+# .rs files in diff: 0
+# R12: npm run ui-smoke:doc then git status --porcelain docs/testing/ui-smoke-inventory.md
+Wrote /home/ubuntu/workspace/repos/codex/.worktrees/sd38-e4/docs/testing/ui-smoke-inventory.md (115 rows, 18 screens).
+(empty above = inventory committed in sync)

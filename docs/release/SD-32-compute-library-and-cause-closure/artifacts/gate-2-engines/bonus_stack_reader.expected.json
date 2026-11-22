@@ -1,0 +1,38 @@
+{
+  "_provenance": "Kanban card 8 (gate-2-corpus-wide-runs), AT-32-G2-004. Every entry below is transcribed by hand directly off the named corpus JSON files' own data.raw_tokens (grep -n 'AlchemistBombLVL|WitchWardBonus|WitchHexDC_Ward' against the paths cited per variable) -- never generated from bonus_stack_reader's own output. `resolved` entries assert a full structural match against the corpus-wide run's outcome for that variable; `refused` entries assert only status + a reason substring (a refusal's exact wording is generated prose, not a corpus-transcribable fact -- see the fixture-check's own code comment in src/bin/bonus_stack_reader.rs).",
+  "outcomes": {
+    "AlchemistBombLVL": {
+      "_sources": [
+        "data/corpus/advanced_players_guide/class_feature/alchemist/bomb.json (DEFINE:AlchemistBombLVL|0, BONUS:VAR|AlchemistBombLVL|AlchemistLVL)",
+        "data/corpus/advanced_players_guide/class_feature/master_chymist/bomb_thrower.json (BONUS:VAR|AlchemistBombLVL|MasterChymistLVL)",
+        "data/corpus/inner_sea_magic/class_feature/crypt_breaker/alkahest_bombs.json (DEFINE:AlchemistBombLVL|0 agreeing, BONUS:VAR|AlchemistBombLVL|AlchemistLVL) -- a THIRD producer this fixture's author only found by running the corpus-wide sweep itself; card 7's own receipt only knew of the first two"
+      ],
+      "status": "resolved",
+      "base": "0",
+      "addends": [
+        { "formula": "AlchemistLVL", "gate": null },
+        { "formula": "MasterChymistLVL", "gate": null },
+        { "formula": "AlchemistLVL", "gate": null }
+      ]
+    },
+    "WitchWardBonus": {
+      "_sources": [
+        "data/corpus/advanced_players_guide/class_feature/witch_hex/ward.json (DEFINE:WitchWardBonus|0; BONUS:VAR|WitchWardBonus|2, |1|PREVARGTEQ:WitchHexAbilityLVL,8, |1|PREVARGTEQ:WitchHexAbilityLVL,16)"
+      ],
+      "status": "resolved",
+      "base": "0",
+      "addends": [
+        { "formula": "2", "gate": null },
+        { "formula": "1", "gate": { "variable": "WitchHexAbilityLVL", "threshold": 8 } },
+        { "formula": "1", "gate": { "variable": "WitchHexAbilityLVL", "threshold": 16 } }
+      ]
+    },
+    "WitchHexDC_Ward": {
+      "_sources": [
+        "data/corpus/advanced_players_guide/class_feature/witch_hex/ward.json (BONUS:VAR|WitchHexDC_Ward|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus(Witch Hex ~ Ward) -- a PRE-tag this reader has never verified)"
+      ],
+      "status": "refused",
+      "reason_contains": "not PREVARGTEQ"
+    }
+  }
+}

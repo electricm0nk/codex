@@ -1,0 +1,28 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:38:17Z",
+  "data": {
+    "key": "Extra Martial Flexibility",
+    "category": "General",
+    "name": "Extra Martial Flexibility",
+    "description": "You are extremely versatile in a fight.",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=Special Ability,Brawler ~ Martial Flexibility"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_feats.lst",
+    "sha256": "a71dc625f64f057c38365b3c3a2c6b58b75170fb8ffeb5eb23d3b29c74b7edc3",
+    "line": 64,
+    "record_key": "Extra Martial Flexibility"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,49 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Spearman ~ Running Throw",
+    "name": "Running Throw",
+    "class": "Spearman",
+    "description": "You can put additional power behind your spear attacks by using your momentum. Prior to making a thrown attack with a spear, if you move at least 10 ft. during the round, on the first thrown attack you make that round, you add twice your Strength bonus to the damage roll and ignore the first range penalty.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Spearman ~ Running Throw"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MarksmanClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "You can put additional power behind your spear attacks by using your momentum. Prior to making a thrown attack with a spear, if you move at least 10 ft. during the round, on the first thrown attack you make that round, you add twice your Strength bonus to the damage roll and ignore the first range penalty."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.271"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1915,
+    "record_key": "Spearman ~ Running Throw"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_ability_scaling",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

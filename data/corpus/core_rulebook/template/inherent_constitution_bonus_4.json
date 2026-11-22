@@ -1,0 +1,35 @@
+{
+  "codex_generated_name": false,
+  "completeness": "chassis_only",
+  "data": {
+    "key": "Inherent Constitution Bonus +4",
+    "name": "Inherent Constitution Bonus +4",
+    "raw_tokens": [
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CON|4|TYPE=Inherent"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T16:43:17Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 77,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_templates.lst",
+    "record_key": "Inherent Constitution Bonus +4",
+    "sha256": "5de512bab3d46192a6bd1342579c61ca8376d2e6e8f25a8bb8a47665c657a11b"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

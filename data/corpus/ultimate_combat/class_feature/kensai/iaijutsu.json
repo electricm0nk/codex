@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Kensai ~ Iaijutsu",
+    "name": "Iaijutsu",
+    "class": "Kensai",
+    "description": "At 7th level, a kensai applies his Intelligence modifier as well as his Dexterity modifier on initiative rolls (minimum 0). A kensai may make attacks of opportunity when flat-footed, and may draw his favored weapon as a free action as part of taking an attack of opportunity. This ability replaces the medium armor ability.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Kensai ~ Iaijutsu"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MagusClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 7th level, a kensai applies his Intelligence modifier as well as his Dexterity modifier on initiative rolls (minimum 0). A kensai may make attacks of opportunity when flat-footed, and may draw his favored weapon as a free action as part of taking an attack of opportunity. This ability replaces the medium armor ability."
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|INITIATIVE|max(INT,0)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.55"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/support/uc_abilities_class_um.lst",
+    "sha256": "b8cff28b7be84f4f3c6b650c3e375a3027ff13bf4226233a514d34385bdfb67a",
+    "line": 22,
+    "record_key": "Kensai ~ Iaijutsu"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

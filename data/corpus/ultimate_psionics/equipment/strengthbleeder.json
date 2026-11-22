@@ -1,0 +1,78 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "ArmsArmor",
+    "cost_gp": 15.0,
+    "description": "1/day, until end of combat, enemy takes 1 Strength damage when hit and wielder gets a cumulative +1 enhancement bonus to Strength (up to +8)",
+    "key": "Strengthbleeder",
+    "name": "Strengthbleeder",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "PROFICIENCY",
+        "value": "WEAPON|Longsword"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weapon.Melee.Martial.Specific.Slashing.Sword"
+      },
+      {
+        "key": "COST",
+        "value": "15"
+      },
+      {
+        "key": "WT",
+        "value": "4"
+      },
+      {
+        "key": "CRITMULT",
+        "value": "x2"
+      },
+      {
+        "key": "CRITRANGE",
+        "value": "2"
+      },
+      {
+        "key": "DAMAGE",
+        "value": "1d8"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Material ~ Crystal / Mundane.Special Ability ~ Enhancement Cost|9600.Special Ability ~ +2 ~ Weapon"
+      },
+      {
+        "key": "WIELD",
+        "value": "OneHanded"
+      },
+      {
+        "key": "SIZE",
+        "value": "M"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.398"
+      },
+      {
+        "key": "SPROP",
+        "value": "1/day, until end of combat, enemy takes 1 Strength damage when hit and wielder gets a cumulative +1 enhancement bonus to Strength (up to +8)"
+      }
+    ],
+    "weight_lbs": 4.0
+  },
+  "ingested_at": "2026-08-16T05:06:54Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 115,
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_equipment.lst",
+    "record_key": "Strengthbleeder",
+    "sha256": "ffdbcf81cb0f2d832299a9c6e4c6b124f35fd447a720b0fdda11cf88fe1ca371"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

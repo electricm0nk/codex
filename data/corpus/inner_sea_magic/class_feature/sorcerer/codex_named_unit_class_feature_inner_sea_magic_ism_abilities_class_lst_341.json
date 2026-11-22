@@ -1,0 +1,72 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T21:16:58Z",
+  "data": {
+    "key": "Codex-Named Unit (class_feature_inner_sea_magic_ism_abilities_class_lst_341)",
+    "name": "Codex-Named Unit (class_feature_inner_sea_magic_ism_abilities_class_lst_341)",
+    "class": "Sorcerer",
+    "description": "[redacted PI]",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Sorcerer Class Feature.SpecialQuality.Extraordinary.SorcererEschewMaterials"
+      },
+      {
+        "key": "DEFINE",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "DESCISPI",
+        "value": "YES"
+      },
+      {
+        "key": "DESC",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|False Focus"
+      },
+      {
+        "key": "BONUS",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "BONUS",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.39"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_abilities_class.lst",
+    "sha256": "1418b84b90da5d4c07818b7f309a5b3841578c9a8e1a8a405511b59470fc19d0",
+    "line": 341,
+    "record_key": "Codex-Named Unit (class_feature_inner_sea_magic_ism_abilities_class_lst_341)"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "description,name,raw_tokens",
+  "pi_marker": "redacted",
+  "codex_generated_name": true,
+  "rename": {
+    "reason": "name_pi_blocked",
+    "coordinate": "inner_sea_magic:ism_abilities_class.lst:341"
+  }
+}

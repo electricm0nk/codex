@@ -1,0 +1,2148 @@
+{
+ "$comment": "Row shape: {id, screen, sidecar?: true (run.mjs builds pcg_import into the app's target directory first), setup?: [rowIds], steps: [{op, target?, index? (the nth control of that name, on click and select; a negative index counts from the last), by?: 'label' (click and select: match `target` against the control's aria-label, else the text of the <label> around it, else the aria-label of its role=group -- uiProbe.ts's labelOf; rows of identical 'Move to'/'Drop' buttons and bare checkboxes are told apart this way), text? (a `type` text's {XDG_DATA_HOME} becomes this run's isolated XDG_DATA_HOME, so a typed folder lives and dies with the run), key?, ticks?, ms?}], marker, expect: [string], headingExact?: string (one h1-h3 must read exactly this, from the probe's headings), noHeadingMarkers?: true (no h1-h3 may carry ::before text, from the probe's headingMarkers), forbid?: [string], allowGlobalForbid?: [string], selectsNonEmpty?: [selectName], manual?: reason, notes}. `setup` is FLAT, not recursive: it runs only the listed rows' own `steps`, never THEIR `setup` -- a row meant to be reused as another row's setup entry must list every ancestor it itself needs, explicitly, in order (see e.g. `settings-theme-select-and-manage-themes-modal`'s own setup). `op: 'nativeFile'` (text: a path from the repo root) types that path into the native file dialog the previous step opened, OS-level input because the command channel only reaches the webview. `op: 'select'` (target, text) picks an `<option>` on the `<select>` located by `target` -- added to run.mjs because CreateCharacterForm's race/class selects carry no accessible name of their own (a `<select>`'s `nameOf()` is its full concatenated option text, since that's non-empty textContent, so `target` must be a substring unique to the wanted select's own option list, e.g. one of its option's exact text, not the select's id); `text` is matched against each `<option>`'s own text/value. `op: 'scroll'` takes an optional `direction: 'up'|'down'` (default 'down', unchanged from before) -- 'up' exists because resetToLanding() (run before every row's own setup/steps) clicks RESET_CLICK_NAMES by raw xdotool coordinate, not the DOM channel, and cannot recover a target scrolled to a negative on-screen y (a tall form's own 'Back'/'Cancel' pushed off the top by content added below it, e.g. a create-character outcome panel) -- a row that leaves the page scrolled down should scroll back up as its own last step so the NEXT row's resetToLanding can find a landing-reachable control; see create-character-fill-and-submit's own trailing scroll step. Generated docs/testing/ui-smoke-inventory.md is rendered FROM this file by render-inventory.mjs -- edit this file, not the doc. Names in `target`/`selectsNonEmpty` are matched against the live uiProbe.ts snapshot's targets/selects by exact `name` (trimmed textContent || aria-label || placeholder || title || id, and select#<n> for the handful of anonymous <select>s -- see uiProbe.ts). `expect`/`marker`/`forbid` strings are matched against bodyText, which is captured via `innerText` (respects CSS, e.g. `text-transform: uppercase` renders the text differently than its mixed-case source prop/string) -- assert the case that actually renders, not the source string. Global forbid strings (applied by run.mjs to every row unless listed in that row's own `allowGlobalForbid`): 'could be read from the corpus', 'failure', 'Failed to load', 'requires the desktop runtime', 'undefined', 'NaN', '[object Object]', and 'Loading' still present after the row's wait budget. Denominator discipline: run.mjs writes results.json with EVERY selected row present (status 'not-run', reason 'not executed') before any row executes, and each row's own entry is replaced in place as it finishes -- a run killed mid-way (e.g. a 10-minute shell-call timeout) leaves a results.json whose row count still matches the run's own denominator, with the unexecuted rows explicit as 'not-run', never silently absent (see lib/resultsSkeleton.mjs). `--resume` (with `--out` pointed at a directory that already holds a results.json from a prior invocation): skips re-running any row whose entry there is already 'green' or 'manual' (carried forward verbatim), and re-runs every other row ('not-run', 'red', 'blocked', or missing from that file entirely) -- see lib/resultsSkeleton.mjs's buildResumeState. The final summary line reads '<green>/<total> green, <red> red, <blocked> blocked, <manual> manual, <not-run> not-run (M = <total> rows)'; run.mjs exits non-zero if red, blocked, OR not-run is nonzero. Auto-recover: if 2 consecutive rows both look like a command-channel stall (resetToLanding never reaching a recognizable screen, or a click/type/key/select's own long retry budget -- CLICK_TARGET_WAIT_MS -- still running out; NOT a row that ran cleanly but asserted false), run.mjs relaunches the app once (driver.sh launch) and retries the CURRENT (second) row before recording it, capped at 3 relaunches per run; a retry that then passes gets 'auto-relaunch' as its own `reason`.",
+ "rows": [
+  {
+   "id": "sheet-gear-filter-equipped",
+   "screen": "sheet",
+   "steps": [
+    {
+     "op": "click",
+     "target": "Load\nCharacter"
+    },
+    {
+     "op": "click",
+     "target": "Aldric Ironhand"
+    },
+    {
+     "op": "click",
+     "target": "Load"
+    },
+    {
+     "op": "wait",
+     "ms": 3000
+    },
+    {
+     "op": "click",
+     "target": "Gear"
+    },
+    {
+     "op": "wait",
+     "ms": 1500
+    },
+    {
+     "op": "click",
+     "target": "Market"
+    },
+    {
+     "op": "click",
+     "target": "Cashless",
+     "index": 1
+    },
+    {
+     "op": "click",
+     "target": "Weapons",
+     "index": 1
+    },
+    {
+     "op": "click",
+     "target": "Search the market"
+    },
+    {
+     "op": "type",
+     "text": "Sickle"
+    },
+    {
+     "op": "click",
+     "target": "Sickle"
+    },
+    {
+     "op": "click",
+     "target": "Buy"
+    },
+    {
+     "op": "wait",
+     "ms": 3000
+    },
+    {
+     "op": "key",
+     "key": "Escape"
+    },
+    {
+     "op": "wait",
+     "ms": 1000
+    },
+    {
+     "op": "select",
+     "target": "Not equipped",
+     "text": "Equipped"
+    },
+    {
+     "op": "wait",
+     "ms": 800
+    }
+   ],
+   "marker": "Chain Shirt25 lb \u00b7 Armor",
+   "expect": [
+    "Longsword4 lb \u00b7 Main hand",
+    "\nSickle\nMove to"
+   ],
+   "forbid": [
+    "Sickle2 lb \u00b7 Carried"
+   ],
+   "notes": "SD-41 E3.3 (decisions.md \u00a713): a Sickle bought Cashless lands Carried; the filter set to Equipped keeps the slot rows on the left and drops the Sickle there, while the right tree still lists it."
+  },
+  {
+   "id": "sheet-gear-move-to-slot-ac",
+   "screen": "sheet",
+   "steps": [
+    {
+     "op": "click",
+     "target": "Load\nCharacter"
+    },
+    {
+     "op": "click",
+     "target": "Aldric Ironhand"
+    },
+    {
+     "op": "click",
+     "target": "Load"
+    },
+    {
+     "op": "wait",
+     "ms": 3000
+    },
+    {
+     "op": "click",
+     "target": "Gear"
+    },
+    {
+     "op": "wait",
+     "ms": 1500
+    },
+    {
+     "op": "click",
+     "target": "Market"
+    },
+    {
+     "op": "click",
+     "target": "Cashless",
+     "index": 1
+    },
+    {
+     "op": "click",
+     "target": "Shields"
+    },
+    {
+     "op": "click",
+     "target": "Search the market"
+    },
+    {
+     "op": "type",
+     "text": "Buckler"
+    },
+    {
+     "op": "click",
+     "target": "Buckler"
+    },
+    {
+     "op": "click",
+     "target": "Buy"
+    },
+    {
+     "op": "wait",
+     "ms": 3000
+    },
+    {
+     "op": "key",
+     "key": "Escape"
+    },
+    {
+     "op": "wait",
+     "ms": 1000
+    },
+    {
+     "op": "click",
+     "target": "Move Buckler to",
+     "by": "label"
+    },
+    {
+     "op": "click",
+     "target": "Shield"
+    },
+    {
+     "op": "wait",
+     "ms": 4000
+    }
+   ],
+   "marker": "Buckler5 lb \u00b7 Shield",
+   "expect": [
+    "AC 17 \u00b7 ",
+    "Shield1 of 1"
+   ],
+   "forbid": [],
+   "notes": "SD-41 E3.3 (\u00a713, \u00a714): Move to (by its aria-label \"Move Buckler to\") puts the bought Buckler in the Shield slot; the gear headline reads the engine AC 16 -> 17."
+  },
+  {
+   "id": "sheet-gear-move-to-carried",
+   "screen": "sheet",
+   "steps": [
+    {
+     "op": "click",
+     "target": "Load\nCharacter"
+    },
+    {
+     "op": "click",
+     "target": "Aldric Ironhand"
+    },
+    {
+     "op": "click",
+     "target": "Load"
+    },
+    {
+     "op": "wait",
+     "ms": 3000
+    },
+    {
+     "op": "click",
+     "target": "Gear"
+    },
+    {
+     "op": "wait",
+     "ms": 1500
+    },
+    {
+     "op": "click",
+     "target": "Move Buckler to",
+     "by": "label"
+    },
+    {
+     "op": "click",
+     "target": "Carried"
+    },
+    {
+     "op": "wait",
+     "ms": 4000
+    }
+   ],
+   "marker": "Buckler5 lb \u00b7 Carried",
+   "expect": [
+    "AC 16 \u00b7 ",
+    "Shield0 of 1"
+   ],
+   "forbid": [],
+   "notes": "SD-41 E3.3: runs on what sheet-gear-move-to-slot-ac left. Moved to Carried, the Buckler adds no AC and frees the slot."
+  },
+  {
+   "id": "sheet-gear-not-carried-weight",
+   "screen": "sheet",
+   "steps": [
+    {
+     "op": "click",
+     "target": "Load\nCharacter"
+    },
+    {
+     "op": "click",
+     "target": "Aldric Ironhand"
+    },
+    {
+     "op": "click",
+     "target": "Load"
+    },
+    {
+     "op": "wait",
+     "ms": 3000
+    },
+    {
+     "op": "click",
+     "target": "Gear"
+    },
+    {
+     "op": "wait",
+     "ms": 1500
+    },
+    {
+     "op": "click",
+     "target": "Move Buckler to",
+     "by": "label"
+    },
+    {
+     "op": "click",
+     "target": "Not Carried"
+    },
+    {
+     "op": "wait",
+     "ms": 4000
+    }
+   ],
+   "marker": "Buckler\u2014 \u00b7 Not Carried",
+   "expect": [
+    "AC 16 \u00b7 31 lb carried"
+   ],
+   "forbid": [],
+   "notes": "SD-41 E3.3 (\u00a75): Not Carried drops the Buckler from the engine carried weight (Longsword 4 + Chain Shirt 25 + Sickle 2 = 31 lb on a fresh run; 36 lb before) and its weight label reads \"\u2014\"."
+  },
+  {
+   "id": "sheet-gear-set-create-activate",
+   "screen": "sheet",
+   "steps": [
+    {
+     "op": "click",
+     "target": "Load\nCharacter"
+    },
+    {
+     "op": "click",
+     "target": "Aldric Ironhand"
+    },
+    {
+     "op": "click",
+     "target": "Load"
+    },
+    {
+     "op": "wait",
+     "ms": 3000
+    },
+    {
+     "op": "click",
+     "target": "Gear"
+    },
+    {
+     "op": "wait",
+     "ms": 1500
+    },
+    {
+     "op": "click",
+     "target": "New"
+    },
+    {
+     "op": "click",
+     "target": "Set name"
+    },
+    {
+     "op": "type",
+     "text": "Travel"
+    },
+    {
+     "op": "click",
+     "target": "Copy of Default",
+     "by": "label"
+    },
+    {
+     "op": "click",
+     "target": "Create"
+    },
+    {
+     "op": "wait",
+     "ms": 3000
+    },
+    {
+     "op": "select",
+     "target": "Default",
+     "text": "Travel"
+    },
+    {
+     "op": "wait",
+     "ms": 4000
+    }
+   ],
+   "marker": "Chain Shirt25 lb \u00b7 Carried",
+   "expect": [
+    "Longsword4 lb \u00b7 Carried",
+    "AC 12 \u00b7 "
+   ],
+   "forbid": [],
+   "notes": "SD-41 E3.3 (\u00a75, \u00a76): a blank set (the \"Copy of Default\" box unticked) holds every copy Carried; activating it projects that onto the engine: the armor and sword come off and AC reads 12. The next row selects Default again."
+  },
+  {
+   "id": "sheet-gear-container-nest",
+   "screen": "sheet",
+   "steps": [
+    {
+     "op": "click",
+     "target": "Load\nCharacter"
+    },
+    {
+     "op": "click",
+     "target": "Aldric Ironhand"
+    },
+    {
+     "op": "click",
+     "target": "Load"
+    },
+    {
+     "op": "wait",
+     "ms": 3000
+    },
+    {
+     "op": "click",
+     "target": "Gear"
+    },
+    {
+     "op": "wait",
+     "ms": 1500
+    },
+    {
+     "op": "select",
+     "target": "Default",
+     "text": "Default"
+    },
+    {
+     "op": "wait",
+     "ms": 4000
+    },
+    {
+     "op": "click",
+     "target": "Market"
+    },
+    {
+     "op": "click",
+     "target": "Cashless",
+     "index": 1
+    },
+    {
+     "op": "click",
+     "target": "Gear",
+     "index": 1
+    },
+    {
+     "op": "click",
+     "target": "Search the market"
+    },
+    {
+     "op": "type",
+     "text": "Backpack"
+    },
+    {
+     "op": "click",
+     "target": "Backpack"
+    },
+    {
+     "op": "click",
+     "target": "Buy"
+    },
+    {
+     "op": "wait",
+     "ms": 3000
+    },
+    {
+     "op": "click",
+     "target": "Search the market"
+    },
+    {
+     "op": "type",
+     "text": "Pouch, Belt"
+    },
+    {
+     "op": "click",
+     "target": "Pouch, Belt"
+    },
+    {
+     "op": "click",
+     "target": "Buy"
+    },
+    {
+     "op": "wait",
+     "ms": 3000
+    },
+    {
+     "op": "key",
+     "key": "Escape"
+    },
+    {
+     "op": "wait",
+     "ms": 1000
+    },
+    {
+     "op": "click",
+     "target": "Gear"
+    },
+    {
+     "op": "wait",
+     "ms": 1500
+    },
+    {
+     "op": "click",
+     "target": "Move Pouch, Belt to",
+     "by": "label"
+    },
+    {
+     "op": "click",
+     "target": "Into Backpack"
+    },
+    {
+     "op": "wait",
+     "ms": 4000
+    }
+   ],
+   "marker": "Pouch, Belt0.5 lb \u00b7 In Backpack",
+   "expect": [
+    "Backpack2 lb \u00b7 Carried \u00b7 0.5 of 60 lb",
+    "Backpack0.5 of 60 lb\nMove to\nPouch, Belt0 lb, no limit"
+   ],
+   "forbid": [],
+   "notes": "SD-41 E3.3 (\u00a77, \u00a732): a belt pouch moved into a backpack shows nested under it in the right tree and the backpack reads 0.5 of its 60 lb. Reopens the sheet after the buys (E3.8: until then the bought backpack is not yet a container on screen)."
+  },
+  {
+   "id": "sheet-gear-container-over-capacity",
+   "screen": "sheet",
+   "steps": [
+    {
+     "op": "click",
+     "target": "Load\nCharacter"
+    },
+    {
+     "op": "click",
+     "target": "Aldric Ironhand"
+    },
+    {
+     "op": "click",
+     "target": "Load"
+    },
+    {
+     "op": "wait",
+     "ms": 3000
+    },
+    {
+     "op": "click",
+     "target": "Gear"
+    },
+    {
+     "op": "wait",
+     "ms": 1500
+    },
+    {
+     "op": "click",
+     "target": "Market"
+    },
+    {
+     "op": "click",
+     "target": "Create"
+    },
+    {
+     "op": "click",
+     "target": "Item name"
+    },
+    {
+     "op": "type",
+     "text": "Coin Purse"
+    },
+    {
+     "op": "click",
+     "target": "Item weight"
+    },
+    {
+     "op": "type",
+     "text": "1"
+    },
+    {
+     "op": "click",
+     "target": "Container",
+     "by": "label"
+    },
+    {
+     "op": "click",
+     "target": "Container capacity"
+    },
+    {
+     "op": "type",
+     "text": "2"
+    },
+    {
+     "op": "click",
+     "target": "Create item"
+    },
+    {
+     "op": "wait",
+     "ms": 3000
+    },
+    {
+     "op": "key",
+     "key": "Escape"
+    },
+    {
+     "op": "wait",
+     "ms": 1000
+    },
+    {
+     "op": "click",
+     "target": "Move Buckler to",
+     "by": "label"
+    },
+    {
+     "op": "click",
+     "target": "Into Coin Purse"
+    },
+    {
+     "op": "wait",
+     "ms": 4000
+    }
+   ],
+   "marker": "Buckler5 lb \u00b7 In Coin Purse",
+   "expect": [
+    "Coin Purse holds 5 lb, over its 2 lb.",
+    "Coin Purse1 lb \u00b7 Carried \u00b7 5 of 2 lb"
+   ],
+   "forbid": [],
+   "notes": "SD-41 E3.3 (\u00a77, \u00a725): a Create item that is a 2 lb container, given the 5 lb Buckler, warns over capacity on the gear screen."
+  },
+  {
+   "id": "sheet-gear-drop-not-carried",
+   "screen": "sheet",
+   "steps": [
+    {
+     "op": "click",
+     "target": "Load\nCharacter"
+    },
+    {
+     "op": "click",
+     "target": "Aldric Ironhand"
+    },
+    {
+     "op": "click",
+     "target": "Load"
+    },
+    {
+     "op": "wait",
+     "ms": 3000
+    },
+    {
+     "op": "click",
+     "target": "Gear"
+    },
+    {
+     "op": "wait",
+     "ms": 1500
+    },
+    {
+     "op": "click",
+     "target": "Drop Sickle",
+     "by": "label"
+    },
+    {
+     "op": "wait",
+     "ms": 4000
+    }
+   ],
+   "marker": "Sickle\u2014 \u00b7 Not Carried",
+   "expect": [
+    "Drop keeps the item and marks it Not Carried"
+   ],
+   "forbid": [],
+   "notes": "SD-41 E3.3 (\u00a727): Drop keeps the Sickle and moves it to Not Carried; nothing is sold."
+  },
+  {
+   "id": "sheet-gear-discard-confirm",
+   "screen": "sheet",
+   "steps": [
+    {
+     "op": "click",
+     "target": "Load\nCharacter"
+    },
+    {
+     "op": "click",
+     "target": "Aldric Ironhand"
+    },
+    {
+     "op": "click",
+     "target": "Load"
+    },
+    {
+     "op": "wait",
+     "ms": 3000
+    },
+    {
+     "op": "click",
+     "target": "Gear"
+    },
+    {
+     "op": "wait",
+     "ms": 1500
+    },
+    {
+     "op": "click",
+     "target": "Discard Sickle",
+     "by": "label"
+    },
+    {
+     "op": "wait",
+     "ms": 500
+    },
+    {
+     "op": "click",
+     "target": "Discard Sickle",
+     "by": "label",
+     "index": 1
+    },
+    {
+     "op": "wait",
+     "ms": 8000
+    }
+   ],
+   "marker": "Drop keeps the item and marks it Not Carried",
+   "expect": [
+    "Longsword4 lb \u00b7 Main hand"
+   ],
+   "forbid": [
+    "Sickle"
+   ],
+   "notes": "SD-41 E3.3 (\u00a727): Discard asks first (\"Discard Sickle for nothing?\"); its confirm button (the second control labelled \"Discard Sickle\": the row button, then the confirm in the group of that name) removes the Sickle from every list. The marker is on screen before the discard lands, so the row waits 8 s for it."
+  },
+  {
+   "id": "sheet-market-sort-by-price",
+   "screen": "sheet",
+   "steps": [
+    {
+     "op": "click",
+     "target": "Load\nCharacter"
+    },
+    {
+     "op": "click",
+     "target": "Aldric Ironhand"
+    },
+    {
+     "op": "click",
+     "target": "Load"
+    },
+    {
+     "op": "wait",
+     "ms": 3000
+    },
+    {
+     "op": "click",
+     "target": "Gear"
+    },
+    {
+     "op": "wait",
+     "ms": 1500
+    },
+    {
+     "op": "click",
+     "target": "Market"
+    },
+    {
+     "op": "click",
+     "target": "Weapons",
+     "index": 1
+    },
+    {
+     "op": "click",
+     "target": "Price"
+    },
+    {
+     "op": "click",
+     "target": "Price \u25b2"
+    },
+    {
+     "op": "wait",
+     "ms": 1000
+    }
+   ],
+   "marker": "Price \u25bc",
+   "expect": [
+    "Luck Blade (3 wishes)\t142,960 gp\t\u2014\t\u2014\nHoly Avenger\t120,630 gp"
+   ],
+   "forbid": [],
+   "notes": "SD-41 E3.3 (\u00a724): the Price header sorts the table, a second click descending."
+  },
+  {
+   "id": "sheet-market-only-affordable",
+   "screen": "sheet",
+   "steps": [
+    {
+     "op": "click",
+     "target": "Load\nCharacter"
+    },
+    {
+     "op": "click",
+     "target": "Aldric Ironhand"
+    },
+    {
+     "op": "click",
+     "target": "Load"
+    },
+    {
+     "op": "wait",
+     "ms": 3000
+    },
+    {
+     "op": "click",
+     "target": "Gear"
+    },
+    {
+     "op": "wait",
+     "ms": 1500
+    },
+    {
+     "op": "click",
+     "target": "gp amount"
+    },
+    {
+     "op": "type",
+     "text": "10"
+    },
+    {
+     "op": "click",
+     "target": "Add"
+    },
+    {
+     "op": "wait",
+     "ms": 1500
+    },
+    {
+     "op": "click",
+     "target": "Market"
+    },
+    {
+     "op": "click",
+     "target": "Buy 100% / Sell 50%",
+     "index": 1
+    },
+    {
+     "op": "click",
+     "target": "Weapons",
+     "index": 1
+    },
+    {
+     "op": "click",
+     "target": "Search the market"
+    },
+    {
+     "op": "type",
+     "text": "Dagger"
+    },
+    {
+     "op": "click",
+     "target": "Only Show Affordable",
+     "by": "label"
+    },
+    {
+     "op": "wait",
+     "ms": 1000
+    }
+   ],
+   "marker": "Dagger\t2 gp\t1 lb\tMain hand",
+   "expect": [
+    "Swordbreaker Dagger\t10 gp"
+   ],
+   "forbid": [
+    "Dagger (Adamantine)",
+    "Dagger of Venom"
+   ],
+   "notes": "SD-41 E3.3 (\u00a724): with 10 gp added and full pricing, Only Show Affordable keeps the 2 gp Dagger and hides the 3,002 gp and 8,302 gp ones."
+  },
+  {
+   "id": "sheet-market-description-box",
+   "screen": "sheet",
+   "steps": [
+    {
+     "op": "click",
+     "target": "Load\nCharacter"
+    },
+    {
+     "op": "click",
+     "target": "Aldric Ironhand"
+    },
+    {
+     "op": "click",
+     "target": "Load"
+    },
+    {
+     "op": "wait",
+     "ms": 3000
+    },
+    {
+     "op": "click",
+     "target": "Gear"
+    },
+    {
+     "op": "wait",
+     "ms": 1500
+    },
+    {
+     "op": "click",
+     "target": "Market"
+    },
+    {
+     "op": "click",
+     "target": "Weapons",
+     "index": 1
+    },
+    {
+     "op": "click",
+     "target": "Search the market"
+    },
+    {
+     "op": "type",
+     "text": "Dagger"
+    },
+    {
+     "op": "click",
+     "target": "Dagger"
+    },
+    {
+     "op": "wait",
+     "ms": 500
+    }
+   ],
+   "marker": "A dagger has a blade that is about 1 foot in length.",
+   "expect": [
+    "Dagger\t2 gp\t1 lb\tMain hand"
+   ],
+   "forbid": [
+    "Pick an item to read its description."
+   ],
+   "notes": "SD-41 E3.3 (\u00a724): the highlighted row's corpus description fills the box under the table."
+  },
+  {
+   "id": "sheet-market-buy-quantity-stack",
+   "screen": "sheet",
+   "steps": [
+    {
+     "op": "click",
+     "target": "Load\nCharacter"
+    },
+    {
+     "op": "click",
+     "target": "Aldric Ironhand"
+    },
+    {
+     "op": "click",
+     "target": "Load"
+    },
+    {
+     "op": "wait",
+     "ms": 3000
+    },
+    {
+     "op": "click",
+     "target": "Gear"
+    },
+    {
+     "op": "wait",
+     "ms": 1500
+    },
+    {
+     "op": "click",
+     "target": "Market"
+    },
+    {
+     "op": "click",
+     "target": "Cashless",
+     "index": 1
+    },
+    {
+     "op": "click",
+     "target": "Weapons",
+     "index": 1
+    },
+    {
+     "op": "click",
+     "target": "Search the market"
+    },
+    {
+     "op": "type",
+     "text": "Arrows (20)"
+    },
+    {
+     "op": "click",
+     "target": "Arrows (20)"
+    },
+    {
+     "op": "click",
+     "target": "Quantity"
+    },
+    {
+     "op": "type",
+     "text": "3"
+    },
+    {
+     "op": "click",
+     "target": "Buy"
+    },
+    {
+     "op": "wait",
+     "ms": 3000
+    },
+    {
+     "op": "key",
+     "key": "Escape"
+    },
+    {
+     "op": "wait",
+     "ms": 1000
+    },
+    {
+     "op": "click",
+     "target": "Gear"
+    },
+    {
+     "op": "wait",
+     "ms": 1500
+    }
+   ],
+   "marker": "Arrows \u00d7609 lb \u00b7 Carried",
+   "expect": [
+    "Arrows \u00d760"
+   ],
+   "forbid": [],
+   "notes": "SD-41 E3.3 (\u00a728, \u00a730): Quantity 3 of \"Arrows (20)\" buys 60 arrows, one stack row in pieces weighing 3 bundles (9 lb). Reopens the sheet after the buy (E3.8: the buy's own refresh shows the stack at one bundle's 3 lb)."
+  },
+  {
+   "id": "sheet-market-negotiate-buy",
+   "screen": "sheet",
+   "steps": [
+    {
+     "op": "click",
+     "target": "Load\nCharacter"
+    },
+    {
+     "op": "click",
+     "target": "Aldric Ironhand"
+    },
+    {
+     "op": "click",
+     "target": "Load"
+    },
+    {
+     "op": "wait",
+     "ms": 3000
+    },
+    {
+     "op": "click",
+     "target": "Gear"
+    },
+    {
+     "op": "wait",
+     "ms": 1500
+    },
+    {
+     "op": "click",
+     "target": "Market"
+    },
+    {
+     "op": "click",
+     "target": "Buy 100% / Sell 50%",
+     "index": 1
+    },
+    {
+     "op": "click",
+     "target": "Weapons",
+     "index": 1
+    },
+    {
+     "op": "click",
+     "target": "Search the market"
+    },
+    {
+     "op": "type",
+     "text": "Light Mace"
+    },
+    {
+     "op": "click",
+     "target": "Light Mace"
+    },
+    {
+     "op": "click",
+     "target": "Negotiate",
+     "index": -1
+    },
+    {
+     "op": "click",
+     "target": "Negotiated price"
+    },
+    {
+     "op": "type",
+     "text": "1"
+    },
+    {
+     "op": "click",
+     "target": "Buy at this price"
+    },
+    {
+     "op": "wait",
+     "ms": 3000
+    }
+   ],
+   "marker": "Bought Light Mace for 1 gp (carried).",
+   "expect": [
+    "Sell Light Mace"
+   ],
+   "forbid": [],
+   "notes": "SD-41 E3.3 (\u00a726): Negotiate (the buy-side one, last of its name after the Sell list's) takes the agreed price, and the Light Mace is bought for 1 gp, not its 5. Spends from sheet-market-only-affordable's 10 gp."
+  },
+  {
+   "id": "sheet-market-create-item-carried",
+   "screen": "sheet",
+   "steps": [
+    {
+     "op": "click",
+     "target": "Load\nCharacter"
+    },
+    {
+     "op": "click",
+     "target": "Aldric Ironhand"
+    },
+    {
+     "op": "click",
+     "target": "Load"
+    },
+    {
+     "op": "wait",
+     "ms": 3000
+    },
+    {
+     "op": "click",
+     "target": "Gear"
+    },
+    {
+     "op": "wait",
+     "ms": 1500
+    },
+    {
+     "op": "click",
+     "target": "Market"
+    },
+    {
+     "op": "click",
+     "target": "Create"
+    },
+    {
+     "op": "click",
+     "target": "Item name"
+    },
+    {
+     "op": "type",
+     "text": "Camping Kit"
+    },
+    {
+     "op": "click",
+     "target": "Item description"
+    },
+    {
+     "op": "type",
+     "text": "Bedroll, flint and steel, a pot."
+    },
+    {
+     "op": "click",
+     "target": "Item weight"
+    },
+    {
+     "op": "type",
+     "text": "7"
+    },
+    {
+     "op": "click",
+     "target": "Create item"
+    },
+    {
+     "op": "wait",
+     "ms": 3000
+    }
+   ],
+   "marker": "Created Camping Kit (carried).",
+   "expect": [
+    "Camping Kit7 lb \u00b7 Carried"
+   ],
+   "forbid": [],
+   "notes": "SD-41 E3.3 (\u00a725): Create makes an item with no corpus base; it lands Carried with its weight on the gear screen."
+  },
+  {
+   "id": "sheet-campaign-add-from-identity",
+   "screen": "sheet",
+   "steps": [
+    {
+     "op": "click",
+     "target": "\u2630 Menu"
+    },
+    {
+     "op": "click",
+     "target": "Options"
+    },
+    {
+     "op": "click",
+     "target": "Google Drive"
+    },
+    {
+     "op": "click",
+     "target": "you@example.com"
+    },
+    {
+     "op": "type",
+     "text": "ui-smoke@example.com"
+    },
+    {
+     "op": "click",
+     "target": "My Drive/TTRPG Campaigns"
+    },
+    {
+     "op": "type",
+     "text": "{XDG_DATA_HOME}/drive"
+    },
+    {
+     "op": "click",
+     "target": "Save"
+    },
+    {
+     "op": "key",
+     "key": "Escape"
+    },
+    {
+     "op": "click",
+     "target": "Campaign\nManager"
+    },
+    {
+     "op": "click",
+     "target": "Create"
+    },
+    {
+     "op": "click",
+     "target": "campaign-name"
+    },
+    {
+     "op": "type",
+     "text": "Gear Campaign"
+    },
+    {
+     "op": "click",
+     "target": "Create campaign"
+    },
+    {
+     "op": "click",
+     "target": "Save"
+    },
+    {
+     "op": "wait",
+     "ms": 1500
+    },
+    {
+     "op": "click",
+     "target": "Cancel"
+    },
+    {
+     "op": "click",
+     "target": "Load\nCharacter"
+    },
+    {
+     "op": "click",
+     "target": "Aldric Ironhand"
+    },
+    {
+     "op": "click",
+     "target": "Load"
+    },
+    {
+     "op": "wait",
+     "ms": 3000
+    },
+    {
+     "op": "click",
+     "target": "Campaign\u2014"
+    },
+    {
+     "op": "wait",
+     "ms": 2000
+    },
+    {
+     "op": "click",
+     "target": "Gear Campaign",
+     "by": "label"
+    },
+    {
+     "op": "click",
+     "target": "Save"
+    },
+    {
+     "op": "wait",
+     "ms": 3000
+    }
+   ],
+   "marker": "Open Gear Campaign",
+   "expect": [
+    "Campaign\nGear Campaign"
+   ],
+   "forbid": [],
+   "notes": "SD-41 E3.3 (\u00a729): the Drive folder is a directory under this run's isolated XDG_DATA_HOME (run.mjs expands {XDG_DATA_HOME}, R5). A campaign made with no member (E3.9: a member makes the folder write fail) is offered in the dialog the Campaign field opens; ticking it adds an \"Open Gear Campaign\" button under Skills."
+  },
+  {
+   "id": "sheet-campaign-button-under-skills",
+   "screen": "sheet",
+   "steps": [
+    {
+     "op": "click",
+     "target": "Load\nCharacter"
+    },
+    {
+     "op": "click",
+     "target": "Aldric Ironhand"
+    },
+    {
+     "op": "click",
+     "target": "Load"
+    },
+    {
+     "op": "wait",
+     "ms": 3000
+    },
+    {
+     "op": "click",
+     "target": "Open Gear Campaign"
+    },
+    {
+     "op": "wait",
+     "ms": 3000
+    }
+   ],
+   "marker": "PARTY (1)",
+   "expect": [
+    "Gear Campaign \u2014 Pathfinder 1e",
+    "Aldric Ironhand"
+   ],
+   "forbid": [],
+   "notes": "SD-41 E3.3 (\u00a729): runs on sheet-campaign-add-from-identity. The button opens that campaign's sheet, whose party lists Aldric."
+  },
+  {
+   "id": "sheet-campaign-remove-keeps-folder",
+   "screen": "sheet",
+   "steps": [
+    {
+     "op": "click",
+     "target": "Load\nCharacter"
+    },
+    {
+     "op": "click",
+     "target": "Aldric Ironhand"
+    },
+    {
+     "op": "click",
+     "target": "Load"
+    },
+    {
+     "op": "wait",
+     "ms": 3000
+    },
+    {
+     "op": "click",
+     "target": "CampaignGear Campaign"
+    },
+    {
+     "op": "wait",
+     "ms": 2000
+    },
+    {
+     "op": "click",
+     "target": "Gear Campaign",
+     "by": "label"
+    },
+    {
+     "op": "click",
+     "target": "Save"
+    },
+    {
+     "op": "wait",
+     "ms": 3000
+    }
+   ],
+   "marker": "Campaign\n\u2014\nHIT POINTS",
+   "expect": [
+    "Campaign\n\u2014"
+   ],
+   "forbid": [
+    "Open Gear Campaign"
+   ],
+   "notes": "SD-41 E3.3 (\u00a729): unticking the campaign removes its button and empties the Campaign field. The folder copy staying on disk is not visible on screen; campaign_mirror's inactive-membership test proves it."
+  },
+  {
+   "id": "sheet-gear-capacity-override",
+   "screen": "sheet",
+   "steps": [
+    {
+     "op": "click",
+     "target": "Load\nCharacter"
+    },
+    {
+     "op": "click",
+     "target": "Aldric Ironhand"
+    },
+    {
+     "op": "click",
+     "target": "Load"
+    },
+    {
+     "op": "wait",
+     "ms": 3000
+    },
+    {
+     "op": "click",
+     "target": "Gear"
+    },
+    {
+     "op": "wait",
+     "ms": 1500
+    },
+    {
+     "op": "click",
+     "target": "Custom"
+    },
+    {
+     "op": "click",
+     "target": "Ignore container capacity limits"
+    },
+    {
+     "op": "wait",
+     "ms": 2500
+    },
+    {
+     "op": "click",
+     "target": "Gear"
+    },
+    {
+     "op": "wait",
+     "ms": 1500
+    }
+   ],
+   "marker": "Override: Ignore container capacity limits",
+   "expect": [
+    "Coin Purse5 of 2 lb"
+   ],
+   "forbid": [
+    "Coin Purse holds 5 lb, over its 2 lb."
+   ],
+   "notes": "SD-41 E3.3 (\u00a732): with \"Ignore container capacity limits\" on, the over-capacity warning goes and the container is tagged; the \"x of y lb\" stays. Reopens the sheet after the toggle (E3.8). Leaves the override on."
+  },
+  {
+   "id": "sheet-equipment-lists",
+   "screen": "sheet",
+   "steps": [
+    {
+     "op": "click",
+     "target": "Load\nCharacter"
+    },
+    {
+     "op": "click",
+     "target": "Aldric Ironhand"
+    },
+    {
+     "op": "click",
+     "target": "Load"
+    },
+    {
+     "op": "wait",
+     "ms": 3000
+    },
+    {
+     "op": "click",
+     "target": "Gear"
+    },
+    {
+     "op": "wait",
+     "ms": 1500
+    }
+   ],
+   "marker": "Main hand1 of 1",
+   "expect": [
+    "Longsword4 lb \u00b7 Main hand",
+    "Chain Shirt25 lb \u00b7 Armor",
+    "Armor1 of 1",
+    "Equipment set"
+   ],
+   "forbid": [],
+   "notes": "SD-39 E4.3, rewritten SD-41 E3.3: the gear screen lists what Aldric wears, each row with its weight and place, and the right tree shows the slots."
+  },
+  {
+   "id": "sheet-equipment-conflict",
+   "screen": "sheet",
+   "steps": [
+    {
+     "op": "click",
+     "target": "Load\nCharacter"
+    },
+    {
+     "op": "click",
+     "target": "Aldric Ironhand"
+    },
+    {
+     "op": "click",
+     "target": "Load"
+    },
+    {
+     "op": "wait",
+     "ms": 3000
+    },
+    {
+     "op": "click",
+     "target": "Gear"
+    },
+    {
+     "op": "wait",
+     "ms": 1500
+    },
+    {
+     "op": "click",
+     "target": "Market"
+    },
+    {
+     "op": "click",
+     "target": "Cashless",
+     "index": 1
+    },
+    {
+     "op": "click",
+     "target": "Magic items"
+    },
+    {
+     "op": "click",
+     "target": "Search the market"
+    },
+    {
+     "op": "type",
+     "text": "Hat of Disguise"
+    },
+    {
+     "op": "click",
+     "target": "Hat of Disguise"
+    },
+    {
+     "op": "click",
+     "target": "Buy"
+    },
+    {
+     "op": "wait",
+     "ms": 3000
+    },
+    {
+     "op": "click",
+     "target": "Search the market"
+    },
+    {
+     "op": "type",
+     "text": "Helm of Brilliance"
+    },
+    {
+     "op": "click",
+     "target": "Helm of Brilliance"
+    },
+    {
+     "op": "click",
+     "target": "Buy"
+    },
+    {
+     "op": "wait",
+     "ms": 3000
+    },
+    {
+     "op": "key",
+     "key": "Escape"
+    },
+    {
+     "op": "wait",
+     "ms": 1000
+    },
+    {
+     "op": "click",
+     "target": "Move Hat of Disguise to",
+     "by": "label"
+    },
+    {
+     "op": "click",
+     "target": "Head"
+    },
+    {
+     "op": "wait",
+     "ms": 8000
+    },
+    {
+     "op": "click",
+     "target": "Move Helm of Brilliance to",
+     "by": "label"
+    },
+    {
+     "op": "wait",
+     "ms": 800
+    }
+   ],
+   "marker": "\nHeadband\nEyes\n",
+   "expect": [
+    "Hat of Disguise0 lb \u00b7 Head",
+    "Head1 of 1\nHat of Disguise"
+   ],
+   "forbid": [
+    "\nHead\nHeadband\n"
+   ],
+   "notes": "SD-39 E4.3, rewritten SD-41 E3.3: two head items bought Cashless land Carried; the Hat goes on the head, and the Helm's Move to menu then offers no Head (the full slot is left out, decisions.md \u00a714) where the old panel showed the refusal. Waits 8 s after the Hat's move: the Helm's Move to button is disabled while that write runs."
+  },
+  {
+   "id": "sheet-equipment-unequip",
+   "screen": "sheet",
+   "steps": [
+    {
+     "op": "click",
+     "target": "Load\nCharacter"
+    },
+    {
+     "op": "click",
+     "target": "Aldric Ironhand"
+    },
+    {
+     "op": "click",
+     "target": "Load"
+    },
+    {
+     "op": "wait",
+     "ms": 3000
+    },
+    {
+     "op": "click",
+     "target": "Gear"
+    },
+    {
+     "op": "wait",
+     "ms": 1500
+    },
+    {
+     "op": "click",
+     "target": "Move Hat of Disguise to",
+     "by": "label"
+    },
+    {
+     "op": "click",
+     "target": "Carried"
+    },
+    {
+     "op": "wait",
+     "ms": 4000
+    }
+   ],
+   "marker": "Hat of Disguise0 lb \u00b7 Carried",
+   "expect": [
+    "Head0 of 1"
+   ],
+   "forbid": [],
+   "notes": "SD-39 E4.3, rewritten SD-41 E3.3: runs on what sheet-equipment-conflict bought. Moved to Carried, the Hat frees the head slot."
+  },
+  {
+   "id": "sheet-equipment-equip",
+   "screen": "sheet",
+   "steps": [
+    {
+     "op": "click",
+     "target": "Load\nCharacter"
+    },
+    {
+     "op": "click",
+     "target": "Aldric Ironhand"
+    },
+    {
+     "op": "click",
+     "target": "Load"
+    },
+    {
+     "op": "wait",
+     "ms": 3000
+    },
+    {
+     "op": "click",
+     "target": "Gear"
+    },
+    {
+     "op": "wait",
+     "ms": 1500
+    },
+    {
+     "op": "click",
+     "target": "Move Helm of Brilliance to",
+     "by": "label"
+    },
+    {
+     "op": "click",
+     "target": "Head"
+    },
+    {
+     "op": "wait",
+     "ms": 4000
+    }
+   ],
+   "marker": "Helm of Brilliance3 lb \u00b7 Head",
+   "expect": [
+    "Head1 of 1\nHelm of Brilliance",
+    "Hat of Disguise0 lb \u00b7 Carried"
+   ],
+   "forbid": [],
+   "notes": "SD-39 E4.3, rewritten SD-41 E3.3: runs on what sheet-equipment-unequip left. The head slot is free, so the Helm goes on."
+  },
+  {
+   "id": "sheet-equipment-left-behind",
+   "screen": "sheet",
+   "steps": [
+    {
+     "op": "click",
+     "target": "Load\nCharacter"
+    },
+    {
+     "op": "click",
+     "target": "Aldric Ironhand"
+    },
+    {
+     "op": "click",
+     "target": "Load"
+    },
+    {
+     "op": "wait",
+     "ms": 3000
+    },
+    {
+     "op": "click",
+     "target": "Gear"
+    },
+    {
+     "op": "wait",
+     "ms": 1500
+    },
+    {
+     "op": "click",
+     "target": "Drop Hat of Disguise",
+     "by": "label"
+    },
+    {
+     "op": "wait",
+     "ms": 4000
+    }
+   ],
+   "marker": "Hat of Disguise\u2014 \u00b7 Not Carried",
+   "expect": [
+    "Helm of Brilliance3 lb \u00b7 Head"
+   ],
+   "forbid": [],
+   "notes": "SD-39 E7.5, rewritten SD-41 E3.3 (decisions.md \u00a727): runs on what sheet-equipment-equip left. Drop leaves the Hat behind as Not Carried; it stays owned."
+  },
+  {
+   "id": "sheet-market-buy-carried",
+   "screen": "sheet",
+   "steps": [
+    {
+     "op": "click",
+     "target": "Load\nCharacter"
+    },
+    {
+     "op": "click",
+     "target": "Aldric Ironhand"
+    },
+    {
+     "op": "click",
+     "target": "Load"
+    },
+    {
+     "op": "wait",
+     "ms": 3000
+    },
+    {
+     "op": "click",
+     "target": "Gear"
+    },
+    {
+     "op": "wait",
+     "ms": 1500
+    },
+    {
+     "op": "click",
+     "target": "gp amount"
+    },
+    {
+     "op": "type",
+     "text": "10"
+    },
+    {
+     "op": "click",
+     "target": "Add"
+    },
+    {
+     "op": "wait",
+     "ms": 1500
+    },
+    {
+     "op": "click",
+     "target": "Market"
+    },
+    {
+     "op": "click",
+     "target": "Buy 100% / Sell 50%",
+     "index": 1
+    },
+    {
+     "op": "click",
+     "target": "Weapons",
+     "index": 1
+    },
+    {
+     "op": "click",
+     "target": "Search the market"
+    },
+    {
+     "op": "type",
+     "text": "Dagger"
+    },
+    {
+     "op": "click",
+     "target": "Dagger"
+    },
+    {
+     "op": "click",
+     "target": "Buy"
+    },
+    {
+     "op": "wait",
+     "ms": 3000
+    }
+   ],
+   "marker": "Bought Dagger for 2 gp (carried).",
+   "expect": [
+    "Sell Dagger"
+   ],
+   "forbid": [],
+   "notes": "SD-39 E4.1, rewritten SD-41 E3.3 (decisions.md \u00a710): a bought item lands Carried; wearing it is a move on the gear screen. Was sheet-market-buy-weapon-worn."
+  },
+  {
+   "id": "sheet-custom-item-worn",
+   "screen": "sheet",
+   "steps": [
+    {
+     "op": "click",
+     "target": "Load\nCharacter"
+    },
+    {
+     "op": "click",
+     "target": "Aldric Ironhand"
+    },
+    {
+     "op": "click",
+     "target": "Load"
+    },
+    {
+     "op": "wait",
+     "ms": 3000
+    },
+    {
+     "op": "click",
+     "target": "Custom"
+    },
+    {
+     "op": "click",
+     "target": "Edit Custom\u2026"
+    },
+    {
+     "op": "wait",
+     "ms": 1000
+    },
+    {
+     "op": "click",
+     "target": "Equipment ("
+    },
+    {
+     "op": "click",
+     "target": "Add custom equipment"
+    },
+    {
+     "op": "click",
+     "target": "Custom equipment name",
+     "index": -1
+    },
+    {
+     "op": "type",
+     "text": "Ring of Hats"
+    },
+    {
+     "op": "select",
+     "target": "Main hand",
+     "text": "ring",
+     "index": -1
+    },
+    {
+     "op": "click",
+     "target": "Add bonus",
+     "index": -1
+    },
+    {
+     "op": "select",
+     "target": "untyped",
+     "text": "Deflection",
+     "index": -1
+    },
+    {
+     "op": "click",
+     "target": "Save"
+    },
+    {
+     "op": "wait",
+     "ms": 2000
+    },
+    {
+     "op": "click",
+     "target": "Gear"
+    },
+    {
+     "op": "wait",
+     "ms": 1500
+    },
+    {
+     "op": "click",
+     "target": "Move Ring of Hats to",
+     "by": "label"
+    },
+    {
+     "op": "click",
+     "target": "Ring"
+    },
+    {
+     "op": "wait",
+     "ms": 4000
+    },
+    {
+     "op": "click",
+     "target": "Defense"
+    }
+   ],
+   "marker": "AC BY SOURCE",
+   "expect": [
+    "Ring of Hats",
+    "AC +1"
+   ],
+   "forbid": [],
+   "allowGlobalForbid": [
+    "failure"
+   ],
+   "notes": "SD-39 E4.4, rewritten SD-41 E3.3: a custom item declared in the dialog (slot, +1 deflection to AC; the new entry is the last of its fields, index -1, after any Create items), put on the Ring slot by Move to, has its row in AC by Source. A row's description can say 'spell failure', hence allowGlobalForbid."
+  },
+  {
+   "id": "sheet-custom-item-stowed",
+   "screen": "sheet",
+   "steps": [
+    {
+     "op": "click",
+     "target": "Load\nCharacter"
+    },
+    {
+     "op": "click",
+     "target": "Aldric Ironhand"
+    },
+    {
+     "op": "click",
+     "target": "Load"
+    },
+    {
+     "op": "wait",
+     "ms": 3000
+    },
+    {
+     "op": "click",
+     "target": "Gear"
+    },
+    {
+     "op": "wait",
+     "ms": 1500
+    },
+    {
+     "op": "click",
+     "target": "Move Ring of Hats to",
+     "by": "label"
+    },
+    {
+     "op": "click",
+     "target": "Carried"
+    },
+    {
+     "op": "wait",
+     "ms": 4000
+    },
+    {
+     "op": "click",
+     "target": "Custom"
+    },
+    {
+     "op": "wait",
+     "ms": 1000
+    }
+   ],
+   "marker": "Carried (takes Ring)",
+   "expect": [
+    "Ring of Hats",
+    "+1 deflection to AC"
+   ],
+   "forbid": [
+    "Worn, Ring"
+   ],
+   "notes": "SD-39 E4.4, rewritten SD-41 E3.3: moved to Carried on the gear screen, the Custom tab reads the fresh record. Depends on sheet-custom-item-worn having run in this app-data root."
+  },
+  {
+   "id": "sheet-override-tag-slot",
+   "screen": "sheet",
+   "steps": [
+    {
+     "op": "click",
+     "target": "Load\nCharacter"
+    },
+    {
+     "op": "click",
+     "target": "Aldric Ironhand"
+    },
+    {
+     "op": "click",
+     "target": "Load"
+    },
+    {
+     "op": "wait",
+     "ms": 3000
+    },
+    {
+     "op": "click",
+     "target": "Gear"
+    },
+    {
+     "op": "wait",
+     "ms": 1500
+    },
+    {
+     "op": "click",
+     "target": "Market"
+    },
+    {
+     "op": "click",
+     "target": "Cashless",
+     "index": 1
+    },
+    {
+     "op": "click",
+     "target": "Magic items"
+    },
+    {
+     "op": "click",
+     "target": "Search the market"
+    },
+    {
+     "op": "type",
+     "text": "Goggles of Minute Seeing"
+    },
+    {
+     "op": "click",
+     "target": "Goggles of Minute Seeing"
+    },
+    {
+     "op": "click",
+     "target": "Buy"
+    },
+    {
+     "op": "wait",
+     "ms": 3000
+    },
+    {
+     "op": "click",
+     "target": "Search the market"
+    },
+    {
+     "op": "type",
+     "text": "Eyes of the Eagle"
+    },
+    {
+     "op": "click",
+     "target": "Eyes of the Eagle"
+    },
+    {
+     "op": "click",
+     "target": "Buy"
+    },
+    {
+     "op": "wait",
+     "ms": 3000
+    },
+    {
+     "op": "key",
+     "key": "Escape"
+    },
+    {
+     "op": "wait",
+     "ms": 1000
+    },
+    {
+     "op": "click",
+     "target": "Move Goggles of Minute Seeing to",
+     "by": "label"
+    },
+    {
+     "op": "click",
+     "target": "Eyes"
+    },
+    {
+     "op": "wait",
+     "ms": 4000
+    },
+    {
+     "op": "click",
+     "target": "Custom"
+    },
+    {
+     "op": "wait",
+     "ms": 500
+    },
+    {
+     "op": "click",
+     "target": "Ignore body slot limits"
+    },
+    {
+     "op": "wait",
+     "ms": 2500
+    },
+    {
+     "op": "click",
+     "target": "Gear"
+    },
+    {
+     "op": "wait",
+     "ms": 1500
+    },
+    {
+     "op": "click",
+     "target": "Move Eyes of the Eagle to",
+     "by": "label"
+    },
+    {
+     "op": "click",
+     "target": "Eyes"
+    },
+    {
+     "op": "wait",
+     "ms": 4000
+    },
+    {
+     "op": "click",
+     "target": "Custom"
+    },
+    {
+     "op": "wait",
+     "ms": 500
+    },
+    {
+     "op": "click",
+     "target": "Ignore body slot limits"
+    },
+    {
+     "op": "wait",
+     "ms": 2500
+    },
+    {
+     "op": "click",
+     "target": "Gear"
+    },
+    {
+     "op": "wait",
+     "ms": 1500
+    }
+   ],
+   "marker": "Override: Ignore body slot limits",
+   "expect": [
+    "Eyes of the EagleOverride: Ignore body slot limits0 lb \u00b7 Eyes",
+    "Goggles of Minute Seeing"
+   ],
+   "forbid": [
+    "eyes slot is taken"
+   ],
+   "notes": "SD-39 E6.2, rewritten SD-41 E3.3: two eyes items bought Cashless; the Goggles go on; with \"Ignore body slot limits\" on, Move to puts the Eagle eyes in the full Eyes slot too and the gear screen tags it; the flag then goes off and the tag stays. The override tag renders between the name and the weight (E3.10)."
+  }
+ ]
+}

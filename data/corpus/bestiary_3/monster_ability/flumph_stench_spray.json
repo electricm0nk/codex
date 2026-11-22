@@ -1,0 +1,57 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Flumph ~ Stench Spray",
+    "delivery": "Extraordinary",
+    "description": "A flumph can spray a 20-foot line of foul-smelling liquid once every 1d4 rounds. This spray functions like the stench universal monster ability, except it only affects creatures struck by the spray, which must make a DC 10 Fortitude save or be sickened for 5 rounds. The save DC is Constitution-based. Alternatively, the flumph can concentrate the spray on a single target within 5 feet. To use this version of its stench spray, the flumph must succeed at a ranged touch attack (+5 for most flumphs). If the target is hit, it must make a DC 10 Fortitude save or become nauseated for 5 rounds; otherwise, it is sickened for 5 rounds. The odor from this spray lingers in the area and on all creatures struck for 1d4 hours, and can be detected at a range of 100 feet (creatures with the scent ability can smell it at double this range).",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:flumph_stench_spray",
+    "name": "Stench Spray",
+    "owners": [
+      "bestiary_3:monster:flumph"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A flumph can spray a 20-foot line of foul-smelling liquid once every 1d4 rounds. This spray functions like the stench universal monster ability, except it only affects creatures struck by the spray, which must make a DC 10 Fortitude save or be sickened for 5 rounds. The save DC is Constitution-based. Alternatively, the flumph can concentrate the spray on a single target within 5 feet. To use this version of its stench spray, the flumph must succeed at a ranged touch attack (+5 for most flumphs). If the target is hit, it must make a DC 10 Fortitude save or become nauseated for 5 rounds; otherwise, it is sickened for 5 rounds. The odor from this spray lingers in the area and on all creatures struck for 1d4 hours, and can be detected at a range of 100 feet (creatures with the scent ability can smell it at double this range)."
+      },
+      {
+        "key": "KEY",
+        "value": "Flumph ~ Stench Spray"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.119"
+      },
+      {
+        "key": "TYPE",
+        "value": "FlumphRacialAbility.SpecialQuality.Extraordinary"
+      }
+    ],
+    "source_page": "p.119",
+    "traits": [
+      "FlumphRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T10:26:03Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 873,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Flumph ~ Stench Spray",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

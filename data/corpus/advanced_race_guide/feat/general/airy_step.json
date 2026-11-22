@@ -1,0 +1,26 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-03T19:41:45Z",
+  "data": {
+    "key": "Airy Step",
+    "category": "general",
+    "name": "Airy Step",
+    "description": "The air responds to your innate elemental nature, protecting you from harm and cushioning your falls.",
+    "effect": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_feats.lst",
+    "sha256": "420384054e43adeb60135c7e379a4645e5817ea1f2e78a8de8c7c687fc510fec",
+    "line": 396,
+    "record_key": "Airy Step"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

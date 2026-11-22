@@ -1,0 +1,564 @@
+[
+  {
+    "id": "sheet-tab-gear",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/a7402d70-3d8d-427c-820e-a54d598e3dda/scratchpad/smoke6/sheet-tab-gear.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nSmoke Test PC — Wizard 1\nCHARACTER DETAILS\n«\n\nLevel\n1\n+\nCaster Level\n1\nRACE\nElf\nCLASS\nWizard 1\nCHARACTER DETAILS\n\nALIGNMENT\n\nDEITY\n\nSEX\n\nAGE\n\nHEIGHT\n\nWEIGHT\n\nHAIR\n\nEYES\n\nVISION\nLow-light vision\nSIZE\nMedium\nVision and Size are calculated from race and aren't editable — a race this build has no profile for reads \"Unknown\" rather than a guessed value. The other fields save automatically wh",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd39-e7mc-MA1rzG/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [
+        "cfb6ca91-4335-448b-99a4-dae30ea63fa7"
+      ],
+      "deleted": [
+        "cfb6ca91-4335-448b-99a4-dae30ea63fa7"
+      ],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "sheet-action-custom-dialog-chips",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/a7402d70-3d8d-427c-820e-a54d598e3dda/scratchpad/smoke6/sheet-action-custom-dialog-chips.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nSmoke Test PC — Wizard 1\nCHARACTER DETAILS\n«\n\nLevel\n1\n+\nCaster Level\n1\nRACE\nElf\nCLASS\nWizard 1\nCHARACTER DETAILS\n\nALIGNMENT\n\nDEITY\n\nSEX\n\nAGE\n\nHEIGHT\n\nWEIGHT\n\nHAIR\n\nEYES\n\nVISION\nLow-light vision\nSIZE\nMedium\nVision and Size are calculated from race and aren't editable — a race this build has no profile for reads \"Unknown\" rather than a guessed value. The other fields save automatically wh",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd39-e7mc-MA1rzG/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [
+        "bed779c3-50c0-4cdf-ad71-5b067dfcc859"
+      ],
+      "deleted": [
+        "bed779c3-50c0-4cdf-ad71-5b067dfcc859"
+      ],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "build-starfinder-soldier",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/a7402d70-3d8d-427c-820e-a54d598e3dda/scratchpad/smoke6/build-starfinder-soldier.png",
+    "rendered_excerpt": "⚙\nSF Seed Soldier\nStarfinder · Human\nLevel up\nFeats, spells and gear\nMarket\nOpen\nClose\nSaved feats, spells and gear: Energy Armor Class (EAC) 16 · Kinetic Armor Class (KAC) 19 · Credits remaining 2045 · Bulk carried 4\n\nCLASS\n\nSoldier\t3\nABILITY SCORES\n\nScore\tModifier\nStrength\t16\t+3\nDexterity\t14\t+2\nConstitution\t12\t+1\nIntelligence\t11\t+0\nWisdom\t10\t+0\nCharisma\t10\t+0\nSTAMINA, HIT POINTS AND RESOLVE\n\nSta",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd39-e7mc-MA1rzG/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [
+        "a1796fa3-98da-4277-b235-b8fd58635b34"
+      ],
+      "deleted": [
+        "a1796fa3-98da-4277-b235-b8fd58635b34"
+      ],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "build-starfinder-mystic",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/a7402d70-3d8d-427c-820e-a54d598e3dda/scratchpad/smoke6/build-starfinder-mystic.png",
+    "rendered_excerpt": "⚙\nSF Seed Mystic\nStarfinder · Lashunta\nLevel up\nFeats, spells and gear\nMarket\nOpen\nClose\nSaved feats, spells and gear: Energy Armor Class (EAC) 16 · Kinetic Armor Class (KAC) 16 · Credits remaining 6350 · Bulk carried 1\n\nCLASS\n\nMystic\t5\nABILITY SCORES\n\nScore\tModifier\nStrength\t10\t+0\nDexterity\t14\t+2\nConstitution\t8\t-1\nIntelligence\t14\t+2\nWisdom\t19\t+4\nCharisma\t15\t+2\nSTAMINA, HIT POINTS AND RESOLVE\n\nSta",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd39-e7mc-MA1rzG/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [
+        "ce88d48f-4f04-41ea-be9a-c2e3d825a50c"
+      ],
+      "deleted": [
+        "ce88d48f-4f04-41ea-be9a-c2e3d825a50c"
+      ],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "build-starfinder-technomancer",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/a7402d70-3d8d-427c-820e-a54d598e3dda/scratchpad/smoke6/build-starfinder-technomancer.png",
+    "rendered_excerpt": "⚙\nSF Seed Technomancer\nStarfinder · Android (Dex)\nLevel up\nFeats, spells and gear\nMarket\nOpen\nClose\nSaved feats, spells and gear: Energy Armor Class (EAC) 18 · Kinetic Armor Class (KAC) 19 · Credits remaining 5350 · Bulk carried 1\n\nCLASS\n\nTechnomancer\t5\nABILITY SCORES\n\nScore\tModifier\nStrength\t10\t+0\nDexterity\t16\t+3\nConstitution\t14\t+2\nIntelligence\t19\t+4\nWisdom\t13\t+1\nCharisma\t8\t-1\nSTAMINA, HIT POINTS",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd39-e7mc-MA1rzG/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [
+        "d9387f3e-77d8-4c38-927d-16affca3fe50"
+      ],
+      "deleted": [
+        "d9387f3e-77d8-4c38-927d-16affca3fe50"
+      ],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "build-starfinder-envoy",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/a7402d70-3d8d-427c-820e-a54d598e3dda/scratchpad/smoke6/build-starfinder-envoy.png",
+    "rendered_excerpt": "⚙\nSF Seed Envoy\nStarfinder · Ysoki (Str)\nLevel up\nFeats, spells and gear\nMarket\nOpen\nClose\nSaved feats, spells and gear: Energy Armor Class (EAC) 14 · Kinetic Armor Class (KAC) 15 · Credits remaining 2330 · Bulk carried 1\n\nCLASS\n\nEnvoy\t3\nABILITY SCORES\n\nScore\tModifier\nStrength\t8\t-1\nDexterity\t13\t+1\nConstitution\t12\t+1\nIntelligence\t12\t+1\nWisdom\t10\t+0\nCharisma\t18\t+4\nSTAMINA, HIT POINTS AND RESOLVE\n\nSt",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd39-e7mc-MA1rzG/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [
+        "f8b21842-4ffc-4d3c-a943-26659150d31d"
+      ],
+      "deleted": [
+        "f8b21842-4ffc-4d3c-a943-26659150d31d"
+      ],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "sheet-market-open-weapons",
+    "status": "red",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/a7402d70-3d8d-427c-820e-a54d598e3dda/scratchpad/smoke6/sheet-market-open-weapons.FAILED.png",
+    "rendered_excerpt": "",
+    "reason": "target not found: 'Aldric Ironhand (no element named 'Aldric Ironhand')' at row step 2/8 (click \"Aldric Ironhand\")",
+    "app_data_root": "/tmp/codex-ui-smoke-sd39-e7mc-MA1rzG/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "sheet-market-open-defense",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/a7402d70-3d8d-427c-820e-a54d598e3dda/scratchpad/smoke6/sheet-market-open-defense.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nAldric Ironhand — Fighter 3\nCHARACTER DETAILS\n«\n\nLevel\n3\n+\nCaster Level\n—\nRACE\nHuman\nCLASS\nFighter 3\nCHARACTER DETAILS\n\nALIGNMENT\n\nDEITY\n\nSEX\n\nAGE\n\nHEIGHT\n\nWEIGHT\n\nHAIR\n\nEYES\n\nVISION\nNormal\nSIZE\nMedium\nVision and Size are calculated from race and aren't editable — a race this build has no profile for reads \"Unknown\" rather than a guessed value. The other fields save automatically when y",
+    "reason": "auto-relaunch",
+    "app_data_root": "/tmp/codex-ui-smoke-sd39-e7mc-MA1rzG/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "sheet-market-filter-armor",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/a7402d70-3d8d-427c-820e-a54d598e3dda/scratchpad/smoke6/sheet-market-filter-armor.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nAldric Ironhand — Fighter 3\nCHARACTER DETAILS\n«\n\nLevel\n3\n+\nCaster Level\n—\nRACE\nHuman\nCLASS\nFighter 3\nCHARACTER DETAILS\n\nALIGNMENT\n\nDEITY\n\nSEX\n\nAGE\n\nHEIGHT\n\nWEIGHT\n\nHAIR\n\nEYES\n\nVISION\nNormal\nSIZE\nMedium\nVision and Size are calculated from race and aren't editable — a race this build has no profile for reads \"Unknown\" rather than a guessed value. The other fields save automatically when y",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd39-e7mc-MA1rzG/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "sheet-market-buy-refused",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/a7402d70-3d8d-427c-820e-a54d598e3dda/scratchpad/smoke6/sheet-market-buy-refused.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nAldric Ironhand — Fighter 3\nCHARACTER DETAILS\n«\n\nLevel\n3\n+\nCaster Level\n—\n'Chain Shirt (Base)' costs 2525000 cp but the character's balance is only 0 cp. The purchase was not applied and no funds were charged.\nRACE\nHuman\nCLASS\nFighter 3\nCHARACTER DETAILS\n\nALIGNMENT\n\nDEITY\n\nSEX\n\nAGE\n\nHEIGHT\n\nWEIGHT\n\nHAIR\n\nEYES\n\nVISION\nNormal\nSIZE\nMedium\nVision and Size are calculated from race and aren't",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd39-e7mc-MA1rzG/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "sheet-market-buy",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/a7402d70-3d8d-427c-820e-a54d598e3dda/scratchpad/smoke6/sheet-market-buy.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nAldric Ironhand — Fighter 3\nCHARACTER DETAILS\n«\n\nLevel\n3\n+\nCaster Level\n—\nRACE\nHuman\nCLASS\nFighter 3\nCHARACTER DETAILS\n\nALIGNMENT\n\nDEITY\n\nSEX\n\nAGE\n\nHEIGHT\n\nWEIGHT\n\nHAIR\n\nEYES\n\nVISION\nNormal\nSIZE\nMedium\nVision and Size are calculated from race and aren't editable — a race this build has no profile for reads \"Unknown\" rather than a guessed value. The other fields save automatically when y",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd39-e7mc-MA1rzG/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "sheet-market-sell",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/a7402d70-3d8d-427c-820e-a54d598e3dda/scratchpad/smoke6/sheet-market-sell.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nAldric Ironhand — Fighter 3\nCHARACTER DETAILS\n«\n\nLevel\n3\n+\nCaster Level\n—\nRACE\nHuman\nCLASS\nFighter 3\nCHARACTER DETAILS\n\nALIGNMENT\n\nDEITY\n\nSEX\n\nAGE\n\nHEIGHT\n\nWEIGHT\n\nHAIR\n\nEYES\n\nVISION\nNormal\nSIZE\nMedium\nVision and Size are calculated from race and aren't editable — a race this build has no profile for reads \"Unknown\" rather than a guessed value. The other fields save automatically when y",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd39-e7mc-MA1rzG/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "sheet-market-buy-weapon-worn",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/a7402d70-3d8d-427c-820e-a54d598e3dda/scratchpad/smoke6/sheet-market-buy-weapon-worn.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nAldric Ironhand — Fighter 3\nCHARACTER DETAILS\n«\n\nLevel\n3\n+\nCaster Level\n—\nRACE\nHuman\nCLASS\nFighter 3\nCHARACTER DETAILS\n\nALIGNMENT\n\nDEITY\n\nSEX\n\nAGE\n\nHEIGHT\n\nWEIGHT\n\nHAIR\n\nEYES\n\nVISION\nNormal\nSIZE\nMedium\nVision and Size are calculated from race and aren't editable — a race this build has no profile for reads \"Unknown\" rather than a guessed value. The other fields save automatically when y",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd39-e7mc-MA1rzG/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "sheet-market-cashless",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/a7402d70-3d8d-427c-820e-a54d598e3dda/scratchpad/smoke6/sheet-market-cashless.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nAldric Ironhand — Fighter 3\nCHARACTER DETAILS\n«\n\nLevel\n3\n+\nCaster Level\n—\nRACE\nHuman\nCLASS\nFighter 3\nCHARACTER DETAILS\n\nALIGNMENT\n\nDEITY\n\nSEX\n\nAGE\n\nHEIGHT\n\nWEIGHT\n\nHAIR\n\nEYES\n\nVISION\nNormal\nSIZE\nMedium\nVision and Size are calculated from race and aren't editable — a race this build has no profile for reads \"Unknown\" rather than a guessed value. The other fields save automatically when y",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd39-e7mc-MA1rzG/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "sheet-market-enhancement-ac",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/a7402d70-3d8d-427c-820e-a54d598e3dda/scratchpad/smoke6/sheet-market-enhancement-ac.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nAldric Ironhand — Fighter 3\nCHARACTER DETAILS\n«\n\nLevel\n3\n+\nCaster Level\n—\nRACE\nHuman\nCLASS\nFighter 3\nCHARACTER DETAILS\n\nALIGNMENT\n\nDEITY\n\nSEX\n\nAGE\n\nHEIGHT\n\nWEIGHT\n\nHAIR\n\nEYES\n\nVISION\nNormal\nSIZE\nMedium\nVision and Size are calculated from race and aren't editable — a race this build has no profile for reads \"Unknown\" rather than a guessed value. The other fields save automatically when y",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd39-e7mc-MA1rzG/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "sheet-market-starfinder-open",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/a7402d70-3d8d-427c-820e-a54d598e3dda/scratchpad/smoke6/sheet-market-starfinder-open.png",
+    "rendered_excerpt": "⚙\nSF Seed Soldier\nStarfinder · Human\nLevel up\nFeats, spells and gear\nMarket\nOpen\nClose\nCLASS\n\nSoldier\t3\nABILITY SCORES\n\nScore\tModifier\nStrength\t16\t+3\nDexterity\t14\t+2\nConstitution\t12\t+1\nIntelligence\t11\t+0\nWisdom\t10\t+0\nCharisma\t10\t+0\nSTAMINA, HIT POINTS AND RESOLVE\n\nStamina Points\t24\nHit Points\t25\nResolve Points\t4\nARMOR CLASS\n\nEnergy Armor Class (EAC)\t16\nKinetic Armor Class (KAC)\t19\nInitiative\t+2\nSA",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd39-e7mc-MA1rzG/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [
+        "fe70eed3-79d8-4565-a660-64987c33d6c8"
+      ],
+      "deleted": [
+        "fe70eed3-79d8-4565-a660-64987c33d6c8"
+      ],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "sheet-market-starfinder-buy",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/a7402d70-3d8d-427c-820e-a54d598e3dda/scratchpad/smoke6/sheet-market-starfinder-buy.png",
+    "rendered_excerpt": "⚙\nSF Seed Soldier\nStarfinder · Human\nLevel up\nFeats, spells and gear\nMarket\nOpen\nClose\nBought Battery for 60 credits.\n\nCLASS\n\nSoldier\t3\nABILITY SCORES\n\nScore\tModifier\nStrength\t16\t+3\nDexterity\t14\t+2\nConstitution\t12\t+1\nIntelligence\t11\t+0\nWisdom\t10\t+0\nCharisma\t10\t+0\nSTAMINA, HIT POINTS AND RESOLVE\n\nStamina Points\t24\nHit Points\t25\nResolve Points\t4\nARMOR CLASS\n\nEnergy Armor Class (EAC)\t16\nKinetic Armor",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd39-e7mc-MA1rzG/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [
+        "0c47441c-a400-4fb0-8548-44216bb1b6bc"
+      ],
+      "deleted": [
+        "0c47441c-a400-4fb0-8548-44216bb1b6bc"
+      ],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "sheet-market-starfinder-sell",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/a7402d70-3d8d-427c-820e-a54d598e3dda/scratchpad/smoke6/sheet-market-starfinder-sell.png",
+    "rendered_excerpt": "⚙\nSF Seed Soldier\nStarfinder · Human\nLevel up\nFeats, spells and gear\nMarket\nOpen\nClose\nSold Battery for 30 credits.\n\nCLASS\n\nSoldier\t3\nABILITY SCORES\n\nScore\tModifier\nStrength\t16\t+3\nDexterity\t14\t+2\nConstitution\t12\t+1\nIntelligence\t11\t+0\nWisdom\t10\t+0\nCharisma\t10\t+0\nSTAMINA, HIT POINTS AND RESOLVE\n\nStamina Points\t24\nHit Points\t25\nResolve Points\t4\nARMOR CLASS\n\nEnergy Armor Class (EAC)\t16\nKinetic Armor C",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd39-e7mc-MA1rzG/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [
+        "a5b8b385-1163-4d67-a442-5ea5fdf68ab1"
+      ],
+      "deleted": [
+        "a5b8b385-1163-4d67-a442-5ea5fdf68ab1"
+      ],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "sheet-market-starfinder-cashless",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/a7402d70-3d8d-427c-820e-a54d598e3dda/scratchpad/smoke6/sheet-market-starfinder-cashless.png",
+    "rendered_excerpt": "⚙\nSF Seed Soldier\nStarfinder · Human\nLevel up\nFeats, spells and gear\nMarket\nOpen\nClose\nAdded Battery; no money moved.\n\nCLASS\n\nSoldier\t3\nABILITY SCORES\n\nScore\tModifier\nStrength\t16\t+3\nDexterity\t14\t+2\nConstitution\t12\t+1\nIntelligence\t11\t+0\nWisdom\t10\t+0\nCharisma\t10\t+0\nSTAMINA, HIT POINTS AND RESOLVE\n\nStamina Points\t24\nHit Points\t25\nResolve Points\t4\nARMOR CLASS\n\nEnergy Armor Class (EAC)\t16\nKinetic Armor",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd39-e7mc-MA1rzG/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [
+        "d6f27747-b7e5-481d-9fbd-115473c73b00"
+      ],
+      "deleted": [
+        "d6f27747-b7e5-481d-9fbd-115473c73b00"
+      ],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "sheet-market-starfinder-refused",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/a7402d70-3d8d-427c-820e-a54d598e3dda/scratchpad/smoke6/sheet-market-starfinder-refused.png",
+    "rendered_excerpt": "⚙\nSF Seed Soldier\nStarfinder · Human\nLevel up\nFeats, spells and gear\nMarket\nOpen\nClose\nCLASS\n\nSoldier\t3\nABILITY SCORES\n\nScore\tModifier\nStrength\t16\t+3\nDexterity\t14\t+2\nConstitution\t12\t+1\nIntelligence\t11\t+0\nWisdom\t10\t+0\nCharisma\t10\t+0\nSTAMINA, HIT POINTS AND RESOLVE\n\nStamina Points\t24\nHit Points\t25\nResolve Points\t4\nARMOR CLASS\n\nEnergy Armor Class (EAC)\t16\nKinetic Armor Class (KAC)\t19\nInitiative\t+2\nSA",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd39-e7mc-MA1rzG/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [
+        "7a8ebb6d-33c5-4a6a-9b39-e8a7f9c5f4b3"
+      ],
+      "deleted": [
+        "7a8ebb6d-33c5-4a6a-9b39-e8a7f9c5f4b3"
+      ],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "sheet-market-cyberpunk-open",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/a7402d70-3d8d-427c-820e-a54d598e3dda/scratchpad/smoke6/sheet-market-cyberpunk-open.png",
+    "rendered_excerpt": "⚙\nJax Moreno\nCyberpunk RED\nImprove\nMarket\nOpen\nClose\nSTATS\n\nSTAT\tCurrent\nINT\t5\t—\nREF\t8\t8\nDEX\t7\t7\nTECH\t4\t—\nCOOL\t7\t—\nWILL\t7\t—\nLUCK\t6\t—\nMOVE\t7\t7\nBODY\t8\t8\nEMP\t5\t3\nSKILLS\n\nLevel\tBase\nAwareness\nConcentration (WILL)\t2\t9\nConceal/Reveal Object (INT)\t0\t5\nLip Reading (INT)\t0\t5\nPerception (INT)\t6\t11\nTracking (INT)\t0\t5\nBody\nAthletics (DEX)\t2\t9\nContortionist (DEX)\t0\t7\nDance (DEX)\t0\t7\nEndurance (WILL)\t0\t7\nResist",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd39-e7mc-MA1rzG/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "sheet-market-cyberpunk-buy",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/a7402d70-3d8d-427c-820e-a54d598e3dda/scratchpad/smoke6/sheet-market-cyberpunk-buy.png",
+    "rendered_excerpt": "⚙\nJax Moreno\nCyberpunk RED\nImprove\nMarket\nOpen\nClose\nSTATS\n\nSTAT\tCurrent\nINT\t5\t—\nREF\t8\t8\nDEX\t7\t7\nTECH\t4\t—\nCOOL\t7\t—\nWILL\t7\t—\nLUCK\t6\t—\nMOVE\t7\t7\nBODY\t8\t8\nEMP\t5\t3\nSKILLS\n\nLevel\tBase\nAwareness\nConcentration (WILL)\t2\t9\nConceal/Reveal Object (INT)\t0\t5\nLip Reading (INT)\t0\t5\nPerception (INT)\t6\t11\nTracking (INT)\t0\t5\nBody\nAthletics (DEX)\t2\t9\nContortionist (DEX)\t0\t7\nDance (DEX)\t0\t7\nEndurance (WILL)\t0\t7\nResist",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd39-e7mc-MA1rzG/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "sheet-market-cyberpunk-sell",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/a7402d70-3d8d-427c-820e-a54d598e3dda/scratchpad/smoke6/sheet-market-cyberpunk-sell.png",
+    "rendered_excerpt": "⚙\nJax Moreno\nCyberpunk RED\nImprove\nMarket\nOpen\nClose\nSTATS\n\nSTAT\tCurrent\nINT\t5\t—\nREF\t8\t8\nDEX\t7\t7\nTECH\t4\t—\nCOOL\t7\t—\nWILL\t7\t—\nLUCK\t6\t—\nMOVE\t7\t7\nBODY\t8\t8\nEMP\t5\t3\nSKILLS\n\nLevel\tBase\nAwareness\nConcentration (WILL)\t2\t9\nConceal/Reveal Object (INT)\t0\t5\nLip Reading (INT)\t0\t5\nPerception (INT)\t6\t11\nTracking (INT)\t0\t5\nBody\nAthletics (DEX)\t2\t9\nContortionist (DEX)\t0\t7\nDance (DEX)\t0\t7\nEndurance (WILL)\t0\t7\nResist",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd39-e7mc-MA1rzG/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "sheet-market-cyberpunk-refused",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/a7402d70-3d8d-427c-820e-a54d598e3dda/scratchpad/smoke6/sheet-market-cyberpunk-refused.png",
+    "rendered_excerpt": "⚙\nJax Moreno\nCyberpunk RED\nImprove\nMarket\nOpen\nClose\nSTATS\n\nSTAT\tCurrent\nINT\t5\t—\nREF\t8\t8\nDEX\t7\t7\nTECH\t4\t—\nCOOL\t7\t—\nWILL\t7\t—\nLUCK\t6\t—\nMOVE\t7\t7\nBODY\t8\t8\nEMP\t5\t3\nSKILLS\n\nLevel\tBase\nAwareness\nConcentration (WILL)\t2\t9\nConceal/Reveal Object (INT)\t0\t5\nLip Reading (INT)\t0\t5\nPerception (INT)\t6\t11\nTracking (INT)\t0\t5\nBody\nAthletics (DEX)\t2\t9\nContortionist (DEX)\t0\t7\nDance (DEX)\t0\t7\nEndurance (WILL)\t0\t7\nResist",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd39-e7mc-MA1rzG/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "sheet-market-cyberpunk-cashless",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/a7402d70-3d8d-427c-820e-a54d598e3dda/scratchpad/smoke6/sheet-market-cyberpunk-cashless.png",
+    "rendered_excerpt": "⚙\nJax Moreno\nCyberpunk RED\nImprove\nMarket\nOpen\nClose\nSTATS\n\nSTAT\tCurrent\nINT\t5\t—\nREF\t8\t8\nDEX\t7\t7\nTECH\t4\t—\nCOOL\t7\t—\nWILL\t7\t—\nLUCK\t6\t—\nMOVE\t7\t7\nBODY\t8\t8\nEMP\t5\t3\nSKILLS\n\nLevel\tBase\nAwareness\nConcentration (WILL)\t2\t9\nConceal/Reveal Object (INT)\t0\t5\nLip Reading (INT)\t0\t5\nPerception (INT)\t6\t11\nTracking (INT)\t0\t5\nBody\nAthletics (DEX)\t2\t9\nContortionist (DEX)\t0\t7\nDance (DEX)\t0\t7\nEndurance (WILL)\t0\t7\nResist",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd39-e7mc-MA1rzG/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "sheet-equipment-lists",
+    "status": "red",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/a7402d70-3d8d-427c-820e-a54d598e3dda/scratchpad/smoke6/sheet-equipment-lists.FAILED.png",
+    "rendered_excerpt": "",
+    "reason": "target not found: 'Aldric Ironhand (no element named 'Aldric Ironhand')' at row step 2/6 (click \"Aldric Ironhand\")",
+    "app_data_root": "/tmp/codex-ui-smoke-sd39-e7mc-MA1rzG/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "sheet-equipment-conflict",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/a7402d70-3d8d-427c-820e-a54d598e3dda/scratchpad/smoke6/sheet-equipment-conflict.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nAldric Ironhand — Fighter 3\nCHARACTER DETAILS\n«\n\nLevel\n3\n+\nCaster Level\n—\nRACE\nHuman\nCLASS\nFighter 3\nCHARACTER DETAILS\n\nALIGNMENT\n\nDEITY\n\nSEX\n\nAGE\n\nHEIGHT\n\nWEIGHT\n\nHAIR\n\nEYES\n\nVISION\nNormal\nSIZE\nMedium\nVision and Size are calculated from race and aren't editable — a race this build has no profile for reads \"Unknown\" rather than a guessed value. The other fields save automatically when y",
+    "reason": "auto-relaunch",
+    "app_data_root": "/tmp/codex-ui-smoke-sd39-e7mc-MA1rzG/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "sheet-equipment-unequip",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/a7402d70-3d8d-427c-820e-a54d598e3dda/scratchpad/smoke6/sheet-equipment-unequip.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nAldric Ironhand — Fighter 3\nCHARACTER DETAILS\n«\n\nLevel\n3\n+\nCaster Level\n—\nRACE\nHuman\nCLASS\nFighter 3\nCHARACTER DETAILS\n\nALIGNMENT\n\nDEITY\n\nSEX\n\nAGE\n\nHEIGHT\n\nWEIGHT\n\nHAIR\n\nEYES\n\nVISION\nNormal\nSIZE\nMedium\nVision and Size are calculated from race and aren't editable — a race this build has no profile for reads \"Unknown\" rather than a guessed value. The other fields save automatically when y",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd39-e7mc-MA1rzG/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "sheet-equipment-equip",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/a7402d70-3d8d-427c-820e-a54d598e3dda/scratchpad/smoke6/sheet-equipment-equip.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nAldric Ironhand — Fighter 3\nCHARACTER DETAILS\n«\n\nLevel\n3\n+\nCaster Level\n—\nRACE\nHuman\nCLASS\nFighter 3\nCHARACTER DETAILS\n\nALIGNMENT\n\nDEITY\n\nSEX\n\nAGE\n\nHEIGHT\n\nWEIGHT\n\nHAIR\n\nEYES\n\nVISION\nNormal\nSIZE\nMedium\nVision and Size are calculated from race and aren't editable — a race this build has no profile for reads \"Unknown\" rather than a guessed value. The other fields save automatically when y",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd39-e7mc-MA1rzG/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "sheet-equipment-left-behind",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/a7402d70-3d8d-427c-820e-a54d598e3dda/scratchpad/smoke6/sheet-equipment-left-behind.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nAldric Ironhand — Fighter 3\nCHARACTER DETAILS\n«\n\nLevel\n3\n+\nCaster Level\n—\nRACE\nHuman\nCLASS\nFighter 3\nCHARACTER DETAILS\n\nALIGNMENT\n\nDEITY\n\nSEX\n\nAGE\n\nHEIGHT\n\nWEIGHT\n\nHAIR\n\nEYES\n\nVISION\nNormal\nSIZE\nMedium\nVision and Size are calculated from race and aren't editable — a race this build has no profile for reads \"Unknown\" rather than a guessed value. The other fields save automatically when y",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd39-e7mc-MA1rzG/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "sheet-custom-item-worn",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/a7402d70-3d8d-427c-820e-a54d598e3dda/scratchpad/smoke6/sheet-custom-item-worn.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nAldric Ironhand — Fighter 3\nCHARACTER DETAILS\n«\n\nLevel\n3\n+\nCaster Level\n—\nRACE\nHuman\nCLASS\nFighter 3\nCHARACTER DETAILS\n\nALIGNMENT\n\nDEITY\n\nSEX\n\nAGE\n\nHEIGHT\n\nWEIGHT\n\nHAIR\n\nEYES\n\nVISION\nNormal\nSIZE\nMedium\nVision and Size are calculated from race and aren't editable — a race this build has no profile for reads \"Unknown\" rather than a guessed value. The other fields save automatically when y",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd39-e7mc-MA1rzG/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "sheet-custom-item-stowed",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/a7402d70-3d8d-427c-820e-a54d598e3dda/scratchpad/smoke6/sheet-custom-item-stowed.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nAldric Ironhand — Fighter 3\nCHARACTER DETAILS\n«\n\nLevel\n3\n+\nCaster Level\n—\nRACE\nHuman\nCLASS\nFighter 3\nCHARACTER DETAILS\n\nALIGNMENT\n\nDEITY\n\nSEX\n\nAGE\n\nHEIGHT\n\nWEIGHT\n\nHAIR\n\nEYES\n\nVISION\nNormal\nSIZE\nMedium\nVision and Size are calculated from race and aren't editable — a race this build has no profile for reads \"Unknown\" rather than a guessed value. The other fields save automatically when y",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd39-e7mc-MA1rzG/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "sheet-override-tag-feat",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/a7402d70-3d8d-427c-820e-a54d598e3dda/scratchpad/smoke6/sheet-override-tag-feat.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nAldric Ironhand — Fighter 3\nCHARACTER DETAILS\n«\n\nLevel\n3\n+\nCaster Level\n—\nRACE\nHuman\nCLASS\nFighter 3\nCHARACTER DETAILS\n\nALIGNMENT\n\nDEITY\n\nSEX\n\nAGE\n\nHEIGHT\n\nWEIGHT\n\nHAIR\n\nEYES\n\nVISION\nNormal\nSIZE\nMedium\nVision and Size are calculated from race and aren't editable — a race this build has no profile for reads \"Unknown\" rather than a guessed value. The other fields save automatically when y",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd39-e7mc-MA1rzG/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "sheet-override-tag-slot",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/a7402d70-3d8d-427c-820e-a54d598e3dda/scratchpad/smoke6/sheet-override-tag-slot.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nAldric Ironhand — Fighter 3\nCHARACTER DETAILS\n«\n\nLevel\n3\n+\nCaster Level\n—\nRACE\nHuman\nCLASS\nFighter 3\nCHARACTER DETAILS\n\nALIGNMENT\n\nDEITY\n\nSEX\n\nAGE\n\nHEIGHT\n\nWEIGHT\n\nHAIR\n\nEYES\n\nVISION\nNormal\nSIZE\nMedium\nVision and Size are calculated from race and aren't editable — a race this build has no profile for reads \"Unknown\" rather than a guessed value. The other fields save automatically when y",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd39-e7mc-MA1rzG/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "sheet-override-tag-spell",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/a7402d70-3d8d-427c-820e-a54d598e3dda/scratchpad/smoke6/sheet-override-tag-spell.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nElowen Ashgrave — Wizard 5\nCHARACTER DETAILS\n«\n\nLevel\n5\n+\nCaster Level\n5\nRACE\nHuman\nCLASS\nWizard 5\nCHARACTER DETAILS\n\nALIGNMENT\n\nDEITY\n\nSEX\n\nAGE\n\nHEIGHT\n\nWEIGHT\n\nHAIR\n\nEYES\n\nVISION\nNormal\nSIZE\nMedium\nVision and Size are calculated from race and aren't editable — a race this build has no profile for reads \"Unknown\" rather than a guessed value. The other fields save automatically when you",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd39-e7mc-MA1rzG/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "sheet-override-market-weapon-not-proficient",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/a7402d70-3d8d-427c-820e-a54d598e3dda/scratchpad/smoke6/sheet-override-market-weapon-not-proficient.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nElowen Ashgrave — Wizard 5\nCHARACTER DETAILS\n«\n\nLevel\n5\n+\nCaster Level\n5\nRACE\nHuman\nCLASS\nWizard 5\nCHARACTER DETAILS\n\nALIGNMENT\n\nDEITY\n\nSEX\n\nAGE\n\nHEIGHT\n\nWEIGHT\n\nHAIR\n\nEYES\n\nVISION\nNormal\nSIZE\nMedium\nVision and Size are calculated from race and aren't editable — a race this build has no profile for reads \"Unknown\" rather than a guessed value. The other fields save automatically when you",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd39-e7mc-MA1rzG/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "sheet-override-tag-spell-non-caster",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/a7402d70-3d8d-427c-820e-a54d598e3dda/scratchpad/smoke6/sheet-override-tag-spell-non-caster.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nAldric Ironhand — Fighter 3\nCHARACTER DETAILS\n«\n\nLevel\n3\n+\nCaster Level\n—\nRACE\nHuman\nCLASS\nFighter 3\nCHARACTER DETAILS\n\nALIGNMENT\n\nDEITY\n\nSEX\n\nAGE\n\nHEIGHT\n\nWEIGHT\n\nHAIR\n\nEYES\n\nVISION\nNormal\nSIZE\nMedium\nVision and Size are calculated from race and aren't editable — a race this build has no profile for reads \"Unknown\" rather than a guessed value. The other fields save automatically when y",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd39-e7mc-MA1rzG/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  }
+]

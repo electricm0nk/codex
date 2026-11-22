@@ -1,0 +1,129 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Miasmic ~ Sickening Touch",
+    "name": "Sickening Touch",
+    "class": "Miasmic",
+    "description": "You can cause a living creature to be",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Miasmic ~ Sickening Touch"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "VitalistClassFeatures.SpecialAttack.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SickeningTouchDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SickeningTouchDuration|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SickeningTouchTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SickeningTouchTransferDuration|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can cause a living creature to be"
+      },
+      {
+        "key": "DESC",
+        "value": " sickened|PREVARLT:VitalistLVL,5"
+      },
+      {
+        "key": "DESC",
+        "value": " nauseated|PREVARGTEQ:VitalistLVL,5"
+      },
+      {
+        "key": "DESC",
+        "value": " with just a touch. As a melee touch attack, the creature touched must make a save (Fortitude DC %1) or be|SickeningTouchDC"
+      },
+      {
+        "key": "DESC",
+        "value": " sickened|PREVARLT:VitalistLVL,5"
+      },
+      {
+        "key": "DESC",
+        "value": " nauseated|PREVARGTEQ:VitalistLVL,5"
+      },
+      {
+        "key": "DESC",
+        "value": " for %1 rounds.|SickeningTouchDuration"
+      },
+      {
+        "key": "DESC",
+        "value": " A successful save negates this effect.|PREVARLT:VitalistLVL,9"
+      },
+      {
+        "key": "DESC",
+        "value": " A successful save causes the creature touched to be sickened.|PREVARGTEQ:VitalistLVL,9"
+      },
+      {
+        "key": "DESC",
+        "value": " You may use this ability %1/day.|SickeningTouchTimes"
+      },
+      {
+        "key": "DESC",
+        "value": " If you absorb a disease through your disease mastery ability, for %1 rounds after abosrbing the disease, you can transfer the disease through this ability, infecting the touched creature with the disease absorbed.|SickeningTouchTransferDuration|PRECLASS:1,Vitalist=13"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SickeningTouchDC|10+VitalistLVL/2+WIS"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SickeningTouchDuration|WIS"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SickeningTouchTimes|3+WIS"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SickeningTouchTransferDuration|WIS"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.289"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|SickeningTouchTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2323,
+    "record_key": "Miasmic ~ Sickening Touch"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

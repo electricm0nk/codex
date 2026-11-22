@@ -1,0 +1,44 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-24T03:53:24Z",
+  "data": {
+    "key": "Default",
+    "name": "Default",
+    "class": null,
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "BONUS",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "BONUS",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RaceReducedCompanion|0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Totem-Bonded Companion Enlargement|PREVARGTEQ:MasterLevel,7,RaceReducedCompanion,1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 754,
+    "record_key": "Default"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "raw_tokens",
+  "pi_marker": "redacted",
+  "codex_generated_name": false
+}

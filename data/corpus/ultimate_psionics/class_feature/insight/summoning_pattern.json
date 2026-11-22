@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Insight ~ Summoning Pattern",
+    "name": "Summoning Pattern",
+    "class": "Insight",
+    "description": "You learn how to create a unique pattern at your current location as a full-round action and then to send a creature to that pattern at a later time by making a touch attack as a standard action.  Unwilling creatures may make a DC %1 Fortitude save to negate this effect.  The pattern created in this way lasts for %2 days, although you may only have one such pattern active at any time.  You and the creature to be affected must be on the same plane of existence as the pattern to send a creature to it.  You may use this insight on yourself.|SummoningPatternDC|SummoningPatternDuration",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Insight ~ Summoning Pattern"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural.CrypticInsight"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "CrypticInsightLVL,12"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SummoningPatternDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SummoningPatternDuration|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You learn how to create a unique pattern at your current location as a full-round action and then to send a creature to that pattern at a later time by making a touch attack as a standard action.  Unwilling creatures may make a DC %1 Fortitude save to negate this effect.  The pattern created in this way lasts for %2 days, although you may only have one such pattern active at any time.  You and the creature to be affected must be on the same plane of existence as the pattern to send a creature to it.  You may use this insight on yourself.|SummoningPatternDC|SummoningPatternDuration"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SummoningPatternDC|CrypticInsightDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SummoningPatternDuration|CrypticInsightStat"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.39"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 223,
+    "record_key": "Insight ~ Summoning Pattern"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

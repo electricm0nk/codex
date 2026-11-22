@@ -1,0 +1,57 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Taotieh ~ Swallow Whole",
+    "delivery": "Supernatural",
+    "description": "A taotieh can expand its jaws to swallow Large or smaller creatures. When swallowed, a victim is transported to its own lightless pocket dimension-a stone prison just large enough to contain the victim. Creatures do not take damage within this pocket dimension, but there is only enough air inside to last for 3 rounds. At the end of the third round, the trapped creature must hold its breath or risk suffocation. A creature that attempts to carve its way out of this dimension with a weapon must be able to penetrate the surrounding walls' hardness 8. When a creature manages to cut its way out of this dimension, it appears to leap out of the taotieh's mouth to emerge into any square adjacent to the taotieh's space-no actual hole is created in the creature, and new creatures that are swallowed later must cut their own way out. When a taotieh is destroyed, its body bursts open to allow the contents of its extradimensional stomachs to spill out into adjacent spaces. A taotieh can swallow up to four creatures at any one time.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:taotieh_swallow_whole",
+    "name": "Swallow Whole",
+    "owners": [
+      "bestiary_3:monster:taotieh"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A taotieh can expand its jaws to swallow Large or smaller creatures. When swallowed, a victim is transported to its own lightless pocket dimension-a stone prison just large enough to contain the victim. Creatures do not take damage within this pocket dimension, but there is only enough air inside to last for 3 rounds. At the end of the third round, the trapped creature must hold its breath or risk suffocation. A creature that attempts to carve its way out of this dimension with a weapon must be able to penetrate the surrounding walls' hardness 8. When a creature manages to cut its way out of this dimension, it appears to leap out of the taotieh's mouth to emerge into any square adjacent to the taotieh's space-no actual hole is created in the creature, and new creatures that are swallowed later must cut their own way out. When a taotieh is destroyed, its body bursts open to allow the contents of its extradimensional stomachs to spill out into adjacent spaces. A taotieh can swallow up to four creatures at any one time."
+      },
+      {
+        "key": "KEY",
+        "value": "Taotieh ~ Swallow Whole"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.260"
+      },
+      {
+        "key": "TYPE",
+        "value": "TaotiehRacialAbility.SpecialQuality.Supernatural"
+      }
+    ],
+    "source_page": "p.260",
+    "traits": [
+      "TaotiehRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T10:26:03Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1589,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Taotieh ~ Swallow Whole",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

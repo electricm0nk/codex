@@ -1,0 +1,4242 @@
+[
+ {
+  "kind": "lifepath_table",
+  "group": "general",
+  "role": null,
+  "name": "Cultural Origins",
+  "source_page": "p046",
+  "dice": "1d10",
+  "roll_instruction": "Roll 1d10 or choose one.",
+  "columns": [
+   "Your (General) Cultural Region",
+   "Languages You Might Know (pick one in your group)"
+  ],
+  "rows": [
+   {
+    "roll": 1,
+    "cells": [
+     "North American",
+     "Chinese, Cree, Creole, English, French, Navajo, Spanish"
+    ]
+   },
+   {
+    "roll": 2,
+    "cells": [
+     "South/Central American",
+     "Creole, English, German, Guarani, Mayan, Portuguese, Quechua, Spanish"
+    ]
+   },
+   {
+    "roll": 3,
+    "cells": [
+     "Western European",
+     "Dutch, English, French, German, Italian, Norwegian, Portuguese, Spanish"
+    ]
+   },
+   {
+    "roll": 4,
+    "cells": [
+     "Eastern European",
+     "English, Finnish, Polish, Romanian, Russian, Ukrainian"
+    ]
+   },
+   {
+    "roll": 5,
+    "cells": [
+     "Middle Eastern/North African",
+     "Arabic, Berber, English, Farsi, French, Hebrew, Turkish"
+    ]
+   },
+   {
+    "roll": 6,
+    "cells": [
+     "Sub-Saharan African",
+     "Arabic, English, French, Hausa, Lingala, Oromo, Portuguese, Swahili, Twi, Yoruba"
+    ]
+   },
+   {
+    "roll": 7,
+    "cells": [
+     "South Asian",
+     "Bengali, Dari, English, Hindi, Nepali, Sinhalese, Tamil, Urdu"
+    ]
+   },
+   {
+    "roll": 8,
+    "cells": [
+     "South East Asian",
+     "Arabic, Burmese, English, Filipino, Hindi, Indonesian, Khmer, Malayan, Vietnamese"
+    ]
+   },
+   {
+    "roll": 9,
+    "cells": [
+     "East Asian",
+     "Cantonese Chinese, English, Japanese, Korean, Mandarin Chinese, Mongolian"
+    ]
+   },
+   {
+    "roll": 10,
+    "cells": [
+     "Oceania/Pacific Islander",
+     "English, French, Hawaiian, Maori, Pama-Nyungan, Tahitian"
+    ]
+   }
+  ],
+  "mechanical": true,
+  "transcription_note": "Mechanical: choose one listed language (or any other) and take it at Skill Rank 4 (p046). The languages are also split into a `languages` list per row.",
+  "languages_by_roll": {
+   "1": [
+    "Chinese",
+    "Cree",
+    "Creole",
+    "English",
+    "French",
+    "Navajo",
+    "Spanish"
+   ],
+   "2": [
+    "Creole",
+    "English",
+    "German",
+    "Guarani",
+    "Mayan",
+    "Portuguese",
+    "Quechua",
+    "Spanish"
+   ],
+   "3": [
+    "Dutch",
+    "English",
+    "French",
+    "German",
+    "Italian",
+    "Norwegian",
+    "Portuguese",
+    "Spanish"
+   ],
+   "4": [
+    "English",
+    "Finnish",
+    "Polish",
+    "Romanian",
+    "Russian",
+    "Ukrainian"
+   ],
+   "5": [
+    "Arabic",
+    "Berber",
+    "English",
+    "Farsi",
+    "French",
+    "Hebrew",
+    "Turkish"
+   ],
+   "6": [
+    "Arabic",
+    "English",
+    "French",
+    "Hausa",
+    "Lingala",
+    "Oromo",
+    "Portuguese",
+    "Swahili",
+    "Twi",
+    "Yoruba"
+   ],
+   "7": [
+    "Bengali",
+    "Dari",
+    "English",
+    "Hindi",
+    "Nepali",
+    "Sinhalese",
+    "Tamil",
+    "Urdu"
+   ],
+   "8": [
+    "Arabic",
+    "Burmese",
+    "English",
+    "Filipino",
+    "Hindi",
+    "Indonesian",
+    "Khmer",
+    "Malayan",
+    "Vietnamese"
+   ],
+   "9": [
+    "Cantonese Chinese",
+    "English",
+    "Japanese",
+    "Korean",
+    "Mandarin Chinese",
+    "Mongolian"
+   ],
+   "10": [
+    "English",
+    "French",
+    "Hawaiian",
+    "Maori",
+    "Pama-Nyungan",
+    "Tahitian"
+   ]
+  },
+  "free_language_rank": 4,
+  "text": "Roll 1d10 or choose one."
+ },
+ {
+  "kind": "lifepath_table",
+  "group": "general",
+  "role": null,
+  "name": "Your Personality",
+  "source_page": "p047",
+  "dice": "1d10",
+  "roll_instruction": "Roll 1d10 or choose one.",
+  "columns": [
+   "What Are You Like?"
+  ],
+  "rows": [
+   {
+    "roll": 1,
+    "cells": [
+     "Shy and secretive"
+    ]
+   },
+   {
+    "roll": 2,
+    "cells": [
+     "Rebellious, antisocial, and violent"
+    ]
+   },
+   {
+    "roll": 3,
+    "cells": [
+     "Arrogant, proud, and aloof"
+    ]
+   },
+   {
+    "roll": 4,
+    "cells": [
+     "Moody, rash, and headstrong"
+    ]
+   },
+   {
+    "roll": 5,
+    "cells": [
+     "Picky, fussy, and nervous"
+    ]
+   },
+   {
+    "roll": 6,
+    "cells": [
+     "Stable and serious"
+    ]
+   },
+   {
+    "roll": 7,
+    "cells": [
+     "Silly and fluff-headed"
+    ]
+   },
+   {
+    "roll": 8,
+    "cells": [
+     "Sneaky and deceptive"
+    ]
+   },
+   {
+    "roll": 9,
+    "cells": [
+     "Intellectual and detached"
+    ]
+   },
+   {
+    "roll": 10,
+    "cells": [
+     "Friendly and outgoing"
+    ]
+   }
+  ],
+  "mechanical": false,
+  "text": "Roll 1d10 or choose one."
+ },
+ {
+  "kind": "lifepath_table",
+  "group": "general",
+  "role": null,
+  "name": "Dress and Personal Style: Clothing Style and Hairstyle",
+  "source_page": "p048",
+  "dice": "1d10",
+  "roll_instruction": "Roll 1d10 or choose one for each column.",
+  "columns": [
+   "Clothing Style",
+   "Hairstyle"
+  ],
+  "rows": [
+   {
+    "roll": 1,
+    "cells": [
+     "Generic Chic (Standard, Colorful, Modular)",
+     "Mohawk"
+    ]
+   },
+   {
+    "roll": 2,
+    "cells": [
+     "Leisurewear (Comfort, Agility, Athleticism)",
+     "Long and ratty"
+    ]
+   },
+   {
+    "roll": 3,
+    "cells": [
+     "Urban Flash (Flashy, Technological, Streetwear)",
+     "Short and spiked"
+    ]
+   },
+   {
+    "roll": 4,
+    "cells": [
+     "Businesswear (Leadership, Presence, Authority)",
+     "Wild and all over"
+    ]
+   },
+   {
+    "roll": 5,
+    "cells": [
+     "High Fashion (Exclusive, Designer, Couture)",
+     "Bald"
+    ]
+   },
+   {
+    "roll": 6,
+    "cells": [
+     "Bohemian (Folksy, Retro, Free-spirited)",
+     "Striped"
+    ]
+   },
+   {
+    "roll": 7,
+    "cells": [
+     "Bag Lady Chic (Homeless, Ragged, Vagrant)",
+     "Wild colors"
+    ]
+   },
+   {
+    "roll": 8,
+    "cells": [
+     "Gang Colors (Dangerous, Violent, Rebellious)",
+     "Neat and short"
+    ]
+   },
+   {
+    "roll": 9,
+    "cells": [
+     "Nomad Leathers (Western, Rugged, Tribal)",
+     "Short and curly"
+    ]
+   },
+   {
+    "roll": 10,
+    "cells": [
+     "Asia Pop (Bright, Costume-like, Youthful)",
+     "Long and straight"
+    ]
+   }
+  ],
+  "mechanical": false,
+  "transcription_note": "One printed box with two roll columns (Clothing Style, Hairstyle). The Affectation table below it is its own printed box with its own roll instruction.",
+  "text": "Roll 1d10 or choose one for each column."
+ },
+ {
+  "kind": "lifepath_table",
+  "group": "general",
+  "role": null,
+  "name": "Affectation You Are Never Without",
+  "source_page": "p048",
+  "dice": "1d10",
+  "roll_instruction": "Roll 1d10 or choose one.",
+  "columns": [
+   "Affectation You Are Never Without"
+  ],
+  "rows": [
+   {
+    "roll": 1,
+    "cells": [
+     "Tattoos"
+    ]
+   },
+   {
+    "roll": 2,
+    "cells": [
+     "Mirrorshades"
+    ]
+   },
+   {
+    "roll": 3,
+    "cells": [
+     "Ritual scars"
+    ]
+   },
+   {
+    "roll": 4,
+    "cells": [
+     "Spiked gloves"
+    ]
+   },
+   {
+    "roll": 5,
+    "cells": [
+     "Nose rings"
+    ]
+   },
+   {
+    "roll": 6,
+    "cells": [
+     "Tongue or other piercings"
+    ]
+   },
+   {
+    "roll": 7,
+    "cells": [
+     "Strange fingernail implants"
+    ]
+   },
+   {
+    "roll": 8,
+    "cells": [
+     "Spiked boots or heels"
+    ]
+   },
+   {
+    "roll": 9,
+    "cells": [
+     "Fingerless gloves"
+    ]
+   },
+   {
+    "roll": 10,
+    "cells": [
+     "Strange contacts"
+    ]
+   }
+  ],
+  "mechanical": false,
+  "text": "Roll 1d10 or choose one."
+ },
+ {
+  "kind": "lifepath_table",
+  "group": "general",
+  "role": null,
+  "name": "Your Motivations and Relationships: What Do You Value Most? and How Do You Feel About Most People?",
+  "source_page": "p049",
+  "dice": "1d10",
+  "roll_instruction": "Roll 1d10 or choose one for each column.",
+  "columns": [
+   "What Do You Value Most?",
+   "How Do You Feel About Most People?"
+  ],
+  "rows": [
+   {
+    "roll": 1,
+    "cells": [
+     "Money",
+     "I stay neutral."
+    ]
+   },
+   {
+    "roll": 2,
+    "cells": [
+     "Honor",
+     "I stay neutral."
+    ]
+   },
+   {
+    "roll": 3,
+    "cells": [
+     "Your word",
+     "I like almost everyone."
+    ]
+   },
+   {
+    "roll": 4,
+    "cells": [
+     "Honesty",
+     "I hate almost everyone."
+    ]
+   },
+   {
+    "roll": 5,
+    "cells": [
+     "Knowledge",
+     "People are tools. Use them for your own goals then discard them."
+    ]
+   },
+   {
+    "roll": 6,
+    "cells": [
+     "Vengeance",
+     "Every person is a valuable individual."
+    ]
+   },
+   {
+    "roll": 7,
+    "cells": [
+     "Love",
+     "People are obstacles to be destroyed if they cross me."
+    ]
+   },
+   {
+    "roll": 8,
+    "cells": [
+     "Power",
+     "People are untrustworthy. Don't depend on anyone."
+    ]
+   },
+   {
+    "roll": 9,
+    "cells": [
+     "Family",
+     "Wipe 'em all out and let the cockroaches take over."
+    ]
+   },
+   {
+    "roll": 10,
+    "cells": [
+     "Friendship",
+     "People are wonderful!"
+    ]
+   }
+  ],
+  "mechanical": false,
+  "transcription_note": "Roll 1 and roll 2 both print 'I stay neutral.' (as printed). The printed apostrophes around 'em in row 9 are typographic quotes in the book; stored as plain apostrophes.",
+  "text": "Roll 1d10 or choose one for each column."
+ },
+ {
+  "kind": "lifepath_table",
+  "group": "general",
+  "role": null,
+  "name": "Things You Value the Most: Most Valued Person in Your Life?",
+  "source_page": "p049",
+  "dice": "1d10",
+  "roll_instruction": "Roll 1d10 or choose one.",
+  "columns": [
+   "Most Valued Person in Your Life?"
+  ],
+  "rows": [
+   {
+    "roll": 1,
+    "cells": [
+     "A parent"
+    ]
+   },
+   {
+    "roll": 2,
+    "cells": [
+     "A brother or sister"
+    ]
+   },
+   {
+    "roll": 3,
+    "cells": [
+     "A lover"
+    ]
+   },
+   {
+    "roll": 4,
+    "cells": [
+     "A friend"
+    ]
+   },
+   {
+    "roll": 5,
+    "cells": [
+     "Yourself"
+    ]
+   },
+   {
+    "roll": 6,
+    "cells": [
+     "A pet"
+    ]
+   },
+   {
+    "roll": 7,
+    "cells": [
+     "A teacher or mentor"
+    ]
+   },
+   {
+    "roll": 8,
+    "cells": [
+     "A public figure"
+    ]
+   },
+   {
+    "roll": 9,
+    "cells": [
+     "A personal hero"
+    ]
+   },
+   {
+    "roll": 10,
+    "cells": [
+     "No one"
+    ]
+   }
+  ],
+  "mechanical": false,
+  "text": "Roll 1d10 or choose one."
+ },
+ {
+  "kind": "lifepath_table",
+  "group": "general",
+  "role": null,
+  "name": "Things You Value the Most: Most Valued Possession You Own?",
+  "source_page": "p049",
+  "dice": "1d10",
+  "roll_instruction": "Roll 1d10 or choose one.",
+  "columns": [
+   "Most Valued Possession You Own?"
+  ],
+  "rows": [
+   {
+    "roll": 1,
+    "cells": [
+     "A weapon"
+    ]
+   },
+   {
+    "roll": 2,
+    "cells": [
+     "A tool"
+    ]
+   },
+   {
+    "roll": 3,
+    "cells": [
+     "A piece of clothing"
+    ]
+   },
+   {
+    "roll": 4,
+    "cells": [
+     "A photograph"
+    ]
+   },
+   {
+    "roll": 5,
+    "cells": [
+     "A book or diary"
+    ]
+   },
+   {
+    "roll": 6,
+    "cells": [
+     "A recording"
+    ]
+   },
+   {
+    "roll": 7,
+    "cells": [
+     "A musical instrument"
+    ]
+   },
+   {
+    "roll": 8,
+    "cells": [
+     "A piece of jewelry"
+    ]
+   },
+   {
+    "roll": 9,
+    "cells": [
+     "A toy"
+    ]
+   },
+   {
+    "roll": 10,
+    "cells": [
+     "A letter"
+    ]
+   }
+  ],
+  "mechanical": false,
+  "text": "Roll 1d10 or choose one."
+ },
+ {
+  "kind": "lifepath_table",
+  "group": "general",
+  "role": null,
+  "name": "Your Original Family Background",
+  "source_page": "p050",
+  "dice": "1d10",
+  "roll_instruction": "Roll 1d10 or choose one.",
+  "columns": [
+   "Original Background",
+   "Description"
+  ],
+  "rows": [
+   {
+    "roll": 1,
+    "cells": [
+     "Corporate Execs",
+     "Wealthy, powerful, with servants, luxury homes, and the best of everything. Private security made sure you were always safe. You definitely went to a big-name private school."
+    ]
+   },
+   {
+    "roll": 2,
+    "cells": [
+     "Corporate Managers",
+     "Well to do, with large homes, safe neighborhoods, nice cars, etc. Sometimes your parent(s) would hire servants, although this was rare. You had a mix of private and corporate education."
+    ]
+   },
+   {
+    "roll": 3,
+    "cells": [
+     "Corporate Technicians",
+     "Middle-middle class, with comfortable conapts or Beaverville suburban homes, minivans and corporate-run technical schools. Kind of like living 1950s America crossed with 1984."
+    ]
+   },
+   {
+    "roll": 4,
+    "cells": [
+     "Nomad Pack",
+     "You had a mix of rugged trailers, vehicles, and huge road kombis for your home. You learned to drive and fight at an early age, but the family was always there to care for you. Food was actually fresh and abundant. Mostly home schooled."
+    ]
+   },
+   {
+    "roll": 5,
+    "cells": [
+     "Ganger \"Family\"",
+     "A savage, violent home in any place the gang could take over. You were usually hungry, cold, and scared. You probably didn't know who your actual parents were. Education? The Gang taught you how to fight, kill, and steal—what else did you need to know?"
+    ]
+   },
+   {
+    "roll": 6,
+    "cells": [
+     "Combat Zoners",
+     "A step up from a gang \"family,\" your home was a decaying building somewhere in the 'Zone', heavily fortified. You were hungry at times, but regularly could score a bed and a meal. Home schooled."
+    ]
+   },
+   {
+    "roll": 7,
+    "cells": [
+     "Urban Homeless",
+     "You lived in cars, dumpsters, or abandoned shipping modules. If you were lucky. You were usually hungry, cold, and scared, unless you were tough enough to fight for the scraps. Education? School of Hard Knocks."
+    ]
+   },
+   {
+    "roll": 8,
+    "cells": [
+     "Megastructure Warren Rats",
+     "You grew up in one of the huge new megastructures that went up after the War. A tiny conapt, kibble and scop for food, a mostly warm bed. Some better educated adult warren dwellers or a local Corporation may have set up a school."
+    ]
+   },
+   {
+    "roll": 9,
+    "cells": [
+     "Reclaimers",
+     "You started out on the road, but then moved into one of the deserted ghost towns or cities to rebuild it. A pioneer life: dangerous, but with plenty of simple food and a safe place to sleep. You were home schooled if there was anyone who had the time."
+    ]
+   },
+   {
+    "roll": 10,
+    "cells": [
+     "Edgerunners",
+     "Your home was always changing based on your parents' current \"job.\" Could be a luxury apartment, an urban conapt, or a dumpster if you were on the run. Food and shelter ran the gamut from gourmet to kibble."
+    ]
+   }
+  ],
+  "mechanical": false,
+  "text": "Roll 1d10 or choose one."
+ },
+ {
+  "kind": "lifepath_table",
+  "group": "general",
+  "role": null,
+  "name": "Your Environment",
+  "source_page": "p051",
+  "dice": "1d10",
+  "roll_instruction": "Roll 1d10 or choose one.",
+  "columns": [
+   "Childhood Environment"
+  ],
+  "rows": [
+   {
+    "roll": 1,
+    "cells": [
+     "Ran on The Street, with no adult supervision."
+    ]
+   },
+   {
+    "roll": 2,
+    "cells": [
+     "Spent in a safe Corp Zone walled off from the rest of the City."
+    ]
+   },
+   {
+    "roll": 3,
+    "cells": [
+     "In a Nomad pack moving from place to place."
+    ]
+   },
+   {
+    "roll": 4,
+    "cells": [
+     "In a Nomad pack with roots in transport (ships, planes, caravans)."
+    ]
+   },
+   {
+    "roll": 5,
+    "cells": [
+     "In a decaying, once upscale neighborhood, now holding off the boosters to survive."
+    ]
+   },
+   {
+    "roll": 6,
+    "cells": [
+     "In the heart of the Combat Zone, living in a wrecked building or other squat."
+    ]
+   },
+   {
+    "roll": 7,
+    "cells": [
+     "In a huge \"megastructure\" building controlled by a Corp or the City."
+    ]
+   },
+   {
+    "roll": 8,
+    "cells": [
+     "In the ruins of a deserted town or city taken over by Reclaimers."
+    ]
+   },
+   {
+    "roll": 9,
+    "cells": [
+     "In a Drift Nation (a floating offshore city) that is a meeting place for all kinds of people."
+    ]
+   },
+   {
+    "roll": 10,
+    "cells": [
+     "In a Corporate luxury \"starscraper,\" high above the rest of the teeming rabble."
+    ]
+   }
+  ],
+  "mechanical": false,
+  "text": "Roll 1d10 or choose one."
+ },
+ {
+  "kind": "lifepath_table",
+  "group": "general",
+  "role": null,
+  "name": "Your Family Crisis",
+  "source_page": "p051",
+  "dice": "1d10",
+  "roll_instruction": "Roll 1d10 or choose one.",
+  "columns": [
+   "Background"
+  ],
+  "rows": [
+   {
+    "roll": 1,
+    "cells": [
+     "Your family lost everything through betrayal."
+    ]
+   },
+   {
+    "roll": 2,
+    "cells": [
+     "Your family lost everything through bad management."
+    ]
+   },
+   {
+    "roll": 3,
+    "cells": [
+     "Your family was exiled or otherwise driven from their original home/nation/Corporation."
+    ]
+   },
+   {
+    "roll": 4,
+    "cells": [
+     "Your family is imprisoned, and you alone escaped."
+    ]
+   },
+   {
+    "roll": 5,
+    "cells": [
+     "Your family vanished. You are the only remaining member."
+    ]
+   },
+   {
+    "roll": 6,
+    "cells": [
+     "Your family was killed, and you were the only survivor."
+    ]
+   },
+   {
+    "roll": 7,
+    "cells": [
+     "Your family is involved in a long-term conspiracy, organization, or association, such as a crime family or revolutionary group."
+    ]
+   },
+   {
+    "roll": 8,
+    "cells": [
+     "Your family was scattered to the winds due to misfortune."
+    ]
+   },
+   {
+    "roll": 9,
+    "cells": [
+     "Your family is cursed with a hereditary feud that has lasted for generations."
+    ]
+   },
+   {
+    "roll": 10,
+    "cells": [
+     "You are the inheritor of a family debt; you must honor this debt before moving on with your life."
+    ]
+   }
+  ],
+  "mechanical": false,
+  "text": "Roll 1d10 or choose one."
+ },
+ {
+  "kind": "lifepath_table",
+  "group": "general",
+  "role": null,
+  "name": "Your Friends",
+  "source_page": "p052",
+  "dice": "1d10",
+  "roll_instruction": "Roll 1d10 and subtract 7 (minimum 0) to see just how many friends you've made so far in your life. For each friend, roll on the table below.",
+  "columns": [
+   "Friend's Relationship to You"
+  ],
+  "rows": [
+   {
+    "roll": 1,
+    "cells": [
+     "Like an older sibling to you."
+    ]
+   },
+   {
+    "roll": 2,
+    "cells": [
+     "Like a younger sibling to you."
+    ]
+   },
+   {
+    "roll": 3,
+    "cells": [
+     "A teacher or mentor."
+    ]
+   },
+   {
+    "roll": 4,
+    "cells": [
+     "A partner or coworker."
+    ]
+   },
+   {
+    "roll": 5,
+    "cells": [
+     "A former lover."
+    ]
+   },
+   {
+    "roll": 6,
+    "cells": [
+     "An old enemy."
+    ]
+   },
+   {
+    "roll": 7,
+    "cells": [
+     "Like a parent to you."
+    ]
+   },
+   {
+    "roll": 8,
+    "cells": [
+     "An old childhood friend."
+    ]
+   },
+   {
+    "roll": 9,
+    "cells": [
+     "Someone you know from The Street."
+    ]
+   },
+   {
+    "roll": 10,
+    "cells": [
+     "Someone with a common interest or goal."
+    ]
+   }
+  ],
+  "mechanical": false,
+  "transcription_note": "Count rule: 1d10 minus 7, minimum 0; for each friend roll this table.",
+  "text": "Roll 1d10 and subtract 7 (minimum 0) to see just how many friends you've made so far in your life. For each friend, roll on the table below."
+ },
+ {
+  "kind": "lifepath_table",
+  "group": "general",
+  "role": null,
+  "name": "Your Enemies",
+  "source_page": "p052",
+  "dice": "1d10",
+  "roll_instruction": "First, roll 1d10 and subtract 7 (minimum 0) to determine how many enemies you've made. Then, for each one, decide who was the injured party and roll once on each of the columns below.",
+  "columns": [
+   "Enemy",
+   "What Caused it? Who's been Wronged? (choose)",
+   "What Can They Throw at You?"
+  ],
+  "rows": [
+   {
+    "roll": 1,
+    "cells": [
+     "Ex-friend",
+     "Caused the other to lose face or status.",
+     "Just themselves and even they won't go out of their way."
+    ]
+   },
+   {
+    "roll": 2,
+    "cells": [
+     "Ex-lover",
+     "Caused the loss of lover, friend, or relative.",
+     "Just themselves."
+    ]
+   },
+   {
+    "roll": 3,
+    "cells": [
+     "Estranged relative",
+     "Caused a major public humiliation.",
+     "Just themselves and a close friend."
+    ]
+   },
+   {
+    "roll": 4,
+    "cells": [
+     "Childhood enemy",
+     "Accused the other of cowardice or some other major personal flaw.",
+     "Themselves and a few (1d6/2) friends."
+    ]
+   },
+   {
+    "roll": 5,
+    "cells": [
+     "Person working for you",
+     "Deserted or betrayed the other.",
+     "Themselves and a few (1d10/2) friends."
+    ]
+   },
+   {
+    "roll": 6,
+    "cells": [
+     "Person you work for",
+     "Turned down the other's offer of a job or romantic involvement.",
+     "An entire gang (at least 1d10 + 5 people)."
+    ]
+   },
+   {
+    "roll": 7,
+    "cells": [
+     "Partner or coworker",
+     "You just don't like each other.",
+     "The local cops or other Lawmen."
+    ]
+   },
+   {
+    "roll": 8,
+    "cells": [
+     "Corporate exec",
+     "One of you was a romantic rival.",
+     "A powerful gang lord or small Corporation."
+    ]
+   },
+   {
+    "roll": 9,
+    "cells": [
+     "Government official",
+     "One of you was a business rival.",
+     "A powerful Corporation."
+    ]
+   },
+   {
+    "roll": 10,
+    "cells": [
+     "Boosterganger",
+     "One of you set the other up for a crime they didn't commit.",
+     "An entire city or government or agency."
+    ]
+   }
+  ],
+  "mechanical": false,
+  "transcription_note": "Three data columns, 10 rows (30 cells); the middle column is 'choose' per the printed header. Dice in cell text (1d6/2, 1d10/2, 1d10 + 5) are literal.",
+  "text": "First, roll 1d10 and subtract 7 (minimum 0) to determine how many enemies you've made. Then, for each one, decide who was the injured party and roll once on each of the columns below."
+ },
+ {
+  "kind": "lifepath_table",
+  "group": "general",
+  "role": null,
+  "name": "Sweet Revenge!",
+  "source_page": "p053",
+  "dice": "1d10",
+  "roll_instruction": "Roll 1d10 or choose one.",
+  "columns": [
+   "What are You/They Gonna do About it?"
+  ],
+  "rows": [
+   {
+    "roll": "1-2",
+    "cells": [
+     "Avoid the scum."
+    ]
+   },
+   {
+    "roll": "3-4",
+    "cells": [
+     "Go into a murderous rage and try to physically rip their face off."
+    ]
+   },
+   {
+    "roll": "5-6",
+    "cells": [
+     "Backstab them indirectly."
+    ]
+   },
+   {
+    "roll": "7-8",
+    "cells": [
+     "Verbally attack them."
+    ]
+   },
+   {
+    "roll": 9,
+    "cells": [
+     "Set them up for a crime or other transgression they didn't commit."
+    ]
+   },
+   {
+    "roll": 10,
+    "cells": [
+     "Set out to murder or maim them."
+    ]
+   }
+  ],
+  "mechanical": false,
+  "transcription_note": "Six rows with roll ranges 1-2, 3-4, 5-6, 7-8, 9, 10 as printed.",
+  "text": "Roll 1d10 or choose one."
+ },
+ {
+  "kind": "lifepath_table",
+  "group": "general",
+  "role": null,
+  "name": "Your Tragic Love Affair(s)",
+  "source_page": "p053",
+  "dice": "1d10",
+  "roll_instruction": "Roll 1d10 and subtract 7 (minimum 0) to see how many tragic love affairs you've had, then use the table below to see how each ended.",
+  "columns": [
+   "What Happened?"
+  ],
+  "rows": [
+   {
+    "roll": 1,
+    "cells": [
+     "Your lover died in an accident."
+    ]
+   },
+   {
+    "roll": 2,
+    "cells": [
+     "Your lover mysteriously vanished."
+    ]
+   },
+   {
+    "roll": 3,
+    "cells": [
+     "It just didn't work out."
+    ]
+   },
+   {
+    "roll": 4,
+    "cells": [
+     "A personal goal or vendetta came between you and your lover."
+    ]
+   },
+   {
+    "roll": 5,
+    "cells": [
+     "Your lover was kidnapped."
+    ]
+   },
+   {
+    "roll": 6,
+    "cells": [
+     "Your lover went insane or cyberpsycho."
+    ]
+   },
+   {
+    "roll": 7,
+    "cells": [
+     "Your lover committed suicide."
+    ]
+   },
+   {
+    "roll": 8,
+    "cells": [
+     "Your lover was killed in a fight."
+    ]
+   },
+   {
+    "roll": 9,
+    "cells": [
+     "A rival cut you out of the action."
+    ]
+   },
+   {
+    "roll": 10,
+    "cells": [
+     "Your lover is imprisoned or exiled."
+    ]
+   }
+  ],
+  "mechanical": false,
+  "text": "Roll 1d10 and subtract 7 (minimum 0) to see how many tragic love affairs you've had, then use the table below to see how each ended."
+ },
+ {
+  "kind": "lifepath_table",
+  "group": "general",
+  "role": null,
+  "name": "Your Life Goals",
+  "source_page": "p054",
+  "dice": "1d10",
+  "roll_instruction": "Roll 1d10 or choose one.",
+  "columns": [
+   "Life Goals"
+  ],
+  "rows": [
+   {
+    "roll": 1,
+    "cells": [
+     "Get rid of a bad reputation."
+    ]
+   },
+   {
+    "roll": 2,
+    "cells": [
+     "Gain power and control."
+    ]
+   },
+   {
+    "roll": 3,
+    "cells": [
+     "Get off The Street no matter what it takes."
+    ]
+   },
+   {
+    "roll": 4,
+    "cells": [
+     "Cause pain and suffering to anyone who crosses you."
+    ]
+   },
+   {
+    "roll": 5,
+    "cells": [
+     "Live down your past life and try to forget it."
+    ]
+   },
+   {
+    "roll": 6,
+    "cells": [
+     "Hunt down those responsible for your miserable life and make them pay."
+    ]
+   },
+   {
+    "roll": 7,
+    "cells": [
+     "Get what's rightfully yours."
+    ]
+   },
+   {
+    "roll": 8,
+    "cells": [
+     "Save, if possible, anyone else involved in your background, like a lover, or family member."
+    ]
+   },
+   {
+    "roll": 9,
+    "cells": [
+     "Gain fame and recognition."
+    ]
+   },
+   {
+    "roll": 10,
+    "cells": [
+     "Become feared and respected."
+    ]
+   }
+  ],
+  "mechanical": false,
+  "text": "Roll 1d10 or choose one."
+ },
+ {
+  "kind": "lifepath_table",
+  "group": "role",
+  "role": "Rockerboy",
+  "name": "Rockerboy: What Kind of Rockerboy are You?",
+  "source_page": "p055",
+  "dice": "1d10",
+  "roll_instruction": "Roll 1d10 or choose one.",
+  "columns": [
+   "Type"
+  ],
+  "rows": [
+   {
+    "roll": 1,
+    "cells": [
+     "Musician"
+    ]
+   },
+   {
+    "roll": 2,
+    "cells": [
+     "Slam Poet"
+    ]
+   },
+   {
+    "roll": 3,
+    "cells": [
+     "Street Artist"
+    ]
+   },
+   {
+    "roll": 4,
+    "cells": [
+     "Performance Artist"
+    ]
+   },
+   {
+    "roll": 5,
+    "cells": [
+     "Comedian"
+    ]
+   },
+   {
+    "roll": 6,
+    "cells": [
+     "Orator"
+    ]
+   },
+   {
+    "roll": 7,
+    "cells": [
+     "Politico"
+    ]
+   },
+   {
+    "roll": 8,
+    "cells": [
+     "Rap Artist"
+    ]
+   },
+   {
+    "roll": 9,
+    "cells": [
+     "DJ"
+    ]
+   },
+   {
+    "roll": 10,
+    "cells": [
+     "Idoru"
+    ]
+   }
+  ],
+  "mechanical": false,
+  "branch": null,
+  "text": "Roll 1d10 or choose one."
+ },
+ {
+  "kind": "lifepath_table",
+  "group": "role",
+  "role": "Rockerboy",
+  "name": "Rockerboy: Who's Gunning for You/Your Group?",
+  "source_page": "p055",
+  "dice": "1d6",
+  "roll_instruction": "Roll 1d6 or choose one.",
+  "columns": [
+   "Who?"
+  ],
+  "rows": [
+   {
+    "roll": 1,
+    "cells": [
+     "Old group member who thinks you did them dirty."
+    ]
+   },
+   {
+    "roll": 2,
+    "cells": [
+     "Rival group or artist trying to steal market share."
+    ]
+   },
+   {
+    "roll": 3,
+    "cells": [
+     "Corporate enemies who don't like your message."
+    ]
+   },
+   {
+    "roll": 4,
+    "cells": [
+     "Critic or other \"influencer\" trying to bring you down."
+    ]
+   },
+   {
+    "roll": 5,
+    "cells": [
+     "Older media star who feels threatened by your rising fame."
+    ]
+   },
+   {
+    "roll": 6,
+    "cells": [
+     "Romantic interest or media figure who wants revenge for personal reasons."
+    ]
+   }
+  ],
+  "mechanical": false,
+  "branch": null,
+  "text": "Roll 1d6 or choose one.",
+  "transcription_note": "Flow (image p055): reached from Where Do You Perform? and from Why Did You Leave?."
+ },
+ {
+  "kind": "lifepath_table",
+  "group": "role",
+  "role": "Rockerboy",
+  "name": "Rockerboy: Where Do You Perform?",
+  "source_page": "p055",
+  "dice": "1d6",
+  "roll_instruction": "Roll 1d6 or choose one.",
+  "columns": [
+   "Venue"
+  ],
+  "rows": [
+   {
+    "roll": 1,
+    "cells": [
+     "Alternative Cafes"
+    ]
+   },
+   {
+    "roll": 2,
+    "cells": [
+     "Private Clubs"
+    ]
+   },
+   {
+    "roll": 3,
+    "cells": [
+     "Seedy Dive Bars"
+    ]
+   },
+   {
+    "roll": 4,
+    "cells": [
+     "Guerrilla Performances"
+    ]
+   },
+   {
+    "roll": 5,
+    "cells": [
+     "Nightclubs Around the City"
+    ]
+   },
+   {
+    "roll": 6,
+    "cells": [
+     "On the Data Pool"
+    ]
+   }
+  ],
+  "mechanical": false,
+  "branch": "group, or solo who was never in a group",
+  "text": "Roll 1d6 or choose one.",
+  "choose_boxes_before": [
+   {
+    "heading": "Are You in a Group or a Solo Act?",
+    "text": "Choose either in a Group or Solo Act.",
+    "branches": "group -> Where Do You Perform?; solo -> Were You Once in a Group?"
+   },
+   {
+    "heading": "Were You Once in a Group?",
+    "text": "Were you once part of a group or have you always been a solo act? Choose one.",
+    "branches": "solo (always solo) -> Where Do You Perform?; group (once in a group) -> Why Did You Leave?"
+   }
+  ],
+  "transcription_note": "Two choose-only boxes (no rows) precede this table on p055; branch tags read from the page image."
+ },
+ {
+  "kind": "lifepath_table",
+  "group": "role",
+  "role": "Rockerboy",
+  "name": "Rockerboy: Why Did You Leave?",
+  "source_page": "p055",
+  "dice": "1d6",
+  "roll_instruction": "Why? Roll 1d6 or choose one.",
+  "columns": [
+   "Reason"
+  ],
+  "rows": [
+   {
+    "roll": 1,
+    "cells": [
+     "You were a jerk and the rest of the group voted you out."
+    ]
+   },
+   {
+    "roll": 2,
+    "cells": [
+     "You got caught sleeping around with another member's mainline."
+    ]
+   },
+   {
+    "roll": 3,
+    "cells": [
+     "The rest of the group was killed in a tragic \"accident.\""
+    ]
+   },
+   {
+    "roll": 4,
+    "cells": [
+     "The rest of the group was murdered or otherwise broken up by external enemies."
+    ]
+   },
+   {
+    "roll": 5,
+    "cells": [
+     "The group broke up over \"creative differences.\""
+    ]
+   },
+   {
+    "roll": 6,
+    "cells": [
+     "You decided to go solo."
+    ]
+   }
+  ],
+  "mechanical": false,
+  "branch": "solo act who was once in a group",
+  "text": "Why? Roll 1d6 or choose one."
+ },
+ {
+  "kind": "lifepath_table",
+  "group": "role",
+  "role": "Solo",
+  "name": "Solo: What Kind of Solo are You?",
+  "source_page": "p056",
+  "dice": "1d6",
+  "roll_instruction": "Roll 1d6 or work with your GM to choose one.",
+  "columns": [
+   "Type"
+  ],
+  "rows": [
+   {
+    "roll": 1,
+    "cells": [
+     "Bodyguard"
+    ]
+   },
+   {
+    "roll": 2,
+    "cells": [
+     "Street Muscle for Hire"
+    ]
+   },
+   {
+    "roll": 3,
+    "cells": [
+     "Corporate Enforcer who takes jobs on the side"
+    ]
+   },
+   {
+    "roll": 4,
+    "cells": [
+     "Corporate or Freelance Black Ops Agent"
+    ]
+   },
+   {
+    "roll": 5,
+    "cells": [
+     "Local Vigilante for Hire"
+    ]
+   },
+   {
+    "roll": 6,
+    "cells": [
+     "Assassin/Hitman for Hire"
+    ]
+   }
+  ],
+  "mechanical": false,
+  "branch": null,
+  "text": "Roll 1d6 or work with your GM to choose one."
+ },
+ {
+  "kind": "lifepath_table",
+  "group": "role",
+  "role": "Solo",
+  "name": "Solo: What's Your Moral Compass Like?",
+  "source_page": "p056",
+  "dice": "1d6",
+  "roll_instruction": "Roll 1d6 or choose one.",
+  "columns": [
+   "Moral Compass"
+  ],
+  "rows": [
+   {
+    "roll": 1,
+    "cells": [
+     "Always working for good, trying to take out the \"bad guys.\""
+    ]
+   },
+   {
+    "roll": 2,
+    "cells": [
+     "Always spare the innocent (elderly, women, children, pets)."
+    ]
+   },
+   {
+    "roll": 3,
+    "cells": [
+     "Will occasionally slip and do unethical or bad things, but it's rare."
+    ]
+   },
+   {
+    "roll": 4,
+    "cells": [
+     "Ruthless and profit centered; you will work for anyone, take any job for the money."
+    ]
+   },
+   {
+    "roll": 5,
+    "cells": [
+     "Willing to bend the rules (and the law) to get the job done."
+    ]
+   },
+   {
+    "roll": 6,
+    "cells": [
+     "Totally evil. You engage in illegal, unethical work all the time; in fact, you enjoy it."
+    ]
+   }
+  ],
+  "mechanical": false,
+  "branch": null,
+  "text": "Roll 1d6 or choose one."
+ },
+ {
+  "kind": "lifepath_table",
+  "group": "role",
+  "role": "Solo",
+  "name": "Solo: Who's Gunning for You?",
+  "source_page": "p056",
+  "dice": "1d6",
+  "roll_instruction": "Roll 1d6 or choose one.",
+  "columns": [
+   "Who?"
+  ],
+  "rows": [
+   {
+    "roll": 1,
+    "cells": [
+     "A Corporation you may have angered."
+    ]
+   },
+   {
+    "roll": 2,
+    "cells": [
+     "A boostergang you may have tackled earlier."
+    ]
+   },
+   {
+    "roll": 3,
+    "cells": [
+     "Corrupt Lawmen or Lawmen who mistakenly think you're guilty of something."
+    ]
+   },
+   {
+    "roll": 4,
+    "cells": [
+     "A rival Solo from another Corp."
+    ]
+   },
+   {
+    "roll": 5,
+    "cells": [
+     "A Fixer who sees you as a threat."
+    ]
+   },
+   {
+    "roll": 6,
+    "cells": [
+     "A rival Solo who sees you as their nemesis."
+    ]
+   }
+  ],
+  "mechanical": false,
+  "branch": null,
+  "text": "Roll 1d6 or choose one."
+ },
+ {
+  "kind": "lifepath_table",
+  "group": "role",
+  "role": "Solo",
+  "name": "Solo: What's Your Operational Territory?",
+  "source_page": "p056",
+  "dice": "1d6",
+  "roll_instruction": "Roll 1d6 or choose one.",
+  "columns": [
+   "Territory"
+  ],
+  "rows": [
+   {
+    "roll": 1,
+    "cells": [
+     "A Corporate Zone"
+    ]
+   },
+   {
+    "roll": 2,
+    "cells": [
+     "Combat Zones"
+    ]
+   },
+   {
+    "roll": 3,
+    "cells": [
+     "The whole City"
+    ]
+   },
+   {
+    "roll": 4,
+    "cells": [
+     "The territory of a single Corporation"
+    ]
+   },
+   {
+    "roll": 5,
+    "cells": [
+     "The territory of a particular Fixer or contact"
+    ]
+   },
+   {
+    "roll": 6,
+    "cells": [
+     "Wherever the money takes you"
+    ]
+   }
+  ],
+  "mechanical": false,
+  "branch": null,
+  "text": "Roll 1d6 or choose one."
+ },
+ {
+  "kind": "lifepath_table",
+  "group": "role",
+  "role": "Netrunner",
+  "name": "Netrunner: What Kind of Runner are You?",
+  "source_page": "p057",
+  "dice": "1d6",
+  "roll_instruction": "Roll 1d6 or work with your GM to choose one.",
+  "columns": [
+   "Type"
+  ],
+  "rows": [
+   {
+    "roll": 1,
+    "cells": [
+     "Freelancer who will hack for hire."
+    ]
+   },
+   {
+    "roll": 2,
+    "cells": [
+     "Corporate \"clone runner\" who hacks for the Man."
+    ]
+   },
+   {
+    "roll": 3,
+    "cells": [
+     "Hacktivist interested in cracking systems and exposing bad guys."
+    ]
+   },
+   {
+    "roll": 4,
+    "cells": [
+     "Just like to crack systems for the fun of it."
+    ]
+   },
+   {
+    "roll": 5,
+    "cells": [
+     "Part of a regular team of freelancers."
+    ]
+   },
+   {
+    "roll": 6,
+    "cells": [
+     "Hack for a Media, politico, or Lawman who hires you as needed."
+    ]
+   }
+  ],
+  "mechanical": false,
+  "branch": null,
+  "text": "Roll 1d6 or work with your GM to choose one.",
+  "transcription_note": "Row 2 'clone runner' confirmed against the p057 image at 200 dpi."
+ },
+ {
+  "kind": "lifepath_table",
+  "group": "role",
+  "role": "Netrunner",
+  "name": "Netrunner: What's Your Workspace Like?",
+  "source_page": "p057",
+  "dice": "1d6",
+  "roll_instruction": "Roll 1d6 or choose one.",
+  "columns": [
+   "Workspace"
+  ],
+  "rows": [
+   {
+    "roll": 1,
+    "cells": [
+     "There are screens everywhere."
+    ]
+   },
+   {
+    "roll": 2,
+    "cells": [
+     "It looks better in Virtuality, you swear."
+    ]
+   },
+   {
+    "roll": 3,
+    "cells": [
+     "It's a filthy bed covered in wires."
+    ]
+   },
+   {
+    "roll": 4,
+    "cells": [
+     "Corporate, modular, and utilitarian."
+    ]
+   },
+   {
+    "roll": 5,
+    "cells": [
+     "Minimalist, clean, and organized."
+    ]
+   },
+   {
+    "roll": 6,
+    "cells": [
+     "It's taken over your entire living space."
+    ]
+   }
+  ],
+  "mechanical": false,
+  "branch": "work alone, or after the partner table",
+  "text": "Roll 1d6 or choose one.",
+  "choose_boxes_before": [
+   {
+    "heading": "Got a Partner, or Do You Work Alone?",
+    "text": "Choose either Got a Partner or Work Alone.",
+    "branches": "work alone -> Workspace; got a partner -> If You Have a Partner, Who are They?"
+   }
+  ]
+ },
+ {
+  "kind": "lifepath_table",
+  "group": "role",
+  "role": "Netrunner",
+  "name": "Netrunner: If You Have a Partner, Who are They?",
+  "source_page": "p057",
+  "dice": "1d6",
+  "roll_instruction": "Roll 1d6 or choose one.",
+  "columns": [
+   "Who?"
+  ],
+  "rows": [
+   {
+    "roll": 1,
+    "cells": [
+     "Family member"
+    ]
+   },
+   {
+    "roll": 2,
+    "cells": [
+     "Old friend"
+    ]
+   },
+   {
+    "roll": 3,
+    "cells": [
+     "Possible romantic partner as well"
+    ]
+   },
+   {
+    "roll": 4,
+    "cells": [
+     "Secret partner who might be a rogue AI. Might."
+    ]
+   },
+   {
+    "roll": 5,
+    "cells": [
+     "Secret partner with mob/gang connections"
+    ]
+   },
+   {
+    "roll": 6,
+    "cells": [
+     "Secret partner with Corporate connections"
+    ]
+   }
+  ],
+  "mechanical": false,
+  "branch": "got a partner",
+  "text": "Roll 1d6 or choose one."
+ },
+ {
+  "kind": "lifepath_table",
+  "group": "role",
+  "role": "Netrunner",
+  "name": "Netrunner: Who are Some of Your Other Clients?",
+  "source_page": "p058",
+  "dice": "1d6",
+  "roll_instruction": "Roll 1d6 or choose one.",
+  "columns": [
+   "Who?"
+  ],
+  "rows": [
+   {
+    "roll": 1,
+    "cells": [
+     "Local Fixers who send you clients."
+    ]
+   },
+   {
+    "roll": 2,
+    "cells": [
+     "Local gangers who also protect your work area while you sweep for NET threats."
+    ]
+   },
+   {
+    "roll": 3,
+    "cells": [
+     "Corporate Execs who use you for \"black project\" work."
+    ]
+   },
+   {
+    "roll": 4,
+    "cells": [
+     "Local Solos or other combat types who use you to keep their personal systems secure."
+    ]
+   },
+   {
+    "roll": 5,
+    "cells": [
+     "Local Nomads and Fixers who use you to keep their family systems secure."
+    ]
+   },
+   {
+    "roll": 6,
+    "cells": [
+     "You work for yourself and sell whatever data you can find on the NET."
+    ]
+   }
+  ],
+  "mechanical": false,
+  "branch": null,
+  "text": "Roll 1d6 or choose one."
+ },
+ {
+  "kind": "lifepath_table",
+  "group": "role",
+  "role": "Netrunner",
+  "name": "Netrunner: Where Do You Get Your Programs?",
+  "source_page": "p058",
+  "dice": "1d6",
+  "roll_instruction": "Roll 1d6 or choose one.",
+  "columns": [
+   "Where?"
+  ],
+  "rows": [
+   {
+    "roll": 1,
+    "cells": [
+     "Dig around in old abandoned City Zones."
+    ]
+   },
+   {
+    "roll": 2,
+    "cells": [
+     "Steal them from other Netrunners you brain-burn."
+    ]
+   },
+   {
+    "roll": 3,
+    "cells": [
+     "Have a local Fixer supply programs in exchange for hack work."
+    ]
+   },
+   {
+    "roll": 4,
+    "cells": [
+     "Corporate Execs supply you with programs in exchange for your services."
+    ]
+   },
+   {
+    "roll": 5,
+    "cells": [
+     "You have backdoors into a few Corporate warehouses."
+    ]
+   },
+   {
+    "roll": 6,
+    "cells": [
+     "You hit the Night Markets and score programs whenever you can."
+    ]
+   }
+  ],
+  "mechanical": false,
+  "branch": null,
+  "text": "Roll 1d6 or choose one."
+ },
+ {
+  "kind": "lifepath_table",
+  "group": "role",
+  "role": "Netrunner",
+  "name": "Netrunner: Who's Gunning for You?",
+  "source_page": "p058",
+  "dice": "1d6",
+  "roll_instruction": "Roll 1d6 or choose one.",
+  "columns": [
+   "Who?"
+  ],
+  "rows": [
+   {
+    "roll": 1,
+    "cells": [
+     "You think it might be a rogue AI or a NET Ghost. Either way, it's bad news."
+    ]
+   },
+   {
+    "roll": 2,
+    "cells": [
+     "Rival Netrunners who just don't like you."
+    ]
+   },
+   {
+    "roll": 3,
+    "cells": [
+     "Corporates who want you to work for them exclusively."
+    ]
+   },
+   {
+    "roll": 4,
+    "cells": [
+     "Lawmen who consider you an illegal \"black hat\" and want to bust you."
+    ]
+   },
+   {
+    "roll": 5,
+    "cells": [
+     "Old clients who think you screwed them over."
+    ]
+   },
+   {
+    "roll": 6,
+    "cells": [
+     "Fixer or another client who wants your services exclusively."
+    ]
+   }
+  ],
+  "mechanical": false,
+  "branch": null,
+  "text": "Roll 1d6 or choose one."
+ },
+ {
+  "kind": "lifepath_table",
+  "group": "role",
+  "role": "Tech",
+  "name": "Tech: What Kind of Tech are You?",
+  "source_page": "p059",
+  "dice": "1d10",
+  "roll_instruction": "Roll 1d10 or choose one.",
+  "columns": [
+   "Type"
+  ],
+  "rows": [
+   {
+    "roll": 1,
+    "cells": [
+     "Cyberware Technician"
+    ]
+   },
+   {
+    "roll": 2,
+    "cells": [
+     "Vehicle Mechanic"
+    ]
+   },
+   {
+    "roll": 3,
+    "cells": [
+     "Jack of All Trades"
+    ]
+   },
+   {
+    "roll": 4,
+    "cells": [
+     "Small Electronics Technician"
+    ]
+   },
+   {
+    "roll": 5,
+    "cells": [
+     "Weaponsmith"
+    ]
+   },
+   {
+    "roll": 6,
+    "cells": [
+     "Crazy Inventor"
+    ]
+   },
+   {
+    "roll": 7,
+    "cells": [
+     "Robot and Drone Mechanic"
+    ]
+   },
+   {
+    "roll": 8,
+    "cells": [
+     "Heavy Machinery Mechanic"
+    ]
+   },
+   {
+    "roll": 9,
+    "cells": [
+     "Scavenger"
+    ]
+   },
+   {
+    "roll": 10,
+    "cells": [
+     "Nautical Mechanic"
+    ]
+   }
+  ],
+  "mechanical": false,
+  "branch": null,
+  "text": "Roll 1d10 or choose one."
+ },
+ {
+  "kind": "lifepath_table",
+  "group": "role",
+  "role": "Tech",
+  "name": "Tech: What's Your Workspace Like?",
+  "source_page": "p059",
+  "dice": "1d6",
+  "roll_instruction": "Roll 1d6 or choose one.",
+  "columns": [
+   "Workspace"
+  ],
+  "rows": [
+   {
+    "roll": 1,
+    "cells": [
+     "A mess strewn with blueprint paper."
+    ]
+   },
+   {
+    "roll": 2,
+    "cells": [
+     "Everything is color coded, but it's still a nightmare."
+    ]
+   },
+   {
+    "roll": 3,
+    "cells": [
+     "Totally digital and obsessively backed up every day."
+    ]
+   },
+   {
+    "roll": 4,
+    "cells": [
+     "You design everything on your Agent."
+    ]
+   },
+   {
+    "roll": 5,
+    "cells": [
+     "You keep everything just in case you need it later."
+    ]
+   },
+   {
+    "roll": 6,
+    "cells": [
+     "Only you understand your filing system."
+    ]
+   }
+  ],
+  "mechanical": false,
+  "branch": "work alone, or after the partner table",
+  "text": "Roll 1d6 or choose one.",
+  "choose_boxes_before": [
+   {
+    "heading": "Got a Partner, or Do You Work Alone?",
+    "text": "Choose either Got a Partner or Work Alone.",
+    "branches": "work alone -> Workspace; got a partner -> If You Have a Partner, Who are They?"
+   }
+  ],
+  "transcription_note": "The 'Workspace is not Housing' sidebar on p060 is play-time rule text; it is not part of this table."
+ },
+ {
+  "kind": "lifepath_table",
+  "group": "role",
+  "role": "Tech",
+  "name": "Tech: If You Have a Partner, Who are They?",
+  "source_page": "p059",
+  "dice": "1d6",
+  "roll_instruction": "Roll 1d6 or choose one.",
+  "columns": [
+   "Who?"
+  ],
+  "rows": [
+   {
+    "roll": 1,
+    "cells": [
+     "Family member"
+    ]
+   },
+   {
+    "roll": 2,
+    "cells": [
+     "Old friend"
+    ]
+   },
+   {
+    "roll": 3,
+    "cells": [
+     "Possible romantic partner as well"
+    ]
+   },
+   {
+    "roll": 4,
+    "cells": [
+     "Mentor"
+    ]
+   },
+   {
+    "roll": 5,
+    "cells": [
+     "Secret partner with mob/gang connections"
+    ]
+   },
+   {
+    "roll": 6,
+    "cells": [
+     "Secret partner with Corporate connections"
+    ]
+   }
+  ],
+  "mechanical": false,
+  "branch": "got a partner",
+  "text": "Roll 1d6 or choose one."
+ },
+ {
+  "kind": "lifepath_table",
+  "group": "role",
+  "role": "Tech",
+  "name": "Tech: Who are Your Main Clients?",
+  "source_page": "p060",
+  "dice": "1d6",
+  "roll_instruction": "Roll 1d6 or choose one.",
+  "columns": [
+   "Who?"
+  ],
+  "rows": [
+   {
+    "roll": 1,
+    "cells": [
+     "Local Fixers who send you clients."
+    ]
+   },
+   {
+    "roll": 2,
+    "cells": [
+     "Local gangers who also protect your work area or home."
+    ]
+   },
+   {
+    "roll": 3,
+    "cells": [
+     "Corporate Execs who use you for \"black project\" work."
+    ]
+   },
+   {
+    "roll": 4,
+    "cells": [
+     "Local Solos or other combat types who use you for weapon upkeep."
+    ]
+   },
+   {
+    "roll": 5,
+    "cells": [
+     "Local Nomads and Fixers who bring you \"found\" tech to repair."
+    ]
+   },
+   {
+    "roll": 6,
+    "cells": [
+     "You work for yourself and sell what you invent/repair."
+    ]
+   }
+  ],
+  "mechanical": false,
+  "branch": null,
+  "text": "Roll 1d6 or choose one."
+ },
+ {
+  "kind": "lifepath_table",
+  "group": "role",
+  "role": "Tech",
+  "name": "Tech: Where Do You Get Your Supplies?",
+  "source_page": "p060",
+  "dice": "1d6",
+  "roll_instruction": "Roll 1d6 or choose one.",
+  "columns": [
+   "Where?"
+  ],
+  "rows": [
+   {
+    "roll": 1,
+    "cells": [
+     "Scavenge the wreckage you find in abandoned City Zones."
+    ]
+   },
+   {
+    "roll": 2,
+    "cells": [
+     "Strip gear from bodies after firefights."
+    ]
+   },
+   {
+    "roll": 3,
+    "cells": [
+     "Have a local Fixer bring you supplies in exchange for repair work."
+    ]
+   },
+   {
+    "roll": 4,
+    "cells": [
+     "Corporate Execs supply you with stuff in exchange for your services."
+    ]
+   },
+   {
+    "roll": 5,
+    "cells": [
+     "You have backdoor into a few Corporate warehouses."
+    ]
+   },
+   {
+    "roll": 6,
+    "cells": [
+     "You hit the Night Markets and score deals whenever you can."
+    ]
+   }
+  ],
+  "mechanical": false,
+  "branch": null,
+  "text": "Roll 1d6 or choose one."
+ },
+ {
+  "kind": "lifepath_table",
+  "group": "role",
+  "role": "Tech",
+  "name": "Tech: Who's Gunning For You?",
+  "source_page": "p060",
+  "dice": "1d6",
+  "roll_instruction": "Roll 1d6 or choose one.",
+  "columns": [
+   "Who?"
+  ],
+  "rows": [
+   {
+    "roll": 1,
+    "cells": [
+     "Combat Zone gangers who want you to work for them exclusively."
+    ]
+   },
+   {
+    "roll": 2,
+    "cells": [
+     "Rival Tech trying to steal your customers."
+    ]
+   },
+   {
+    "roll": 3,
+    "cells": [
+     "Corporates who want you to work for them exclusively."
+    ]
+   },
+   {
+    "roll": 4,
+    "cells": [
+     "Larger manufacturer trying to bring you down because your mods are a threat."
+    ]
+   },
+   {
+    "roll": 5,
+    "cells": [
+     "Old client who thinks you screwed them over."
+    ]
+   },
+   {
+    "roll": 6,
+    "cells": [
+     "Rival Tech trying to beat you out for resources and parts."
+    ]
+   }
+  ],
+  "mechanical": false,
+  "branch": null,
+  "text": "Roll 1d6 or choose one."
+ },
+ {
+  "kind": "lifepath_table",
+  "group": "role",
+  "role": "Medtech",
+  "name": "Medtech: What Kind of Medtech are You?",
+  "source_page": "p061",
+  "dice": "1d10",
+  "roll_instruction": "Roll 1d10 or work with your GM to choose one.",
+  "columns": [
+   "Type"
+  ],
+  "rows": [
+   {
+    "roll": 1,
+    "cells": [
+     "Surgeon"
+    ]
+   },
+   {
+    "roll": 2,
+    "cells": [
+     "General Practitioner"
+    ]
+   },
+   {
+    "roll": 3,
+    "cells": [
+     "Trauma Medic"
+    ]
+   },
+   {
+    "roll": 4,
+    "cells": [
+     "Psychiatrist"
+    ]
+   },
+   {
+    "roll": 5,
+    "cells": [
+     "Cyberpsycho Therapist"
+    ]
+   },
+   {
+    "roll": 6,
+    "cells": [
+     "Ripperdoc"
+    ]
+   },
+   {
+    "roll": 7,
+    "cells": [
+     "Cryosystems Operator"
+    ]
+   },
+   {
+    "roll": 8,
+    "cells": [
+     "Pharmacist"
+    ]
+   },
+   {
+    "roll": 9,
+    "cells": [
+     "Bodysculptor"
+    ]
+   },
+   {
+    "roll": 10,
+    "cells": [
+     "Forensic Pathologist"
+    ]
+   }
+  ],
+  "mechanical": false,
+  "branch": null,
+  "text": "Roll 1d10 or work with your GM to choose one."
+ },
+ {
+  "kind": "lifepath_table",
+  "group": "role",
+  "role": "Medtech",
+  "name": "Medtech: Tell Us About Your Partner(s).",
+  "source_page": "p061",
+  "dice": "1d6",
+  "roll_instruction": "Roll 1d6 or choose one.",
+  "columns": [
+   "Who?"
+  ],
+  "rows": [
+   {
+    "roll": 1,
+    "cells": [
+     "Trauma Team group"
+    ]
+   },
+   {
+    "roll": 2,
+    "cells": [
+     "Old friend"
+    ]
+   },
+   {
+    "roll": 3,
+    "cells": [
+     "Possible romantic partner as well"
+    ]
+   },
+   {
+    "roll": 4,
+    "cells": [
+     "Family member"
+    ]
+   },
+   {
+    "roll": 5,
+    "cells": [
+     "Secret partner with mob/gang connections"
+    ]
+   },
+   {
+    "roll": 6,
+    "cells": [
+     "Secret partner with Corporate connections"
+    ]
+   }
+  ],
+  "mechanical": false,
+  "branch": "got a partner",
+  "text": "Roll 1d6 or choose one.",
+  "choose_boxes_before": [
+   {
+    "heading": "Got a Partner, or Do You Work Alone?",
+    "text": "Choose either Got a Partner or Work Alone.",
+    "branches": "got a partner -> Tell Us About Your Partner(s).; work alone -> What's Your Workspace Like?"
+   }
+  ]
+ },
+ {
+  "kind": "lifepath_table",
+  "group": "role",
+  "role": "Medtech",
+  "name": "Medtech: What's Your Workspace Like?",
+  "source_page": "p061",
+  "dice": "1d6",
+  "roll_instruction": "Roll 1d6 or choose one.",
+  "columns": [
+   "Workspace"
+  ],
+  "rows": [
+   {
+    "roll": 1,
+    "cells": [
+     "Sterilized daily in the morning like clockwork."
+    ]
+   },
+   {
+    "roll": 2,
+    "cells": [
+     "It's not state-of-the-art anymore, but it's comfortable to you."
+    ]
+   },
+   {
+    "roll": 3,
+    "cells": [
+     "Your cryo equipment is also used to cool drinks."
+    ]
+   },
+   {
+    "roll": 4,
+    "cells": [
+     "Everything possible is single-use and stored compacted until needed."
+    ]
+   },
+   {
+    "roll": 5,
+    "cells": [
+     "Not as clean as many of your patients may have hoped."
+    ]
+   },
+   {
+    "roll": 6,
+    "cells": [
+     "Meticulously organized, sharpened, and sterilized."
+    ]
+   }
+  ],
+  "mechanical": false,
+  "branch": "work alone, or after the partner table",
+  "text": "Roll 1d6 or choose one."
+ },
+ {
+  "kind": "lifepath_table",
+  "group": "role",
+  "role": "Medtech",
+  "name": "Medtech: Who are Your Main Clients?",
+  "source_page": "p062",
+  "dice": "1d6",
+  "roll_instruction": "Roll 1d6 or choose one.",
+  "columns": [
+   "Who?"
+  ],
+  "rows": [
+   {
+    "roll": 1,
+    "cells": [
+     "Local Fixers who send you clients."
+    ]
+   },
+   {
+    "roll": 2,
+    "cells": [
+     "Local gangers who also protect your work area or home in exchange for medical help."
+    ]
+   },
+   {
+    "roll": 3,
+    "cells": [
+     "Corporate Execs who use you for \"black project\" medical work."
+    ]
+   },
+   {
+    "roll": 4,
+    "cells": [
+     "Local Solos or other combat types who use you for medical help."
+    ]
+   },
+   {
+    "roll": 5,
+    "cells": [
+     "Local Nomads and Fixers who bring you wounded clients."
+    ]
+   },
+   {
+    "roll": 6,
+    "cells": [
+     "Trauma Team paramedical work."
+    ]
+   }
+  ],
+  "mechanical": false,
+  "branch": null,
+  "text": "Roll 1d6 or choose one."
+ },
+ {
+  "kind": "lifepath_table",
+  "group": "role",
+  "role": "Medtech",
+  "name": "Medtech: Where Do You Get Your Supplies?",
+  "source_page": "p062",
+  "dice": "1d6",
+  "roll_instruction": "Roll 1d6 or choose one.",
+  "columns": [
+   "Where?"
+  ],
+  "rows": [
+   {
+    "roll": 1,
+    "cells": [
+     "Scavenge stashes of medical supplies you find in abandoned City Zones."
+    ]
+   },
+   {
+    "roll": 2,
+    "cells": [
+     "Strip parts from bodies after firefights."
+    ]
+   },
+   {
+    "roll": 3,
+    "cells": [
+     "Have a local Fixer bring you supplies in exchange for medical work."
+    ]
+   },
+   {
+    "roll": 4,
+    "cells": [
+     "Corporate Execs or Trauma Team supply you with stuff in exchange for your services."
+    ]
+   },
+   {
+    "roll": 5,
+    "cells": [
+     "You have a backdoor into a few Corporate or Hospital warehouses."
+    ]
+   },
+   {
+    "roll": 6,
+    "cells": [
+     "You hit the Night Markets and score deals whenever you can."
+    ]
+   }
+  ],
+  "mechanical": false,
+  "branch": null,
+  "text": "Roll 1d6 or choose one."
+ },
+ {
+  "kind": "lifepath_table",
+  "group": "role",
+  "role": "Media",
+  "name": "Media: What Kind of Media are You?",
+  "source_page": "p063",
+  "dice": "1d6",
+  "roll_instruction": "Roll 1d6 or choose one.",
+  "columns": [
+   "Type"
+  ],
+  "rows": [
+   {
+    "roll": 1,
+    "cells": [
+     "Blogger"
+    ]
+   },
+   {
+    "roll": 2,
+    "cells": [
+     "Writer (Books)"
+    ]
+   },
+   {
+    "roll": 3,
+    "cells": [
+     "Videographer"
+    ]
+   },
+   {
+    "roll": 4,
+    "cells": [
+     "Documentarian"
+    ]
+   },
+   {
+    "roll": 5,
+    "cells": [
+     "Investigative Reporter"
+    ]
+   },
+   {
+    "roll": 6,
+    "cells": [
+     "Street Scribe"
+    ]
+   }
+  ],
+  "mechanical": false,
+  "branch": null,
+  "text": "Roll 1d6 or choose one."
+ },
+ {
+  "kind": "lifepath_table",
+  "group": "role",
+  "role": "Media",
+  "name": "Media: How Does Your Work Reach the Public?",
+  "source_page": "p063",
+  "dice": "1d6",
+  "roll_instruction": "Roll 1d6 or choose one.",
+  "columns": [
+   "How?"
+  ],
+  "rows": [
+   {
+    "roll": 1,
+    "cells": [
+     "Monthly magazine"
+    ]
+   },
+   {
+    "roll": 2,
+    "cells": [
+     "Blog"
+    ]
+   },
+   {
+    "roll": 3,
+    "cells": [
+     "Mainstream vid feed"
+    ]
+   },
+   {
+    "roll": 4,
+    "cells": [
+     "News channel"
+    ]
+   },
+   {
+    "roll": 5,
+    "cells": [
+     "\"Book\" sales"
+    ]
+   },
+   {
+    "roll": 6,
+    "cells": [
+     "Screamsheets"
+    ]
+   }
+  ],
+  "mechanical": false,
+  "branch": null,
+  "text": "Roll 1d6 or choose one."
+ },
+ {
+  "kind": "lifepath_table",
+  "group": "role",
+  "role": "Media",
+  "name": "Media: How Ethical are You?",
+  "source_page": "p063",
+  "dice": "1d6",
+  "roll_instruction": "Roll 1d6 or choose one.",
+  "columns": [
+   "Ethics"
+  ],
+  "rows": [
+   {
+    "roll": 1,
+    "cells": [
+     "Fair, honest reporting, strong ethical practices. You only report the verifiable truth."
+    ]
+   },
+   {
+    "roll": 2,
+    "cells": [
+     "Fair and honest reporting, but willing to go on hearsay and rumor if that's what it takes."
+    ]
+   },
+   {
+    "roll": 3,
+    "cells": [
+     "Will occasionally slip and do unethical things, but it's rare. You have some standards."
+    ]
+   },
+   {
+    "roll": 4,
+    "cells": [
+     "Willing to bend any rules to get the bad guys. But only the bad guys."
+    ]
+   },
+   {
+    "roll": 5,
+    "cells": [
+     "Ruthless and determined to make it big, even if it means breaking the law. You're a muckraker."
+    ]
+   },
+   {
+    "roll": 6,
+    "cells": [
+     "Totally corrupt. You take bribes, engage in illegal, unethical reporting all the time. Your pen is for hire to the highest bidder."
+    ]
+   }
+  ],
+  "mechanical": false,
+  "branch": null,
+  "text": "Roll 1d6 or choose one."
+ },
+ {
+  "kind": "lifepath_table",
+  "group": "role",
+  "role": "Media",
+  "name": "Media: What Types of Stories Do You Want to Tell?",
+  "source_page": "p063",
+  "dice": "1d6",
+  "roll_instruction": "Roll 1d6 or choose one.",
+  "columns": [
+   "Stories"
+  ],
+  "rows": [
+   {
+    "roll": 1,
+    "cells": [
+     "Political Intrigue"
+    ]
+   },
+   {
+    "roll": 2,
+    "cells": [
+     "Ecological Impact"
+    ]
+   },
+   {
+    "roll": 3,
+    "cells": [
+     "Celebrity News"
+    ]
+   },
+   {
+    "roll": 4,
+    "cells": [
+     "Corporate Takedowns"
+    ]
+   },
+   {
+    "roll": 5,
+    "cells": [
+     "Editorials"
+    ]
+   },
+   {
+    "roll": 6,
+    "cells": [
+     "Propaganda"
+    ]
+   }
+  ],
+  "mechanical": false,
+  "branch": null,
+  "text": "Roll 1d6 or choose one."
+ },
+ {
+  "kind": "lifepath_table",
+  "group": "role",
+  "role": "Exec",
+  "name": "Exec: What Kind of Corp Do You Work For?",
+  "source_page": "p064",
+  "dice": "1d6",
+  "roll_instruction": "Roll 1d6 or work with your GM to choose one.",
+  "columns": [
+   "Type"
+  ],
+  "rows": [
+   {
+    "roll": 1,
+    "cells": [
+     "Financial"
+    ]
+   },
+   {
+    "roll": 2,
+    "cells": [
+     "Media and Communications"
+    ]
+   },
+   {
+    "roll": 3,
+    "cells": [
+     "Cybertech and Medical Technologies"
+    ]
+   },
+   {
+    "roll": 4,
+    "cells": [
+     "Pharmaceuticals and Biotech"
+    ]
+   },
+   {
+    "roll": 5,
+    "cells": [
+     "Food, Clothing, or other General Consumables"
+    ]
+   },
+   {
+    "roll": 6,
+    "cells": [
+     "Energy Production"
+    ]
+   },
+   {
+    "roll": 7,
+    "cells": [
+     "Personal Electronics and Robotics"
+    ]
+   },
+   {
+    "roll": 8,
+    "cells": [
+     "Corporate Services"
+    ]
+   },
+   {
+    "roll": 9,
+    "cells": [
+     "Consumer Services"
+    ]
+   },
+   {
+    "roll": 10,
+    "cells": [
+     "Real Estate and Construction"
+    ]
+   }
+  ],
+  "mechanical": false,
+  "branch": null,
+  "text": "Roll 1d6 or work with your GM to choose one.",
+  "transcription_note": "D-9: the printed header says 1d6 but the table has 10 rows (p064). The header is kept as printed in `dice`; `rows` holds all 10 rows; `printed_dice_conflict` records the mismatch.",
+  "printed_dice_conflict": "header prints 1d6; table has 10 rows (D-9)"
+ },
+ {
+  "kind": "lifepath_table",
+  "group": "role",
+  "role": "Exec",
+  "name": "Exec: What Division Do You Work In?",
+  "source_page": "p064",
+  "dice": "1d6",
+  "roll_instruction": "Roll 1d6 or choose one.",
+  "columns": [
+   "Division"
+  ],
+  "rows": [
+   {
+    "roll": 1,
+    "cells": [
+     "Procurement"
+    ]
+   },
+   {
+    "roll": 2,
+    "cells": [
+     "Manufacturing"
+    ]
+   },
+   {
+    "roll": 3,
+    "cells": [
+     "Research and Development"
+    ]
+   },
+   {
+    "roll": 4,
+    "cells": [
+     "Human Resources"
+    ]
+   },
+   {
+    "roll": 5,
+    "cells": [
+     "Public Affairs/Publicity/Advertising"
+    ]
+   },
+   {
+    "roll": 6,
+    "cells": [
+     "Mergers and Acquisitions"
+    ]
+   }
+  ],
+  "mechanical": false,
+  "branch": null,
+  "text": "Roll 1d6 or choose one."
+ },
+ {
+  "kind": "lifepath_table",
+  "group": "role",
+  "role": "Exec",
+  "name": "Exec: How Good/Bad is Your Corp?",
+  "source_page": "p064",
+  "dice": "1d6",
+  "roll_instruction": "Roll 1d6 or choose one.",
+  "columns": [
+   "Good/Bad"
+  ],
+  "rows": [
+   {
+    "roll": 1,
+    "cells": [
+     "Always working for good, fully supporting ethical practices."
+    ]
+   },
+   {
+    "roll": 2,
+    "cells": [
+     "Operates as a fair and honest business all the time."
+    ]
+   },
+   {
+    "roll": 3,
+    "cells": [
+     "Will occasionally slip and do unethical things, but it's rare."
+    ]
+   },
+   {
+    "roll": 4,
+    "cells": [
+     "Willing to bend the rules to get what it needs."
+    ]
+   },
+   {
+    "roll": 5,
+    "cells": [
+     "Ruthless and profit-centered, willing to do some bad things."
+    ]
+   },
+   {
+    "roll": 6,
+    "cells": [
+     "Totally evil. Will engage in illegal, unethical business all the time."
+    ]
+   }
+  ],
+  "mechanical": false,
+  "branch": null,
+  "text": "Roll 1d6 or choose one."
+ },
+ {
+  "kind": "lifepath_table",
+  "group": "role",
+  "role": "Exec",
+  "name": "Exec: Where is Your Corp Based?",
+  "source_page": "p065",
+  "dice": "1d6",
+  "roll_instruction": "Roll 1d6 or choose one.",
+  "columns": [
+   "Where?"
+  ],
+  "rows": [
+   {
+    "roll": 1,
+    "cells": [
+     "One city"
+    ]
+   },
+   {
+    "roll": 2,
+    "cells": [
+     "Several cities"
+    ]
+   },
+   {
+    "roll": 3,
+    "cells": [
+     "Statewide"
+    ]
+   },
+   {
+    "roll": 4,
+    "cells": [
+     "National"
+    ]
+   },
+   {
+    "roll": 5,
+    "cells": [
+     "International, offices in a few major cities"
+    ]
+   },
+   {
+    "roll": 6,
+    "cells": [
+     "International, offices everywhere"
+    ]
+   }
+  ],
+  "mechanical": false,
+  "branch": null,
+  "text": "Roll 1d6 or choose one."
+ },
+ {
+  "kind": "lifepath_table",
+  "group": "role",
+  "role": "Exec",
+  "name": "Exec: Who's Gunning for Your Group?",
+  "source_page": "p065",
+  "dice": "1d6",
+  "roll_instruction": "Roll 1d6 or choose one.",
+  "columns": [
+   "Who?"
+  ],
+  "rows": [
+   {
+    "roll": 1,
+    "cells": [
+     "Rival Corp in the same industry."
+    ]
+   },
+   {
+    "roll": 2,
+    "cells": [
+     "Law enforcement is watching you."
+    ]
+   },
+   {
+    "roll": 3,
+    "cells": [
+     "Local Media wants to bring you down."
+    ]
+   },
+   {
+    "roll": 4,
+    "cells": [
+     "Different divisions in your own company are feuding with each other."
+    ]
+   },
+   {
+    "roll": 5,
+    "cells": [
+     "Local government doesn't like your Corp."
+    ]
+   },
+   {
+    "roll": 6,
+    "cells": [
+     "International Corporations are eyeing you for a hostile takeover."
+    ]
+   }
+  ],
+  "mechanical": false,
+  "branch": null,
+  "text": "Roll 1d6 or choose one."
+ },
+ {
+  "kind": "lifepath_table",
+  "group": "role",
+  "role": "Exec",
+  "name": "Exec: Current State with Your Boss",
+  "source_page": "p065",
+  "dice": "1d6",
+  "roll_instruction": "Roll 1d6 or choose one.",
+  "columns": [
+   "Current State"
+  ],
+  "rows": [
+   {
+    "roll": 1,
+    "cells": [
+     "Your Boss mentors you but watch out for their enemies."
+    ]
+   },
+   {
+    "roll": 2,
+    "cells": [
+     "Your Boss gives you a free hand and doesn't want to know what you're up to."
+    ]
+   },
+   {
+    "roll": 3,
+    "cells": [
+     "Your Boss is a micromanager who tries to meddle in your work."
+    ]
+   },
+   {
+    "roll": 4,
+    "cells": [
+     "Your Boss is a psycho whose unpredictable outbursts are offset by quiet paranoia."
+    ]
+   },
+   {
+    "roll": 5,
+    "cells": [
+     "Your Boss is cool and watches your back against rivals."
+    ]
+   },
+   {
+    "roll": 6,
+    "cells": [
+     "Your Boss is threatened by your meteoric rise and is planning to knife you."
+    ]
+   }
+  ],
+  "mechanical": false,
+  "branch": null,
+  "text": "Roll 1d6 or choose one."
+ },
+ {
+  "kind": "lifepath_table",
+  "group": "role",
+  "role": "Lawman",
+  "name": "Lawman: What is Your Position on the Force",
+  "source_page": "p066",
+  "dice": "1d6",
+  "roll_instruction": "Roll 1d6 or work with your GM to choose one.",
+  "columns": [
+   "Position"
+  ],
+  "rows": [
+   {
+    "roll": 1,
+    "cells": [
+     "Guard"
+    ]
+   },
+   {
+    "roll": 2,
+    "cells": [
+     "Standard Beat or Patrol"
+    ]
+   },
+   {
+    "roll": 3,
+    "cells": [
+     "Criminal Investigation"
+    ]
+   },
+   {
+    "roll": 4,
+    "cells": [
+     "Special Weapons and Tactics"
+    ]
+   },
+   {
+    "roll": 5,
+    "cells": [
+     "Motor Patrol"
+    ]
+   },
+   {
+    "roll": 6,
+    "cells": [
+     "Internal Affairs"
+    ]
+   }
+  ],
+  "mechanical": false,
+  "branch": null,
+  "text": "Roll 1d6 or work with your GM to choose one."
+ },
+ {
+  "kind": "lifepath_table",
+  "group": "role",
+  "role": "Lawman",
+  "name": "Lawman: How Wide is Your Group's Jurisdiction?",
+  "source_page": "p066",
+  "dice": "1d6",
+  "roll_instruction": "Roll 1d6 or choose one.",
+  "columns": [
+   "Jurisdiction"
+  ],
+  "rows": [
+   {
+    "roll": 1,
+    "cells": [
+     "Corporate Zones"
+    ]
+   },
+   {
+    "roll": 2,
+    "cells": [
+     "Standard City Patrol Zone"
+    ]
+   },
+   {
+    "roll": 3,
+    "cells": [
+     "Combat Zones"
+    ]
+   },
+   {
+    "roll": 4,
+    "cells": [
+     "Outer City"
+    ]
+   },
+   {
+    "roll": 5,
+    "cells": [
+     "Recovery Zones"
+    ]
+   },
+   {
+    "roll": 6,
+    "cells": [
+     "Open Highways"
+    ]
+   }
+  ],
+  "mechanical": false,
+  "branch": null,
+  "text": "Roll 1d6 or choose one."
+ },
+ {
+  "kind": "lifepath_table",
+  "group": "role",
+  "role": "Lawman",
+  "name": "Lawman: How Corrupt is Your Group?",
+  "source_page": "p066",
+  "dice": "1d6",
+  "roll_instruction": "Roll 1d6 or choose one.",
+  "columns": [
+   "Corruption"
+  ],
+  "rows": [
+   {
+    "roll": 1,
+    "cells": [
+     "Fair, honest policing, strong ethical practices."
+    ]
+   },
+   {
+    "roll": 2,
+    "cells": [
+     "Fair and honest policing, but hard on lawbreakers."
+    ]
+   },
+   {
+    "roll": 3,
+    "cells": [
+     "Will occasionally slip and do unethical things, but it's rare."
+    ]
+   },
+   {
+    "roll": 4,
+    "cells": [
+     "Willing to bend any rules to get the bad guys."
+    ]
+   },
+   {
+    "roll": 5,
+    "cells": [
+     "Ruthless and determined to control The Street, even if it means breaking the law."
+    ]
+   },
+   {
+    "roll": 6,
+    "cells": [
+     "Totally corrupt. You take bribes, engage in illegal, and unethical business all the time."
+    ]
+   }
+  ],
+  "mechanical": false,
+  "branch": null,
+  "text": "Roll 1d6 or choose one."
+ },
+ {
+  "kind": "lifepath_table",
+  "group": "role",
+  "role": "Lawman",
+  "name": "Lawman: Who's Gunning for Your Group?",
+  "source_page": "p066",
+  "dice": "1d6",
+  "roll_instruction": "Roll 1d6 or choose one.",
+  "columns": [
+   "Who?"
+  ],
+  "rows": [
+   {
+    "roll": 1,
+    "cells": [
+     "Organized Crime"
+    ]
+   },
+   {
+    "roll": 2,
+    "cells": [
+     "Boostergangs"
+    ]
+   },
+   {
+    "roll": 3,
+    "cells": [
+     "Police Accountability Group"
+    ]
+   },
+   {
+    "roll": 4,
+    "cells": [
+     "Dirty Politicians"
+    ]
+   },
+   {
+    "roll": 5,
+    "cells": [
+     "Smugglers"
+    ]
+   },
+   {
+    "roll": 6,
+    "cells": [
+     "Street Criminals"
+    ]
+   }
+  ],
+  "mechanical": false,
+  "branch": null,
+  "text": "Roll 1d6 or choose one."
+ },
+ {
+  "kind": "lifepath_table",
+  "group": "role",
+  "role": "Lawman",
+  "name": "Lawman: Who is Your Group's Major Target?",
+  "source_page": "p066",
+  "dice": "1d6",
+  "roll_instruction": "Roll 1d6 or choose one.",
+  "columns": [
+   "Who?"
+  ],
+  "rows": [
+   {
+    "roll": 1,
+    "cells": [
+     "Organized Crime"
+    ]
+   },
+   {
+    "roll": 2,
+    "cells": [
+     "Boostergangs"
+    ]
+   },
+   {
+    "roll": 3,
+    "cells": [
+     "Drug Runners"
+    ]
+   },
+   {
+    "roll": 4,
+    "cells": [
+     "Dirty Politicians"
+    ]
+   },
+   {
+    "roll": 5,
+    "cells": [
+     "Smugglers"
+    ]
+   },
+   {
+    "roll": 6,
+    "cells": [
+     "Street Crime"
+    ]
+   }
+  ],
+  "mechanical": false,
+  "branch": null,
+  "text": "Roll 1d6 or choose one."
+ },
+ {
+  "kind": "lifepath_table",
+  "group": "role",
+  "role": "Fixer",
+  "name": "Fixer: What Kind of Fixer are You?",
+  "source_page": "p067",
+  "dice": "1d10",
+  "roll_instruction": "Roll 1d10 or work with your GM to choose one.",
+  "columns": [
+   "Type"
+  ],
+  "rows": [
+   {
+    "roll": 1,
+    "cells": [
+     "Broker deals between rival gangs."
+    ]
+   },
+   {
+    "roll": 2,
+    "cells": [
+     "Procure rare or atypical resources for exclusive clientele."
+    ]
+   },
+   {
+    "roll": 3,
+    "cells": [
+     "Specialize in brokering Solo or Tech services as an agent."
+    ]
+   },
+   {
+    "roll": 4,
+    "cells": [
+     "Supply a regular resource for the Night Markets, like food, medicines, or drugs."
+    ]
+   },
+   {
+    "roll": 5,
+    "cells": [
+     "Procure highly illegal resources, like street drugs or milspec weapons."
+    ]
+   },
+   {
+    "roll": 6,
+    "cells": [
+     "Supply resources for Techs and Medtechs, like parts and medical supplies."
+    ]
+   },
+   {
+    "roll": 7,
+    "cells": [
+     "Operate several successful Night Markets, although not as owner."
+    ]
+   },
+   {
+    "roll": 8,
+    "cells": [
+     "Broker use contracts for heavy machinery, military vehicles, and aircraft."
+    ]
+   },
+   {
+    "roll": 9,
+    "cells": [
+     "Broker deals as a fence for scavengers raiding Corps or Combat Zones."
+    ]
+   },
+   {
+    "roll": 10,
+    "cells": [
+     "Act as an exclusive agent for a Media, Rockerboy, or a Nomad Pack."
+    ]
+   }
+  ],
+  "mechanical": false,
+  "branch": null,
+  "text": "Roll 1d10 or work with your GM to choose one."
+ },
+ {
+  "kind": "lifepath_table",
+  "group": "role",
+  "role": "Fixer",
+  "name": "Fixer: Got a Partner? Who?",
+  "source_page": "p067",
+  "dice": "1d6",
+  "roll_instruction": "Roll 1d6 or choose one.",
+  "columns": [
+   "Who?"
+  ],
+  "rows": [
+   {
+    "roll": 1,
+    "cells": [
+     "Family member"
+    ]
+   },
+   {
+    "roll": 2,
+    "cells": [
+     "Old friend"
+    ]
+   },
+   {
+    "roll": 3,
+    "cells": [
+     "Possible romantic partner as well"
+    ]
+   },
+   {
+    "roll": 4,
+    "cells": [
+     "Mentor"
+    ]
+   },
+   {
+    "roll": 5,
+    "cells": [
+     "Secret partner with mob/gang connections"
+    ]
+   },
+   {
+    "roll": 6,
+    "cells": [
+     "Secret partner with Corporate connections"
+    ]
+   }
+  ],
+  "mechanical": false,
+  "branch": "got a partner",
+  "text": "Roll 1d6 or choose one.",
+  "choose_boxes_before": [
+   {
+    "heading": "Got a Partner or Work Alone?",
+    "text": "Choose either Got a Partner or Work Alone.",
+    "branches": "got a partner -> Got a Partner? Who?; work alone -> What's Your \"Office\" Like?"
+   }
+  ]
+ },
+ {
+  "kind": "lifepath_table",
+  "group": "role",
+  "role": "Fixer",
+  "name": "Fixer: What's Your \"Office\" Like?",
+  "source_page": "p067",
+  "dice": "1d6",
+  "roll_instruction": "Roll 1d6 of choose one.",
+  "columns": [
+   "Office"
+  ],
+  "rows": [
+   {
+    "roll": 1,
+    "cells": [
+     "You don't have one. You like to keep it mobile."
+    ]
+   },
+   {
+    "roll": 2,
+    "cells": [
+     "A booth in a local bar."
+    ]
+   },
+   {
+    "roll": 3,
+    "cells": [
+     "All Data Pool messages and anonymous dead drops."
+    ]
+   },
+   {
+    "roll": 4,
+    "cells": [
+     "Spare room in a warehouse, shop, or clinic."
+    ]
+   },
+   {
+    "roll": 5,
+    "cells": [
+     "An otherwise abandoned building."
+    ]
+   },
+   {
+    "roll": 6,
+    "cells": [
+     "The lobby of a cube hotel."
+    ]
+   }
+  ],
+  "mechanical": false,
+  "branch": "work alone, or after the partner table",
+  "text": "Roll 1d6 of choose one.",
+  "transcription_note": "The printed instruction reads 'Roll 1d6 of choose one.' (typo for 'or'); kept as printed."
+ },
+ {
+  "kind": "lifepath_table",
+  "group": "role",
+  "role": "Fixer",
+  "name": "Fixer: Who are Your Side Clients?",
+  "source_page": "p068",
+  "dice": "1d6",
+  "roll_instruction": "Roll 1d6 or choose one.",
+  "columns": [
+   "Who?"
+  ],
+  "rows": [
+   {
+    "roll": 1,
+    "cells": [
+     "Local Rockerboys or Medias who use you to get them gigs or contacts."
+    ]
+   },
+   {
+    "roll": 2,
+    "cells": [
+     "Local gangers who also protect your work area or home."
+    ]
+   },
+   {
+    "roll": 3,
+    "cells": [
+     "Corporate Execs who use you for \"black project\" procurement work."
+    ]
+   },
+   {
+    "roll": 4,
+    "cells": [
+     "Local Solos or other combat types who use you to get them jobs or contacts."
+    ]
+   },
+   {
+    "roll": 5,
+    "cells": [
+     "Local Nomads and Fixers who use you to set up transactions or deals."
+    ]
+   },
+   {
+    "roll": 6,
+    "cells": [
+     "Local politicos or Execs who depend on you for finding out information."
+    ]
+   }
+  ],
+  "mechanical": false,
+  "branch": null,
+  "text": "Roll 1d6 or choose one."
+ },
+ {
+  "kind": "lifepath_table",
+  "group": "role",
+  "role": "Fixer",
+  "name": "Fixer: Who's Gunning for You?",
+  "source_page": "p068",
+  "dice": "1d6",
+  "roll_instruction": "Roll 1d6 or choose one.",
+  "columns": [
+   "Who?"
+  ],
+  "rows": [
+   {
+    "roll": 1,
+    "cells": [
+     "Combat Zone gangers who want you to work for them exclusively."
+    ]
+   },
+   {
+    "roll": 2,
+    "cells": [
+     "Rival Fixers trying to steal your clients."
+    ]
+   },
+   {
+    "roll": 3,
+    "cells": [
+     "Execs who want you to work for them exclusively."
+    ]
+   },
+   {
+    "roll": 4,
+    "cells": [
+     "Enemy of a former client who wants to clean up \"loose ends\"—like you."
+    ]
+   },
+   {
+    "roll": 5,
+    "cells": [
+     "Old client who thinks you screwed them over."
+    ]
+   },
+   {
+    "roll": 6,
+    "cells": [
+     "Rival Fixer trying to beat you out for resources and parts."
+    ]
+   }
+  ],
+  "mechanical": false,
+  "branch": null,
+  "text": "Roll 1d6 or choose one."
+ },
+ {
+  "kind": "lifepath_table",
+  "group": "role",
+  "role": "Nomad",
+  "name": "Nomad: How Big is Your Pack?",
+  "source_page": "p069",
+  "dice": "1d6",
+  "roll_instruction": "Roll 1d6 or choose one.",
+  "columns": [
+   "Pack Size"
+  ],
+  "rows": [
+   {
+    "roll": 1,
+    "cells": [
+     "A single extended tribe or family"
+    ]
+   },
+   {
+    "roll": 2,
+    "cells": [
+     "A couple dozen members"
+    ]
+   },
+   {
+    "roll": 3,
+    "cells": [
+     "Forty or fifty members"
+    ]
+   },
+   {
+    "roll": 4,
+    "cells": [
+     "A hundred or more members"
+    ]
+   },
+   {
+    "roll": 5,
+    "cells": [
+     "A Blood Family (hundreds of members)"
+    ]
+   },
+   {
+    "roll": 6,
+    "cells": [
+     "An Affiliated Family (made of several Blood Families)"
+    ]
+   }
+  ],
+  "mechanical": false,
+  "branch": null,
+  "text": "Roll 1d6 or choose one."
+ },
+ {
+  "kind": "lifepath_table",
+  "group": "role",
+  "role": "Nomad",
+  "name": "Nomad: If on Land, What Do They Do?",
+  "source_page": "p069",
+  "dice": "1d10",
+  "roll_instruction": "Roll 1d10 or choose one.",
+  "columns": [
+   "Type"
+  ],
+  "rows": [
+   {
+    "roll": 1,
+    "cells": [
+     "Gogang"
+    ]
+   },
+   {
+    "roll": 2,
+    "cells": [
+     "Passenger transport"
+    ]
+   },
+   {
+    "roll": 3,
+    "cells": [
+     "Chautauqua/school"
+    ]
+   },
+   {
+    "roll": 4,
+    "cells": [
+     "Traveling show/carnival"
+    ]
+   },
+   {
+    "roll": 5,
+    "cells": [
+     "Migrant farmers"
+    ]
+   },
+   {
+    "roll": 6,
+    "cells": [
+     "Cargo transport"
+    ]
+   },
+   {
+    "roll": 7,
+    "cells": [
+     "Shipment protection"
+    ]
+   },
+   {
+    "roll": 8,
+    "cells": [
+     "Smuggling"
+    ]
+   },
+   {
+    "roll": 9,
+    "cells": [
+     "Mercenary army"
+    ]
+   },
+   {
+    "roll": 10,
+    "cells": [
+     "Construction work gang"
+    ]
+   }
+  ],
+  "mechanical": false,
+  "branch": "land",
+  "text": "Roll 1d10 or choose one.",
+  "choose_boxes_before": [
+   {
+    "heading": "Is Your Pack Based on Land, Air, or Sea?",
+    "text": "Choose Land, Air, or Sea Nomads.",
+    "branches": "land -> If on Land; air -> If in Air; sea -> If at Sea"
+   }
+  ]
+ },
+ {
+  "kind": "lifepath_table",
+  "group": "role",
+  "role": "Nomad",
+  "name": "Nomad: If in Air, What Do They Do?",
+  "source_page": "p069",
+  "dice": "1d6",
+  "roll_instruction": "Roll 1d6 or choose one.",
+  "columns": [
+   "Type"
+  ],
+  "rows": [
+   {
+    "roll": 1,
+    "cells": [
+     "Air piracy"
+    ]
+   },
+   {
+    "roll": 2,
+    "cells": [
+     "Cargo transport"
+    ]
+   },
+   {
+    "roll": 3,
+    "cells": [
+     "Passenger transport"
+    ]
+   },
+   {
+    "roll": 4,
+    "cells": [
+     "Aircraft protection"
+    ]
+   },
+   {
+    "roll": 5,
+    "cells": [
+     "Smuggling"
+    ]
+   },
+   {
+    "roll": 6,
+    "cells": [
+     "Combat support"
+    ]
+   }
+  ],
+  "mechanical": false,
+  "branch": "air",
+  "text": "Roll 1d6 or choose one."
+ },
+ {
+  "kind": "lifepath_table",
+  "group": "role",
+  "role": "Nomad",
+  "name": "Nomad: If at Sea, What Do They Do?",
+  "source_page": "p069",
+  "dice": "1d6",
+  "roll_instruction": "Roll 1d6 or choose one.",
+  "columns": [
+   "Type"
+  ],
+  "rows": [
+   {
+    "roll": 1,
+    "cells": [
+     "Piracy"
+    ]
+   },
+   {
+    "roll": 2,
+    "cells": [
+     "Cargo transport"
+    ]
+   },
+   {
+    "roll": 3,
+    "cells": [
+     "Passenger transport"
+    ]
+   },
+   {
+    "roll": 4,
+    "cells": [
+     "Smuggling"
+    ]
+   },
+   {
+    "roll": 5,
+    "cells": [
+     "Combat support"
+    ]
+   },
+   {
+    "roll": 6,
+    "cells": [
+     "Submarine warfare"
+    ]
+   }
+  ],
+  "mechanical": false,
+  "branch": "sea",
+  "text": "Roll 1d6 or choose one."
+ },
+ {
+  "kind": "lifepath_table",
+  "group": "role",
+  "role": "Nomad",
+  "name": "Nomad: What Do You Do for Your Pack?",
+  "source_page": "p070",
+  "dice": "1d6",
+  "roll_instruction": "Roll 1d6 or choose one.",
+  "columns": [
+   "Type"
+  ],
+  "rows": [
+   {
+    "roll": 1,
+    "cells": [
+     "Scout (negotiator)"
+    ]
+   },
+   {
+    "roll": 2,
+    "cells": [
+     "Outrider (protection, weapons)"
+    ]
+   },
+   {
+    "roll": 3,
+    "cells": [
+     "Transport pilot/driver"
+    ]
+   },
+   {
+    "roll": 4,
+    "cells": [
+     "Loadmaster (large cargo mover, trucker)"
+    ]
+   },
+   {
+    "roll": 5,
+    "cells": [
+     "Solo smuggler"
+    ]
+   },
+   {
+    "roll": 6,
+    "cells": [
+     "Procurement (fuel, vehicles, etc.)"
+    ]
+   }
+  ],
+  "mechanical": false,
+  "branch": null,
+  "text": "Roll 1d6 or choose one."
+ },
+ {
+  "kind": "lifepath_table",
+  "group": "role",
+  "role": "Nomad",
+  "name": "Nomad: What's Your Pack's Overall Philosophy?",
+  "source_page": "p070",
+  "dice": "1d6",
+  "roll_instruction": "Roll 1d6 or choose one.",
+  "columns": [
+   "Philosophy"
+  ],
+  "rows": [
+   {
+    "roll": 1,
+    "cells": [
+     "Always working for good; your Pack accepts others, just wants to get along."
+    ]
+   },
+   {
+    "roll": 2,
+    "cells": [
+     "It's more like a family business. Operates as a fair and honest concern."
+    ]
+   },
+   {
+    "roll": 3,
+    "cells": [
+     "Will occasionally slip and do unethical things, but it's rare."
+    ]
+   },
+   {
+    "roll": 4,
+    "cells": [
+     "Willing to bend the rules whenever they get in the way to get what the Pack needs."
+    ]
+   },
+   {
+    "roll": 5,
+    "cells": [
+     "Ruthless and self-centered, willing to do some bad things if it will get the Pack ahead."
+    ]
+   },
+   {
+    "roll": 6,
+    "cells": [
+     "Totally evil. You rage up and down the highways, killing, looting, and just terrorizing everyone."
+    ]
+   }
+  ],
+  "mechanical": false,
+  "branch": null,
+  "text": "Roll 1d6 or choose one."
+ },
+ {
+  "kind": "lifepath_table",
+  "group": "role",
+  "role": "Nomad",
+  "name": "Nomad: Who's Gunning for Your Pack?",
+  "source_page": "p070",
+  "dice": "1d6",
+  "roll_instruction": "Roll 1d6 or choose one.",
+  "columns": [
+   "Who?"
+  ],
+  "rows": [
+   {
+    "roll": 1,
+    "cells": [
+     "Organized Crime"
+    ]
+   },
+   {
+    "roll": 2,
+    "cells": [
+     "Boostergangs"
+    ]
+   },
+   {
+    "roll": 3,
+    "cells": [
+     "Drug Runners"
+    ]
+   },
+   {
+    "roll": 4,
+    "cells": [
+     "Dirty Politicians"
+    ]
+   },
+   {
+    "roll": 5,
+    "cells": [
+     "Rival Packs in the same businesses"
+    ]
+   },
+   {
+    "roll": 6,
+    "cells": [
+     "Dirty Cops"
+    ]
+   }
+  ],
+  "mechanical": false,
+  "branch": null,
+  "text": "Roll 1d6 or choose one."
+ }
+]

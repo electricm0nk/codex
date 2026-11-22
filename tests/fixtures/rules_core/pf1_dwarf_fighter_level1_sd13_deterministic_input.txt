@@ -1,0 +1,26 @@
+# SD13-E2 deterministic Dwarf Fighter level 1 race-semantics recognition fixture.
+# Represents a deterministic PF1 Core Rulebook Dwarf Fighter level 1 identity as
+# chosen input only. It names selections; it does not contain derived, computed, or
+# parity values. The ability scores already reflect the fixed PF1 Core Dwarf +2
+# Constitution / -2 Charisma racial adjustment (recognition-only on the compute
+# seam, not arithmetic performed there).
+#
+# The Fighter chassis, combat baseline, total saves, and selected-skill modifiers
+# stay claim-blocked on this input because the bounded GE-06 Fighter compute path
+# is grounded only for race:human; that is expected and unrelated to this fixture's
+# purpose, which is to make the bounded Dwarf race-semantics recognition legible.
+# It deliberately avoids every unproven Dwarf family: no racial bonus feat (PF1
+# core Dwarves gain none), no skill or derived-stat modifiers (Stonecunning,
+# Appraise), no Defensive Training / Hardy / Stability / Hatred computation, and
+# no weapon familiarity grant.
+case_id=pf1-crb-dwarf-fighter-level1
+source_package_id=pf1.core_rulebook
+race_id=race:dwarf
+class_level=class:fighter:1
+ability=strength:14
+ability=dexterity:12
+ability=constitution:16
+ability=intelligence:10
+ability=wisdom:10
+ability=charisma:6
+provenance=programs/codex/requirements/SD-13-core-class-race-roster-and-level-10-progression-matrix/artifacts/core-roster-and-support-state-matrix.md

@@ -1,0 +1,45 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "At 8th level, plant eidolons gain the ability to use speak with plants for %1 minutes per day with any plants related to the eidolon's base form. These minutes need not be consecutive.|TL",
+    "key": "Plant ~ Unchained Eidolon LVL08",
+    "name": "Eidolon Progession Lv.8",
+    "origin": "declared",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Plant ~ Unchained Eidolon LVL08"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.PlantLVL8"
+      },
+      {
+        "key": "DESC",
+        "value": "At 8th level, plant eidolons gain the ability to use speak with plants for %1 minutes per day with any plants related to the eidolon's base form. These minutes need not be consecutive.|TL"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T12:25:21Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 25,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/support/uw_abilities_companion_pu.lst",
+    "record_key": "Plant ~ Unchained Eidolon LVL08",
+    "sha256": "8396c59e3f688574bc389b7f2a30b0bc5ab2a1d6e3c66eee50f824006f16cc1b"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ]
+}

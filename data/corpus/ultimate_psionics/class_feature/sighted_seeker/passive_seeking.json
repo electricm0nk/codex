@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Sighted Seeker ~ Passive Seeking",
+    "name": "Passive Seeking",
+    "class": "Sighted Seeker",
+    "description": "Free Diplomacy check to gather information every 10 minutes while focused with goal in mind, with +%1 bonus if the goal is to locate a mark.|PassiveSeekingBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sighted Seeker ~ Passive Seeking"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SightedSeekerClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PassiveSeekingBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Free Diplomacy check to gather information every 10 minutes while focused with goal in mind, with +%1 bonus if the goal is to locate a mark.|PassiveSeekingBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PassiveSeekingBonus|SightedSeekerLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.377"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1481,
+    "record_key": "Sighted Seeker ~ Passive Seeking"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

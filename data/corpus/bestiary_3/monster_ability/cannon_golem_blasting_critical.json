@@ -1,0 +1,55 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Cannon Golem ~ Blasting Critical",
+    "delivery": "Extraordinary",
+    "description": "When a cannon golem confirms a critical hit with a slam attack, it can make one cannon attack against that target as a free action (as long as the cannon is loaded).",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:cannon_golem_blasting_critical",
+    "name": "Blasting Critical",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "When a cannon golem confirms a critical hit with a slam attack, it can make one cannon attack against that target as a free action (as long as the cannon is loaded)."
+      },
+      {
+        "key": "KEY",
+        "value": "Cannon Golem ~ Blasting Critical"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.135"
+      },
+      {
+        "key": "TYPE",
+        "value": "CannonGolemRacialAbility.SpecialQuality.Extraordinary"
+      }
+    ],
+    "source_page": "p.135",
+    "traits": [
+      "CannonGolemRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T14:09:11Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 947,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Cannon Golem ~ Blasting Critical",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

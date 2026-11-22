@@ -1,0 +1,54 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "General",
+    "cost_gp": 12000.0,
+    "description": "Once per day, the possessor can frame a question in her mind, cast the stones upon the ground, and attempt a reading with a Knowledge (planes) check to find the answer to her question.",
+    "key": "Lithomancy Stones",
+    "name": "Lithomancy Stones",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Lithomancy Stones"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.LesserMedium"
+      },
+      {
+        "key": "COST",
+        "value": "12000"
+      },
+      {
+        "key": "WT",
+        "value": "2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.260"
+      },
+      {
+        "key": "SPROP",
+        "value": "Once per day, the possessor can frame a question in her mind, cast the stones upon the ground, and attempt a reading with a Knowledge (planes) check to find the answer to her question."
+      }
+    ],
+    "weight_lbs": 2.0
+  },
+  "ingested_at": "2026-08-17T08:18:39Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 92,
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_equip.lst",
+    "record_key": "Lithomancy Stones",
+    "sha256": "48877b9621bd36c3812d91cc603838c92eda6199fd2bd116d16d47523cbc1cbc"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "data": {
+    "category": "Proficiency",
+    "key": "Weapon Specialization ~ Sniper Weapons",
+    "name": "Weapon Specialization ~ Sniper Weapons",
+    "type": "Weapon Specialization.Weapon Specialization Sniper Weapons"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 950,
+    "path": "starfinder/paizo/core/scr_abilities.lst",
+    "record_key": "Weapon Specialization ~ Sniper Weapons",
+    "sha256": "dfd415e1ab4cbef3c0417edecd59e13a7a116cad2086fcf2773dbafcb78711f5"
+  },
+  "unit_id": "core:ability:weapon_specialization_sniper_weapons"
+}

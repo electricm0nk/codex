@@ -1,0 +1,30 @@
+   Compiling codex-desktop v0.17.0 (/home/ubuntu/workspace/worktrees/codex-sd37/apps/desktop/src-tauri)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 29.52s
+     Running unittests src/main.rs (/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/codex_desktop-f9c244288bc1271e)
+
+running 2 tests
+pf-seed-render manifest_dir=/home/ubuntu/workspace/worktrees/codex-sd37/apps/desktop/src-tauri
+pf-seed-render aldric sha256=1d830682210a0e6e216093a3125593edf1f25539f38547fc832a56c050a5a569 bytes=55037
+pf-seed-render elowen sha256=8d1a711c8519b62b489f47f097d683922568a645f4daabc9c95933c1b2b100f2 bytes=81136
+test character_hub::pf_seed_render_hash::pf_seed_render_hash_renders_every_seed_deterministically ... ok
+test pf_catalog_dump_hash::pf_catalog_dump_hash_renders_every_catalog_deterministically has been running for over 60 seconds
+pf-catalog-dump bestiary1_monsters=46 book_b1_entries=326 monster_entries=1243
+pf-catalog-dump list_class_catalog sha256=51a2d996e9ddd6688b9b7173f154286597b4fbaf8e73b21b22f411ba1db03bd7 bytes=276824
+pf-catalog-dump list_class_feature_descriptions sha256=eec8c5c5913993760af22b4322943176ac1085e942f845fc299a078ed2702203 bytes=7099451
+pf-catalog-dump list_class_feature_feat_bridge_descriptions sha256=317c87fd38c881792f4def246fe8bcb177d2574439e5b499b61ea08c73e13e40 bytes=446692
+pf-catalog-dump list_class_feature_pool_options sha256=def32fae6bf82b757208d4a76cfd9ac3f6c564264929085e4942417555c822ab bytes=2744009
+pf-catalog-dump list_equipment_catalog sha256=1e585296b174cb7e9bdddbeb1acb775be894c68af52991f1c3999ef8d8c63c7f bytes=2702648
+pf-catalog-dump list_race_catalog sha256=1085fa982bd6ee392dfdcd268e7aa76586cc18c079d40b89b71df502fbbf2111 bytes=89053
+pf-catalog-dump list_companion_catalog sha256=bdce3ec920b5d9b13c8a9dd306697913761d9fd7704510a4e78f55e6a6983d3d bytes=2970637
+pf-catalog-dump list_intelligent_item_catalog sha256=345bd58cc26e5fcb86080f39925a5f3f7f5cf476ea3789c63659127f571966b3 bytes=94276
+pf-catalog-dump list_feat_catalog sha256=26f013b0d0d1aa5e1f9e13ffd9267cbe87396d45bdb8d158b22b7129a1d84b24 bytes=1277031
+pf-catalog-dump list_weapon_targets sha256=18e988a6e9f1eb14e459f6e13b5d6891f495a46989ba09a73e608c7b1f7b7e5b bytes=8266
+pf-catalog-dump list_spell_catalog sha256=e2ee565327aba0e0eee9addcc690a36a6423e57d3cf2c9eca1bb010091306021 bytes=2000049
+pf-catalog-dump list_alternate_racial_traits sha256=5196053d9e3c92f041b803bdc0c49ba920ff7ef8729d5e5990d7343a5e8344e3 bytes=574132
+pf-catalog-dump list_monster_catalog sha256=5edf5b813379ae0493383655d0337c0dd55f6a2fdf96bf95c339dd6af313f2ea bytes=3544976
+pf-catalog-dump list_race_creation_roster sha256=7caf669d6f08f6fb8f0cb171f6853dc149ada5d782acc90c99e9bcf560101b31 bytes=12185
+pf-catalog-dump list_available_character_traits sha256=a0fec55a5e10e4090dca4caf5e3ce13d4438a3abe0bc311bfebb005fdebfa272 bytes=44512
+test pf_catalog_dump_hash::pf_catalog_dump_hash_renders_every_catalog_deterministically ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 700 filtered out; finished in 110.20s
+

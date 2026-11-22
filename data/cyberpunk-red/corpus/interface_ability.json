@@ -1,0 +1,149 @@
+[
+  {
+    "name": "Backdoor",
+    "source_page": "p148",
+    "rules_pages": [
+      "p200"
+    ],
+    "action_cost": "NET Action",
+    "roll": "Interface + 1d10 vs. DV",
+    "data": "Allows the Netrunner to break through Passwords and other obstructions in the Architecture.",
+    "text": "Allows a Netrunner to attempt to break through Passwords in a NET Architecture using a NET Action. Of course, if you knew the password already, you automatically pass through the obstruction.",
+    "example": "The Netrunner encounters a particularly difficult Password of DV10 blocking their progress while in an Architecture. Using a NET Action, they attempt to Backdoor it. They roll a d10 and add their Interface (7), getting a 16. The Password blocks the Netrunner no more.",
+    "kind": "interface_ability"
+  },
+  {
+    "name": "Cloak",
+    "source_page": "p148",
+    "rules_pages": [
+      "p200"
+    ],
+    "action_cost": "NET Action",
+    "roll": "Interface + 1d10 vs. DV",
+    "data": "Allows the Netrunner to hide their actions in the Architecture before they leave.",
+    "text": "Allows you to hide traces of your presence and any Virus you left in the Architecture using a NET Action. The Pathfinder DV for another Netrunner to overcome your Cloak and discover your Actions is equal to the Cloak Check you made to create the Cloak. If you do not use the Cloak Ability before Jacking Out, another Netrunner can automatically discover what actions you took in the Architecture upon using the Pathfinder Ability.",
+    "example": "After leaving their Virus on the Corporation's network, the Netrunner wants to hide any traces of their presence on the Architecture along with their Virus, so they use a NET Action to use their Cloak Ability. They roll Interface (7) + 1d10, getting a 16! An enemy Netrunner will have to beat this number with Interface + 1d10 before they can discover any traces of the Netrunner or be able to roll against any Virus that they left. If the Netrunner didn't leave such a flashy Virus, maybe the Corp wouldn't have even known that their NET Architecture was compromised!",
+    "kind": "interface_ability"
+  },
+  {
+    "name": "Control",
+    "source_page": "p148",
+    "rules_pages": [
+      "p200"
+    ],
+    "action_cost": "NET Action",
+    "roll": "Interface + 1d10 vs. DV",
+    "data": "Allows the Netrunner to control things that are attached to the Architecture.",
+    "text": "Allows you to control things attached to the NET Architectures like cameras, drones, turrets, laser grids, elevators, sprinklers, etc., using a Control Node. Each Node has a DV required to take control of it as a NET Action. Operating each individual thing attached to the node requires a separate NET Action once you have taken hold of the Control Node, and can be done from anywhere in the Architecture as long as you are still in control of the Control Node. Each Control Node can only be activated once per Turn. The DV to wrest a Control Node currently held by another Netrunner or a Demon is equal to the Control Check they made to take control of it. You lose control of any Control Nodes you hold in an Architecture when you Jack Out.",
+    "example": "In an Architecture, a Netrunner encounters a DV10 Control Node that manages the cameras on this floor. By using a NET Action to use their Control Ability they roll Interface (7) + 1d10 and beat the Control Node's DV by 2. Now that they've taken control of the Control Node, they use an additional NET Action to reposition the cameras so that they will not capture the Netrunner's friends while they sneak out of the fire escape.",
+    "kind": "interface_ability"
+  },
+  {
+    "name": "Eye-Dee",
+    "source_page": "p148",
+    "rules_pages": [
+      "p200"
+    ],
+    "action_cost": "NET Action",
+    "roll": "Interface + 1d10 vs. DV",
+    "data": "Allows the Netrunner to know what a found piece of data is and its value.",
+    "text": "Allows you to know what a found piece of data (like a File) is and its value using a NET Action. Some Files have a DV that must be beaten to learn anything from them.",
+    "example": "After discovering an interestingly titled File, the Netrunner uses their Eye-Dee Ability with a NET Action. It's a DV9 File, so the Netrunner rolls Interface (7) + 1d10 and easily rolls higher than 9. Unfortunately, the File was a dummy left in the Architecture just to waste a Netrunner's time!",
+    "kind": "interface_ability"
+  },
+  {
+    "name": "Pathfinder",
+    "source_page": "p148",
+    "rules_pages": [
+      "p200",
+      "p201"
+    ],
+    "action_cost": "NET Action",
+    "roll": "Interface + 1d10 vs. DV",
+    "data": "Allows the Netrunner to learn the \"map\" of the Architecture.",
+    "text": "Uses a NET Action to partially reveal the \"map\" of the NET Architecture. The higher your roll, the more you learn. This tells you generally what is in the NET Architecture you have just broken into, but not the DV of anything. You can see into the Architecture a number of floors equal to your Check or up to the first obstruction (usually a Password) with a DV higher than your Pathfinder Check, whichever happens first.",
+    "example": "After jacking into a new NET Architecture, the Netrunner has no idea what they might be up against, so they use their Pathfinder Ability with a NET Action to find out. Rolling their Interface + 1d10, they only get a 10. The GM determines they learn only the first 3 floors of the elevator, because the third has a DV11 Password on it that blocks their view.",
+    "kind": "interface_ability"
+  },
+  {
+    "name": "Scanner",
+    "source_page": "p148",
+    "rules_pages": [
+      "p200"
+    ],
+    "action_cost": "Meat Action",
+    "roll": "Interface + 1d10 vs. DV",
+    "data": "Allows the Netrunner to find out the locations of systems in an area.",
+    "text": "Use a Meat Action to find out the Meatspace location of access points to any NET Architectures in an area. The higher the Check, the more you spot from further away. It is up to the GM's discretion to determine how much you find.",
+    "example": "The Netrunner uses their Scanner Ability to search the building for NET Architectures and their access points to hack using a Meat Action. Rolling a 1d10 and adding their Interface (7), they get a 14. With this roll, the GM determines that the Netrunner learns the Meatspace location of two of the nearby access points for the building's NET Architecture.",
+    "transcription_note": "p199: all Interface Abilities use NET Actions 'save for Scanner'; Scanner is a Meat Action (p200).",
+    "kind": "interface_ability"
+  },
+  {
+    "name": "Slide",
+    "source_page": "p148",
+    "rules_pages": [
+      "p201"
+    ],
+    "action_cost": "NET Action",
+    "roll": "Interface + 1d10 vs. DV",
+    "data": "Allows the Netrunner to slip away from one Black ICE that is following them.",
+    "text": "Attempt to flee combat with a single Non-Demon Black ICE Program as a NET Action. If you are able to roll a successful Slide Check against the Program's Perception + 1d10 you can escape the Black ICE to an adjacent floor of the elevator, but not past a Password or other NET obstruction. A Black ICE Program that has been successfully slid away from stops following the Netrunner and becomes a Black ICE laying in wait right where it was slid away from. You can only attempt to Slide once per Turn. You can't Slide preemptively.",
+    "example": "In the middle of a painful conflict with a Hellhound Black ICE a Netrunner decides that they really don't have the time to get killed right now. Using a NET Action they attempt to Slide away from the Black ICE, rolling Interface (7) + 1d10 vs. the Hellhound's Perception (6) + 1d10. The Netrunner gets 14 to the Hellhound's 13. Success! The Netrunner escapes to the next floor of the elevator... Unfortunately, there is another Hellhound waiting there. This Netrunner really should have used Pathfinder! They can't Slide again until their next Turn!",
+    "kind": "interface_ability"
+  },
+  {
+    "name": "Virus",
+    "source_page": "p148",
+    "rules_pages": [
+      "p201"
+    ],
+    "action_cost": "NET Action",
+    "roll": "Interface + 1d10 vs. DV",
+    "data": "Allows the Netrunner to leave a custom virus at the very core of the Architecture.",
+    "text": "Once you have reached the lowest level of the NET Architecture you can leave your own Virus in the Architecture to perform up to 2 actions or changes, within reason. Using this ability is the only way a Netrunner can make a change to a NET Architecture that persists after they Jack Out. Describe to the GM what you want the virus to do, and they will assign a DV. A more powerful Virus will require a higher DV to leave in the Architecture, as determined by the GM. Depending what you want to do, this can require as many NET Actions as the GM determines. Roll a Virus Check. The DV to destroy a Virus is equal to the Virus Check made to create it.",
+    "example": "After reaching the lowest level of an Architecture, the Netrunner wants to leave it worse than they found it. They explain to the GM that they want to leave a Virus in the Architecture that changes all the passwords in the Architecture every 5 minutes. The GM determines that placing such a Virus would take 9 NET Actions to leave in the Architecture and assigns a DV12. Over their next 3 Turns, the Netrunner spends all 3 of their NET Actions to complete the Virus, then rolls Interface (7) + 1d10... rolling only a 12. Their code just doesn't work so they decide to try again, spending another 9 NET Actions over another 3 Turns to try again, succeeding this time with a 15. When the Corporation later discovers the Netrunner's Virus, their Netrunner gets a headache while trying to clean up the DV15 Virus.",
+    "virus_examples": [
+      {
+        "text": "Virus which forcibly alters the icon of all Asp Black ICE installed into the Architecture from fierce serpents into cute little sneks wearing tiny party hats.",
+        "dv": 6,
+        "net_actions": 1
+      },
+      {
+        "text": "Virus which completely deactivates a particular Black ICE installed in the Architecture until the Virus is destroyed.",
+        "dv": 10,
+        "net_actions": 2
+      },
+      {
+        "text": "Virus which causes a Control Node to malfunction until the Virus is destroyed.",
+        "dv": 10,
+        "net_actions": 2
+      },
+      {
+        "text": "Virus which deletes all Black ICE installed in the Architecture permanently.",
+        "dv": 12,
+        "net_actions": 10
+      },
+      {
+        "text": "Virus that causes catastrophic and lasting damage to the Net Architecture itself, halving the number of available floors permanently.",
+        "dv": 12,
+        "net_actions": 10
+      }
+    ],
+    "kind": "interface_ability"
+  },
+  {
+    "name": "Zap",
+    "source_page": "p148",
+    "rules_pages": [
+      "p202"
+    ],
+    "action_cost": "NET Action",
+    "roll": "Zap Check vs. the Program's Defense Value + 1d10 or the Netrunner's Interface + 1d10",
+    "data": "A basic Netrunner attack that works against both Programs and other Netrunners.",
+    "text": "Allows you to make an attack as a NET Action against a Program or enemy Netrunner. If you are able to roll a successful Zap Check against the Program's Defense Value + 1d10 or the Netrunner's Interface + 1d10, you deal 1d6 damage to the Program's REZ or directly to the Netrunner's brain.",
+    "example": "A Netrunner, who already used all their Attacker Programs this Turn, still hasn't managed to finish off a Hellhound. Luckily, they have one NET Action left, so they Zap it. Rolling Interface (7) + 1d10 vs. the Hellhound's Defense (2) + 1d10 they beat the Hellhound, and deal 1d6 damage to the Hellhound's REZ, finishing it off.",
+    "transcription_note": "p199 resolution line 'Interface + 1d10 vs. DV' is stated 'save for Zap'. D-2: brain damage subtracts from HP and armour is ignored (the 'direct' wording, p202). The netrunning chapter (p196-p219) does not state what brain damage is applied against or what reaching 0 does; the sheet prints the rule text only.",
+    "kind": "interface_ability"
+  }
+]

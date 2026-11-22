@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Terrakineticist ~ Omniterrakinesis",
+    "name": "Omniterrakinesis",
+    "class": "Kineticist",
+    "description": "A terrakineticist can accept 1 point of burn as a free action at the start of her turn to change her element without regard to the surrounding terrain until the beginning of her next turn.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Terrakineticist ~ Omniterrakinesis"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Kineticist Class Features.TerrakineticistClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "A terrakineticist can accept 1 point of burn as a free action at the start of her turn to change her element without regard to the surrounding terrain until the beginning of her next turn."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.63"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/support/uw_abilities_class_oa.lst",
+    "sha256": "26a03f73c3534cd6bae0bcda9581b3a89fa28ce5f78f854e009fc8110c477568",
+    "line": 31,
+    "record_key": "Terrakineticist ~ Omniterrakinesis"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

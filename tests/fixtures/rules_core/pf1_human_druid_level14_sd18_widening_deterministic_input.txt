@@ -1,0 +1,41 @@
+# SD18 deterministic Human Druid level 14 progression fixture.
+# Widens the accepted SD18 deterministic PF1 Core Rulebook Human Druid
+# level-1..level-13 prepared divine spell-bearing baseline
+# (tests/fixtures/rules_core/pf1_human_druid_level13_sd18_widening_deterministic_input.txt)
+# to level 14 as chosen input only. It names selections; it does not contain
+# derived, computed, or parity values. It preserves the accepted Human
+# race-choice seam (ability-bonus and bonus-feat), the deterministic
+# ability/feat posture from the level-1 through level-13 fixtures, and the
+# same canonical nature-bond selection (animal companion), adding only the
+# level bump this bounded slice needs.
+#
+# It deliberately avoids every later Druid burden surface: no animal
+# companion stat block/advancement/link-share-spells, no Wild Shape
+# execution (form list, duration tracking), no spellbook, no spells
+# prepared, no spell slots, no spell DCs, and no level-15+ progression.
+# Base attack bonus genuinely rises to +10 (14 * 3 / 4 = 10) and both good
+# saves (Fortitude, Will) genuinely rise to +9 (14 / 2 + 2 = 9), while poor
+# Reflex stays +4 (14 / 3 = 4, an integer-division coincidence with level
+# 13), checked rather than assumed. Wild Empathy genuinely rises to 15
+# (14 + Charisma modifier 1). The PF1 CRB Druid class table's level-14
+# "Special" column reads "Wild shape (6/day)" (verified independently
+# against d20pfsrd and Archives of Nethys aonprd.com): per the
+# level-4/6/8/10/12 precedent, this frequency increase is bundled with a
+# non-separable functioning-level upgrade, so Wild Shape stays entirely
+# named-but-unproven and this slice grounds no new pillar at level 14
+# either — only the existing arithmetic pillars are widened.
+case_id=pf1-crb-human-druid-level14
+source_package_id=pf1.core_rulebook
+race_id=race:human
+class_level=class:druid:14
+ability=strength:10
+ability=dexterity:14
+ability=constitution:13
+ability=intelligence:8
+ability=wisdom:17
+ability=charisma:12
+feat=feat:dodge
+choice=choice:druid_nature_bond:bond:animal_companion
+choice=choice:human_bonus_feat:feat:dodge
+choice=choice:human_ability_bonus:ability:wisdom
+provenance=programs/codex/requirements/SD-18-core-rules-breadth/scope-draft.md

@@ -1,0 +1,25 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T13:59:53Z",
+  "data": {
+    "key": "Invisibility (self only)",
+    "school": "Illusion",
+    "level": null,
+    "description": "The creature or object touched becomes invisible."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_spells.lst",
+    "sha256": "e7e55cf92a9e94909f085392ce48a7b41c4d2243cd8cf974ac13708204a27195",
+    "line": 13,
+    "record_key": "Invisibility (self only)"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

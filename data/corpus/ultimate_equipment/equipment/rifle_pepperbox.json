@@ -1,0 +1,90 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "ArmsArmor",
+    "cost_gp": 7000.0,
+    "description": "Misfire 1-2",
+    "key": "Rifle (Pepperbox)",
+    "name": "Rifle (Pepperbox)",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "OUTPUTNAME",
+        "value": "Pepperbox Rifle"
+      },
+      {
+        "key": "PROFICIENCY",
+        "value": "WEAPON|Rifle"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weapon.Resizable.Exotic.Ranged.Standard.Piercing.Bludgeoning.Container.Projectile.Firearm.Weapon Group Firearms.Rifle"
+      },
+      {
+        "key": "CONTAINS",
+        "value": "1|FirearmCartridge=4"
+      },
+      {
+        "key": "COST",
+        "value": "7000"
+      },
+      {
+        "key": "WT",
+        "value": "15"
+      },
+      {
+        "key": "CRITMULT",
+        "value": "x4"
+      },
+      {
+        "key": "CRITRANGE",
+        "value": "1"
+      },
+      {
+        "key": "DAMAGE",
+        "value": "1d10"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Material ~ Steel"
+      },
+      {
+        "key": "WIELD",
+        "value": "TwoHandsOnly"
+      },
+      {
+        "key": "RANGE",
+        "value": "80"
+      },
+      {
+        "key": "SIZE",
+        "value": "M"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.45"
+      },
+      {
+        "key": "SPROP",
+        "value": "Misfire 1-2"
+      }
+    ],
+    "weight_lbs": 15.0
+  },
+  "ingested_at": "2026-08-16T01:34:54Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 304,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_equipment/ue_equip_arms_armor.lst",
+    "record_key": "Rifle (Pepperbox)",
+    "sha256": "0283152baf7f7c9e547849da095df5cd4a5275fc4041c92028cbd85c7a1b5322"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

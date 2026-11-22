@@ -1,0 +1,46 @@
+name=sf_envoy_3
+race=Ysoki
+class=Envoy
+level=3
+stat.STR=8
+stat.DEX=13
+stat.CON=12
+stat.INT=12
+stat.WIS=10
+stat.CHA=18
+hp=20
+stamina=21
+resolve=5
+eac=14
+kac=15
+initiative=+1
+bab=+2
+save.Fortitude=+2
+save.Reflex=+4
+save.Will=+3
+attack.melee=+1
+attack.ranged=+3
+skill.Acrobatics=1|ranks=0.0|untrained=Y
+skill.Athletics=-1|ranks=0.0|untrained=Y
+skill.Bluff=10|ranks=3.0|untrained=Y
+skill.Computers=7|ranks=3.0|untrained=NO
+skill.Culture=8|ranks=3.0|untrained=NO
+skill.Diplomacy=10|ranks=3.0|untrained=Y
+skill.Disguise=4|ranks=0.0|untrained=Y
+skill.Engineering=9|ranks=3.0|untrained=NO
+skill.Intimidate=10|ranks=3.0|untrained=Y
+skill.Perception=6|ranks=3.0|untrained=Y
+skill.Piloting=1|ranks=0.0|untrained=Y
+skill.Sense Motive=6|ranks=3.0|untrained=Y
+skill.Stealth=9|ranks=3.0|untrained=Y
+skill.Survival=2|ranks=0.0|untrained=Y
+weapon.Semi-auto pistol, tactical=+3|damage=1d6+1|category=Non-Standard-Ranged
+weapon.Baton, tactical=+3|damage=1d4|category=OPERATIVE-Melee
+bulk=1.4 lbs.
+credits=0
+credits.spent=1670 cr
+acp=-1
+abilities.feat=Mobility, Quick Draw
+abilities.theme=Icon, THEME KNOWLEDGE
+abilities.class_feature=Envoy Improvisation, Expertise, Expertise Talent, Skill Expertise, Weapon Specialization, Skill Expertise (Sense Motive)
+abilities.racial_trait=SIZE AND TYPE, CHEEK POUCHES, DARKVISION, MOXIE, SCROUNGER

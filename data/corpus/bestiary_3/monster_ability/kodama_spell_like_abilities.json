@@ -1,0 +1,52 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Kodama ~ Spell-Like Abilities",
+    "delivery": "SpellLike",
+    "description": "(CL 6th; concentration +9) At will-speak with plants (trees only), tree shape 3/day-charm animal (DC 14), entangle (DC 14), tree stride (self plus 50 lbs. of objects only)",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:kodama_spell_like_abilities",
+    "name": "Spell-Like Abilities",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "(CL 6th; concentration +9) At will-speak with plants (trees only), tree shape 3/day-charm animal (DC 14), entangle (DC 14), tree stride (self plus 50 lbs. of objects only)"
+      },
+      {
+        "key": "KEY",
+        "value": "Kodama ~ Spell-Like Abilities"
+      },
+      {
+        "key": "TYPE",
+        "value": "KodamaRacialAbility.SpecialQuality.SpellLike"
+      }
+    ],
+    "source_page": null,
+    "traits": [
+      "KodamaRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T14:09:11Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1124,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Kodama ~ Spell-Like Abilities",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "display:no_magnitude_token"
+  ]
+}

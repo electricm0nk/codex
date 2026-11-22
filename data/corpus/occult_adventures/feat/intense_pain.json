@@ -1,0 +1,29 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Intense Pain",
+    "category": "General",
+    "name": "Intense Pain",
+    "description": "You deal additional damage when using your painful stare. When you use your painful stare ability to increase your own damage, you deal an additional 1d6 points of damage. This damage increases to 2d6 at mesmerist level 12th and to 3d6 at mesmerist level 18th. When you use painful stare to augment an ally's damage, the target of the painful stare takes 1 additional point of damage for every 4 mesmerist levels you possess.",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=Special Ability,Mesmerist ~ Painful Stare",
+      "PRECLASS:1,Mesmerist=7"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_feats.lst",
+    "sha256": "eff885715102905735a080776def2406d112a05b5c00c518dd7d5a11964f2889",
+    "line": 38,
+    "record_key": "Intense Pain"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

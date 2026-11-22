@@ -1,0 +1,2454 @@
+{
+  "format": "codex.rules_tables/1",
+  "table": "advanced_race_guide/feat_data/general/GENERAL_TABLE",
+  "licence": {
+    "license": "OGL",
+    "book": "advanced_race_guide",
+    "screen": "pi_screening::classify_field",
+    "pi_hits": [],
+    "redacted": []
+  },
+  "rows": [
+    {
+      "key": "Adaptive Fortune",
+      "category": "General",
+      "name": "Adaptive Fortune",
+      "description": "Your luck takes on almost legendary proportions.",
+      "effect": [
+        {
+          "qualifiers": [
+            "VAR",
+            "Halfling_AdaptableLuck_Times",
+            "1"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        },
+        {
+          "qualifiers": [
+            "VAR",
+            "Halfling_AdaptableLuck_Bonus",
+            "2"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Agile Tongue",
+      "category": "General",
+      "name": "Agile Tongue",
+      "description": "Your long pink tongue is capable of manipulating small items and even stealing objects.",
+      "effect": null
+    },
+    {
+      "key": "Airy Step",
+      "category": "General",
+      "name": "Airy Step",
+      "description": "The air responds to your innate elemental nature, protecting you from harm and cushioning your falls.",
+      "effect": null
+    },
+    {
+      "key": "Angel Wings",
+      "category": "General",
+      "name": "Angel Wings",
+      "description": "Feathered wings sprout from your back.",
+      "effect": [
+        {
+          "qualifiers": [
+            "VAR",
+            "Maneuverability",
+            "3"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        },
+        {
+          "qualifiers": [
+            "VAR",
+            "Maneuverability",
+            "-1"
+          ],
+          "bonus_type": null,
+          "conditions": [
+            {
+              "negated": false,
+              "family": "VARLT",
+              "items": [
+                {
+                  "facet": null,
+                  "value": "ENCUMBERANCE"
+                },
+                {
+                  "facet": null,
+                  "value": "1"
+                },
+                {
+                  "facet": null,
+                  "value": "var(\\\"COUNT[EQTYPE.ARMOR.EQUIPPED.IS.MEDIUM]\\\")"
+                },
+                {
+                  "facet": null,
+                  "value": "1"
+                },
+                {
+                  "facet": null,
+                  "value": "var(\\\"COUNT[EQTYPE.ARMOR.EQUIPPED.IS.HEAVY]\\\")"
+                },
+                {
+                  "facet": null,
+                  "value": "1"
+                }
+              ],
+              "alternatives": []
+            }
+          ],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Angelic Blood",
+      "category": "General",
+      "name": "Angelic Blood",
+      "description": "Your blood is infused with holy power.",
+      "effect": null
+    },
+    {
+      "key": "Angelic Flesh",
+      "category": "General",
+      "name": "Angelic Flesh",
+      "description": "Your skin shines like burnished metal.",
+      "effect": [
+        {
+          "qualifiers": [
+            "ABILITYPOOL",
+            "Angelic Flesh Option",
+            "1"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        },
+        {
+          "qualifiers": [
+            "SKILL",
+            "Disguise,Stealth",
+            "-2"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Aquatic Ancestry",
+      "category": "General",
+      "name": "Aquatic Ancestry",
+      "description": "You favor your outsider ancestry and are better adapted to life in the water.",
+      "effect": [
+        {
+          "qualifiers": [
+            "MOVEADD",
+            "TYPE.Swim",
+            "10"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Armor of the Pit",
+      "category": "General",
+      "name": "Armor of the Pit",
+      "description": "Your fiendish traits take the form of a protective scaly skin.",
+      "effect": [
+        {
+          "qualifiers": [
+            "VAR",
+            "AC_Natural_Armor",
+            "2"
+          ],
+          "bonus_type": "Base",
+          "conditions": [
+            {
+              "negated": true,
+              "family": "ABILITY",
+              "items": [
+                {
+                  "facet": null,
+                  "value": "1"
+                },
+                {
+                  "facet": "CATEGORY",
+                  "value": "Special Ability"
+                },
+                {
+                  "facet": null,
+                  "value": "Scaled Skin C ~ Tiefling"
+                },
+                {
+                  "facet": null,
+                  "value": "Scaled Skin E ~ Tiefling"
+                },
+                {
+                  "facet": null,
+                  "value": "Scaled Skin F ~ Tiefling"
+                }
+              ],
+              "alternatives": []
+            }
+          ],
+          "selection": null
+        },
+        {
+          "qualifiers": [
+            "VAR",
+            "ColdResistanceBonus,ElectricityResistanceBonus,FireResistanceBonus",
+            "5"
+          ],
+          "bonus_type": "Resistance",
+          "conditions": [],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Attuned to the Wild",
+      "category": "General",
+      "name": "Attuned to the Wild",
+      "description": "You share a strong mystic connection with one type of wilderness terrain.",
+      "effect": null
+    },
+    {
+      "key": "Beast Rider",
+      "category": "General",
+      "name": "Beast Rider",
+      "description": "You gain the service of a monstrous companion or mount.",
+      "effect": [
+        {
+          "qualifiers": [
+            "FOLLOWERS",
+            "Animal Companion",
+            "-1"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        },
+        {
+          "qualifiers": [
+            "VAR",
+            "SpecialMountLVL",
+            "min(TL,max(var(\\\"PaladinLVL\\\")+2,var(\\\"AnimalCompanionLVL\\\")+2,var(\\\"CavalierMountLVL\\\")+2))"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Bestow Luck",
+      "category": "General",
+      "name": "Bestow Luck",
+      "description": "You are extremely lucky and sometimes your allies are as well.",
+      "effect": [
+        {
+          "qualifiers": [
+            "VAR",
+            "DefiantLuckTimes",
+            "1"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Black Cat",
+      "category": "General",
+      "name": "Black Cat",
+      "description": "Bad luck befalls those who dare to cross you.",
+      "effect": null
+    },
+    {
+      "key": "Blood Drinker",
+      "category": "General",
+      "name": "Blood Drinker",
+      "description": "Consuming blood reinvigorates you.",
+      "effect": [
+        {
+          "qualifiers": [
+            "ABILITYPOOL",
+            "Blood Drinker Type",
+            "1"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Blood Feaster",
+      "category": "General",
+      "name": "Blood Feaster",
+      "description": "Consuming blood gives you superhuman strength.",
+      "effect": null
+    },
+    {
+      "key": "Blood Salvage",
+      "category": "General",
+      "name": "Blood Salvage",
+      "description": "You do not need to drink blood from a living creature to gain healing benefits.",
+      "effect": null
+    },
+    {
+      "key": "Blood Vengeance",
+      "category": "General",
+      "name": "Blood Vengeance",
+      "description": "Seeing an ally fall in combat fills you with a raging and murderous fury.",
+      "effect": null
+    },
+    {
+      "key": "Born Alone",
+      "category": "General",
+      "name": "Born Alone",
+      "description": "You are so tough and vicious that you killed and ate the rest of your litter while still in the womb.",
+      "effect": null
+    },
+    {
+      "key": "Brewmaster",
+      "category": "General",
+      "name": "Brewmaster",
+      "description": "You can concoct potent brews.",
+      "effect": [
+        {
+          "qualifiers": [
+            "SKILL",
+            "Craft (Alchemy),Profession (Brewer)",
+            "1"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Burn! Burn! Burn!",
+      "category": "General",
+      "name": "Burn! Burn! Burn!",
+      "description": "You take the goblin love of arson and fire play to a whole new level.",
+      "effect": null
+    },
+    {
+      "key": "Burrowing Teeth",
+      "category": "General",
+      "name": "Burrowing Teeth",
+      "description": "You have teeth and claws that suit you well to digging.",
+      "effect": null
+    },
+    {
+      "key": "Carrion Feeder",
+      "category": "General",
+      "name": "Carrion Feeder",
+      "description": "Like many scavengers, you can stomach foods that would make weaker creatures ill.",
+      "effect": [
+        {
+          "qualifiers": [
+            "SITUATION",
+            "Survival=Find Food",
+            "2"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Casual Illusionist",
+      "category": "General",
+      "name": "Casual Illusionist",
+      "description": "You can use your innate magic to create minor illusions that augment your efforts at trickery and deceit.",
+      "effect": null
+    },
+    {
+      "key": "Catfolk Exemplar",
+      "category": "General",
+      "name": "Catfolk Exemplar",
+      "description": "Your feline traits are more defined and prominent than those of other members of your race.",
+      "effect": [
+        {
+          "qualifiers": [
+            "ABILITYPOOL",
+            "Catfolk Exemplar Option",
+            "1"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Celestial Servant",
+      "category": "General",
+      "name": "Celestial Servant",
+      "description": "Rather than being a normal animal or beast, your companion or familiar hails from the heavenly realms.",
+      "effect": null
+    },
+    {
+      "key": "Channel Force",
+      "category": "General",
+      "name": "Channel Force",
+      "description": "Your channel is bolstered by your faith, allowing you to move and damage your foes.",
+      "effect": null
+    },
+    {
+      "key": "Cloud Gazer",
+      "category": "General",
+      "name": "Cloud Gazer",
+      "description": "Your insight into your elemental heritage gives you a clarity of sight few humans possess.",
+      "effect": null
+    },
+    {
+      "key": "Courageous Resolve",
+      "category": "General",
+      "name": "Courageous Resolve",
+      "description": "Even when others run, you tend to stand your ground.",
+      "effect": null
+    },
+    {
+      "key": "Dark Sight",
+      "category": "General",
+      "name": "Dark Sight",
+      "description": "With further modification, your eyes can pierce the gloom of even magical darkness.",
+      "effect": null
+    },
+    {
+      "key": "Dauntless Destiny",
+      "category": "General",
+      "name": "Dauntless Destiny",
+      "description": "Your ability to avert disaster is impressive.",
+      "effect": null
+    },
+    {
+      "key": "Deafening Explosion",
+      "category": "General",
+      "name": "Deafening Explosion",
+      "description": "Your bombs explode with deafening force.",
+      "effect": null
+    },
+    {
+      "key": "Defiant Luck",
+      "category": "General",
+      "name": "Defiant Luck",
+      "description": "You can sometimes defiantly shrug off spells and attacks that would kill a lesser creature.",
+      "effect": [
+        {
+          "qualifiers": [
+            "VAR",
+            "DefiantLuckTimes",
+            "1"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Discerning Eye",
+      "category": "General",
+      "name": "Discerning Eye",
+      "description": "You are not easily fooled by illusions and forgeries.",
+      "effect": null
+    },
+    {
+      "key": "Diverse Palate",
+      "category": "General",
+      "name": "Diverse Palate",
+      "description": "Your taste for blood is broader than that of other dhampirs.",
+      "effect": [
+        {
+          "qualifiers": [
+            "ABILITYPOOL",
+            "Blood Drinker Type",
+            "1"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Draconic Aspect",
+      "category": "General",
+      "name": "Draconic Aspect",
+      "description": "You possess some of the qualities of your dragon ancestors.",
+      "effect": [
+        {
+          "qualifiers": [
+            "VAR",
+            "AC_Natural_Armor",
+            "1"
+          ],
+          "bonus_type": "Base",
+          "conditions": [
+            {
+              "negated": false,
+              "family": "ABILITY",
+              "items": [
+                {
+                  "facet": null,
+                  "value": "1"
+                },
+                {
+                  "facet": "CATEGORY",
+                  "value": "Special Ability"
+                },
+                {
+                  "facet": null,
+                  "value": "Kobold ~ Dragon-Scaled"
+                }
+              ],
+              "alternatives": []
+            }
+          ],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Draconic Breath",
+      "category": "General",
+      "name": "Draconic Breath",
+      "description": "You possess draconic defenses and a draconic breath weapon.",
+      "effect": [
+        {
+          "qualifiers": [
+            "VAR",
+            "KoboldBreathWeaponSave",
+            "10+TL+CON"
+          ],
+          "bonus_type": null,
+          "conditions": [
+            {
+              "negated": true,
+              "family": "ABILITY",
+              "items": [
+                {
+                  "facet": null,
+                  "value": "1"
+                },
+                {
+                  "facet": "CATEGORY",
+                  "value": "Special Ability"
+                },
+                {
+                  "facet": null,
+                  "value": "Kobold Sorcerer Bloodline"
+                },
+                {
+                  "facet": null,
+                  "value": "Draconic Bloodline"
+                }
+              ],
+              "alternatives": []
+            }
+          ],
+          "selection": null
+        },
+        {
+          "qualifiers": [
+            "VAR",
+            "KoboldBreathWeaponSave",
+            "10+TL+CHA"
+          ],
+          "bonus_type": null,
+          "conditions": [
+            {
+              "negated": false,
+              "family": "ABILITY",
+              "items": [
+                {
+                  "facet": null,
+                  "value": "1"
+                },
+                {
+                  "facet": "CATEGORY",
+                  "value": "Special Ability"
+                },
+                {
+                  "facet": null,
+                  "value": "Kobold Sorcerer Bloodline"
+                },
+                {
+                  "facet": null,
+                  "value": "Draconic Bloodline"
+                }
+              ],
+              "alternatives": []
+            }
+          ],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Draconic Glide",
+      "category": "General",
+      "name": "Draconic Glide",
+      "description": "You possess draconic defenses and wings that allow you to glide.",
+      "effect": [
+        {
+          "qualifiers": [
+            "VAR",
+            "GlidingBaseSpeed",
+            "5"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        },
+        {
+          "qualifiers": [
+            "VAR",
+            "GlidingBaseSpeed",
+            "25"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Draconic Paragon",
+      "category": "General",
+      "name": "Draconic Paragon",
+      "description": "You can shrug off sleep and paralysis effects as well as any dragon, and your draconic aspects improve.",
+      "effect": null
+    },
+    {
+      "key": "Drow Nobility",
+      "category": "General",
+      "name": "Drow Nobility",
+      "description": "Your blood courses with power, granting you greater spell-like abilities.",
+      "effect": [
+        {
+          "qualifiers": [
+            "VAR",
+            "RacialSLA_DetectMagic_AtWill",
+            "1"
+          ],
+          "bonus_type": "Boolean",
+          "conditions": [],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Drow ~ Spider Step",
+      "category": "General",
+      "name": "Spider Step",
+      "description": "You tread where only arachnids dare.",
+      "effect": null
+    },
+    {
+      "key": "Dwarf Blooded",
+      "category": "General",
+      "name": "Dwarf Blooded",
+      "description": "You have dwarven blood coursing through your veins.",
+      "effect": null
+    },
+    {
+      "key": "Echoes of Stone",
+      "category": "General",
+      "name": "Echoes of Stone",
+      "description": "Your senses are keener among the rocks and stones.",
+      "effect": [
+        {
+          "qualifiers": [
+            "SITUATION",
+            "Perception=Underground",
+            "4"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        },
+        {
+          "qualifiers": [
+            "SITUATION",
+            "Survival=Avoid Becoming Lost in Caverns and Rocky Areas",
+            "4"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Elemental Jaunt",
+      "category": "General",
+      "name": "Elemental Jaunt",
+      "description": "The spirits of your ancestral home call to you, beckoning you to return.",
+      "effect": null
+    },
+    {
+      "key": "Elven Spirit",
+      "category": "General",
+      "name": "Elven Spirit",
+      "description": "Although you are of mixed heritage, you are closer to your elven relatives and the magic in their blood flows freely in your veins.",
+      "effect": [
+        {
+          "qualifiers": [
+            "ABILITYPOOL",
+            "Elven Spirit Choice",
+            "1"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Exile's Path",
+      "category": "General",
+      "name": "Exile's Path",
+      "description": "A lifetime spent shunned by others and eschewing your heritage makes you resistant to efforts to pry inside of your mind.",
+      "effect": null
+    },
+    {
+      "key": "Expanded Fiendish Resistance (Acid)",
+      "category": "General",
+      "name": "Expanded Fiendish Resistance (Acid)",
+      "description": "You gain extra fiendish resistances.",
+      "effect": [
+        {
+          "qualifiers": [
+            "VAR",
+            "AcidResistanceBonus",
+            "5"
+          ],
+          "bonus_type": "Resistance",
+          "conditions": [],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Expanded Fiendish Resistance (Cold)",
+      "category": "General",
+      "name": "Expanded Fiendish Resistance (Cold)",
+      "description": "You gain extra fiendish resistances.",
+      "effect": [
+        {
+          "qualifiers": [
+            "VAR",
+            "ColdResistanceBonus",
+            "5"
+          ],
+          "bonus_type": "Resistance",
+          "conditions": [],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Expanded Fiendish Resistance (Electricity)",
+      "category": "General",
+      "name": "Expanded Fiendish Resistance (Electricity)",
+      "description": "You gain extra fiendish resistances.",
+      "effect": [
+        {
+          "qualifiers": [
+            "VAR",
+            "ElectricityResistanceBonus",
+            "5"
+          ],
+          "bonus_type": "Resistance",
+          "conditions": [],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Expanded Fiendish Resistance (Fire)",
+      "category": "General",
+      "name": "Expanded Fiendish Resistance (Fire)",
+      "description": "You gain extra fiendish resistances.",
+      "effect": [
+        {
+          "qualifiers": [
+            "VAR",
+            "FireResistanceBonus",
+            "5"
+          ],
+          "bonus_type": "Resistance",
+          "conditions": [],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Expanded Resistance",
+      "category": "General",
+      "name": "Expanded Resistance",
+      "description": "You have expanded your natural resistance to magic to encompass different kinds of magic.",
+      "effect": null
+    },
+    {
+      "key": "Extra Elemental Assault",
+      "category": "General",
+      "name": "Extra Elemental Assault",
+      "description": "You have unlocked greater elemental power.",
+      "effect": [
+        {
+          "qualifiers": [
+            "VAR",
+            "Suli_ElementalAssault_Duration",
+            "2"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Fast Learner",
+      "category": "General",
+      "name": "Fast Learner",
+      "description": "Your progress gains extra versatility.",
+      "effect": null
+    },
+    {
+      "key": "Fearless Curiosity",
+      "category": "General",
+      "name": "Fearless Curiosity",
+      "description": "Your desire to see and experience the world overrides healthy caution.",
+      "effect": [
+        {
+          "qualifiers": [
+            "VAR",
+            "FearlessCuriosityBonus",
+            "1"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Feline Grace",
+      "category": "General",
+      "name": "Feline Grace",
+      "description": "Your innate grace allows you to get out of the stickiest situations.",
+      "effect": [
+        {
+          "qualifiers": [
+            "VAR",
+            "CMD_BullRush,CMD_Grapple,CMD_Overrun,CMD_Reposition,CMD_Trip",
+            "2"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Ferocious Action",
+      "category": "General",
+      "name": "Ferocious Action",
+      "description": "You ferocity is quick but shorter lived.",
+      "effect": null
+    },
+    {
+      "key": "Ferocious Resolve",
+      "category": "General",
+      "name": "Ferocious Resolve",
+      "description": "Your orc heritage allows you to fight on.",
+      "effect": null
+    },
+    {
+      "key": "Ferocious Summons",
+      "category": "General",
+      "name": "Ferocious Summons",
+      "description": "Your summoned creatures gain your ferocity.",
+      "effect": null
+    },
+    {
+      "key": "Fiend Sight",
+      "category": "General",
+      "name": "Fiend Sight",
+      "description": "Your eyes develop keener sight in dim light and darkness.",
+      "effect": [
+        {
+          "qualifiers": [
+            "VAR",
+            "FiendSightTier",
+            "1"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Fire Tamer",
+      "category": "General",
+      "name": "Fire Tamer",
+      "description": "You know your way around even magical fire.",
+      "effect": null
+    },
+    {
+      "key": "Firesight",
+      "category": "General",
+      "name": "Firesight",
+      "description": "Fire no longer blinds you, and smoke conceals nothing from your gaze.",
+      "effect": null
+    },
+    {
+      "key": "Flame Heart",
+      "category": "General",
+      "name": "Flame Heart",
+      "description": "You have mastered fire magic and alchemy.",
+      "effect": [
+        {
+          "qualifiers": [
+            "CASTERLEVEL",
+            "DESCRIPTOR.Fire",
+            "1"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        },
+        {
+          "qualifiers": [
+            "VAR",
+            "FireResistanceBonus",
+            "5"
+          ],
+          "bonus_type": "Resistance",
+          "conditions": [],
+          "selection": null
+        },
+        {
+          "qualifiers": [
+            "VAR",
+            "FireResistanceBonus",
+            "5"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Foment the Blood",
+      "category": "General",
+      "name": "Foment the Blood",
+      "description": "You can unleash a wave of energy that drives orcs into a frenzy.",
+      "effect": null
+    },
+    {
+      "key": "Fortunate One",
+      "category": "General",
+      "name": "Fortunate One",
+      "description": "You have an even greater knack than most halflings for adaptable luck.",
+      "effect": [
+        {
+          "qualifiers": [
+            "VAR",
+            "Halfling_AdaptableLuck_Times",
+            "1"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Giant Steps",
+      "category": "General",
+      "name": "Giant Steps",
+      "description": "When enlarged, your speed increases.",
+      "effect": null
+    },
+    {
+      "key": "Gloom Sight",
+      "category": "General",
+      "name": "Gloom Sight",
+      "description": "With a combination of strange shadow magic and chirurgery, your eyes are permanently modified to see farther in darkness.",
+      "effect": null
+    },
+    {
+      "key": "Gore Fiend",
+      "category": "General",
+      "name": "Gore Fiend",
+      "description": "Horrible wounds, whether on yourself or your enemies, make your blood sing.",
+      "effect": null
+    },
+    {
+      "key": "Grasping Tail",
+      "category": "General",
+      "name": "Grasping Tail",
+      "description": "Your tail becomes more useful.",
+      "effect": null
+    },
+    {
+      "key": "Greater Channel Force",
+      "category": "General",
+      "name": "Greater Channel Force",
+      "description": "Your eruptions of divine power move your enemies.",
+      "effect": null
+    },
+    {
+      "key": "Greater Drow Nobility",
+      "category": "General",
+      "name": "Greater Drow Nobility",
+      "description": "You have mastered the lesser spell-like abilities of the drow, demonstrating true nobility.",
+      "effect": [
+        {
+          "qualifiers": [
+            "VAR",
+            "RacialSLA_DetectMagic_Constant",
+            "1"
+          ],
+          "bonus_type": "Boolean",
+          "conditions": [],
+          "selection": null
+        },
+        {
+          "qualifiers": [
+            "VAR",
+            "RacialSLA_DancingLights_AtWill,RacialSLA_FaerieFire_AtWill,RacialSLA_FeatherFall_AtWill,RacialSLA_Levitate_AtWill,RacialSLA_DeeperDarkness_AtWill",
+            "1"
+          ],
+          "bonus_type": "Boolean",
+          "conditions": [],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Guardian of the Wild",
+      "category": "General",
+      "name": "Guardian of the Wild",
+      "description": "Your mystic connection with the wilderness enhances your ability to react to threats.",
+      "effect": null
+    },
+    {
+      "key": "Half-Drow Paragon",
+      "category": "General",
+      "name": "Half-Drow Paragon",
+      "description": "Your drow blood is particularly strong.",
+      "effect": null
+    },
+    {
+      "key": "Heavenly Radiance",
+      "category": "General",
+      "name": "Heavenly Radiance",
+      "description": "Your heavenly light can be used in a variety of ways.",
+      "effect": [
+        {
+          "qualifiers": [
+            "ABILITYPOOL",
+            "Heavenly Radiance Option",
+            "1"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        },
+        {
+          "qualifiers": [
+            "VAR",
+            "RacialSLA_Daylight_Times",
+            "1"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Heroic Will",
+      "category": "General",
+      "name": "Heroic Will",
+      "description": "Your indomitable will breaks free from mental shackles.",
+      "effect": null
+    },
+    {
+      "key": "Hobgoblin Discipline",
+      "category": "General",
+      "name": "Hobgoblin Discipline",
+      "description": "The presence of other hobgoblins bolsters your resolve.",
+      "effect": null
+    },
+    {
+      "key": "Human Spirit",
+      "category": "General",
+      "name": "Human Spirit",
+      "description": "Your blood burns with the passion and unyielding quest for self-improvement displayed so prominently by your human relatives.",
+      "effect": [
+        {
+          "qualifiers": [
+            "SKILLPOINTS",
+            "NUMBER",
+            "1"
+          ],
+          "bonus_type": null,
+          "conditions": [
+            {
+              "negated": false,
+              "family": "LEVELMAX",
+              "items": [
+                {
+                  "facet": null,
+                  "value": "4"
+                }
+              ],
+              "alternatives": []
+            }
+          ],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Huntmaster",
+      "category": "General",
+      "name": "Huntmaster",
+      "description": "You are an expert trainer of horses, hounds, falcons, or hunting cats.",
+      "effect": null
+    },
+    {
+      "key": "Hydraulic Maneuver",
+      "category": "General",
+      "name": "Hydraulic Maneuver",
+      "description": "You can use your hydraulic push to disarm or trip.",
+      "effect": null
+    },
+    {
+      "key": "Improved Channel Force",
+      "category": "General",
+      "name": "Improved Channel Force",
+      "description": "You move your enemies within a beam of righteous energy.",
+      "effect": null
+    },
+    {
+      "key": "Improved Dark Sight",
+      "category": "General",
+      "name": "Improved Dark Sight",
+      "description": "With further modification, your eyes see clearly in not only normal darkness, but in magical darkness as well.",
+      "effect": null
+    },
+    {
+      "key": "Improved Drow Nobility",
+      "category": "General",
+      "name": "Improved Drow Nobility",
+      "description": "Your magical heritage is more potent than that of your peers, as demonstrated by your superior spell-like abilities.",
+      "effect": [
+        {
+          "qualifiers": [
+            "VAR",
+            "Drow_Replace_SLADarkness",
+            "1"
+          ],
+          "bonus_type": "Boolean",
+          "conditions": [],
+          "selection": null
+        },
+        {
+          "qualifiers": [
+            "VAR",
+            "RacialSLA_DancingLights_Times,RacialSLA_DeeperDarkness_Times,RacialSLA_FaerieFire_Times,RacialSLA_FeatherFall_Times,RacialSLA_Levitate_Times",
+            "2"
+          ],
+          "bonus_type": "Base",
+          "conditions": [],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Improved Improvisation",
+      "category": "General",
+      "name": "Improved Improvisation",
+      "description": "You are masterful in your improvisation.",
+      "effect": [
+        {
+          "qualifiers": [
+            "VAR",
+            "ImprovisationBonus",
+            "2"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        },
+        {
+          "qualifiers": [
+            "VAR",
+            "ACCHECK",
+            "ArmorCheckPenalty/2"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Improved Umbral Scion",
+      "category": "General",
+      "name": "Improved Umbral Scion",
+      "description": "You are a master of drow noble magic.",
+      "effect": null
+    },
+    {
+      "key": "Improvisation",
+      "category": "General",
+      "name": "Improvisation",
+      "description": "You can figure out how to do almost anything.",
+      "effect": [
+        {
+          "qualifiers": [
+            "SKILL",
+            "Acrobatics",
+            "ImprovisationBonus"
+          ],
+          "bonus_type": null,
+          "conditions": [
+            {
+              "negated": true,
+              "family": "SKILL",
+              "items": [
+                {
+                  "facet": null,
+                  "value": "1"
+                },
+                {
+                  "facet": "Acrobatics",
+                  "value": "1"
+                }
+              ],
+              "alternatives": []
+            }
+          ],
+          "selection": null
+        },
+        {
+          "qualifiers": [
+            "SKILL",
+            "Appraise",
+            "ImprovisationBonus"
+          ],
+          "bonus_type": null,
+          "conditions": [
+            {
+              "negated": true,
+              "family": "SKILL",
+              "items": [
+                {
+                  "facet": null,
+                  "value": "1"
+                },
+                {
+                  "facet": "Appraise",
+                  "value": "1"
+                }
+              ],
+              "alternatives": []
+            }
+          ],
+          "selection": null
+        },
+        {
+          "qualifiers": [
+            "SKILL",
+            "Bluff",
+            "ImprovisationBonus"
+          ],
+          "bonus_type": null,
+          "conditions": [
+            {
+              "negated": true,
+              "family": "SKILL",
+              "items": [
+                {
+                  "facet": null,
+                  "value": "1"
+                },
+                {
+                  "facet": "Bluff",
+                  "value": "1"
+                }
+              ],
+              "alternatives": []
+            }
+          ],
+          "selection": null
+        },
+        {
+          "qualifiers": [
+            "SKILL",
+            "Climb",
+            "ImprovisationBonus"
+          ],
+          "bonus_type": null,
+          "conditions": [
+            {
+              "negated": true,
+              "family": "SKILL",
+              "items": [
+                {
+                  "facet": null,
+                  "value": "1"
+                },
+                {
+                  "facet": "Climb",
+                  "value": "1"
+                }
+              ],
+              "alternatives": []
+            }
+          ],
+          "selection": null
+        },
+        {
+          "qualifiers": [
+            "SKILL",
+            "Craft (Untrained)",
+            "ImprovisationBonus"
+          ],
+          "bonus_type": null,
+          "conditions": [
+            {
+              "negated": true,
+              "family": "SKILL",
+              "items": [
+                {
+                  "facet": null,
+                  "value": "1"
+                },
+                {
+                  "facet": "TYPE.Craft",
+                  "value": "1"
+                }
+              ],
+              "alternatives": []
+            }
+          ],
+          "selection": null
+        },
+        {
+          "qualifiers": [
+            "SKILL",
+            "Diplomacy",
+            "ImprovisationBonus"
+          ],
+          "bonus_type": null,
+          "conditions": [
+            {
+              "negated": true,
+              "family": "SKILL",
+              "items": [
+                {
+                  "facet": null,
+                  "value": "1"
+                },
+                {
+                  "facet": "Diplomacy",
+                  "value": "1"
+                }
+              ],
+              "alternatives": []
+            }
+          ],
+          "selection": null
+        },
+        {
+          "qualifiers": [
+            "SKILL",
+            "Disguise",
+            "ImprovisationBonus"
+          ],
+          "bonus_type": null,
+          "conditions": [
+            {
+              "negated": true,
+              "family": "SKILL",
+              "items": [
+                {
+                  "facet": null,
+                  "value": "1"
+                },
+                {
+                  "facet": "Disguise",
+                  "value": "1"
+                }
+              ],
+              "alternatives": []
+            }
+          ],
+          "selection": null
+        },
+        {
+          "qualifiers": [
+            "SKILL",
+            "Untrained ~ Disable Device",
+            "ImprovisationBonus"
+          ],
+          "bonus_type": null,
+          "conditions": [
+            {
+              "negated": true,
+              "family": "SKILL",
+              "items": [
+                {
+                  "facet": null,
+                  "value": "1"
+                },
+                {
+                  "facet": "Disable Device",
+                  "value": "1"
+                }
+              ],
+              "alternatives": []
+            }
+          ],
+          "selection": null
+        },
+        {
+          "qualifiers": [
+            "SKILL",
+            "Escape Artist",
+            "ImprovisationBonus"
+          ],
+          "bonus_type": null,
+          "conditions": [
+            {
+              "negated": true,
+              "family": "SKILL",
+              "items": [
+                {
+                  "facet": null,
+                  "value": "1"
+                },
+                {
+                  "facet": "Escape Artist",
+                  "value": "1"
+                }
+              ],
+              "alternatives": []
+            }
+          ],
+          "selection": null
+        },
+        {
+          "qualifiers": [
+            "SKILL",
+            "Fly",
+            "ImprovisationBonus"
+          ],
+          "bonus_type": null,
+          "conditions": [
+            {
+              "negated": true,
+              "family": "SKILL",
+              "items": [
+                {
+                  "facet": null,
+                  "value": "1"
+                },
+                {
+                  "facet": "Fly",
+                  "value": "1"
+                }
+              ],
+              "alternatives": []
+            }
+          ],
+          "selection": null
+        },
+        {
+          "qualifiers": [
+            "SKILL",
+            "Untrained ~ Handle Animal",
+            "ImprovisationBonus"
+          ],
+          "bonus_type": null,
+          "conditions": [
+            {
+              "negated": true,
+              "family": "SKILL",
+              "items": [
+                {
+                  "facet": null,
+                  "value": "1"
+                },
+                {
+                  "facet": "Handle Animal",
+                  "value": "1"
+                }
+              ],
+              "alternatives": []
+            }
+          ],
+          "selection": null
+        },
+        {
+          "qualifiers": [
+            "SKILL",
+            "Heal",
+            "ImprovisationBonus"
+          ],
+          "bonus_type": null,
+          "conditions": [
+            {
+              "negated": true,
+              "family": "SKILL",
+              "items": [
+                {
+                  "facet": null,
+                  "value": "1"
+                },
+                {
+                  "facet": "Heal",
+                  "value": "1"
+                }
+              ],
+              "alternatives": []
+            }
+          ],
+          "selection": null
+        },
+        {
+          "qualifiers": [
+            "SKILL",
+            "Intimidate",
+            "ImprovisationBonus"
+          ],
+          "bonus_type": null,
+          "conditions": [
+            {
+              "negated": true,
+              "family": "SKILL",
+              "items": [
+                {
+                  "facet": null,
+                  "value": "1"
+                },
+                {
+                  "facet": "Intimidate",
+                  "value": "1"
+                }
+              ],
+              "alternatives": []
+            }
+          ],
+          "selection": null
+        },
+        {
+          "qualifiers": [
+            "SKILL",
+            "Untrained ~ Linguistics",
+            "ImprovisationBonus"
+          ],
+          "bonus_type": null,
+          "conditions": [
+            {
+              "negated": true,
+              "family": "SKILL",
+              "items": [
+                {
+                  "facet": null,
+                  "value": "1"
+                },
+                {
+                  "facet": "Linguistics",
+                  "value": "1"
+                }
+              ],
+              "alternatives": []
+            }
+          ],
+          "selection": null
+        },
+        {
+          "qualifiers": [
+            "SKILL",
+            "Knowledge (Untrained)",
+            "ImprovisationBonus"
+          ],
+          "bonus_type": null,
+          "conditions": [
+            {
+              "negated": true,
+              "family": "SKILL",
+              "items": [
+                {
+                  "facet": null,
+                  "value": "1"
+                },
+                {
+                  "facet": "TYPE.Knowledge",
+                  "value": "1"
+                }
+              ],
+              "alternatives": []
+            }
+          ],
+          "selection": null
+        },
+        {
+          "qualifiers": [
+            "SKILL",
+            "Perception",
+            "ImprovisationBonus"
+          ],
+          "bonus_type": null,
+          "conditions": [
+            {
+              "negated": true,
+              "family": "SKILL",
+              "items": [
+                {
+                  "facet": null,
+                  "value": "1"
+                },
+                {
+                  "facet": "Perception",
+                  "value": "1"
+                }
+              ],
+              "alternatives": []
+            }
+          ],
+          "selection": null
+        },
+        {
+          "qualifiers": [
+            "SKILL",
+            "Perform (Untrained)",
+            "ImprovisationBonus"
+          ],
+          "bonus_type": null,
+          "conditions": [
+            {
+              "negated": true,
+              "family": "SKILL",
+              "items": [
+                {
+                  "facet": null,
+                  "value": "1"
+                },
+                {
+                  "facet": "TYPE.Perform",
+                  "value": "1"
+                }
+              ],
+              "alternatives": []
+            }
+          ],
+          "selection": null
+        },
+        {
+          "qualifiers": [
+            "SKILL",
+            "Profession (Untrained)",
+            "ImprovisationBonus"
+          ],
+          "bonus_type": null,
+          "conditions": [
+            {
+              "negated": true,
+              "family": "SKILL",
+              "items": [
+                {
+                  "facet": null,
+                  "value": "1"
+                },
+                {
+                  "facet": "TYPE.Profession",
+                  "value": "1"
+                }
+              ],
+              "alternatives": []
+            }
+          ],
+          "selection": null
+        },
+        {
+          "qualifiers": [
+            "SKILL",
+            "Ride",
+            "ImprovisationBonus"
+          ],
+          "bonus_type": null,
+          "conditions": [
+            {
+              "negated": true,
+              "family": "SKILL",
+              "items": [
+                {
+                  "facet": null,
+                  "value": "1"
+                },
+                {
+                  "facet": "Ride",
+                  "value": "1"
+                }
+              ],
+              "alternatives": []
+            }
+          ],
+          "selection": null
+        },
+        {
+          "qualifiers": [
+            "SKILL",
+            "Sense Motive",
+            "ImprovisationBonus"
+          ],
+          "bonus_type": null,
+          "conditions": [
+            {
+              "negated": true,
+              "family": "SKILL",
+              "items": [
+                {
+                  "facet": null,
+                  "value": "1"
+                },
+                {
+                  "facet": "Sense Motive",
+                  "value": "1"
+                }
+              ],
+              "alternatives": []
+            }
+          ],
+          "selection": null
+        },
+        {
+          "qualifiers": [
+            "SKILL",
+            "Untrained ~ Sleight of Hand",
+            "ImprovisationBonus"
+          ],
+          "bonus_type": null,
+          "conditions": [
+            {
+              "negated": true,
+              "family": "SKILL",
+              "items": [
+                {
+                  "facet": null,
+                  "value": "1"
+                },
+                {
+                  "facet": "Sleight of Hand",
+                  "value": "1"
+                }
+              ],
+              "alternatives": []
+            }
+          ],
+          "selection": null
+        },
+        {
+          "qualifiers": [
+            "SKILL",
+            "Untrained ~ Spellcraft",
+            "ImprovisationBonus"
+          ],
+          "bonus_type": null,
+          "conditions": [
+            {
+              "negated": true,
+              "family": "SKILL",
+              "items": [
+                {
+                  "facet": null,
+                  "value": "1"
+                },
+                {
+                  "facet": "Spellcraft",
+                  "value": "1"
+                }
+              ],
+              "alternatives": []
+            }
+          ],
+          "selection": null
+        },
+        {
+          "qualifiers": [
+            "SKILL",
+            "Stealth",
+            "ImprovisationBonus"
+          ],
+          "bonus_type": null,
+          "conditions": [
+            {
+              "negated": true,
+              "family": "SKILL",
+              "items": [
+                {
+                  "facet": null,
+                  "value": "1"
+                },
+                {
+                  "facet": "Stealth",
+                  "value": "1"
+                }
+              ],
+              "alternatives": []
+            }
+          ],
+          "selection": null
+        },
+        {
+          "qualifiers": [
+            "SKILL",
+            "Survival",
+            "ImprovisationBonus"
+          ],
+          "bonus_type": null,
+          "conditions": [
+            {
+              "negated": true,
+              "family": "SKILL",
+              "items": [
+                {
+                  "facet": null,
+                  "value": "1"
+                },
+                {
+                  "facet": "Survival",
+                  "value": "1"
+                }
+              ],
+              "alternatives": []
+            }
+          ],
+          "selection": null
+        },
+        {
+          "qualifiers": [
+            "SKILL",
+            "Swim",
+            "ImprovisationBonus"
+          ],
+          "bonus_type": null,
+          "conditions": [
+            {
+              "negated": true,
+              "family": "SKILL",
+              "items": [
+                {
+                  "facet": null,
+                  "value": "1"
+                },
+                {
+                  "facet": "Swim",
+                  "value": "1"
+                }
+              ],
+              "alternatives": []
+            }
+          ],
+          "selection": null
+        },
+        {
+          "qualifiers": [
+            "SKILL",
+            "Untrained ~ Use Magic Device",
+            "ImprovisationBonus"
+          ],
+          "bonus_type": null,
+          "conditions": [
+            {
+              "negated": true,
+              "family": "SKILL",
+              "items": [
+                {
+                  "facet": null,
+                  "value": "1"
+                },
+                {
+                  "facet": "Use Magic Device",
+                  "value": "1"
+                }
+              ],
+              "alternatives": []
+            }
+          ],
+          "selection": null
+        },
+        {
+          "qualifiers": [
+            "VAR",
+            "ImprovisationBonus",
+            "2"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        },
+        {
+          "qualifiers": [
+            "VAR",
+            "UseUntrainedSkills",
+            "1"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Incremental Elemental Assault",
+      "category": "General",
+      "name": "Incremental Elemental Assault",
+      "description": "You may activate and quench your elemental assault ability multiple times per day.",
+      "effect": null
+    },
+    {
+      "key": "Inexplicable Luck",
+      "category": "General",
+      "name": "Inexplicable Luck",
+      "description": "Others are often dumfounded by your luck.",
+      "effect": null
+    },
+    {
+      "key": "Inner Breath",
+      "category": "General",
+      "name": "Inner Breath",
+      "description": "Your body is suffused with elemental air that provides for all your respiratory needs.",
+      "effect": null
+    },
+    {
+      "key": "Intimidating Confidence",
+      "category": "General",
+      "name": "Intimidating Confidence",
+      "description": "You have boundless faith in your success.",
+      "effect": [
+        {
+          "qualifiers": [
+            "VAR",
+            "FearlessCuriosityBonus",
+            "1"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Ledge Walker",
+      "category": "General",
+      "name": "Ledge Walker",
+      "description": "You negotiate tiny ledges like a mountain goat.",
+      "effect": null
+    },
+    {
+      "key": "Life's Blood",
+      "category": "General",
+      "name": "Life's Blood",
+      "description": "Your blood flows with eternal life, and its healing powers allow you use your blood to heal others.",
+      "effect": null
+    },
+    {
+      "key": "Lingering Invisibility",
+      "category": "General",
+      "name": "Lingering Invisibility",
+      "description": "You remain briefly translucent after losing invisibility.",
+      "effect": null
+    },
+    {
+      "key": "Long-Nose Form",
+      "category": "General",
+      "name": "Long-Nose Form",
+      "description": "You can shift into the form of a human with an unusually long nose.",
+      "effect": null
+    },
+    {
+      "key": "Lucky Healer",
+      "category": "General",
+      "name": "Lucky Healer",
+      "description": "Your luck allows you to draw from magical healing far more efficiently than most.",
+      "effect": null
+    },
+    {
+      "key": "Mage of the Wild",
+      "category": "General",
+      "name": "Mage of the Wild",
+      "description": "Your mystic connection with the wilderness enhances your spellcasting.",
+      "effect": null
+    },
+    {
+      "key": "Magical Tail",
+      "category": "General",
+      "name": "Magical Tail",
+      "description": "You grow an extra tail that represents your growing magical powers.",
+      "effect": [
+        {
+          "qualifiers": [
+            "VAR",
+            "KitsuneTails",
+            "1"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Metallic Wings",
+      "category": "General",
+      "name": "Metallic Wings",
+      "description": "Your wing feathers are made of gleaming metal.",
+      "effect": null
+    },
+    {
+      "key": "Mother's Gift",
+      "category": "General",
+      "name": "Mother's Gift",
+      "description": "You inherit a special boon from your hag parent.",
+      "effect": [
+        {
+          "qualifiers": [
+            "ABILITYPOOL",
+            "Mother's Gift Option",
+            "1"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Multitalented Mastery",
+      "category": "General",
+      "name": "Multitalented Mastery",
+      "description": "You are adept at numerous disciplines.",
+      "effect": [
+        {
+          "qualifiers": [
+            "ABILITYPOOL",
+            "Multitalented Mastery Bonus",
+            "TL-FavoredClassLevels"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        },
+        {
+          "qualifiers": [
+            "VAR",
+            "FavoredClassLevels"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": "FavoredClassBonusCount"
+        }
+      ]
+    },
+    {
+      "key": "Murmurs of Earth",
+      "category": "General",
+      "name": "Murmurs of Earth",
+      "description": "The earth opens up her secrets to your perceptions.",
+      "effect": null
+    },
+    {
+      "key": "Natural Charmer",
+      "category": "General",
+      "name": "Natural Charmer",
+      "description": "You possess some of the dominating powers of your vampire progenitor.",
+      "effect": null
+    },
+    {
+      "key": "Neither Elf nor Human",
+      "category": "General",
+      "name": "Neither Elf nor Human",
+      "description": "You have removed yourself from your heritage so thoroughly that even magic does not recognize you.",
+      "effect": null
+    },
+    {
+      "key": "Noble Spell Resistance",
+      "category": "General",
+      "name": "Noble Spell Resistance",
+      "description": "Your ascension is complete; you have the spell resistance approaching that of a demon.",
+      "effect": null
+    },
+    {
+      "key": "Oread Burrower",
+      "category": "General",
+      "name": "Oread Burrower",
+      "description": "The ground parts for you at the slightest touch, allowing you to dig with great speed.",
+      "effect": null
+    },
+    {
+      "key": "Oread Earth Glider",
+      "category": "General",
+      "name": "Oread Earth Glider",
+      "description": "The earth welcomes you, showing you the secret paths through sand and soil.",
+      "effect": null
+    },
+    {
+      "key": "Realistic Likeness",
+      "category": "General",
+      "name": "Realistic Likeness",
+      "description": "When you are in human form, you can take the shape of a specific individual.",
+      "effect": null
+    },
+    {
+      "key": "Resilient Brute",
+      "category": "General",
+      "name": "Resilient Brute",
+      "description": "You absorb punishment others find deadly.",
+      "effect": null
+    },
+    {
+      "key": "Resolute Rager",
+      "category": "General",
+      "name": "Resolute Rager",
+      "description": "Fear passes quickly while you are raging.",
+      "effect": null
+    },
+    {
+      "key": "Scavenger's Eye",
+      "category": "General",
+      "name": "Scavenger's Eye",
+      "description": "Your gaze is naturally drawn to valuable glittering objects.",
+      "effect": [
+        {
+          "qualifiers": [
+            "SKILL",
+            "Appraise",
+            "2"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Seen and Unseen",
+      "category": "General",
+      "name": "Seen and Unseen",
+      "description": "Your anonymity makes you difficult to find through magical or mundane means, and you have learned how to combat both of your progenitor races.",
+      "effect": [
+        {
+          "qualifiers": [
+            "SKILL",
+            "Stealth",
+            "2"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Shadow Caster",
+      "category": "General",
+      "name": "Shadow Caster",
+      "description": "Your command over shadow and darkness create longer-lasting spell effects.",
+      "effect": null
+    },
+    {
+      "key": "Shadow Ghost",
+      "category": "General",
+      "name": "Shadow Ghost",
+      "description": "You can move between the Shadow Plane and the Material Plane more often.",
+      "effect": [
+        {
+          "qualifiers": [
+            "VAR",
+            "ShadowWalkTimes",
+            "1"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        },
+        {
+          "qualifiers": [
+            "VAR",
+            "ShadowWalkTimes",
+            "1"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Shadow Walker",
+      "category": "General",
+      "name": "Shadow Walker",
+      "description": "You can pierce the veil between the Shadow Plane and the Material Plane more often, and to greater effect.",
+      "effect": null
+    },
+    {
+      "key": "Shadowy Dash",
+      "category": "General",
+      "name": "Shadowy Dash",
+      "description": "In dim light, you resemble little more than a shadow.",
+      "effect": null
+    },
+    {
+      "key": "Shared Manipulation",
+      "category": "General",
+      "name": "Shared Manipulation",
+      "description": "You can subtly bolster allies' ability to misdirect and infuriate their enemies.",
+      "effect": null
+    },
+    {
+      "key": "Sleep Venom",
+      "category": "General",
+      "name": "Sleep Venom",
+      "description": "You can change the nature of your toxic spittle to put your enemies to sleep.",
+      "effect": null
+    },
+    {
+      "key": "Spider Summoner",
+      "category": "General",
+      "name": "Spider Summoner",
+      "description": "You gain the ability to summon powerful spiders.",
+      "effect": null
+    },
+    {
+      "key": "Spirit of the Wild",
+      "category": "General",
+      "name": "Spirit of the Wild",
+      "description": "Your mystic connection with one type of wilderness has grown even stronger.",
+      "effect": null
+    },
+    {
+      "key": "Steam Caster",
+      "category": "General",
+      "name": "Steam Caster",
+      "description": "You imbue your fire spells with elemental water, transforming them into powerful gouts of steam.",
+      "effect": null
+    },
+    {
+      "key": "Stoic Pose",
+      "category": "General",
+      "name": "Stoic Pose",
+      "description": "You can hold yourself as still as a statue, evading detection.",
+      "effect": null
+    },
+    {
+      "key": "Stony Step",
+      "category": "General",
+      "name": "Stony Step",
+      "description": "The earth recognizes its kinship with you and does not impede your movement.",
+      "effect": null
+    },
+    {
+      "key": "Stretched Wings",
+      "category": "General",
+      "name": "Stretched Wings",
+      "description": "You strengthen your crippled wings.",
+      "effect": [
+        {
+          "qualifiers": [
+            "MOVEADD",
+            "TYPE.Fly",
+            "40"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        },
+        {
+          "qualifiers": [
+            "VAR",
+            "Maneuverability",
+            "1"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Sure and Fleet",
+      "category": "General",
+      "name": "Sure and Fleet",
+      "description": "You are both fast and careful.",
+      "effect": [
+        {
+          "qualifiers": [
+            "SKILL",
+            "Acrobatics,Climb",
+            "2"
+          ],
+          "bonus_type": "Racial",
+          "conditions": [],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Surge of Success",
+      "category": "General",
+      "name": "Surge of Success",
+      "description": "Your success drives your further actions.",
+      "effect": null
+    },
+    {
+      "key": "Tenacious Survivor",
+      "category": "General",
+      "name": "Tenacious Survivor",
+      "description": "Your spirit lingers long after any other's would have passed on.",
+      "effect": null
+    },
+    {
+      "key": "Tengu Raven Form",
+      "category": "General",
+      "name": "Tengu Raven Form",
+      "description": "You can shift into the form of a giant black raven.",
+      "effect": null
+    },
+    {
+      "key": "Tengu Wings",
+      "category": "General",
+      "name": "Tengu Wings",
+      "description": "You can grow wings that allow you to fly.",
+      "effect": null
+    },
+    {
+      "key": "Thrill of the Kill",
+      "category": "General",
+      "name": "Thrill of the Kill",
+      "description": "Killing fuels your rage.",
+      "effect": null
+    },
+    {
+      "key": "Toxic Recovery",
+      "category": "General",
+      "name": "Toxic Recovery",
+      "description": "Your system recuperates from the effects of poisons with astonishing speed.",
+      "effect": null
+    },
+    {
+      "key": "Trap Wrecker",
+      "category": "General",
+      "name": "Trap Wrecker",
+      "description": "You can smash traps instead of disarming them.",
+      "effect": null
+    },
+    {
+      "key": "Triton Portal",
+      "category": "General",
+      "name": "Triton Portal",
+      "description": "You can channel your inner magic to summon allies.",
+      "effect": null
+    },
+    {
+      "key": "Tunnel Rat",
+      "category": "General",
+      "name": "Tunnel Rat",
+      "description": "You are a master of fighting in confined spaces.",
+      "effect": null
+    },
+    {
+      "key": "Umbral Scion",
+      "category": "General",
+      "name": "Umbral Scion",
+      "description": "New spell-like abilities are unlocked for you as you rise to ascendency among the drow people.",
+      "effect": [
+        {
+          "qualifiers": [
+            "ABILITYPOOL",
+            "Umbral Scion Spell",
+            "1"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Water Skinned",
+      "category": "General",
+      "name": "Water Skinned",
+      "description": "Your touch extinguishes small flames.",
+      "effect": null
+    },
+    {
+      "key": "Wings of Air",
+      "category": "General",
+      "name": "Wings of Air",
+      "description": "The winds lift you, carrying you where you want to go.",
+      "effect": [
+        {
+          "qualifiers": [
+            "VAR",
+            "Maneuverability",
+            "4"
+          ],
+          "bonus_type": null,
+          "conditions": [
+            {
+              "negated": false,
+              "family": "VAREQ",
+              "items": [
+                {
+                  "facet": null,
+                  "value": "ENCUMBERANCE"
+                },
+                {
+                  "facet": null,
+                  "value": "0"
+                }
+              ],
+              "alternatives": []
+            }
+          ],
+          "selection": null
+        }
+      ]
+    }
+  ]
+}

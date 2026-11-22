@@ -1,0 +1,61 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "If an Eidolon with this ability wins a bull rush check by 5 or more and pushes its target into a stone barrier, the target must make a DC %1 Reflex save or be forced into the barrier as if the target had cast meld into stone until the victim makes a successful DC %1 Fortitude save as a full-round action to exit the stone.|10+HD/2+STR",
+    "key": "Evolution ~ Stone Curse",
+    "name": "Stone Curse",
+    "origin": "declared",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Evolution ~ Stone Curse"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "EvolutionChoice.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "PRERACE",
+        "value": "1,RACETYPE=Shaitan Binder Eidolon"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "MasterLevel,18"
+      },
+      {
+        "key": "DESC",
+        "value": "If an Eidolon with this ability wins a bull rush check by 5 or more and pushes its target into a stone barrier, the target must make a DC %1 Reflex save or be forced into the barrier as if the target had cast meld into stone until the victim makes a successful DC %1 Fortitude save as a full-round action to exit the stone.|10+HD/2+STR"
+      },
+      {
+        "key": "COST",
+        "value": "4"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.146"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T15:20:31Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 29,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_companion.lst",
+    "record_key": "Evolution ~ Stone Curse",
+    "sha256": "0970a14a15f2865ee6cc611109e45caf3cc3545d2f2ae717e7143de105b4ea83"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:prose_formula_segment"
+  ]
+}

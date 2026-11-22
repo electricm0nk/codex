@@ -1,0 +1,146 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Companion Body Type ~ Unusual (Plant and Vermin)",
+    "delivery": null,
+    "description": "Available Magic Item Slots; belt, eyes",
+    "description_variables": [],
+    "description_variants": [],
+    "facet": null,
+    "key": "ultimate_wilderness:companion:companion_body_type_unusual_plant_and_vermin",
+    "name": "Unusual (Plant and Vermin)",
+    "owners": [
+      "ultimate_wilderness:companion:companion_squid_giant",
+      "ultimate_wilderness:companion:companion_corpse_eater_fungus",
+      "ultimate_wilderness:companion:companion_creeping_puffball",
+      "ultimate_wilderness:companion:companion_gulper_plant",
+      "ultimate_wilderness:companion:companion_hunting_cactus",
+      "ultimate_wilderness:companion:companion_rash_creeper",
+      "ultimate_wilderness:companion:companion_slithering_sundew",
+      "ultimate_wilderness:companion:companion_snapping_flytrap",
+      "ultimate_wilderness:companion:companion_sniper_cactus",
+      "ultimate_wilderness:companion:companion_assassin_bug_giant",
+      "ultimate_wilderness:companion:companion_caterpillar_giant",
+      "ultimate_wilderness:companion:companion_cockroach_giant",
+      "ultimate_wilderness:companion:companion_dragonfly_giant",
+      "ultimate_wilderness:companion:companion_eurypterid",
+      "ultimate_wilderness:companion:companion_locust_giant",
+      "ultimate_wilderness:companion:companion_mantis_shrimp_giant",
+      "ultimate_wilderness:companion:companion_mosquito_giant",
+      "ultimate_wilderness:companion:companion_solifugid_giant",
+      "ultimate_wilderness:companion:companion_spider_web_tyrant",
+      "ultimate_wilderness:companion:companion_termite_giant",
+      "ultimate_wilderness:companion:companion_whiptail_centipede_giant",
+      "ultimate_wilderness:companion:familiar_butterfly",
+      "ultimate_wilderness:companion:familiar_cockroach",
+      "ultimate_wilderness:companion:familiar_creeper_ivy",
+      "ultimate_wilderness:companion:familiar_dweomer_cap",
+      "ultimate_wilderness:companion:familiar_flowering_lattice",
+      "ultimate_wilderness:companion:familiar_ioun_wyrd",
+      "ultimate_wilderness:companion:familiar_isopod_giant",
+      "ultimate_wilderness:companion:familiar_leopard_slug",
+      "ultimate_wilderness:companion:familiar_moth",
+      "ultimate_wilderness:companion:familiar_petrifern",
+      "ultimate_wilderness:companion:familiar_ravenous_tumbleweed",
+      "ultimate_wilderness:companion:familiar_razor_fern",
+      "ultimate_wilderness:companion:familiar_sawleg_locust",
+      "ultimate_wilderness:companion:familiar_shimmerwing_dragonfly",
+      "ultimate_wilderness:companion:familiar_spiny_starfish",
+      "ultimate_wilderness:companion:familiar_suture_vine",
+      "ultimate_wilderness:companion:familiar_tardigrade_giant",
+      "ultimate_wilderness:companion:familiar_vampire_squid"
+    ],
+    "raw_tokens": [
+      {
+        "key": "BONUS",
+        "value": "SLOTS|Armor|-1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SLOTS|Body|-1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SLOTS|Chest|-1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SLOTS|Feet|-2"
+      },
+      {
+        "key": "BONUS",
+        "value": "SLOTS|Hands|-2"
+      },
+      {
+        "key": "BONUS",
+        "value": "SLOTS|Headband|-1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SLOTS|Head|-1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SLOTS|Neck|-1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SLOTS|Ring|-2"
+      },
+      {
+        "key": "BONUS",
+        "value": "SLOTS|Shield|-1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SLOTS|Shoulders|-1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SLOTS|Wrist|-2"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Available Magic Item Slots; belt, eyes"
+      },
+      {
+        "key": "KEY",
+        "value": "Companion Body Type ~ Unusual (Plant and Vermin)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.177"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuaility"
+      }
+    ],
+    "record_type": "ability",
+    "source_page": "p.177",
+    "stat_adjustments": [],
+    "type_segments": [
+      "SpecialQuaility"
+    ]
+  },
+  "ingested_at": "2026-08-15T01:24:11Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 400,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+    "record_key": "Companion Body Type ~ Unusual (Plant and Vermin)",
+    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Ectoplasm Bloodline ~ Feat Tracker",
+    "name": "Ectoplasm Bloodline ~ Feat Tracker",
+    "class": "Sorcerer",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_BloodlineFeat_BlindFight|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_BloodlineFeat_Dodge|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_BloodlineFeat_EctoplasmicSpell|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_BloodlineFeat_LingeringSpell|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_BloodlineFeat_SilentSpell|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_BloodlineFeat_SkillFocusFly|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_BloodlineFeat_SkillFocusStealth|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_BloodlineFeat_SpellFocus|1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1856,
+    "record_key": "Ectoplasm Bloodline ~ Feat Tracker"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

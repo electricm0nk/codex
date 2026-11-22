@@ -1,0 +1,55 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Chuspiki ~ SLA",
+    "delivery": "SpellLike",
+    "description": null,
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_5:monster_ability:chuspiki_sla",
+    "name": "Spell-Like Abilities",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "KEY",
+        "value": "Chuspiki ~ SLA"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=1|TIMEUNIT=PE|CASTERLEVEL=2|Alter Winds,11+CHA"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=2|TIMEUNIT=PE|CASTERLEVEL=2|Gust of Wind,12+CHA|Whispering Wind"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.SpellLike.ChuspikiRacialTrait"
+      }
+    ],
+    "source_page": null,
+    "traits": [
+      "ChuspikiRacialTrait"
+    ]
+  },
+  "ingested_at": "2026-08-23T15:23:07Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 19,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_5/support/b5_abilities_race_oa.lst",
+    "record_key": "Chuspiki ~ SLA",
+    "sha256": "15f9a4abfa03080f40ce11e5d4b72bb8cc91dbc3842745dcb37a90f996336142"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:spells"
+  ]
+}

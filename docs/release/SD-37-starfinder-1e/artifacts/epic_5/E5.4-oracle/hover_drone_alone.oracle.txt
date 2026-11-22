@@ -1,0 +1,9 @@
+name=R2-D2
+dronelvl=0
+dronemastertotallvl=0
+flighttaken=2
+fly=60
+movement=Walk 30', Burrow 15', Fly 60'
+dronemods=
+internal=Acrobatics, Computers, Default, Drone Flight System, Far Shot, Hover, Iron Will, Movement, Movement / Fly 60, Movement / Walk 30, Movement ~ Base, Skill Focus, Skill Focus, Suppressive Fire
+hp=0

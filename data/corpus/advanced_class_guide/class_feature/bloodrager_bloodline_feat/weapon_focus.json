@@ -1,0 +1,73 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Bloodrager Bloodline Feat ~ Weapon Focus",
+    "name": "Weapon Focus",
+    "class": "Bloodrager",
+    "description": "<<Feat1 Description>>",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bloodrager Bloodline Feat ~ Weapon Focus"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "TYPE",
+        "value": "Bloodrager Bloodline Feat"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Bloodrager_BloodlineFeat_WeaponFocus,1"
+      },
+      {
+        "key": "DESC",
+        "value": "<<Feat1 Description>>"
+      },
+      {
+        "key": "STACK",
+        "value": "YES"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "NOCHOICE"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Weapon Focus|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.<<Feat1 Source Page>>"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "<<Feat1 Benefits>>"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 511,
+    "record_key": "Bloodrager Bloodline Feat ~ Weapon Focus"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice",
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

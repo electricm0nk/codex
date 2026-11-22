@@ -1,0 +1,2 @@
+# Fixture for desktop Market +N (AC and attack rows), source: ue_equip_arms_armor.lst, KEY: Poisoned Sand Tube
+Poisoned Sand Tube																		PROFICIENCY:WEAPON|Poisoned Sand Tube						TYPE:Weapon.Resizable.EasternWeapon.Eastern.Ranged.Martial.Blowgun																																		COST:1	WT:1																				DAMAGE:Special				EQMOD:Material ~ Wood																																																				SOURCEPAGE:p.34

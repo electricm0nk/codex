@@ -1,0 +1,60 @@
+{
+  "completeness": "full",
+  "data": {
+    "key": "Lamellar (Steel)",
+    "name": "Lamellar (Steel)",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "COMBAT",
+          "AC",
+          "6",
+          "TYPE=Armor",
+          "PREVAREQ:DisableArmorBonus,0"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "PROFICIENCY",
+        "value": "ARMOR|Lamellar"
+      },
+      {
+        "key": "TYPE",
+        "value": "Armor.Medium.ArmorProfMedium.Suit.Standard"
+      },
+      {
+        "key": "COST",
+        "value": "150"
+      },
+      {
+        "key": "WT",
+        "value": "35"
+      },
+      {
+        "key": "ACCHECK",
+        "value": "-5"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Material ~ Steel"
+      },
+      {
+        "key": "MAXDEX",
+        "value": "3"
+      },
+      {
+        "key": "SPELLFAILURE",
+        "value": "25"
+      }
+    ]
+  },
+  "license": "OGL",
+  "population": "in_scope",
+  "source": {
+    "kind": "desktop_ui_fixture",
+    "line": 1,
+    "path": "apps/desktop/src-tauri/fixtures_src/equip_lamellar_steel.txt",
+    "record_key": "Lamellar (Steel)"
+  }
+}

@@ -1,0 +1,29 @@
+# SD13-E2 deterministic Half-Elf Fighter level 1 race-semantics recognition
+# fixture. Represents a deterministic PF1 Core Rulebook Half-Elf Fighter level 1
+# identity as chosen input only. It names selections; it does not contain derived,
+# computed, or parity values.
+#
+# Unlike Dwarf/Elf/Gnome (a fixed racial ability-score pair), PF1 Core Half-Elf
+# grants a player-chosen +2 to any one ability score, mirroring the Human
+# ability-bonus mechanic's shape (a named choice, not a fixed pair).
+#
+# The Fighter combat baseline, total saves, and selected-skill modifiers stay
+# claim-blocked on this input because the bounded GE-06 Fighter compute path is
+# grounded only for race:human; that is expected and unrelated to this fixture's
+# purpose, which is to make the bounded Half-Elf race-semantics recognition
+# legible. It deliberately avoids every unproven Half-Elf family: no Elven
+# Immunities (sleep immunity, enchantment save bonus), no Adaptability (bonus
+# Skill Focus feat), no Keen Senses Perception bonus, and no Multitalented
+# favored-class posture.
+case_id=pf1-crb-half-elf-fighter-level1
+source_package_id=pf1.core_rulebook
+race_id=race:half-elf
+class_level=class:fighter:1
+ability=strength:12
+ability=dexterity:16
+ability=constitution:12
+ability=intelligence:10
+ability=wisdom:10
+ability=charisma:12
+choice=choice:half_elf_ability_bonus:ability:dexterity
+provenance=programs/codex/requirements/SD-13-core-class-race-roster-and-level-10-progression-matrix/artifacts/core-roster-and-support-state-matrix.md

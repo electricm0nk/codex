@@ -1,0 +1,26 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:34:12Z",
+  "data": {
+    "key": "Hellfire Ray",
+    "school": "Evocation",
+    "level": 6,
+    "description": "A blast of hellfire blazes from your hands and deals (min(15,CASTERLEVEL))d6 points of damage."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_1/botd1_spells.lst",
+    "sha256": "6ced82a6317309ca529afd1b403d66212011e766aae38468d280623dce0085cf",
+    "line": 8,
+    "record_key": "Hellfire Ray"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "derived:range_keyword"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

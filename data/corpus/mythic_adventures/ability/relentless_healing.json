@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Mythic Path Ability ~ Relentless Healing (Guardian)",
+    "name": "Relentless Healing",
+    "description": "You can restore life to the recently dead. If a creature has died within 1 round, as a free action you can expend one use of mythic power when casting a healing spell or using a class feature that heals damage to apply that healing to the dead creature. If this healing brings the creature's hit points above the threshold for death, it comes back to life and stabilizes at its new hit point total (similar to the way breath of life functions); otherwise, it remains dead. Alternatively, you can expend two uses of mythic power on a dead creature that would have the ability to magically heal itself if it were alive (such as a dead cleric with a prepared cure light wounds spell) in order to trigger the most powerful healing magic it knows or has prepared. If this brings the creature's hit points above its death threshold, it returns to life.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Path Ability ~ Relentless Healing (Guardian)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Path Ability.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Mythic Path ~ Guardian"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "MythicTierLevel,1"
+      },
+      {
+        "key": "DESC",
+        "value": "You can restore life to the recently dead. If a creature has died within 1 round, as a free action you can expend one use of mythic power when casting a healing spell or using a class feature that heals damage to apply that healing to the dead creature. If this healing brings the creature's hit points above the threshold for death, it comes back to life and stabilizes at its new hit point total (similar to the way breath of life functions); otherwise, it remains dead. Alternatively, you can expend two uses of mythic power on a dead creature that would have the ability to magically heal itself if it were alive (such as a dead cleric with a prepared cure light wounds spell) in order to trigger the most powerful healing magic it knows or has prepared. If this brings the creature's hit points above its death threshold, it returns to life."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.29"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Mythic Power"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
+    "line": 244,
+    "record_key": "Mythic Path Ability ~ Relentless Healing (Guardian)"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

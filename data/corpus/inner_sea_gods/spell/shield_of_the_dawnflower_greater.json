@@ -1,0 +1,76 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "You create a disk of sunlight on one arm. Any creature that strikes you with a melee attack deals normal damage, but also takes ld6 points of damage + 1 point per caster level. Half of this damage is fire damage and half is holy damage (as the spell fame strike). An undead creature or a creature particularly vulnerable to light that hits you instead takes 2d6 points of damage + 1 point per caster level. Creatures with reach weapons are not subject to this damage if they attack you. The shield provides illumination equivalent to a daylight spell. You can have only one instance of this spell in effect at a time. It does not stack with similar damaging aura spells such as fire shield or shield of the Oawnfower (The Inner Sea World Guide 296).",
+    "key": "Shield of the Dawnflower (Greater)",
+    "level": 6,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Bard,Cleric,Magus=6"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, OF"
+      },
+      {
+        "key": "DESC",
+        "value": "You create a disk of sunlight on one arm. Any creature that strikes you with a melee attack deals normal damage, but also takes ld6 points of damage + 1 point per caster level. Half of this damage is fire damage and half is holy damage (as the spell fame strike). An undead creature or a creature particularly vulnerable to light that hits you instead takes 2d6 points of damage + 1 point per caster level. Creatures with reach weapons are not subject to this damage if they attack you. The shield provides illumination equivalent to a daylight spell. You can have only one instance of this spell in effect at a time. It does not stack with similar damaging aura spells such as fire shield or shield of the Oawnfower (The Inner Sea World Guide 296)."
+      },
+      {
+        "key": "DESCRIPTOR",
+        "value": "Fire|Good|Light"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) rounds"
+      },
+      {
+        "key": "FACTSET",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "KEY",
+        "value": "Shield of the Dawnflower (Greater)"
+      },
+      {
+        "key": "RANGE",
+        "value": "Personal"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Evocation"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.240"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "You"
+      }
+    ],
+    "school": "Evocation"
+  },
+  "ingested_at": "2026-08-17T01:45:11Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 56,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_spells.lst",
+    "record_key": "Shield of the Dawnflower (Greater)",
+    "sha256": "48bcb314dbdf8369982b3bc68d10dbe11baa5fe748d4121d6e197ab414406e68"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "derived:prose_expr"
+  ]
+}

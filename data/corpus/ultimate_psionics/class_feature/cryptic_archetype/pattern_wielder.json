@@ -1,0 +1,84 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Cryptic Archetype ~ Pattern Wielder",
+    "name": "Pattern Wielder",
+    "class": "Cryptic",
+    "description": "You form a powerful bond with your tattoos.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Cryptic Archetype ~ Pattern Wielder"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.CrypticArchetype.CrypticInsight2.CrypticRapidDefense.CrypticInsight8"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Cryptic=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Cryptic Archetype ~ Pattern Wielder],[!PREABILITY:1,CATEGORY=Archetype,TYPE.CrypticInsight2,TYPE.CrypticRapidDefense,TYPE.CrypticInsight8]"
+      },
+      {
+        "key": "PRERACE",
+        "value": "1,Elan"
+      },
+      {
+        "key": "DESC",
+        "value": "You form a powerful bond with your tattoos."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Cryptic Class Feature|AUTOMATIC|Pattern Wielder ~ Patterned Weapon|PRECLASS:1,Cryptic=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Cryptic Class Feature|AUTOMATIC|Pattern Wielder ~ Hurl Tattoo|PRECLASS:1,Cryptic=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Cryptic Class Feature|AUTOMATIC|Pattern Wielder ~ Tap Tattoo|PRECLASS:1,Cryptic=8"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Cryptic Insight|-1|PRECLASS:1,Cryptic=2"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Cryptic Insight|-1|PRECLASS:1,Cryptic=8"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.323"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1806,
+    "record_key": "Cryptic Archetype ~ Pattern Wielder"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

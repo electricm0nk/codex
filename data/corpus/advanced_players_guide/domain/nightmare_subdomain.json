@@ -1,0 +1,43 @@
+{
+  "codex_generated_name": false,
+  "completeness": "chassis_only",
+  "data": {
+    "key": "Nightmare Subdomain",
+    "name": "Nightmare Subdomain",
+    "raw_tokens": [
+      {
+        "key": "PREMULT",
+        "value": "1,[PREDOMAIN:1,Nightmare Subdomain],[PREVARLT:MadnessDomain,1]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Core Domain ~ Nightmare Subdomain"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.94"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Nightmare Subdomain=1|Confusion (Lesser)|Nightmare Subdomain=2|Touch of Idiocy|Nightmare Subdomain=3|Rage|Nightmare Subdomain=4|Phantasmal Killer|Nightmare Subdomain=5|Nightmare|Nightmare Subdomain=6|Nightmare|Nightmare Subdomain=7|Insanity|Nightmare Subdomain=8|Scintillating Pattern|Nightmare Subdomain=9|Weird"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T15:18:05Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 56,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_domains.lst",
+    "record_key": "Nightmare Subdomain",
+    "sha256": "a5c270c30b0caee73d7ae2b9b45bfa4e26da0d52f99c6d1a8787f3d7cc73098e"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

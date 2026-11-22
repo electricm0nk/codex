@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Trait ~ Psionic Theory",
+    "name": "Psionic Theory",
+    "description": "+2 to Spellcraft checks when analyzing psionic powers or items.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Trait ~ Psionic Theory"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Trait.BasicTrait.PsionicTrait"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Trait ~ Psionic Theory],[PREVAREQ:BypassTraitRestriction,1],[!PREABILITY:1,CATEGORY=Special Ability,TYPE.PsionicTrait]"
+      },
+      {
+        "key": "DESC",
+        "value": "+2 to Spellcraft checks when analyzing psionic powers or items."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.299"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_apg.lst",
+    "sha256": "d4ac8a9a33149811222e6affeba9ba1553ced3ba7f6beb6be722e89ddfc9a51f",
+    "line": 141,
+    "record_key": "Trait ~ Psionic Theory"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

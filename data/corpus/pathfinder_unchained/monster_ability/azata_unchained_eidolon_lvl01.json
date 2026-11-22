@@ -1,0 +1,67 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Azata ~ Unchained Eidolon LVL01",
+    "delivery": null,
+    "description": "At 1st level, azata eidolons gain the resistance (electricity) evolution and the 4-point weapon training evolution (proficiency in martial weapons).",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "pathfinder_unchained:monster_ability:azata_unchained_eidolon_lvl01",
+    "name": "Eidolon Progession Lv.1",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Unchained Eidolon Evolution|AUTOMATIC|Unchained Evolution ~ Resistance|PREVAREQ:RemoveEidolonResistanceForImmunity,0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Unchained Eidolon Evolution|AUTOMATIC|Unchained Evolution ~ Weapon Training (Martial)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Unchained Eidolon Resistance|AUTOMATIC|Eidolon Resistance to electricity|PREVAREQ:RemoveEidolonResistanceForImmunity,0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Pool_EidolonResistance|-1|PREVARGTEQ:RemoveEidolonResistanceForImmunity,0"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "At 1st level, azata eidolons gain the resistance (electricity) evolution and the 4-point weapon training evolution (proficiency in martial weapons)."
+      },
+      {
+        "key": "KEY",
+        "value": "Azata ~ Unchained Eidolon LVL01"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.AzataLVL1"
+      }
+    ],
+    "source_page": null,
+    "traits": [
+      "AzataLVL1"
+    ]
+  },
+  "ingested_at": "2026-08-23T16:17:34Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 119,
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_race.lst",
+    "record_key": "Azata ~ Unchained Eidolon LVL01",
+    "sha256": "700bcd41e1ee925d0a727c86097de8fa37bed2768529e4a750bdb8249c4d8b8d"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

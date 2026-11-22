@@ -1,0 +1,72 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "You have learned how to preserve a sample of oozes in a sealed bottle, which you can prepare for use as an extract.  When you activate the extract, you actually throw the bottle at a square within 30 feet, releasing the CR 3 ooze, which reconstitutes and attacks the closest creature.  The ooze is not under your control, but is otherwise treated as a summoned creature.  The ooze remains for %1 rounds, and decays into powder when the duration expires.  If you have the infusion discovery, another character can use the infused specimen.",
+    "key": "Bottled Ooze (3)",
+    "level": 3,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Alchemist=3"
+      },
+      {
+        "key": "COMPS",
+        "value": "S"
+      },
+      {
+        "key": "DESC",
+        "value": "You have learned how to preserve a sample of oozes in a sealed bottle, which you can prepare for use as an extract.  When you activate the extract, you actually throw the bottle at a square within 30 feet, releasing the CR 3 ooze, which reconstitutes and attacks the closest creature.  The ooze is not under your control, but is otherwise treated as a summoned creature.  The ooze remains for %1 rounds, and decays into powder when the duration expires.  If you have the infusion discovery, another character can use the infused specimen.|BottledOozeDuration"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) rounds"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "Bottled Ooze"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Discovery ~ Bottled Ooze"
+      },
+      {
+        "key": "RANGE",
+        "value": "30 ft."
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/ultimateMagic/spellcastingClassOptions/alchemist.html#_bottled-ooze"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.15"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "Closest Creature"
+      }
+    ],
+    "school": null
+  },
+  "ingested_at": "2026-08-16T12:10:17Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 284,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_spells.lst",
+    "record_key": "Bottled Ooze (3)",
+    "sha256": "277484651533d6e3f350fd62db33c91294a4768ab5519886d6ad77c2516f83fa"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:prose_expr"
+  ]
+}

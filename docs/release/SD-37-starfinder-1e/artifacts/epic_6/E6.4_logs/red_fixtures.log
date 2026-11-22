@@ -1,0 +1,22 @@
+   Compiling codex-desktop v0.17.0 (/home/ubuntu/workspace/worktrees/codex-sd37/apps/desktop/src-tauri)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 34.56s
+     Running unittests src/main.rs (/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/codex_desktop-f9c244288bc1271e)
+
+running 1 test
+test sf_catalog::tests::the_frontend_catalog_fixtures_are_the_commands_responses ... FAILED
+
+failures:
+
+---- sf_catalog::tests::the_frontend_catalog_fixtures_are_the_commands_responses stdout ----
+
+thread 'sf_catalog::tests::the_frontend_catalog_fixtures_are_the_commands_responses' (802437) panicked at src/sf_catalog.rs:404:9:
+stale or missing Starfinder catalog fixtures ["/home/ubuntu/workspace/worktrees/codex-sd37/apps/desktop/src-tauri/../src/starfinderCatalog/starfinderCatalogFixtures/race.json", "/home/ubuntu/workspace/worktrees/codex-sd37/apps/desktop/src-tauri/../src/starfinderCatalog/starfinderCatalogFixtures/class.json"]; regenerate with SF_CATALOG_FIXTURES_WRITE=1 cargo test --bin codex-desktop the_frontend_catalog_fixtures_are_the_commands_responses
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    sf_catalog::tests::the_frontend_catalog_fixtures_are_the_commands_responses
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 684 filtered out; finished in 0.62s
+
+error: test failed, to rerun pass `--bin codex-desktop`

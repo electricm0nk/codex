@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Peacekeeper ~ No Raised Hand",
+    "name": "No Raised Hand",
+    "class": "Peacekeeper",
+    "description": "As long as you maintain psionic focus, anyone wanting to attack you must make a successful save (Will DC %1) or it can't follow through with the attack, that part of its action is lost, and they take a -1 morale penalty to all saving throws against powers manifested by you until the end of their next turn.  A creature that succeeds on the saving throw is immune to this effect for 24 hours.  Area effects are not subjected to this effect.  By spending your psionic focus as a move action, you can share this ability with all allies within 30 ft. for one round.|NoRaisedHandDC",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Peacekeeper ~ No Raised Hand"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "PsionClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "NoRaisedHandDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "As long as you maintain psionic focus, anyone wanting to attack you must make a successful save (Will DC %1) or it can't follow through with the attack, that part of its action is lost, and they take a -1 morale penalty to all saving throws against powers manifested by you until the end of their next turn.  A creature that succeeds on the saving throw is immune to this effect for 24 hours.  Area effects are not subjected to this effect.  By spending your psionic focus as a move action, you can share this ability with all allies within 30 ft. for one round.|NoRaisedHandDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|NoRaisedHandDC|10+PsionLVL/2+PsionPrimeStat"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.334"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2010,
+    "record_key": "Peacekeeper ~ No Raised Hand"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

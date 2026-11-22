@@ -1,0 +1,18 @@
+# PF (full desktop suite run with PF_SEED_RENDER_OUT): diff E0.6/pf-render/base/sha256.txt <dir>/sha256.txt
+PF_SHA_EQUAL
+aldric.json: OK
+elowen.json: OK
+tomas.json: OK
+# SF: sha256 of 4 files vs E0.6/sf-lines/base/sha256.txt
+SF_SHA_EQUAL
+SF-Envoy-3.txt 42
+SF-Mystic-5.txt 72
+SF-Soldier-3.txt 51
+SF-Technomancer-5.txt 63
+SF-Envoy-3.txt 42
+SF-Mystic-5.txt 72
+SF-Soldier-3.txt 51
+SF-Technomancer-5.txt 63
+# CPR starters vs E7.1/seeds.txt (loaded.json hash lines)
+CPR_SHA_EQUAL
+Nyx rows (python): 213

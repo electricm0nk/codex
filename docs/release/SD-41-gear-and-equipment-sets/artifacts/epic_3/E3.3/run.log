@@ -1,0 +1,41 @@
+
+> codex@0.21.0 ui-smoke
+> node scripts/ui-smoke/run.mjs --only sheet-gear-filter-equipped,sheet-gear-move-to-slot-ac,sheet-gear-move-to-carried,sheet-gear-not-carried-weight,sheet-gear-set-create-activate,sheet-gear-container-nest,sheet-gear-container-over-capacity,sheet-gear-drop-not-carried,sheet-gear-discard-confirm,sheet-market-sort-by-price,sheet-market-only-affordable,sheet-market-description-box,sheet-market-buy-quantity-stack,sheet-market-negotiate-buy,sheet-market-create-item-carried,sheet-campaign-add-from-identity,sheet-campaign-button-under-skills,sheet-campaign-remove-keeps-folder,sheet-gear-capacity-override,sheet-equipment-lists,sheet-equipment-conflict,sheet-equipment-unequip,sheet-equipment-equip,sheet-equipment-left-behind,sheet-market-buy-carried,sheet-custom-item-worn,sheet-custom-item-stowed,sheet-override-tag-slot --out /home/ubuntu/cargo-target/sd41-main-logs/e33/run2
+
+App data root: /tmp/codex-ui-smoke-sd41-e3_3-Ox86NB/data/io.electricm0nk.codex (isolated; the real store /home/ubuntu/.local/share/io.electricm0nk.codex is never opened)
+Real store before: 15379 entries, sha256 ddfc4461e3f278447373d61e1eff268905da65d3894566b68ab1bc2cbdf9b8bf
+Launching app for agent 'sd41-e3.3'...
+PASS  sheet-gear-filter-equipped
+PASS  sheet-gear-move-to-slot-ac
+PASS  sheet-gear-move-to-carried
+PASS  sheet-gear-not-carried-weight
+PASS  sheet-gear-set-create-activate
+PASS  sheet-gear-container-nest
+PASS  sheet-gear-container-over-capacity
+PASS  sheet-gear-drop-not-carried
+PASS  sheet-gear-discard-confirm
+PASS  sheet-market-sort-by-price
+PASS  sheet-market-only-affordable
+PASS  sheet-market-description-box
+PASS  sheet-market-buy-quantity-stack
+PASS  sheet-market-negotiate-buy
+PASS  sheet-market-create-item-carried
+PASS  sheet-campaign-add-from-identity
+PASS  sheet-campaign-button-under-skills
+PASS  sheet-campaign-remove-keeps-folder
+PASS  sheet-gear-capacity-override
+PASS  sheet-equipment-lists
+PASS  sheet-equipment-conflict
+PASS  sheet-equipment-unequip
+PASS  sheet-equipment-equip
+PASS  sheet-equipment-left-behind
+PASS  sheet-market-buy-carried
+PASS  sheet-custom-item-worn
+PASS  sheet-custom-item-stowed
+FAIL  sheet-override-tag-slot  -- target not found: 'Eyes (no element named 'Eyes')' at row step 36/47 (click "Eyes")
+Real store after:  15379 entries, sha256 ddfc4461e3f278447373d61e1eff268905da65d3894566b68ab1bc2cbdf9b8bf -- UNTOUCHED (count and sha256 equal)
+
+27/28 green, 1 red, 0 blocked, 0 manual, 0 not-run (M = 28 rows)
+Cleanup: 0 character(s) created across 28 row(s) with a cleanup record, 0 deleted, 0 leftover; store /tmp/codex-ui-smoke-sd41-e3_3-Ox86NB/data/io.electricm0nk.codex now holds: 00000000-0000-0000-0000-000000000001, 00000000-0000-0000-0000-000000000002, 00000000-0000-0000-0000-000000000003, 00000000-0000-0000-0000-000000000004, 00000000-0000-0000-0000-000000000005, 00000000-0000-0000-0000-000000000006
+Evidence: /home/ubuntu/cargo-target/sd41-main-logs/e33/run2
+Removed isolated app-data root /tmp/codex-ui-smoke-sd41-e3_3-Ox86NB (it held 6 character(s) at the end: 00000000-0000-0000-0000-000000000001, 00000000-0000-0000-0000-000000000002, 00000000-0000-0000-0000-000000000003, 00000000-0000-0000-0000-000000000004, 00000000-0000-0000-0000-000000000005, 00000000-0000-0000-0000-000000000006).

@@ -1,0 +1,72 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Universal Monster Rule ~ Grab",
+    "delivery": "Extraordinary",
+    "description": "If a creature with this special attack hits with the indicated attack (usually a claw or bite attack), it deals normal damage and attempts to start a grapple as a free action without provoking an attack of opportunity. The creature has the option to conduct the grapple normally, or simply use the part of its body it used in the grab to hold the opponent. If it chooses to do the latter, it takes a -20 penalty on its CMB check to make and maintain the grapple, but does not gain the grappled condition itself. A successful hold does not deal any extra damage unless the creature also has the constrict special attack. If the creature does not constrict, each successful grapple check it makes during successive rounds automatically deals the damage indicated for the attack that established the hold. Otherwise, it deals constriction damage as well (the amount is given in the creature's descriptive text).&nl;Creatures with the grab special attack receive a +4 bonus on combat maneuver checks made to start and maintain a grapple.&nl;Unless otherwise noted, grab can only be used against targets of a size equal to or smaller than the creature with this ability. If the creature can use grab on creatures of other sizes, it is noted in the creature's Special Attacks line.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:universal_monster_rule_grab",
+    "name": "Grab",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "ASPECT",
+        "value": "NaturalAttackBonus|Bite|PREVAREQ:UMR_Grab_ApplyBite,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CMB_Grapple|4"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "UMR_Grab_ApplyBite|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "UMR_Grab_SpecificDesc|0"
+      },
+      {
+        "key": "DESC",
+        "value": "If a creature with this special attack hits with the indicated attack (usually a claw or bite attack), it deals normal damage and attempts to start a grapple as a free action without provoking an attack of opportunity. The creature has the option to conduct the grapple normally, or simply use the part of its body it used in the grab to hold the opponent. If it chooses to do the latter, it takes a -20 penalty on its CMB check to make and maintain the grapple, but does not gain the grappled condition itself. A successful hold does not deal any extra damage unless the creature also has the constrict special attack. If the creature does not constrict, each successful grapple check it makes during successive rounds automatically deals the damage indicated for the attack that established the hold. Otherwise, it deals constriction damage as well (the amount is given in the creature's descriptive text).&nl;Creatures with the grab special attack receive a +4 bonus on combat maneuver checks made to start and maintain a grapple.&nl;Unless otherwise noted, grab can only be used against targets of a size equal to or smaller than the creature with this ability. If the creature can use grab on creatures of other sizes, it is noted in the creature's Special Attacks line.|PREVAREQ:UMR_Grab_SpecificDesc,0"
+      },
+      {
+        "key": "KEY",
+        "value": "Universal Monster Rule ~ Grab"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.301"
+      },
+      {
+        "key": "TYPE",
+        "value": "Universal Monster Rule.SpecialAttack.Extraordinary.AttackOption"
+      }
+    ],
+    "source_page": "p.301",
+    "traits": [
+      "Universal Monster Rule",
+      "AttackOption"
+    ]
+  },
+  "ingested_at": "2026-08-23T12:58:07Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 2373,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "record_key": "Universal Monster Rule ~ Grab",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

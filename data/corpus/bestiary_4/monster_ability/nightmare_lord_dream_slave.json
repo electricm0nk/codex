@@ -1,0 +1,49 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Nightmare Lord ~ Dream Slave",
+    "delivery": "Supernatural",
+    "description": "Instead of killing a target with its night terror ability, a nightmare lord may instead enslave it with a permanent dominate monster effect. The enslaved creature is healed of all Charisma damage taken from night terrors.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:nightmare_lord_dream_slave",
+    "name": "Dream Slave",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Instead of killing a target with its night terror ability, a nightmare lord may instead enslave it with a permanent dominate monster effect. The enslaved creature is healed of all Charisma damage taken from night terrors."
+      },
+      {
+        "key": "KEY",
+        "value": "Nightmare Lord ~ Dream Slave"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T14:10:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1126,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "record_key": "Nightmare Lord ~ Dream Slave",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

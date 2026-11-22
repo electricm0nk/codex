@@ -1,0 +1,52 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Star-Spawn of Cthulhu ~ Overwhelming Mind",
+    "delivery": "Extraordinary",
+    "description": "A star-spawn of Cthulhu's mind is overwhelming in its power and alien structure. The first time a creature other than an outsider (excluding native outsiders) or aberration makes mental contact with a star-spawn of Cthulhu, it must succeed at a DC %1 Will save or be stunned for 1d4 rounds. On a successful save, the creature is merely staggered for 1 round. This effect can occur whether the star-spawn of Cthulhu initiates mental contact (such as via a demand, dream, nightmare, or sending spell-like ability, or once per round merely by telepathic communication) or another creature attempts to do so (such as via detect thoughts or dominate monster). Once a creature is exposed to a specific star-spawn of Cthulhu's overwhelming mind, it is immune to this effect from all star-spawn of Cthulhu for 24 hours. This is a mind-affecting effect.",
+    "description_variables": [
+      "CHA+22"
+    ],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:star_spawn_of_cthulhu_overwhelming_mind",
+    "name": "Overwhelming Mind",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A star-spawn of Cthulhu's mind is overwhelming in its power and alien structure. The first time a creature other than an outsider (excluding native outsiders) or aberration makes mental contact with a star-spawn of Cthulhu, it must succeed at a DC %1 Will save or be stunned for 1d4 rounds. On a successful save, the creature is merely staggered for 1 round. This effect can occur whether the star-spawn of Cthulhu initiates mental contact (such as via a demand, dream, nightmare, or sending spell-like ability, or once per round merely by telepathic communication) or another creature attempts to do so (such as via detect thoughts or dominate monster). Once a creature is exposed to a specific star-spawn of Cthulhu's overwhelming mind, it is immune to this effect from all star-spawn of Cthulhu for 24 hours. This is a mind-affecting effect.|CHA+22"
+      },
+      {
+        "key": "KEY",
+        "value": "Star-Spawn of Cthulhu ~ Overwhelming Mind"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary"
+      }
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T14:10:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1337,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "record_key": "Star-Spawn of Cthulhu ~ Overwhelming Mind",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ]
+}

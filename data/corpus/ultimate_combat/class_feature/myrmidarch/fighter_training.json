@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Myrmidarch ~ Fighter Training",
+    "name": "Fighter Training",
+    "class": "Myrmidarch",
+    "description": "At 7th level, a myrmidarch counts his magus level -3 as his fighter level for the purpose of qualifying for feats (if he has levels in fighter, these levels stack). This ability replaces both knowledge pool and the fighter trainign the magus gets at 10th level.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Myrmidarch ~ Fighter Training"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MagusClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 7th level, a myrmidarch counts his magus level -3 as his fighter level for the purpose of qualifying for feats (if he has levels in fighter, these levels stack). This ability replaces both knowledge pool and the fighter trainign the magus gets at 10th level."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.56"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/support/uc_abilities_class_um.lst",
+    "sha256": "b8cff28b7be84f4f3c6b650c3e375a3027ff13bf4226233a514d34385bdfb67a",
+    "line": 40,
+    "record_key": "Myrmidarch ~ Fighter Training"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

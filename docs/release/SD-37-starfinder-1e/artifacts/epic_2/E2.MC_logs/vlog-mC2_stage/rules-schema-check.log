@@ -1,0 +1,45 @@
+   Compiling codex v0.1.0 (/home/ubuntu/workspace/worktrees/codex-sd37)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 28.38s
+     Running unittests src/lib.rs (/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/codex-ce0bccb9212d3fe1)
+
+running 1 test
+test rules_core::sheet_rule::schema_publish_tests::published_schemas_match_the_serde_types ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 2788 filtered out; finished in 0.02s
+
+--- regenerated vs published (diff -r) ---
+diff -r docs/release/SD-37-starfinder-1e/artifacts/epic_2/E2.MC_logs/vlog-mC2_stage/rules-schema-regen/sheet_rule.schema.json /home/ubuntu/workspace/worktrees/codex-sd37/schemas/rules/sheet_rule.schema.json
+465c465
+<             "EacX"
+---
+>             "Eac"
+diff exit 1
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.05s
+     Running unittests src/lib.rs (/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/codex-ce0bccb9212d3fe1)
+
+running 3 tests
+test rules_core::sheet_rule::schema_publish_tests::the_schema_names_the_starfinder_variants_and_every_shape_the_package_uses ... FAILED
+test rules_core::sheet_rule::schema_publish_tests::published_schemas_match_the_serde_types ... FAILED
+test rules_core::sheet_rule::schema_publish_tests::sampled_package_files_agree_with_the_schema_at_the_top_level ... ok
+
+failures:
+
+---- rules_core::sheet_rule::schema_publish_tests::the_schema_names_the_starfinder_variants_and_every_shape_the_package_uses stdout ----
+
+thread 'rules_core::sheet_rule::schema_publish_tests::the_schema_names_the_starfinder_variants_and_every_shape_the_package_uses' (1270038) panicked at src/rules_core/sheet_rule.rs:4097:13:
+SheetRule schema lacks the Eac variant
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- rules_core::sheet_rule::schema_publish_tests::published_schemas_match_the_serde_types stdout ----
+
+thread 'rules_core::sheet_rule::schema_publish_tests::published_schemas_match_the_serde_types' (1270036) panicked at src/rules_core/sheet_rule.rs:4089:13:
+schemas/rules/sheet_rule.schema.json drifts from the serde types; regenerate with RULES_SCHEMA_OUT
+
+
+failures:
+    rules_core::sheet_rule::schema_publish_tests::published_schemas_match_the_serde_types
+    rules_core::sheet_rule::schema_publish_tests::the_schema_names_the_starfinder_variants_and_every_shape_the_package_uses
+
+test result: FAILED. 1 passed; 2 failed; 0 ignored; 0 measured; 2786 filtered out; finished in 0.56s
+
+error: test failed, to rerun pass `--lib`

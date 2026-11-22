@@ -1,0 +1,31 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Shared Stash",
+    "category": "Teamwork",
+    "name": "Shared Stash",
+    "description": "You are adept at borrowing from your allies even in the middle of combat. While you are in the same square as a willing ally who also has this feat, you can draw a weapon from that creature as a free action or draw a hidden weapon or any other object as a move action. You can also take a held object from a willing ally in the same square as you as a free action. Drawing or taking an object (but not a weapon) in this way provokes an attack of opportunity.",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=FEAT,Quick Draw",
+      "PREABILITY:1,CATEGORY=Special Ability,Ratfolk ~ Swarming,Builder Racial Trait ~ Swarming",
+      "PRESKILL:1,Sleight of Hand=1",
+      "PRETOTALAB:1"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/monster_codex/mc_feats.lst",
+    "sha256": "c4261bd4df0271759c3cf8949dcdfd7112b51560c14cf91a3b3937bdf0db98e7",
+    "line": 26,
+    "record_key": "Shared Stash"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

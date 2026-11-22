@@ -1,0 +1,53 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Hive ~ Blind",
+    "delivery": null,
+    "description": "A hive creature is blind. It is immune to gaze attacks, visual effects, illusions, and other attack forms that rely on sight. Unlike other aberrations, a hive creature doesn't have darkvision.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "horror_adventures:monster_ability:hive_blind",
+    "name": "Blind",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A hive creature is blind. It is immune to gaze attacks, visual effects, illusions, and other attack forms that rely on sight. Unlike other aberrations, a hive creature doesn't have darkvision."
+      },
+      {
+        "key": "KEY",
+        "value": "Hive ~ Blind"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.233"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality"
+      }
+    ],
+    "source_page": "p.233",
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T14:10:27Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 209,
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_race.lst",
+    "record_key": "Hive ~ Blind",
+    "sha256": "63d4d7024f3fea15adb5b626c17f3f1dc4c40e4fc4bef4616a1d36be77a9fe00"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

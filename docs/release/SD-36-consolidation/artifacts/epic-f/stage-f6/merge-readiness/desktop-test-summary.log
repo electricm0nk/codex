@@ -1,0 +1,4 @@
+fighter 6 level-up options: advance 1, add_base 58, add_prestige 74 (of 74 census prestige); arcane archer entry lines: [
+fighter 6, each of 133 level-up options (advance 1, add_base 58, add_prestige 74) taken for real: computed 123, refused with the blocker shown 10, refused by something other than the mix gate 0: []
+test result: ok. 633 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 456.02s
+EXIT=0

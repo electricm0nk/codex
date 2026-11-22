@@ -1,0 +1,82 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "Equipmods",
+    "cost_gp": 48000.0,
+    "description": "% 1/day|%LIST",
+    "key": "Legendary Item ~ Intelligent Item ~ Spellcasting / 8th Level Spell / 1 per Day",
+    "name": "Legendary Intelligent Item / Spellcasting 8th-level spell 1/day",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "VAR",
+          "IntItemCost",
+          "48000"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "IntelligentItemEgo",
+          "2"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Legendary Item ~ Intelligent Item ~ Spellcasting / 8th Level Spell / 1 per Day"
+      },
+      {
+        "key": "NAMEOPT",
+        "value": "NOTHING"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic.Intelligent.Powers"
+      },
+      {
+        "key": "COST",
+        "value": "48000"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "QUALIFY"
+      },
+      {
+        "key": "PRETYPE",
+        "value": "1,Item Has Alignment"
+      },
+      {
+        "key": "PRETYPE",
+        "value": "1,EQMOD=Legendary Item ~ Intelligent Item ~ Spellcasting"
+      },
+      {
+        "key": "SPROP",
+        "value": "% 1/day|%LIST"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "EQBUILDER.SPELL|Arcane,Divine|8|8"
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-17T12:09:37Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 135,
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_equipmods.lst",
+    "record_key": "Legendary Item ~ Intelligent Item ~ Spellcasting / 8th Level Spell / 1 per Day",
+    "sha256": "abb04fbe2a924fe90ce1d2a6517e423141d9b79b24642f5ac76878f2e7e43876"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice",
+    "computed:pre_guard"
+  ]
+}

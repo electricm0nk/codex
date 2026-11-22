@@ -1,0 +1,55 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Kaprosuchus ~ Ramming Snout",
+    "delivery": "Extraordinary",
+    "description": "When a kaprosuchus charges, it can ram an opponent with the calcified tip of its snout. This attack has the same attack bonus as the kaprosuchus's bite attack, and it deals an amount of bludgeoning damage equal to the kaprosuchus's bite damage. If the attack is successful, the kaprosuchus can attempt a trip combat maneuver against the target as a free action.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "bestiary_5:monster_ability:kaprosuchus_ramming_snout",
+    "name": "Ramming Snout",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "When a kaprosuchus charges, it can ram an opponent with the calcified tip of its snout. This attack has the same attack bonus as the kaprosuchus's bite attack, and it deals an amount of bludgeoning damage equal to the kaprosuchus's bite damage. If the attack is successful, the kaprosuchus can attempt a trip combat maneuver against the target as a free action."
+      },
+      {
+        "key": "KEY",
+        "value": "Kaprosuchus ~ Ramming Snout"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.170"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary.KaprosuchusRacialTrait"
+      }
+    ],
+    "source_page": "p.170",
+    "traits": [
+      "KaprosuchusRacialTrait"
+    ]
+  },
+  "ingested_at": "2026-08-23T15:23:07Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 46,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_5/b5_abilities_race.lst",
+    "record_key": "Kaprosuchus ~ Ramming Snout",
+    "sha256": "da3b63848f2dea0a3cc2088f288e93a85921513ab30d601d05330ceac6db664c"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

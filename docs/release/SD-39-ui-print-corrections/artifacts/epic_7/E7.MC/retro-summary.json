@@ -1,0 +1,229 @@
+{
+  "corrections": {
+    "by_corrector": {
+      "sd39-e7.1": 5,
+      "sd39-e7.2": 2,
+      "sd39-e7.3": 3,
+      "sd39-e7.4": 3,
+      "sd39-e7.5": 1,
+      "sd39-e7.6": 2,
+      "sd39-e7.mc": 8
+    },
+    "by_subject": {
+      "E5.MC decision, E7.6 receipt": 1,
+      "E7.1 mapping": 1,
+      "E7.2 row acceptance command": 1,
+      "E7.2 row, G-11, NR-1": 1,
+      "E7.4 receipt": 1,
+      "E7.4 row": 1,
+      "E7.5 row in epic-breakdown.md": 1,
+      "E7.6 receipt": 1,
+      "E7.6 row": 1,
+      "SD-39 E7.6 row + G-2": 1,
+      "SD-39 card-count constants (epic-breakdown E9.5, kanban.md line 31, content-unit-inventory F-3)": 1,
+      "SD-39 decisions.md \u00a75 command": 1,
+      "content-unit-inventory": 1,
+      "dispatch-prompt": 1,
+      "epic-breakdown": 1,
+      "epic-breakdown.md": 1,
+      "epic-breakdown.md E7.4 FILES YOU OWN": 1,
+      "feat_effects.rs": 1,
+      "sd39-e7.3": 1,
+      "sd39-e7.4 own first test": 1,
+      "sd39-e7.mc retro event 1793906517523": 1,
+      "sd39-kanban": 1,
+      "technical-design": 1,
+      "tests/sd20_contract_skill_wiring.rs and tests/sd21_wizard_chassis_computes.rs": 1
+    },
+    "by_verification_method": {
+      "awk -F'|' '$2 ~ /E7\\.[123] /{print $2,$5,$6}' docs/release/SD-39-ui-print-corrections/kanban.md at c414299715; kanban.md header 'the script dispatches a card only when every dependency is complete'": 1,
+      "awk -F'|' '$2 ~ /^ (C|E)[0-9]/' docs/release/SD-39-ui-print-corrections/kanban.md | awk 'END{print NR}'": 1,
+      "awk -F'|' '$2 ~ /^ (C|E)[0-9]/' kanban.md | awk 'END{print NR}' -> 63": 1,
+      "cargo test --bins left_behind in apps/desktop/src-tauri: left_behind_each_row_moves_its_own_copy red before fromState": 1,
+      "cargo test --locked --test sd20_contract_skill_wiring: panicked at my first assert, 4 passed after the fix": 1,
+      "cargo test --locked -j 8 --bins character_money_ in apps/desktop/src-tauri: character_money_survives_a_clone and _export_then_import left 0 right 36345 before the fix": 1,
+      "cargo test --locked -j 8 --bins no_required_gear_a_ranged in apps/desktop/src-tauri, red before the fix": 1,
+      "cargo test --locked -j 8 --test sd20_contract_skill_wiring --test sd21_wizard_chassis_computes": 1,
+      "cargo test --locked -j 8 no_required_gear in apps/desktop/src-tauri": 1,
+      "git show --stat a4150fc4b1": 1,
+      "git show --stat f6ed94b1e7; root sweep attributed 3 FAILED to sd13_ranger_spell_burden_classification, sd20_contract_skill_wiring, sd27_feat_effects_reach_both_compute_paths": 1,
+      "grep -n discovered docs/release/SD-39-ui-print-corrections/kanban.md": 1,
+      "grep -rln 'pcg' src apps/desktop/src apps/desktop/src-tauri/src | awk 'END{print NR}' at c5c2809197": 1,
+      "ls scripts/oracle_harness/eqm-fixtures/*.pcg | awk 'END{print NR}'": 1,
+      "no_required_gear_a_shield_is_not_the_melee_number, left 7 right 8 before the fix": 1,
+      "pcg_import_fixtures_deity_none_is_no_deity, left None right empty before the fix; regex census over the 65 files": 1,
+      "pilot_compute_corpus.rs compute_selected_skill_modifiers_from_corpus via require_selected_skill_rank; first run of pcg_import_fixtures_a_file_of_held_classes_computes": 1,
+      "python3 over data/sheet_rules/core_rulebook/deity/iomedae.json grants = None at 439f821c91; ls apps/desktop/src-tauri/resources/corpus_bundle/core_rulebook": 1,
+      "race_weapon_proficiency_a_deity_survives_a_clone, left empty right Iomedae before the fix": 1,
+      "race_weapon_proficiency_a_shield_bash_reads_what_the_refusal_reads, left 3 right 7 before the fix": 1,
+      "ran both in apps/desktop; artifacts/epic_7/E7.2/deb-build.txt": 1,
+      "ran it: the in-place rewrite of data/sheet_rules requires --write": 1,
+      "temporary desktop test over import_character_from_json, E7.1/desktop-oneoff.txt: E71 saved=37 blocked=26 bad=0": 1,
+      "tests/ge06_pilot_selected_skill_modifiers.rs selected_skill_feat_bonus_rises_at_ten_ranks_in_that_skill_alone; data/sheet_rules/core_rulebook/feat/persuasive.json Benefit text": 1
+    },
+    "caught_before": {
+      "merge": 1,
+      "release": 1
+    },
+    "recent": [
+      {
+        "actor": "sd39-e7.6",
+        "id": "1793870794844-sd39-e7.6-680d2e",
+        "summary": "SD-39 E7.6 row + G-2 claimed the race and deity grants are in the data the engine already holds; no converter re-run; actual data/sheet_rules held neither DEITYWEAP nor CHANGEPROF (converter dropped them as metadata); the shipped corpus bundle has no deity kind",
+        "ts": "2026-11-05T09:26:34Z"
+      },
+      {
+        "actor": "sd39-e7.6",
+        "id": "1793870794986-sd39-e7.6-168ea9",
+        "summary": "SD-39 decisions.md \u00a75 command claimed cargo run -p codex-ingest --bin sheet_rule_convert rewrites the data; actual it refuses without --write",
+        "ts": "2026-11-05T09:26:34Z"
+      },
+      {
+        "actor": "sd39-e7.mc",
+        "id": "1793886602498-sd39-e7.mc-6489d4",
+        "summary": "E7.4 receipt claimed a wielded weapon of any kind has its own attack row, and the table's 36 ranged rows are right; actual the row read Strength for every weapon that cannot be swung: Aldric's Longbow read 7, not 4; the Melee tile was right, the row was not",
+        "ts": "2026-11-05T13:50:02Z"
+      },
+      {
+        "actor": "sd39-e7.mc",
+        "id": "1793886602628-sd39-e7.mc-7f3870",
+        "summary": "E7.6 row claimed the Market's refusal check and this row read the same answer; actual a table shield's row read -4 and 'nothing grants' for a Fighter the refusal lets in",
+        "ts": "2026-11-05T13:50:02Z"
+      },
+      {
+        "actor": "sd39-e7.mc",
+        "id": "1793886602775-sd39-e7.mc-259988",
+        "summary": "E7.6 receipt claimed the deity moves a number, so it travels with the file (export named, clone not); actual clone_character copied no bio, and the load rewrites the row from bio.json, so a clone of Iomedae's Cleric read -4",
+        "ts": "2026-11-05T13:50:02Z"
+      },
+      {
+        "actor": "sd39-e7.mc",
+        "id": "1793886602902-sd39-e7.mc-4e1a54",
+        "summary": "E7.4 row claimed Melee is the first melee weapon in hand's; a shield's bash is not a weapon in hand; actual a catalog row whose base is a shield states is_shield false, so Shield (Light/Steel) worn first was the Melee number: pf_Cleric.pcg read -2 with a Morningstar row of 2",
+        "ts": "2026-11-05T13:50:02Z"
+      },
+      {
+        "actor": "sd39-e7.mc",
+        "id": "1793886603028-sd39-e7.mc-06a42e",
+        "summary": "E7.1 mapping claimed DEITY maps to bio.deity; actual DEITY:None is PCGen's word for no deity; 7 of 65 fixtures wrote the word None as a deity",
+        "ts": "2026-11-05T13:50:03Z"
+      },
+      {
+        "actor": "sd39-e7.mc",
+        "id": "1793904929028-sd39-e7.mc-8b03e6",
+        "summary": "E5.MC decision, E7.6 receipt claimed a clone and an Export carry the character's sidecar files (custom, ledger, hit points, bio); actual neither carried money.json: a clone or an Export then Import of a character holding 36,345 cp read 0",
+        "ts": "2026-11-05T18:55:29Z"
+      },
+      {
+        "actor": "sd39-e7.mc",
+        "id": "1793906517523-sd39-e7.mc-7414aa",
+        "summary": "SD-39 card-count constants (epic-breakdown E9.5, kanban.md line 31, content-unit-inventory F-3) claimed 59 cards; actual 63 cards with E7.7; four discovered cards (E1.5, E1.6, E7.3, E7.7) re-counted G-12, README and epic-breakdown but not these three",
+        "ts": "2026-11-05T19:21:57Z"
+      },
+      {
+        "actor": "sd39-e7.mc",
+        "id": "1793906534554-sd39-e7.mc-5675fd",
+        "summary": "sd39-e7.mc retro event 1793906517523 claimed four discovered cards, E1.5, E1.6, E7.3, E7.7, took 59 to 63; actual the list was not derived: kanban.md names at least E3.6, E4.5, E4.6, E4.7, E5.4, E7.3, E7.7 as discovered; the three constants were simply never re-counted after launch",
+        "ts": "2026-11-05T19:22:14Z"
+      }
+    ],
+    "repeat_subjects": [],
+    "total": 24,
+    "with_blast_radius": 1
+  },
+  "deferrals": {
+    "open": 0,
+    "open_items": [],
+    "recent": [],
+    "resolved": 0,
+    "total": 0
+  },
+  "events": {
+    "by_actor": {
+      "sd39-e7.1": 6,
+      "sd39-e7.2": 5,
+      "sd39-e7.3": 4,
+      "sd39-e7.4": 4,
+      "sd39-e7.5": 1,
+      "sd39-e7.6": 2,
+      "sd39-e7.mc": 11
+    },
+    "by_origin": {
+      "agent": 26,
+      "derived": 7
+    },
+    "by_type": {
+      "correction": 24,
+      "incident": 2,
+      "verification": 7
+    },
+    "total": 33
+  },
+  "generated_at": "2026-11-05T19:22:25Z",
+  "generated_by": "scripts/retro.py summary",
+  "git_join": {
+    "authors": 1,
+    "available": true,
+    "commits": 59,
+    "events_per_commit": 0.5593,
+    "top_authors": [
+      [
+        "Todd Hintzmann",
+        59
+      ]
+    ]
+  },
+  "incidents": {
+    "by_recurrence_key": {
+      "network-outage-mid-run": 1,
+      "wrote-in-lead-checkout": 1
+    },
+    "recent": [
+      {
+        "actor": "sd39-e7.2",
+        "id": "1793832825695-sd39-e7.2-af633e",
+        "summary": "a nohup log redirect with a wrong relative path wrote cargo-sweep.log into the lead's checkout, untracked, for about a minute (detected by realpath of the redirect target in the same command)",
+        "ts": "2026-11-04T22:53:45Z"
+      },
+      {
+        "actor": "sd39-e7.mc",
+        "id": "1793904929171-sd39-e7.mc-1d7ae1",
+        "summary": "an internet outage cut the first E7.MC run after its code commit, before push; the codex-ingest sweep's PCGen oracle test failed on a gradle download in the same window",
+        "ts": "2026-11-05T18:55:29Z"
+      }
+    ],
+    "recurring": [],
+    "silent": 0,
+    "time_lost_minutes": 1,
+    "total": 2
+  },
+  "log": {
+    "invalid_lines": 0,
+    "path": "/home/ubuntu/workspace/repos/codex/.worktrees/sd39-main/docs/retro/events",
+    "problems": [],
+    "shards": 7
+  },
+  "near_misses": {
+    "by_caught_by": {},
+    "escaped": 0,
+    "recent": [],
+    "total": 0
+  },
+  "rework": {
+    "by_cause": {},
+    "recent": [],
+    "total": 0
+  },
+  "schema_version": 1,
+  "verification": {
+    "by_failing_stage": {},
+    "fail_rate": 0.0,
+    "failed_runs": 0,
+    "runs": 7
+  },
+  "window": {
+    "since": "2026-11-03T00:00:00+00:00",
+    "spec": "2026-11-03T00:00:00",
+    "until": null
+  }
+}

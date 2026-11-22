@@ -1,0 +1,30 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Kyton Shield",
+    "category": "Combat",
+    "name": "Kyton Shield",
+    "description": "Whether in your hand or draped around your body, the spiked chain serves as both weapon and shield. When using Kyton Style, you gain a +1 shield bonus to your Armor Class as long as you are wielding a spiked chain. If the spiked chain is magical, add 1/2 its enhancement bonus to this shield bonus. If the spiked chain has the vicious ability, instead add its full enhancement bonus to the shield bonus.",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=FEAT,Kyton Style",
+      "PRETOTALAB:5",
+      "PREVARGTEQ:PreStatScore_WIS,15"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_feats.lst",
+    "sha256": "b8183ddca5eece895bf40f7765744bb470970418a8baca58aee907487f0140e6",
+    "line": 34,
+    "record_key": "Kyton Shield"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

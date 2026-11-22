@@ -1,0 +1,72 @@
+{
+  "completeness": "full",
+  "data": {
+    "codex_generated_name": false,
+    "corpus_key": "Fast Healing",
+    "delivery": "Extraordinary",
+    "description": "You regain hit points at %1 hit points per round. You regain hit points at %2 per round. Fast healing does not restore hit points lost from starvation, thirst, or suffocation, nor does it allow a creature to regrow lost body parts. Unless otherwise stated, it does not allow lost body parts to be reattached. Fast healing continues to function (even at negative hit points) until a creature dies, at which point the effects of fast healing end immediately.",
+    "description_variables": [
+      "FastHealingRate",
+      "FastHealingRate"
+    ],
+    "facet": "SpecialQuality",
+    "key": "beastiary:monster_ability:fast_healing",
+    "name": "Fast Healing",
+    "owners": [
+      "beastiary:monster:retriever",
+      "beastiary:monster:shoggoth",
+      "beastiary:monster:vampire_spawn"
+    ],
+    "raw_tokens": [
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|%1|FastHealingRate"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FastHealingRate|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You regain hit points at %1 hit points per round.|FastHealingRate"
+      },
+      {
+        "key": "DESC",
+        "value": "You regain hit points at %1 per round. Fast healing does not restore hit points lost from starvation, thirst, or suffocation, nor does it allow a creature to regrow lost body parts. Unless otherwise stated, it does not allow lost body parts to be reattached. Fast healing continues to function (even at negative hit points) until a creature dies, at which point the effects of fast healing end immediately.|FastHealingRate"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.300"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary.ModifyHP"
+      }
+    ],
+    "rename": null,
+    "source_page": "p.300",
+    "traits": [
+      "ModifyHP"
+    ]
+  },
+  "ingested_at": "2026-08-23T22:58:47Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1363,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "record_key": "Fast Healing",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

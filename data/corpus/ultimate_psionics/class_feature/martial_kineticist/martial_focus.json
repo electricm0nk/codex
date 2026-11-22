@@ -1,0 +1,72 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Martial Kineticist ~ Martial Focus",
+    "name": "Martial Focus",
+    "class": "Kineticist",
+    "description": "You are treated as if you are still maintaining your psionic focus even after you have expended it.  For effects that require maintaining psionic focus, you are treated as if you are maintaining your psionic focus for %1 rounds after you expended focus.  You can use this ability %2/day.|MartialFocusDuration|MartialFocusTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Martial Kineticist ~ Martial Focus"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "PsychicWarriorClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MartialFocusDuration|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MartialFocusTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You are treated as if you are still maintaining your psionic focus even after you have expended it.  For effects that require maintaining psionic focus, you are treated as if you are maintaining your psionic focus for %1 rounds after you expended focus.  You can use this ability %2/day.|MartialFocusDuration|MartialFocusTimes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MartialFocusTimes|3"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MartialFocusDuration|WIS"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.276"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|MartialFocusTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2043,
+    "record_key": "Martial Kineticist ~ Martial Focus"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

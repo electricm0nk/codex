@@ -1,0 +1,35 @@
+{
+  "codex_generated_name": false,
+  "completeness": "chassis_only",
+  "data": {
+    "key": "Bonus Language ~ Orc",
+    "name": "Bonus Language ~ Orc",
+    "raw_tokens": [
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "LANGBONUS",
+        "value": "Orc"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T16:43:14Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 6,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/orc/orc_templates_language.lst",
+    "record_key": "Bonus Language ~ Orc",
+    "sha256": "625e41492f5345051c4f3dbb1423c48420cec613d800b836211951bd9a218128"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

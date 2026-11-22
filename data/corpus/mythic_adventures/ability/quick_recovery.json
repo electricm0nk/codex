@@ -1,0 +1,72 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Mythic Path Ability ~ Quick Recovery",
+    "name": "Quick Recovery",
+    "description": "Whenever you are dazed, dazzled, deafened, sickened, or stunned, reduce the duration of that condition by half (minimum 1 round). Any other effects relating to the source of that condition are unaffected; for example, if you are panicked and sickened from an eyebite spell, the panicked effect has the normal duration even though you are sickened for only half as long. You can select this ability twice. The second time you select it, you also reduce the duration of the blinded, nauseated, and paralyzed conditions by half.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Path Ability ~ Quick Recovery"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Path Ability.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Mythic Path ~ Guardian"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "MythicTierLevel,1"
+      },
+      {
+        "key": "PREVARLT",
+        "value": "count(\"ABILITIES\",\"CATEGORY=Special Ability\",\"KEY=Mythic Path Ability ~ Quick Recovery\"),2"
+      },
+      {
+        "key": "DESC",
+        "value": "Whenever you are dazed, dazzled, deafened, sickened, or stunned, reduce the duration of that condition by half (minimum 1 round). Any other effects relating to the source of that condition are unaffected; for example, if you are panicked and sickened from an eyebite spell, the panicked effect has the normal duration even though you are sickened for only half as long. You can select this ability twice. The second time you select it, you also reduce the duration of the blinded, nauseated, and paralyzed conditions by half."
+      },
+      {
+        "key": "STACK",
+        "value": "YES"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "NOCHOICE"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.29"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
+    "line": 239,
+    "record_key": "Mythic Path Ability ~ Quick Recovery"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

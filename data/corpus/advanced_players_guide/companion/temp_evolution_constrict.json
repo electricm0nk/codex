@@ -1,0 +1,93 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Temp Evolution ~ Constrict",
+    "delivery": "Extraordinary",
+    "description": null,
+    "description_variables": [],
+    "description_variants": [],
+    "facet": null,
+    "key": "advanced_players_guide:companion:temp_evolution_constrict",
+    "name": "Constrict",
+    "owners": [
+      "advanced_players_guide:companion:familiar_crab_giant_king"
+    ],
+    "raw_tokens": [
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Evolution ~ Constrict"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|VIRTUAL|Evolution ~ Constrict"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TempEvolutionCost|-2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TempEvolutionTaken|1"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "TempEvolutionTaken|0"
+      },
+      {
+        "key": "KEY",
+        "value": "Temp Evolution ~ Constrict"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Evolution ~ Grab"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PRERACE:1,Eidolon (Serpentine)],[PREABILITY:1,CATEGORY=Internal,Eidolon Type ~ Serpentine]"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "EidolonTempEvolutionPool,2"
+      },
+      {
+        "key": "PREVARLT",
+        "value": "TempEvolutionTaken,TempEvolutionsAllowed"
+      },
+      {
+        "key": "TYPE",
+        "value": "TempEvolutionChoice.Extraordinary"
+      }
+    ],
+    "record_type": "ability",
+    "source_page": null,
+    "stat_adjustments": [],
+    "type_segments": [
+      "TempEvolutionChoice",
+      "Extraordinary"
+    ]
+  },
+  "ingested_at": "2026-08-18T22:35:20Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 261,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_companion.lst",
+    "record_key": "Temp Evolution ~ Constrict",
+    "sha256": "61a70768a48385f4e43881fe0d28d51abb4eedcd0e3ab1f504660ead793d08b4"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

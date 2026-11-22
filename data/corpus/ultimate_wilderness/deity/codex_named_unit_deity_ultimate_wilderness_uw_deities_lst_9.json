@@ -1,0 +1,70 @@
+{
+  "codex_generated_name": true,
+  "completeness": "full",
+  "data": {
+    "key": "Codex-Named Unit (deity_ultimate_wilderness_uw_deities_lst_9)",
+    "name": "Codex-Named Unit (deity_ultimate_wilderness_uw_deities_lst_9)",
+    "raw_tokens": [
+      {
+        "key": "NAMEISPI",
+        "value": "YES"
+      },
+      {
+        "key": "DOMAINS",
+        "value": "Knowledge,Madness,Nobility,Repose,Ancestors Subdomain,Insanity Subdomain,Martyr Subdomain,Memory Subdomain|PREALIGN:LN,NG,TN,NE,CN"
+      },
+      {
+        "key": "DESC",
+        "value": "Eldest of forgotten things, sadness, solitude"
+      },
+      {
+        "key": "FACT",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "FACT",
+        "value": "Symbol|Crumbling black tower"
+      },
+      {
+        "key": "FACTSET",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "DEITYWEAP",
+        "value": "Quarterstaff"
+      },
+      {
+        "key": "ALIGN",
+        "value": "TN"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.131"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|InquisitorDomainKnowledge,InquisitorDomainMadness,InquisitorDomainNobility,InquisitorDomainRepose,InquisitorDomainAncestorsSubdomain,InquisitorDomainInsanitySubdomain,InquisitorDomainMartyrSubdomain,InquisitorDomainMemorySubdomain|1"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T14:24:41Z",
+  "license": "PI-REDACTED",
+  "pi_field": "name,raw_tokens",
+  "pi_marker": "redacted",
+  "population": "in_scope",
+  "rename": {
+    "coordinate": "ultimate_wilderness:uw_deities.lst:9",
+    "reason": "name_pi_blocked"
+  },
+  "source": {
+    "kind": "lst_token",
+    "line": 9,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_deities.lst",
+    "record_key": "Codex-Named Unit (deity_ultimate_wilderness_uw_deities_lst_9)",
+    "sha256": "aa5a4376eaf49e6d6c23c2b78003538e51eb5bd0f638c9371387e1a34a435a3f"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

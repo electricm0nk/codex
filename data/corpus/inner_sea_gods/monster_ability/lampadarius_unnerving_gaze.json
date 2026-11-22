@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T10:26:11Z",
+  "data": {
+    "corpus_key": "Lampadarius ~ Unnerving Gaze",
+    "delivery": "Extraordinary",
+    "description": "A lampadarius can make an opponent feel like its own shadow is attempting to claw its face. Those who fail their saves are shaken for 1d3 rounds. This ability has no effect if there is no light present to create shadows. In dim illumination, the DC increases by 2. This is a mind-affecting fear effect.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "inner_sea_gods:monster_ability:lampadarius_unnerving_gaze",
+    "name": "Unnerving Gaze",
+    "owners": [
+      "inner_sea_gods:monster:kyton_lampadarius"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities_races.lst",
+    "sha256": "b309f3f779ee8d564aacff977e2a9119410a70844107ecd3e6bdc0170fe79ea8",
+    "line": 303,
+    "record_key": "Lampadarius ~ Unnerving Gaze"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

@@ -1,0 +1,16 @@
+codex verify — mode: --only, jobs: 2
+repo:  /home/ubuntu/workspace/repos/codex
+logs:  /tmp/codex-verify-EKnbpX
+---------------------------------------------------------------
+==> clippy — cargo clippy --locked --tests -j 2  (BOTH crates)
+    PASS  clippy  (root:52 desktop:7 warnings, 0 errors)
+---------------------------------------------------------------
+==> driver-selftest — scripts/tests/test_run_desktop_driver.sh
+    PASS  driver-selftest  (7 passed, 0 failed)
+---------------------------------------------------------------
+SUMMARY
+  passed:  2  clippy driver-selftest
+
+RESULT: PASS
+logs in /tmp/codex-verify-EKnbpX
+EXIT=0

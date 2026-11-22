@@ -1,0 +1,75 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Constant ~ Magic Weapon",
+    "delivery": "SpellLike",
+    "description": "You can use magic weapon, as per the spell, as a constant ability. Constant spell-like abilities function at all times but can be dispelled. Constant spell-like abilities can be reactivated a as a swift action.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "inner_sea_world_guide:monster_ability:constant_magic_weapon",
+    "name": "Magic Weapon",
+    "owners": [
+      "inner_sea_world_guide:monster:calikang"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SLA_CL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can use magic weapon, as per the spell, as a constant ability. Constant spell-like abilities function at all times but can be dispelled. Constant spell-like abilities can be reactivated a as a swift action."
+      },
+      {
+        "key": "KEY",
+        "value": "Constant ~ Magic Weapon"
+      },
+      {
+        "key": "SOURCELONG",
+        "value": "Core Rulebook"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.310"
+      },
+      {
+        "key": "SOURCESHORT",
+        "value": "CR"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=ATWILL|CASTERLEVEL=SLA_CL|Magic Weapon,11+CHA"
+      },
+      {
+        "key": "TYPE",
+        "value": "PFSNotLegal"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.SpellLike"
+      }
+    ],
+    "source_page": "p.310",
+    "traits": []
+  },
+  "ingested_at": "2026-08-15T01:24:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 91,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_abilities_race.lst",
+    "record_key": "Constant ~ Magic Weapon",
+    "sha256": "776debf1cea780aac4b3518c47baf43523d6b06deb0aea80de08b640ffc03c15"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:spells"
+  ]
+}

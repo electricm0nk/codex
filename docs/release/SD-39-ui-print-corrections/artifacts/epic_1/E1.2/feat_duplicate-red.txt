@@ -1,0 +1,15 @@
+test character_hub::tests::feat_duplicate_a_seeded_feat_is_held_whichever_shape_the_picker_sends ... FAILED
+test character_hub::tests::feat_duplicate_a_feat_with_no_record_is_not_stackable ... FAILED
+test character_hub::tests::feat_duplicate_every_chooser_feat_is_repeatable_and_catalog_keys_reach_their_records ... ok
+test character_hub::tests::feat_duplicate_a_draft_with_a_duplicate_pick_still_lists_feats ... ok
+test character_hub::tests::feat_duplicate_a_save_already_holding_two_copies_keeps_them ... FAILED
+test character_hub::tests::feat_duplicate_is_named_before_the_budget_on_a_full_character ... FAILED
+test character_hub::tests::feat_duplicate_a_repeatable_feat_with_no_target_may_be_taken_again ... ok
+test character_hub::tests::feat_duplicate_create_refuses_the_same_pick_twice_and_a_seeded_target_again ... FAILED
+test character_hub::tests::feat_duplicate_create_a_pick_of_a_seeded_default_replaces_it ... FAILED
+test character_hub::tests::feat_duplicate_create_allows_what_may_be_taken_again ... ok
+test character_hub::tests::feat_duplicate_an_untargeted_chooser_feat_is_refused_only_against_an_untargeted_copy ... FAILED
+test character_hub::tests::feat_duplicate_weapon_focus_longsword_and_dagger_are_two_feats_and_neither_comes_twice ... FAILED
+test character_hub::tests::feat_duplicate_toughness_twice_is_refused_in_every_id_shape ... FAILED
+test character_hub::tests::feat_duplicate_skill_focus_targets_are_compared_within_the_feat ... FAILED
+test result: FAILED. 4 passed; 10 failed; 0 ignored; 0 measured; 905 filtered out; finished in 29.54s

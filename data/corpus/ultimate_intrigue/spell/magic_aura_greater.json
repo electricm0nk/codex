@@ -1,0 +1,88 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "If cast on an object, this spell functions as magic aura, except that if you have identified the unique spellcasting signatures of a specific individual with greater detect magic or a similar spell, you can make the magic aura appear to have been created by that individual. Alternatively, you can simply obscure all identifiers, making it more difficult to determine who cast the spell. In either case, if the object is the subject of a greater detect magic spell, any Spellcraft check made to identify the unique spellcasting identifiers of the aura automatically produce the result you chose unless the observer disbelieves the spell with a successful Will save (as with magic aura, however, detect spells don't grant a save to disbelieve). If cast on a creature, you can make that creature register to detect spells (and spells with similar capabilities) as though it were the subject of any number of spells that you specify, when the spell is cast. Alternatively, you can make the creature register as nonmagical, hiding all spell effects that he is currently affected by from such scrutiny. If you choose to make the creature register as being the subject of one or more spells, you can also alter the unique spellcasting identifiers of those spell auras, in the same fashion as described for objects. If the target is a creature, you can also alter how the creature registers to arcane sight, making the creature appear to have or not have spellcasting or spell-like abilities, whether those abilities are arcane, divine, or psychic in nature, and the strength of the most powerful spell or spell-like ability they currently have available for use. Similarly, you can alter the way the target appears when viewed with greater detect magic, causing the last spell that he cast to seem to be any spell of your choice.|PRERULE:1,DisplayFullSpell",
+    "key": "Magic Aura (Greater)",
+    "level": 3,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Bard,Mesmerist,Occultist=3|Psychic,Sorcerer,Wizard=4"
+      },
+      {
+        "key": "COMPS",
+        "value": "V,S,F"
+      },
+      {
+        "key": "DESC",
+        "value": "As magic aura, but also affects creatures and allows more options.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "If cast on an object, this spell functions as magic aura, except that if you have identified the unique spellcasting signatures of a specific individual with greater detect magic or a similar spell, you can make the magic aura appear to have been created by that individual. Alternatively, you can simply obscure all identifiers, making it more difficult to determine who cast the spell. In either case, if the object is the subject of a greater detect magic spell, any Spellcraft check made to identify the unique spellcasting identifiers of the aura automatically produce the result you chose unless the observer disbelieves the spell with a successful Will save (as with magic aura, however, detect spells don't grant a save to disbelieve). If cast on a creature, you can make that creature register to detect spells (and spells with similar capabilities) as though it were the subject of any number of spells that you specify, when the spell is cast. Alternatively, you can make the creature register as nonmagical, hiding all spell effects that he is currently affected by from such scrutiny. If you choose to make the creature register as being the subject of one or more spells, you can also alter the unique spellcasting identifiers of those spell auras, in the same fashion as described for objects. If the target is a creature, you can also alter how the creature registers to arcane sight, making the creature appear to have or not have spellcasting or spell-like abilities, whether those abilities are arcane, divine, or psychic in nature, and the strength of the most powerful spell or spell-like ability they currently have available for use. Similarly, you can alter the way the target appears when viewed with greater detect magic, causing the last spell that he cast to seem to be any spell of your choice.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) days [D]"
+      },
+      {
+        "key": "RANGE",
+        "value": "Close"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "None"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Illusion"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://aonprd.com/SpellDisplay.aspx?ItemName=Magic Aura, Greater"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.219"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "No; see text"
+      },
+      {
+        "key": "SUBSCHOOL",
+        "value": "Glamer"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "One creature, or one object weighing up to (CASTERLEVEL*20) lbs."
+      },
+      {
+        "key": "TYPE",
+        "value": "Arcane.Psychic"
+      }
+    ],
+    "school": "Illusion"
+  },
+  "ingested_at": "2026-08-16T12:10:17Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 74,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_spells.lst",
+    "record_key": "Magic Aura (Greater)",
+    "sha256": "5f4a23b7b02b3d3b2cd4a20d8f06ec24f49e39592d0822d32cdb80d13f3e6324"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "derived:range_keyword"
+  ]
+}

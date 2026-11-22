@@ -1,0 +1,25 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:34:12Z",
+  "data": {
+    "key": "Transfer Regeneration",
+    "school": "Transmutation",
+    "level": 3,
+    "description": "You bestow your regenerative abilities on the target. Your regeneration stops functioning for the duration of the spell, and the target gains your regeneration. For example, if you have regeneration 5 (acid or fire), your target gains regeneration 5 (acid or fire). This regeneration overlaps (does not stack) with any regeneration the creature already has, including other castings of this spell. This spell has no effect if you don't have the regeneration ability or your regeneration isn't functioning when you cast the spell."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/monster_codex/mc_spells.lst",
+    "sha256": "fb504808c5c3b320b1c082f4cdb66fbf22297ae9929f2486aab2684f7a361787",
+    "line": 27,
+    "record_key": "Transfer Regeneration"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:range_keyword"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,62 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Locust (Giant) ~ Leap",
+    "delivery": "Extraordinary",
+    "description": "A giant locust can take 10 on Acrobatics checks to jump, even when distracted or threatened.",
+    "description_variables": [],
+    "description_variants": [],
+    "facet": null,
+    "key": "ultimate_wilderness:companion:locust_giant_leap",
+    "name": "Leap",
+    "owners": [
+      "ultimate_wilderness:companion:companion_locust_giant"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A giant locust can take 10 on Acrobatics checks to jump, even when distracted or threatened."
+      },
+      {
+        "key": "KEY",
+        "value": "Locust (Giant) ~ Leap"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.185"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuaility.Extraordinary.GiantLocustRacialTrait"
+      }
+    ],
+    "record_type": "ability",
+    "source_page": "p.185",
+    "stat_adjustments": [],
+    "type_segments": [
+      "SpecialQuaility",
+      "Extraordinary",
+      "GiantLocustRacialTrait"
+    ]
+  },
+  "ingested_at": "2026-08-15T01:24:11Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 266,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+    "record_key": "Locust (Giant) ~ Leap",
+    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

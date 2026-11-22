@@ -1,0 +1,63 @@
+{
+  "completeness": "full",
+  "data": {
+    "codex_generated_name": false,
+    "corpus_key": "Traits Output ~ Demodand",
+    "delivery": "Extraordinary",
+    "description": "Immunity to acid and poison. &nl; Resistance to fire 10 and cold 10. &nl; Faith-Stealing Strike (Su) When a demodand's natural attack or melee weapon damages a creature capable of casting divine spells, that creature must make a Will saving throw or be unable to cast any divine spells for 1 round. Once a creature makes this save, it is immune to further faith-stealing strikes from that particular demodand for 24 hours. The save DC is Charisma-based. &nl; Heretical Soul (Ex) All demodands gain a +4 bonus on saving throws against divine spells. In addition, any attempts to scry on a demodand using divine magic automatically fail. The caster can see the scryed area normally, but the demodand simply does not appear.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:traits_output_demodand",
+    "name": "Demodand Traits",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "&nl; Faith-Stealing Strike (Su) When a demodand's natural attack or melee weapon damages a creature capable of casting divine spells, that creature must make a Will saving throw or be unable to cast any divine spells for 1 round. Once a creature makes this save, it is immune to further faith-stealing strikes from that particular demodand for 24 hours. The save DC is Charisma-based."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl; Heretical Soul (Ex) All demodands gain a +4 bonus on saving throws against divine spells. In addition, any attempts to scry on a demodand using divine magic automatically fail. The caster can see the scryed area normally, but the demodand simply does not appear."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl; Resistance to fire 10 and cold 10."
+      },
+      {
+        "key": "DESC",
+        "value": "Immunity to acid and poison."
+      },
+      {
+        "key": "KEY",
+        "value": "Traits Output ~ Demodand"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary"
+      }
+    ],
+    "rename": null,
+    "source_page": null,
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T22:59:00Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 2308,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "record_key": "Traits Output ~ Demodand",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

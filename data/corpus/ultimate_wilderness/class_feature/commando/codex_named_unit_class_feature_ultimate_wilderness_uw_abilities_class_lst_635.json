@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T21:27:29Z",
+  "data": {
+    "key": "Codex-Named Unit (class_feature_ultimate_wilderness_uw_abilities_class_lst_635)",
+    "name": "Codex-Named Unit (class_feature_ultimate_wilderness_uw_abilities_class_lst_635)",
+    "class": "Commando",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Commando ~ Ranger Trap"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "TYPE",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "STACK",
+        "value": "YES"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "NOCHOICE"
+      },
+      {
+        "key": "BONUS",
+        "value": "[redacted PI]"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 635,
+    "record_key": "Codex-Named Unit (class_feature_ultimate_wilderness_uw_abilities_class_lst_635)"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "name,raw_tokens",
+  "pi_marker": "redacted",
+  "codex_generated_name": true,
+  "rename": {
+    "reason": "name_pi_blocked",
+    "coordinate": "ultimate_wilderness:uw_abilities_class.lst:635"
+  }
+}

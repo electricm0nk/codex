@@ -1,0 +1,264 @@
+   Compiling codex v0.1.0 (/home/ubuntu/workspace/repos/codex/.worktrees/sd38-a)
+error[E0425]: cannot find type `CprArmorCatalog` in this scope
+  --> src/rules_core/cpr/armor.rs:20:21
+   |
+20 |     fn catalog() -> CprArmorCatalog {
+   |                     ^^^^^^^^^^^^^^^ not found in this scope
+
+error[E0425]: cannot find type `CprArmorLocation` in this scope
+  --> src/rules_core/cpr/armor.rs:25:35
+   |
+25 |     fn wear(name: &str, location: CprArmorLocation) -> CprWornArmor {
+   |                                   ^^^^^^^^^^^^^^^^ not found in this scope
+
+error[E0425]: cannot find type `CprWornArmor` in this scope
+  --> src/rules_core/cpr/armor.rs:25:56
+   |
+25 |     fn wear(name: &str, location: CprArmorLocation) -> CprWornArmor {
+   |                                                        ^^^^^^^^^^^^ not found in this scope
+
+error[E0422]: cannot find struct, variant or union type `CprWornArmor` in this scope
+  --> src/rules_core/cpr/armor.rs:26:9
+   |
+26 |         CprWornArmor { name: name.to_string(), location }
+   |         ^^^^^^^^^^^^ not found in this scope
+
+error[E0425]: cannot find type `ComputationExplanation` in this scope
+  --> src/rules_core/cpr/armor.rs:29:20
+   |
+29 |     fn row(rows: &[ComputationExplanation], id: &str) -> i16 {
+   |                    ^^^^^^^^^^^^^^^^^^^^^^ not found in this scope
+   |
+help: consider importing this struct through its public re-export
+   |
+ 3 +     use crate::rules_core::pilot_compute::ComputationExplanation;
+   |
+
+error[E0422]: cannot find struct, variant or union type `CprSpSource` in this scope
+   --> src/rules_core/cpr/armor.rs:111:25
+    |
+111 |         let subdermal = CprSpSource { label: "Subdermal Armor".to_string(), location: CprArmorLocation::Body, sp: 11 };
+    |                         ^^^^^^^^^^^ not found in this scope
+
+warning: unused import: `super::*`
+ --> src/rules_core/cpr/armor.rs:3:9
+  |
+3 |     use super::*;
+  |         ^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+error[E0433]: cannot find type `CprArmorCatalog` in this scope
+  --> src/rules_core/cpr/armor.rs:22:9
+   |
+22 |         CprArmorCatalog::load(&dir).expect("the CPR armour corpus loads")
+   |         ^^^^^^^^^^^^^^^ use of undeclared type `CprArmorCatalog`
+
+error[E0433]: cannot find type `CprArmorLocation` in this scope
+  --> src/rules_core/cpr/armor.rs:45:45
+   |
+45 |         let worn = [wear("Light Armorjack", CprArmorLocation::Head), wear("Flak", CprArmorLocation::Body)];
+   |                                             ^^^^^^^^^^^^^^^^ use of undeclared type `CprArmorLocation`
+
+error[E0433]: cannot find type `CprArmorLocation` in this scope
+  --> src/rules_core/cpr/armor.rs:45:83
+   |
+45 |         let worn = [wear("Light Armorjack", CprArmorLocation::Head), wear("Flak", CprArmorLocation::Body)];
+   |                                                                                   ^^^^^^^^^^^^^^^^ use of undeclared type `CprArmorLocation`
+
+error[E0433]: cannot find type `CprArmorLocation` in this scope
+  --> src/rules_core/cpr/armor.rs:47:30
+   |
+47 |         assert_eq!(armour.sp(CprArmorLocation::Body), 15);
+   |                              ^^^^^^^^^^^^^^^^ use of undeclared type `CprArmorLocation`
+
+error[E0433]: cannot find type `CprArmorLocation` in this scope
+  --> src/rules_core/cpr/armor.rs:48:30
+   |
+48 |         assert_eq!(armour.sp(CprArmorLocation::Head), 11);
+   |                              ^^^^^^^^^^^^^^^^ use of undeclared type `CprArmorLocation`
+
+error[E0433]: cannot find type `CprArmorLocation` in this scope
+  --> src/rules_core/cpr/armor.rs:61:45
+   |
+61 |         let worn = [wear("Light Armorjack", CprArmorLocation::Head), wear("Flak", CprArmorLocation::Body)];
+   |                                             ^^^^^^^^^^^^^^^^ use of undeclared type `CprArmorLocation`
+
+error[E0433]: cannot find type `CprArmorLocation` in this scope
+  --> src/rules_core/cpr/armor.rs:61:83
+   |
+61 |         let worn = [wear("Light Armorjack", CprArmorLocation::Head), wear("Flak", CprArmorLocation::Body)];
+   |                                                                                   ^^^^^^^^^^^^^^^^ use of undeclared type `CprArmorLocation`
+
+error[E0433]: cannot find type `CprArmorLocation` in this scope
+  --> src/rules_core/cpr/armor.rs:71:28
+   |
+71 |             wear("Kevlar", CprArmorLocation::Body),
+   |                            ^^^^^^^^^^^^^^^^ use of undeclared type `CprArmorLocation`
+
+error[E0433]: cannot find type `CprArmorLocation` in this scope
+  --> src/rules_core/cpr/armor.rs:72:37
+   |
+72 |             wear("Light Armorjack", CprArmorLocation::Body),
+   |                                     ^^^^^^^^^^^^^^^^ use of undeclared type `CprArmorLocation`
+
+error[E0433]: cannot find type `CprArmorLocation` in this scope
+  --> src/rules_core/cpr/armor.rs:73:30
+   |
+73 |             wear("Leathers", CprArmorLocation::Body),
+   |                              ^^^^^^^^^^^^^^^^ use of undeclared type `CprArmorLocation`
+
+error[E0433]: cannot find type `CprArmorLocation` in this scope
+  --> src/rules_core/cpr/armor.rs:76:30
+   |
+76 |         assert_eq!(armour.sp(CprArmorLocation::Body), 11, "max(7, 11, 4), never 7 + 11 + 4");
+   |                              ^^^^^^^^^^^^^^^^ use of undeclared type `CprArmorLocation`
+
+error[E0433]: cannot find type `CprArmorLocation` in this scope
+  --> src/rules_core/cpr/armor.rs:77:30
+   |
+77 |         assert_eq!(armour.sp(CprArmorLocation::Head), 0, "nothing on the head");
+   |                              ^^^^^^^^^^^^^^^^ use of undeclared type `CprArmorLocation`
+
+error[E0433]: cannot find type `CprArmorLocation` in this scope
+  --> src/rules_core/cpr/armor.rs:82:46
+   |
+82 |         let worn = [wear("Medium Armorjack", CprArmorLocation::Head), wear("Heavy Armorjack", CprArmorLocation::Body)];
+   |                                              ^^^^^^^^^^^^^^^^ use of undeclared type `CprArmorLocation`
+
+error[E0433]: cannot find type `CprArmorLocation` in this scope
+  --> src/rules_core/cpr/armor.rs:82:95
+   |
+82 |         let worn = [wear("Medium Armorjack", CprArmorLocation::Head), wear("Heavy Armorjack", CprArmorLocation::Body)];
+   |                                                                                               ^^^^^^^^^^^^^^^^ use of undeclared type `CprArmorLocation`
+
+error[E0433]: cannot find type `CprArmorLocation` in this scope
+  --> src/rules_core/cpr/armor.rs:85:46
+   |
+85 |         let worn = [wear("Medium Armorjack", CprArmorLocation::Head), wear("Metalgear", CprArmorLocation::Body)];
+   |                                              ^^^^^^^^^^^^^^^^ use of undeclared type `CprArmorLocation`
+
+error[E0433]: cannot find type `CprArmorLocation` in this scope
+  --> src/rules_core/cpr/armor.rs:85:89
+   |
+85 |         let worn = [wear("Medium Armorjack", CprArmorLocation::Head), wear("Metalgear", CprArmorLocation::Body)];
+   |                                                                                         ^^^^^^^^^^^^^^^^ use of undeclared type `CprArmorLocation`
+
+error[E0433]: cannot find type `CprArmorLocation` in this scope
+  --> src/rules_core/cpr/armor.rs:87:36
+   |
+87 |         let worn = [wear("Kevlar", CprArmorLocation::Head), wear("Light Armorjack", CprArmorLocation::Body)];
+   |                                    ^^^^^^^^^^^^^^^^ use of undeclared type `CprArmorLocation`
+
+error[E0433]: cannot find type `CprArmorLocation` in this scope
+  --> src/rules_core/cpr/armor.rs:87:85
+   |
+87 |         let worn = [wear("Kevlar", CprArmorLocation::Head), wear("Light Armorjack", CprArmorLocation::Body)];
+   |                                                                                     ^^^^^^^^^^^^^^^^ use of undeclared type `CprArmorLocation`
+
+error[E0433]: cannot find type `CprArmorLocation` in this scope
+  --> src/rules_core/cpr/armor.rs:95:45
+   |
+95 |         let worn = [wear("Bodyweight Suit", CprArmorLocation::Body)];
+   |                                             ^^^^^^^^^^^^^^^^ use of undeclared type `CprArmorLocation`
+
+error[E0433]: cannot find type `CprArmorLocation` in this scope
+  --> src/rules_core/cpr/armor.rs:97:30
+   |
+97 |         assert_eq!(armour.sp(CprArmorLocation::Body), 11);
+   |                              ^^^^^^^^^^^^^^^^ use of undeclared type `CprArmorLocation`
+
+error[E0433]: cannot find type `CprArmorLocation` in this scope
+  --> src/rules_core/cpr/armor.rs:98:30
+   |
+98 |         assert_eq!(armour.sp(CprArmorLocation::Head), 11, "p351: worn on both body and head, each SP11");
+   |                              ^^^^^^^^^^^^^^^^ use of undeclared type `CprArmorLocation`
+
+error[E0433]: cannot find type `CprArmorLocation` in this scope
+   --> src/rules_core/cpr/armor.rs:101:45
+    |
+101 |         let worn = [wear("Bodyweight Suit", CprArmorLocation::Head), wear("Flak", CprArmorLocation::Body)];
+    |                                             ^^^^^^^^^^^^^^^^ use of undeclared type `CprArmorLocation`
+
+error[E0433]: cannot find type `CprArmorLocation` in this scope
+   --> src/rules_core/cpr/armor.rs:101:83
+    |
+101 |         let worn = [wear("Bodyweight Suit", CprArmorLocation::Head), wear("Flak", CprArmorLocation::Body)];
+    |                                                                                   ^^^^^^^^^^^^^^^^ use of undeclared type `CprArmorLocation`
+
+error[E0433]: cannot find type `CprArmorLocation` in this scope
+   --> src/rules_core/cpr/armor.rs:103:30
+    |
+103 |         assert_eq!(armour.sp(CprArmorLocation::Body), 15);
+    |                              ^^^^^^^^^^^^^^^^ use of undeclared type `CprArmorLocation`
+
+error[E0433]: cannot find type `CprArmorLocation` in this scope
+   --> src/rules_core/cpr/armor.rs:104:30
+    |
+104 |         assert_eq!(armour.sp(CprArmorLocation::Head), 11);
+    |                              ^^^^^^^^^^^^^^^^ use of undeclared type `CprArmorLocation`
+
+error[E0433]: cannot find type `CprArmorLocation` in this scope
+   --> src/rules_core/cpr/armor.rs:110:36
+    |
+110 |         let worn = [wear("Kevlar", CprArmorLocation::Body)];
+    |                                    ^^^^^^^^^^^^^^^^ use of undeclared type `CprArmorLocation`
+
+error[E0433]: cannot find type `CprArmorLocation` in this scope
+   --> src/rules_core/cpr/armor.rs:111:87
+    |
+111 |         let subdermal = CprSpSource { label: "Subdermal Armor".to_string(), location: CprArmorLocation::Body, sp: 11 };
+    |                                                                                       ^^^^^^^^^^^^^^^^ use of undeclared type `CprArmorLocation`
+
+error[E0433]: cannot find type `CprArmorLocation` in this scope
+   --> src/rules_core/cpr/armor.rs:113:30
+    |
+113 |         assert_eq!(armour.sp(CprArmorLocation::Body), 11);
+    |                              ^^^^^^^^^^^^^^^^ use of undeclared type `CprArmorLocation`
+
+error[E0433]: cannot find type `CprArmorLocation` in this scope
+   --> src/rules_core/cpr/armor.rs:114:34
+    |
+114 |         let worn = [wear("Flak", CprArmorLocation::Body)];
+    |                                  ^^^^^^^^^^^^^^^^ use of undeclared type `CprArmorLocation`
+
+error[E0433]: cannot find type `CprArmorLocation` in this scope
+   --> src/rules_core/cpr/armor.rs:115:68
+    |
+115 |         assert_eq!(catalog().wear(&worn, &[subdermal]).unwrap().sp(CprArmorLocation::Body), 15);
+    |                                                                    ^^^^^^^^^^^^^^^^ use of undeclared type `CprArmorLocation`
+
+error[E0433]: cannot find type `CprArmorLocation` in this scope
+   --> src/rules_core/cpr/armor.rs:121:50
+    |
+121 |         let two_suits = [wear("Bodyweight Suit", CprArmorLocation::Body), wear("Bodyweight Suit", CprArmorLocation::Head)];
+    |                                                  ^^^^^^^^^^^^^^^^ use of undeclared type `CprArmorLocation`
+
+error[E0433]: cannot find type `CprArmorLocation` in this scope
+   --> src/rules_core/cpr/armor.rs:121:99
+    |
+121 |         let two_suits = [wear("Bodyweight Suit", CprArmorLocation::Body), wear("Bodyweight Suit", CprArmorLocation::Head)];
+    |                                                                                                   ^^^^^^^^^^^^^^^^ use of undeclared type `CprArmorLocation`
+
+error[E0433]: cannot find type `CprArmorLocation` in this scope
+   --> src/rules_core/cpr/armor.rs:123:50
+    |
+123 |         let shield = [wear("Bulletproof Shield", CprArmorLocation::Body)];
+    |                                                  ^^^^^^^^^^^^^^^^ use of undeclared type `CprArmorLocation`
+
+error[E0433]: cannot find type `CprArmorLocation` in this scope
+   --> src/rules_core/cpr/armor.rs:125:44
+    |
+125 |         let unknown = [wear("Power Armor", CprArmorLocation::Body)];
+    |                                            ^^^^^^^^^^^^^^^^ use of undeclared type `CprArmorLocation`
+
+error[E0433]: cannot find type `CprArmorLocation` in this scope
+   --> src/rules_core/cpr/armor.rs:131:34
+    |
+131 |         let worn = [wear("Flak", CprArmorLocation::Body)];
+    |                                  ^^^^^^^^^^^^^^^^ use of undeclared type `CprArmorLocation`
+
+Some errors have detailed explanations: E0422, E0425, E0433.
+For more information about an error, try `rustc --explain E0422`.
+warning: `codex` (lib test) generated 1 warning
+error: could not compile `codex` (lib test) due to 41 previous errors; 1 warning emitted

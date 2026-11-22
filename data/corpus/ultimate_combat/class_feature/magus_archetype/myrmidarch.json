@@ -1,0 +1,176 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-24T03:53:24Z",
+  "data": {
+    "key": "Magus Archetype ~ Myrmidarch",
+    "name": "Myrmidarch",
+    "class": "Magus",
+    "description": "The myrmidarch is a skilled specialist, using magic to supplement and augment his martial mastery. Less inclined to mix the two than a typical magus, the myrmidarch seeks supremacy with blade, bow, and armor.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Magus Archetype ~ Myrmidarch"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.MagusArchetype.MagusSpellRecall.MagusImprovedSpellRecall.MagusArcana6.MagusArcana12.MagusArcana18.MagusKnowledgePool.MagusImprovedSpellCombat.MagusGreaterSpellCombat.MagusTrueMagus.MagusFighterTraining"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Magus=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Magus Archetype ~ Myrmidarch],[!PREABILITY:1,CATEGORY=Archetype,TYPE.MagusSpellRecall,TYPE.MagusImprovedSpellRecall,TYPE.MagusArcana6,TYPE.MagusArcana12,TYPE.MagusArcana18,TYPE.MagusKnowledgePool,TYPE.MagusImprovedSpellCombat,TYPE.MagusGreaterSpellCombat,TYPE.MagusTrueMagus, TYPE.MagusFighterTraining]"
+      },
+      {
+        "key": "DESC",
+        "value": "The myrmidarch is a skilled specialist, using magic to supplement and augment his martial mastery. Less inclined to mix the two than a typical magus, the myrmidarch seeks supremacy with blade, bow, and armor."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Magus Class Feature|AUTOMATIC|Myrmidarch ~ Diminished Spellcasting|PRECLASS:1,Magus=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Magus Class Feature|AUTOMATIC|Myrmidarch ~ Ranged Spellstrike|PRECLASS:1,Magus=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Magus Class Feature|AUTOMATIC|Myrmidarch ~ Weapon Training|PRECLASS:1,Magus=6"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Magus Class Feature|AUTOMATIC|Myrmidarch ~ Fighter Training|PRECLASS:1,Magus=7"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Magus Class Feature|AUTOMATIC|Myrmidarch ~ Armor Training|PRECLASS:1,Magus=8"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Magus Class Feature|AUTOMATIC|Myrmidarch ~ Armor Mastery|PRECLASS:1,Magus=20"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Magus Class Feature|AUTOMATIC|Myrmidarch ~ Magus Arcana|PRECLASS:1,Magus=1"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.56"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Magus"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Magus Archetype ~ Myrmidarch],[!PREFACT:1,ABILITIES,Magus_Archetype_SpellRecall=True,Magus_Archetype_ImprovedSpellRecall=True,Magus_Archetype_Arcana6=True,Magus_Archetype_Arcana12=True,Magus_Archetype_Arcana18=True,Magus_Archetype_KnowledgePool=True,Magus_Archetype_ImprovedSpellCombat=True,Magus_Archetype_GreaterSpellCombat=True,Magus_Archetype_TrueMagus=True,Magus_Archetype_FighterTraining=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Magus_CF_SpellRecall|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Magus_CF_ImprovedSpellRecall|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Magus_CF_Arcana6|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Magus_CF_Arcana12|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Magus_CF_Arcana18|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Magus_CF_KnowledgePool|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Magus_CF_ImprovedSpellCombat|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Magus_CF_GreaterSpellCombat|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Magus_CF_TrueMagus|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Magus_CF_FighterTraining|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Magus_Archetype_SpellRecall|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Magus_Archetype_ImprovedSpellRecall|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Magus_Archetype_Arcana6|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Magus_Archetype_Arcana12|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Magus_Archetype_Arcana18|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Magus_Archetype_KnowledgePool|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Magus_Archetype_ImprovedSpellCombat|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Magus_Archetype_GreaterSpellCombat|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Magus_Archetype_TrueMagus|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Magus_Archetype_FighterTraining|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/support/uc_abilities_class_um.lst",
+    "sha256": "b8cff28b7be84f4f3c6b650c3e375a3027ff13bf4226233a514d34385bdfb67a",
+    "line": 8,
+    "record_key": "Magus Archetype ~ Myrmidarch"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

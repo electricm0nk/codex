@@ -1,0 +1,6 @@
+no_baked_manifest_dir_in_production: exit=0
+clippy: exit=0
+sd24_wired_integration_audit: exit=0
+pf_seed_render_hash: exit=0
+sf_seed_lines: exit=0
+desktop_full: exit=0

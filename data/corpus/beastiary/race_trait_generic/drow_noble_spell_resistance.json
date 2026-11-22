@@ -1,0 +1,55 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "Drow nobles have spell resistance equal to 11 + their character level.",
+    "key": "Drow Noble ~ Spell Resistance",
+    "name": "Spell Resistance",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Drow Noble ~ Spell Resistance"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Drow Racial Trait.Drow Noble Racial Trait.SpecialQuality"
+      },
+      {
+        "key": "!PREFACT",
+        "value": "1,ABILITIES,Drow_ReplaceSpellResistance=True"
+      },
+      {
+        "key": "DESC",
+        "value": "Drow nobles have spell resistance equal to 11 + their character level."
+      },
+      {
+        "key": "SR",
+        "value": "11+TL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.115"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 565,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "record_key": "Drow Noble ~ Spell Resistance",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:sr"
+  ]
+}

@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Eyebiter ~ Staring Eye",
+    "name": "Staring Eye",
+    "class": "Mesmerist",
+    "description": "An eyebiter can expend one use of his daily mesmerist tricks to either see through his eyeball familiar as if it were an arcane eye, or to use his hypnotic stare (including related abilities like painful stare and bold stare), as well as any gaze attack he possesses (like burning gaze and eyebite) through his eyeball familiar, as if he were at its location.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Eyebiter ~ Staring Eye"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mesmerist Class Features.EyebiterClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "An eyebiter can expend one use of his daily mesmerist tricks to either see through his eyeball familiar as if it were an arcane eye, or to use his hypnotic stare (including related abilities like painful stare and bold stare), as well as any gaze attack he possesses (like burning gaze and eyebite) through his eyeball familiar, as if he were at its location."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.37"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/support/ui_abilities_class_oa.lst",
+    "sha256": "123f008e9a2f31828861df9025f48f5c2f7c78a648553f22dba96a8d8a2e24dc",
+    "line": 67,
+    "record_key": "Eyebiter ~ Staring Eye"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

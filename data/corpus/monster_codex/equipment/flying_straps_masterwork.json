@@ -1,0 +1,50 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "category": "General",
+    "cost_gp": 80.0,
+    "description": null,
+    "key": "Flying Straps (Masterwork)",
+    "name": "Flying Straps (Masterwork)",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "OUTPUTNAME",
+        "value": "Flying Straps, Masterwork"
+      },
+      {
+        "key": "TYPE",
+        "value": "Goods.Mount.Resizable"
+      },
+      {
+        "key": "COST",
+        "value": "80"
+      },
+      {
+        "key": "WT",
+        "value": "10"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.105"
+      }
+    ],
+    "weight_lbs": 10.0
+  },
+  "ingested_at": "2026-08-17T08:18:39Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 11,
+    "path": "pathfinder/paizo/roleplaying_game/monster_codex/mc_equip_general.lst",
+    "record_key": "Flying Straps (Masterwork)",
+    "sha256": "207f2b99008c8bb3c6adc67fa6483c99f67b05ecf068c350088df8f4b204fda5"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

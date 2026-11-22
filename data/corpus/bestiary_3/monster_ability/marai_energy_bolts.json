@@ -1,0 +1,55 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Marai ~ Energy Bolts",
+    "delivery": "Extraordinary",
+    "description": "Once every 1d4 rounds as a standard action that provokes an attack of opportunity, a marai's six snake arms can each spit a bolt of energy to a maximum range of 60 feet. Each bolt deals 1d8 points of damage and has an additional effect if the target fails to resist it with a DC 19 Fortitude save, as summarized below. The save DC is Constitution-based. Amethyst Viper: Cold damage plus sickened for 1d4 rounds. Crimson Viper: Fire damage plus burn (1d4, DC 19). Emerald Viper: Acid damage plus nauseated for 1 round. Magenta Viper: Electricity damage plus staggered for 1 round. Turquoise Viper: Sonic damage plus stunned for 1 round. Violet Viper: Force damage plus knocked prone.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:marai_energy_bolts",
+    "name": "Energy Bolts",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Once every 1d4 rounds as a standard action that provokes an attack of opportunity, a marai's six snake arms can each spit a bolt of energy to a maximum range of 60 feet. Each bolt deals 1d8 points of damage and has an additional effect if the target fails to resist it with a DC 19 Fortitude save, as summarized below. The save DC is Constitution-based. Amethyst Viper: Cold damage plus sickened for 1d4 rounds. Crimson Viper: Fire damage plus burn (1d4, DC 19). Emerald Viper: Acid damage plus nauseated for 1 round. Magenta Viper: Electricity damage plus staggered for 1 round. Turquoise Viper: Sonic damage plus stunned for 1 round. Violet Viper: Force damage plus knocked prone."
+      },
+      {
+        "key": "KEY",
+        "value": "Marai ~ Energy Bolts"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.228"
+      },
+      {
+        "key": "TYPE",
+        "value": "MaraiRacialAbility.SpecialQuality.Extraordinary"
+      }
+    ],
+    "source_page": "p.228",
+    "traits": [
+      "MaraiRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T14:09:11Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1454,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Marai ~ Energy Bolts",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

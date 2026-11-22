@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Mythic Path Ability ~ Words of Hope",
+    "name": "Words of Hope",
+    "description": "As a standard action, you can expend one use of mythic power to inspire allies within a 30-foot radius, granting each of them the ability to roll twice and take the higher result on one attack roll, saving throw, skill check, or ability check. An ally can use this ability once per round for a number of rounds equal to half your tier, and must choose whether to roll twice before rolling the die. This is a language-dependent emotion effect.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Path Ability ~ Words of Hope"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Path Ability.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Mythic Path ~ Marshal"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "MythicTierLevel,3"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action, you can expend one use of mythic power to inspire allies within a 30-foot radius, granting each of them the ability to roll twice and take the higher result on one attack roll, saving throw, skill check, or ability check. An ally can use this ability once per round for a number of rounds equal to half your tier, and must choose whether to roll twice before rolling the die. This is a language-dependent emotion effect."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
+    "line": 367,
+    "record_key": "Mythic Path Ability ~ Words of Hope"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

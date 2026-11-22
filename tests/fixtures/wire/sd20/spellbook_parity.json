@@ -1,0 +1,45 @@
+{
+  "name": "spellbook_abjuration_parity",
+  "epic": "Epic 2 -- Spellbook engine",
+  "shape": "sd20-epic-seam-v1",
+  "shape_note": "SD-20 fixture-shape decision, documented identically across all six Epic 2-7 wire-fixture parity fixtures (spellbook_parity.json, feat_prereqs_parity.json, skill_allocation_parity.json, equipment_effects_parity.json, damage_total_parity.json, level_up_parity.json): technical-design.md section 1.2 illustrates a CharacterInput -> PilotReceipt shaped fixture, but Epic 8's own integration-closure cycle (tests/sd20_tabletop_readiness_integration.rs module doc comment, Finding 1) found Epics 2-7's compute functions are never wired into PilotReceipt / printed_sheet_cell_map at all -- each epic's real seam takes and returns its own distinct type, not a CharacterInput/PilotReceipt pair. Section 1.2's illustrative format therefore does not fit Epics 2-7 as actually landed. This fixture instead captures that epic's OWN real compute function's input -> output round trip directly: {name, epic, seam_function, input, expected_output}, where input/expected_output mirror the real Rust input/output types field-by-field. A Rust enum variant is represented as its Debug-format string (matching the convention tests/sd20_contract_boundary_parity.rs already set for expected_permutation); a Rust Option::None is represented as JSON null. Only boundary_contract_parity.json (Epic 1) and human_fighter_level_1_tabletop.json (Epic 8) are genuinely CharacterInput -> PilotReceipt shaped, because only Epic 1's contract and Epic 8's integration test actually route through that pipeline.",
+  "seam_function": "rules_core::spellbook::compute_spellbook_coverage",
+  "input": {
+    "corpus_spell": {
+      "raw_lst_row": "Shield\tSCHOOL:Abjuration\tCLASSES:Sorcerer=1,Wizard=1\tDESCRIPTION:Invisible shield of force.",
+      "note": "the same real cr_spells.lst-shaped row tests/sd20_spellbook_abjuration.rs uses; only spell identity/school need to resolve against the corpus -- level/effect_text are read from the canonical rules_tables::crb::spell_list::SPELL_LIST table store, not this row"
+    },
+    "character": {
+      "race_id": "human",
+      "class_levels": [{ "class_id": "class:wizard", "level": 1 }],
+      "ability_scores": {
+        "strength": 10,
+        "dexterity": 10,
+        "constitution": 10,
+        "intelligence": 17,
+        "wisdom": 10,
+        "charisma": 10
+      },
+      "spells_selected": [
+        { "spell_id": "Shield", "source_class_id": "class:wizard", "acquisition_mode": "Prepared" }
+      ]
+    }
+  },
+  "expected_output": {
+    "spells_prepared": [
+      {
+        "source_class_id": "class:wizard",
+        "effect": {
+          "spell_id": "Shield",
+          "school": "Abjuration",
+          "level": 1,
+          "effect_text": "Shield creates an invisible shield of force that hovers in front of you. It negates magic missile attacks directed at you. The disk also provides a +4 shield bonus to AC. This bonus applies against incorporeal touch attacks, since it is a force effect. The shield has no armor check penalty or arcane spell failure chance.",
+          "table_cell": { "table": "spell_list", "row_key": "Shield" }
+        }
+      }
+    ],
+    "spells_known": [],
+    "spell_save_dc": { "class:wizard": 14 },
+    "bonus_slots_from_ability": { "1": 1, "2": 1, "3": 1 }
+  }
+}

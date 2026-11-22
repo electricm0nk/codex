@@ -1,0 +1,5 @@
+SUMMARY
+  passed:  1  clippy
+
+RESULT: PASS
+logs in /tmp/codex-verify-hqz83P

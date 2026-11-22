@@ -1,0 +1,41 @@
+{
+  "codex_generated_name": false,
+  "completeness": "chassis_only",
+  "data": {
+    "description": null,
+    "key": "Magus",
+    "name": "Magus",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Class"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Magus_CFP_Level|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Magus_CFP_Level|MagusLVL"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 5,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_globalvar.lst",
+    "record_key": "Magus",
+    "sha256": "614263767e175881131144ad470c45e96d5f3e6e5ba0636409b45f8db8e124a9"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "static:literal_magnitudes_only"
+  ]
+}

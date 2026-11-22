@@ -1,0 +1,47 @@
+{
+  "codex_generated_name": false,
+  "completeness": "full",
+  "data": {
+    "key": "Righteous Might (Damage Reduction/Evil)",
+    "name": "Righteous Might (Damage Reduction/Evil)",
+    "raw_tokens": [
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      },
+      {
+        "key": "DR",
+        "value": "0/Evil"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Channel Positive Energy"
+      },
+      {
+        "key": "PRESPELL",
+        "value": "1,Righteous Might"
+      },
+      {
+        "key": "DESC",
+        "value": "This Template provides the Damage Reduction to a character when Righteous Might is cast."
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T16:43:17Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 46,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_templates.lst",
+    "record_key": "Righteous Might (Damage Reduction/Evil)",
+    "sha256": "5de512bab3d46192a6bd1342579c61ca8376d2e6e8f25a8bb8a47665c657a11b"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

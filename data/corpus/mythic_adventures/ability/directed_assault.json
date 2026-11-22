@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Mythic Path Ability ~ Directed Assault",
+    "name": "Directed Assault",
+    "description": "By finding a gap in your enemy's defenses, you allow your allies to take advantage of your discovery. When you confirm a critical hit with a melee or ranged weapon against an opponent, allies within 30 feet of that opponent add %1 to their critical confirmation rolls against that opponent. This bonus lasts for %1 rounds. During this duration, you can expend one use of mythic power to convert an ally's successful attack into a critical threat. The ally must be within 30 feet, and can also gain the bonus to its confirmation roll. Only one opponent can be the focus of your directed assault at a time. If you confirm a critical hit against another creature, you may make it the new focus (immediately ending the previous focus) or maintain the current focus.|MythicLevel",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Path Ability ~ Directed Assault"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Path Ability.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Mythic Path ~ Marshal"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "MythicTierLevel,1"
+      },
+      {
+        "key": "DESC",
+        "value": "By finding a gap in your enemy's defenses, you allow your allies to take advantage of your discovery. When you confirm a critical hit with a melee or ranged weapon against an opponent, allies within 30 feet of that opponent add %1 to their critical confirmation rolls against that opponent. This bonus lasts for %1 rounds. During this duration, you can expend one use of mythic power to convert an ally's successful attack into a critical threat. The ally must be within 30 feet, and can also gain the bonus to its confirmation roll. Only one opponent can be the focus of your directed assault at a time. If you confirm a critical hit against another creature, you may make it the new focus (immediately ending the previous focus) or maintain the current focus.|MythicLevel"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.39"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Mythic Power"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
+    "line": 148,
+    "record_key": "Mythic Path Ability ~ Directed Assault"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

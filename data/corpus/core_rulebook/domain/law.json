@@ -1,0 +1,67 @@
+{
+  "codex_generated_name": false,
+  "completeness": "full",
+  "data": {
+    "key": "Law",
+    "name": "Law",
+    "raw_tokens": [
+      {
+        "key": "PREALIGN",
+        "value": "LG,LN,LE"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREVARLT:DomainNotAllowed,1],[PREVAREQ:AllowDomainLaw,1]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Core Domain ~ Law Domain|!PREABILITY:1,CATEGORY=Special Ability,TYPE.LawDomainReplacement"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainLawLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainLawDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainLawTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainLawAbilityTriggerLVL|0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.45"
+      },
+      {
+        "key": "DESC",
+        "value": "You follow a strict and ordered code of laws, and in so doing, achieve enlightenment."
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Law=1|Protection from Chaos|Law=2|Align Weapon (Law Only)|Law=3|Magic Circle against Chaos|Law=4|Order's Wrath|Law=5|Dispel Chaos|Law=6|Hold Monster|Law=7|Dictum|Law=8|Shield of Law|Law=9|Summon Monster IX (Law Spell Only)"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T15:18:10Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 28,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_domains.lst",
+    "record_key": "Law",
+    "sha256": "1b6a671beb757f213bf73a7cab0b977521794f44db731c3f3e33e9df94662999"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

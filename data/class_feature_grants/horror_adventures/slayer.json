@@ -1,0 +1,302 @@
+[
+  {
+    "key": "Bloody Jake ~ Cruel Trick",
+    "class": "Slayer",
+    "level": 11,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+      "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+      "line": 205
+    }
+  },
+  {
+    "key": "Bloody Jake ~ Cruel Tricks",
+    "class": "Slayer",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+      "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+      "line": 205
+    }
+  },
+  {
+    "key": "Bloody Jake ~ Distant Voices",
+    "class": "Slayer",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+      "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+      "line": 205
+    }
+  },
+  {
+    "key": "Bloody Jake ~ Favored Terrain",
+    "class": "Slayer",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+      "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+      "line": 205
+    }
+  },
+  {
+    "key": "Bloody Jake ~ Lose Your Way",
+    "class": "Slayer",
+    "level": 4,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+      "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+      "line": 205
+    }
+  },
+  {
+    "key": "Bloody Jake ~ Poor Study",
+    "class": "Slayer",
+    "level": 5,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+      "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+      "line": 205
+    }
+  },
+  {
+    "key": "Bloody Jake ~ Sadistic Snare",
+    "class": "Slayer",
+    "level": 6,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+      "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+      "line": 205
+    }
+  },
+  {
+    "key": "Bloody Jake ~ Something's Not Right",
+    "class": "Slayer",
+    "level": 8,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+      "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+      "line": 205
+    }
+  },
+  {
+    "key": "Bloody Jake ~ The Woods Have Eyes",
+    "class": "Slayer",
+    "level": 12,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+      "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+      "line": 205
+    }
+  },
+  {
+    "key": "Bloody Jake ~ Woodland Shortcut",
+    "class": "Slayer",
+    "level": 13,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+      "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+      "line": 205
+    }
+  },
+  {
+    "key": "Family Hunter ~ Disrupt Teamwork",
+    "class": "Slayer",
+    "level": 6,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+      "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+      "line": 206
+    }
+  },
+  {
+    "key": "Family Hunter ~ Find Family",
+    "class": "Slayer",
+    "level": 2,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+      "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+      "line": 206
+    }
+  },
+  {
+    "key": "Family Hunter ~ Kinslayer",
+    "class": "Slayer",
+    "level": 3,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+      "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+      "line": 206
+    }
+  },
+  {
+    "key": "Family Hunter ~ Studied Target",
+    "class": "Slayer",
+    "level": 5,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+      "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+      "line": 206
+    }
+  },
+  {
+    "key": "Witch Killer ~ Burn the Witch",
+    "class": "Slayer",
+    "level": 10,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+      "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+      "line": 207
+    }
+  },
+  {
+    "key": "Witch Killer ~ Class Skills",
+    "class": "Slayer",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": false,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+      "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+      "line": 207
+    }
+  },
+  {
+    "key": "Witch Killer ~ Lingering Thrust",
+    "class": "Slayer",
+    "level": 4,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+      "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+      "line": 207
+    }
+  },
+  {
+    "key": "Witch Killer ~ Scent Magic",
+    "class": "Slayer",
+    "level": 5,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+      "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+      "line": 207
+    }
+  },
+  {
+    "key": "Witch Killer ~ Studied Witch",
+    "class": "Slayer",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+      "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+      "line": 207
+    }
+  },
+  {
+    "key": "Witch Killer ~ Superstitious",
+    "class": "Slayer",
+    "level": 2,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+      "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+      "line": 207
+    }
+  }
+]

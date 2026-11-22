@@ -1,0 +1,122 @@
+[
+  {
+    "key": "Devolutionist ~ Devolution",
+    "class": "Druid",
+    "level": 9,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+      "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+      "line": 102
+    }
+  },
+  {
+    "key": "Devolutionist ~ Devolved Companion",
+    "class": "Druid",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+      "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+      "line": 102
+    }
+  },
+  {
+    "key": "Devolutionist ~ Undomesticate",
+    "class": "Druid",
+    "level": 4,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+      "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+      "line": 102
+    }
+  },
+  {
+    "key": "Life Channeler ~ Alignment",
+    "class": "Druid",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+      "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+      "line": 103
+    }
+  },
+  {
+    "key": "Life Channeler ~ Plant Preservation",
+    "class": "Druid",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+      "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+      "line": 103
+    }
+  },
+  {
+    "key": "Life Channeler ~ Rampant Growth",
+    "class": "Druid",
+    "level": 4,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+      "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+      "line": 103
+    }
+  },
+  {
+    "key": "Life Channeler ~ Stored Life",
+    "class": "Druid",
+    "level": 9,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+      "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+      "line": 103
+    }
+  },
+  {
+    "key": "Life Channeler ~ Wicker Talismans",
+    "class": "Druid",
+    "level": 4,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+      "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+      "line": 103
+    }
+  }
+]

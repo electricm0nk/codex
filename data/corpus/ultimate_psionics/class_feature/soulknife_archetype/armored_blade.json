@@ -1,0 +1,72 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Soulknife Archetype ~ Armored Blade",
+    "name": "Armored Blade",
+    "class": "Soulknife",
+    "description": "Although most soulknives choose to focus their psionic energy into weapons they can wield, some have chosen to channel their energy into a more defensive form, creating armor to protect themselves as well as the weapons to strike at their enemies.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Soulknife Archetype ~ Armored Blade"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.SoulknifeArchetype.SoulknifeFormMindBlade.SoulknifeShapeMindBlade.SoulknifeEnhancedMindBlade"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Soulknife=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Soulknife Archetype ~ Armored Blade],[!PREABILITY:1,CATEGORY=Archetype,TYPE.SoulknifeFormMindBlade,TYPE.SoulknifeShapeMindBlade,TYPE.SoulknifeEnhancedMindBlade]"
+      },
+      {
+        "key": "DESC",
+        "value": "Although most soulknives choose to focus their psionic energy into weapons they can wield, some have chosen to channel their energy into a more defensive form, creating armor to protect themselves as well as the weapons to strike at their enemies."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Soulknife Class Feature|AUTOMATIC|Armored Blade ~ Form Mind Armaments|PRECLASS:1,Soulknife=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Soulknife Class Feature|AUTOMATIC|Armored Blade ~ Shape Mind Armaments|PRECLASS:1,Soulknife=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Soulknife Class Feature|AUTOMATIC|Armored Blade ~ Enhanced Mind Armaments|PREVARGTEQ:MndBladeLVL,3"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.279"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2133,
+    "record_key": "Soulknife Archetype ~ Armored Blade"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

@@ -1,0 +1,11 @@
+   Compiling codex-ingest v0.1.0 (/home/ubuntu/workspace/worktrees/codex-sd37/crates/codex-ingest)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 12.29s
+     Running tests/sf_global_default.rs (/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/sf_global_default-b4166a2b11d988d5)
+
+running 2 tests
+test the_global_default_is_one_always_held_record_that_prints_nothing ... ok
+test effective_level_is_the_character_level_for_every_character ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+
+exit=0

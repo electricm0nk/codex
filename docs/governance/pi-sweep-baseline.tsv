@@ -1,0 +1,44 @@
+# Product-Identity sweep baseline for the rules tables: src/rules_core/rules_catalog/**/*.rs and data/rules_tables/**/*.json (src/rules_core/rules_tables/**/*.rs until SD-37 E4a.4)
+#
+# Format: file<TAB>term<TAB>count<TAB>disposition<TAB>note
+# disposition is `real-leak` or `false-positive` — no other value parses.
+#
+# Every row here is a hit that PRE-DATES the provenance gate
+# (docs/governance/license-matrix.md's central finding: no file under
+# rules_tables/ had ever been screened). The gate fails on anything not
+# listed, and on a listed row the tree no longer carries — so this file
+# cannot rot into a blanket suppression.
+#
+# The three `real-leak` rows are OWNED BY OTHER BUNDLES' write scope
+# (SD-27/SD-28 landed those tables); the provenance gate records them and
+# does not redact them here. Redaction is that bundle's cycle, not this one's.
+#
+# Derived 2026-08-11 by `cargo run --locked --bin pi_sweep_rules_tables`
+# over 137 files / 55 terms: 10 hits, 3 real, 7 false positives.
+#
+# SD-37 E4a.4 removed the compiled src/rules_core/rules_tables/**/*.rs. The ten
+# rows that keyed table text there (3 real-leak, 7 false-positive) are carried by
+# their package copies below, unchanged in disposition. The sweep now covers the
+# catalog code that reads the package (src/rules_core/rules_catalog/**/*.rs);
+# the Pharasma test literal moved there with the test that holds it.
+src/rules_core/rules_catalog/simple_kind_tables.rs	Pharasma	1	false-positive	AT-34-E3-001 negative assertion: proves the PI-redacted domain name does NOT resolve directly (resolve_by_coordinate returns the masked record instead). The literal is the thing under test -- removing it would delete the proof that redaction works. Two further prose occurrences were removed rather than baselined, so this file carries the minimum PI surface the test needs.
+#
+# SD-37 E4a.1 — the rules_tables data package (data/rules_tables/<table id>.json).
+# The package ships each compiled table's text unchanged, so it carries exactly
+# the hits its source .rs rows above carry (Pharasma excepted: that literal is
+# test code, never a table row). Each row below is the package copy of the .rs
+# row with the same term and keeps that row's disposition. Counted per row
+# VALUE (one per field), so the Ultimate Magic `Gebr` item counts 2: its `key`
+# and `name` are separate fields of one source line. The file's own licence
+# stamp lists the same hits and says "PI"; pi_sweep_rules_tables fails if the
+# stamp and a re-screen disagree.
+data/rules_tables/acg/archetype_tables/archetype_swap_tables.json	Sarenrae	1	real-leak	package copy of acg/archetype_tables.rs (Ecclesitheurge ~ Domain Mastery description); redaction owned outside SD-37, as the .rs row
+data/rules_tables/acg/spell_list/SPELL_LIST.json	Jarn	1	real-leak	package copy of acg/spell_list.rs (Discern Next of Kin flavor text), as the .rs row
+data/rules_tables/advanced_race_guide/archetype_tables/archetype_swap_tables.json	Asmodeus	1	real-leak	package copy of advanced_race_guide/archetype_tables.rs (Fiendish Vessel ~ Fiendish Familiar description), as the .rs row
+data/rules_tables/acg/shaman_spell_list/SHAMAN_SPELL_LIST.json	Nex	1	false-positive	"Next of Kin" substring collision, as the .rs row
+data/rules_tables/acg/spell_list/SPELL_LIST.json	Nex	1	false-positive	"Next of Kin" substring collision (the spell key), as the .rs row
+data/rules_tables/apg/witch_spell_list/WITCH_SPELL_LIST.json	Nex	1	false-positive	"Next of Kin" substring collision, as the .rs row
+data/rules_tables/crb/bard_spell_list/BARD_SPELL_LIST.json	Nex	1	false-positive	"Next of Kin" substring collision, as the .rs row
+data/rules_tables/crb/sorcerer_spell_list/SORCERER_SPELL_LIST.json	Nex	1	false-positive	"Next of Kin" substring collision, as the .rs row
+data/rules_tables/crb/wizard_spell_list/WIZARD_SPELL_LIST.json	Nex	1	false-positive	"Next of Kin" substring collision, as the .rs row
+data/rules_tables/ultimate_magic/equipment_tables/GENERAL_TABLE.json	Geb	2	false-positive	"Geb" inside the unrelated proper noun "Gebr" (key and name fields), as the .rs row

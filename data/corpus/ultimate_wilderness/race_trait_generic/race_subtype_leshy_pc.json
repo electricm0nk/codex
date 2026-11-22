@@ -1,0 +1,62 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Race Subtype ~ Leshy (PC)",
+    "name": "Leshy Traits",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Race Subtype ~ Leshy (PC)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Traits Output ~ Leshy (PC)|PRERULE:1,DISPLAYTYPETRAITS"
+      },
+      {
+        "key": "SOURCELONG",
+        "value": "Bestiary 5"
+      },
+      {
+        "key": "SOURCESHORT",
+        "value": "B5"
+      },
+      {
+        "key": "SOURCEWEB",
+        "value": "http://paizo.com/products/btpy9g9x"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.307"
+      },
+      {
+        "key": "SOURCEDATE",
+        "value": "2015-12"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_race.lst",
+    "sha256": "0c4ae15128009d48586ea7794a6aeae96d492e10d49f8200529fca2dbb801284",
+    "line": 26,
+    "record_key": "Race Subtype ~ Leshy (PC)"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

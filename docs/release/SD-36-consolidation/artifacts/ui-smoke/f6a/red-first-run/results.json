@@ -1,0 +1,23 @@
+[
+  {
+    "id": "sheet-f6a-samurai-weapons",
+    "status": "red",
+    "screenshot": "docs/release/SD-36-consolidation/artifacts/ui-smoke/f6a/red-first-run/sheet-f6a-samurai-weapons.FAILED.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nF4 Smoke Alpha — Samurai 1\nPROGRESSION\n«\n\nLevel\n1\n+\nCaster Level\n…\nRACE\nHuman\nCLASS\nSamurai 1\nLevel 1 Samurai\nSkill points: 5\nFeat\nNEXT\nLevel 2 Samurai\nSkill points: 5\nCharacter Name\nF4 Smoke Alpha\nCampaign\n—\nABILITIES\n\nSTR\n18\n+4\nDEX\n14\n+2\nCON\n14\n+2\nINT\n10\n+0\nWIS\n12\n+1\nCHA\n8\n-1\nINITIATIVE\n+2\nHIT POINTS\n12 / 12\nARMOR CLASS\n\nAC\n17\nTOUCH\n13\nFLAT-FOOTED\n14\nATTACK\n\nBAB\n+1\nMELEE\n+6\nCMB\n+5\nCMD",
+    "reason": "expected string missing: '✓ Martial Weapons'; forbidden string present: 'Martial Weapons (Unknown)'; forbidden string present: 'Class skills Unknown'"
+  },
+  {
+    "id": "sheet-f6a-warrior-weapons",
+    "status": "green",
+    "screenshot": "docs/release/SD-36-consolidation/artifacts/ui-smoke/f6a/red-first-run/sheet-f6a-warrior-weapons.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nF4 Smoke Charlie — Warrior 1\nPROGRESSION\n«\n\nLevel\n1\n+\nCaster Level\n—\nRACE\nHuman\nCLASS\nWarrior 1\nLevel 1 Warrior\nSkill points: 3\nFeat\nNEXT\nLevel 2 Warrior\nSkill points: 3\nCharacter Name\nF4 Smoke Charlie\nCampaign\n—\nABILITIES\n\nSTR\n18\n+4\nDEX\n14\n+2\nCON\n14\n+2\nINT\n10\n+0\nWIS\n12\n+1\nCHA\n8\n-1\nINITIATIVE\n+2\nHIT POINTS\n12 / 12\nARMOR CLASS\n\nAC\n17\nTOUCH\n13\nFLAT-FOOTED\n14\nATTACK\n\nBAB\n+1\nMELEE\n+6\nCMB\n+5",
+    "reason": null
+  },
+  {
+    "id": "sheet-f6a-magus-caster-level",
+    "status": "green",
+    "screenshot": "docs/release/SD-36-consolidation/artifacts/ui-smoke/f6a/red-first-run/sheet-f6a-magus-caster-level.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nF4 Smoke Bravo — Magus 1\nPROGRESSION\n«\n\nLevel\n1\n+\nCaster Level\n1\nRACE\nHuman\nCLASS\nMagus 1\nLevel 1 Magus\nSkill points: 3\nFeat\nNEXT\nLevel 2 Magus\nSkill points: 3\nCharacter Name\nF4 Smoke Bravo\nCampaign\n—\nABILITIES\n\nSTR\n18\n+4\nDEX\n14\n+2\nCON\n14\n+2\nINT\n10\n+0\nWIS\n12\n+1\nCHA\n8\n-1\nINITIATIVE\n+2\nHIT POINTS\n10 / 10\nARMOR CLASS\n\nAC\n17\nTOUCH\n13\nFLAT-FOOTED\n14\nATTACK\n\nBAB\n+0\nMELEE\n+5\nCMB\n+4\nCMD\n16\nSAVI",
+    "reason": null
+  }
+]

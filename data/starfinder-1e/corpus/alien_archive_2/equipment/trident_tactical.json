@@ -1,0 +1,19 @@
+{
+  "data": {
+    "key": "Trident (tactical)",
+    "name": "Trident, tactical",
+    "type": "RESIZABLE.Weapon.Melee.Advanced Melee.Prof Group Advanced Melee.ToHit_UseStr.Damage_UseStr"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 19,
+    "path": "starfinder/paizo/alien_archive_2/saa2_equip.lst",
+    "record_key": "Trident (tactical)",
+    "sha256": "dbecc5c380f3c681431f6efec15c9342088b45fd267495725b03e6d844f0b83c"
+  },
+  "unit_id": "alien_archive_2:equipment:trident_tactical"
+}

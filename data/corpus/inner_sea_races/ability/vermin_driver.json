@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Trait ~ Vermin Driver",
+    "name": "Vermin Driver",
+    "description": "You can train mindless vermin with the Handle Animal skill as if they were animals with an Intelligence score of 1.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Trait ~ Vermin Driver"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Trait.RaceTrait.Duergar Race Trait"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREVAREQ:BypassTraitRestriction,1],[!PREABILITY:1,CATEGORY=Special Ability,TYPE.RaceTrait],[PREABILITY:1,CATEGORY=Special Ability,Trait ~ Vermin Driver]"
+      },
+      {
+        "key": "PREFACT",
+        "value": "1,TEMPLATES,IsDuergar=true"
+      },
+      {
+        "key": "DESC",
+        "value": "You can train mindless vermin with the Handle Animal skill as if they were animals with an Intelligence score of 1."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.198"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities.lst",
+    "sha256": "38af17b7b20261b8279fd8411b7bc3b88b8e2d90303c89d03952d93dd3e1f1cd",
+    "line": 118,
+    "record_key": "Trait ~ Vermin Driver"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

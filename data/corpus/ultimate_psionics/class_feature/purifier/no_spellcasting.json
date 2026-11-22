@@ -1,0 +1,117 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Purifier ~ No Spellcasting",
+    "name": "No Spellcasting",
+    "class": "Purifier",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Purifier ~ No Spellcasting"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "PaladinClassFeatures.Internal"
+      },
+      {
+        "key": "BONUS",
+        "value": "CASTERLEVEL|Paladin.RESET|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Paladin;LEVEL=1|-floor((CHA+3)/4)|PRECLASS:1,Paladin=4"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Paladin;LEVEL=1|-1|PRECLASS:1,Paladin=5"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Paladin;LEVEL=1|-1|PRECLASS:1,Paladin=9"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Paladin;LEVEL=1|-1|PRECLASS:1,Paladin=13"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Paladin;LEVEL=1|-1|PRECLASS:1,Paladin=17"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Paladin;LEVEL=2|-floor((CHA+2)/4)|PRECLASS:1,Paladin=7"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Paladin;LEVEL=2|-1|PRECLASS:1,Paladin=8"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Paladin;LEVEL=2|-1|PRECLASS:1,Paladin=12"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Paladin;LEVEL=2|-1|PRECLASS:1,Paladin=16"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Paladin;LEVEL=2|-1|PRECLASS:1,Paladin=20"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Paladin;LEVEL=3|-floor((CHA+1)/4)|PRECLASS:1,Paladin=10"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Paladin;LEVEL=3|-1|PRECLASS:1,Paladin=11"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Paladin;LEVEL=3|-1|PRECLASS:1,Paladin=15"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Paladin;LEVEL=3|-1|PRECLASS:1,Paladin=19"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Paladin;LEVEL=4|-floor(CHA/4)|PRECLASS:1,Paladin=13"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Paladin;LEVEL=4|-1|PRECLASS:1,Paladin=14"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Paladin;LEVEL=4|-1|PRECLASS:1,Paladin=18"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Paladin;LEVEL=4|-1|PRECLASS:1,Paladin=20"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2549,
+    "record_key": "Purifier ~ No Spellcasting"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

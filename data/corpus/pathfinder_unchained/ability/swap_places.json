@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Combat Trick ~ Swap Places",
+    "name": "Swap Places",
+    "description": "When using this feat, you can spend 2 stamina points. If you do, your movement during the swap doesn't provoke attacks of opportunity.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Combat Trick ~ Swap Places"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Combat Trick"
+      },
+      {
+        "key": "DESC",
+        "value": "When using this feat, you can spend 2 stamina points. If you do, your movement during the swap doesn't provoke attacks of opportunity."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "133"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SourceBook|APG"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/support/ability_apg.lst",
+    "sha256": "485862d2019840c9c67d4cb4145bd6c2f5e0ec192d95ce0ef78779f0bb057a9c",
+    "line": 75,
+    "record_key": "Combat Trick ~ Swap Places"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

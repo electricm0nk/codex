@@ -1,0 +1,19 @@
+{
+  "ruling": "SD-35 operator ruling B18 (decisions.md \u00a721)",
+  "derived_from": "set(docs/work-inventory.json ids) - set($INVENTORY_BEFORE ids)",
+  "count": 12,
+  "ids": [
+    "core_rulebook:feat:sylvan_scimitar_cleave",
+    "core_rulebook:spell:magic_vestment_shield_use",
+    "mythic_adventures:spell:elemental_body_iiimod",
+    "pathfinder_unchained:feat:champion_of_anarchy",
+    "pathfinder_unchained:feat:champion_of_balance",
+    "pathfinder_unchained:feat:champion_of_destruction",
+    "pathfinder_unchained:feat:champion_of_freedom",
+    "pathfinder_unchained:feat:champion_of_grace",
+    "pathfinder_unchained:feat:champion_of_malevolence",
+    "pathfinder_unchained:feat:champion_of_righteousness",
+    "pathfinder_unchained:feat:champion_of_tranquility",
+    "pathfinder_unchained:feat:champion_of_tyranny"
+  ]
+}

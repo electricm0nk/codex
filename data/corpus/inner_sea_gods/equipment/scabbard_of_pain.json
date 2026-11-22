@@ -1,0 +1,58 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "General",
+    "cost_gp": 2500.0,
+    "description": "This rugged black leather scabbard is wrapped in jet black chains that allow it to easily be hung from one's belt. A scabbard of pain grants it bearer knowledge of advanced torturing techniques used by depraved cultists of the Midnight Lord. It grows or shrinks to fit any bladed weapon sized for a Medium or Small creature. Three times per day, the bearer can declare that he is attempting to deliver a painful strike with a melee attack. If the attack hits, the opponent must succeed at a DC 11 Fortitude save or be affected by Ray of Sickening. The bearer can expend one use of the scabbard's painful strike as an immediate action to affect himself with the ray of sickening effect and voluntarily fail the saving throw. Doing so allows the bearer to reroll a failed saving throw against a mind-affecting effect.",
+    "key": "Scabbard Of Pain",
+    "name": "Scabbard Of Pain",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous Item.SLOT_None"
+      },
+      {
+        "key": "COST",
+        "value": "2500"
+      },
+      {
+        "key": "WT",
+        "value": "1"
+      },
+      {
+        "key": "SOURCELONG",
+        "value": "Inner Sea Gods"
+      },
+      {
+        "key": "SOURCESHORT",
+        "value": "isg"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.269"
+      },
+      {
+        "key": "DESC",
+        "value": "This rugged black leather scabbard is wrapped in jet black chains that allow it to easily be hung from one's belt. A scabbard of pain grants it bearer knowledge of advanced torturing techniques used by depraved cultists of the Midnight Lord. It grows or shrinks to fit any bladed weapon sized for a Medium or Small creature. Three times per day, the bearer can declare that he is attempting to deliver a painful strike with a melee attack. If the attack hits, the opponent must succeed at a DC 11 Fortitude save or be affected by Ray of Sickening. The bearer can expend one use of the scabbard's painful strike as an immediate action to affect himself with the ray of sickening effect and voluntarily fail the saving throw. Doing so allows the bearer to reroll a failed saving throw against a mind-affecting effect."
+      }
+    ],
+    "weight_lbs": 1.0
+  },
+  "ingested_at": "2026-08-17T12:09:37Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 221,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_equip.lst",
+    "record_key": "Scabbard Of Pain",
+    "sha256": "cde6e3e0acd33edb906c404430e39a375d0721c6e136c5faf0cde575c7c27c74"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

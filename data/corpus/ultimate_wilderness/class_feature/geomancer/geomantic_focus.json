@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Geomancer ~ Geomantic Focus",
+    "name": "Geomantic Focus",
+    "class": "Occultist",
+    "description": "When a geomancer invests mental focus into his implements for the day, he can store some of it in the surrounding terrain. As long as he remains in physical contact with the terrain, he gains the survivalist resonant power and the ability to use the terrain stride, dominion, and wall of terrain focus powers as appropriate for his level. This alters mental focus.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Geomancer ~ Geomantic Focus"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Occultist Class Features.GeomancerClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "When a geomancer invests mental focus into his implements for the day, he can store some of it in the surrounding terrain. As long as he remains in physical contact with the terrain, he gains the survivalist resonant power and the ability to use the terrain stride, dominion, and wall of terrain focus powers as appropriate for his level. This alters mental focus."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.66"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/support/uw_abilities_class_oa.lst",
+    "sha256": "26a03f73c3534cd6bae0bcda9581b3a89fa28ce5f78f854e009fc8110c477568",
+    "line": 133,
+    "record_key": "Geomancer ~ Geomantic Focus"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

@@ -1,0 +1,25 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T13:59:53Z",
+  "data": {
+    "key": "Tree Shape (Colossal tree)",
+    "school": "Transmutation",
+    "level": null,
+    "description": "This spell allows you to assume the form of a Colossal living tree or shrub or a Colossal dead tree trunk with a small number of limbs."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_spells.lst",
+    "sha256": "e7e55cf92a9e94909f085392ce48a7b41c4d2243cd8cf974ac13708204a27195",
+    "line": 126,
+    "record_key": "Tree Shape (Colossal tree)"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,56 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Ferocity",
+    "delivery": "Extraordinary",
+    "description": "You remain conscious and can continue fighting even if your hit point total is below 0. You are still staggered and loose 1 hit point each round. You still die when your hit point total reach -%1.",
+    "description_variables": [
+      "CONSCORE"
+    ],
+    "facet": "SpecialQuality",
+    "key": "beastiary:monster_ability:ferocity",
+    "name": "Ferocity",
+    "owners": [
+      "beastiary:monster:boar_dire",
+      "beastiary:monster:cyclops"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "You remain conscious and can continue fighting even if your hit point total is below 0. You are still staggered and loose 1 hit point each round. You still die when your hit point total reach -%1.|CONSCORE"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.300"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary.Defensive"
+      }
+    ],
+    "source_page": "p.300",
+    "traits": [
+      "Defensive"
+    ]
+  },
+  "ingested_at": "2026-08-17T12:26:26Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1366,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "record_key": "Ferocity",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

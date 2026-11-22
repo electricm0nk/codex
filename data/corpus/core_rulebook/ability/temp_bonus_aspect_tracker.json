@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Temp_Bonus_Aspect_Tracker",
+    "name": "Temp_Bonus_Aspect_Tracker",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|VIRTUAL|Paladin ~ Smite Evil|PREVAREQ:AuraOfJusticeActivate,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Temp Bonus ~ Bless Weapon|PREVAREQ:TempBonus_BlessWeapon,1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SaveBonus|Inspire courage&colon; +1 morale bonus on saving throws against charm and fear effects|InspireCourageBonus|PREVARGTEQ:InspireCourageBonus,1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SaveBonus|Aura of courage&colon; +4 morale bonus on saving throws against fear effects.|PREVAREQ:AuraOfCourageActivate,1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SaveBonus|Aura of Resolve&colon; +4 morale bonus on saving throws against charm effects.|PREVAREQ:AuraOfResolveActivate,1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SaveBonus|Aura of Righteousness&colon; +4 morale bonus on saving throws against compulsion effects.|PREVAREQ:AuraOfRighteousnessActivate,1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities.lst",
+    "sha256": "ab77788e05536453a16a22bef8a5e74c209e536cb5b8cdcdb1130f712cc2402f",
+    "line": 100,
+    "record_key": "Temp_Bonus_Aspect_Tracker"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

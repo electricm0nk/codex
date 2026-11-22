@@ -1,0 +1,58 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Clockwork Golem ~ Grind",
+    "delivery": "Extraordinary",
+    "description": "A clockwork golem deals an additional 2d10+%1 points of slashing damage when it makes a successful grapple check as razor-sharp gears and blades emerge from its body to grind and slice its foe.",
+    "description_variables": [
+      "STR*1.5"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:clockwork_golem_grind",
+    "name": "Grind",
+    "owners": [
+      "bestiary_2:monster:golem_clockwork"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A clockwork golem deals an additional 2d10+%1 points of slashing damage when it makes a successful grapple check as razor-sharp gears and blades emerge from its body to grind and slice its foe.|STR*1.5"
+      },
+      {
+        "key": "KEY",
+        "value": "Clockwork Golem ~ Grind"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.137"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary"
+      }
+    ],
+    "source_page": "p.137",
+    "traits": []
+  },
+  "ingested_at": "2026-08-15T01:24:19Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 608,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Clockwork Golem ~ Grind",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ]
+}

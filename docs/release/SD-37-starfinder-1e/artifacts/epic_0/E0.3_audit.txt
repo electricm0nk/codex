@@ -1,0 +1,6 @@
+# E0.3 dual audit on bad4e4110141f34b2b3d7fd969eaf276208f41d8...HEAD (committed diff, added lines only)
+OK_NO_BUNDLE_TAGS
+OK_NO_TOKENS
+OK_NO_NOOP_HANDLERS
+OK_NO_MOCK_LEAKS
+OK_NO_WOULD_STRINGS

@@ -1,0 +1,1 @@
+{"var":"vb19a28e844514dae","label":"Soldier LVL","declared_by":["core:class:soldier"],"contributions":[{"rule_id":"core:class:soldier","expr":{"ClassLevel":"soldier"},"when":"Always"}],"provenance":{}}

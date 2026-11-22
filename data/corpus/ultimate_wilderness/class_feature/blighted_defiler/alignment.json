@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Blighted Defiler ~ Alignment",
+    "name": "Alignment",
+    "class": "Kineticist",
+    "description": "Blighted defilers must be evil in order to use steal power, since defiling the land and reaping the vulnerable for power is a particularly vile act. Nonevil blighted defilers can continue to gain kineticist levels and use their other abilities. This alters the kineticist's alignment.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Blighted Defiler ~ Alignment"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Kineticist Class Features.BlightedDefilerClassFeatures"
+      },
+      {
+        "key": "DESC",
+        "value": "Blighted defilers must be evil in order to use steal power, since defiling the land and reaping the vulnerable for power is a particularly vile act. Nonevil blighted defilers can continue to gain kineticist levels and use their other abilities. This alters the kineticist's alignment."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.62"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/support/uw_abilities_class_oa.lst",
+    "sha256": "26a03f73c3534cd6bae0bcda9581b3a89fa28ce5f78f854e009fc8110c477568",
+    "line": 14,
+    "record_key": "Blighted Defiler ~ Alignment"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

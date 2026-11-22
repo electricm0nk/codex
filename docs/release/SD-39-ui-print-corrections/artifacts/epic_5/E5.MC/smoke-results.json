@@ -1,0 +1,58 @@
+[
+  {
+    "id": "sheet-progression-ledger-aldric",
+    "status": "green",
+    "screenshot": "/home/ubuntu/workspace/repos/codex/.worktrees/sd39-main/apps/desktop/scripts/ui-smoke/.out/sd39-e5.mc/sheet-progression-ledger-aldric.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nAldric Ironhand — Fighter 3\nCHARACTER DETAILS\n«\n\nLevel\n3\n+\nCaster Level\n—\nRACE\nHuman\nCLASS\nFighter 3\nCHARACTER DETAILS\n\nALIGNMENT\n\nDEITY\n\nSEX\n\nAGE\n\nHEIGHT\n\nWEIGHT\n\nHAIR\n\nEYES\n\nVISION\nNormal\nSIZE\nMedium\nVision and Size are calculated from race and aren't editable — a race this build has no profile for reads \"Unknown\" rather than a guessed value. The other fields save automatically when y",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd39-e5_mc-R4uIvp/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "sheet-progression-drawer-open",
+    "status": "green",
+    "screenshot": "/home/ubuntu/workspace/repos/codex/.worktrees/sd39-main/apps/desktop/scripts/ui-smoke/.out/sd39-e5.mc/sheet-progression-drawer-open.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nElowen Ashgrave — Wizard 5\nCHARACTER DETAILS\n«\n\nLevel\n5\n+\nCaster Level\n5\nRACE\nHuman\nCLASS\nWizard 5\nCHARACTER DETAILS\n\nALIGNMENT\n\nDEITY\n\nSEX\n\nAGE\n\nHEIGHT\n\nWEIGHT\n\nHAIR\n\nEYES\n\nVISION\nNormal\nSIZE\nMedium\nVision and Size are calculated from race and aren't editable — a race this build has no profile for reads \"Unknown\" rather than a guessed value. The other fields save automatically when you",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd39-e5_mc-R4uIvp/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "sheet-progression-drawer-close-x",
+    "status": "green",
+    "screenshot": "/home/ubuntu/workspace/repos/codex/.worktrees/sd39-main/apps/desktop/scripts/ui-smoke/.out/sd39-e5.mc/sheet-progression-drawer-close-x.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nElowen Ashgrave — Wizard 5\nCHARACTER DETAILS\n«\n\nLevel\n5\n+\nCaster Level\n5\nRACE\nHuman\nCLASS\nWizard 5\nCHARACTER DETAILS\n\nALIGNMENT\n\nDEITY\n\nSEX\n\nAGE\n\nHEIGHT\n\nWEIGHT\n\nHAIR\n\nEYES\n\nVISION\nNormal\nSIZE\nMedium\nVision and Size are calculated from race and aren't editable — a race this build has no profile for reads \"Unknown\" rather than a guessed value. The other fields save automatically when you",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd39-e5_mc-R4uIvp/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "sheet-progression-drawer-close-escape",
+    "status": "green",
+    "screenshot": "/home/ubuntu/workspace/repos/codex/.worktrees/sd39-main/apps/desktop/scripts/ui-smoke/.out/sd39-e5.mc/sheet-progression-drawer-close-escape.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nElowen Ashgrave — Wizard 5\nCHARACTER DETAILS\n«\n\nLevel\n5\n+\nCaster Level\n5\nRACE\nHuman\nCLASS\nWizard 5\nCHARACTER DETAILS\n\nALIGNMENT\n\nDEITY\n\nSEX\n\nAGE\n\nHEIGHT\n\nWEIGHT\n\nHAIR\n\nEYES\n\nVISION\nNormal\nSIZE\nMedium\nVision and Size are calculated from race and aren't editable — a race this build has no profile for reads \"Unknown\" rather than a guessed value. The other fields save automatically when you",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd39-e5_mc-R4uIvp/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  }
+]

@@ -1,0 +1,5 @@
+
+> codex@0.18.0 ui-smoke:doc
+> node scripts/ui-smoke/render-inventory.mjs
+
+Wrote /home/ubuntu/workspace/repos/codex/.worktrees/sd38-main/docs/testing/ui-smoke-inventory.md (127 rows, 18 screens).

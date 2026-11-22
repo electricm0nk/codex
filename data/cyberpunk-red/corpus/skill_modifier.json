@@ -1,0 +1,72 @@
+[
+ {
+  "kind": "skill_modifier",
+  "name": "Night or low lighting conditions",
+  "modifier": -1,
+  "source_page": "p131",
+  "text": "Night or low lighting conditions"
+ },
+ {
+  "kind": "skill_modifier",
+  "name": "Have never done this before",
+  "modifier": -1,
+  "source_page": "p131",
+  "text": "Have never done this before"
+ },
+ {
+  "kind": "skill_modifier",
+  "name": "Complex task",
+  "modifier": -2,
+  "source_page": "p131",
+  "text": "Complex task"
+ },
+ {
+  "kind": "skill_modifier",
+  "name": "Don't have right tools or parts",
+  "modifier": -2,
+  "source_page": "p131",
+  "text": "Don't have right tools or parts"
+ },
+ {
+  "kind": "skill_modifier",
+  "name": "Slept uncomfortable the night before.",
+  "modifier": -2,
+  "source_page": "p131",
+  "text": "Slept uncomfortable the night before."
+ },
+ {
+  "kind": "skill_modifier",
+  "name": "Under extreme stress",
+  "modifier": -2,
+  "source_page": "p131",
+  "text": "Under extreme stress"
+ },
+ {
+  "kind": "skill_modifier",
+  "name": "Exhausted",
+  "modifier": -4,
+  "source_page": "p131",
+  "text": "Exhausted"
+ },
+ {
+  "kind": "skill_modifier",
+  "name": "Extremely drunk or sedated",
+  "modifier": -4,
+  "source_page": "p131",
+  "text": "Extremely drunk or sedated"
+ },
+ {
+  "kind": "skill_modifier",
+  "name": "Trying to perform task secretly",
+  "modifier": -4,
+  "source_page": "p131",
+  "text": "Trying to perform task secretly"
+ },
+ {
+  "kind": "skill_modifier",
+  "name": "Task obscured by smoke, darkness",
+  "modifier": -4,
+  "source_page": "p131",
+  "text": "Task obscured by smoke, darkness"
+ }
+]

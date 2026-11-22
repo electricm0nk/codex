@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Adaptive Warrior ~ Combine Fighting Styles",
+    "name": "Combine Fighting Styles",
+    "class": "Adaptive Warrior",
+    "description": "When focused, and have used your Examine Technique on at least two creatures in the past hour, and have not expended focus since using Examine Technique, you can, as a swift action, treat your opponents as flat-footed when making attacks against them until the start of your next turn.  This can be used %1/day.|CombineFightingStylesTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Adaptive Warrior ~ Combine Fighting Styles"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "AdaptiveWarriorClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CombineFightingStylesTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "When focused, and have used your Examine Technique on at least two creatures in the past hour, and have not expended focus since using Examine Technique, you can, as a swift action, treat your opponents as flat-footed when making attacks against them until the start of your next turn.  This can be used %1/day.|CombineFightingStylesTimes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CombineFightingStylesTimes|4+INT"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.350"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|CombineFightingStyleTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1135,
+    "record_key": "Adaptive Warrior ~ Combine Fighting Styles"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

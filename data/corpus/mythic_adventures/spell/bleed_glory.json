@@ -1,0 +1,26 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:34:12Z",
+  "data": {
+    "key": "Bleed Glory",
+    "school": "Necromancy",
+    "level": 3,
+    "description": "The mythic power cost for all path abilities, feats, spells, and other effects used by the target increases by 1."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_spells.lst",
+    "sha256": "d62f0bb802aab15dde7b963773c586cb539a4571e3c404ead1b76788b0546374",
+    "line": 281,
+    "record_key": "Bleed Glory"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "derived:range_keyword"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

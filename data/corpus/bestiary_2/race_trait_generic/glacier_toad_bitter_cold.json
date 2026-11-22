@@ -1,0 +1,50 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Glacier Toad ~ Bitter Cold",
+    "name": "Bitter Cold",
+    "description": "All creatures within 20 feet of a glacier toad take 1d6 points of cold damage each round on the toad's turn.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Glacier Toad ~ Bitter Cold"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Aura.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "All creatures within 20 feet of a glacier toad take 1d6 points of cold damage each round on the toad's turn."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.268"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(20 ft.)"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 1284,
+    "record_key": "Glacier Toad ~ Bitter Cold"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,28 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Altitude Affinity",
+    "category": "General",
+    "name": "Altitude Affinity",
+    "description": "You have hardened your body against the grueling rigors of surviving at high altitudes. Automatically acclimated to high altitude. You have hardened your body against the grueling rigors of surviving at high altitudes. You are automatically acclimated at high altitudes. In addition, you gain a +2 competence bonus on all Survival checks made at altitudes of 5,000 ft. or higher.",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=FEAT,Endurance"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_feats.lst",
+    "sha256": "b6435a0a073ef6f3e3cb6731b705dbbeffa5089deab97f66b98525036034a4a8",
+    "line": 9,
+    "record_key": "Altitude Affinity"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,11 @@
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.05s
+     Running unittests src/lib.rs (/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/codex_ingest-06e24ac7d271e507)
+
+running 3 tests
+test pcgen_import::sheet_rule::sf_mapping::tests::modifier_is_floor_score_over_two_minus_five ... ok
+test pcgen_import::sheet_rule::sf_mapping::tests::find_field_matches_whole_token_or_token_prefix ... ok
+test pcgen_import::sheet_rule::sf_mapping::tests::hp_pool_row_routes_claimed_tokens_and_refuses_the_rest ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 686 filtered out; finished in 0.00s
+
+exit=0

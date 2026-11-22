@@ -1,0 +1,49 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Psychometabolism ~ Metabolic Healing",
+    "name": "Metabolic Healing",
+    "class": "Psychometabolism",
+    "description": "Gain fast healing %1 when mainifesting any psychometabolism power on yourself; healing lasts for 1 round per power level manifested.|(PsychometabolismDisciplineLVL+2)/4",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Psychometabolism ~ Metabolic Healing"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "PsionClassFeatures.SpecialQuality.Supernatural.PsionicDisciplineTalent"
+      },
+      {
+        "key": "DESC",
+        "value": "Gain fast healing %1 when mainifesting any psychometabolism power on yourself; healing lasts for 1 round per power level manifested.|(PsychometabolismDisciplineLVL+2)/4"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.52"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 437,
+    "record_key": "Psychometabolism ~ Metabolic Healing"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

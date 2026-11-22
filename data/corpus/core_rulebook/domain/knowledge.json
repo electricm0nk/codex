@@ -1,0 +1,67 @@
+{
+  "codex_generated_name": false,
+  "completeness": "full",
+  "data": {
+    "key": "Knowledge",
+    "name": "Knowledge",
+    "raw_tokens": [
+      {
+        "key": "PREMULT",
+        "value": "1,[PREVARLT:DomainNotAllowed,1],[PREVAREQ:AllowDomainKnowledge,1]"
+      },
+      {
+        "key": "CSKILL",
+        "value": "TYPE=Knowledge"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Core Domain ~ Knowledge Domain|!PREABILITY:1,CATEGORY=Special Ability,TYPE.KnowledgeDomainReplacement"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainKnowledgeLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainKnowledgeDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainKnowledgeTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainKnowledgeAbilityTriggerLVL|0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.45"
+      },
+      {
+        "key": "DESC",
+        "value": "You are a scholar and a sage of legends. In addition, you treat all Knowledge skills as class skills."
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Knowledge=1|Comprehend Languages|Knowledge=2|Detect Thoughts|Knowledge=3|Speak with Dead|Knowledge=4|Divination|Knowledge=5|True Seeing|Knowledge=6|Find the Path|Knowledge=7|Legend Lore|Knowledge=8|Discern Location|Knowledge=9|Foresight"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T15:18:10Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 27,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_domains.lst",
+    "record_key": "Knowledge",
+    "sha256": "1b6a671beb757f213bf73a7cab0b977521794f44db731c3f3e33e9df94662999"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

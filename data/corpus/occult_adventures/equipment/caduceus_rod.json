@@ -1,0 +1,63 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "General",
+    "cost_gp": 142000.0,
+    "description": "+5 insight bonus on Craft (alchemy) checks and a +1 insight bonus on attack and damage rolls with alchemical items, including alchemists' bombs. When it's held in hand, the caduceus rod powers can be invoked five times per day",
+    "key": "Caduceus Rod",
+    "name": "Caduceus Rod",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "SKILL",
+          "Craft (alchemy)",
+          "5",
+          "TYPE=Insight"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Caduceus Rod"
+      },
+      {
+        "key": "TYPE",
+        "value": "Rod.Magic.GreaterMajor"
+      },
+      {
+        "key": "COST",
+        "value": "142000"
+      },
+      {
+        "key": "WT",
+        "value": "1"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Ability ~ Uses per Day / 3|CHARGES[3]"
+      },
+      {
+        "key": "SPROP",
+        "value": "+5 insight bonus on Craft (alchemy) checks and a +1 insight bonus on attack and damage rolls with alchemical items, including alchemists' bombs. When it's held in hand, the caduceus rod powers can be invoked five times per day"
+      }
+    ],
+    "weight_lbs": 1.0
+  },
+  "ingested_at": "2026-08-17T08:18:39Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 71,
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_equip.lst",
+    "record_key": "Caduceus Rod",
+    "sha256": "48877b9621bd36c3812d91cc603838c92eda6199fd2bd116d16d47523cbc1cbc"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

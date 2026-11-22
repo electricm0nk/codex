@@ -1,0 +1,93 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "You mend the target's injuries, curing 3d8+%1 hit points as cure serious wounds, but leaving its body laced with a subtle toxin that remains inert until you activate it. A target that decides to attempt the Will save and succeeds is healed for half (as cure serious wounds) and negates the toxin. Otherwise, you can activate the toxin by concentrating on the spell as a standard action, at which point the victim takes 1d3 points of Strength damage per round for 6 rounds. Once the poison is active, the target can attempt a Fortitude save each round to negate that round's damage and end the affliction. If you don't trigger the poison for 1 hour, the spell ends and leaves the target unharmed. Detect poison reveals an inert poisonous balm only if the caster succeeds at a caster level check against a DC %2. Attempts to identify poisonous balm with a skill check incorrectly identify it as cure serious wounds. A fooled viewer mistakes poisonous balm's aura as the lingering aura of an instantaneous effect.|MIN(15,CASTERLEVEL)|CASTERLEVEL+15|PRERULE:1,DisplayFullSpell",
+    "key": "Poisonous Balm",
+    "level": 4,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Cleric,Occultist,Shaman=4|Druid,Witch=5"
+      },
+      {
+        "key": "COMPS",
+        "value": "V,S"
+      },
+      {
+        "key": "DESC",
+        "value": "As cure serious wounds, but leave behind a latent venom.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "You mend the target's injuries, curing 3d8+%1 hit points as cure serious wounds, but leaving its body laced with a subtle toxin that remains inert until you activate it. A target that decides to attempt the Will save and succeeds is healed for half (as cure serious wounds) and negates the toxin. Otherwise, you can activate the toxin by concentrating on the spell as a standard action, at which point the victim takes 1d3 points of Strength damage per round for 6 rounds. Once the poison is active, the target can attempt a Fortitude save each round to negate that round's damage and end the affliction. If you don't trigger the poison for 1 hour, the spell ends and leaves the target unharmed. Detect poison reveals an inert poisonous balm only if the caster succeeds at a caster level check against a DC %2. Attempts to identify poisonous balm with a skill check incorrectly identify it as cure serious wounds. A fooled viewer mistakes poisonous balm's aura as the lingering aura of an instantaneous effect.|MIN(15,CASTERLEVEL)|CASTERLEVEL+15|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESCRIPTOR",
+        "value": "Poison|Ruse"
+      },
+      {
+        "key": "DURATION",
+        "value": "Instantaneous, then 1 hour or until triggered plus 6 rounds; see text"
+      },
+      {
+        "key": "RANGE",
+        "value": "Close"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Will partial (harmless), then Fortitude negates; see text"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Conjuration"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://aonprd.com/SpellDisplay.aspx?ItemName=Poisonous Balm"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.222"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes"
+      },
+      {
+        "key": "SUBSCHOOL",
+        "value": "Healing"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "One creature"
+      },
+      {
+        "key": "TYPE",
+        "value": "Arcane.Divine.Psychic"
+      }
+    ],
+    "school": "Conjuration"
+  },
+  "ingested_at": "2026-08-16T12:10:17Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 88,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_spells.lst",
+    "record_key": "Poisonous Balm",
+    "sha256": "5f4a23b7b02b3d3b2cd4a20d8f06ec24f49e39592d0822d32cdb80d13f3e6324"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "derived:prose_formula_segment",
+    "derived:range_keyword"
+  ]
+}

@@ -1,0 +1,15 @@
+== root_full
+awk suites 300 passed 6699 failed 0 ignored 27
+python suites 300 passed 6699 failed 0 ignored 27
+FAILED lines 0
+== desktop_full
+awk suites 2 passed 858 failed 0 ignored 2
+python suites 2 passed 858 failed 0 ignored 2
+FAILED lines 0
+== npm test
+PASS scripts/ui-smoke/lib/rowSelection.test.mjs
+
+171/171 test files passed.
+== ui-smoke:doc
+
+Wrote /home/ubuntu/workspace/repos/codex/.worktrees/sd38-e3/docs/testing/ui-smoke-inventory.md (108 rows, 18 screens).

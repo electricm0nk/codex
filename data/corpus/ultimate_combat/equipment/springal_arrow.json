@@ -1,0 +1,62 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "ArmsArmor",
+    "cost_gp": 1000.0,
+    "description": " Range (50 ft. min.); Crew 3, Aim 2, Load 3, Speed 0 ft.",
+    "key": "Springal (Arrow)",
+    "name": "Springal (Arrow)",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "PROFICIENCY",
+        "value": "WEAPON|Springal (Arrow)"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weapon.Ranged.SiegeWeapon.Exotic.Piercing"
+      },
+      {
+        "key": "COST",
+        "value": "1000"
+      },
+      {
+        "key": "CRITMULT",
+        "value": "x3"
+      },
+      {
+        "key": "DAMAGE",
+        "value": "3d8"
+      },
+      {
+        "key": "RANGE",
+        "value": "100"
+      },
+      {
+        "key": "SPROP",
+        "value": " Range (50 ft. min.)"
+      },
+      {
+        "key": "SPROP",
+        "value": "Crew 3, Aim 2, Load 3, Speed 0 ft."
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-16T05:06:54Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 171,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_equip_arms_armor.lst",
+    "record_key": "Springal (Arrow)",
+    "sha256": "adc5e058994bfae7f14ff0a41a408e0e6bf74ed0f4e656d50533bc66874b67fc"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

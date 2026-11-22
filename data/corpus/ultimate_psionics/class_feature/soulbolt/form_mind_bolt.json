@@ -1,0 +1,92 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Soulbolt ~ Form Mind Bolt",
+    "name": "Form Mind Bolt",
+    "class": "Soulbolt",
+    "description": "Form a semi-sold ranged weapon composed of psychic energy.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Soulbolt ~ Form Mind Bolt"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SoulknifeClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MndBladeLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MndBladeEnhancement|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MndBladeMxEnhancement|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PsychicStrikeDie|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PsychicStrikeDiceNumber|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WeaponSpecialCount|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Form a semi-sold ranged weapon composed of psychic energy."
+      },
+      {
+        "key": "AUTO",
+        "value": "WEAPONPROF|Mind Bolt"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PsychicStrikeDie|8"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MndBladeEnhancement|max(0,(MndBladeLVL-1)/2)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MndBladeMxEnhancement|min((MndBladeLVL/3),5)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.283"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MndBladeLVL|SoulknifeLVL"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2203,
+    "record_key": "Soulbolt ~ Form Mind Bolt"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

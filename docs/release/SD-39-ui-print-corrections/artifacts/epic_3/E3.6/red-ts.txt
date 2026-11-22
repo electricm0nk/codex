@@ -1,0 +1,5 @@
+
+> codex@0.19.0 typecheck
+> tsc --noEmit
+
+src/boundary/attachEquipmentModifier.test.ts(18,7): error TS2353: Object literal may only specify known properties, and 'priceMode' does not exist in type 'AttachEquipmentModifierRequest'.

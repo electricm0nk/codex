@@ -1,0 +1,40 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-03T19:41:45Z",
+  "data": {
+    "key": "Draconic Breath",
+    "category": "general",
+    "name": "Draconic Breath",
+    "description": "You possess draconic defenses and a draconic breath weapon.",
+    "effect": [
+      [
+        "VAR",
+        "KoboldBreathWeaponSave",
+        "10+TL+CON",
+        "!PREABILITY:1,CATEGORY=Special Ability,Kobold Sorcerer Bloodline,Draconic Bloodline"
+      ],
+      [
+        "VAR",
+        "KoboldBreathWeaponSave",
+        "10+TL+CHA",
+        "PREABILITY:1,CATEGORY=Special Ability,Kobold Sorcerer Bloodline,Draconic Bloodline"
+      ]
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_feats.lst",
+    "sha256": "420384054e43adeb60135c7e379a4645e5817ea1f2e78a8de8c7c687fc510fec",
+    "line": 331,
+    "record_key": "Draconic Breath"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

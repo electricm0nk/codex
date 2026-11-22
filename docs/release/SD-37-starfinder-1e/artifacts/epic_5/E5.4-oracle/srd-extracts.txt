@@ -1,0 +1,91 @@
+== https://www.aonsrd.com/Classes.aspx?ItemName=Drone (lines 60-81 of the extracted text)
+Your drone’s abilities are determined by your mechanic level (or the level you assign to it through your control net ability) and the mods you select for your drone. The below table determines many of the base statistics for your drone. These base statistics modify the starting statistics determined by the drone’s chassis. The terms used in the table are as follows. Class Level : This is equal to your mechanic level. If you have the control net class feature and assign fewer levels to your drone than you have, the drone’s base statistics are determined by the level you assign to it. Hit Points : This is the drone’s maximum number of Hit Points. For the purposes of spells and other effects that rely on level, your drone’s equivalent level is equal to your mechanic level (or the level you have assigned to it with the control net class feature). Drones do not have Stamina Points. Base Attack Bonus : This is the drone’s base attack bonus. Armor Class : Add the listed bonus and the drone’s Dexterity modifier to base Armor Class values listed for its chassis to determine the drone’s total EAC and KAC. Your drone cannot wear armor of any kind, and you cannot increase your drone’s AC further without selecting the appropriate mods. Good Save Bonus, Poor Save Bonus : These are the drone’s base saving throw bonuses. Each chassis type designates which saving throw uses the good save value and which ones use the poor save value. Ability Increase : Increase two of your drone’s ability scores, as designated by its chassis, by this amount. Feats : This is the drone’s total number of feats. You can select a drone’s feats from those listed in Drone Feats on page 76. A drone cannot select a feat that requires a base attack bonus of +1 until it gains its second feat at 3rd level. Mods : This is the number of custom modifications you can add to your drone. Special : Your drone gains these abilities when you reach (or assign via control net) the appropriate level, as noted on the table. These abilities are described in the section below. 
+ Class Level | Hit Points | Base Attack Bonus | Armor Class | Good Save Bonus | Poor Save Bonus | Ability Increase | Feats | Mods | Special Abilities | 
+ 1st | 10 | +1 | +0 | +2 | +0 | — | 1 | 1 | Basic mods, limited AI, master control, skill unit | 
+ 2nd | 20 | +2 | +1 | +3 | +0 | — | 1 | 1 | | 
+ 3rd | 30 | +3 | +2 | +3 | +1 | — | 2 | 2 | | 
+ 4th | 40 | +3 | +3 | +3 | +1 | +1 | 2 | 2 | | 
+ 5th | 50 | +4 | +4 | +4 | +1 | — | 2 | 3 | | 
+ 6th | 60 | +5 | +5 | +4 | +1 | — | 3 | 3 | | 
+ 7th | 70 | +6 | +6 | +5 | +2 | +1 | 3 | 4 | Expert AI | 
+ 8th | 80 | +6 | +7 | +5 | +2 | — | 3 | 4 | | 
+ 9th | 90 | +7 | +8 | +5 | +2 | — | 4 | 5 | | 
+ 10th | 100 | +8 | +9 | +6 | +2 | +1 | 4 | 5 | Upgraded power core | 
+ 11th | 110 | +9 | +9 | +6 | +3 | — | 5 | 6 | Advanced mods | 
+ 12th | 120 | +9 | +10 | +6 | +3 | — | 5 | 6 | | 
+ 13th | 130 | +10 | +11 | +7 | +3 | +1 | 5 | 7 | | 
+ 14th | 140 | +11 | +12 | +7 | +3 | — | 6 | 7 | | 
+ 15th | 150 | +12 | +13 | +8 | +4 | — | 6 | 8 | | 
+ 16th | 160 | +12 | +14 | +8 | +4 | +1 | 6 | 8 | | 
+ 17th | 170 | +13 | +15 | +8 | +4 | — | 7 | 9 | | 
+ 18th | 190 | +14 | +16 | +9 | +4 | — | 7 | 9 | | 
+ 19th | 210 | +15 | +17 | +9 | +5 | +1 | 8 | 10 | | 
+ 20th | 230 | +15 | +18 | +9 | +5 | — | 8 | 10 | True AI | 
+
+== https://www.aonsrd.com/DroneChassis.aspx?ItemName=All (chassis intro and the Hover Drone entry)
+Drone Chassis - Archives of Nethys: Starfinder RPG Database
+ ||| 
+ Home
+ Afflictions 
+ Aliens 
+ Classes 
+ Conditions 
+ Equipment 
+ Feats 
+ Races 
+ Rules 
+ Setting 
+ Skills 
+ Spells/Rituals 
+ Themes 
+ Vehicles 
+ Licenses 
+ Search 
+ Sources 
+ Contact Us 
+ Contributors 
+ Support the Archives 
+ Maximize Menu 
+ Archives of Nethys
+ Afflictions 
+ Aliens 
+ Classes 
+ Conditions 
+ Equipment 
+ Feats 
+ Races 
+ Rules 
+ Setting 
+ Skills 
+ Spells/Rituals 
+ Themes 
+ Vehicles 
+ Licenses 
+ Search 
+ Sources 
+ Contact Us 
+ Contributors 
+ Support the Archives 
+ Toggle Theme 
+ Paizo & Archives of Nethys—Moving Forw
+...
+Initial Mods : Each chassis comes with initial drone mods that are a part of the chassis itself. These are in addition to the mods a drone gains by level. You can’t change these mods when you gain levels or rebuild your drone unless you choose a new chassis. The list of mods appears on page 77. 
+ Artillery Drone 
+ Source Tech Revolution pg. 25 
+Often built with a low profile to avoid return fire, 
+...
+Hover Drone 
+ Source Starfinder Core Rulebook pg. 75 
+The hover drone is the smallest chassis and is equipped with miniature hoverjets or similar aerial propulsion (legs or wheels provide propulsion on land). This drone can fly and avoid obstacles but isn’t very stealthy. A hover drone with melee weapon arms or weapon mounts can use weapons designed for Small or Medium creatures without penalty.
+ Starting Statistics
+ Size Tiny
+ Speed 30 feet, fly 30 feet (perfect)
+ AC EAC 11, KAC 11
+ Good Save Reflex
+ Poor Saves Fortitude, Will
+ Ability Scores Str 6, Dex 16, Con —, Int 6, Wis 8, Cha 6
+ Ability Increases Dexterity, Wisdom
+ Bonus Skill Unit Acrobatics
+ Initial Mods flight system (x2, included in its speed), weapon mount
+ | 
+ 

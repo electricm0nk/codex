@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Magical Child ~ Transformation Sequence",
+    "name": "Transformation Sequence",
+    "class": "Vigilante",
+    "description": "A magical child's transformation between identities is assisted by magic. This makes it faster than usual, but also more noticeable. A magical child can normally transform between her identities in 5 rounds, though this improves to a standard action with the quick change social talent and a swift action with the immediate change social talent. However, the transformation is quite a spectacle, involving loud sounds or music, brilliant colorful energies, and swift motions.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Magical Child ~ Transformation Sequence"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Vigilante Class Features.MagicalChildClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "A magical child's transformation between identities is assisted by magic. This makes it faster than usual, but also more noticeable. A magical child can normally transform between her identities in 5 rounds, though this improves to a standard action with the quick change social talent and a swift action with the immediate change social talent. However, the transformation is quite a spectacle, involving loud sounds or music, brilliant colorful energies, and swift motions."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.58"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/support/ui_abilities_class_pu.lst",
+    "sha256": "31facfcea3534d72c26bfbfeebc7af50e80e79157eda459e9afb16f184a93aaf",
+    "line": 98,
+    "record_key": "Magical Child ~ Transformation Sequence"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

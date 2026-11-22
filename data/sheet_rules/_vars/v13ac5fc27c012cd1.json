@@ -1,0 +1,1 @@
+{"var":"v13ac5fc27c012cd1","label":"POOL GUNSLINGERBONUSFEATPOOLCHOICE","declared_by":["ultimate_combat:class_feature:gunslinger_bonus_feats"],"contributions":[{"rule_id":"ultimate_combat:class_feature:gunslinger_bonus_feats","expr":{"Div":[{"Var":"v5eabe89496ce5620"},{"Const":4}]},"when":"Always"}],"provenance":{}}

@@ -1,0 +1,28 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Sacrificial Ritualist",
+    "category": "General",
+    "name": "Sacrificial Ritualist",
+    "description": "Your magical power used to originate in yourself, but now you draw it from others. You can improve your ability to cast an occult ritual (Occult Adventures p208) by powering it with the blood of creatures. When you begin the occult ritual with the death of a sentient creature (or number of sentient creatures with a total number of Hit Dice equal to twice the effective level of the ritual), you and all secondary casters gain a +4 bonus on all skill checks necessary to complete the occult ritual. This feat's sacrifices are in addition to any sacrifices normally required to complete the ritual.",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=FEAT,Mutilating Ritualist"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_feats.lst",
+    "sha256": "b8183ddca5eece895bf40f7765744bb470970418a8baca58aee907487f0140e6",
+    "line": 48,
+    "record_key": "Sacrificial Ritualist"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

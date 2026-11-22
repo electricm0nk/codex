@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Skill unlock ~ acrobatics 05 Ranks",
+    "name": "Skill unlock acrobatics 5 Ranks",
+    "class": "Skill unlock",
+    "description": "You can move at normal speed through a threatened square without provoking an attack of opportunity by increasing the DC of the check by 5 (instead of by 10). You aren't denied your Dexterity bonus when attempting Acrobatics checks with DCs of 20 or lower.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Skill unlock ~ acrobatics 05 Ranks"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Rogue's Edge acrobatics 05"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Signature Skill 05"
+      },
+      {
+        "key": "PRESKILL",
+        "value": "1,acrobatics=5"
+      },
+      {
+        "key": "DESC",
+        "value": "You can move at normal speed through a threatened square without provoking an attack of opportunity by increasing the DC of the check by 5 (instead of by 10). You aren't denied your Dexterity bonus when attempting Acrobatics checks with DCs of 20 or lower."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst",
+    "sha256": "2becbb0524bd4c367cc1273434c20bcd8e42e3e08abd372f99b005e69e8c4725",
+    "line": 1000,
+    "record_key": "Skill unlock ~ acrobatics 05 Ranks"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

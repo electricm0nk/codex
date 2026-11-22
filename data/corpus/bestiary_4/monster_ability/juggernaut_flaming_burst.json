@@ -1,0 +1,53 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Juggernaut ~ Flaming Burst",
+    "delivery": "Supernatural",
+    "description": "The juggernaut's slam attack gains the flaming burst weapon special ability. Its vicious trample attack deals an additional 1d6 points of fire damage.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:juggernaut_flaming_burst",
+    "name": "Fire Domain - Flaming Burst",
+    "owners": [
+      "bestiary_4:monster:juggernaut"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "The juggernaut's slam attack gains the flaming burst weapon special ability. Its vicious trample attack deals an additional 1d6 points of fire damage."
+      },
+      {
+        "key": "KEY",
+        "value": "Juggernaut ~ Flaming Burst"
+      },
+      {
+        "key": "TYPE",
+        "value": "JuggernautDomain.SpecialAttack.Supernatural"
+      }
+    ],
+    "source_page": null,
+    "traits": [
+      "JuggernautDomain"
+    ]
+  },
+  "ingested_at": "2026-08-23T09:31:46Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 929,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "record_key": "Juggernaut ~ Flaming Burst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

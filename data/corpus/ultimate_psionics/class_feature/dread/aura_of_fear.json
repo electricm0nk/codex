@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Dread ~ Aura of Fear",
+    "name": "Aura of Fear",
+    "class": "Dread",
+    "description": "While you are conscious, all enemies within %1 ft. take a %2 penalty on saves against fear; creatures with immunity to fear lose that immunity.|AuraOfFearRadius|AuraOfFearPenalty",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Dread ~ Aura of Fear"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "DreadClassFeatures.SpecialQuality.Supernatural.Aura"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AuraOfFearRadius|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AuraOfFearPenalty|0"
+      },
+      {
+        "key": "DESC",
+        "value": "While you are conscious, all enemies within %1 ft. take a %2 penalty on saves against fear; creatures with immunity to fear lose that immunity.|AuraOfFearRadius|AuraOfFearPenalty"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AuraOfFearRadius|10"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AuraOfFearPenalty|-4"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.43"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(10 ft.)"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 268,
+    "record_key": "Dread ~ Aura of Fear"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

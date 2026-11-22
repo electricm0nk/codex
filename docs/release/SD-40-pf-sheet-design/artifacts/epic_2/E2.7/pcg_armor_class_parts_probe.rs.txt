@@ -1,0 +1,86 @@
+    // E2.7 population probe (SD-40). NOT shipped: pasted into a scratch copy of
+    // `apps/desktop/src-tauri/src/character_hub.rs`'s test module (before
+    // `pcg_sidecar_missing_gives_a_named_error`), where `pcg_import_via_sidecar` and `tempdir` live
+    // (`import_pcg_with_sidecar` is private to that file, outside E2.7's FILES YOU OWN; E1.MC's shape).
+    // Run: PCG_PROBE_OUT=<file> cargo test --locked -j 8 armor_class_parts_pcg_population_probe -- --test-threads=8 --nocapture
+    // Population: E1.MC's set, `codex-ingest/src/pcg_import/fixtures_tests.rs::fixtures()`:
+    // scripts/oracle_harness/eqm-fixtures/*.pcg + every .pcg under the pinned oracle checkout.
+    #[test]
+    fn armor_class_parts_pcg_population_probe() {
+        fn walk(dir: &Path, out: &mut Vec<PathBuf>) {
+            let Ok(entries) = std::fs::read_dir(dir) else { return };
+            for entry in entries.flatten() {
+                let path = entry.path();
+                if path.is_dir() {
+                    walk(&path, out);
+                } else if path.extension().is_some_and(|ext| ext == "pcg") {
+                    out.push(path);
+                }
+            }
+        }
+        let mut files = Vec::new();
+        walk(&pcg_repo_root().join("scripts/oracle_harness/eqm-fixtures"), &mut files);
+        let oracle = match std::env::var("PCGEN_REPO_DIR") {
+            Ok(dir) if !dir.is_empty() => PathBuf::from(dir),
+            _ => PathBuf::from(std::env::var("HOME").unwrap()).join("workspace/repos/pcgen"),
+        };
+        walk(&oracle, &mut files);
+        files.sort();
+        let mut lines = Vec::new();
+        let (mut saved, mut blocked, mut refused, mut stated, mut without, mut sums, mut row_is_printed) = (0, 0, 0, 0, 0, 0, 0);
+        for (n, file) in files.iter().enumerate() {
+            let root = tempdir(&format!("pcg-ac-probe-{n}")).join("imported");
+            let name = file.display().to_string().replace(&oracle.display().to_string(), "$PCGEN_REPO_DIR");
+            match pcg_import_via_sidecar(file, &root) {
+                Ok(ImportPcgResponse { outcome: CreateCharacterResponse::Saved { .. }, .. }) => {
+                    saved += 1;
+                    let sheet = load_saved_character_at_root(&root).expect("a saved import loads");
+                    let row = sheet.explanations.iter().find(|row| row.id == "defense.baseline_armor_class").map(|row| row.value);
+                    let printed = sheet.snapshot.as_ref().map(|snapshot| snapshot.baseline_armor_class);
+                    let parts: Vec<(String, i16)> = sheet
+                        .explanations
+                        .iter()
+                        .filter(|row| row.id.starts_with("defense.armor_class."))
+                        .map(|row| (row.id.trim_start_matches("defense.armor_class.").to_owned(), row.value))
+                        .collect();
+                    if parts.is_empty() {
+                        without += 1;
+                        lines.push(format!("WITHOUT\t{name}\trow={row:?}\tprinted={printed:?}"));
+                        continue;
+                    }
+                    stated += 1;
+                    assert_eq!(parts.len(), 7, "{name}: seven parts {parts:?}");
+                    let total = 10 + parts.iter().map(|(_, value)| value).sum::<i16>();
+                    let sum_ok = Some(total) == row;
+                    sums += usize::from(sum_ok);
+                    row_is_printed += usize::from(row == printed);
+                    let words: Vec<String> = parts.iter().map(|(id, value)| format!("{id}={value}")).collect();
+                    lines.push(format!(
+                        "STATED\t{name}\trow={}\tprinted={}\tten_plus_parts={total}\tsum={}\trow_is_printed={}\t{}",
+                        row.unwrap_or(i16::MIN),
+                        printed.unwrap_or(i16::MIN),
+                        if sum_ok { "ok" } else { "MISMATCH" },
+                        if row == printed { "yes" } else { "NO" },
+                        words.join(" ")
+                    ));
+                }
+                Ok(_) => {
+                    blocked += 1;
+                    lines.push(format!("BLOCKED\t{name}"));
+                }
+                Err(err) => {
+                    refused += 1;
+                    lines.push(format!("REFUSED\t{name}\t{err}"));
+                }
+            }
+        }
+        lines.push(format!(
+            "SUMMARY\tfiles={}\tsaved={saved}\tblocked={blocked}\trefused={refused}\tstated={stated}\twithout={without}\tsums={sums}\trow_is_printed={row_is_printed}",
+            files.len()
+        ));
+        let out = std::env::var("PCG_PROBE_OUT").expect("PCG_PROBE_OUT");
+        std::fs::write(&out, lines.join("\n") + "\n").unwrap();
+        eprintln!("{}", lines.last().unwrap());
+        assert_eq!(sums, stated, "every stated set sums to the AC row");
+    }
+

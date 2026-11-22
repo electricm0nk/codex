@@ -1,0 +1,10 @@
+App data root: /tmp/codex-ui-smoke-sd38-e5_mc-kozcnu/data/io.electricm0nk.codex (isolated; the real store /home/ubuntu/.local/share/io.electricm0nk.codex is never opened)
+Real store before: 15379 entries, sha256 ddfc4461e3f278447373d61e1eff268905da65d3894566b68ab1bc2cbdf9b8bf
+Launching app for agent 'sd38-e5.mc'...
+FAIL  improve-cyberpunk-skill  -- expected string missing: 'Handgun (REF)	7	14'; expected string missing: 'Improvement Points (current / total)	60 / 200'; forbidden string present: 'Handgun (REF)	6	13'; forbidden string present: 'Improvement Points (current / total)	0 / 0'
+Real store after:  15379 entries, sha256 ddfc4461e3f278447373d61e1eff268905da65d3894566b68ab1bc2cbdf9b8bf -- UNTOUCHED (count and sha256 equal)
+
+0/1 green, 1 red, 0 blocked, 0 manual, 0 not-run (M = 1 rows)
+Cleanup: 1 character(s) created across 1 row(s) with a cleanup record, 1 deleted, 0 leftover; store /tmp/codex-ui-smoke-sd38-e5_mc-kozcnu/data/io.electricm0nk.codex now holds: 00000000-0000-0000-0000-000000000001, 00000000-0000-0000-0000-000000000002, 00000000-0000-0000-0000-000000000003
+Evidence: /home/ubuntu/cargo-target/sd38-main/verify-e5mc/ui-p1
+Removed isolated app-data root /tmp/codex-ui-smoke-sd38-e5_mc-kozcnu (it held 3 character(s) at the end: 00000000-0000-0000-0000-000000000001, 00000000-0000-0000-0000-000000000002, 00000000-0000-0000-0000-000000000003).

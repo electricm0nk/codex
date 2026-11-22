@@ -1,0 +1,3 @@
+test character_hub::tests::market_held_names_a_legacy_id_and_skips_an_absent_selection ... ok
+test character_hub::tests::market_held_lists_every_copy_and_each_row_sells_itself ... ok
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 946 filtered out; finished in 59.88s

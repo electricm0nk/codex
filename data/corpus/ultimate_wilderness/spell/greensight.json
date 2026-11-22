@@ -1,0 +1,79 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "The target of this spell gains the ability to see up to 60 feet through thick plant matter as though it were transparent. Greenery, leaves, and vines-even lichen, moss, and slime-offer no concealment to the recipient's sight, though her vision still can be blocked by solid wood, such as trees or wooden structures. Undergrowth does not grant concealment to a creature against a target of the effects of greensight.",
+    "key": "Greensight",
+    "level": 2,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Druid,Ranger,Shaman,Sorcerer,Wizard=2"
+      },
+      {
+        "key": "COMPS",
+        "value": "V,S,M"
+      },
+      {
+        "key": "DESC",
+        "value": "Grant a target the ability to see through plant matter as if it were transparent.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "The target of this spell gains the ability to see up to 60 feet through thick plant matter as though it were transparent. Greenery, leaves, and vines-even lichen, moss, and slime-offer no concealment to the recipient's sight, though her vision still can be blocked by solid wood, such as trees or wooden structures. Undergrowth does not grant concealment to a creature against a target of the effects of greensight.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL*10) minutes"
+      },
+      {
+        "key": "RANGE",
+        "value": "Touch"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Will negates (harmless)"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Transmutation"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.231"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "No"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "Creature touched"
+      },
+      {
+        "key": "TYPE",
+        "value": "Arcane.Divine"
+      }
+    ],
+    "school": "Transmutation"
+  },
+  "ingested_at": "2026-08-20T01:55:37Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 27,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_spells.lst",
+    "record_key": "Greensight",
+    "sha256": "0ebcaef0aa5ab9967a06e53a5179bcaca436c5a2bfeeb8926821eb38391978a4"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr"
+  ]
+}

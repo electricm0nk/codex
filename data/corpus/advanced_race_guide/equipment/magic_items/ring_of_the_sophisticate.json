@@ -1,0 +1,55 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "magic_items",
+    "cost_gp": 11000.0,
+    "description": "Once per day on command, the wearer can cast either locate creature or locate object. On command, the wearer can instantly know the direction to the nearest tavern, pub, or similar watering hole  within 20 miles of the wearer.",
+    "key": "Ring of the Sophisticate",
+    "name": "Ring of the Sophisticate",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "SKILL",
+          "Sense Motive,Knowledge (Local)",
+          "4",
+          "TYPE=Competence"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.Ring"
+      },
+      {
+        "key": "COST",
+        "value": "11000"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.48"
+      },
+      {
+        "key": "SPROP",
+        "value": "Once per day on command, the wearer can cast either locate creature or locate object. On command, the wearer can instantly know the direction to the nearest tavern, pub, or similar watering hole  within 20 miles of the wearer."
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-03T19:41:45Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 75,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equip_magic_items.lst",
+    "record_key": "Ring of the Sophisticate",
+    "sha256": "894fe0503949ab48c527aa3d9423a8a475d2b251b6e7eaddd5f53889b4d5cc17"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

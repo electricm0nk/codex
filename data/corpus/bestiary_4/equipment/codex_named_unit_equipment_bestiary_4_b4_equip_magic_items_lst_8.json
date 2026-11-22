@@ -1,0 +1,32 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:26:33Z",
+  "data": {
+    "key": "Codex-Named Unit (equipment_bestiary_4_b4_equip_magic_items_lst_8)",
+    "category": "MagicItems",
+    "name": "Codex-Named Unit (equipment_bestiary_4_b4_equip_magic_items_lst_8)",
+    "cost_gp": 0.0,
+    "weight_lbs": 4.0,
+    "description": "Functions as a rod of enemy detection (unlimited uses), rod of cancellation 1/day, can panic creatures within 30 ft. for 1d6 rounds (DC 23 Will negates), Pazuzu can call to hand across planar boundaries, trandforms into a +5 anarchic keen unholy longsword."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_equip_magic_items.lst",
+    "sha256": "fbd8d1a7bae71d0b809e54540e572cd6674811f59ceaf263e9a7deae6624ab54",
+    "line": 8,
+    "record_key": "Codex-Named Unit (equipment_bestiary_4_b4_equip_magic_items_lst_8)"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "name",
+  "pi_marker": "redacted",
+  "codex_generated_name": true,
+  "rename": {
+    "reason": "name_pi_blocked",
+    "coordinate": "bestiary_4:b4_equip_magic_items.lst:8"
+  }
+}

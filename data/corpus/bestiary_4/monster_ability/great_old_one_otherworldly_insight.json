@@ -1,0 +1,57 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Great Old One ~ Otherworldly Insight",
+    "delivery": "Extraordinary",
+    "description": "All Great Old Ones gain a +10 insight bonus on Initiative checks and to AC.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:great_old_one_otherworldly_insight",
+    "name": "Otherworldly Insight",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "BONUS",
+        "value": "COMBAT|AC|10|TYPE=Insight"
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|INITIATIVE|10|TYPE=Insight"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "All Great Old Ones gain a +10 insight bonus on Initiative checks and to AC."
+      },
+      {
+        "key": "KEY",
+        "value": "Great Old One ~ Otherworldly Insight"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary"
+      }
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T14:10:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 135,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_races_ce.lst",
+    "record_key": "Great Old One ~ Otherworldly Insight",
+    "sha256": "a9af292735dbd8cbd424d6dabeb2ecbef7180374304194180b8bc4b0f66a7b8b"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

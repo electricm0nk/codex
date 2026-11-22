@@ -1,0 +1,35 @@
+{
+  "codex_generated_name": false,
+  "completeness": "chassis_only",
+  "data": {
+    "key": "Starting Gold ~ UC",
+    "name": "Starting Gold ~ UC",
+    "raw_tokens": [
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "CHOOSE:Starting Gold UC ~ Random|Starting Gold UC ~ Maximum|Starting Gold UC ~ Average"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T16:43:18Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 11,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_templates.lst",
+    "record_key": "Starting Gold ~ UC",
+    "sha256": "007e24879101d7dae55cfe9e1f941456576542a452b10924768a87cef8534dff"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

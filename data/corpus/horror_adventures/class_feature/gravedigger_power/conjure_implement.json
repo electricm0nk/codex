@@ -1,0 +1,53 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Gravedigger Power ~ Conjure Implement",
+    "name": "Conjure Implement",
+    "class": "Gravedigger Power",
+    "description": "You can expend 1 point of inspiration to conjure any item that qualifies as an implement that you know how to use. This implement can be used as the item in question, functioning as a masterwork version of that item. The implement lasts for %1 minutes.|10*InvestigatorLVL",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Gravedigger Power ~ Conjure Implement"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "InvestigatorTalent.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Gravedigger ~ Grave Lamp"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "InvestigatorTalentLVL,5"
+      },
+      {
+        "key": "DESC",
+        "value": "You can expend 1 point of inspiration to conjure any item that qualifies as an implement that you know how to use. This implement can be used as the item in question, functioning as a masterwork version of that item. The implement lasts for %1 minutes.|10*InvestigatorLVL"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/support/ha_abilities_class_oa.lst",
+    "sha256": "9c111f652f8442433ea215fa11e67258c7e6c15c75d1c1753fa6fef34827f46c",
+    "line": 54,
+    "record_key": "Gravedigger Power ~ Conjure Implement"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

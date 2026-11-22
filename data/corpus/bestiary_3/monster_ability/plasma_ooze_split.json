@@ -1,0 +1,49 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Plasma Ooze ~ Split",
+    "delivery": null,
+    "description": null,
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:plasma_ooze_split",
+    "name": "Split (Slashing or Sonic)",
+    "owners": [
+      "bestiary_3:monster:plasma_ooze"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "KEY",
+        "value": "Plasma Ooze ~ Split"
+      },
+      {
+        "key": "TYPE",
+        "value": "PlasmaOozeRacialAbility.SpecialQuality"
+      }
+    ],
+    "source_page": null,
+    "traits": [
+      "PlasmaOozeRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T10:26:03Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1418,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Plasma Ooze ~ Split",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Serial Killer ~ Studied Target",
+    "name": "Studied Target",
+    "class": "Vigilante",
+    "description": "A serial killer gains the studied target ability of a slayer 3 levels lower, including the ability to study multiple targets simultaneously at the appropriate levels. The serial killer does not provoke attacks of opportunity when attempting a coup de grace against a studied target.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Serial Killer ~ Studied Target"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Vigilante Class Feature.SerialKillerClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.71"
+      },
+      {
+        "key": "DESC",
+        "value": "A serial killer gains the studied target ability of a slayer 3 levels lower, including the ability to study multiple targets simultaneously at the appropriate levels. The serial killer does not provoke attacks of opportunity when attempting a coup de grace against a studied target."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Slayer ~ Studied Target"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SlayerStudiedTargetLVL|AlchemistLVL"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/support/ha_abilities_class_ui.lst",
+    "sha256": "ef4d4c665ec9e9551c7b5e968fae9f10ad358ac8fdcf2addf3b9bb647cb3801b",
+    "line": 36,
+    "record_key": "Serial Killer ~ Studied Target"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

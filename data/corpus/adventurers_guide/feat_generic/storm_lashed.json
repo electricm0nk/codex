@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:16:16Z",
+  "data": {
+    "key": "Storm-Lashed",
+    "name": "Storm-Lashed",
+    "description": "A life spent enduring gales and storms has hardened your body to the elements.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "FEAT"
+      },
+      {
+        "key": "TYPE",
+        "value": "General"
+      },
+      {
+        "key": "DESC",
+        "value": "A life spent enduring gales and storms has hardened your body to the elements."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.184"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "You can ignore many of the effects of severe weather. In rainy conditions, your visibility is reduced by only one-quarter (not by half) and you take only a -2 penalty on Perception checks. You are treated as if you were one size category larger for the purpose of wind effects, and halve any penalty on Perception checks caused by high winds. Finally, you gain a +2 bonus on saving throws against effects with the electricity descriptor or that deal electricity damage."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_feats.lst",
+    "sha256": "e3c7767bc0491cf56909e0ded972ef6b70ae228bed3266f7f52ace170084756a",
+    "line": 67,
+    "record_key": "Storm-Lashed"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

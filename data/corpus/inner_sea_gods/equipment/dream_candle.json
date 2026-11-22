@@ -1,0 +1,58 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "General",
+    "cost_gp": 2300.0,
+    "description": "This heavy pastel candle is carved and painted to look like its outer surface is covered with butterflies. A creature can use the candle to create a dream effect conveying a message of no longer than 10 minutes. Alternatively, the candle can be used to send up to 10 shorter messages, so long as the total time is no longer than 10 minutes. The user must light the candle, identify the intended recipient, speak the message, then snuff the candle; the next time the recipient sleeps, she receives the message.",
+    "key": "Dream Candle",
+    "name": "Dream Candle",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous Item.SLOT_None"
+      },
+      {
+        "key": "COST",
+        "value": "2300"
+      },
+      {
+        "key": "WT",
+        "value": "1"
+      },
+      {
+        "key": "SOURCELONG",
+        "value": "Inner Sea Gods"
+      },
+      {
+        "key": "SOURCESHORT",
+        "value": "isg"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.263"
+      },
+      {
+        "key": "DESC",
+        "value": "This heavy pastel candle is carved and painted to look like its outer surface is covered with butterflies. A creature can use the candle to create a dream effect conveying a message of no longer than 10 minutes. Alternatively, the candle can be used to send up to 10 shorter messages, so long as the total time is no longer than 10 minutes. The user must light the candle, identify the intended recipient, speak the message, then snuff the candle; the next time the recipient sleeps, she receives the message."
+      }
+    ],
+    "weight_lbs": 1.0
+  },
+  "ingested_at": "2026-08-17T12:09:37Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 190,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_equip.lst",
+    "record_key": "Dream Candle",
+    "sha256": "cde6e3e0acd33edb906c404430e39a375d0721c6e136c5faf0cde575c7c27c74"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

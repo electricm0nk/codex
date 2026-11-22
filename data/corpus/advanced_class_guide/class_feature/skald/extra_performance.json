@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-24T03:53:24Z",
+  "data": {
+    "key": "Skald ~ Extra Performance",
+    "name": "Extra Performance",
+    "class": "Skald",
+    "description": "At 1st level, a skald gains Extra Performance as a bonus feat.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Skald ~ Extra Performance"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Skald Class Feature.SkaldScribeScroll"
+      },
+      {
+        "key": "DESC",
+        "value": "At 1st level, a skald gains Extra Performance as a bonus feat."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Extra Performance"
+      },
+      {
+        "key": "PRE",
+        "value": ".CLEAR"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SkaldRagingSongRoundsPerDay|6"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,TYPE.SkaldRagingSong],[PREABILITY:1,CATEGORY=Special Ability,TYPE.Bardic Performance]"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/_pfs/pfs_acg_abilities_class.lst",
+    "sha256": "5b3be443084eb3206099ea6afbfee8fca6485711fccd7bd9b3e92a6205df286c",
+    "line": 115,
+    "record_key": "Skald ~ Extra Performance"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

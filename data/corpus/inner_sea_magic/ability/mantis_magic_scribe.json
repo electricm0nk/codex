@@ -1,0 +1,65 @@
+{
+  "codex_generated_name": false,
+  "completeness": "full",
+  "data": {
+    "description": "Add the selected spell to one of your classes' spell list. You can automatically scribe this spell into your spellbook, teach the spell to your familiar (if you are a witch), or learn the spell in place of a spell of an equal level that you already know (if you are a spontaneous spellcaster).",
+    "key": "Mantis Magic Scribe ~ Secret Society",
+    "name": "Mantis Magic (Scribe)",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mantis Magic Scribe ~ Secret Society"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.CrimsonCitadelReward"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Crimson Citadel ~ Secret Society"
+      },
+      {
+        "key": "DESC",
+        "value": "Add the selected spell to one of your classes' spell list. You can automatically scribe this spell into your spellbook, teach the spell to your familiar (if you are a witch), or learn the spell in place of a spell of an equal level that you already know (if you are a spontaneous spellcaster)."
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "STRING|Blood Mist|Bloody Claws|Creeping Doom|Giant Vermin|Insect Plague|Spider Climb|Summon Swarm|Swarm Skin|Vermin Shape I|Vermin Shape II|Vomit Swarm"
+      },
+      {
+        "key": "COST",
+        "value": "4"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.27"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 179,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_abilities_other.lst",
+    "record_key": "Mantis Magic Scribe ~ Secret Society",
+    "sha256": "6ea35a2432c9b609f27926d9492f1d85c599eb18e81adf36154ae594b89072db"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice",
+    "computed:pre_guard"
+  ]
+}

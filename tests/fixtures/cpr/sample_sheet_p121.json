@@ -1,0 +1,581 @@
+{
+ "source": "Cyberpunk RED core rulebook, Sample Character Sheet: page-image file p121 (printed p. 120), read from `pdftoppm -f 121 -l 121 -r 400` crops; hand-transcribed, not built from data/cyberpunk-red/corpus/",
+ "branch": "labels-only: the sample sheet prints field labels and empty boxes, no values, so every numeric field it labels must have a cpr. row",
+ "printed_labels": [
+  "-2 to all Actions when Seriously Wounded",
+  "Penalty applies to REF, DEX & MOVE"
+ ],
+ "skill_columns": [
+  "LVL",
+  "STAT",
+  "BASE"
+ ],
+ "fields": [
+  {
+   "block": "1",
+   "label": "Role Ability RANK",
+   "numeric": "rank"
+  },
+  {
+   "block": "2",
+   "label": "INT",
+   "numeric": "stat"
+  },
+  {
+   "block": "2",
+   "label": "REF",
+   "numeric": "stat"
+  },
+  {
+   "block": "2",
+   "label": "DEX",
+   "numeric": "stat"
+  },
+  {
+   "block": "2",
+   "label": "TECH",
+   "numeric": "stat"
+  },
+  {
+   "block": "2",
+   "label": "COOL",
+   "numeric": "stat"
+  },
+  {
+   "block": "2",
+   "label": "WILL",
+   "numeric": "stat"
+  },
+  {
+   "block": "2",
+   "label": "LUCK",
+   "numeric": "stat out of",
+   "out_of": true
+  },
+  {
+   "block": "2",
+   "label": "MOVE",
+   "numeric": "stat"
+  },
+  {
+   "block": "2",
+   "label": "BODY",
+   "numeric": "stat"
+  },
+  {
+   "block": "2",
+   "label": "EMP",
+   "numeric": "stat out of",
+   "out_of": true
+  },
+  {
+   "block": "3",
+   "label": "Humanity",
+   "numeric": "out of",
+   "out_of": true
+  },
+  {
+   "block": "3",
+   "label": "Hit Points",
+   "numeric": "out of",
+   "out_of": true
+  },
+  {
+   "block": "3",
+   "label": "Seriously Wounded",
+   "numeric": "value"
+  },
+  {
+   "block": "3",
+   "label": "Death Save",
+   "numeric": "value"
+  },
+  {
+   "block": "5",
+   "label": "Armor Head SP",
+   "numeric": "value"
+  },
+  {
+   "block": "5",
+   "label": "Armor Head Penalty",
+   "numeric": "value"
+  },
+  {
+   "block": "5",
+   "label": "Armor Body SP",
+   "numeric": "value"
+  },
+  {
+   "block": "5",
+   "label": "Armor Body Penalty",
+   "numeric": "value"
+  },
+  {
+   "block": "5",
+   "label": "Armor Shield SP",
+   "numeric": "value"
+  },
+  {
+   "block": "5",
+   "label": "Armor Shield Penalty",
+   "numeric": "value"
+  },
+  {
+   "block": "5",
+   "label": "Weapon DMG",
+   "numeric": "dice"
+  },
+  {
+   "block": "5",
+   "label": "Weapon Ammo",
+   "numeric": "value"
+  },
+  {
+   "block": "5",
+   "label": "Weapon ROF",
+   "numeric": "value"
+  },
+  {
+   "block": "6",
+   "label": "Improvement Points",
+   "numeric": "out of",
+   "out_of": true
+  },
+  {
+   "block": "6",
+   "label": "Reputation",
+   "numeric": "value"
+  },
+  {
+   "block": "9",
+   "label": "Ammunition",
+   "numeric": "value"
+  },
+  {
+   "block": "9",
+   "label": "Cash",
+   "numeric": "value"
+  },
+  {
+   "block": "9",
+   "label": "Rent",
+   "numeric": "value"
+  }
+ ],
+ "skills": [
+  {
+   "category": "Awareness",
+   "label": "Concentration",
+   "stat": "WILL",
+   "x2": false
+  },
+  {
+   "category": "Awareness",
+   "label": "Conceal/Reveal Object",
+   "stat": "INT",
+   "x2": false
+  },
+  {
+   "category": "Awareness",
+   "label": "Lip Reading",
+   "stat": "INT",
+   "x2": false
+  },
+  {
+   "category": "Awareness",
+   "label": "Perception",
+   "stat": "INT",
+   "x2": false
+  },
+  {
+   "category": "Awareness",
+   "label": "Tracking",
+   "stat": "INT",
+   "x2": false
+  },
+  {
+   "category": "Body",
+   "label": "Athletics",
+   "stat": "DEX",
+   "x2": false
+  },
+  {
+   "category": "Body",
+   "label": "Contortionist",
+   "stat": "DEX",
+   "x2": false
+  },
+  {
+   "category": "Body",
+   "label": "Dance",
+   "stat": "DEX",
+   "x2": false
+  },
+  {
+   "category": "Body",
+   "label": "Endurance",
+   "stat": "WILL",
+   "x2": false
+  },
+  {
+   "category": "Body",
+   "label": "Resist Torture/Drugs",
+   "stat": "WILL",
+   "x2": false
+  },
+  {
+   "category": "Body",
+   "label": "Stealth",
+   "stat": "DEX",
+   "x2": false
+  },
+  {
+   "category": "Control",
+   "label": "Drive Land Vehicle",
+   "stat": "REF",
+   "x2": false
+  },
+  {
+   "category": "Control",
+   "label": "Pilot Air Vehicle",
+   "stat": "REF",
+   "x2": true
+  },
+  {
+   "category": "Control",
+   "label": "Pilot Sea Vehicle",
+   "stat": "REF",
+   "x2": false
+  },
+  {
+   "category": "Control",
+   "label": "Riding",
+   "stat": "REF",
+   "x2": false
+  },
+  {
+   "category": "Education",
+   "label": "Accounting",
+   "stat": "INT",
+   "x2": false
+  },
+  {
+   "category": "Education",
+   "label": "Animal Handling",
+   "stat": "INT",
+   "x2": false
+  },
+  {
+   "category": "Education",
+   "label": "Bureaucracy",
+   "stat": "INT",
+   "x2": false
+  },
+  {
+   "category": "Education",
+   "label": "Business",
+   "stat": "INT",
+   "x2": false
+  },
+  {
+   "category": "Education",
+   "label": "Composition",
+   "stat": "INT",
+   "x2": false
+  },
+  {
+   "category": "Education",
+   "label": "Criminology",
+   "stat": "INT",
+   "x2": false
+  },
+  {
+   "category": "Education",
+   "label": "Cryptography",
+   "stat": "INT",
+   "x2": false
+  },
+  {
+   "category": "Education",
+   "label": "Deduction",
+   "stat": "INT",
+   "x2": false
+  },
+  {
+   "category": "Education",
+   "label": "Education",
+   "stat": "INT",
+   "x2": false
+  },
+  {
+   "category": "Education",
+   "label": "Gamble",
+   "stat": "INT",
+   "x2": false
+  },
+  {
+   "category": "Education",
+   "label": "Language",
+   "stat": "INT",
+   "x2": false,
+   "sub_rows": [
+    "Streetslang",
+    null,
+    null
+   ]
+  },
+  {
+   "category": "Education",
+   "label": "Library Search",
+   "stat": "INT",
+   "x2": false
+  },
+  {
+   "category": "Education",
+   "label": "Local Expert",
+   "stat": "INT",
+   "x2": false,
+   "sub_rows": [
+    "Your Home",
+    null,
+    null
+   ]
+  },
+  {
+   "category": "Education",
+   "label": "Science",
+   "stat": "INT",
+   "x2": false,
+   "sub_rows": [
+    null,
+    null
+   ]
+  },
+  {
+   "category": "Education",
+   "label": "Tactics",
+   "stat": "INT",
+   "x2": false
+  },
+  {
+   "category": "Education",
+   "label": "Wilderness Survival",
+   "stat": "INT",
+   "x2": false
+  },
+  {
+   "category": "Fighting",
+   "label": "Brawling",
+   "stat": "DEX",
+   "x2": false
+  },
+  {
+   "category": "Fighting",
+   "label": "Evasion",
+   "stat": "DEX",
+   "x2": false
+  },
+  {
+   "category": "Fighting",
+   "label": "Martial Arts",
+   "stat": "DEX",
+   "x2": true
+  },
+  {
+   "category": "Fighting",
+   "label": "Melee Weapon",
+   "stat": "DEX",
+   "x2": false
+  },
+  {
+   "category": "Performance",
+   "label": "Acting",
+   "stat": "COOL",
+   "x2": false
+  },
+  {
+   "category": "Performance",
+   "label": "Play Instrument",
+   "stat": "TECH",
+   "x2": false,
+   "sub_rows": [
+    null,
+    null
+   ]
+  },
+  {
+   "category": "Ranged Weapon",
+   "label": "Archery",
+   "stat": "REF",
+   "x2": false
+  },
+  {
+   "category": "Ranged Weapon",
+   "label": "Autofire",
+   "stat": "REF",
+   "x2": true
+  },
+  {
+   "category": "Ranged Weapon",
+   "label": "Handgun",
+   "stat": "REF",
+   "x2": false
+  },
+  {
+   "category": "Ranged Weapon",
+   "label": "Heavy Weapons",
+   "stat": "REF",
+   "x2": true
+  },
+  {
+   "category": "Ranged Weapon",
+   "label": "Shoulder Arms",
+   "stat": "REF",
+   "x2": false
+  },
+  {
+   "category": "Social",
+   "label": "Bribery",
+   "stat": "COOL",
+   "x2": false
+  },
+  {
+   "category": "Social",
+   "label": "Conversation",
+   "stat": "EMP",
+   "x2": false
+  },
+  {
+   "category": "Social",
+   "label": "Human Perception",
+   "stat": "EMP",
+   "x2": false
+  },
+  {
+   "category": "Social",
+   "label": "Interrogation",
+   "stat": "COOL",
+   "x2": false
+  },
+  {
+   "category": "Social",
+   "label": "Persuasion",
+   "stat": "COOL",
+   "x2": false
+  },
+  {
+   "category": "Social",
+   "label": "Personal Grooming",
+   "stat": "COOL",
+   "x2": false
+  },
+  {
+   "category": "Social",
+   "label": "Streetwise",
+   "stat": "COOL",
+   "x2": false
+  },
+  {
+   "category": "Social",
+   "label": "Trading",
+   "stat": "COOL",
+   "x2": false
+  },
+  {
+   "category": "Social",
+   "label": "Wardrobe & Style",
+   "stat": "COOL",
+   "x2": false
+  },
+  {
+   "category": "Technique",
+   "label": "Air Vehicle Tech",
+   "stat": "TECH",
+   "x2": false
+  },
+  {
+   "category": "Technique",
+   "label": "Basic Tech",
+   "stat": "TECH",
+   "x2": false
+  },
+  {
+   "category": "Technique",
+   "label": "Cybertech",
+   "stat": "TECH",
+   "x2": false
+  },
+  {
+   "category": "Technique",
+   "label": "Demolitions",
+   "stat": "TECH",
+   "x2": true
+  },
+  {
+   "category": "Technique",
+   "label": "Electronics/Security Tech",
+   "stat": "TECH",
+   "x2": true
+  },
+  {
+   "category": "Technique",
+   "label": "First Aid",
+   "stat": "TECH",
+   "x2": false
+  },
+  {
+   "category": "Technique",
+   "label": "Forgery",
+   "stat": "TECH",
+   "x2": false
+  },
+  {
+   "category": "Technique",
+   "label": "Land Vehicle Tech",
+   "stat": "TECH",
+   "x2": false
+  },
+  {
+   "category": "Technique",
+   "label": "Paint/Draw/Sculpt",
+   "stat": "TECH",
+   "x2": false
+  },
+  {
+   "category": "Technique",
+   "label": "Paramedic",
+   "stat": "TECH",
+   "x2": true
+  },
+  {
+   "category": "Technique",
+   "label": "Photography/Film",
+   "stat": "TECH",
+   "x2": false
+  },
+  {
+   "category": "Technique",
+   "label": "Pick Lock",
+   "stat": "TECH",
+   "x2": false
+  },
+  {
+   "category": "Technique",
+   "label": "Pick Pocket",
+   "stat": "TECH",
+   "x2": false
+  },
+  {
+   "category": "Technique",
+   "label": "Sea Vehicle Tech",
+   "stat": "TECH",
+   "x2": false
+  },
+  {
+   "category": "Technique",
+   "label": "Weaponstech",
+   "stat": "TECH",
+   "x2": false
+  }
+ ]
+}

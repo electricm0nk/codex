@@ -1,0 +1,612 @@
+{
+  "corrections": {
+    "by_corrector": {
+      "sd37-c0-1": 3,
+      "sd37-c0-2": 5,
+      "sd37-e1-1-e1-3": 1,
+      "sd37-e1-mc": 1,
+      "sd37-e2-1": 1,
+      "sd37-e3-1": 2,
+      "sd37-e3-2": 1,
+      "sd37-e3-3": 1,
+      "sd37-e3-4": 1,
+      "sd37-e3-5": 1,
+      "sd37-e3-mc": 1,
+      "sd37-e4-1": 1,
+      "sd37-e4-2": 1,
+      "sd37-e4-3": 1,
+      "sd37-e4-mc": 1,
+      "sd37-e4a-2": 2,
+      "sd37-e4a-3": 1,
+      "sd37-e4a-4a": 3,
+      "sd37-e4a-mc": 1,
+      "sd37-e5-1": 1,
+      "sd37-e5-4": 2,
+      "sd37-e5-mc": 1,
+      "sd37-e6-1": 1,
+      "sd37-e6-2": 1,
+      "sd37-e6-mc": 1,
+      "sd37-e7-3": 1
+    },
+    "by_subject": {
+      "C1": 1,
+      "C1 commit 9d03a76996": 1,
+      "E3.1 test draft (own)": 1,
+      "E3.2 draft test (own)": 1,
+      "E3.4 receipt (Does not cover / Next-cycle plan)": 1,
+      "E3.MC discovery (progress.md ## DISCOVERED, kanban E4.1 row)": 1,
+      "E4.2 selection hop (convert.rs internal_hop_grants)": 1,
+      "E4.3 receipt draft (own)": 1,
+      "E4.6 receipt (Build scope verified)": 1,
+      "E4a.1 receipt (bundle path proof)": 1,
+      "E4a.1 receipt (rules_data_package every_collection_function_is_a_table_or_a_named_view)": 1,
+      "E5.4 attempt-1 receipt (Does not cover: Flight System)": 1,
+      "E5.4 attempt-1 receipt (Does not cover: drone HP)": 1,
+      "E6.5 starfinderLevelUpModel.ts (level-up increase count)": 1,
+      "SD-35 forward-scope-register C2.1 owner column": 1,
+      "SD-36 FS-3 / scope-draft / memory rules-tables-stay-rust-until-starfinder": 1,
+      "SD-37 package authoring (CUI F-6 / \u00a72)": 1,
+      "SD-37 package authoring (CUI F-7 use in E4.1/E7.1/G-2)": 1,
+      "SD-37 package authoring (DEF-1 revisit command)": 1,
+      "SD-37 package authoring (E7.3 closure scan, progress Total, E4.1/NR-2 grep)": 1,
+      "SD-37 package authoring (decisions.md \u00a78, technical-design \u00a74-5, CUI \u00a73, risks R-1)": 1,
+      "SD-37 source-inventory research report": 1,
+      "decisions.md \u00a719 / epic-breakdown E4a.3 'elsewhere' .lst count": 1,
+      "decisions.md \u00a78": 1,
+      "forward-scope-register.md FSR-C1 (quoting SD-36 FS-2)": 1,
+      "ingest_spells (SD-32 c27375ee1d .COPY= mechanism) vs shipped spell_list tables": 1,
+      "kanban.md E5.1 row note (E1.MC discovery)": 1,
+      "progress.md DISCOVERED E3.4 -> E4.2 (SF skill bonus targets)": 1,
+      "progress.md DISCOVERED E5.3 -> E7.1 (per-weapon rows +0 mechanism)": 1,
+      "progress.md Summary (E3 row + Total)": 1,
+      "progress.md Summary Total row": 1,
+      "progress.md Summary table (E0, E1, Total rows)": 1,
+      "sd37-e3-2 (SF formula-system census predicate)": 1,
+      "sd37-e4a-4a": 1,
+      "transcribe_companion_tables.py vs shipped companion_data tables": 1,
+      "transcribe_monster_tables.py vs shipped monster_data tables": 1,
+      "workflow-instruction.md \u00a73 E2 row / epic-breakdown.md \u00a70 E2.1 row": 1
+    },
+    "by_verification_method": {
+      "awk '/^[^#[:space:]]/ && !/^(SOURCELONG|SOURCESHORT|SOURCEWEB|SOURCEDATE)/{r++} END{print r}' $PCGEN_REPO_DIR/data/starfinder/paizo/core/_society/_abilities.lst -> 15; Python os.walk agrees": 1,
+      "awk -F'\\t' '!/^#/{for(i=1;i<=NF;i++) if($i ~ /BONUS:VAR\\|Resolve(_PCLvl)?\\|/) print $1\" :: \"$i}' $PCGEN_REPO_DIR/data/starfinder/paizo/core/scr_abilities.lst; oracle-builds/*.oracle.txt var.resolve": 1,
+      "awk -F'\\t' '!/^#/{for(i=1;i<=NF;i++) if($i ~ /HP\\|(CURRENTMAX|ALTHP)\\|/ && FILENAME !~ /scr_classes/) print FILENAME\": \"$1\" :: \"$i}' $PCGEN_REPO_DIR/data/starfinder/paizo/core/*.lst": 1,
+      "awk -F'\\t' '!/^#/{for(i=1;i<=NF;i++) if($i ~ /^PART:[^|]*\\|MODIFY:/) n++} END{print n+0}' $SF/paizo/core/*.lst -> 273; Python walk of every .lst under data/starfinder -> all 1081 core 273": 1,
+      "awk -F'\\t' '/^CLASS:Drone\\t/{for(i=1;i<=NF;i++) if($i~/TYPE:/) print $i}' $PCGEN_REPO_DIR/data/starfinder/paizo/core/scr_classes.lst -> TYPE:Monster": 1,
+      "awk -F'|' '$2 ~ /^ (C\\|E)[0-9]/ && $5 !~ /complete/' kanban.md | wc -l -> 0 vs 54 with (C|E)": 1,
+      "awk -F'|' '$2 ~ /^ (C|E)[0-9]/ && $5 ~ /^ complete *$/' docs/release/SD-37-starfinder-1e/kanban.md | awk 'END{print NR}' -> 13": 1,
+      "awk -F'|' '$2 ~ /^ (C|E)[0-9]/ && $5 ~ /^ complete *$/' docs/release/SD-37-starfinder-1e/kanban.md | awk 'END{print NR}' -> 21; Python row parse -> 21": 1,
+      "awk -F'|' '$2 ~ /^ (C|E)[0-9]/ && $5 ~ /^ complete *$/' kanban.md | awk 'END{print NR}' on HEAD~1 -> 16, on E3.1 -> 17": 1,
+      "awk over the 8 registered PCCs for ^(ALIGNMENT|DATATABLE|DYNAMIC|GLOBALMODIFIER|SAVE|SIZE|STAT|VARIABLE): -> 13 rows; resolve_book_includes().campaign_system_files() -> 13": 1,
+      "bash docs/release/SD-37-starfinder-1e/artifacts/epic_3/token-mapping/oracle-builds/run_drone_party.sh -> hp=100 var.drone_lvl=10": 1,
+      "bash docs/release/SD-37-starfinder-1e/artifacts/epic_7/E7.3_logs/fsr_checks.sh (FSR-C1 section: awk over SD-36 receipts/epic-e_receipt.md + git log --diff-filter=D)": 1,
+      "cargo build --locked -j 8 --lib after adding the variants: 4 x error[E0004] non-exhaustive patterns naming those 3 files": 1,
+      "cargo test --bins authoring_workbench::tests::a_packaged_app_reads_the_rules_tables_from_its_resource_root: RED with the binding removed (probe child read the checkout: left 1, right 77), GREEN with it; artifacts/epic_4a/E4a.2_logs/red-packaged-root-unbound.log + green-packaged-root-bound.log": 1,
+      "cargo test --lib every_collection_function (RED with the scanner joining split signatures and the two ids removed: 'collection functions neither a table nor a named view' lists both); artifacts/epic_4a/E4a.2_logs/red-collection-scanner.log": 1,
+      "cargo test --locked -j 8 --workspace --no-fail-fast -- --test-threads=8 (docs/release/SD-37-starfinder-1e/artifacts/epic_4/E4.MC_logs/verify_root.log, failure attributed to its Running line)": 1,
+      "cargo test -p codex-ingest --test sf_core_proof a_selection_hop_carries_its_ability_pool_onto_the_race_ability (RED before, GREEN after); awk over scr_*.lst Race Selection rows with ABILITYPOOL -> 1 of 76": 1,
+      "cargo test -p codex-ingest --test sf_formula_system an_independent_walk (left 124 right 123; per-file naive counts all equal)": 1,
+      "cd apps/desktop && npm test (frontend_test before fix: 131/132, FAIL src/release/buildVersionTriple.test.ts); git show 9d03a76996 -- .github/workflows/publish-tester-release.yml": 1,
+      "find $PCGEN_REPO_DIR/system/gameModes/Starfinder -maxdepth 1 -name '*.lst' | wc -l": 1,
+      "find src/rules_core/rules_tables -name '*.rs' -print0 | xargs -0 cat | wc -l; Python os.walk agrees": 1,
+      "git diff of data/rules_tables after re-running the ported transcriber for all 22 books before folding the rewrite in (3 files, 23+/23-)": 1,
+      "git show 9d03a76996 -- apps/desktop/src-tauri/Cargo.lock; cd apps/desktop/src-tauri && cargo metadata --offline wanted \"Downgrading rfd v0.17.0 -> v0.16.0\"; after restore cargo metadata --locked exit 0": 1,
+      "grep -c weapon_specialization_ docs/release/SD-37-starfinder-1e/artifacts/epic_5/E5.MC_logs/seed_lines/SF-Soldier-3.txt -> 6; data/starfinder-1e/sheet_rules/_vars/v7907c0245e2d2cb2.json declared_by": 1,
+      "grep -n 'C2.1' docs/release/SD-36-consolidation/forward-scope-register.md (no output)": 1,
+      "grep -n race_trait_picker apps/desktop/src-tauri/src/sf_adapter.rs (only the error-shaped RaceSelectionResponse); E5.1 test race_books_load_through_the_per_system_registry + pf_registry_plant log": 1,
+      "grep -rcF '.lst' src/rules_core --exclude-dir=rules_tables | awk -F: '{s+=$2} END{print s+0}' -> 1117 ; Python os.walk agrees": 1,
+      "ingest_spells re-run on the unported mechanism, git diff --stat data/rules_tables (artifacts/epic_4a/E4a.4a_logs/rerun1-spell-drift.stat); per-book count = awk over rerun-ingest_spells.log 'not ingested' lines = 411, Python agrees": 1,
+      "package row shapes (python json over data/rules_tables/*/companion_data/*.json) vs the transcriber's pre-port emission code; post-port re-run of 16 books: git status --porcelain data/rules_tables empty": 1,
+      "pcgen-run-character.sh -c <sf_mechanic_drone.pcg with chassis Hover, Flight System pick removed> -> flighttaken=2 dronemastertotallvl=0 (artifacts/epic_5/E5.4-oracle/hover_drone_alone.oracle.txt)": 1,
+      "python census over data/starfinder-1e/sheet_rules/*/*/*.json grouped by kind and bonus_type: 16+32+204+203": 1,
+      "python3 -c \"import json;r=json.load(open('data/starfinder-1e/sheet_rules/core/class/soldier.json'));print(r[0]['prose'][0])\" -> {'family': {'StatBlock': 'Hit die'}, 'pieces': [{'Text': 'd1'}], ...}": 1,
+      "python3 census over data/starfinder-1e/sheet_rules/*/*/*.json target.Skill / target.SkillSituation.skill prefix (E4.2 receipt Figures)": 1,
+      "sed -n 30,40p apps/desktop/src-tauri/Cargo.toml": 1,
+      "sheet_rule_convert --system starfinder-1e --dump on the widened list: refused=8 no_corpus_record; sf_core_proof the_package_prints_no_product_identity_term: 9 hits; --check: source-format literal BONUS: in _vars": 1,
+      "tsx src/characterHub/starfinderLevelUpModel.test.ts with a preview asking for 2 scores -> 'expected STR,DEX, got STR,DEX,CON' (RED), GREEN after; cargo test --bin codex-desktop sf_level_up 6/0": 1,
+      "unset PCGEN_REPO_DIR; test -d \"$PCGEN_REPO_DIR/data/starfinder/paizo/core/starship\" || grep -lE '^ABILITY:starship' \"$PCGEN_REPO_DIR\"/data/starfinder/paizo/core/*.pcc -> stdout empty, rc=2": 1
+    },
+    "caught_before": {
+      "implementation": 2,
+      "release": 1
+    },
+    "recent": [
+      {
+        "actor": "sd37-e6-2",
+        "id": "1791231583906-sd37-e6-2-92b60c",
+        "summary": "E4.2 selection hop (convert.rs internal_hop_grants) claimed the Internal selection hop carries the row's effects onto the race ability (human holds its racial traits); actual the hop carried ABILITY: grants only; Human Race Selection ~ Default's BONUS:ABILITYPOOL|+2 Racial Stat Bonus|1 (scr_abilities.lst:809, 1 of 76 SF race selection rows) was dropped, so no converted record said a human picks the +2",
+        "ts": "2026-10-05T20:19:43Z"
+      },
+      {
+        "actor": "sd37-e6-mc",
+        "id": "1791275724900-sd37-e6-mc-38dd43",
+        "summary": "E6.5 starfinderLevelUpModel.ts (level-up increase count) claimed every list, cap and number in the level-up dialog is the engine's preview; the increase takes four scores because the engine's preview asks for four; actual the preview carried no count; the dialog held its own const SCORES_PER_INCREASE = 4 (a desktop copy of sf_abilities::SCORES_PER_INCREASE, R2); fixed by E6.MC: preview.increaseScores from the engine",
+        "ts": "2026-10-06T08:35:24Z"
+      },
+      {
+        "actor": "sd37-e4a-2",
+        "id": "1791321088652-sd37-e4a-2-e15c9d",
+        "summary": "E4a.1 receipt (rules_data_package every_collection_function_is_a_table_or_a_named_view) claimed every zero-argument collection function of rules_tables is a registered table or a named view (279 tables + 170 views); actual 2 were neither: pathfinder_unchained/{rogue,summoner}_features/class_skills, whose signature rustfmt splits as 'fn class_skills(\\n) -> ...' so the line scanner never saw it; package is now 281 tables",
+        "ts": "2026-10-06T21:11:28Z"
+      },
+      {
+        "actor": "sd37-e4a-2",
+        "id": "1791322850661-sd37-e4a-2-b9a79d",
+        "summary": "E4a.1 receipt (bundle path proof) claimed the bundle path is proven by tauri.conf.json resources + tauri-resources-tracked; the loader reads the package at runtime_package_root(); actual runtime_package_root() read only CODEX_REPO_ROOT or the compile-time checkout, so a packaged app on a tester machine (no checkout, no env) would have panicked on its first table read once importers read the package; fixed by use_repo_root + authoring_workbench::bind_rules_tables_package_root called from main's setup",
+        "ts": "2026-10-06T21:40:50Z"
+      },
+      {
+        "actor": "sd37-e4a-3",
+        "id": "1791349560749-sd37-e4a-3-c8d228",
+        "summary": "decisions.md \u00a719 / epic-breakdown E4a.3 'elsewhere' .lst count claimed 1098 .lst lines elsewhere in src/rules_core (2026-10-02); actual 1117 at E4a.3 start (tranche/17 615ce41338); 1110 at 5cbee570e1~1; 1117 after E4a.3",
+        "ts": "2026-10-07T05:06:00Z"
+      },
+      {
+        "actor": "sd37-e4a-4a",
+        "id": "1791369776899-sd37-e4a-4a-cf7a44",
+        "summary": "ingest_spells (SD-32 c27375ee1d .COPY= mechanism) vs shipped spell_list tables claimed generator re-run reproduces every book's shipped SPELL_LIST (mechanism 'fixed as a class'); actual only bestiary + book_of_the_damned_volume_1 were regenerated; a re-run adds 411 .COPY= rows to 7 books (AG 7, HA 4, ISM 1, ISWG 2, OA 369, UM 19, UW 9) and reverts 1 SD-34 hand edit (U+00AD soft hyphens in monster_codex Spellsteal)",
+        "ts": "2026-10-07T10:42:56Z"
+      },
+      {
+        "actor": "sd37-e4a-4a",
+        "id": "1791369777028-sd37-e4a-4a-1b2699",
+        "summary": "transcribe_monster_tables.py vs shipped monster_data tables claimed the transcriber's output is the shipped table; actual SD-35 AT-35-E6-003-SWEEP cycle 11 (208ebf1e21) hand-edited 3 generated tables (%CHOICE x5/%LIST x15 -> 'the chosen option', TYPE=Base x2 -> Base, ' DESC:&nl; ' x4); a re-run reverted them in bestiary, bestiary_3, inner_sea_world_guide",
+        "ts": "2026-10-07T10:42:57Z"
+      },
+      {
+        "actor": "sd37-e4a-4a",
+        "id": "1791369777152-sd37-e4a-4a-d9cb1f",
+        "summary": "transcribe_companion_tables.py vs shipped companion_data tables claimed the transcriber emits the shipped shape; actual SD-35 cycles 9 (f4583db504) and 13 (88b4490e16) converted guard strings to typed EffectCondition / CompanionAbilityGrant / ExternalAbilityRefCondition by hand in the generated tables; the transcriber still emitted strings",
+        "ts": "2026-10-07T10:42:57Z"
+      },
+      {
+        "actor": "sd37-e4a-mc",
+        "id": "1791379511132-sd37-e4a-mc-7d6f0a",
+        "summary": "sd37-e4a-4a claimed the desktop does not depend on codex-ingest (so desktop suite not run; PF pair only); actual codex-ingest is a dev-dependency of apps/desktop/src-tauri (Cargo.toml line 40, [dev-dependencies]); E4a.4a's new pub mod rules_package_out is compiled into the desktop test build",
+        "ts": "2026-10-07T13:25:11Z"
+      },
+      {
+        "actor": "sd37-e7-3",
+        "id": "1791395536480-sd37-e7-3-3cb192",
+        "summary": "forward-scope-register.md FSR-C1 (quoting SD-36 FS-2) claimed 8 open SD-34 fable-review P1 correctness rows; actual 0 open: 6 FIXED by SD-36 Epic E (desktop-P1-01/02, PC8-1, PC8-2, PC4-1, R12-01), 2 mooted by file retirement in SD-36 Epic B (R9-02 v06_work_inventory.rs 0aa1f77223, R11-02 reach_gate.rs b8ff0e895b)",
+        "ts": "2026-10-07T17:52:16Z"
+      }
+    ],
+    "repeat_subjects": [],
+    "total": 37,
+    "with_blast_radius": 8
+  },
+  "deferrals": {
+    "open": 8,
+    "open_items": [
+      {
+        "actor": "sd37-e3-5",
+        "id": "1791041635274-sd37-e3-5-a1e0b9",
+        "reason": "race speed print/total is the race print path (E5.1 row: races print) and a SET-override speed model is not in E3.5's criterion; changing it moves every core race",
+        "revisit": "E5.1 (races, themes, class features print)",
+        "ts": "2026-10-03T15:33:55Z",
+        "what": "SF race speed: MOVE:Walk,0 prints 'Walk 0 ft.' and BONUS:VAR|Walk|<n> converts to no line for every SF race (core included); 9 MODIFYOTHER movement_speed SET tokens degrade by name"
+      },
+      {
+        "actor": "sd37-e4-6",
+        "id": "1791121789146-sd37-e4-6-871e0a",
+        "reason": "LevelUpPlan grants cite Grant::source_table: TableCellRef whose rule_set is a Pathfinder rules_tables RuleSetId; no Starfinder package row can be named without changing level_up.rs (no E4 row); SF level-up is card E6.5's criterion",
+        "revisit": "E6.5 (SF level-up)",
+        "ts": "2026-10-04T13:49:49Z",
+        "what": "StarfinderAdapter::level_up returns the empty LevelUpPlan"
+      },
+      {
+        "actor": "sd37-e4-mc",
+        "id": "1791127587671-sd37-e4-mc-8861b4",
+        "reason": "No E4 criterion and no E0.4 hand value names an attack bonus, so it is outside E4's criteria and E4.MC's comparison; a new SF reader with SRD hand values is not a small fix inside a merge check (decisions.md \u00a75 lists attack bonuses as computed)",
+        "revisit": "E7.1 SF oracle parity (PCGen SF output carries attack totals)",
+        "ts": "2026-10-04T15:26:27Z",
+        "what": "Starfinder attack bonuses (melee/ranged/thrown totals) are computed by no SF reader; the adapter's baseline_melee_attack_bonus is 0 with a diagnostic"
+      },
+      {
+        "actor": "sd37-e5-1",
+        "id": "1791135016991-sd37-e5-1-17436f",
+        "reason": "E5.1 prints features; these rows are one weapon's attack/damage terms and are kept off the feature list by sf_sheet_print; a carried weapon's line is E5.3 (equipment print), its attack total E7.1",
+        "revisit": "E5.3 (equipment print) and E7.1 (attack totals)",
+        "ts": "2026-10-04T17:30:16Z",
+        "what": "per-weapon CATEGORY:Weapon attack/damage rows (package pool 'weapon') printing on the carried weapon's line"
+      },
+      {
+        "actor": "sd37-e7-1",
+        "id": "1791293897862-sd37-e7-1-eb1805",
+        "reason": "E5.4's recorded scope (accepted by E5.MC); E7.1's criterion is parity, a drone total reader with SRD hand values is a new criterion",
+        "revisit": "an operator ruling on whether drone totals are sheet totals under decisions.md \u00a75",
+        "ts": "2026-10-06T13:38:17Z",
+        "what": "Drone totals (EAC/KAC, total saves, initiative, attack bonuses, skill totals) are not computed: the engine prints the drone's terms only (sf_drone_print, E5.4); E7.1 parity explains 10 drone fields + Stamina by that decision"
+      },
+      {
+        "actor": "sd37-e7-1",
+        "id": "1791293897995-sd37-e7-1-c3a445",
+        "reason": "the fix moves the held-set facts every SF reader shares (gates PRETOTALAB), outside E7.1's parity criterion; E6.5a recorded the same gap",
+        "revisit": "the next card that touches sf_defense::held or the SF print path",
+        "ts": "2026-10-06T13:38:17Z",
+        "what": "sf_defense::held leaves CharacterFacts.base_attack at 0, so a printed line over BAB reads 0 (Deadly Aim prints 'additional 0 (minimum 1)' on SF-Soldier-3 where min(1,BAB/2) = 1); E7.1's attack reader sets the fact for its own rows only"
+      },
+      {
+        "actor": "sd37-e4a-1",
+        "id": "1791318539166-sd37-e4a-1-29cc88",
+        "reason": "E4a.1's population is every table (arrays, fn-built record lists, registries); scalars and label mappings are not rows of a table, and E4a.4's 'no .rs left in rules_tables' criterion must place them (package constants table or code outside rules_tables)",
+        "revisit": "E4a.2 dispatch / E4a.4 criterion",
+        "ts": "2026-10-06T20:28:59Z",
+        "what": "rules_tables values that are not tables: 84 file-level scalar consts (71 u8, 7 i16, 4 &str, 2 BookRegistry) and 13 enum-label / coverage-report match functions"
+      },
+      {
+        "actor": "sd37-e4a-4a",
+        "id": "1791369784650-sd37-e4a-4a-fc217e",
+        "reason": "E4a.4a's criterion is a byte-identical port; the shipped package (the tables' source since E4a.4) never carried them, and the census does not count them as missing records. Shipping them is a PF content + census change outside SD-37 (Starfinder) scope",
+        "revisit": "a PF content bundle that re-derives v06_work_inventory's treatment of bare .COPY= spell rows",
+        "ts": "2026-10-07T10:43:04Z",
+        "what": "Whether the 411 .COPY= spell variant rows ingest_spells resolves for 7 books (copy_variants=false) should ship: 388 are origin mod_only in docs/work-inventory.json (OA 369, UM 19); 23 are absent from the inventory entirely (AG 7, HA 4, ISM 1, ISWG 2, UW 9)"
+      }
+    ],
+    "recent": [
+      {
+        "actor": "sd37-e3-5",
+        "id": "1791041635274-sd37-e3-5-a1e0b9",
+        "summary": "deferred SF race speed: MOVE:Walk,0 prints 'Walk 0 ft.' and BONUS:VAR|Walk|<n> converts to no line for every SF race (core included); 9 MODIFYOTHER movement_speed SET tokens degrade by name: race speed print/total is the race print path (E5.1 row: races print) and a SET-override speed model is not in E3.5's criterion; changing it moves every core race",
+        "ts": "2026-10-03T15:33:55Z"
+      },
+      {
+        "actor": "sd37-e4-6",
+        "id": "1791121789146-sd37-e4-6-871e0a",
+        "summary": "deferred StarfinderAdapter::level_up returns the empty LevelUpPlan: LevelUpPlan grants cite Grant::source_table: TableCellRef whose rule_set is a Pathfinder rules_tables RuleSetId; no Starfinder package row can be named without changing level_up.rs (no E4 row); SF level-up is card E6.5's criterion",
+        "ts": "2026-10-04T13:49:49Z"
+      },
+      {
+        "actor": "sd37-e4-mc",
+        "id": "1791127587671-sd37-e4-mc-8861b4",
+        "summary": "deferred Starfinder attack bonuses (melee/ranged/thrown totals) are computed by no SF reader; the adapter's baseline_melee_attack_bonus is 0 with a diagnostic: No E4 criterion and no E0.4 hand value names an attack bonus, so it is outside E4's criteria and E4.MC's comparison; a new SF reader with SRD hand values is not a small fix inside a merge check (decisions.md \u00a75 lists attack bonuses as computed)",
+        "ts": "2026-10-04T15:26:27Z"
+      },
+      {
+        "actor": "sd37-e5-1",
+        "id": "1791135016991-sd37-e5-1-17436f",
+        "summary": "deferred per-weapon CATEGORY:Weapon attack/damage rows (package pool 'weapon') printing on the carried weapon's line: E5.1 prints features; these rows are one weapon's attack/damage terms and are kept off the feature list by sf_sheet_print; a carried weapon's line is E5.3 (equipment print), its attack total E7.1",
+        "ts": "2026-10-04T17:30:16Z"
+      },
+      {
+        "actor": "sd37-e7-1",
+        "id": "1791293897862-sd37-e7-1-eb1805",
+        "summary": "deferred Drone totals (EAC/KAC, total saves, initiative, attack bonuses, skill totals) are not computed: the engine prints the drone's terms only (sf_drone_print, E5.4); E7.1 parity explains 10 drone fields + Stamina by that decision: E5.4's recorded scope (accepted by E5.MC); E7.1's criterion is parity, a drone total reader with SRD hand values is a new criterion",
+        "ts": "2026-10-06T13:38:17Z"
+      },
+      {
+        "actor": "sd37-e7-1",
+        "id": "1791293897995-sd37-e7-1-c3a445",
+        "summary": "deferred sf_defense::held leaves CharacterFacts.base_attack at 0, so a printed line over BAB reads 0 (Deadly Aim prints 'additional 0 (minimum 1)' on SF-Soldier-3 where min(1,BAB/2) = 1); E7.1's attack reader sets the fact for its own rows only: the fix moves the held-set facts every SF reader shares (gates PRETOTALAB), outside E7.1's parity criterion; E6.5a recorded the same gap",
+        "ts": "2026-10-06T13:38:17Z"
+      },
+      {
+        "actor": "sd37-e4a-1",
+        "id": "1791318539166-sd37-e4a-1-29cc88",
+        "summary": "deferred rules_tables values that are not tables: 84 file-level scalar consts (71 u8, 7 i16, 4 &str, 2 BookRegistry) and 13 enum-label / coverage-report match functions: E4a.1's population is every table (arrays, fn-built record lists, registries); scalars and label mappings are not rows of a table, and E4a.4's 'no .rs left in rules_tables' criterion must place them (package constants table or code outside rules_tables)",
+        "ts": "2026-10-06T20:28:59Z"
+      },
+      {
+        "actor": "sd37-e4a-2",
+        "id": "1791328034641-sd37-e4a-2-399125",
+        "summary": "deferred Compiled code that stays in the rules_tables module after E4a.2 and is re-exported by the catalog by name: 112 structs + 66 enums (row/id types, whose impl methods stay compiled, incl. the two enums UnchainedRogueFeature/UnchainedSummonerFeature whose per-variant facts the package also carries), 186 pure functions (formulas over their arguments, 295 plain fns in the module minus those the catalog replaces), 78 scalar consts (71 u8 + 7 i16), 2 inline modules: types, impl methods and formulas are code, not table rows; E4a.4 'no .rs left in rules_tables' must place every one of them (move to a non-table module), and the package carries only table rows",
+        "ts": "2026-10-06T23:07:14Z"
+      },
+      {
+        "actor": "sd37-e4a-4",
+        "id": "1791361210108-sd37-e4a-4-8bb4cd",
+        "summary": "deferred Six codegen tools still emit compiled table source into the removed src/rules_core/rules_tables (gen_feat_gap_tables, gen_equipment_gap_tables, ingest_class_spell_levels_arg, ingest_spells, scripts/transcribe_monster_tables.py, scripts/transcribe_companion_tables.py); they must write data/rules_tables/<id>.json instead: not in E4a.4's criterion (PF parity, catalog parity, Bestiary count, no .rs left); porting ~8.6k lines and proving each against the pinned oracle is its own card",
+        "ts": "2026-10-07T08:20:10Z"
+      },
+      {
+        "actor": "sd37-e4a-4a",
+        "id": "1791369784650-sd37-e4a-4a-fc217e",
+        "summary": "deferred Whether the 411 .COPY= spell variant rows ingest_spells resolves for 7 books (copy_variants=false) should ship: 388 are origin mod_only in docs/work-inventory.json (OA 369, UM 19); 23 are absent from the inventory entirely (AG 7, HA 4, ISM 1, ISWG 2, UW 9): E4a.4a's criterion is a byte-identical port; the shipped package (the tables' source since E4a.4) never carried them, and the census does not count them as missing records. Shipping them is a PF content + census change outside SD-37 (Starfinder) scope",
+        "ts": "2026-10-07T10:43:04Z"
+      }
+    ],
+    "resolved": 2,
+    "total": 10
+  },
+  "events": {
+    "by_actor": {
+      "codex-sd37": 36,
+      "codex-sd37-e0-1": 4,
+      "sd37-c0-1": 3,
+      "sd37-c0-2": 5,
+      "sd37-e0-2": 1,
+      "sd37-e0-4": 1,
+      "sd37-e1-1-e1-3": 1,
+      "sd37-e1-4": 1,
+      "sd37-e1-mc": 2,
+      "sd37-e2-1": 1,
+      "sd37-e2-mc": 8,
+      "sd37-e3-1": 2,
+      "sd37-e3-2": 1,
+      "sd37-e3-3": 1,
+      "sd37-e3-4": 4,
+      "sd37-e3-5": 3,
+      "sd37-e3-mc": 3,
+      "sd37-e4-1": 2,
+      "sd37-e4-2": 1,
+      "sd37-e4-3": 2,
+      "sd37-e4-4": 2,
+      "sd37-e4-5": 1,
+      "sd37-e4-6": 1,
+      "sd37-e4-mc": 5,
+      "sd37-e4a-1": 8,
+      "sd37-e4a-2": 8,
+      "sd37-e4a-3": 2,
+      "sd37-e4a-4": 2,
+      "sd37-e4a-4a": 6,
+      "sd37-e4a-mc": 10,
+      "sd37-e5-1": 4,
+      "sd37-e5-2": 2,
+      "sd37-e5-3": 3,
+      "sd37-e5-4": 4,
+      "sd37-e5-mc": 2,
+      "sd37-e6-1": 2,
+      "sd37-e6-2": 1,
+      "sd37-e6-3": 1,
+      "sd37-e6-4": 1,
+      "sd37-e6-5": 3,
+      "sd37-e6-5a": 2,
+      "sd37-e6-6": 1,
+      "sd37-e6-mc": 2,
+      "sd37-e7-1": 3,
+      "sd37-e7-2": 1,
+      "sd37-e7-3": 1
+    },
+    "by_origin": {
+      "agent": 91,
+      "derived": 69
+    },
+    "by_type": {
+      "correction": 37,
+      "deferral": 10,
+      "incident": 15,
+      "near_miss": 1,
+      "note": 3,
+      "resolution": 2,
+      "rework": 23,
+      "verification": 69
+    },
+    "total": 160
+  },
+  "generated_at": "2026-10-07T18:01:14Z",
+  "generated_by": "scripts/retro.py summary",
+  "git_join": {
+    "authors": 1,
+    "available": true,
+    "commits": 115,
+    "events_per_commit": 1.3913,
+    "top_authors": [
+      [
+        "Todd Hintzmann",
+        115
+      ]
+    ]
+  },
+  "incidents": {
+    "by_recurrence_key": {
+      "clippy-stage-not-in-card-verify": 1,
+      "dispatch-before-discovered-dependency": 2,
+      "fenced-file-blocks-criterion": 1,
+      "liveness-check-cannot-see-process": 1,
+      "oracle-misdecoded-text": 1,
+      "pcgen-gradle-network-fetch": 1,
+      "redispatch-of-complete-card": 2,
+      "redispatch-of-completed-card": 1,
+      "root-sweep-skipped-on-desktop-card": 1,
+      "rule-id-colon-grammar": 1,
+      "ui-smoke-campaign-manager-list-reset-stall": 1,
+      "verify-without-cargo-target-dir": 1,
+      "weapon-rows-unset-vars": 1
+    },
+    "recent": [
+      {
+        "actor": "sd37-e5-3",
+        "id": "1791157503896-sd37-e5-3-58ec89",
+        "summary": "a Starfinder character carrying any augmentation cannot compute: augmentation records state no bulk (oracle QUALITY:ItemLevel only; 144 augmentation principals) and sf_loadout refuses an item with no bulk (sf_loadout.item_bulk); installed upgrades' price/bulk cannot reach credits/bulk because sf_loadout refuses equipment_modifier records",
+        "ts": "2026-10-04T23:45:03Z"
+      },
+      {
+        "actor": "sd37-e0-4",
+        "id": "1791167378425-sd37-e0-4-593e7e",
+        "summary": "E0.4 transcriber re-dispatched (attempt 1) although E0.4 is complete on origin/tranche/17 (705088c8d7 transcriber, 5f116cd4b9 review 126/126 agree); declined without rewriting",
+        "ts": "2026-10-05T02:29:38Z"
+      },
+      {
+        "actor": "sd37-e1-4",
+        "id": "1791167428729-sd37-e1-4-e92bbf",
+        "summary": "E1.4 re-dispatched (attempt 1 of 3) although it landed complete at 390917267e/520d746125 on origin/tranche/17 and E1.MC plus E2-E5 cards already built on it; one agent turn spent re-verifying (detected by kanban.md E1.4 row = complete; git branch -r --contains 520d746125 -> origin/tranche/17)",
+        "ts": "2026-10-05T02:30:28Z"
+      },
+      {
+        "actor": "sd37-e0-2",
+        "id": "1791167500346-sd37-e0-2-2ea5f5",
+        "summary": "E0.2 re-dispatched (attempt 1 of 3) although kanban row is complete at 2f0bd9d793/bad4e41101 on origin/tranche/17",
+        "ts": "2026-10-05T02:31:40Z"
+      },
+      {
+        "actor": "sd37-e5-3",
+        "id": "1791177420441-sd37-e5-3-d4b149",
+        "summary": "root sweep: v06_wizard_pilot_case_verification full_pipeline failed; PCGen gradlew could not reach api.adoptium.net (downloadJavaFXLocal)",
+        "ts": "2026-10-05T05:17:00Z"
+      },
+      {
+        "actor": "sd37-e6-5",
+        "id": "1791259622731-sd37-e6-5-3d56b9",
+        "summary": "root sweep red since E6.3 (9cf7cf76fc): tests/sd24_wired_integration_audit.rs no_zero_tolerance_forbidden_tokens_in_shipping_source flags the corpus words 'Magic Hack' in the E6.3 test fixture apps/desktop/src/characterHub/starfinderSheetFixtures/SF-Technomancer-5.json; E6.3 and E6.4 ran desktop + frontend only, so no card saw it (detected by E6.5 root full sweep: awk '/^     Running/{r=$2} /^test result: FAILED/{print r}' E6.5_logs/verify_root.log -> tests/sd24_wired_integration_audit.rs (1 of 468 suites))",
+        "ts": "2026-10-06T04:07:02Z"
+      },
+      {
+        "actor": "sd37-e6-mc",
+        "id": "1791290681811-sd37-e6-mc-5974e2",
+        "summary": "ui-smoke full spec: campaign-manager-list BLOCKED (could not reach the landing screen within 6 reset attempts; command-channel stall) when it runs right after encounter-builder-add-monster-and-rating; green alone",
+        "ts": "2026-10-06T12:44:41Z"
+      },
+      {
+        "actor": "sd37-e4a-2",
+        "id": "1791322580133-sd37-e4a-2-ce5b77",
+        "summary": "verify.sh launched without CARGO_TARGET_DIR exported: cargo built into ./target inside the tree",
+        "ts": "2026-10-06T21:36:20Z"
+      },
+      {
+        "actor": "sd37-e4a-mc",
+        "id": "1791366771518-sd37-e4a-mc-b14f76",
+        "summary": "E4a.MC dispatched while its kanban dependency E4a.4a (discovered by E4a.4) is 'ready', not complete; the workflow step list [E4a1..E4a4, E4aMC] predates the discovered card",
+        "ts": "2026-10-07T09:52:51Z"
+      },
+      {
+        "actor": "sd37-e4a-mc",
+        "id": "1791367386209-sd37-e4a-mc-88cd81",
+        "summary": "E4a.MC re-dispatched (attempt 2) while E4a.4a is still 'ready' and origin/tranche/17 has not moved since attempt 1 (949a8dbf62); second firing of this key \u2014 the workflow's E4a step list does not read kanban Depends-on, so a warning in a receipt does not stop it",
+        "ts": "2026-10-07T10:03:06Z"
+      }
+    ],
+    "recurring": [
+      {
+        "count": 2,
+        "recurrence_key": "redispatch-of-complete-card"
+      },
+      {
+        "count": 2,
+        "recurrence_key": "dispatch-before-discovered-dependency"
+      }
+    ],
+    "silent": 4,
+    "time_lost_minutes": 47,
+    "total": 15
+  },
+  "log": {
+    "invalid_lines": 0,
+    "path": "/home/ubuntu/workspace/worktrees/codex-sd37/docs/retro/events",
+    "problems": [],
+    "shards": 46
+  },
+  "near_misses": {
+    "by_caught_by": {
+      "E1.MC planted mutations A and B (render logs mutA-render.log, mutB-render.log: hashes 1d830682/8d1a711c unchanged)": 1
+    },
+    "escaped": 0,
+    "recent": [
+      {
+        "actor": "sd37-e1-mc",
+        "id": "1790963467597-sd37-e1-mc-77eb84",
+        "summary": "harness sensitivity is 2 seeds' reach, not the registries",
+        "ts": "2026-10-02T17:51:07Z"
+      }
+    ],
+    "total": 1
+  },
+  "rework": {
+    "by_cause": {
+      "a new enum variant cannot compile without arms in exhaustive matches (the same mechanism E2.1 hit)": 1,
+      "a reference inside a const points at the const's own interned copy, never at the static it was written from": 1,
+      "a textual substitution over source treated string literals like paths; the acceptance command counts the literal, the render counts the bytes, and nothing tied the two together before the sweep": 1,
+      "comment rewrite in the move reached doc comments that schemars publishes as descriptions": 1,
+      "drafted rows from the open-starfinder-sheet precedent without reading the sheet's onClose/onOpen wiring or the sheet's own text; 'Touch' matches 'Healing Touch'/'Touch' spell text on a Mystic and a Technomancer sheet": 1,
+      "file-order registration let drone skill units take (INTERNAL, COMPUTERS/STEALTH...) name pairs from Skill Synergy / Master Crafter options": 1,
+      "hand-built seed inputs name only records that feed a total; the comparison was narrowed to feat/spell/equipment/modifier lines, the kinds this card writes": 1,
+      "implementation written first; RED confirmed only on the chosen-ability gap and by 7 planted mutations": 1,
+      "json.dump of the whole spec reformatted 861 lines (2755+/861-); restored from HEAD and inserted the two rows textually (341+/0-)": 1,
+      "nested if-let written before the edition-2024 let-chain lint was considered": 1,
+      "plant order: a shared snapshot used as one link's new side and the next link's base": 1,
+      "plant script wrote the arrow as the escape \\u2192 while the source holds the literal character; P9 aborted before running, whole plant set re-run": 1,
+      "ran clippy only inside the final verify, not after the last code edit": 1,
+      "ran the ingest sweep on a tree whose generators (gen_book_cache, equipment_gap, gen_equipment_gap_tables) still joined table citations by the old extension; the join sites were found by reading, after the sweep had started": 1,
+      "test helper prefixed ids that were already full rule ids": 1,
+      "the 20th-row parse took the last 6 digit/dash tokens of the page tail, which on the Witchwarper page includes the Starfinder Enhanced note after the table": 1,
+      "the ability's CHOOSE:SKILL|TYPE=DSBase offers the Display ~ skill records; the .pcg association must name the chosen record's KEY": 1,
+      "the gate has two callers (bin + integration test) and E4a.1 extended only the bin first": 1,
+      "the plant named a row id the engine does not send; the model lays out no row without an engine value, so the plant rendered nothing; replaced by a plant that writes 'Flat-Footed' into the component": 1,
+      "the script's in_test flag never reset after the first #[cfg(test)] line; caught by the compiler (ClassWeaponProficiency: Serialize not satisfied)": 1,
+      "the unnarrowed view gave 4 non-drone records (lashunta_default_student, half_elf_default_adaptability, verthani_default_skill_focus, exocortex_memory_module) new offers, one on a seed's race (SF-Mystic-5)": 1,
+      "the verify script rm -rf'd SF_SEED_LINES_OUT and did not mkdir it (E7.1_verify.sh does); harness error, not a code defect; re-run of the --bins sf_sheet_print set with the dir created: 13 passed 0 failed": 1,
+      "the verify script's clippy stage ran 'cd crates/codex-ingest' inside a { } group (not a subshell), so the later stages' relative log redirects failed and both sweeps never ran; their skeleton logs still read not-run, so the miss was visible": 1
+    },
+    "recent": [
+      {
+        "actor": "sd37-e6-6",
+        "id": "1791274259521-sd37-e6-6-376ed6",
+        "summary": "redid open-starfinder-* rows: two first-draft step/forbid choices redone (Close -> Open to reach the Load list; forbid 'Touch' dropped): drafted rows from the open-starfinder-sheet precedent without reading the sheet's onClose/onOpen wiring or the sheet's own text; 'Touch' matches 'Healing Touch'/'Touch' spell text on a Mystic and a Technomancer sheet",
+        "ts": "2026-10-06T08:10:59Z"
+      },
+      {
+        "actor": "sd37-e7-1",
+        "id": "1791293897735-sd37-e7-1-59ac39",
+        "summary": "redid E7.1 parity .pcg for SF-Mystic-5: Lashunta Student '+2 Racial Bonus to Skill' associated to the base skills (APPLIEDTO:Diplomacy/Medicine), so the oracle run printed Diplomacy/Medicine 10 against the engine's 12; re-encoded APPLIEDTO:Display ~ <skill> and re-ran the build (12 = engine = SRD): the ability's CHOOSE:SKILL|TYPE=DSBase offers the Display ~ skill records; the .pcg association must name the chosen record's KEY",
+        "ts": "2026-10-06T13:38:17Z"
+      },
+      {
+        "actor": "sd37-e4a-1",
+        "id": "1791318528911-sd37-e4a-1-cf3883",
+        "summary": "redid E4a.1 derive-adding script skipped the 2 crb/weapon_tables.rs row types after a mid-file #[cfg(test)]: the script's in_test flag never reset after the first #[cfg(test)] line; caught by the compiler (ClassWeaponProficiency: Serialize not satisfied)",
+        "ts": "2026-10-06T20:28:48Z"
+      },
+      {
+        "actor": "sd37-e4a-1",
+        "id": "1791318529039-sd37-e4a-1-0617c7",
+        "summary": "redid registry index rows matched MONSTER_BOOKS/COMPANION_BOOKS slices to their static tables by address; every row came back <unregistered>: a reference inside a const points at the const's own interned copy, never at the static it was written from",
+        "ts": "2026-10-06T20:28:49Z"
+      },
+      {
+        "actor": "sd37-e4a-1",
+        "id": "1791318529170-sd37-e4a-1-fabca8",
+        "summary": "redid tests/pi_table_sweep.rs reconciled only the Rust sweep against the baseline, so the package baseline rows read as stale (root-full: 1 failed of 294 suites): the gate has two callers (bin + integration test) and E4a.1 extended only the bin first",
+        "ts": "2026-10-06T20:28:49Z"
+      },
+      {
+        "actor": "sd37-e4a-1",
+        "id": "1791318539041-sd37-e4a-1-547f6f",
+        "summary": "redid 3 collapsible_if clippy errors in rules_data_package.rs (verify --only clippy FAIL root:1): nested if-let written before the edition-2024 let-chain lint was considered",
+        "ts": "2026-10-06T20:28:59Z"
+      },
+      {
+        "actor": "sd37-e4a-2",
+        "id": "1791328034415-sd37-e4a-2-2085ae",
+        "summary": "redid The first re-point pass rewrote every rules_tables:: in the 253 importers to rules_catalog::, string literals included; 41 literals in 16 files are provenance text (Elowen's base attack bonus line, hit-die source labels, feat-prerequisite reasons) whose bytes the PF render hash and fixtures pin; root full run: 1 FAILED suite (sd20_feat_prereqs_parity). Redone as E4a.2_split_provenance_strings.py: the literals keep their bytes (concat! or the COMPILED_MODULE_CITATION constant), the source names no compiled path: a textual substitution over source treated string literals like paths; the acceptance command counts the literal, the render counts the bytes, and nothing tied the two together before the sweep",
+        "ts": "2026-10-06T23:07:14Z"
+      },
+      {
+        "actor": "sd37-e4a-3",
+        "id": "1791349574274-sd37-e4a-3-639beb",
+        "summary": "redid first codex-ingest full run (about 25 min) aborted and redone after the generator fixes landed: ran the ingest sweep on a tree whose generators (gen_book_cache, equipment_gap, gen_equipment_gap_tables) still joined table citations by the old extension; the join sites were found by reading, after the sweep had started",
+        "ts": "2026-10-07T05:06:14Z"
+      },
+      {
+        "actor": "sd37-e4a-4",
+        "id": "1791361210286-sd37-e4a-4-eba3d9",
+        "summary": "redid rules_tables.schema.json regenerated: 18 description lines changed rules_tables:: to rules_catalog:: after moved doc comments were path-rewritten: comment rewrite in the move reached doc comments that schemars publishes as descriptions",
+        "ts": "2026-10-07T08:20:10Z"
+      },
+      {
+        "actor": "sd37-e4a-mc",
+        "id": "1791381240687-sd37-e4a-mc-60afc2",
+        "summary": "redid E4a.MC attempt-3 desktop full suite: 1 failure sf_seed_printed_features_equal_the_features_the_converted_records_grant (writes the seed's lines: NotFound): the verify script rm -rf'd SF_SEED_LINES_OUT and did not mkdir it (E7.1_verify.sh does); harness error, not a code defect; re-run of the --bins sf_sheet_print set with the dir created: 13 passed 0 failed",
+        "ts": "2026-10-07T13:54:00Z"
+      }
+    ],
+    "total": 23
+  },
+  "schema_version": 1,
+  "verification": {
+    "by_failing_stage": {
+      "clippy": 9,
+      "preflight-oracle": 2,
+      "rules-schema-check": 5,
+      "sf-sheet-rules-check": 2,
+      "tauri-resources-tracked": 1
+    },
+    "fail_rate": 0.2754,
+    "failed_runs": 19,
+    "runs": 69
+  },
+  "window": {
+    "since": "2026-10-02T00:00:00+00:00",
+    "spec": "2026-10-02",
+    "until": null
+  }
+}

@@ -1,0 +1,11 @@
+# dual audit on 520d746125de047a84ac22c7bc5993c92d98d1d9...41bb9757bdbecbd2b48c0defaa4be380417dc585
+OK_NO_BUNDLE_TAGS
+OK_NO_TOKENS
+OK_NO_NOOP_HANDLERS
+OK_NO_MOCK_LEAKS
+OK_NO_WOULD_STRINGS
+docs/release/SD-37-starfinder-1e/artifacts/epic_1/E1.MC_cycle_receipt.md
+docs/release/SD-37-starfinder-1e/kanban.md
+docs/release/SD-37-starfinder-1e/progress.md
+docs/retro/events/sd37-e1-mc.jsonl
+61 files changed

@@ -1,0 +1,74 @@
+{
+  "codex_generated_name": false,
+  "completeness": "full",
+  "data": {
+    "description": "Your martial training makes you a dangerous and elusive target for giants.",
+    "key": "Earth Child Style",
+    "name": "Earth Child Style",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "FEAT"
+      },
+      {
+        "key": "TYPE",
+        "value": "Combat.Style"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Dwarf ~ Defensive Training,Gnome ~ Defensive Training"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=FEAT,Improved Unarmed Strike"
+      },
+      {
+        "key": "PREFACT",
+        "value": "1,TEMPLATES,IsDwarf=true,IsGnome=True"
+      },
+      {
+        "key": "PRESKILL",
+        "value": "1,Acrobatics=3"
+      },
+      {
+        "key": "PRESTAT",
+        "value": "1,WIS=13"
+      },
+      {
+        "key": "DESC",
+        "value": "Your martial training makes you a dangerous and elusive target for giants."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RacialDefensiveTrainingBonus|2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.99"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "While using this style, your defensive training dodge bonus to AC increases to +6. Further, against creatures of the giant subtype, you can add your Wisdom bonus (%1) on your unarmed strike damage rolls.|WIS"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T14:16:16Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 101,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_feats.lst",
+    "record_key": "Earth Child Style",
+    "sha256": "220f72d5a7e8a60077c981fcf7e0bfc086ddc05f3fd460f37a619eb6795ee58f"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "ambiguous:prose_ability_scaling",
+    "computed:pre_guard",
+    "derived:prose_formula_segment"
+  ]
+}

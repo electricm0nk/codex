@@ -1,0 +1,30 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Godless Healing",
+    "category": "General",
+    "name": "Godless Healing",
+    "description": "You have mastered a specialized and complex technique to ignore pain by focusing your belief on the self rather than relying on faith. Heal yourself 1d8+(TL) hp /day. You have mastered a specialized and complex technique to ignore pain by focusing your belief on the self rather than relying on faith. /day when you have half your total hit points or fewer, you may heal yourself of an amount of damage equal to 1d8 plus your total Hit Dice as a move action. This is a supernatural ability.",
+    "prerequisites": [
+      "PREDEITY:1,N"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_feats.lst",
+    "sha256": "b6435a0a073ef6f3e3cb6731b705dbbeffa5089deab97f66b98525036034a4a8",
+    "line": 25,
+    "record_key": "Godless Healing"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice",
+    "computed:pre_guard",
+    "derived:prose_expr"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

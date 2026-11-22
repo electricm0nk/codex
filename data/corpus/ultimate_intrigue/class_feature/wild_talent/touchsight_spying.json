@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Wild Talent ~ Spying Touchsight",
+    "name": "Touchsight, Spying",
+    "class": "Kineticist",
+    "description": "Element aether; Type utility (Sp); Level 4; Burn 0 - You attach a sticky strand of invisible aether to a target and then project your senses along the strand, allowing you to spy on that target. Attaching the strand of aether requires a ranged touch attack, but if you activate this ability while your target is under the effect of your touchsight, you can use the strands from your touchsight instead. Once you have activated spying touchsight, you can concentrate on it to spy on your target with any of your five senses (though your own body no longer benefits from the senses you project); the strand lasts as long you concentrate, though you can switch which senses you are projecting each round. A creature using see invisibility or a similar effect can notice the trailing strand of aether and follow it back to you. A creature can break your spying touchsight by dispelling it, but otherwise, the only way to break the strand is if one of you uses a teleportation effect, moves more than 1 mile from the other, or is completely blocked from the other in all directions (such as if one of you were inside a telekinetic sphere).",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wild Talent ~ Spying Touchsight"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Wild Talent.Utility Wild Talent"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Wild Talent ~ Touchsight"
+      },
+      {
+        "key": "PRETEXT",
+        "value": "Prerequisite touchsight"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "KineticistLVL_Aether,4"
+      },
+      {
+        "key": "DESC",
+        "value": "Element aether; Type utility (Sp); Level 4; Burn 0 - You attach a sticky strand of invisible aether to a target and then project your senses along the strand, allowing you to spy on that target. Attaching the strand of aether requires a ranged touch attack, but if you activate this ability while your target is under the effect of your touchsight, you can use the strands from your touchsight instead. Once you have activated spying touchsight, you can concentrate on it to spy on your target with any of your five senses (though your own body no longer benefits from the senses you project); the strand lasts as long you concentrate, though you can switch which senses you are projecting each round. A creature using see invisibility or a similar effect can notice the trailing strand of aether and follow it back to you. A creature can break your spying touchsight by dispelling it, but otherwise, the only way to break the strand is if one of you uses a teleportation effect, moves more than 1 mile from the other, or is completely blocked from the other in all directions (such as if one of you were inside a telekinetic sphere)."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.66"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/support/ui_abilities_class_oa.lst",
+    "sha256": "123f008e9a2f31828861df9025f48f5c2f7c78a648553f22dba96a8d8a2e24dc",
+    "line": 36,
+    "record_key": "Wild Talent ~ Spying Touchsight"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

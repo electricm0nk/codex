@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Psionic Advanced Rogue Talent ~ Vanish",
+    "name": "Vanish",
+    "class": "Psionic Advanced Rogue Talent",
+    "description": "As long as you are maintaining focus, as a swift action you can become invisible as long as you do not move from your location.  If you move while under this effect, you instead are treated as having 50%% concealment if you move less than half your movement, or 20%% concealment if you move more than half your movement.  You can use this ability for %1 rounds per day.  These rounds do not need to be consecutive.|VanishRounds",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Psionic Advanced Rogue Talent ~ Vanish"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RogueClassFeatures.SpecialQuality.Supernatural.RogueAdvancedTalent"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "RogueTalentLVL,10"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "IsPsionic,1"
+      },
+      {
+        "key": "DEFINE",
+        "value": "VanishRounds|0"
+      },
+      {
+        "key": "DESC",
+        "value": "As long as you are maintaining focus, as a swift action you can become invisible as long as you do not move from your location.  If you move while under this effect, you instead are treated as having 50%% concealment if you move less than half your movement, or 20%% concealment if you move more than half your movement.  You can use this ability for %1 rounds per day.  These rounds do not need to be consecutive.|VanishRounds"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|VanishRounds|RogueTalentLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.292"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1092,
+    "record_key": "Psionic Advanced Rogue Talent ~ Vanish"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

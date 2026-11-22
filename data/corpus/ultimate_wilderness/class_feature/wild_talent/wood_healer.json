@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Wild Talent ~ Wood Healer",
+    "name": "Wood Healer",
+    "class": "Kineticist",
+    "description": "Element wood; Type utility (Sp); Level 1; Burn 1; see text; Saving Throw none; Spell Resistance yes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wild Talent ~ Wood Healer"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Wild Talent.Utility Wild Talent.Utility Wild Talent Wood"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Wild Talent ~ Positive Blast"
+      },
+      {
+        "key": "PRETEXT",
+        "value": "Prerequisite positive blast"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "KineticistLVL_Wood,1"
+      },
+      {
+        "key": "SERVESAS",
+        "value": "ABILITY=Special Ability|Wild Talent ~ Kinetic Healer"
+      },
+      {
+        "key": "DESC",
+        "value": "Element wood; Type utility (Sp); Level 1; Burn 1; see text; Saving Throw none; Spell Resistance yes"
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;This functions as kinetic healer, but you must base the amount of healing on your positive blast, not wood blast. A phytokineticist with positive blast as her first blast qualifies for the kinetic chirurgeon archetype and gains this utility talent instead of kinetic healer. This wild talent counts as kinetic healer for prerequisites for selecting other kineticist wild talents."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.61"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/support/uw_abilities_class_oa.lst",
+    "sha256": "26a03f73c3534cd6bae0bcda9581b3a89fa28ce5f78f854e009fc8110c477568",
+    "line": 87,
+    "record_key": "Wild Talent ~ Wood Healer"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

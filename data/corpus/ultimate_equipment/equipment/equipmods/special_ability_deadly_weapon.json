@@ -1,0 +1,62 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "Equipmods",
+    "cost_gp": null,
+    "description": "This special ability can only be placed on weapons that normally deal nonlethal damage, such as whips and saps. All damage a deadly weapon deals is lethal damage. A whip (or similar weapon that cannot damage creatures with armor or natural armor bonuses) with this special ability deals damage even to creatures with armor or natural armor. On command, the weapon suppresses this ability until told to resume it.",
+    "key": "Special Ability ~ Deadly ~ Weapon",
+    "name": "Deadly",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Special Ability ~ Deadly ~ Weapon"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weapon.Melee"
+      },
+      {
+        "key": "PLUS",
+        "value": "1"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "QUALIFY"
+      },
+      {
+        "key": "ITYPE",
+        "value": "Deadly"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.139"
+      },
+      {
+        "key": "PRETYPE",
+        "value": "3,WeaponEnhancement,Weapon,Melee"
+      },
+      {
+        "key": "SPROP",
+        "value": "This special ability can only be placed on weapons that normally deal nonlethal damage, such as whips and saps. All damage a deadly weapon deals is lethal damage. A whip (or similar weapon that cannot damage creatures with armor or natural armor bonuses) with this special ability deals damage even to creatures with armor or natural armor. On command, the weapon suppresses this ability until told to resume it."
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-23T16:06:17Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 186,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_equipment/ue_equipmods.lst",
+    "record_key": "Special Ability ~ Deadly ~ Weapon",
+    "sha256": "360125009489703fb61f3143a5590f3576552382619c4b61f66b6d252f1ad8a4"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Unchained Ki Power ~ Ki Volley",
+    "name": "Ki Volley",
+    "class": "Unchained Ki Power",
+    "description": "When a targeted spell or spell-like ability fails to overcome the monk's spell resistance from diamond soul, he can spend 2 ki points as an immediate action to send that spell back at its caster as spell turning. A monk must be 16th level or higher and possess the diamond soul ki power before selecting this ki power.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Unchained Ki Power ~ Ki Volley"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Unchained Ki Power.SpecialQuality.Supernatural.Ki Volley"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Unchained Ki Power ~ Diamond Soul"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "KiPowerLVL,16"
+      },
+      {
+        "key": "DESC",
+        "value": "When a targeted spell or spell-like ability fails to overcome the monk's spell resistance from diamond soul, he can spend 2 ki points as an immediate action to send that spell back at its caster as spell turning. A monk must be 16th level or higher and possess the diamond soul ki power before selecting this ki power."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.18"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst",
+    "sha256": "2becbb0524bd4c367cc1273434c20bcd8e42e3e08abd372f99b005e69e8c4725",
+    "line": 549,
+    "record_key": "Unchained Ki Power ~ Ki Volley"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

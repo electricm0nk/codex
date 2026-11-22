@@ -1,0 +1,1 @@
+cpr | cpr.reputation.facedown_roll | Facedown | dice | 8 + 1d10 | Facedown: COOL + Reputation + 1d10, 8 + 1d10 (p. 194) | 

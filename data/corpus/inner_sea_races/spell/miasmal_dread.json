@@ -1,0 +1,25 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:34:12Z",
+  "data": {
+    "key": "Miasmal Dread",
+    "school": "Enchantment",
+    "level": 2,
+    "description": "A cloud of sickly green mist pours from your mouth and coalesces around creatures in the cone. Attempt a single Intimidate check to demoralize as part of casting the spell, comparing the result against the DC to Intimidate each foe within the area. You demoralize all foes whose DC you meet or exceed."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_spells.lst",
+    "sha256": "03a2e5e296f66a797d40d633aee1e6f08144e807e49c9923f72def8a78bab996",
+    "line": 31,
+    "record_key": "Miasmal Dread"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

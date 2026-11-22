@@ -1,0 +1,10 @@
+tree: a0998838a1
+$ test ! -e src/rules_core/rules_tables || find src/rules_core/rules_tables -name "*.rs" | awk "END{exit NR>0}"
+exit=0
+test -e src/rules_core/rules_tables -> absent
+python os.walk .rs under src/rules_core/rules_tables: 0
+$ E4a.2 acceptance
+0 0 0 0 
+$ E4a.3 acceptance
+(no output above = module absent)
+package .lst lines 0

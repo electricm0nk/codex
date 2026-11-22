@@ -1,0 +1,96 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-24T03:51:47Z",
+  "data": {
+    "key": "Aegis ~ Form Astral Suit",
+    "name": "Form Astral Suit",
+    "class": "Aegis",
+    "description": "You can form an astral suit with various abilities.  Customization Points: %1|CustomPoints",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Aegis ~ Form Astral Suit"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "AegisClassFeatures.SpecialQuality.Supernatural.FormAstralSuit"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CustomPoints|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AstralSuitLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AstralSuitPrereqLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can form an astral suit with various abilities.  Customization Points: %1|CustomPoints"
+      },
+      {
+        "key": "AUTO",
+        "value": "EQUIP|Astral Armor|PREVARLT:NoAstralArmor,1"
+      },
+      {
+        "key": "AUTO",
+        "value": "EQUIP|Astral Juggernaut|PREVARLT:NoAstralJuggernaut,1"
+      },
+      {
+        "key": "AUTO",
+        "value": "EQUIP|Astral Skin|PREVARLT:NoAstralSkin,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Astral Suit Customization|CustomPoints|PREEQUIP:1,TYPE=AstralSuit"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AstralSuitLVL|AegisLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AstralSuitPrereqLVL|AstralSuitLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.28"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Aegis ~ Astral Skin|PREEQUIP:1,Astral Skin"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Aegis ~ Astral Armor|PREEQUIP:1,Astral Armor"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Aegis ~ Astral Juggernaut|PREEQUIP:1,Astral Juggernaut"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 25,
+    "record_key": "Aegis ~ Form Astral Suit"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

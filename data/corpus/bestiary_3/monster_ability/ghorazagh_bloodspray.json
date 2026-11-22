@@ -1,0 +1,57 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Ghorazagh ~ Bloodspray",
+    "delivery": "Supernatural",
+    "description": "Once every 1d4 rounds, a ghorazagh can unleash a 20-foot cone of blood and eldritch enzymes. Any living creature struck by a ghorazagh's bloodspray must make a DC 25 Fortitude save or be affected as by the spell slow. A slowed creature struck by a ghorazagh's bloodspray a second time must make an additional save or be paralyzed. These effects last for 2d6 rounds. A ghorazagh can also consciously alter its enzymes, producing a spray that removes all effects of this ability. The save DC is Constitution-based.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:ghorazagh_bloodspray",
+    "name": "Bloodspray",
+    "owners": [
+      "bestiary_3:monster:ghorazagh"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Once every 1d4 rounds, a ghorazagh can unleash a 20-foot cone of blood and eldritch enzymes. Any living creature struck by a ghorazagh's bloodspray must make a DC 25 Fortitude save or be affected as by the spell slow. A slowed creature struck by a ghorazagh's bloodspray a second time must make an additional save or be paralyzed. These effects last for 2d6 rounds. A ghorazagh can also consciously alter its enzymes, producing a spray that removes all effects of this ability. The save DC is Constitution-based."
+      },
+      {
+        "key": "KEY",
+        "value": "Ghorazagh ~ Bloodspray"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.124"
+      },
+      {
+        "key": "TYPE",
+        "value": "GhorazaghRacialAbility.SpecialQuality.Supernatural"
+      }
+    ],
+    "source_page": "p.124",
+    "traits": [
+      "GhorazaghRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T10:26:03Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 896,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Ghorazagh ~ Bloodspray",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

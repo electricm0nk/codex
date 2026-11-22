@@ -1,0 +1,83 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "An object you touch emanates a 20-foot radius of bright light. The effect looks like a regular flame but creates no heat and uses no oxygen. Allies within the area of this light gain a +2 enhancement bonus on Perception and Sense Motive checks, as well as on Knowledge checks to identify monsters that are also within the area and their special powers and vulnerabilities. When an inquisitor casts this spell, the light emanation doubles (40-ft.-radius emanation) while that inquisitor has a judgment active. Light spells counter and dispel darkness spells of an equal or lower level.",
+    "key": "Discovery Torch",
+    "level": 2,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 round"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Bard,Inquisitor=2|Cleric=3"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S"
+      },
+      {
+        "key": "DESC",
+        "value": "An object you touch emanates a 20-foot radius of bright light. The effect looks like a regular flame but creates no heat and uses no oxygen. Allies within the area of this light gain a +2 enhancement bonus on Perception and Sense Motive checks, as well as on Knowledge checks to identify monsters that are also within the area and their special powers and vulnerabilities. When an inquisitor casts this spell, the light emanation doubles (40-ft.-radius emanation) while that inquisitor has a judgment active. Light spells counter and dispel darkness spells of an equal or lower level.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "Touched object emanates bright light, granting Perception and Sense Motive bonuses.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESCRIPTOR",
+        "value": "Light"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL*10) minutes"
+      },
+      {
+        "key": "RANGE",
+        "value": "Touch"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "None"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Evocation"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/ultimateCombat/spells/discoveryTorch.html#_discovery-torch-"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.228"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "No"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "object touched"
+      }
+    ],
+    "school": "Evocation"
+  },
+  "ingested_at": "2026-08-16T12:10:17Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 36,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_spells.lst",
+    "record_key": "Discovery Torch",
+    "sha256": "b3621f212f8bdde1d0e9a8861c43f7587bb493909a46c372ca0616b37f0706a0"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr"
+  ]
+}

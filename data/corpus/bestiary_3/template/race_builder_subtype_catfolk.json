@@ -1,0 +1,43 @@
+{
+  "codex_generated_name": false,
+  "completeness": "chassis_only",
+  "data": {
+    "key": "Race Builder Subtype ~ Catfolk",
+    "name": "Catfolk",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Race Builder Subtype ~ Catfolk"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "RACESUBTYPE",
+        "value": "Catfolk"
+      },
+      {
+        "key": "TYPE",
+        "value": "Race Builder Subtype"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T16:43:16Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 19,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/catfolk/catfolk_templates.lst",
+    "record_key": "Race Builder Subtype ~ Catfolk",
+    "sha256": "11f8dd4865d4c169ba8618c42f5b49343f409d4c2ca5fe3cab9f34b5880248dd"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

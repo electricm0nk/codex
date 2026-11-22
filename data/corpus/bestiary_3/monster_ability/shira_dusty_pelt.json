@@ -1,0 +1,55 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Shira ~ Dusty Pelt",
+    "delivery": "Extraordinary",
+    "description": "A shira collects and produces copious amounts of dust and ash within the coarse hairs of its furry hide. As a move action, it can shake itself, creating a cloud of dust that fills its space, providing it concealment. Any attack that deals at least 10 points of bludgeoning, piercing, or slashing damage to the shira (before DR) automatically activates this ability. The dust cloud lasts for 1 round. A light wind disperses this cloud immediately.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:shira_dusty_pelt",
+    "name": "Dusty Pelt",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A shira collects and produces copious amounts of dust and ash within the coarse hairs of its furry hide. As a move action, it can shake itself, creating a cloud of dust that fills its space, providing it concealment. Any attack that deals at least 10 points of bludgeoning, piercing, or slashing damage to the shira (before DR) automatically activates this ability. The dust cloud lasts for 1 round. A light wind disperses this cloud immediately."
+      },
+      {
+        "key": "KEY",
+        "value": "Shira ~ Dusty Pelt"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.90"
+      },
+      {
+        "key": "TYPE",
+        "value": "ShiraRacialAbility.SpecialQuality.Extraordinary"
+      }
+    ],
+    "source_page": "p.90",
+    "traits": [
+      "ShiraRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T14:09:11Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 747,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Shira ~ Dusty Pelt",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

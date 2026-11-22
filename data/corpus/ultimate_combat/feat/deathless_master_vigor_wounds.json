@@ -1,0 +1,32 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Deathless Master (Vigor/Wounds)",
+    "category": "Combat",
+    "name": "Deathless Master (Vigor/Wounds)",
+    "description": null,
+    "prerequisites": [
+      "PREABILITY:4,CATEGORY=FEAT,Deathless Initiate (Vigor/Wound),Diehard (Vigor/Wound),Endurance,Ironhide",
+      "PREFACT:1,TEMPLATES,IsOrc=true,IsHalfOrc=true",
+      "PRERULE:1,DAMAGE_VW",
+      "PRESTAT:2,STR=13,CON=15",
+      "PRETOTALAB:9"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_feats.lst",
+    "sha256": "220f72d5a7e8a60077c981fcf7e0bfc086ddc05f3fd460f37a619eb6795ee58f",
+    "line": 357,
+    "record_key": "Deathless Master (Vigor/Wounds)"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,44 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Social Grace ~ Artistry",
+    "name": "Artistry",
+    "class": "Social Grace",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Social Grace ~ Artistry"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "TYPE",
+        "value": "SocialGraceSkillChoice"
+      },
+      {
+        "key": "BONUS",
+        "value": "SITUATION|Artistry=In Social Identity|SocialGraceBonus|TYPE=Circumstance"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/support/ui_abilities_class_pu.lst",
+    "sha256": "31facfcea3534d72c26bfbfeebc7af50e80e79157eda459e9afb16f184a93aaf",
+    "line": 9,
+    "record_key": "Social Grace ~ Artistry"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

@@ -1,0 +1,35 @@
+# G-1 (rewritten) — E2.7. base = CARD_BASE 9673d4fed0 (rendered in this tree before any change), head = d945250ec1 (the desktop full run with PF_SEED_RENDER_OUT), same tree/CARGO_TARGET_DIR
+## diff base/sha256.txt head/sha256.txt
+1,3c1,3
+< 8fd0ef3678cfa8944212a089b8ac8634db333d38c916d3065c30c86d775a31c0  aldric.json
+< 65b8f53d158b595a69534859b63181ed426a05c605ccbaca6ca93c4b6fc5fabf  elowen.json
+< 63d2b9e2d3eb3a379bae771a0550069a8d44893d9d161b3a545a1fa22a284be6  tomas.json
+---
+> 9786d5805abb00fb4a37ac0e5ac4f5e999be3c59991eca247212392de6fb2d17  aldric.json
+> e44b0b5eee7a8a139d82684486b8c9d8f83efc8e9a56451783d7195fca5e8ad9  elowen.json
+> c06f5deb08b2aaed0dc75da4f8f914d107f72d9eb01d5f3f813f5646f98f075d  tomas.json
+## acceptance-and-verification.md G-1 strip script (NEW_ROWS includes 'defense.armor_class.')
+aldric.json SAME_EXCEPT_NAMED added top-level keys []
+   defense.armor_class.armor 4 | Armor Class part, Armor: Chain Shirt armor bonus (+4) = 4
+   defense.armor_class.shield 0 | Armor Class part, Shield: none = 0
+   defense.armor_class.dexterity 1 | Armor Class part, Dexterity: Dexterity contribution (DEX modifier +1 within MAXDEX:5) (+1) = 1
+   defense.armor_class.size 0 | Armor Class part, Size: Medium size modifier (PF1 Table 8-1) (+0) = 0
+   defense.armor_class.natural 0 | Armor Class part, Natural armor: none = 0
+   defense.armor_class.deflection 0 | Armor Class part, Deflection: none = 0
+   defense.armor_class.misc 1 | Armor Class part, Misc: Dodge (feat:dodge) (+1) = 1
+elowen.json SAME_EXCEPT_NAMED added top-level keys []
+   defense.armor_class.armor 4 | Armor Class part, Armor: Chain Shirt armor bonus (+4) = 4
+   defense.armor_class.shield 0 | Armor Class part, Shield: none = 0
+   defense.armor_class.dexterity 2 | Armor Class part, Dexterity: Dexterity contribution (DEX modifier +2 within MAXDEX:4) (+2) = 2
+   defense.armor_class.size 0 | Armor Class part, Size: Medium size modifier (PF1 Table 8-1) (+0) = 0
+   defense.armor_class.natural 0 | Armor Class part, Natural armor: none = 0
+   defense.armor_class.deflection 0 | Armor Class part, Deflection: none = 0
+   defense.armor_class.misc 1 | Armor Class part, Misc: Dodge (feat:dodge) (+1) = 1
+tomas.json SAME_EXCEPT_NAMED added top-level keys []
+   defense.armor_class.armor 4 | Armor Class part, Armor: Chain Shirt armor bonus (+4) = 4
+   defense.armor_class.shield 0 | Armor Class part, Shield: none = 0
+   defense.armor_class.dexterity 0 | Armor Class part, Dexterity: Dexterity contribution (DEX modifier +0 within MAXDEX:4) (+0) = 0
+   defense.armor_class.size 0 | Armor Class part, Size: Medium size modifier (PF1 Table 8-1) (+0) = 0
+   defense.armor_class.natural 0 | Armor Class part, Natural armor: none = 0
+   defense.armor_class.deflection 0 | Armor Class part, Deflection: none = 0
+   defense.armor_class.misc 1 | Armor Class part, Misc: Dodge (feat:dodge) (+1) = 1

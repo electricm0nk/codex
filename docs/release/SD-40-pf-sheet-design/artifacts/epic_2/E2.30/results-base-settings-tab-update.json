@@ -1,0 +1,16 @@
+[
+  {
+    "id": "settings-tab-update",
+    "status": "red",
+    "screenshot": "/home/ubuntu/cargo-target/sd40-main/e230-base/settings-tab-update.FAILED.png",
+    "rendered_excerpt": "",
+    "reason": "target not found: 'Update (no probe report acknowledged command 'cmd-4090730-1794536853877-3' within 2000ms)' at row step 1/1 (click \"Update\")",
+    "app_data_root": "/tmp/codex-ui-smoke-sd40-e2_30-dYQvRU/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  }
+]

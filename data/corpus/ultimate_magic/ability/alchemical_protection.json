@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Preparation Ritual ~ Alchemical Protection",
+    "name": "Alchemical Protection",
+    "description": "The alchemical knowledge granted by this book protects you from poisons and alchemical items. Spend this boon's effect as an immediate action when you make a saving throw against poison or an alchemical item but before rolling the saving throw. You gain a +4 bonus on that saving throw.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Preparation Ritual ~ Alchemical Protection"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.PreparationRitual"
+      },
+      {
+        "key": "DESC",
+        "value": "The alchemical knowledge granted by this book protects you from poisons and alchemical items. Spend this boon's effect as an immediate action when you make a saving throw against poison or an alchemical item but before rolling the saving throw. You gain a +4 bonus on that saving throw."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.122"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities.lst",
+    "sha256": "a08f7ed509102fe180c11544de6877bffe963ed196ba721f4894c5e4b081a5b6",
+    "line": 33,
+    "record_key": "Preparation Ritual ~ Alchemical Protection"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

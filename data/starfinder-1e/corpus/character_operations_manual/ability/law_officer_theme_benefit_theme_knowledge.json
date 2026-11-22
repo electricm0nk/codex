@@ -1,0 +1,20 @@
+{
+  "data": {
+    "category": "Theme",
+    "key": "Law Officer Theme Benefit ~ THEME KNOWLEDGE",
+    "name": "THEME KNOWLEDGE",
+    "type": "Theme.Theme Benefit.Law Officer Theme Benefit.Law Officer Theme Benefit Lvl 1"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 38,
+    "path": "starfinder/paizo/character_operations_manual/scom_abilities.lst",
+    "record_key": "Law Officer Theme Benefit ~ THEME KNOWLEDGE",
+    "sha256": "7dded3c6f7f708b9f1fe9c3fa406225a93c3fd62ec87ff1ec85b020ff0984222"
+  },
+  "unit_id": "character_operations_manual:ability:law_officer_theme_benefit_theme_knowledge"
+}

@@ -1,0 +1,61 @@
+{
+  "codex_generated_name": false,
+  "completeness": "full",
+  "data": {
+    "description": "At 2nd level and every 2 levels thereafter, a student of perfection can select one ki power. This ki power must be open to all students of perfection or appropriate to his chosen school. All other prerequisites must be met. Unless otherwise noted, a student of perfection cannot select an individual ki power more than once.",
+    "key": "Student of Perfection ~ Ki Powers",
+    "name": "Ki Powers",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Student of Perfection ~ Ki Powers"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.Student of Perfection Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "StudentOfPerfectionKiDC|0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.102"
+      },
+      {
+        "key": "DESC",
+        "value": "At 2nd level and every 2 levels thereafter, a student of perfection can select one ki power. This ki power must be open to all students of perfection or appropriate to his chosen school. All other prerequisites must be met. Unless otherwise noted, a student of perfection cannot select an individual ki power more than once."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|StudentOfPerfectionKiDC|10+StudentOfPerfectionLVL+WIS"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Student of Perfection Ki Power|StudentOfPerfectionLVL/2"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 8,
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/support/ag_abilities_pu.lst",
+    "record_key": "Student of Perfection ~ Ki Powers",
+    "sha256": "5ec588e897907d739c5b66f29ef8486385ceb24c1ef86a3d43bdbfd8b0ead09f"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "derived:bonus"
+  ]
+}

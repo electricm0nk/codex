@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Aegis ~ Spikes",
+    "name": "Spikes",
+    "class": "Aegis",
+    "description": "You gain the ability to loose a volley of two spikes as a standard action (make an attack roll for each spike).  This attack has a range of 180 feet with no range increment and deals 1d6+%1 damage (if you are Medium-sized).  All targets must be within 30 feet of each other.  You can launch only 24 spikes in any 24-hour period.|STR",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Aegis ~ Spikes"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "AberrantCustomization.SpecialAttack"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain the ability to loose a volley of two spikes as a standard action (make an attack roll for each spike).  This attack has a range of 180 feet with no range increment and deals 1d6+%1 damage (if you are Medium-sized).  All targets must be within 30 feet of each other.  You can launch only 24 spikes in any 24-hour period.|STR"
+      },
+      {
+        "key": "COST",
+        "value": "2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.262"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Spike,Weapon.Natural.Ranged.Thrown.Piercing,*2,1d6"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1727,
+    "record_key": "Aegis ~ Spikes"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

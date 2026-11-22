@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Medium ~ Butcher ~ Bloodletter",
+    "name": "Bloodletter",
+    "class": "Medium",
+    "description": "(Intermediate) The Butcher enhances a single slashing weapon or spiked chain, allowing you to add the keen, mighty cleaving, or wounding special abilities to the weapon when you wield it. As a swift action, you can allow the Butcher to gain 1 point of influence over you to make that weapon vorpal until the end of your turn, though the vorpal special ability doesn't work with abilities that let you choose the result of your d20 roll. Each time you kill a creature whose CR is greater than your medium level with this vorpal special ability, the butcher gains an additional point of influence over you.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Medium ~ Butcher ~ Bloodletter"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MediumClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.58"
+      },
+      {
+        "key": "DESC",
+        "value": "(Intermediate) The Butcher enhances a single slashing weapon or spiked chain, allowing you to add the keen, mighty cleaving, or wounding special abilities to the weapon when you wield it. As a swift action, you can allow the Butcher to gain 1 point of influence over you to make that weapon vorpal until the end of your turn, though the vorpal special ability doesn't work with abilities that let you choose the result of your d20 roll. Each time you kill a creature whose CR is greater than your medium level with this vorpal special ability, the butcher gains an additional point of influence over you."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/support/ha_abilities_class_oa.lst",
+    "sha256": "9c111f652f8442433ea215fa11e67258c7e6c15c75d1c1753fa6fef34827f46c",
+    "line": 93,
+    "record_key": "Medium ~ Butcher ~ Bloodletter"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

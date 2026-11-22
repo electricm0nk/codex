@@ -1,0 +1,757 @@
+{
+  "format": "codex.rules_tables/1",
+  "table": "apg/feat_data/general/GENERAL_TABLE",
+  "licence": {
+    "license": "OGL",
+    "book": "apg",
+    "screen": "pi_screening::classify_field",
+    "pi_hits": [],
+    "redacted": []
+  },
+  "rows": [
+    {
+      "key": "Additional Traits",
+      "category": "General",
+      "name": "Additional Traits",
+      "description": "You have more traits than normal",
+      "effect": [
+        {
+          "qualifiers": [
+            "VAR",
+            "Pool_Traits",
+            "2"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Arcane Blast",
+      "category": "General",
+      "name": "Arcane Blast",
+      "description": "You can convert any spell into an attack.",
+      "effect": null
+    },
+    {
+      "key": "Arcane Shield",
+      "category": "General",
+      "name": "Arcane Shield",
+      "description": "You can convert any spell into a defense.",
+      "effect": null
+    },
+    {
+      "key": "Arcane Talent",
+      "category": "General",
+      "name": "Arcane Talent",
+      "description": "Magic is in your blood, and at your fingertips.",
+      "effect": [
+        {
+          "qualifiers": [
+            "ABILITYPOOL",
+            "Arcane Talent Selection",
+            "1"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Aspect of the Beast",
+      "category": "General",
+      "name": "Aspect of the Beast",
+      "description": "Whether by magic or a curse of your blood, some part of you is more beast than man.",
+      "effect": [
+        {
+          "qualifiers": [
+            "ABILITYPOOL",
+            "Aspect of the Beast Selection",
+            "1"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Breadth of Experience",
+      "category": "General",
+      "name": "Breadth of Experience",
+      "description": "Although still young for your kind, you have a lifetime of knowledge and training.",
+      "effect": [
+        {
+          "qualifiers": [
+            "SKILL",
+            "TYPE.Knowledge,TYPE.Profession",
+            "2"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        },
+        {
+          "qualifiers": [
+            "VAR",
+            "UseProfessionUntrained,UseKnowledgeUntrained",
+            "1"
+          ],
+          "bonus_type": "Boolean",
+          "conditions": [],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Childlike",
+      "category": "General",
+      "name": "Childlike",
+      "description": "Your resemblance to a human child tends to make others trust you, perhaps more than they should.",
+      "effect": null
+    },
+    {
+      "key": "Cloud Step",
+      "category": "General",
+      "name": "Cloud Step",
+      "description": "Your tread is of unearthly lightness.",
+      "effect": null
+    },
+    {
+      "key": "Cooperative Crafting",
+      "category": "General",
+      "name": "Cooperative Crafting",
+      "description": "Your assistance makes item crafting far more efficient.",
+      "effect": null
+    },
+    {
+      "key": "Cosmopolitan",
+      "category": "General",
+      "name": "Cosmopolitan",
+      "description": "Living in large exotic cities has put you in touch with many diverse civilizations, cultures, and races.",
+      "effect": null
+    },
+    {
+      "key": "Deep Drinker",
+      "category": "General",
+      "name": "Deep Drinker",
+      "description": "You draw greater amounts of ki from your libations.",
+      "effect": null
+    },
+    {
+      "key": "Deepsight",
+      "category": "General",
+      "name": "Deepsight",
+      "description": "Your senses are especially keen in the utter darkness.",
+      "effect": [
+        {
+          "qualifiers": [
+            "VISION",
+            "Darkvision",
+            "60"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Diviner's Delving",
+      "category": "General",
+      "name": "Diviner's Delving",
+      "description": "Your keen magical intuition makes reading signs, portents, and mystical clues quick and easy.",
+      "effect": null
+    },
+    {
+      "key": "Eagle Eyes",
+      "category": "General",
+      "name": "Eagle Eyes",
+      "description": "Your vision is especially keen.",
+      "effect": null
+    },
+    {
+      "key": "Eclectic",
+      "category": "General",
+      "name": "Eclectic",
+      "description": "You have a talent for picking up different vocations.",
+      "effect": [
+        {
+          "qualifiers": [
+            "ABILITYPOOL",
+            "Favored Class",
+            "1"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Elemental Focus",
+      "category": "General",
+      "name": "Elemental Focus",
+      "description": "Your spells of a certain element are more difficult to resist.",
+      "effect": null
+    },
+    {
+      "key": "Expanded Arcana",
+      "category": "General",
+      "name": "Expanded Arcana",
+      "description": "Your research has revealed new spells.",
+      "effect": [
+        {
+          "qualifiers": [
+            "ABILITYPOOL",
+            "Expanded Arcana Selection",
+            "1"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Extra Bombs",
+      "category": "General",
+      "name": "Extra Bombs",
+      "description": "You can throw more bombs per day.",
+      "effect": [
+        {
+          "qualifiers": [
+            "VAR",
+            "AlchemistBombTimes",
+            "2"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Extra Discovery",
+      "category": "General",
+      "name": "Extra Discovery",
+      "description": "You have made a new alchemical discovery.",
+      "effect": [
+        {
+          "qualifiers": [
+            "ABILITYPOOL",
+            "Alchemist Discovery",
+            "1"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Extra Hex",
+      "category": "General",
+      "name": "Extra Hex",
+      "description": "You have learned the secrets of a new hex.",
+      "effect": [
+        {
+          "qualifiers": [
+            "ABILITYPOOL",
+            "Witch Hex",
+            "1"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Extra Rage Power",
+      "category": "General",
+      "name": "Extra Rage Power",
+      "description": "You have unlocked a new ability to use while raging.",
+      "effect": [
+        {
+          "qualifiers": [
+            "ABILITYPOOL",
+            "Rage Power",
+            "1"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Extra Revelation",
+      "category": "General",
+      "name": "Extra Revelation",
+      "description": "You have discovered a new aspect of your mystery.",
+      "effect": [
+        {
+          "qualifiers": [
+            "VAR",
+            "OracleMysteryLevel",
+            "1"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Extra Rogue Talent",
+      "category": "General",
+      "name": "Extra Rogue Talent",
+      "description": "Through constant practice, you have learned how to perform a special trick.",
+      "effect": [
+        {
+          "qualifiers": [
+            "ABILITYPOOL",
+            "Advanced Talent",
+            "1"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Fast Drinker",
+      "category": "General",
+      "name": "Fast Drinker",
+      "description": "You swiftly guzzle spirits to draw forth ki.",
+      "effect": null
+    },
+    {
+      "key": "Fast Healer",
+      "category": "General",
+      "name": "Fast Healer",
+      "description": "You benefit greatly from your healing, be it from spells or natural healing.",
+      "effect": null
+    },
+    {
+      "key": "Favored Defense",
+      "category": "General",
+      "name": "Favored Defense",
+      "description": "Your cunning is your shield against your quarry's attacks.",
+      "effect": null
+    },
+    {
+      "key": "Fight On",
+      "category": "General",
+      "name": "Fight On",
+      "description": "You can keep fighting even after you should be dead.",
+      "effect": null
+    },
+    {
+      "key": "Gnome Trickster",
+      "category": "General",
+      "name": "Gnome Trickster",
+      "description": "Your arcane talents go beyond the illusory.",
+      "effect": [
+        {
+          "qualifiers": [
+            "VAR",
+            "GnomePrestidigitationTimes",
+            "1"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        },
+        {
+          "qualifiers": [
+            "VAR",
+            "FEAT_GnomeTricksterMageHandTimes",
+            "1"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Go Unnoticed",
+      "category": "General",
+      "name": "Go Unnoticed",
+      "description": "Your small size lets you quickly duck out of sight.",
+      "effect": null
+    },
+    {
+      "key": "Greater Elemental Focus",
+      "category": "General",
+      "name": "Greater Elemental Focus",
+      "description": "Choose an energy type to which you have already applied the Elemental Focus feat. Any spells you cast of this energy type are very hard to resist.",
+      "effect": null
+    },
+    {
+      "key": "Groundling",
+      "category": "General",
+      "name": "Groundling",
+      "description": "You can speak with burrowing animals.",
+      "effect": null
+    },
+    {
+      "key": "Heroic Defiance",
+      "category": "General",
+      "name": "Heroic Defiance",
+      "description": "You struggle on when others would fall.",
+      "effect": null
+    },
+    {
+      "key": "Heroic Recovery",
+      "category": "General",
+      "name": "Heroic Recovery",
+      "description": "You can throw off the effects of crippling conditions.",
+      "effect": null
+    },
+    {
+      "key": "Improved Share Spells",
+      "category": "General",
+      "name": "Improved Share Spells",
+      "description": "You can share spells with those you have a magical connection with.",
+      "effect": null
+    },
+    {
+      "key": "Improved Stonecunning",
+      "category": "General",
+      "name": "Improved Stonecunning",
+      "description": "Your sense for stonework is uncanny.",
+      "effect": null
+    },
+    {
+      "key": "Ironguts",
+      "category": "General",
+      "name": "Ironguts",
+      "description": "You have an especially strong stomach.",
+      "effect": null
+    },
+    {
+      "key": "Ironhide",
+      "category": "General",
+      "name": "Ironhide",
+      "description": "Your skin is thicker and more resilient than that of most of your people.",
+      "effect": [
+        {
+          "qualifiers": [
+            "VAR",
+            "AC_Natural_Armor",
+            "1"
+          ],
+          "bonus_type": "Base.STACK",
+          "conditions": [],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Keen Scent",
+      "category": "General",
+      "name": "Keen Scent",
+      "description": "Your nose is as sensitive as that of a wild predator.",
+      "effect": null
+    },
+    {
+      "key": "Leaf Singer",
+      "category": "General",
+      "name": "Leaf Singer",
+      "description": "Your songs recount the ways and mysteries of your people.",
+      "effect": null
+    },
+    {
+      "key": "Light Step",
+      "category": "General",
+      "name": "Light Step",
+      "description": "You pick your way nimbly through even the most dangerous and uneven terrain.",
+      "effect": null
+    },
+    {
+      "key": "Lingering Performance",
+      "category": "General",
+      "name": "Lingering Performance",
+      "description": "The effects of your bardic performance carry on, even after you have stopped performing.",
+      "effect": null
+    },
+    {
+      "key": "Lucky Halfling",
+      "category": "General",
+      "name": "Lucky Halfling",
+      "description": "You bring luck to those with whom you travel.",
+      "effect": null
+    },
+    {
+      "key": "Major Spell Expertise",
+      "category": "General",
+      "name": "Major Spell Expertise",
+      "description": "You can cast a single low-level spell as a spell-like ability.",
+      "effect": null
+    },
+    {
+      "key": "Master Alchemist",
+      "category": "General",
+      "name": "Master Alchemist",
+      "description": "Your mastery of alchemy is nearly supernatural.",
+      "effect": [
+        {
+          "qualifiers": [
+            "SKILL",
+            "Craft (Alchemy)",
+            "2"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Minor Spell Expertise",
+      "category": "General",
+      "name": "Minor Spell Expertise",
+      "description": "You are able to cast a 1st-level spell as a spell-like ability.",
+      "effect": null
+    },
+    {
+      "key": "Parry Spell",
+      "category": "General",
+      "name": "Parry Spell",
+      "description": "You can throw an enemy spell back at its caster.",
+      "effect": null
+    },
+    {
+      "key": "Pass for Human",
+      "category": "General",
+      "name": "Pass for Human",
+      "description": "You're easily mistaken for a human rather than a member of your own race.",
+      "effect": null
+    },
+    {
+      "key": "Racial Heritage",
+      "category": "General",
+      "name": "Racial Heritage",
+      "description": "The blood of a non-human ancestor flows in your veins.",
+      "effect": [
+        {
+          "qualifiers": [
+            "ABILITYPOOL",
+            "Racial Heritage Choice",
+            "1"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Raging Vitality",
+      "category": "General",
+      "name": "Raging Vitality",
+      "description": "While raging, you are full of vigor and health.",
+      "effect": [
+        {
+          "qualifiers": [
+            "VAR",
+            "RageConBonus",
+            "2"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Razortusk",
+      "category": "General",
+      "name": "Razortusk",
+      "description": "Your powerful jaws and steely teeth are deadly enough to give you a bite attack.",
+      "effect": null
+    },
+    {
+      "key": "Shared Insight",
+      "category": "General",
+      "name": "Shared Insight",
+      "description": "You deftly direct others' attentions where you wish.",
+      "effect": null
+    },
+    {
+      "key": "Sharp Senses",
+      "category": "General",
+      "name": "Sharp Senses",
+      "description": "Your senses are especially sharp, even for your kind.",
+      "effect": [
+        {
+          "qualifiers": [
+            "VAR",
+            "KeenSensesBonus",
+            "2"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Smell Fear",
+      "category": "General",
+      "name": "Smell Fear",
+      "description": "You can catch the sour scent of fear on the wind.",
+      "effect": null
+    },
+    {
+      "key": "Sociable",
+      "category": "General",
+      "name": "Sociable",
+      "description": "You have a way of helping others to get along.",
+      "effect": null
+    },
+    {
+      "key": "Spell Perfection",
+      "category": "General",
+      "name": "Spell Perfection",
+      "description": "You are unequaled at the casting of one particular spell.",
+      "effect": null
+    },
+    {
+      "key": "Spider Step",
+      "category": "General",
+      "name": "Spider Step",
+      "description": "Your physical mastery grants you an impossible stride.",
+      "effect": null
+    },
+    {
+      "key": "Steel Soul",
+      "category": "General",
+      "name": "Steel Soul",
+      "description": "You are especially resistant to magic.",
+      "effect": [
+        {
+          "qualifiers": [
+            "VAR",
+            "SaveBonus_vs_Spells",
+            "2"
+          ],
+          "bonus_type": "Racial",
+          "conditions": [],
+          "selection": null
+        },
+        {
+          "qualifiers": [
+            "VAR",
+            "DwarfHardyAspect",
+            "1"
+          ],
+          "bonus_type": "Boolean",
+          "conditions": [],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Stone-Faced",
+      "category": "General",
+      "name": "Stone-Faced",
+      "description": "Rocks show more expression than you.",
+      "effect": null
+    },
+    {
+      "key": "Stone Sense",
+      "category": "General",
+      "name": "Stone Sense",
+      "description": "You can feel movement in the very earth and stones around you.",
+      "effect": null
+    },
+    {
+      "key": "Stone Singer",
+      "category": "General",
+      "name": "Stone Singer",
+      "description": "Your songs are in accordance with the ways and lands of your people.",
+      "effect": null
+    },
+    {
+      "key": "Summoner's Call",
+      "category": "General",
+      "name": "Summoner's Call",
+      "description": "Whenever you summon your eidolon, it is more powerful for a brief period of time.",
+      "effect": null
+    },
+    {
+      "key": "Taunt",
+      "category": "General",
+      "name": "Taunt",
+      "description": "You may be small, but your remarks cut others down to size.",
+      "effect": null
+    },
+    {
+      "key": "Tenacious Transmutation",
+      "category": "General",
+      "name": "Tenacious Transmutation",
+      "description": "Your mastery of the magic of changing makes your transmutations more durable.",
+      "effect": null
+    },
+    {
+      "key": "Verminheart",
+      "category": "General",
+      "name": "Verminheart",
+      "description": "You have a special bond with things that creep, crawl, skitter, and sting.",
+      "effect": null
+    },
+    {
+      "key": "War Singer",
+      "category": "General",
+      "name": "War Singer",
+      "description": "Your songs draw upon the savage chants and brutal ways of your people, inspiring those around you to new heights of violence and savagery.",
+      "effect": null
+    },
+    {
+      "key": "Well-Prepared",
+      "category": "General",
+      "name": "Well-Prepared",
+      "description": "Somehow, you always seem to have the right tools or supplies close at hand.",
+      "effect": null
+    },
+    {
+      "key": "Blood of Heroes",
+      "category": "General",
+      "name": "Blood of Heroes",
+      "description": "You have a sense of destiny about you and always seem to succeed, even when the odds are against you.",
+      "effect": null
+    },
+    {
+      "key": "Hero's Fortune",
+      "category": "General",
+      "name": "Hero's Fortune",
+      "description": "Even at the start of your career, it was clear that you had a chance at greatness, and your legend continues to grow with every adventure.",
+      "effect": [
+        {
+          "qualifiers": [
+            "VAR",
+            "HeroPointsMax",
+            "2"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Luck of Heroes",
+      "category": "General",
+      "name": "Luck of Heroes",
+      "description": "To others, it seems that you always have a bit of luck around you.",
+      "effect": null
+    }
+  ]
+}

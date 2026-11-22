@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Flood Walker ~ Breath Siphon",
+    "name": "Breath Siphon",
+    "class": "Witch",
+    "description": "A flood walker gains strength from his patron when creatures suffocate or drown. Whenever a creature with an Intelligence of 3 or higher asphyxiates or drowns within 30 feet of him, the flood walker gains the benefit of a death knell spell for 1 hour. If a flood walker drowns such a victim himself (such as by holding a grappled or helpless creature under water until it dies or by killing it with a suffocation spell), the duration is doubled, and the flood walker gains 4d8 temporary hit points and a +6 enhancement bonus to Strength instead of the usual temporary hit points and enhancement bonus to Strength from death knell. Like death knell itself, this is an evil act.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Flood Walker ~ Breath Siphon"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Witch Class Feature.FloodWalkerClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "A flood walker gains strength from his patron when creatures suffocate or drown. Whenever a creature with an Intelligence of 3 or higher asphyxiates or drowns within 30 feet of him, the flood walker gains the benefit of a death knell spell for 1 hour. If a flood walker drowns such a victim himself (such as by holding a grappled or helpless creature under water until it dies or by killing it with a suffocation spell), the duration is doubled, and the flood walker gains 4d8 temporary hit points and a +6 enhancement bonus to Strength instead of the usual temporary hit points and enhancement bonus to Strength from death knell. Like death knell itself, this is an evil act."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.89"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/support/uw_abilities_class_arg.lst",
+    "sha256": "54f3a2c057555c56328ef47ef1d86dfb30eeebc9b377516682828d26ea076021",
+    "line": 18,
+    "record_key": "Flood Walker ~ Breath Siphon"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

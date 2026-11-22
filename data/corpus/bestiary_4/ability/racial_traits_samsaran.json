@@ -1,0 +1,36 @@
+{
+  "codex_generated_name": false,
+  "completeness": "chassis_only",
+  "data": {
+    "description": null,
+    "key": "Racial Traits ~ Samsaran",
+    "name": "Racial Traits ~ Samsaran",
+    "raw_tokens": [
+      {
+        "key": "DEFINE",
+        "value": "Samsaran_ReplaceAbilityScores|0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Samsaran Racial Trait|AUTOMATIC|Samsaran ~ Ability Scores|PREVAREQ:Samsaran_ReplaceAbilityScores,0"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 10,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/samsaran/samsaran_abilities_globalvar.lst",
+    "record_key": "Racial Traits ~ Samsaran",
+    "sha256": "06bea6bf2a5ebc6cac35d439e5638b896bd5c9031f5cd82548078af0261c23e8"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

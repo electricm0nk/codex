@@ -1,0 +1,2837 @@
+{
+ "_purpose": "SD-36 Epic F3c5: the NaturalAttack fact grants an Internal natural-attack helper reference now converts to, the CONV-02 line siblings and principal field moves that follow on a record carrying one, the closure_complete attestation it earns (Dragon Disciple), the _vars/ tables a fact's gate first writes, and the _defects/ row counts, all against the F3c4 package; structural_diff.py gates on each (f3c5_check).",
+ "_command": "python3 f3c5_delta_pins.py <tranche/16 package dir, git archive cc21cac195> data/sheet_rules structural_diff_f3c5_deltas.json <F3c4 package dir, git archive 5bdf879c24>",
+ "owner": "core_rulebook:class:dragon_disciple",
+ "added_rules": {
+  "f3c5_line_sibling": {
+   "_count": 3,
+   "pins": [
+    [
+     "core_rulebook:class_feature:abyssal_bloodline_claws#weapon0",
+     "core_rulebook:class_feature:abyssal_bloodline_claws",
+     "1d69c71484905c6fc635976a34eb6eded16aa4b0d9524343b7c2d327f1292f23"
+    ],
+    [
+     "core_rulebook:class_feature:draconic_bloodline_claws#weapon0",
+     "core_rulebook:class_feature:draconic_bloodline_claws",
+     "0ae04f4a46bf886da2b46ca9181593a5c5b98611ed869f54caa5d11522d767a7"
+    ],
+    [
+     "core_rulebook:class_feature:rage_power_animal_fury#weapon0",
+     "core_rulebook:class_feature:rage_power_animal_fury",
+     "5f5727543de0ccf1f06cfdd2aa5d4dfb84a01bfb69c042e04b7f08147066ffd2"
+    ]
+   ]
+  }
+ },
+ "field_deltas": {
+  "f3c5_line_split": {
+   "_count": 9,
+   "pins": [
+    [
+     "core_rulebook:class_feature:abyssal_bloodline_claws",
+     "applies",
+     "776fbd05dbe53ce38d680f0cf7c3fb5f538e9e4f639b1b4c1ea3b911f4721e51"
+    ],
+    [
+     "core_rulebook:class_feature:abyssal_bloodline_claws",
+     "target",
+     "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b"
+    ],
+    [
+     "core_rulebook:class_feature:abyssal_bloodline_claws",
+     "value",
+     "c028d4bda5c6fda7d50332b324fd20992eb78517fc85b8f6a2421f2d3bf68a79"
+    ],
+    [
+     "core_rulebook:class_feature:draconic_bloodline_claws",
+     "applies",
+     "61dd39af5e2fa2e7c9c9bb1477ca2bcb65534aade63bc30d813b564de688c20f"
+    ],
+    [
+     "core_rulebook:class_feature:draconic_bloodline_claws",
+     "target",
+     "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b"
+    ],
+    [
+     "core_rulebook:class_feature:draconic_bloodline_claws",
+     "value",
+     "c028d4bda5c6fda7d50332b324fd20992eb78517fc85b8f6a2421f2d3bf68a79"
+    ],
+    [
+     "core_rulebook:class_feature:rage_power_animal_fury",
+     "applies",
+     "35543ac7f01172ad1a472f7e464982b8a6dff85adc87b6fe43fb1312ac8a2744"
+    ],
+    [
+     "core_rulebook:class_feature:rage_power_animal_fury",
+     "target",
+     "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b"
+    ],
+    [
+     "core_rulebook:class_feature:rage_power_animal_fury",
+     "value",
+     "c028d4bda5c6fda7d50332b324fd20992eb78517fc85b8f6a2421f2d3bf68a79"
+    ]
+   ]
+  },
+  "f3c5_closure_complete": {
+   "_count": 1,
+   "pins": [
+    [
+     "core_rulebook:class:dragon_disciple",
+     "closure_complete",
+     "b5bea41b6c623f7c09f1bf24dcae58ebab3c0cdd90ad966bc43a45b44867e12b"
+    ]
+   ]
+  }
+ },
+ "required_added_grants": {
+  "_count": 681,
+  "pins": [
+   [
+    "advanced_class_guide:class_feature:abyssal_bloodrager_bloodline_claws",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "advanced_class_guide:class_feature:draconic_bloodrager_bloodline_claws",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "advanced_class_guide:class_feature:mutagenic_mauler_brawler_discovery_feral_mutagen",
+    "{\"GatedFactGrant\": {\"fact\": {\"NaturalAttack\": \"Bite\"}, \"when\": {\"Compare\": {\"lhs\": {\"Var\": \"v073b8a67bdd5efe7\"}, \"op\": \"Eq\", \"rhs\": {\"Const\": 1}}}}}"
+   ],
+   [
+    "advanced_class_guide:class_feature:mutagenic_mauler_brawler_discovery_feral_mutagen",
+    "{\"GatedFactGrant\": {\"fact\": {\"NaturalAttack\": \"Claw\"}, \"when\": {\"Compare\": {\"lhs\": {\"Var\": \"v073b8a67bdd5efe7\"}, \"op\": \"Eq\", \"rhs\": {\"Const\": 1}}}}}"
+   ],
+   [
+    "advanced_class_guide:class_feature:mutation_warrior_discovery_feral_mutagen",
+    "{\"GatedFactGrant\": {\"fact\": {\"NaturalAttack\": \"Bite\"}, \"when\": {\"Compare\": {\"lhs\": {\"Var\": \"v073b8a67bdd5efe7\"}, \"op\": \"Eq\", \"rhs\": {\"Const\": 1}}}}}"
+   ],
+   [
+    "advanced_class_guide:class_feature:mutation_warrior_discovery_feral_mutagen",
+    "{\"GatedFactGrant\": {\"fact\": {\"NaturalAttack\": \"Claw\"}, \"when\": {\"Compare\": {\"lhs\": {\"Var\": \"v073b8a67bdd5efe7\"}, \"op\": \"Eq\", \"rhs\": {\"Const\": 1}}}}}"
+   ],
+   [
+    "advanced_players_guide:class_feature:beast_totem_claws",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "advanced_players_guide:class_feature:beast_totem_claws",
+    "{\"GatedFactGrant\": {\"fact\": {\"NaturalAttack\": \"Claw\"}, \"when\": {\"Compare\": {\"lhs\": {\"Var\": \"v5a75c897e1253933\"}, \"op\": \"Eq\", \"rhs\": {\"Const\": 1}}}}}"
+   ],
+   [
+    "advanced_players_guide:class_feature:beast_totem_claws",
+    "{\"GatedFactGrant\": {\"fact\": {\"NaturalAttack\": \"Claw\"}, \"when\": {\"Compare\": {\"lhs\": {\"Var\": \"v5a75c897e1253933\"}, \"op\": \"Eq\", \"rhs\": {\"Const\": 2}}}}}"
+   ],
+   [
+    "advanced_players_guide:class_feature:discovery_feral_mutagen",
+    "{\"GatedFactGrant\": {\"fact\": {\"NaturalAttack\": \"Bite\"}, \"when\": {\"Compare\": {\"lhs\": {\"Var\": \"v073b8a67bdd5efe7\"}, \"op\": \"Eq\", \"rhs\": {\"Const\": 1}}}}}"
+   ],
+   [
+    "advanced_players_guide:class_feature:discovery_feral_mutagen",
+    "{\"GatedFactGrant\": {\"fact\": {\"NaturalAttack\": \"Claw\"}, \"when\": {\"Compare\": {\"lhs\": {\"Var\": \"v073b8a67bdd5efe7\"}, \"op\": \"Eq\", \"rhs\": {\"Const\": 1}}}}}"
+   ],
+   [
+    "advanced_players_guide:class_feature:serpentine_bloodline_serpent_s_fang",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "advanced_players_guide:companion:evolution_bite",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "advanced_players_guide:companion:evolution_clawed_feet",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "advanced_players_guide:companion:evolution_clawed_hands",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "advanced_players_guide:companion:evolution_pincers",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Pincers\"}}"
+   ],
+   [
+    "advanced_players_guide:companion:evolution_sting",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Sting\"}}"
+   ],
+   [
+    "advanced_players_guide:companion:evolution_tail_slap",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Tail Slap\"}}"
+   ],
+   [
+    "advanced_players_guide:companion:evolution_tentacle",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Tentacle\"}}"
+   ],
+   [
+    "advanced_players_guide:companion:familiar_centipede_house",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "advanced_players_guide:companion:familiar_crab_giant_king",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "advanced_players_guide:companion:familiar_fox",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "advanced_players_guide:companion:familiar_octopus",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "advanced_players_guide:companion:familiar_octopus",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Tentacle\"}}"
+   ],
+   [
+    "advanced_players_guide:companion:familiar_parrot",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "advanced_players_guide:companion:familiar_scorpion_greensting",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Sting\"}}"
+   ],
+   [
+    "advanced_players_guide:companion:familiar_spider_scarlet",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "advanced_players_guide:companion:parrot",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "advanced_race_guide:ability:builder_racial_trait_claws",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "advanced_race_guide:ability:builder_racial_trait_slapping_tail",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Tail Slap\"}}"
+   ],
+   [
+    "advanced_race_guide:ability:tracker_builder_racial_trait_bite",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "advanced_race_guide:companion:brute_steed_camel",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "advanced_race_guide:companion:brute_steed_horse",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "advanced_race_guide:feat:catfolk_exemplar_sharp_claws",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "advanced_race_guide:race_trait:catfolk_cat_s_claws",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "advanced_race_guide:race_trait:goblin_hard_head_big_teeth",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "advanced_race_guide:race_trait:tengu_claw_attack",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "advanced_race_guide:race_trait:tiefling_maw_or_claw",
+    "{\"GatedFactGrant\": {\"fact\": {\"NaturalAttack\": \"Bite\"}, \"when\": {\"Holds\": {\"count\": 1, \"what\": {\"Rule\": \"advanced_race_guide:race_trait:tiefling_maw_or_claw\"}}}}}"
+   ],
+   [
+    "advanced_race_guide:race_trait:tiefling_maw_or_claw",
+    "{\"GatedFactGrant\": {\"fact\": {\"NaturalAttack\": \"Claw\"}, \"when\": {\"Holds\": {\"count\": 1, \"what\": {\"Rule\": \"advanced_race_guide:race_trait:tiefling_maw_or_claw\"}}}}}"
+   ],
+   [
+    "adventurers_guide:race:companion_bird_raven",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary:monster:aboleth",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Tentacle\"}}"
+   ],
+   [
+    "bestiary:monster:ankheg",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary:monster:ant_drone",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary:monster:ant_drone",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Sting\"}}"
+   ],
+   [
+    "bestiary:monster:ant_giant",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary:monster:ant_giant",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Sting\"}}"
+   ],
+   [
+    "bestiary:monster:ant_queen",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary:monster:ant_queen",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Sting\"}}"
+   ],
+   [
+    "bestiary:monster:ant_worker",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary:monster:ape_dire",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary:monster:ape_dire",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "bestiary:monster:azata_lillend",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Tail Slap\"}}"
+   ],
+   [
+    "bestiary:monster:barghest",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary:monster:barghest",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "bestiary:monster:barghest_greater",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary:monster:barghest_greater",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "bestiary:monster:basilisk",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary:monster:bat_dire",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary:monster:bear_dire",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary:monster:bear_dire",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "bestiary:monster:bear_grizzly",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary:monster:bear_grizzly",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "bestiary:monster:bebilith",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary:monster:bebilith",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "bestiary:monster:beetle_fire",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary:monster:beetle_giant_stag",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary:monster:behir",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary:monster:bulette",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary:monster:bulette",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "bestiary:monster:cat_cheetah",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary:monster:cat_cheetah",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "bestiary:monster:cat_leopard",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary:monster:cat_leopard",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "bestiary:monster:cave_fisher",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "bestiary:monster:centipede_giant",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary:monster:centipede_giant_whiptail",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary:monster:centipede_great_forest",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary:monster:centipede_hisser",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary:monster:centipede_house",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary:monster:centipede_sewer",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary:monster:centipede_titan",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary:monster:choker",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Tentacle\"}}"
+   ],
+   [
+    "bestiary:monster:chuul",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "bestiary:monster:cloaker",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary:monster:cloaker",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Tail Slap\"}}"
+   ],
+   [
+    "bestiary:monster:cockatrice",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary:monster:couatl",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary:monster:crab_giant",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "bestiary:monster:crab_giant_coconut",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "bestiary:monster:crab_giant_king",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "bestiary:monster:crab_giant_reef",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "bestiary:monster:crab_giant_rock",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "bestiary:monster:crab_giant_shark_eating",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "bestiary:monster:crab_giant_shipwrecker",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "bestiary:monster:vargouille",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary:monster:vegepygmy",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "bestiary:monster:violet_fungus",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Tentacle\"}}"
+   ],
+   [
+    "bestiary:monster:wasp_giant",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Sting\"}}"
+   ],
+   [
+    "bestiary:monster:wolf",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary:monster:wolf_dire",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary:monster:wolverine",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary:monster:wolverine",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "bestiary:monster:wolverine_dire",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary:monster:wolverine_dire",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "bestiary:monster:worg",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary:monster:worg_winter_wolf",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary:monster:wyvern",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary:monster:wyvern",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Sting\"}}"
+   ],
+   [
+    "bestiary:monster:xill",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary:monster:xill",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "bestiary:monster:yeth_hound",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary:monster:yeti",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "bestiary:monster_ability:rake",
+    "{\"GatedFactGrant\": {\"fact\": {\"NaturalAttack\": \"Rake\"}, \"when\": {\"All\": [{\"Compare\": {\"lhs\": {\"Var\": \"v58ee7a23ec1c122a\"}, \"op\": \"Eq\", \"rhs\": {\"Const\": 2}}}, {\"Compare\": {\"lhs\": {\"Var\": \"v8dd53fff9050dfac\"}, \"op\": \"Eq\", \"rhs\": {\"Const\": 2}}}]}}}"
+   ],
+   [
+    "bestiary:monster_ability:rake",
+    "{\"GatedFactGrant\": {\"fact\": {\"NaturalAttack\": \"Rake\"}, \"when\": {\"All\": [{\"Compare\": {\"lhs\": {\"Var\": \"v58ee7a23ec1c122a\"}, \"op\": \"Eq\", \"rhs\": {\"Const\": 3}}}, {\"Compare\": {\"lhs\": {\"Var\": \"v8dd53fff9050dfac\"}, \"op\": \"Eq\", \"rhs\": {\"Const\": 2}}}]}}}"
+   ],
+   [
+    "bestiary:monster_ability:rake",
+    "{\"GatedFactGrant\": {\"fact\": {\"NaturalAttack\": \"Rake\"}, \"when\": {\"All\": [{\"Compare\": {\"lhs\": {\"Var\": \"v58ee7a23ec1c122a\"}, \"op\": \"Eq\", \"rhs\": {\"Const\": 4}}}, {\"Compare\": {\"lhs\": {\"Var\": \"v8dd53fff9050dfac\"}, \"op\": \"Eq\", \"rhs\": {\"Const\": 2}}}]}}}"
+   ],
+   [
+    "bestiary:monster_ability:rake",
+    "{\"GatedFactGrant\": {\"fact\": {\"NaturalAttack\": \"Rake\"}, \"when\": {\"All\": [{\"Compare\": {\"lhs\": {\"Var\": \"v58ee7a23ec1c122a\"}, \"op\": \"Eq\", \"rhs\": {\"Const\": 5}}}, {\"Compare\": {\"lhs\": {\"Var\": \"v8dd53fff9050dfac\"}, \"op\": \"Eq\", \"rhs\": {\"Const\": 2}}}]}}}"
+   ],
+   [
+    "bestiary:monster_ability:rake",
+    "{\"GatedFactGrant\": {\"fact\": {\"NaturalAttack\": \"Rake\"}, \"when\": {\"All\": [{\"Compare\": {\"lhs\": {\"Var\": \"v58ee7a23ec1c122a\"}, \"op\": \"Eq\", \"rhs\": {\"Const\": 6}}}, {\"Compare\": {\"lhs\": {\"Var\": \"v8dd53fff9050dfac\"}, \"op\": \"Eq\", \"rhs\": {\"Const\": 2}}}]}}}"
+   ],
+   [
+    "bestiary:monster_ability:rake",
+    "{\"GatedFactGrant\": {\"fact\": {\"NaturalAttack\": \"Rake\"}, \"when\": {\"All\": [{\"Compare\": {\"lhs\": {\"Var\": \"v58ee7a23ec1c122a\"}, \"op\": \"Eq\", \"rhs\": {\"Const\": 7}}}, {\"Compare\": {\"lhs\": {\"Var\": \"v8dd53fff9050dfac\"}, \"op\": \"Eq\", \"rhs\": {\"Const\": 2}}}]}}}"
+   ],
+   [
+    "bestiary:monster_ability:rake",
+    "{\"GatedFactGrant\": {\"fact\": {\"NaturalAttack\": \"Rake\"}, \"when\": {\"All\": [{\"Compare\": {\"lhs\": {\"Var\": \"v58ee7a23ec1c122a\"}, \"op\": \"Eq\", \"rhs\": {\"Const\": 8}}}, {\"Compare\": {\"lhs\": {\"Var\": \"v8dd53fff9050dfac\"}, \"op\": \"Eq\", \"rhs\": {\"Const\": 2}}}]}}}"
+   ],
+   [
+    "bestiary:monster_ability:rake",
+    "{\"GatedFactGrant\": {\"fact\": {\"NaturalAttack\": \"Rake\"}, \"when\": {\"All\": [{\"Compare\": {\"lhs\": {\"Var\": \"v58ee7a23ec1c122a\"}, \"op\": \"Eq\", \"rhs\": {\"Const\": 9}}}, {\"Compare\": {\"lhs\": {\"Var\": \"v8dd53fff9050dfac\"}, \"op\": \"Eq\", \"rhs\": {\"Const\": 2}}}]}}}"
+   ],
+   [
+    "bestiary:race_trait:tengu_natural_weapon",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary:template:half_dragon",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary:template:half_dragon",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "bestiary:template:skeletal_champion",
+    "{\"GatedFactGrant\": {\"fact\": {\"NaturalAttack\": \"Claw\"}, \"when\": {\"Situational\": {\"text\": \"requires 0 hands\"}}}}"
+   ],
+   [
+    "bestiary:template:skeleton",
+    "{\"GatedFactGrant\": {\"fact\": {\"NaturalAttack\": \"Claw\"}, \"when\": {\"Situational\": {\"text\": \"requires 0 hands\"}}}}"
+   ],
+   [
+    "bestiary:template:skeleton_bloody",
+    "{\"GatedFactGrant\": {\"fact\": {\"NaturalAttack\": \"Claw\"}, \"when\": {\"Situational\": {\"text\": \"requires 0 hands\"}}}}"
+   ],
+   [
+    "bestiary:template:skeleton_burning",
+    "{\"GatedFactGrant\": {\"fact\": {\"NaturalAttack\": \"Claw\"}, \"when\": {\"Situational\": {\"text\": \"requires 0 hands\"}}}}"
+   ],
+   [
+    "bestiary:template:wererat_abilities",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary:template:werewolf_abilities",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary_2:companion:familiar_cacodaemon",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary_2:companion:familiar_compsognathus",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary_2:companion:familiar_cythnigot",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary_2:companion:familiar_silvanshee",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary_2:companion:familiar_silvanshee",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "bestiary_2:companion:familiar_snapping_turtle",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary_2:companion:familiar_voidworm",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary_2:companion:familiar_voidworm",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Tail Slap\"}}"
+   ],
+   [
+    "bestiary_2:template:whale_bite",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary_2:template:whale_tail_slap",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Tail Slap\"}}"
+   ],
+   [
+    "bestiary_3:companion:companion_archelon",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary_3:companion:companion_axe_beak",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary_3:companion:companion_basilosaurus",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary_3:companion:companion_basilosaurus",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Tail Slap\"}}"
+   ],
+   [
+    "bestiary_3:companion:companion_dimetrodon",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary_3:companion:companion_giant_chameleon",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary_3:companion:companion_giant_gecko",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary_3:companion:companion_giant_vulture",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary_3:companion:companion_iguanodon",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "bestiary_3:companion:companion_spinosaurus",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary_3:companion:companion_spinosaurus",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "bestiary_3:companion:companion_thylacine",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary_3:monster:adaro",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary_3:monster:adlet",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary_3:monster:ahuizotl",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary_3:monster:ahuizotl",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "bestiary_3:monster:annis_hag",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary_3:monster:annis_hag",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "bestiary_3:monster:ant_lion_giant",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary_3:monster:ant_lion_giant_adult",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary_3:monster:asura_adhukait",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "bestiary_3:monster:asura_aghasura",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary_3:monster:asura_asurendra",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary_3:monster:asura_asurendra",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "bestiary_3:monster:asura_tripurasura",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Sting\"}}"
+   ],
+   [
+    "bestiary_3:monster:axe_beak",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary_3:monster:axe_beak_diatryma",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary_3:monster:axe_beak_terror_bird",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary_3:monster:azruverda",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary_3:monster:baku",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "bestiary_3:monster:lizard_giant_gecko",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary_3:race_trait:unfettered_eidolon_evolution_bite",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary_3:race_trait:unfettered_eidolon_evolution_claw",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "bestiary_3:race_trait:unfettered_eidolon_evolution_sting",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Sting\"}}"
+   ],
+   [
+    "bestiary_3:race_trait:unfettered_eidolon_evolution_tail_slap",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Tail Slap\"}}"
+   ],
+   [
+    "bestiary_3:template:penanggalen",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary_4:companion:companion_dinosaur_dimorphodon",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary_4:companion:companion_dinosaur_diplodocus",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Tail Slap\"}}"
+   ],
+   [
+    "bestiary_4:companion:companion_seahorse",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary_4:companion:companion_tortoise",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary_4:companion:companion_trumpeter_swan",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary_4:companion:companion_walrus",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary_4:companion:companion_weasel_giant",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary_4:companion:drake_shadow",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary_4:companion:drake_shadow",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Tail Slap\"}}"
+   ],
+   [
+    "bestiary_4:companion:familiar_archaeopteryx",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary_4:companion:familiar_dodo",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary_4:companion:familiar_giant_flea",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary_4:companion:familiar_nosoi",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary_4:companion:familiar_pipefox",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary_4:companion:familiar_ratling",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary_4:companion:familiar_shadow_drake",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary_4:companion:familiar_shadow_drake",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Tail Slap\"}}"
+   ],
+   [
+    "bestiary_4:companion:familiar_sloth",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "bestiary_4:companion:familiar_tuatara",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary_4:companion:pipefox",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary_4:companion:psychopomp_nosoi",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary_4:companion:ratling",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary_4:monster:alpluachra",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary_4:monster:apocalypse_locust",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Pincers\"}}"
+   ],
+   [
+    "bestiary_4:monster:apocalypse_locust",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Sting\"}}"
+   ],
+   [
+    "bestiary_4:monster:archaeopteryx",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary_4:monster:astral_leviathan",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Tail Slap\"}}"
+   ],
+   [
+    "bestiary_4:monster:bakekujira",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Tail Slap\"}}"
+   ],
+   [
+    "bestiary_4:monster:blood_hag",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "bestiary_4:monster:chaneque",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "bestiary_4:monster:clockwork_dragon",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary_4:monster:clockwork_dragon",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "bestiary_4:monster:clockwork_dragon",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Tail Slap\"}}"
+   ],
+   [
+    "bestiary_4:monster:clockwork_steed",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary_4:monster:contemplative",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "bestiary_4:monster:death_dog",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary_4:monster:devil_drowning",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary_4:monster:devil_host",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "bestiary_4:monster:devil_nemesis",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary_4:monster:devil_nemesis",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "bestiary_4:monster:devil_nemesis",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Tail Slap\"}}"
+   ],
+   [
+    "bestiary_4:monster:dinosaur_dimorphodon",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary_4:monster:dinosaur_velociraptor",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary_4:monster:dodo",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary_4:monster:dossenus",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary_4:monster:drakainia",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Tentacle\"}}"
+   ],
+   [
+    "bestiary_4:monster:drake_lava",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary_4:monster:drake_lava",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "bestiary_4:monster:drake_lava",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Tail Slap\"}}"
+   ],
+   [
+    "bestiary_4:monster:drake_mist",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary_4:monster:drake_mist",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Tail Slap\"}}"
+   ],
+   [
+    "bestiary_4:monster:drake_spire",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary_4:monster:drake_spire",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Tail Slap\"}}"
+   ],
+   [
+    "bestiary_4:monster:elder_thing",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Tentacle\"}}"
+   ],
+   [
+    "bestiary_4:monster:elohim",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Tentacle\"}}"
+   ],
+   [
+    "bestiary_4:monster:fachen",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary_4:monster:flea_giant",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary_4:monster:flea_mammoth",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary_4:monster:fleshdreg",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary_4:monster:fleshwarp_ghonhatine",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary_4:monster:fleshwarp_ghonhatine",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "bestiary_4:monster:fleshwarp_ghonhatine",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Tail Slap\"}}"
+   ],
+   [
+    "bestiary_4:monster:fleshwarp_halsora",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "bestiary_4:monster:fleshwarp_irnakurse",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary_4:monster:fleshwarp_irnakurse",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Tentacle\"}}"
+   ],
+   [
+    "bestiary_4:monster:flying_polyp",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Tentacle\"}}"
+   ],
+   [
+    "bestiary_4:monster:formian_myrmarch",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary_4:monster:formian_myrmarch",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "bestiary_4:monster:formian_myrmarch",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Sting\"}}"
+   ],
+   [
+    "bestiary_4:monster:formian_taskmaster",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "bestiary_4:monster:formian_taskmaster",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Sting\"}}"
+   ],
+   [
+    "bestiary_4:monster:formian_warrior",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "bestiary_4:monster:formian_warrior",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Sting\"}}"
+   ],
+   [
+    "bestiary_4:monster:formian_worker",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary_4:monster:gaki",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary_4:monster:gaki",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "bestiary_4:monster:gallowdead",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "bestiary_4:monster:gashadokuro",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary_4:monster:gashadokuro",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "bestiary_4:monster:gholdako",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary_4:monster:gholdako",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "bestiary_4:monster:golem_coral",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "bestiary_4:monster:graeae",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "bestiary_4:monster:gremlin_grimple",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary_4:monster:gremlin_haniver",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary_4:monster:gremlin_monaciello",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary_4:monster:guardian_dragon",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary_4:monster:guardian_dragon",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "bestiary_4:monster:guardian_dragon",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Tail Slap\"}}"
+   ],
+   [
+    "bestiary_4:monster:ijiraq",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary_4:monster:incutilis",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Tentacle\"}}"
+   ],
+   [
+    "bestiary_4:monster:jack_o_lantern",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary_4:monster:jinmenju",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary_4:monster:kyton_sacristan",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "bestiary_4:monster:locust_giant",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary_4:monster:lunarma",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary_4:monster:lunarma",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "bestiary_4:monster:mi_go",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "bestiary_4:monster:nependis",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "bestiary_4:monster:nightgaunt",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "bestiary_4:monster:ningyo",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary_4:monster:ningyo",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "bestiary_4:monster:pard",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary_4:monster:pard",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "bestiary_4:monster:peluda",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary_4:monster:peluda",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "bestiary_4:monster:psychopomp_vanth",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "bestiary_4:monster:psychopomp_yamaraj",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary_4:monster:psychopomp_yamaraj",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "bestiary_4:monster:psychopomp_yamaraj",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Tail Slap\"}}"
+   ],
+   [
+    "bestiary_4:monster:qallupilluk",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary_4:monster:qallupilluk",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "bestiary_4:monster:rokurokubi",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "bestiary_4:monster:rukh",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary_4:monster:rukh_juvenile",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary_4:monster:sea_cat",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary_4:monster:sea_cat",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "bestiary_4:monster:selkie",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary_4:monster:selkie",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "bestiary_4:monster:shark_bull",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary_4:monster:shark_great_white",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary_4:monster:shredskin",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary_4:monster:shredskin",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "bestiary_4:monster:shriezyx",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "bestiary_4:monster:sloth",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "bestiary_4:monster:snallygaster",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "bestiary_4:monster:soulbound_mannequin",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "bestiary_4:monster:swan_trumpeter",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary_4:monster:taniniver",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary_4:monster:taniniver",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "bestiary_4:monster:taniniver",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Tail Slap\"}}"
+   ],
+   [
+    "bestiary_4:monster:tortoise_giant",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary_4:monster:tortoise_immense",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary_4:monster:tuatara",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary_4:monster:vouivre",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "bestiary_4:monster:walrus",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary_4:monster:water_strider_giant",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary_4:monster:water_strider_giant",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "bestiary_4:monster:water_strider_nymph",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary_4:monster:water_strider_nymph",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "bestiary_4:monster:weasel_dire",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary_4:monster:weasel_giant",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary_4:monster:winter_hag",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "bestiary_4:monster:xanthos",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary_4:monster:xanthos",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Tail Slap\"}}"
+   ],
+   [
+    "bestiary_4:monster:yaoguai",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary_4:monster:yaoguai",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "bestiary_4:monster:yaoguai",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Tentacle\"}}"
+   ],
+   [
+    "bestiary_4:monster:zomok",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary_4:monster:zomok",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "bestiary_4:monster:zomok",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Tail Slap\"}}"
+   ],
+   [
+    "bestiary_4:race_trait:changeling_claws",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "bestiary_4:race_trait:kitsune_natural_weapons",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary_4:template:werebat_abilities",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary_4:template:werebat_abilities",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "bestiary_4:template:werecrocodile_abilities",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary_4:template:wereshark_abilities",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary_5:companion:companion_cameroceras",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary_5:companion:companion_cameroceras",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Tentacle\"}}"
+   ],
+   [
+    "bestiary_5:companion:companion_ceratosaurus",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary_5:companion:companion_chalicotherium",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "bestiary_5:companion:companion_digmaul",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary_5:companion:companion_digmaul",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "bestiary_5:companion:companion_frog_father",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary_5:companion:companion_frog_goliath",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary_5:companion:companion_kaprosuchus",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary_5:companion:companion_kaprosuchus",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Tail Slap\"}}"
+   ],
+   [
+    "bestiary_5:companion:companion_megaprimatus",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary_5:companion:companion_megaprimatus",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "bestiary_5:companion:companion_narwhal",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary_5:companion:companion_plesiosaurus",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary_5:companion:companion_polar_bear",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary_5:companion:companion_polar_bear",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "bestiary_5:companion:companion_polar_bear_dire",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary_5:companion:companion_polar_bear_dire",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "bestiary_5:companion:companion_therizinosaurus",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "bestiary_5:companion:companion_troodon",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary_5:companion:companion_troodon",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "bestiary_5:companion:companion_uintatherium",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary_5:companion:companion_whale_blue",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Tail Slap\"}}"
+   ],
+   [
+    "bestiary_5:companion:familiar_brain_mole",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary_5:companion:familiar_chicken",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary_5:companion:familiar_clockwork_familiar",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary_5:companion:familiar_flying_fox",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary_5:companion:familiar_penguin",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary_5:companion:familiar_red_panda",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary_5:companion:familiar_seal",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary_5:companion:familiar_trilobite",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary_5:companion:familiar_xiao",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary_5:race_trait:reptoid_natural_weapons",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary_5:race_trait:reptoid_natural_weapons",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "bestiary_5:race_trait:skinwalker_change_shape_bite",
+    "{\"GatedFactGrant\": {\"fact\": {\"NaturalAttack\": \"Bite\"}, \"when\": \"Never\"}}"
+   ],
+   [
+    "bestiary_5:race_trait:skinwalker_change_shape_claw",
+    "{\"GatedFactGrant\": {\"fact\": {\"NaturalAttack\": \"Claw\"}, \"when\": \"Never\"}}"
+   ],
+   [
+    "bestiary_6:companion:companion_amargasaurus",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Tail Slap\"}}"
+   ],
+   [
+    "bestiary_6:companion:companion_devil_monkey",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary_6:companion:companion_dunkleosteus",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary_6:companion:companion_giganotosaurus",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary_6:companion:companion_mokele_mbembe",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary_6:companion:companion_mokele_mbembe",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Tail Slap\"}}"
+   ],
+   [
+    "bestiary_6:companion:companion_quetzalcoatlus",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary_6:companion:companion_raven_giant",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary_6:companion:companion_titanoboa",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary_6:companion:familiar_coral_capuchin",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bestiary_6:race_trait:rougarou_natural_weapon",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bonus_bestiary:monster:ant_lion_giant",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bonus_bestiary:monster:ant_lion_mature",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bonus_bestiary:monster:axe_beak",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bonus_bestiary:monster:dragon_faerie",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bonus_bestiary:monster:dragonne",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bonus_bestiary:monster:dragonne",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "bonus_bestiary:monster:hag_annis",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bonus_bestiary:monster:hag_annis",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "bonus_bestiary:monster:huecuva",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "bonus_bestiary:monster:lammasu",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "bonus_bestiary:monster:naga_water",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "bonus_bestiary:monster:shadow_mastiff",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "book_of_the_damned_volume_1:monster:devil_apostate",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "book_of_the_damned_volume_1:monster:devil_heresy",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "book_of_the_damned_volume_1:monster:devil_warmonger",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "core_rulebook:class_feature:abyssal_bloodline_claws",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "core_rulebook:class_feature:draconic_bloodline_claws",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "core_rulebook:class_feature:dragon_disciple_dragon_bite",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "core_rulebook:class_feature:rage_power_animal_fury",
+    "{\"GatedFactGrant\": {\"fact\": {\"NaturalAttack\": \"Bite\"}, \"when\": {\"Compare\": {\"lhs\": {\"Var\": \"v854235a6afd26ec3\"}, \"op\": \"Eq\", \"rhs\": {\"Const\": 1}}}}}"
+   ],
+   [
+    "core_rulebook:companion:companion_advancement_dinosaur_deinonychus",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "core_rulebook:companion:companion_advancement_dinosaur_velociraptor",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "core_rulebook:companion:companion_ape",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "core_rulebook:companion:companion_ape",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "core_rulebook:companion:companion_badger_wolverine",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "core_rulebook:companion:companion_badger_wolverine",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "core_rulebook:companion:companion_bear",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "core_rulebook:companion:companion_bear",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "core_rulebook:companion:companion_bird_eagle",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "core_rulebook:companion:companion_bird_hawk",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "core_rulebook:companion:companion_bird_owl",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "core_rulebook:companion:companion_camel",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "core_rulebook:companion:companion_cat_big_lion",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "core_rulebook:companion:companion_cat_big_lion",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "core_rulebook:companion:companion_cat_big_tiger",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "core_rulebook:companion:companion_cat_big_tiger",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "core_rulebook:companion:companion_cat_small_cheetah",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "core_rulebook:companion:companion_cat_small_cheetah",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "core_rulebook:companion:companion_cat_small_leopard",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "core_rulebook:companion:companion_cat_small_leopard",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "core_rulebook:companion:companion_crocodile_alligator",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "core_rulebook:companion:companion_dinosaur_allosaurus",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "core_rulebook:companion:companion_dinosaur_allosaurus",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "core_rulebook:companion:companion_dinosaur_deinonychus",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "core_rulebook:companion:companion_dinosaur_parasaurolophus",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Tail Slap\"}}"
+   ],
+   [
+    "core_rulebook:companion:companion_dinosaur_tylosaurus",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "core_rulebook:companion:companion_dinosaur_velociraptor",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "core_rulebook:companion:companion_dire_rat",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "core_rulebook:companion:companion_dog",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "core_rulebook:companion:companion_gar",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "core_rulebook:companion:companion_horse",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "core_rulebook:companion:companion_megafauna_megatherium",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "core_rulebook:companion:companion_primate_baboon",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "core_rulebook:companion:companion_ray_manta",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Tail Slap\"}}"
+   ],
+   [
+    "core_rulebook:companion:companion_ray_stingray",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Tail Slap\"}}"
+   ],
+   [
+    "core_rulebook:companion:companion_shark",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "core_rulebook:companion:companion_snake_constrictor",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "core_rulebook:companion:companion_snake_viper",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "core_rulebook:companion:companion_turtle_giant_snapping",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "core_rulebook:companion:companion_wolf",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "core_rulebook:template:wild_shape_huge_animal_allosaurus",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "core_rulebook:template:wild_shape_medium_animal_baboon",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "core_rulebook:template:wild_shape_medium_animal_cheetah",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "core_rulebook:template:wild_shape_medium_animal_cheetah",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "core_rulebook:template:wild_shape_medium_animal_constrictor_snake",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "core_rulebook:template:wild_shape_medium_animal_deinonychus",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "core_rulebook:template:wild_shape_medium_animal_dire_badger",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "core_rulebook:template:wild_shape_medium_animal_dire_badger",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "core_rulebook:template:wild_shape_medium_animal_gar",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "core_rulebook:template:wild_shape_medium_animal_giant_frog",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "core_rulebook:template:wild_shape_medium_animal_goblin_dog",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "core_rulebook:template:wild_shape_medium_animal_hyena",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "core_rulebook:template:wild_shape_medium_animal_leopard",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "core_rulebook:template:wild_shape_medium_animal_leopard",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "core_rulebook:template:wild_shape_medium_animal_monitor_lizard",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "core_rulebook:template:wild_shape_medium_animal_riding_dog",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "core_rulebook:template:wild_shape_medium_animal_squid",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "core_rulebook:template:wild_shape_medium_animal_squid",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Tentacle\"}}"
+   ],
+   [
+    "core_rulebook:template:wild_shape_medium_animal_stingray",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Sting\"}}"
+   ],
+   [
+    "core_rulebook:template:wild_shape_small_animal_badger",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "core_rulebook:template:wild_shape_small_animal_badger",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "core_rulebook:template:wild_shape_small_animal_dire_rat",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "core_rulebook:template:wild_shape_small_animal_dog",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "core_rulebook:template:wild_shape_small_animal_eagle",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "core_rulebook:template:wild_shape_small_animal_electric_eel",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "core_rulebook:template:wild_shape_small_animal_octopus",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "core_rulebook:template:wild_shape_small_animal_octopus",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Tentacle\"}}"
+   ],
+   [
+    "horror_adventures:ability:accursed_corruption_weakening_claws_gift",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "horror_adventures:ability:deep_one_corruption_bloodthirst_gift",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "horror_adventures:ability:deep_one_corruption_claws_of_the_deep_gift",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "horror_adventures:ability:ghoul_corruption_gnashing_bite_gift",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "horror_adventures:ability:ghoul_corruption_rending_claws_gift",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "horror_adventures:ability:hive_corruption_living_weapon_gift",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "horror_adventures:ability:lycanthropy_corruption_shift_form_gift",
+    "{\"GatedFactGrant\": {\"fact\": {\"NaturalAttack\": \"Bite\"}, \"when\": \"Never\"}}"
+   ],
+   [
+    "horror_adventures:ability:vampirism_corruption_fangs_gift",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "horror_adventures:class_feature:gingerbread_witch_gruesome_gobbler",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "horror_adventures:class_feature:mooncursed_bear",
+    "{\"GatedFactGrant\": {\"fact\": {\"NaturalAttack\": \"Bite\"}, \"when\": {\"Compare\": {\"lhs\": {\"Var\": \"v854235a6afd26ec3\"}, \"op\": \"Gte\", \"rhs\": {\"Const\": 1}}}}}"
+   ],
+   [
+    "horror_adventures:class_feature:mooncursed_bear",
+    "{\"GatedFactGrant\": {\"fact\": {\"NaturalAttack\": \"Claw\"}, \"when\": {\"Compare\": {\"lhs\": {\"Var\": \"v854235a6afd26ec3\"}, \"op\": \"Gte\", \"rhs\": {\"Const\": 1}}}}}"
+   ],
+   [
+    "horror_adventures:class_feature:mooncursed_crocodile",
+    "{\"GatedFactGrant\": {\"fact\": {\"NaturalAttack\": \"Bite\"}, \"when\": {\"Compare\": {\"lhs\": {\"Var\": \"v854235a6afd26ec3\"}, \"op\": \"Gte\", \"rhs\": {\"Const\": 1}}}}}"
+   ],
+   [
+    "horror_adventures:class_feature:mooncursed_crocodile",
+    "{\"GatedFactGrant\": {\"fact\": {\"NaturalAttack\": \"Tail Slap\"}, \"when\": {\"Compare\": {\"lhs\": {\"Var\": \"v854235a6afd26ec3\"}, \"op\": \"Gte\", \"rhs\": {\"Const\": 1}}}}}"
+   ],
+   [
+    "horror_adventures:class_feature:mooncursed_shark",
+    "{\"GatedFactGrant\": {\"fact\": {\"NaturalAttack\": \"Bite\"}, \"when\": {\"Compare\": {\"lhs\": {\"Var\": \"v854235a6afd26ec3\"}, \"op\": \"Gte\", \"rhs\": {\"Const\": 1}}}}}"
+   ],
+   [
+    "horror_adventures:class_feature:mooncursed_tiger",
+    "{\"GatedFactGrant\": {\"fact\": {\"NaturalAttack\": \"Bite\"}, \"when\": {\"Compare\": {\"lhs\": {\"Var\": \"v854235a6afd26ec3\"}, \"op\": \"Gte\", \"rhs\": {\"Const\": 1}}}}}"
+   ],
+   [
+    "horror_adventures:class_feature:mooncursed_tiger",
+    "{\"GatedFactGrant\": {\"fact\": {\"NaturalAttack\": \"Claw\"}, \"when\": {\"Compare\": {\"lhs\": {\"Var\": \"v854235a6afd26ec3\"}, \"op\": \"Gte\", \"rhs\": {\"Const\": 1}}}}}"
+   ],
+   [
+    "horror_adventures:class_feature:mooncursed_wolf",
+    "{\"GatedFactGrant\": {\"fact\": {\"NaturalAttack\": \"Bite\"}, \"when\": {\"Compare\": {\"lhs\": {\"Var\": \"v854235a6afd26ec3\"}, \"op\": \"Gte\", \"rhs\": {\"Const\": 1}}}}}"
+   ],
+   [
+    "horror_adventures:companion:companion_devolved_humanoid",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "horror_adventures:companion:companion_devolved_humanoid",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "horror_adventures:equipment:gloves_of_feasting",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "horror_adventures:monster:hive_queen",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "horror_adventures:monster:hive_queen",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Tail Slap\"}}"
+   ],
+   [
+    "horror_adventures:monster:hive_warrior",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "horror_adventures:monster:hive_warrior",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "horror_adventures:monster:hive_warrior",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Tail Slap\"}}"
+   ],
+   [
+    "horror_adventures:template:accursed_creature",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "horror_adventures:template:deep_creature",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "horror_adventures:template:ghoulish_creature",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "horror_adventures:template:ghoulish_creature",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "horror_adventures:template:hive_creature",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "horror_adventures:template:hive_creature",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "horror_adventures:template:lycanthropic_creature",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "horror_adventures:template:unknown",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "inner_sea_bestiary:monster:mantis_deadly",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "inner_sea_bestiary:monster:mantis_deadly",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "inner_sea_bestiary:monster:moxix",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "inner_sea_bestiary:monster:robot_annihilator",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "inner_sea_bestiary:monster:robot_myrmidon",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "inner_sea_bestiary:monster:veiled_master",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "inner_sea_bestiary:monster:veiled_master",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "inner_sea_bestiary:monster:veiled_master",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Tentacle\"}}"
+   ],
+   [
+    "inner_sea_bestiary:monster:water_wraith",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "inner_sea_bestiary:monster:water_wraith",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "inner_sea_bestiary:monster:whirlmaw",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "inner_sea_bestiary:monster:woundwyrm",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "inner_sea_bestiary:monster:woundwyrm",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "inner_sea_bestiary:monster:zelishkar",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "inner_sea_bestiary:monster:zelishkar",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "inner_sea_bestiary:template:vetala",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "inner_sea_combat:companion:companion_advancement_hippogriff",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "inner_sea_combat:companion:companion_griffon",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "inner_sea_combat:companion:companion_hippocampus",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "inner_sea_combat:companion:companion_hippocampus",
+    "{\"GatedFactGrant\": {\"fact\": {\"NaturalAttack\": \"Tail Slap\"}, \"when\": {\"Compare\": {\"lhs\": {\"Var\": \"v0db58de056733ab3\"}, \"op\": \"Gte\", \"rhs\": {\"Const\": 1}}}}}"
+   ],
+   [
+    "inner_sea_combat:companion:companion_hippogriff",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "inner_sea_combat:companion:companion_worg",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "inner_sea_intrigue:companion:familiar_clockwork_familiar",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "inner_sea_world_guide:monster:dragon_spine",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "inner_sea_world_guide:monster:dragon_spine",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "inner_sea_world_guide:monster:fennec_firefoot",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "inner_sea_world_guide:monster:gecko_giant",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "inner_sea_world_guide:monster:rat_donkey",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "inner_sea_world_guide:monster:sandpoint_devil",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "inner_sea_world_guide:monster:shark_jigsaw",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "monster_codex:class_feature:ghoul_bloodline_ghoulish_claws",
+    "{\"GatedFactGrant\": {\"fact\": {\"NaturalAttack\": \"Claw\"}, \"when\": {\"Not\": {\"Holds\": {\"count\": 1, \"what\": {\"Race\": \"bestiary:monster:ghoul\"}}}}}}"
+   ],
+   [
+    "monster_codex:companion:companion_cave_salamander",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "monster_codex:companion:companion_giant_vulture",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "monster_codex:companion:companion_python_riding",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "monster_codex:companion:companion_rat_riding",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "monster_codex:feat:sharptooth",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "mythic_adventures:template:mythic_aspect_of_the_beast_doesn_t_have_claws",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "occult_adventures:race:homunculus_companion",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "pathfinder_unchained:race_trait:unchained_evolution_bite",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "pathfinder_unchained:race_trait:unchained_evolution_claws_arms",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "pathfinder_unchained:race_trait:unchained_evolution_claws_legs",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "pathfinder_unchained:race_trait:unchained_evolution_pincers",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Pincers\"}}"
+   ],
+   [
+    "pathfinder_unchained:race_trait:unchained_evolution_sting",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Sting\"}}"
+   ],
+   [
+    "pathfinder_unchained:race_trait:unchained_evolution_tail_slap",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Tail Slap\"}}"
+   ],
+   [
+    "pathfinder_unchained:race_trait:unchained_evolution_tentacle",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Tentacle\"}}"
+   ],
+   [
+    "ultimate_magic:class_feature:witch_hex_prehensile_hair",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Hair\"}}"
+   ],
+   [
+    "ultimate_magic:companion:blue_ringed_octopus",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "ultimate_magic:companion:donkey_rat",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "ultimate_magic:companion:familiar_blue_ringed_octopus",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "ultimate_magic:companion:familiar_donkey_rat",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "ultimate_magic:companion:familiar_pig",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "ultimate_magic:companion:familiar_thrush",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "ultimate_magic:companion:familiar_turtle",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "ultimate_magic:companion:fox",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "ultimate_magic:companion:pig",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "ultimate_magic:companion:thrush",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "ultimate_magic:companion:turtle",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "ultimate_magic:monster_ability:animated_object_ranged_attack",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Ranged Slam\"}}"
+   ],
+   [
+    "ultimate_magic:monster_ability:animated_object_ranged_attack_all",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Ranged Slam\"}}"
+   ],
+   [
+    "ultimate_wilderness:companion:arctic_fox",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "ultimate_wilderness:companion:arctic_hare",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "ultimate_wilderness:companion:arctic_tern",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "ultimate_wilderness:companion:armadillo",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "ultimate_wilderness:companion:cat_margay",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "ultimate_wilderness:companion:cat_margay",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "ultimate_wilderness:companion:chicken",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "ultimate_wilderness:companion:cockroach",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "ultimate_wilderness:companion:companion_anglerfish",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "ultimate_wilderness:companion:companion_archaeopteryx",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "ultimate_wilderness:companion:companion_armorfish",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "ultimate_wilderness:companion:companion_assassin_bug_giant",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "ultimate_wilderness:companion:companion_assassin_bug_giant",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "ultimate_wilderness:companion:companion_bustard",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "ultimate_wilderness:companion:companion_capybara",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "ultimate_wilderness:companion:companion_chimpanzee",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "ultimate_wilderness:companion:companion_cockroach_giant",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "ultimate_wilderness:companion:companion_dragonfly_giant",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "ultimate_wilderness:companion:companion_eohippus",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "ultimate_wilderness:companion:companion_eurypterid",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "ultimate_wilderness:companion:companion_falcon",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "ultimate_wilderness:companion:companion_frilled_lizard_giant",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "ultimate_wilderness:companion:companion_frilled_lizard_giant",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Tail Slap\"}}"
+   ],
+   [
+    "ultimate_wilderness:companion:companion_grizzly_bear",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "ultimate_wilderness:companion:companion_grizzly_bear",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "ultimate_wilderness:companion:companion_hammerhead_shark",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "ultimate_wilderness:companion:companion_llama",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "ultimate_wilderness:companion:companion_locust_giant",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "ultimate_wilderness:companion:companion_mantis_shrimp_giant",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Pincers\"}}"
+   ],
+   [
+    "ultimate_wilderness:companion:companion_marsupial_devil",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "ultimate_wilderness:companion:companion_marsupial_lion",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "ultimate_wilderness:companion:companion_marsupial_lion",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "ultimate_wilderness:companion:companion_mole_giant",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "ultimate_wilderness:companion:companion_mosquito_giant",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "ultimate_wilderness:companion:companion_ornithomimosaur",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "ultimate_wilderness:companion:companion_panda",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "ultimate_wilderness:companion:companion_panda",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "ultimate_wilderness:companion:companion_porcupine_giant",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Tail Slap\"}}"
+   ],
+   [
+    "ultimate_wilderness:companion:companion_prionosuchus",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "ultimate_wilderness:companion:companion_reef_snake",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "ultimate_wilderness:companion:companion_saber_toothed_cat",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "ultimate_wilderness:companion:companion_salamander_giant",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "ultimate_wilderness:companion:companion_skunk_giant",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "ultimate_wilderness:companion:companion_skunk_giant",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "ultimate_wilderness:companion:companion_snapping_flytrap",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "ultimate_wilderness:companion:companion_solifugid_giant",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "ultimate_wilderness:companion:companion_solifugid_giant",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "ultimate_wilderness:companion:companion_spider_web_tyrant",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "ultimate_wilderness:companion:companion_spitting_cobra",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "ultimate_wilderness:companion:companion_squid_giant",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "ultimate_wilderness:companion:companion_squid_giant",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Tentacle\"}}"
+   ],
+   [
+    "ultimate_wilderness:companion:companion_termite_giant",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "ultimate_wilderness:companion:companion_wolfdog",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "ultimate_wilderness:companion:companion_zebra",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "ultimate_wilderness:companion:dodo",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "ultimate_wilderness:companion:dragonfly_shimmerwing",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "ultimate_wilderness:companion:dwarf_caiman",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "ultimate_wilderness:companion:ermine",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "ultimate_wilderness:companion:familiar_arctic_fox",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "ultimate_wilderness:companion:familiar_arctic_hare",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "ultimate_wilderness:companion:familiar_arctic_tern",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "ultimate_wilderness:companion:familiar_armadillo",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "ultimate_wilderness:companion:familiar_chicken",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "ultimate_wilderness:companion:familiar_cockroach",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "ultimate_wilderness:companion:familiar_dodo",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "ultimate_wilderness:companion:familiar_dwarf_caiman",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "ultimate_wilderness:companion:familiar_ermine",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "ultimate_wilderness:companion:familiar_fire_salamander",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "ultimate_wilderness:companion:familiar_horned_lizard",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "ultimate_wilderness:companion:familiar_isopod_giant",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "ultimate_wilderness:companion:familiar_jerboa",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "ultimate_wilderness:companion:familiar_kakapo",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "ultimate_wilderness:companion:familiar_koala",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "ultimate_wilderness:companion:familiar_lamprey",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "ultimate_wilderness:companion:familiar_lemming",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "ultimate_wilderness:companion:familiar_margay",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "ultimate_wilderness:companion:familiar_margay",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "ultimate_wilderness:companion:familiar_marine_iguana",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "ultimate_wilderness:companion:familiar_meerkat",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "ultimate_wilderness:companion:familiar_mole",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "ultimate_wilderness:companion:familiar_mongoose",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "ultimate_wilderness:companion:familiar_parrot",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "ultimate_wilderness:companion:familiar_penguin",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "ultimate_wilderness:companion:familiar_ptarmigan",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "ultimate_wilderness:companion:familiar_puffin",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "ultimate_wilderness:companion:familiar_rabbit",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "ultimate_wilderness:companion:familiar_rhamphorhynchus",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "ultimate_wilderness:companion:familiar_sawleg_locust",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "ultimate_wilderness:companion:familiar_sea_krait",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "ultimate_wilderness:companion:familiar_seal",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "ultimate_wilderness:companion:familiar_shimmerwing_dragonfly",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "ultimate_wilderness:companion:familiar_skunk",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "ultimate_wilderness:companion:familiar_skunk",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "ultimate_wilderness:companion:familiar_squirrel",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "ultimate_wilderness:companion:familiar_tardigrade_giant",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "ultimate_wilderness:companion:familiar_tarsier",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "ultimate_wilderness:companion:familiar_toucan",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "ultimate_wilderness:companion:familiar_vampire_squid",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "ultimate_wilderness:companion:fire_salamander",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "ultimate_wilderness:companion:isopod_giant",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "ultimate_wilderness:companion:jerboa",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "ultimate_wilderness:companion:kakapo",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "ultimate_wilderness:companion:koala",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "ultimate_wilderness:companion:lamprey",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "ultimate_wilderness:companion:lemming",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "ultimate_wilderness:companion:lizard_horned",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "ultimate_wilderness:companion:locust_sawleg",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "ultimate_wilderness:companion:marine_iguana",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "ultimate_wilderness:companion:meerkat",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "ultimate_wilderness:companion:mole",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Claw\"}}"
+   ],
+   [
+    "ultimate_wilderness:companion:mongoose",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "ultimate_wilderness:companion:parrot",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "ultimate_wilderness:companion:penguin",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "ultimate_wilderness:companion:ptarmigan",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "ultimate_wilderness:companion:puffin",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "ultimate_wilderness:companion:rabbit",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "ultimate_wilderness:companion:rhamphorhynchus",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "ultimate_wilderness:companion:sea_krait",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "ultimate_wilderness:companion:seal",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "ultimate_wilderness:companion:squid_vampire",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "ultimate_wilderness:companion:squirrel",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "ultimate_wilderness:companion:tardigrade_giant",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "ultimate_wilderness:companion:tarsier",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ],
+   [
+    "ultimate_wilderness:companion:toucan",
+    "{\"FactGrant\": {\"NaturalAttack\": \"Bite\"}}"
+   ]
+  ]
+ },
+ "added_var_tables": {
+  "_count": 2,
+  "pins": [
+   [
+    "_vars/v58ee7a23ec1c122a.json",
+    "ba07a21bf9246be7743986c9215c8cce6f9b8e358611309dbd3ecae25ed74f90"
+   ],
+   [
+    "_vars/v5a75c897e1253933.json",
+    "9dd7c39c5822479cbd51a19b41789820f69f1908ca522f1fa9df45fa3cbdb88f"
+   ]
+  ]
+ },
+ "defect_rows": {
+  "_defects/unresolved-references.json": 6252,
+  "_defects/natural-attack-helper-carries-more.json": 0,
+  "_defects/natural-attack-helper-names-no-attack.json": 0,
+  "_defects/natural-attack-helper-pair-shared.json": 0
+ }
+}

@@ -1,0 +1,8 @@
+SPELL.1.1.0.NAME=Hero's Defiance
+SPELL.1.1.0.DC=
+SPELL.1.3.0.NAME=Heal Mount
+SPELL.1.3.0.DC=17
+SPELL.1.3.1.NAME=Holy Whisper
+SPELL.1.3.1.DC=17
+SPELL.1.4.0.NAME=Fire of Vengeance
+SPELL.1.4.0.DC=

@@ -1,0 +1,19 @@
+{
+  "data": {
+    "key": "Strix",
+    "name": "Strix",
+    "type": "Humanoid"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 9,
+    "path": "starfinder/paizo/pact_worlds/spw_races.lst",
+    "record_key": "Strix",
+    "sha256": "9cecdddea267c6a78ad7cdc8d99fde12e16c464351471d82248ec292500e7374"
+  },
+  "unit_id": "pact_worlds:race:strix"
+}

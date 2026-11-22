@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Unchained Rogue Talent ~ Surprise Attack",
+    "name": "Surprise Attack",
+    "class": "Unchained Rogue Talent",
+    "description": "During the surprise round, opponents are always considered flat-footed to you, even if they have acted. You add %1 to your sneak attack damage rolls made during the surprise round.|RogueSurpriseAttackDamage",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Unchained Rogue Talent ~ Surprise Attack"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary.Unchained Rogue Talent"
+      },
+      {
+        "key": "SERVESAS",
+        "value": "ABILITY=Special Ability|Rogue Talent ~ Surprise Attack"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RogueSurpriseAttackDamage|0"
+      },
+      {
+        "key": "DESC",
+        "value": "During the surprise round, opponents are always considered flat-footed to you, even if they have acted. You add %1 to your sneak attack damage rolls made during the surprise round.|RogueSurpriseAttackDamage"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RogueSurpriseAttackDamage|RogueTalentLVL/2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.22"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst",
+    "sha256": "2becbb0524bd4c367cc1273434c20bcd8e42e3e08abd372f99b005e69e8c4725",
+    "line": 656,
+    "record_key": "Unchained Rogue Talent ~ Surprise Attack"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

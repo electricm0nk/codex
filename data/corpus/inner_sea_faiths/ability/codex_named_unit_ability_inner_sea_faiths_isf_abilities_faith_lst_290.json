@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Codex-Named Unit (ability_inner_sea_faiths_isf_abilities_faith_lst_290)",
+    "name": "Codex-Named Unit (ability_inner_sea_faiths_isf_abilities_faith_lst_290)",
+    "description": "Collect two unblemished white rose blossoms, open to their fullest but without any wilted petals. Stand beside a river and cut the blossoms from the stems, then set them on the water to float downstream. Meditate upon the beautiful perfection of love and the imperfection of a life that would deny it to star-crossed lovers. You gain a +2 profane or sacred bonus on Charisma-based skill checks. The type of bonus depends on your alignment-if you're neither good nor evil, you must choose either sacred or profane the first time you perform your obedience, and this choice can be changed.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "NAMEISPI",
+        "value": "YES"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "DESC",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.77"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_faiths/isf_abilities_faith.lst",
+    "sha256": "e3a3596c61200c9e94e7975a4b1c250cdfb843673360c5ae3f11c00895c44a04",
+    "line": 290,
+    "record_key": "Codex-Named Unit (ability_inner_sea_faiths_isf_abilities_faith_lst_290)"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "name,raw_tokens",
+  "pi_marker": "redacted",
+  "codex_generated_name": true,
+  "rename": {
+    "reason": "name_pi_blocked",
+    "coordinate": "inner_sea_faiths:isf_abilities_faith.lst:290"
+  }
+}

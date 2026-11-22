@@ -1,0 +1,95 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T22:30:42Z",
+  "data": {
+    "key": "Gillman ~ Deep Gillman",
+    "name": "Deep Gillman",
+    "race_key": "Gillman",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Gillman Racial Trait",
+      "SpecialQuality",
+      "Special Quality"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [
+      "Gillman_ReplaceAmphibious",
+      "Gillman_ReplaceEnchantmentResistance"
+    ],
+    "description": "Some gillmen live in the deeper ocean and almost never visit the land above the sea. Such gillmen gain darkvision to a range of 60 feet and resist cold 5, in order to survive the lightless depths. This racial trait replaces amphibious and enchantment resistance.",
+    "source_page": "p.215",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Gillman ~ Deep Gillman"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Gillman Racial Trait.SpecialQuality.Special Quality"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Gillman ~ Deep Gillman],[!PREFACT:1,ABILITIES,Gillman_ReplaceAmphibious=True,Gillman_ReplaceEnchantmentResistance=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Some gillmen live in the deeper ocean and almost never visit the land above the sea. Such gillmen gain darkvision to a range of 60 feet and resist cold 5, in order to survive the lightless depths."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces amphibious and enchantment resistance.|!PREABILITY:1,CATEGORY=Special Ability,Gillmen ~ Deep Gillman"
+      },
+      {
+        "key": "VISION",
+        "value": "Darkvision (60)"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.215"
+      },
+      {
+        "key": "FACT",
+        "value": "Gillman_ReplaceAmphibious|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Gillman_ReplaceEnchantmentResistance|True"
+      }
+    ],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "VAR",
+          "ColdResistanceBonus",
+          "5",
+          "TYPE=Resistance"
+        ]
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
+    "sha256": "9f4d653eed18681cf969c75453f2d2dc00707f382e3ed7f9d767a75d1e5776bf",
+    "line": 710,
+    "record_key": "Gillman ~ Deep Gillman"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

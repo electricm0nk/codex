@@ -1,0 +1,113 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-24T03:51:47Z",
+  "data": {
+    "key": "Brawler ~ Brawler's Strike",
+    "name": "Brawler's Strike",
+    "class": "Brawler",
+    "description": "A brawler's unarmed strikes are treated as magic weapons for the purpose of overcoming damage reduction.|PREVAREQ:BrawlersStrikeProgression,1",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Brawler ~ Brawler's Strike"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Brawler Class Feature.SpecialAttack.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BrawlersStrikeProgression|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BrawlerStrikeLawful|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BrawlerStrikeChaotic|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BrawlerStrikeEvil|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BrawlerStrikeGood|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A brawler's unarmed strikes are treated as magic weapons for the purpose of overcoming damage reduction.|PREVAREQ:BrawlersStrikeProgression,1"
+      },
+      {
+        "key": "DESC",
+        "value": "A brawler's unarmed strikes are treated as magic, cold iron and silver weapons for the purpose of overcoming damage reduction.|PREVAREQ:BrawlersStrikeProgression,2"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Brawler's Strike Alignment Selection|BrawlersStrikeProgression/3"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BrawlersStrikeProgression|(BrawlerLVL>=5)+(BrawlerLVL>=9)+(BrawlerLVL>=12)+(BrawlerLVL>=17)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.23"
+      },
+      {
+        "key": "DESC",
+        "value": "A brawler's unarmed strikes are treated as magic, cold iron, silver and chaotic weapons for the purpose of overcoming damage reduction.|PREVAREQ:BrawlersStrikeProgression,3,BrawlerStrikeChaotic,1"
+      },
+      {
+        "key": "DESC",
+        "value": "A brawler's unarmed strikes are treated as magic, cold iron, silver, chaotic and adamantine weapons for the purpose of overcoming damage reduction.|PREVAREQ:BrawlersStrikeProgression,4,BrawlerStrikeChaotic,1"
+      },
+      {
+        "key": "DESC",
+        "value": "A brawler's unarmed strikes are treated as magic, cold iron, silver and evil weapons for the purpose of overcoming damage reduction.|PREVAREQ:BrawlersStrikeProgression,3,BrawlerStrikeEvil,1"
+      },
+      {
+        "key": "DESC",
+        "value": "A brawler's unarmed strikes are treated as magic, cold iron, silver, evil and adamantine weapons for the purpose of overcoming damage reduction.|PREVAREQ:BrawlersStrikeProgression,4,BrawlerStrikeEvil,1"
+      },
+      {
+        "key": "DESC",
+        "value": "A brawler's unarmed strikes are treated as magic, cold iron, silver and good weapons for the purpose of overcoming damage reduction.|PREVAREQ:BrawlersStrikeProgression,3,BrawlerStrikeGood,1"
+      },
+      {
+        "key": "DESC",
+        "value": "A brawler's unarmed strikes are treated as magic, cold iron, silver, good and adamantine weapons for the purpose of overcoming damage reduction.|PREVAREQ:BrawlersStrikeProgression,4,BrawlerStrikeGood,1"
+      },
+      {
+        "key": "DESC",
+        "value": "A brawler's unarmed strikes are treated as magic, cold iron, silver and lawful weapons for the purpose of overcoming damage reduction.|PREVAREQ:BrawlersStrikeProgression,3,BrawlerStrikeLawful,1"
+      },
+      {
+        "key": "DESC",
+        "value": "A brawler's unarmed strikes are treated as magic, cold iron, silver, lawful and adamantine weapons for the purpose of overcoming damage reduction.|PREVAREQ:BrawlersStrikeProgression,4,BrawlerStrikeLawful,1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1051,
+    "record_key": "Brawler ~ Brawler's Strike"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

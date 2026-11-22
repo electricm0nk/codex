@@ -1,0 +1,10 @@
+FAIL real inventory did not exit 0
+Traceback (most recent call last):
+  File "<stdin>", line 2, in <module>
+FileNotFoundError: [Errno 2] No such file or directory: 'docs/work-inventory.starfinder-1e.json'
+PASS planted drop_unit exits 2: python3: can't open file '/home/ubuntu/workspace/worktrees/codex-sd37-e0-3/docs/release/SD-37-starfinder-1e/artifacts/epic_0/sf_work_inventory_check.py': [Errno 2] No such file or directory
+PASS planted bump_total exits 2: python3: can't open file '/home/ubuntu/workspace/worktrees/codex-sd37-e0-3/docs/release/SD-37-starfinder-1e/artifacts/epic_0/sf_work_inventory_check.py': [Errno 2] No such file or directory
+PASS planted bump_bucket exits 2: python3: can't open file '/home/ubuntu/workspace/worktrees/codex-sd37-e0-3/docs/release/SD-37-starfinder-1e/artifacts/epic_0/sf_work_inventory_check.py': [Errno 2] No such file or directory
+PASS planted move_unit exits 2: python3: can't open file '/home/ubuntu/workspace/worktrees/codex-sd37-e0-3/docs/release/SD-37-starfinder-1e/artifacts/epic_0/sf_work_inventory_check.py': [Errno 2] No such file or directory
+PASS planted dup_unit exits 2: python3: can't open file '/home/ubuntu/workspace/worktrees/codex-sd37-e0-3/docs/release/SD-37-starfinder-1e/artifacts/epic_0/sf_work_inventory_check.py': [Errno 2] No such file or directory
+PASS planted excluded_rows exits 2: python3: can't open file '/home/ubuntu/workspace/worktrees/codex-sd37-e0-3/docs/release/SD-37-starfinder-1e/artifacts/epic_0/sf_work_inventory_check.py': [Errno 2] No such file or directory

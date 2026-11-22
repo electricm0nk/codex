@@ -1,0 +1,62 @@
+{
+  "codex_generated_name": false,
+  "completeness": "full",
+  "data": {
+    "description": "You gain a +%1 bonus on Bluff and Diplomacy checks. Once per day when you succeed at a Bluff or Diplomacy check against a creature, you can attempt to influence it as if using suggestion with a caster level equal to your character level and a duration of %2 minutes.|HellboundSerpentsTongueBonus|TL",
+    "key": "Hellbound Corruption ~ Serpent's Tongue Gift",
+    "name": "Serpent's Tongue Gift",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Hellbound Corruption ~ Serpent's Tongue Gift"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.HellboundSerpentsTongueGift"
+      },
+      {
+        "key": "DEFINE",
+        "value": "HellboundSerpentsTongueBonus|0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.23"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a +%1 bonus on Bluff and Diplomacy checks. Once per day when you succeed at a Bluff or Diplomacy check against a creature, you can attempt to influence it as if using suggestion with a caster level equal to your character level and a duration of %2 minutes.|HellboundSerpentsTongueBonus|TL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HellboundSerpentsTongueBonus|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HellboundSerpentsTongueBonus|2|PREVARGTEQ:HellboundManifestationLevel,6"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 355,
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
+    "record_key": "Hellbound Corruption ~ Serpent's Tongue Gift",
+    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "computed:pre_guard",
+    "derived:prose_formula_segment"
+  ]
+}

@@ -1,0 +1,77 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "ABP_Armor",
+    "name": "ABP_Armor",
+    "class": null,
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ABP_ArmorBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ABP_ArmorBonusMax|0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Automatic Bonus Progression|AUTOMATIC|ABP Armor Attunement"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Attuned Armor|Attuned Shield"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ABP_ArmorBonus|1|PREVARGTEQ:ABP_ArmorLVL,4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ABP_ArmorBonus|1|PREVARGTEQ:ABP_ArmorLVL,9"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ABP_ArmorBonus|1|PREVARGTEQ:ABP_ArmorLVL,14"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ABP_ArmorBonus|1|PREVARGTEQ:ABP_ArmorLVL,15"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ABP_ArmorBonus|1|PREVARGTEQ:ABP_ArmorLVL,17"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ABP_ArmorBonusMax|min(ABP_ArmorBonus,5)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.156"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst",
+    "sha256": "2becbb0524bd4c367cc1273434c20bcd8e42e3e08abd372f99b005e69e8c4725",
+    "line": 44,
+    "record_key": "ABP_Armor"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

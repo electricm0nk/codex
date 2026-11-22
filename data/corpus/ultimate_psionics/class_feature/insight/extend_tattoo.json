@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Insight ~ Extend Tattoo",
+    "name": "Extend Tattoo",
+    "class": "Insight",
+    "description": "You can, %1/day, cause any tattoo you tap that does not have an instantaneous duration to function at twice its normal duration.|ExtendTattooTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Insight ~ Extend Tattoo"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary.CrypticInsight"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ExtendTattooTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can, %1/day, cause any tattoo you tap that does not have an instantaneous duration to function at twice its normal duration.|ExtendTattooTimes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ExtendTattooTimes|CrypticInsightStat"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.37"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|ExtendTattooTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 203,
+    "record_key": "Insight ~ Extend Tattoo"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

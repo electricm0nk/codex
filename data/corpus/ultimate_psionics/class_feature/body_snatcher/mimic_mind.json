@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Body Snatcher ~ Mimic Mind",
+    "name": "Mimic Mind",
+    "class": "Body Snatcher",
+    "description": "You may use conceal thoughts to create a false set of surface thoughts appropriate for the body you currently occupy.  If you succeed on a saving throw against an attempt to read your mind while under conceal thoughts, the intruder reads only the decoy thoughts.  While you do not need to specify the nature of these thoughts (although you may choose to do so), they will reflect what the prying party might expect to find were the body's normal mind in residence.  In addition, while under conceal thoughts, you may emulate the alignment of the subject for purposes of fooling abilities that detect alignment.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Body Snatcher ~ Mimic Mind"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "BodySnatcherClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "You may use conceal thoughts to create a false set of surface thoughts appropriate for the body you currently occupy.  If you succeed on a saving throw against an attempt to read your mind while under conceal thoughts, the intruder reads only the decoy thoughts.  While you do not need to specify the nature of these thoughts (although you may choose to do so), they will reflect what the prying party might expect to find were the body's normal mind in residence.  In addition, while under conceal thoughts, you may emulate the alignment of the subject for purposes of fooling abilities that detect alignment."
+      },
+      {
+        "key": "DESC",
+        "value": " This extends to include false memories, foiling effects such as mind probe.|PRECLASS:1,Body Snatcher=5"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.352"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1155,
+    "record_key": "Body Snatcher ~ Mimic Mind"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

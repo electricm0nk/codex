@@ -1,0 +1,78 @@
+## DEF-1 (decisions.md §17 fenced command, verbatim)
+DEF-1 exit=0
+oracle HEAD 7f818006e371188e5717fd18d74d18a420747fc6
+-- DEF-1 matcher sanity (same awk, '#' allowed: the commented-out add-on lines it must skip):
+paizo/core/_starfinder_core_rulebook.pcc: 85: #ABILITY:starship/scr_abilities_starship.lst
+paizo/core/_starfinder_core_rulebook.pcc: 86: #EQUIPMENT:starship/scr_equip_starship.lst
+paizo/core/_starfinder_core_rulebook.pcc: 87: #RACE:starship/scr_races_starship.lst
+paizo/core/_starfinder_core_rulebook.pcc: 88: #KIT:scr_kits_starship.lst
+
+## FSR-C1 open SD-34 fable-review P1 rows
+apps/desktop/src-tauri/src/character_hub.rs exists=y tranche_numstat=+40/-16
+src/saved_character/local_store.rs exists=y tranche_numstat=
+src/bin/v06_work_inventory.rs exists=n tranche_numstat=
+src/rules_core/pilot_compute/mod.rs exists=y tranche_numstat=+44/-22
+scripts/transcribe_companion_tables.py exists=y tranche_numstat=+290/-215
+apps/desktop/src-tauri/src/reach_gate.rs exists=n tranche_numstat=
+ desktop-P1-01 (path traversal) | **FIXED** (2 bypasses; see fix-cycle addendum) 
+ desktop-P1-02 (non-atomic saves) | **FIXED** (3 stores) 
+ PC8-1 (literal parens in id) | **FIXED** 
+ PC8-2 (missing size modifier) | **FIXED** 
+ PC4-1 (Warpriest Blessing contradiction) | **FIXED** (fix cycle 2) 
+ R12-01 (transcribe_companion_tables.py atomic write) | **FIXED** 
+0aa1f77223 feat(sd36,epic-b): retire v06_work_inventory, support_state_matrix + bridge
+b8ff0e895b feat(sd36,epic-b): retire reach_gate.rs (separate, revertable commit)
+
+## FSR-C2 prestige_mix_computed (E7.2 verify log on 2443fb2ac4)
+    PASS  class-census  (ids=137 computed=63 prestige_alone_blocked=74 mix_panel_computed=185 prestige_mix_computed=68; OK class-coverage table matches the census (ids=137 computed=63 prestige_swept=74 mix_panel_computed=185 of 185))
+
+## FSR-C3 FS-27 pin ran in E7.2 desktop; FS-28 inputs unchanged since 20bf84a3b2
+test character_hub::tests::level_up_options_name_the_engines_mix_refusal_before_accept ... ok
+data/sheet_rules diff lines since 20bf84a3b2: 0
+fact_words/weapon_words body lines changed since 20bf84a3b2: @@ -344,0 +345,4 @@ fn target_words(package: &SheetRulePackage, target: &BonusTarget) -> String {
+@@ -786,0 +791,10 @@ mod tests {
+
+## FSR-C4 SF (kind, slug) collisions within Starfinder
+A inventory: units 8582 distinct (kind,slug) 8551 held in 2+ books 31
+B sheet_rules: (kind,slug) 8839 held in 2+ books 31 differing value 1 [('equipment', 'needler_rifle')]
+A == B: True
+   ('ability', 'armor_prof_shields') ['paizo/character_operations_manual', 'paizo/near_space']
+   ('equipment', 'cred_stick') ['paizo/alien_archive', 'paizo/core']
+   ('equipment', 'credit') ['paizo/alien_archive', 'paizo/core']
+   ('equipment', 'needler_rifle') ['paizo/character_operations_manual', 'paizo/core']
+   ('equipment', 'polymorphic_serum_mk_1') ['paizo/character_operations_manual', 'paizo/near_space']
+   ('equipment', 'polymorphic_serum_mk_2') ['paizo/character_operations_manual', 'paizo/near_space']
+   ('equipment', 'polymorphic_serum_mk_3') ['paizo/character_operations_manual', 'paizo/near_space']
+   ('equipment', 'polymorphic_serum_mk_4') ['paizo/character_operations_manual', 'paizo/near_space']
+   ('equipment', 'polymorphic_serum_mk_5') ['paizo/character_operations_manual', 'paizo/near_space']
+   ('equipment', 'polymorphic_serum_mk_6') ['paizo/character_operations_manual', 'paizo/near_space']
+   ('equipment', 'rad_out_serum') ['paizo/character_operations_manual', 'paizo/near_space']
+   ('equipment', 'regeneration_serum') ['paizo/character_operations_manual', 'paizo/near_space']
+   ('equipment_modifier', 'ammunition_cold_iron') ['paizo/armory', 'paizo/core']
+   ('equipment_modifier', 'ammunition_silver') ['paizo/armory', 'paizo/core']
+   ('equipment_modifier', 'underwater') ['paizo/alien_archive', 'paizo/pact_worlds']
+   ('equipment_modifier', 'weapon_cold_iron') ['paizo/armory', 'paizo/core']
+   ('equipment_modifier', 'weapon_nanite') ['paizo/alien_archive', 'paizo/pact_worlds']
+   ('equipment_modifier', 'weapon_silver') ['paizo/armory', 'paizo/core']
+   ('feat', 'close_combat') ['paizo/character_operations_manual', 'paizo/pact_worlds']
+   ('feat', 'poison_rejection') ['paizo/character_operations_manual', 'paizo/near_space']
+   ('proficiency', 'heavy_armor') ['paizo/armory', 'paizo/core']
+   ('proficiency', 'light_armor') ['paizo/armory', 'paizo/core']
+   ('proficiency', 'powered_armor') ['paizo/armory', 'paizo/core']
+   ('proficiency', 'spear_gravity') ['paizo/alien_archive', 'paizo/core']
+   ('spell', 'summon_creature') ['paizo/alien_archive', 'paizo/character_operations_manual']
+   ('spell', 'summon_creature_level_1') ['paizo/alien_archive', 'paizo/character_operations_manual']
+   ('spell', 'summon_creature_level_2') ['paizo/alien_archive', 'paizo/character_operations_manual']
+   ('spell', 'summon_creature_level_3') ['paizo/alien_archive', 'paizo/character_operations_manual']
+   ('spell', 'summon_creature_level_4') ['paizo/alien_archive', 'paizo/character_operations_manual']
+   ('spell', 'summon_creature_level_5') ['paizo/alien_archive', 'paizo/character_operations_manual']
+   ('spell', 'summon_creature_level_6') ['paizo/alien_archive', 'paizo/character_operations_manual']
+
+## FSR-C5 E7.1 oracle-runner change shape since 20bf84a3b2
+A 22
+
+## FSR-C6 SF ACP signature
+pub fn armor_check_penalty(package: &SheetRulePackage, build: &SfBuild) -> Result<i64, SfChassisRefusal> {
+
+## FSR-C7 residue gate diff since 20bf84a3b2 (lines)
+0

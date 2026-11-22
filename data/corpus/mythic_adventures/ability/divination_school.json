@@ -1,0 +1,68 @@
+{
+  "codex_generated_name": false,
+  "completeness": "full",
+  "data": {
+    "description": "Diviners are masters of remote viewing, prophecies, and using magic to explore the world.",
+    "key": "Flexible School ~ Divination",
+    "name": "Divination School",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Flexible School ~ Divination"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.WizardClassFeatures.SpecialQuality.ClassSpecialization.ArcaneSchool.Flexible School"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Divination School"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Divination Opposition School"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ability_FlexibleSchool_DivinationLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Diviners are masters of remote viewing, prophecies, and using magic to explore the world."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Flexible School Power ~ Divination ~ Forwarned"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Ability_FlexibleSchool_DivinationLVL|MythicLevel"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.80"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 447,
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "record_key": "Flexible School ~ Divination",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

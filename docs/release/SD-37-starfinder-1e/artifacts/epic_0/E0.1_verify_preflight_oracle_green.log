@@ -1,0 +1,12 @@
+codex verify — mode: --only, jobs: 2
+repo:  /home/ubuntu/workspace/worktrees/codex-sd37-e0-1
+logs:  /tmp/codex-verify-GTTSyh
+---------------------------------------------------------------
+==> preflight-oracle — scripts/fetch-pcgen-oracle.sh --check
+    PASS  preflight-oracle  (oracle at pin 7f818006e371188e5717fd18d74d18a420747fc6)
+---------------------------------------------------------------
+SUMMARY
+  passed:  1  preflight-oracle
+
+RESULT: PASS
+logs in /tmp/codex-verify-GTTSyh

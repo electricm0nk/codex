@@ -1,0 +1,50 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "category": "General",
+    "cost_gp": 2.0,
+    "description": null,
+    "key": "Shadow's Touch",
+    "name": "Shadow's Touch",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "EQMOD",
+        "value": "Material ~ Steel"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "YES"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Ability ~ Keen ~ Weapon.Special Ability ~ +2 ~ Weapon"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.145"
+      },
+      {
+        "key": "SPROP",
+        "value": "It ignores bonuses to AC provided by deflection and force effects, and deals 2 points of Strength damage on a confirmed critical hit. By expending one use of mythic power while attacking, the wielder can strike a force effect and disintegrate it as a touch attack. This effect also automatically dispels force effects that can be dispelled whether or not they're subject to disintegrate. As a standard action, the wielder can expend a use of mythic power while slashing at the air to open up a rift to the Shadow Plane. This functions as shadow walk, except that a maximum number of creatures equal to double the wielder's tier can pass through before the rift closes."
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-17T12:09:37Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 22,
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_equip.lst",
+    "record_key": "Shadow's Touch",
+    "sha256": "82192828759e9b9ecb8ba8eeb4aecbec7f7edc2f5af4b2d5cf909561ab91393b"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "codex_generated_name": false,
+  "completeness": "chassis_only",
+  "data": {
+    "key": "Life (Spirit)",
+    "name": "Life (Spirit)",
+    "raw_tokens": [
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Life (Spirit)=1|detect undead|Life (Spirit)=2|restoration (lesser)|Life (Spirit)=3|neutralize poison|Life (Spirit)=4|restoration|Life (Spirit)=5|breath of life|Life (Spirit)=6|heal|Life (Spirit)=7|restoration (greater)|Life (Spirit)=8|heal (mass)|Life (Spirit)=9|true resurrection"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T15:18:04Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 9,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_domains.lst",
+    "record_key": "Life (Spirit)",
+    "sha256": "80e1bd9e91ad02c2653b6faf0a94bc92b528c0e89b6bfeb60c379ec40d4e64fd"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

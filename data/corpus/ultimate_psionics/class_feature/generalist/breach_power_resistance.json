@@ -1,0 +1,49 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Generalist ~ Breach Power Resistance",
+    "name": "Breach Power Resistance",
+    "class": "Generalist",
+    "description": "Expend psionic focus to gain +%1 to check to overcome power resistance.|INT+(GeneralistDisciplineLVL-8)/2",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Generalist ~ Breach Power Resistance"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "PsionClassFeatures.SpecialQuality.Extraordinary.PsionicDisciplineTalent"
+      },
+      {
+        "key": "DESC",
+        "value": "Expend psionic focus to gain +%1 to check to overcome power resistance.|INT+(GeneralistDisciplineLVL-8)/2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.53"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 458,
+    "record_key": "Generalist ~ Breach Power Resistance"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

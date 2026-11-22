@@ -1,0 +1,53 @@
+rows 156
+ROW core_rulebook:class:adept L1  | L10 
+ROW advanced_players_guide:class:alchemist L1 "A:ArmorProfLight" | L10 "A:ArmorProfLight"
+ROW advanced_players_guide:class:antipaladin L1 "A:ArmorProfHeavy", "A:ArmorProfLight", "A:ArmorProfMedium", "S:Buckler", "S:Hea | L10 "A:ArmorProfHeavy", "A:ArmorProfLight", "A:ArmorProfMedium", "S:Buckler", "S:Hea
+ROW core_rulebook:class:arcane_archer L1 "A:ArmorProfLight", "A:ArmorProfMedium", "S:Buckler", "S:Heavy", "S:Light" | L10 "A:ArmorProfLight", "A:ArmorProfMedium", "S:Buckler", "S:Heavy", "S:Light"
+ROW core_rulebook:class:arcane_trickster L1  | L10 
+ROW advanced_class_guide:class:arcanist L1  | L10 
+ROW core_rulebook:class:aristocrat L1 "A:ArmorProfHeavy", "A:ArmorProfLight", "A:ArmorProfMedium", "S:Buckler", "S:Hea | L10 "A:ArmorProfHeavy", "A:ArmorProfLight", "A:ArmorProfMedium", "S:Buckler", "S:Hea
+ROW core_rulebook:class:assassin L1 "A:ArmorProfLight" | L10 "A:ArmorProfLight"
+ROW core_rulebook:class:barbarian L1 "A:ArmorProfLight", "A:ArmorProfMedium", "S:Buckler", "S:Heavy", "S:Light", "S:S | L10 "A:ArmorProfLight", "A:ArmorProfMedium", "S:Buckler", "S:Heavy", "S:Light", "S:S
+ROW core_rulebook:class:bard L1 "A:ArmorProfLight", "S:Buckler", "S:Heavy", "S:Light", "S:Shield (Heavy)", "S:Sh | L10 "A:ArmorProfLight", "S:Buckler", "S:Heavy", "S:Light", "S:Shield (Heavy)", "S:Sh
+ROW advanced_players_guide:class:battle_herald L1  | L10 
+ROW advanced_class_guide:class:bloodrager L1 "A:ArmorProfLight", "A:ArmorProfMedium", "S:Buckler", "S:Heavy", "S:Light", "S:S | L10 "A:ArmorProfLight", "A:ArmorProfMedium", "S:Buckler", "S:Heavy", "S:Light", "S:S
+ROW advanced_class_guide:class:brawler L1 "A:ArmorProfLight", "S:Buckler", "S:Heavy", "S:Light", "S:Shield (Heavy)", "S:Sh | L10 "A:ArmorProfLight", "S:Buckler", "S:Heavy", "S:Light", "S:Shield (Heavy)", "S:Sh
+ROW advanced_players_guide:class:cavalier L1 "A:ArmorProfHeavy", "A:ArmorProfLight", "A:ArmorProfMedium", "S:Buckler", "S:Hea | L10 "A:ArmorProfHeavy", "A:ArmorProfLight", "A:ArmorProfMedium", "S:Buckler", "S:Hea
+ROW core_rulebook:class:cleric L1 "A:ArmorProfLight", "A:ArmorProfMedium", "S:Buckler", "S:Heavy", "S:Light", "S:S | L10 "A:ArmorProfLight", "A:ArmorProfMedium", "S:Buckler", "S:Heavy", "S:Light", "S:S
+ROW core_rulebook:class:commoner L1  | L10 
+ROW core_rulebook:class:dragon_disciple L1  | L10 
+ROW core_rulebook:class:druid L1 "A:ArmorProfLight", "A:ArmorProfMedium", "S:Buckler", "S:Heavy", "S:Light", "S:S | L10 "A:ArmorProfLight", "A:ArmorProfMedium", "S:Buckler", "S:Heavy", "S:Light", "S:S
+ROW core_rulebook:class:duelist L1  | L10 
+ROW advanced_players_guide:class:eidolon L1  | L10 
+ROW core_rulebook:class:eldritch_knight L1  | L10 
+ROW advanced_players_guide:class:ex_antipaladin L1 "A:ArmorProfHeavy", "A:ArmorProfLight", "A:ArmorProfMedium", "S:Buckler", "S:Hea | L10 "A:ArmorProfHeavy", "A:ArmorProfLight", "A:ArmorProfMedium", "S:Buckler", "S:Hea
+ROW core_rulebook:class:ex_barbarian L1 "A:ArmorProfLight", "A:ArmorProfMedium", "S:Buckler", "S:Heavy", "S:Light", "S:S | L10 "A:ArmorProfLight", "A:ArmorProfMedium", "S:Buckler", "S:Heavy", "S:Light", "S:S
+ROW advanced_players_guide:class:ex_inquisitor L1 "A:ArmorProfLight", "A:ArmorProfMedium", "S:Buckler", "S:Heavy", "S:Light", "S:S | L10 "A:ArmorProfLight", "A:ArmorProfMedium", "S:Buckler", "S:Heavy", "S:Light", "S:S
+ROW core_rulebook:class:ex_paladin L1 "A:ArmorProfHeavy", "A:ArmorProfLight", "A:ArmorProfMedium", "S:Buckler", "S:Hea | L10 "A:ArmorProfHeavy", "A:ArmorProfLight", "A:ArmorProfMedium", "S:Buckler", "S:Hea
+ROW advanced_class_guide:class:ex_warpriest L1 "A:ArmorProfHeavy", "A:ArmorProfLight", "A:ArmorProfMedium", "S:Buckler", "S:Hea | L10 "A:ArmorProfHeavy", "A:ArmorProfLight", "A:ArmorProfMedium", "S:Buckler", "S:Hea
+ROW core_rulebook:class:expert L1 "A:ArmorProfLight" | L10 "A:ArmorProfLight"
+ROW core_rulebook:class:fighter L1 "A:ArmorProfHeavy", "A:ArmorProfLight", "A:ArmorProfMedium", "S:Buckler", "S:Hea | L10 "A:ArmorProfHeavy", "A:ArmorProfLight", "A:ArmorProfMedium", "S:Buckler", "S:Hea
+ROW advanced_players_guide:class:holy_vindicator L1 "A:ArmorProfHeavy", "A:ArmorProfLight", "A:ArmorProfMedium", "S:Buckler", "S:Hea | L10 "A:ArmorProfHeavy", "A:ArmorProfLight", "A:ArmorProfMedium", "S:Buckler", "S:Hea
+ROW advanced_players_guide:class:horizon_walker L1  | L10 
+ROW advanced_class_guide:class:hunter L1 "A:ArmorProfLight", "A:ArmorProfMedium", "S:Buckler", "S:Heavy", "S:Light", "S:S | L10 "A:ArmorProfLight", "A:ArmorProfMedium", "S:Buckler", "S:Heavy", "S:Light", "S:S
+ROW advanced_players_guide:class:inquisitor L1 "A:ArmorProfLight", "A:ArmorProfMedium", "S:Buckler", "S:Heavy", "S:Light", "S:S | L10 "A:ArmorProfLight", "A:ArmorProfMedium", "S:Buckler", "S:Heavy", "S:Light", "S:S
+ROW advanced_class_guide:class:investigator L1 "A:ArmorProfLight" | L10 "A:ArmorProfLight"
+ROW core_rulebook:class:loremaster L1  | L10 
+ROW advanced_players_guide:class:master_chymist L1  | L10 
+ROW advanced_players_guide:class:master_spy L1  | L10 
+ROW core_rulebook:class:monk L1  | L10 
+ROW core_rulebook:class:mystic_theurge L1  | L10 
+ROW advanced_players_guide:class:nature_warden L1  | L10 
+ROW advanced_players_guide:class:oracle L1 "A:ArmorProfLight", "A:ArmorProfMedium", "S:Buckler", "S:Heavy", "S:Light", "S:S | L10 "A:ArmorProfLight", "A:ArmorProfMedium", "S:Buckler", "S:Heavy", "S:Light", "S:S
+ROW core_rulebook:class:paladin L1 "A:ArmorProfHeavy", "A:ArmorProfLight", "A:ArmorProfMedium", "S:Buckler", "S:Hea | L10 "A:ArmorProfHeavy", "A:ArmorProfLight", "A:ArmorProfMedium", "S:Buckler", "S:Hea
+ROW core_rulebook:class:pathfinder_chronicler L1  | L10 
+ROW advanced_players_guide:class:rage_prophet L1  | L10 
+ROW core_rulebook:class:ranger L1 "A:ArmorProfLight", "A:ArmorProfMedium", "S:Buckler", "S:Heavy", "S:Light", "S:S | L10 "A:ArmorProfLight", "A:ArmorProfMedium", "S:Buckler", "S:Heavy", "S:Light", "S:S
+ROW core_rulebook:class:rogue L1 "A:ArmorProfLight" | L10 "A:ArmorProfLight"
+ROW core_rulebook:class:shadowdancer L1 "A:ArmorProfLight" | L10 "A:ArmorProfLight"
+ROW advanced_class_guide:class:shaman L1 "A:ArmorProfLight", "A:ArmorProfMedium" | L10 "A:ArmorProfLight", "A:ArmorProfMedium"
+ROW advanced_class_guide:class:skald L1 "A:ArmorProfLight", "A:ArmorProfMedium", "S:Buckler", "S:Heavy", "S:Light", "S:S | L10 "A:ArmorProfLight", "A:ArmorProfMedium", "S:Buckler", "S:Heavy", "S:Light", "S:S
+ROW advanced_class_guide:class:slayer L1 "A:ArmorProfLight", "A:ArmorProfMedium", "S:Buckler", "S:Heavy", "S:Light", "S:S | L10 "A:ArmorProfLight", "A:ArmorProfMedium", "S:Buckler", "S:Heavy", "S:Light", "S:S
+ROW core_rulebook:class:sorcerer L1  | L10 
+ROW advanced_players_guide:class:stalwart_defender L1  | L10 
+prose says armor, walk holds none: 0

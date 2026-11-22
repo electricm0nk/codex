@@ -1,0 +1,102 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Universal Monster Rule ~ Burn",
+    "delivery": "Extraordinary",
+    "description": "A creature with the burn special attack deals fire damage in addition to damage dealt on a successful hit in melee. Those affected by the burn ability must also succeed on a Reflex save or catch fire, taking the listed damage for an additional 1d4 rounds at the start of its turn (DC 10 + 1/2 burning creature's racial HD + burning creature's Con modifier). A burning creature can attempt a new save as a full-round action. Dropping and rolling on the ground grants a +4 bonus on this save. Creatures that hit a burning creature with natural weapons or unarmed attacks take fire damage as though hit by the burning creature and must make a Reflex save to avoid catching on fire (see Pathfinder RPG Core Rulebook, Environmental Rules: Heat Dangers).",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:universal_monster_rule_burn",
+    "name": "Burn",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Burn"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(%1d%2, DC %3)|UMR_Burn_DamageDice|UMR_Burn_DamageDieSize|UMR_Burn_DC"
+      },
+      {
+        "key": "ASPECT",
+        "value": "NaturalAttackBonus|Slam|PREVAREQ:UMR_Burn_ApplySlam,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|UMR_Burn_DC|10+(max(HD,CompanionHD)/2)+CON|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|UMR_Burn_DC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Burn)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|UMR_Burn_DamageDice|1"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "UMR_Burn_ApplySlam|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "UMR_Burn_DC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "UMR_Burn_DamageDice|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "UMR_Burn_DamageDieSize|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "UMR_Burn_SpecificDesc|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A creature with the burn special attack deals fire damage in addition to damage dealt on a successful hit in melee. Those affected by the burn ability must also succeed on a Reflex save or catch fire, taking the listed damage for an additional 1d4 rounds at the start of its turn (DC 10 + 1/2 burning creature's racial HD + burning creature's Con modifier). A burning creature can attempt a new save as a full-round action. Dropping and rolling on the ground grants a +4 bonus on this save. Creatures that hit a burning creature with natural weapons or unarmed attacks take fire damage as though hit by the burning creature and must make a Reflex save to avoid catching on fire (see Pathfinder RPG Core Rulebook, Environmental Rules: Heat Dangers).|PREVAREQ:UMR_Burn_SpecificDesc,0"
+      },
+      {
+        "key": "KEY",
+        "value": "Universal Monster Rule ~ Burn"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.298"
+      },
+      {
+        "key": "TYPE",
+        "value": "Universal Monster Rule.SpecialAttack.Special Attack.Extraordinary"
+      }
+    ],
+    "source_page": "p.298",
+    "traits": [
+      "Universal Monster Rule",
+      "Special Attack"
+    ]
+  },
+  "ingested_at": "2026-08-23T12:58:07Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 2367,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "record_key": "Universal Monster Rule ~ Burn",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus",
+    "derived:prose_expr"
+  ]
+}

@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Mythic Path Ability ~ Borrow Elements",
+    "name": "Borrow Elements",
+    "description": "When you take acid, cold, electricity, fire, or sonic damage, you store some of this energy within yourself and can direct it outward through your attacks. Whenever you take energy damage, you gain an amount of energy of that type equal to 1/2 the damage taken (after any resistances or immunities are applied). Whenever you hit with a melee attack, you may expend 5 points from the pool of one energy type to have the attack deal an additional 1d6 points of energy damage of that type. As a standard action, you can expend one use of mythic power to release all stored energy of one type as a ray with a 60-foot range. The ray deals 1d6 points of energy damage for every 5 points of energy stored. If unused, the stored energy harmlessly dissipates 1 minute after the last time you took energy damage of any type.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Path Ability ~ Borrow Elements"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Path Ability.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Mythic Path ~ Guardian"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "MythicTierLevel,1"
+      },
+      {
+        "key": "DESC",
+        "value": "When you take acid, cold, electricity, fire, or sonic damage, you store some of this energy within yourself and can direct it outward through your attacks. Whenever you take energy damage, you gain an amount of energy of that type equal to 1/2 the damage taken (after any resistances or immunities are applied). Whenever you hit with a melee attack, you may expend 5 points from the pool of one energy type to have the attack deal an additional 1d6 points of energy damage of that type. As a standard action, you can expend one use of mythic power to release all stored energy of one type as a ray with a 60-foot range. The ray deals 1d6 points of energy damage for every 5 points of energy stored. If unused, the stored energy harmlessly dissipates 1 minute after the last time you took energy damage of any type."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.27"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Mythic Power"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
+    "line": 127,
+    "record_key": "Mythic Path Ability ~ Borrow Elements"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

@@ -1,0 +1,16 @@
+[
+  {
+    "id": "sheet-override-tag-slot",
+    "status": "red",
+    "screenshot": "/home/ubuntu/cargo-target/sd41-main-logs/e3.10-red/sheet-override-tag-slot.FAILED.png",
+    "rendered_excerpt": "",
+    "reason": "target not found: 'Eyes (no element named 'Eyes')' at row step 36/47 (click \"Eyes\")",
+    "app_data_root": "/tmp/codex-ui-smoke-sd41-e3_10-jf1m5i/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  }
+]

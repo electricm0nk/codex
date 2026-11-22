@@ -1,0 +1,37 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T10:26:11Z",
+  "data": {
+    "corpus_key": "Skein Steward ~ Gaze",
+    "delivery": "Supernatural",
+    "description": "Dazed 2d6 rounds (or stunned if 5 HD or fewer, or held for 2d6 rounds if undead), 60 feet; Will DC %1 negates. A creature that succeeds at its save is immune to the gaze for 24 hours. This is a mind-affecting effect (or a necromancy effect against undead).",
+    "description_variables": [
+      "GazeDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "inner_sea_gods:monster_ability:skein_steward_gaze",
+    "name": "Gaze",
+    "owners": [
+      "inner_sea_gods:monster:steward_of_the_skein"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/support/isg_abilities_races_b4.lst",
+    "sha256": "f66eccddcddfe51b19ba3723366fc2458ce67888f4c501f8088f6d4101e8bd50",
+    "line": 26,
+    "record_key": "Skein Steward ~ Gaze"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus",
+    "derived:prose_expr"
+  ]
+}

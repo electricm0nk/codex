@@ -1,0 +1,23 @@
+== fresh clone proof
+export PCGEN_CORPUS_ROOT=<scratch>/fresh-oracle/data
+export PCGEN_REPO_DIR=<scratch>/fresh-oracle
+fetch exit 0
+FRESH_ACCEPTANCE_PASS
+check-before-removal exit 0
+SF_CONE_REMOVED
+fetch-pcgen-oracle.sh: <scratch>/fresh-oracle is at the pinned SHA but the Starfinder cone is incomplete -- missing:
+    data/starfinder/paizo/core/_starfinder_core_rulebook.pcc
+    system/gameModes/Starfinder
+    fix with: scripts/fetch-pcgen-oracle.sh --dest <scratch>/fresh-oracle --force
+probe exit after removal: 1
+    FAIL: the PCGen oracle is absent or off-pin. Remediation from the log:
+    FAIL  preflight-oracle  (exit 1 — /tmp/codex-verify-LXmMba/preflight-oracle.log)
+  FAILED:  1  preflight-oracle
+RESULT: FAIL — logs in /tmp/codex-verify-LXmMba
+fetch-pcgen-oracle.sh: <scratch>/fresh-oracle is at the pinned SHA but the Starfinder cone is incomplete -- missing:
+    data/starfinder/paizo/core/_starfinder_core_rulebook.pcc
+    system/gameModes/Starfinder
+    fix with: scripts/fetch-pcgen-oracle.sh --dest <scratch>/fresh-oracle --force
+force repair exit 0
+REPAIRED
+7f818006e371188e5717fd18d74d18a420747fc6

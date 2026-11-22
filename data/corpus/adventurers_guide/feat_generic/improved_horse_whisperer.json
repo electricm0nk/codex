@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:16:16Z",
+  "data": {
+    "key": "Improved Horse Whisperer",
+    "name": "Improved Horse Whisperer",
+    "description": "Your understanding of horses goes so deep that you can communicate with them as if you shared a language.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "FEAT"
+      },
+      {
+        "key": "TYPE",
+        "value": "General"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=FEAT,Horse Whisperer"
+      },
+      {
+        "key": "PRESKILL",
+        "value": "2,Handle Animal=5,Ride=5"
+      },
+      {
+        "key": "DESC",
+        "value": "Your understanding of horses goes so deep that you can communicate with them as if you shared a language."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.15"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "With a successful DC 20 Handle Animal check, you can communicate with a horse as if you were using speak with animals for 1 round. The horse's ability to communicate and take actions is still limited by its intelligence."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_feats.lst",
+    "sha256": "e3c7767bc0491cf56909e0ded972ef6b70ae228bed3266f7f52ace170084756a",
+    "line": 39,
+    "record_key": "Improved Horse Whisperer"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

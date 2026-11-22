@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Sorcerer Domain ~ Luck",
+    "name": "Sorcerer Domain ~ Luck",
+    "class": "Sorcerer",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "CLASS|Sorcerer/Cleric (Arcane)=1|Entropic Shield|Sorcerer/Cleric (Arcane)=2|Aid|Sorcerer/Cleric (Arcane)=3|Protection from Energy|Sorcerer/Cleric (Arcane)=4|Freedom of Movement|Sorcerer/Cleric (Arcane)=5|Break Enchantment|Sorcerer/Cleric (Arcane)=6|Mislead|Sorcerer/Cleric (Arcane)=7|Spell Turning|Sorcerer/Cleric (Arcane)=8|Moment of Prescience|Sorcerer/Cleric (Arcane)=9|Miracle|PREVAREQ:LuckDomainAllowed,1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 3136,
+    "record_key": "Sorcerer Domain ~ Luck"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

@@ -1,0 +1,69 @@
+{
+  "codex_generated_name": false,
+  "completeness": "full",
+  "data": {
+    "description": "You are immune to the chosen specific kind of poisons.",
+    "key": "Poison Immunity ~ Guild",
+    "name": "Poison Immunity",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Poison Immunity ~ Guild"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.PoisonersGuildReward"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Poisoners Guild ~ Guild"
+      },
+      {
+        "key": "DESC",
+        "value": "You are immune to the chosen specific kind of poisons."
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "USERINPUT|TITLE=Pick a type of poison."
+      },
+      {
+        "key": "SELECT",
+        "value": "1"
+      },
+      {
+        "key": "COST",
+        "value": "5"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.23"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 117,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_abilities_other.lst",
+    "record_key": "Poison Immunity ~ Guild",
+    "sha256": "6ea35a2432c9b609f27926d9492f1d85c599eb18e81adf36154ae594b89072db"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice",
+    "computed:pre_guard"
+  ]
+}

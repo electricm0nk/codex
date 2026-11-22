@@ -1,0 +1,29 @@
+# Synthetic fixture for SD-17 Slice B-5 equipment parser tests.
+#
+# The on-disk shape exercised here is the directive-prefix form: rows
+# whose first non-whitespace token is `EQUIP:<name>`. The parser must
+# classify these as `EquipmentRecordKind::Equip`.
+#
+# Line numbers are deterministic; tests assert on these exact lines.
+# Field 1: SOURCELONG
+# Field 2: SOURCESHORT
+SOURCELONG:Synthetic Equipment Test Fixture	SOURCESHORT:SETF	SOURCEWEB:file:///tests/fixtures/lst/equipment_minimal.lst	SOURCEDATE:2026-07-12
+
+###Block: Directive-prefix equipment rows
+EQUIP:Padded Armor	KEY:Padded Armor (Base)	TYPE:Armor.Light.Suit	COST:5	WT:10
+EQUIP:Leather Armor	KEY:Leather Armor (Base)	TYPE:Armor.Light.Suit	COST:10	WT:15
+
+###Block: Corpus-typical equipment rows (path disambiguates to Equip)
+Arrow	KEY:Arrow (Base)	TYPE:Ammunition.Resizable.Arrow	COST:0.05	WT:0.15	SOURCEPAGE:p.145	VISIBLE:NO
+Bolt	KEY:Bolt (Base)	TYPE:Ammunition.Resizable.Bolt	COST:0.1	WT:0.1	SOURCEPAGE:p.145	VISIBLE:NO
+Padded Armor	KEY:Padded Armor (Base)	TYPE:Armor.Light.ArmorProfLight.Suit.Nonmetal	COST:5	WT:10	ACCHECK:0	MAXDEX:8	SOURCEPAGE:p.151	BONUS:COMBAT|AC|1|TYPE=Armor|PREVAREQ:DisableArmorBonus,0	BONUS:VAR|ArmorCheckPenalty|0|TYPE=BaseArmor	VISIBLE:NO
+
+###Block: Empty label diagnostic marker
+###Block:
+Cloth	KEY:Material ~ Empty-Block-Test	TYPE:Mundane
+
+# A malformed EQUIP row to exercise the diagnostic path.
+EQUIP:	KEY:MalformedTest
+
+# An orphan continuation row to exercise the OrphanContinuationRow diagnostic.
+BONUS:COMBAT|AC|99|TYPE=OrphanTest

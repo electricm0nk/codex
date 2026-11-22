@@ -1,0 +1,191 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Universal Monster Rule ~ Breath Weapon",
+    "delivery": "Supernatural",
+    "description": "Some creatures can exhale a cone, line, or cloud of energy or other magical effects. A breath weapon attack usually deals damage and is often based on some type of energy. Breath weapons allow a Reflex save for half damage (DC 10 + 1/2 breathing creature's racial HD + breathing creature's Con modifier; the exact DC is given in the creature's descriptive text). A creature is immune to its own breath weapon unless otherwise noted. Some breath weapons allow a Fortitude save or a Will save instead of a Reflex save. Each breath weapon also includes notes on how often it can be used, even if this number is limited in times per day.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:universal_monster_rule_breath_weapon",
+    "name": "Breath Weapon",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Breath Weapon"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(%1-ft. cone, %2d%3 acid damage, Reflex DC %4 for half, usable every %5 rounds)|BreathWeaponCone|BreathWeaponDice|BreathWeaponDamageDie|BreathWeaponDC|BreathWeaponRechargeRounds|PREVAREQ:bBreathWeaponAcid,1|PREVARGTEQ:BreathWeaponRechargeRounds,1|PREVARGTEQ:BreathWeaponCone,1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(%1-ft. cone, %2d%3 acid damage, Reflex DC %4 for half, usable every %5d%6 rounds)|BreathWeaponCone|BreathWeaponDice|BreathWeaponDamageDie|BreathWeaponDC|BreathWeaponRechargeDice|BreathWeaponRechargeDieType|PREVAREQ:bBreathWeaponAcid,1|PREVAREQ:BreathWeaponRechargeRounds,0|PREVARGTEQ:BreathWeaponCone,1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(%1-ft. cone, %2d%3 cold damage, Reflex DC %4 for half, usable every %5 rounds)|BreathWeaponCone|BreathWeaponDice|BreathWeaponDamageDie|BreathWeaponDC|BreathWeaponRechargeRounds|PREVAREQ:bBreathWeaponCold,1|PREVARGTEQ:BreathWeaponRechargeRounds,1|PREVARGTEQ:BreathWeaponCone,1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(%1-ft. cone, %2d%3 cold damage, Reflex DC %4 for half, usable every %5d%6 rounds)|BreathWeaponCone|BreathWeaponDice|BreathWeaponDamageDie|BreathWeaponDC|BreathWeaponRechargeDice|BreathWeaponRechargeDieType|PREVAREQ:bBreathWeaponCold,1|PREVAREQ:BreathWeaponRechargeRounds,0|PREVARGTEQ:BreathWeaponCone,1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(%1-ft. cone, %2d%3 electricity damage, Reflex DC %4 for half, usable every %5 rounds)|BreathWeaponCone|BreathWeaponDice|BreathWeaponDamageDie|BrBreathWeaponRechargeRounds|PREVAREQ:bBreathWeaponElectricity,1|PREVARGTEQ:BreathWeaponRechargeRounds,1|PREVARGTEQ:BreathWeaponCone,1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(%1-ft. cone, %2d%3 electricity damage, Reflex DC %4 for half, usable every %5d%6 rounds)|BreathWeaponCone|BreathWeaponDice|BreathWeaponDamageDie|BreathWeaponDC|BreathWeaponRechargeDice|BreathWeaponRechargeDieType|PREVAREQ:bBreathWeaponElectricity,1|PREVAREQ:BreathWeaponRechargeRounds,0|PREVARGTEQ:BreathWeaponCone,1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(%1-ft. cone, %2d%3 fire damage, Reflex DC %4 for half, usable every %5 rounds)|BreathWeaponCone|BreathWeaponDice|BreathWeaponDamageDie|BreathWeaponDC|BreathWeaponRechargeRounds|PREVAREQ:bBreathWeaponFire,1|PREVARGTEQ:BreathWeaponRechargeRounds,1|PREVARGTEQ:BreathWeaponCone,1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(%1-ft. cone, %2d%3 fire damage, Reflex DC %4 for half, usable every %5d%6 rounds)|BreathWeaponCone|BreathWeaponDice|BreathWeaponDamageDie|BreathWeaponDC|BreathWeaponRechargeDice|BreathWeaponRechargeDieType|PREVAREQ:bBreathWeaponFire,1|PREVAREQ:BreathWeaponRechargeRounds,0|PREVARGTEQ:BreathWeaponCone,1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(%1-ft. line, %2d%3 acid damage, Reflex DC %4 for half, usable every %5 rounds)|BreathWeaponLine|BreathWeaponDice|BreathWeaponDamageDie|BreathWeaponDC|BreathWeaponRechargeRounds|PREVAREQ:bBreathWeaponAcid,1|PREVARGTEQ:BreathWeaponRechargeRounds,1|PREVARGTEQ:BreathWeaponLine,1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(%1-ft. line, %2d%3 acid damage, Reflex DC %4 for half, usable every %5d%6 rounds)|BreathWeaponLine|BreathWeaponDice|BreathWeaponDamageDie|BreathWeaponDC|BreathWeaponRechargeDice|BreathWeaponRechargeDieType|PREVAREQ:bBreathWeaponAcid,1|PREVAREQ:BreathWeaponRechargeRounds,0|PREVARGTEQ:BreathWeaponLine,1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(%1-ft. line, %2d%3 cold damage, Reflex DC %4 for half, usable every %5 rounds)|BreathWeaponLine|BreathWeaponDice|BreathWeaponDamageDie|BreathWeaponDC|BreathWeaponRechargeRounds|PREVAREQ:bBreathWeaponCold,1|PREVARGTEQ:BreathWeaponRechargeRounds,1|PREVARGTEQ:BreathWeaponLine,1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(%1-ft. line, %2d%3 cold damage, Reflex DC %4 for half, usable every %5d%6 rounds)|BreathWeaponLine|BreathWeaponDice|BreathWeaponDamageDie|BreathWeaponDC|BreathWeaponRechargeDice|BreathWeaponRechargeDieType|PREVAREQ:bBreathWeaponCold,1|PREVAREQ:BreathWeaponRechargeRounds,0|PREVARGTEQ:BreathWeaponLine,1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(%1-ft. line, %2d%3 electricity damage, Reflex DC %4 for half, usable every %5 rounds)|BreathWeaponLine|BreathWeaponDice|BreathWeaponDamageDie|BrBreathWeaponRechargeRounds|PREVAREQ:bBreathWeaponElectricity,1|PREVARGTEQ:BreathWeaponRechargeRounds,1|PREVARGTEQ:BreathWeaponLine,1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(%1-ft. line, %2d%3 electricity damage, Reflex DC %4 for half, usable every %5d%6 rounds)|BreathWeaponLine|BreathWeaponDice|BreathWeaponDamageDie|BreathWeaponDC|BreathWeaponRechargeDice|BreathWeaponRechargeDieType|PREVAREQ:bBreathWeaponElectricity,1|PREVAREQ:BreathWeaponRechargeRounds,0|PREVARGTEQ:BreathWeaponLine,1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(%1-ft. line, %2d%3 fire damage, Reflex DC %4 for half, usable every %5 rounds)|BreathWeaponLine|BreathWeaponDice|BreathWeaponDamageDie|BreathWeaponDC|BreathWeaponRechargeRounds|PREVAREQ:bBreathWeaponFire,1|PREVARGTEQ:BreathWeaponRechargeRounds,1|PREVARGTEQ:BreathWeaponLine,1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(%1-ft. line, %2d%3 fire damage, Reflex DC %4 for half, usable every %5d%6 rounds)|BreathWeaponLine|BreathWeaponDice|BreathWeaponDamageDie|BreathWeaponDC|BreathWeaponRechargeDice|BreathWeaponRechargeDieType|PREVAREQ:bBreathWeaponFire,1|PREVAREQ:BreathWeaponRechargeRounds,0|PREVARGTEQ:BreathWeaponLine,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BreathWeaponDC|10+(max(HD,CompanionHD)/2)+CON|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BreathWeaponDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Breath Weapon)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BreathWeaponCone|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BreathWeaponDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BreathWeaponDamageDie|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BreathWeaponDice|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BreathWeaponLine|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BreathWeaponRechargeDice|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BreathWeaponRechargeDieType|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BreathWeaponRechargeRounds|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BreathWeaponSpray|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "UMR_BreathWeapon_SpecificDesc|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "bBreathWeaponAcid|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "bBreathWeaponCold|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "bBreathWeaponElectricity|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "bBreathWeaponFire|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Some creatures can exhale a cone, line, or cloud of energy or other magical effects. A breath weapon attack usually deals damage and is often based on some type of energy. Breath weapons allow a Reflex save for half damage (DC 10 + 1/2 breathing creature's racial HD + breathing creature's Con modifier; the exact DC is given in the creature's descriptive text). A creature is immune to its own breath weapon unless otherwise noted. Some breath weapons allow a Fortitude save or a Will save instead of a Reflex save. Each breath weapon also includes notes on how often it can be used, even if this number is limited in times per day.|PREVAREQ:UMR_BreathWeapon_SpecificDesc,0"
+      },
+      {
+        "key": "KEY",
+        "value": "Universal Monster Rule ~ Breath Weapon"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.298"
+      },
+      {
+        "key": "TYPE",
+        "value": "Universal Monster Rule.SpecialAttack.Special Attack.Supernatural.BreathWeapon"
+      }
+    ],
+    "source_page": "p.298",
+    "traits": [
+      "Universal Monster Rule",
+      "Special Attack",
+      "BreathWeapon"
+    ]
+  },
+  "ingested_at": "2026-08-23T12:58:07Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 2366,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "record_key": "Universal Monster Rule ~ Breath Weapon",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus",
+    "derived:prose_expr"
+  ]
+}

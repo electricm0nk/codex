@@ -1,0 +1,57 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Tzitzimitl ~ Eye Beam",
+    "delivery": "Supernatural",
+    "description": "As a standard action, a tzitzimitl can fire a glowing beam of force from its eyes at a range of 100 feet as a ranged touch attack dealing 10d6 points of force damage and 10d6 points of electricity damage.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:tzitzimitl_eye_beam",
+    "name": "Eye Beam",
+    "owners": [
+      "bestiary_3:monster:tzitzimitl"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action, a tzitzimitl can fire a glowing beam of force from its eyes at a range of 100 feet as a ranged touch attack dealing 10d6 points of force damage and 10d6 points of electricity damage."
+      },
+      {
+        "key": "KEY",
+        "value": "Tzitzimitl ~ Eye Beam"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.276"
+      },
+      {
+        "key": "TYPE",
+        "value": "TzitzimitlRacialAbility.SpecialQuality.Supernatural"
+      }
+    ],
+    "source_page": "p.276",
+    "traits": [
+      "TzitzimitlRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T10:26:03Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1648,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Tzitzimitl ~ Eye Beam",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

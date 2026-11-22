@@ -1,0 +1,8 @@
+      1 error: could not compile `codex` (lib test) due to 20 previous errors
+      2 error[E0277]: can't compare `&str` with `std::option::Option<&str>`
+      1 error[E0277]: can't compare `[{integer}; 2]` with `[{integer}; 3]`
+      3 error[E0277]: can't compare `std::path::PathBuf` with `std::option::Option<std::path::PathBuf>`
+      1 error[E0308]: mismatched types
+      1 error[E0560]: struct `game_system::PerSystem<std::option::Option<&str>>` has no field named `cyberpunk_red`
+      1 error[E0560]: struct `game_system::PerSystem<{integer}>` has no field named `cyberpunk_red`
+     11 error[E0599]: no variant, associated function, or constant named `CyberpunkRed` found for enum `game_system::GameSystem` in the current scope

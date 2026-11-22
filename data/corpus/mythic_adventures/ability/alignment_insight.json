@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Mythic Path Ability ~ Alignment Insight",
+    "name": "Alignment Insight",
+    "description": "You can automatically detect the alignment of any outsider you can see. This ability doesn't function if the creature is magically disguised or has been polymorphed into a different shape. You can automatically detect the alignment of any creature you see casting a divine spell; if that creature worships a deity, you also learn its deity. Spells and effects that mask a creature's alignment prevent the use of this ability. Whenever you cast a spell that affects creatures differently based on their alignment(such as holy smite), you may have the spell treat creatures of one particular alignment as an alignment one step away from that alignment. For example, when casting holy smite, you could treat all lawful neutral creatures as lawful good or lawful evil, all chaotic neutral creature as chaotic good or chaotic evil, or all neutral creatures as neutral good or neutral evil.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Path Ability ~ Alignment Insight"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Path Ability.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Mythic Path ~ Hierophant"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "MythicTierLevel,3"
+      },
+      {
+        "key": "DESC",
+        "value": "You can automatically detect the alignment of any outsider you can see. This ability doesn't function if the creature is magically disguised or has been polymorphed into a different shape. You can automatically detect the alignment of any creature you see casting a divine spell; if that creature worships a deity, you also learn its deity. Spells and effects that mask a creature's alignment prevent the use of this ability. Whenever you cast a spell that affects creatures differently based on their alignment(such as holy smite), you may have the spell treat creatures of one particular alignment as an alignment one step away from that alignment. For example, when casting holy smite, you could treat all lawful neutral creatures as lawful good or lawful evil, all chaotic neutral creature as chaotic good or chaotic evil, or all neutral creatures as neutral good or neutral evil."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
+    "line": 286,
+    "record_key": "Mythic Path Ability ~ Alignment Insight"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

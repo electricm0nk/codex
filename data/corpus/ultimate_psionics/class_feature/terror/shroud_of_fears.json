@@ -1,0 +1,69 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Terror ~ Shroud of Fears",
+    "name": "Shroud of Fears",
+    "class": "Terror",
+    "description": "You gain a +%1 deflection bonus to AC while using the Nightmare Form terror.|ShroudOfFearsBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Terror ~ Shroud of Fears"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.DreadTerror"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Terror ~ Nightmare Form"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "TerrorsPrereqLVL,10"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShroudOfFearsBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a +%1 deflection bonus to AC while using the Nightmare Form terror.|ShroudOfFearsBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShroudOfFearsBonus|DreadPrimeStat"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.43"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|COMBAT|AC|ShroudOfFearsBonus|TYPE=Deflection"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 308,
+    "record_key": "Terror ~ Shroud of Fears"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "computed:tempbonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

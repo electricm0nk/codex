@@ -1,0 +1,172 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Investigator Archetype ~ Gravedigger",
+    "name": "Gravedigger",
+    "class": "Investigator",
+    "description": "Gravediggers pursue long-buried mysteries, figuratively and literally digging up the truth and finding answers to secrets only moldering corpses and dry bones can tell.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Investigator Archetype ~ Gravedigger"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.InvestigatorArchetype"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.54"
+      },
+      {
+        "key": "DESC",
+        "value": "Gravediggers pursue long-buried mysteries, figuratively and literally digging up the truth and finding answers to secrets only moldering corpses and dry bones can tell."
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Investigator=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Investigator Archetype ~ Gravedigger],[!PREFACT:1,ABILITIES,Investigator_Archetype_Proficiencies=True,Investigator_Archetype_Alchemy=True,Investigator_Archetype_InvestigatorTalents=True,Investigator_Archetype_Trapfinding=True,Investigator_Archetype_TrapSense=True,Investigator_Archetype_PoisonResistance=True,Investigator_Archetype_PoisonImmunity=True,Investigator_Archetype_PoisonLore=True,Investigator_Archetype_StudiedCombat=True,Investigator_Archetype_StudiedStrike=True,Investigator_Archetype_SwiftAlchemy=True]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Gravedigger ~ Weapon and Armor Proficiency|PRECLASS:1,Investigator=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Gravedigger ~ Limited Alchemy|PRECLASS:1,Investigator=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Gravedigger ~ Grave Magic|PRECLASS:1,Investigator=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Gravedigger ~ Relic Focus|PRECLASS:1,Investigator=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Gravedigger ~ Deny Death|PRECLASS:1,Investigator=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Gravedigger ~ Read the Bones|PRECLASS:1,Investigator=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Gravedigger ~ Focus Talent|PRECLASS:1,Investigator=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Gravedigger ~ Kill the Dead|PRECLASS:1,Investigator=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Gravedigger ~ Grave Lamp|PRECLASS:1,Investigator=4"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_Archetype_Proficiencies|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_Archetype_Alchemy|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_Archetype_InvestigatorTalents|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_Archetype_Trapfinding|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_Archetype_TrapSense|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_Archetype_PoisonResistance|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_Archetype_PoisonImmunity|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_Archetype_PoisonLore|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_Archetype_StudiedCombat|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_Archetype_StudiedStrike|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_Archetype_SwiftAlchemy|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_CF_WeaponProficiencies|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_CF_ArmorProficiencies|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_CF_Trapfinding|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_CF_TrapSense|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_CF_PoisonResistance|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_CF_PoisonImmunity|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_CF_PoisonLore|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_CF_SwiftAlchemy|true"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/support/ha_abilities_class_oa.lst",
+    "sha256": "9c111f652f8442433ea215fa11e67258c7e6c15c75d1c1753fa6fef34827f46c",
+    "line": 31,
+    "record_key": "Investigator Archetype ~ Gravedigger"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

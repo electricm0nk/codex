@@ -1,0 +1,54 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "MagicItems",
+    "cost_gp": 61200.0,
+    "description": "continual True Metabolism except heal 5 HP/minute.",
+    "key": "Psychoactive Skin (Troll)",
+    "name": "Skin of the [NAME]",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "OUTPUTNAME",
+        "value": "Skin of the [NAME]"
+      },
+      {
+        "key": "TYPE",
+        "value": "Psionic.Universal.Ectoshell"
+      },
+      {
+        "key": "COST",
+        "value": "61200"
+      },
+      {
+        "key": "WT",
+        "value": "2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.421"
+      },
+      {
+        "key": "SPROP",
+        "value": "continual True Metabolism except heal 5 HP/minute."
+      }
+    ],
+    "weight_lbs": 2.0
+  },
+  "ingested_at": "2026-08-16T05:06:54Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 346,
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_equipment.lst",
+    "record_key": "Psychoactive Skin (Troll)",
+    "sha256": "ffdbcf81cb0f2d832299a9c6e4c6b124f35fd447a720b0fdda11cf88fe1ca371"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

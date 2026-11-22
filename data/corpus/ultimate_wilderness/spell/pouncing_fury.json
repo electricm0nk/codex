@@ -1,0 +1,71 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "When you charge, you can make a full attack at the end of that charge, but only with claw attacks you have, and you can make only one attack per claw. If you have abilities that grant bonuses on damage rolls or that apply other special effects to charge attacks, only the first claw attack benefits from these bonuses. When you make a claw attack as an attack of opportunity, you can expend one additional use of your attacks of opportunity to make an additional claw attack against the target that provoked the attack.",
+    "key": "Pouncing Fury",
+    "level": 2,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Alchemist,Bloodrager,Druid,Magus,Ranger,Sorcerer,Witch,Wizard=2"
+      },
+      {
+        "key": "COMPS",
+        "value": "V,S"
+      },
+      {
+        "key": "DESC",
+        "value": "Make a full attack with your claws after a charge.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "When you charge, you can make a full attack at the end of that charge, but only with claw attacks you have, and you can make only one attack per claw. If you have abilities that grant bonuses on damage rolls or that apply other special effects to charge attacks, only the first claw attack benefits from these bonuses. When you make a claw attack as an attack of opportunity, you can expend one additional use of your attacks of opportunity to make an additional claw attack against the target that provoked the attack.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) rounds"
+      },
+      {
+        "key": "RANGE",
+        "value": "Personal"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Transmutation"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.233"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "You"
+      },
+      {
+        "key": "TYPE",
+        "value": "Arcane.Divine"
+      }
+    ],
+    "school": "Transmutation"
+  },
+  "ingested_at": "2026-08-20T01:55:37Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 36,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_spells.lst",
+    "record_key": "Pouncing Fury",
+    "sha256": "0ebcaef0aa5ab9967a06e53a5179bcaca436c5a2bfeeb8926821eb38391978a4"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr"
+  ]
+}

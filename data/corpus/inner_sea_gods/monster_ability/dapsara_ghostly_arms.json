@@ -1,0 +1,51 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Dapsara ~ Ghostly Arms",
+    "delivery": "Supernatural",
+    "description": "A dapsara's two spectral arms may manipulate corporeal or incorporeal creatures and objects, as if they had the ghost touch weapon property. She may manifest or hide these arms at will in any shape, even in gaseous form.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "inner_sea_gods:monster_ability:dapsara_ghostly_arms",
+    "name": "Ghostly Arms",
+    "owners": [
+      "inner_sea_gods:monster:dapsara"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A dapsara's two spectral arms may manipulate corporeal or incorporeal creatures and objects, as if they had the ghost touch weapon property. She may manifest or hide these arms at will in any shape, even in gaseous form."
+      },
+      {
+        "key": "KEY",
+        "value": "Dapsara ~ Ghostly Arms"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      }
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "ingested_at": "2026-08-15T02:34:27Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 262,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities_races.lst",
+    "record_key": "Dapsara ~ Ghostly Arms",
+    "sha256": "b309f3f779ee8d564aacff977e2a9119410a70844107ecd3e6bdc0170fe79ea8"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

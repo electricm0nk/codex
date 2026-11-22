@@ -1,0 +1,53 @@
+{
+  "codex_generated_name": false,
+  "completeness": "full",
+  "data": {
+    "description": "As long as you have at least 1 stamina point in your stamina pool, when you hit a creature you have identified with Kirin StyleUC, you add your Intelligence modifier to melee and ranged attack damage rolls against that creature for the next 24 hours. You still can take a swift action to add twice your Intelligence modifier to damage rolls, but that damage doesn't stack with the damage from this combat trick.",
+    "key": "Combat Trick ~ Kirin Strike",
+    "name": "Kirin Strike",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Combat Trick ~ Kirin Strike"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Combat Trick"
+      },
+      {
+        "key": "DESC",
+        "value": "As long as you have at least 1 stamina point in your stamina pool, when you hit a creature you have identified with Kirin StyleUC, you add your Intelligence modifier to melee and ranged attack damage rolls against that creature for the next 24 hours. You still can take a swift action to add twice your Intelligence modifier to damage rolls, but that damage doesn't stack with the damage from this combat trick."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "125"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SourceBook|UC"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 94,
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/support/ability_uc.lst",
+    "record_key": "Combat Trick ~ Kirin Strike",
+    "sha256": "11fe5af3a23ebdf6b90f238bb433207cc58d2f76a5ad62759e2be4ef6b712f14"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_ability_scaling",
+    "display:no_magnitude_token"
+  ]
+}

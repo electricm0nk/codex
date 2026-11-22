@@ -1,0 +1,60 @@
+{
+  "codex_generated_name": false,
+  "completeness": "full",
+  "data": {
+    "description": "Your mind fractures in the struggle against the spirit.",
+    "key": "Possessed Corruption ~ Contaminated Personality",
+    "name": "Contaminated Personality",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Possessed Corruption ~ Contaminated Personality"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "PossessedManifestation"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "PossessedManifestationLevel,4"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.30"
+      },
+      {
+        "key": "DESC",
+        "value": "Your mind fractures in the struggle against the spirit."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Possessed Contaminated Personality Gift Choice|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Possessed Contaminated Personality Stain Choice|1"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 639,
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
+    "record_key": "Possessed Corruption ~ Contaminated Personality",
+    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

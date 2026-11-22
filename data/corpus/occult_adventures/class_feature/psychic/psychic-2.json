@@ -1,0 +1,333 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-24T03:51:47Z",
+  "data": {
+    "key": "Psychic ~ CLASS",
+    "name": "Psychic",
+    "class": "Psychic",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "CLASS"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Psychic_CFP_Level|0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Psychic Archetype|AUTOMATIC|Archetype Psychic"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Psychic_CFP_Level|PsychicLVL"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Psychic Class Feature|AUTOMATIC|Psychic ~ Class Skills|PREVAREQ:Psychic_CF_ClassSkills,0|PREVARGTEQ:Psychic_CFP_Level,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Psychic Class Feature|AUTOMATIC|Psychic ~ Weapon and Armor Proficiency|PREVAREQ:Psychic_CF_WeaponandArmorProficiency,0|PREVARGTEQ:Psychic_CFP_Level,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Psychic Class Feature|AUTOMATIC|Psychic ~ Spells|PREVAREQ:Psychic_CF_Spells,0|PREVARGTEQ:Psychic_CFP_Level,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Psychic Class Feature|AUTOMATIC|Psychic ~ Knacks|PREVAREQ:Psychic_CF_Knacks,0|PREVARGTEQ:Psychic_CFP_Level,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Psychic Class Feature|AUTOMATIC|Psychic ~ Phrenic Pool|PREVAREQ:Psychic_CF_PhrenicPool,0|PREVARGTEQ:Psychic_CFP_Level,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Psychic Class Feature|AUTOMATIC|Psychic ~ Phrenic Amplifications|PREVAREQ:Psychic_CF_PhrenicAmplifications,0|PREVARGTEQ:Psychic_CFP_Level,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Psychic Class Feature|AUTOMATIC|Psychic ~ Psychic Discipline|PREVAREQ:Psychic_CF_PsychicDiscipline,0|PREVARGTEQ:Psychic_CFP_Level,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Psychic Class Feature|AUTOMATIC|Psychic ~ Detect Thoughts|PREVAREQ:Psychic_CF_DetectThoughts,0|PREVARGTEQ:Psychic_CFP_Level,2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Psychic Class Feature|AUTOMATIC|Psychic ~ Telepathic Bond|PREVAREQ:Psychic_CF_TelepathicBond,0|PREVARGTEQ:Psychic_CFP_Level,9"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Psychic Class Feature|AUTOMATIC|Psychic ~ Major Amplifications|PREVAREQ:Psychic_CF_MajorAmplifications,0|PREVARGTEQ:Psychic_CFP_Level,11"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Psychic Class Feature|AUTOMATIC|Psychic ~ Telepathy|PREVAREQ:Psychic_CF_Telepathy,0|PREVARGTEQ:Psychic_CFP_Level,17"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Psychic Class Feature|AUTOMATIC|Psychic ~ Remade Self|PREVAREQ:Psychic_CF_RemadeSelf,0|PREVARGTEQ:Psychic_CFP_Level,20"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Psychic;LEVEL=0|-4|PREMULT:2,[PREVAREQ:Psychic_CF_Knacks,1],[PRECLASS:1,Psychic=1]"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Psychic;LEVEL=0|-1|PREMULT:2,[PREVAREQ:Psychic_CF_Knacks,1],[PRECLASS:1,Psychic=2]"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Psychic;LEVEL=0|-1|PREMULT:2,[PREVAREQ:Psychic_CF_Knacks,1],[PRECLASS:1,Psychic=4]"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Psychic;LEVEL=0|-1|PREMULT:2,[PREVAREQ:Psychic_CF_Knacks,1],[PRECLASS:1,Psychic=6]"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Psychic;LEVEL=0|-1|PREMULT:2,[PREVAREQ:Psychic_CF_Knacks,1],[PRECLASS:1,Psychic=8]"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Psychic;LEVEL=0|-1|PREMULT:2,[PREVAREQ:Psychic_CF_Knacks,1],[PRECLASS:1,Psychic=10]"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Psychic_CF_ClassSkills|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Psychic_CF_WeaponandArmorProficiency|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Psychic_CF_Spells|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Psychic_CF_Knacks|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Psychic_CF_PhrenicPool|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Psychic_CF_PhrenicAmplifications|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Psychic_CF_PsychicDiscipline|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Psychic_CF_DetectThoughts|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Psychic_CF_TelepathicBond|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Psychic_CF_MajorAmplifications|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Psychic_CF_Telepathy|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Psychic_CF_RemadeSelf|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Psychic_CF_PhrenicAmplification1|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Psychic_CF_PhrenicAmplification4|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Psychic_CF_PhrenicAmplification7|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Psychic_CF_PhrenicAmplification11|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Psychic_CF_PhrenicAmplification15|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Psychic_CF_PhrenicAmplification19|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Psychic_CF_DisciplineSpell1|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Psychic_CF_DisciplineSpell2|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Psychic_CF_DisciplineSpell3|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Psychic_CF_DisciplineSpell4|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Psychic_CF_DisciplineSpell5|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Psychic_CF_DisciplineSpell6|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Psychic_CF_DisciplineSpell7|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Psychic_CF_DisciplineSpell8|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Psychic_CF_DisciplineSpell9|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Psychic_CF_ClassSkills|1|PREFACT:1,ABILITIES,Psychic_CF_ClassSkills=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Psychic_CF_WeaponandArmorProficiency|1|PREFACT:1,ABILITIES,Psychic_CF_WeaponandArmorProficiency=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Psychic_CF_Spells|1|PREFACT:1,ABILITIES,Psychic_CF_Spells=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Psychic_CF_Knacks|1|PREFACT:1,ABILITIES,Psychic_CF_Knacks=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Psychic_CF_PhrenicPool|1|PREFACT:1,ABILITIES,Psychic_CF_PhrenicPool=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Psychic_CF_PhrenicAmplifications|1|PREFACT:1,ABILITIES,Psychic_CF_PhrenicAmplifications=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Psychic_CF_PsychicDiscipline|1|PREFACT:1,ABILITIES,Psychic_CF_PsychicDiscipline=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Psychic_CF_DetectThoughts|1|PREFACT:1,ABILITIES,Psychic_CF_DetectThoughts=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Psychic_CF_TelepathicBond|1|PREFACT:1,ABILITIES,Psychic_CF_TelepathicBond=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Psychic_CF_MajorAmplifications|1|PREFACT:1,ABILITIES,Psychic_CF_MajorAmplifications=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Psychic_CF_Telepathy|1|PREFACT:1,ABILITIES,Psychic_CF_Telepathy=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Psychic_CF_RemadeSelf|1|PREFACT:1,ABILITIES,Psychic_CF_RemadeSelf=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Psychic_CF_PhrenicAmplification1|1|PREFACT:1,ABILITIES,Psychic_CF_PhrenicAmplification1=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Psychic_CF_PhrenicAmplification4|1|PREFACT:1,ABILITIES,Psychic_CF_PhrenicAmplification4=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Psychic_CF_PhrenicAmplification7|1|PREFACT:1,ABILITIES,Psychic_CF_PhrenicAmplification7=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Psychic_CF_PhrenicAmplification11|1|PREFACT:1,ABILITIES,Psychic_CF_PhrenicAmplification11=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Psychic_CF_PhrenicAmplification15|1|PREFACT:1,ABILITIES,Psychic_CF_PhrenicAmplification15=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Psychic_CF_PhrenicAmplification19|1|PREFACT:1,ABILITIES,Psychic_CF_PhrenicAmplification19=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Psychic_CF_DisciplineSpell1|1|PREFACT:1,ABILITIES,Psychic_CF_DisciplineSpell1=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Psychic_CF_DisciplineSpell2|1|PREFACT:1,ABILITIES,Psychic_CF_DisciplineSpell2=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Psychic_CF_DisciplineSpell3|1|PREFACT:1,ABILITIES,Psychic_CF_DisciplineSpell3=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Psychic_CF_DisciplineSpell4|1|PREFACT:1,ABILITIES,Psychic_CF_DisciplineSpell4=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Psychic_CF_DisciplineSpell5|1|PREFACT:1,ABILITIES,Psychic_CF_DisciplineSpell5=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Psychic_CF_DisciplineSpell6|1|PREFACT:1,ABILITIES,Psychic_CF_DisciplineSpell6=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Psychic_CF_DisciplineSpell7|1|PREFACT:1,ABILITIES,Psychic_CF_DisciplineSpell7=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Psychic_CF_DisciplineSpell8|1|PREFACT:1,ABILITIES,Psychic_CF_DisciplineSpell8=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Psychic_CF_DisciplineSpell9|1|PREFACT:1,ABILITIES,Psychic_CF_DisciplineSpell9=True"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 23,
+    "record_key": "Psychic ~ CLASS"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

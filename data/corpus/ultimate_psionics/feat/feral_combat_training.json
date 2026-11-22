@@ -1,0 +1,28 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Feral Combat Training",
+    "category": "Combat",
+    "name": "Feral Combat Training",
+    "description": "You were taught a style of martial arts that relies on the natural weapons from your racial ability or class feature. Choose one of your natural weapons. While using the selected natural weapon, you can apply the effects of feats that have Improved Unarmed Strike as a prerequisite, as well as effects that augment an unarmed strike. \n [Special]If you are a monk, you can use the selected natural weapon with your flurry of blows class feature.",
+    "prerequisites": [
+      "PREABILITY:2,CATEGORY=FEAT,Improved Unarmed Strike,Weapon Focus (TYPE=Natural)"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_feats.lst",
+    "sha256": "528096cb97ebe8255b9f9fe67682dd7e045f53b65e32295cd57967002eccb137",
+    "line": 128,
+    "record_key": "Feral Combat Training"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

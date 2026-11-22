@@ -1,0 +1,30 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Shrouded in Mystery",
+    "category": "General",
+    "name": "Shrouded in Mystery",
+    "description": "Common folk have many superstitious rumors about your kind-tall tales born out of ignorance and fear alike. Whether or not what they say about your race is true is irrelevant, as you use their beliefs to take advantage of them whenever you can. You gain a +2 insight bonus on Will saves against mind-affecting spells and effects and a +3 insight bonus on Bluff checks. Both benefits apply only against humanoid creatures of races other than your own.",
+    "prerequisites": [
+      "PREFACT:1,TEMPLATES,IsKitsune=true,IsNagaji=true,IsSamsaran=true,IsTengu=true,IsWayang=true",
+      "PRESKILL:2,Bluff=1,Disguise=1",
+      "PRETEXT:Bluff 1 rank; Disguise 1 rank; kitsune, nagaji, samsaran, tengu, or wayang."
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_feats.lst",
+    "sha256": "082b55d0a2908a9c20bc977758f596c73e29a512f7a1407f62b977793587b649",
+    "line": 57,
+    "record_key": "Shrouded in Mystery"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

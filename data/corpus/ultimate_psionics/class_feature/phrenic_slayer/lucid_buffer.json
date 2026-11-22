@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Phrenic Slayer ~ Lucid Buffer",
+    "name": "Lucid Buffer",
+    "class": "Phrenic Slayer",
+    "description": "Gain +%1 on saves against compulsion and mind-affecting effects.|LucidBuffer",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Phrenic Slayer ~ Lucid Buffer"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "PhrenicSlayerClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "LucidBuffer|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Gain +%1 on saves against compulsion and mind-affecting effects.|LucidBuffer"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|LucidBuffer|2*floor((2+PhrenicSlayerLVL)/5)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.367"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1329,
+    "record_key": "Phrenic Slayer ~ Lucid Buffer"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

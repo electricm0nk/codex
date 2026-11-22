@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Thought Eater ~ Assume Knowledge",
+    "name": "Assume Knowledge",
+    "class": "Mesmerist",
+    "description": "The thought eater can choose one Knowledge skill possessed by the target of his hypnotic stare. He uses the target's number of ranks in that skill, instead of his own, to calculate his bonus (but not for other purposes, such as meeting the prerequisites of feats) to a maximum number of ranks equal to his mesmerist level. This ability lasts for 24 hours or until he uses his hypnotic stare ability on a different creature.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Thought Eater ~ Assume Knowledge"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mesmerist Class Features.ThoughtEaterClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "The thought eater can choose one Knowledge skill possessed by the target of his hypnotic stare. He uses the target's number of ranks in that skill, instead of his own, to calculate his bonus (but not for other purposes, such as meeting the prerequisites of feats) to a maximum number of ranks equal to his mesmerist level. This ability lasts for 24 hours or until he uses his hypnotic stare ability on a different creature."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.38"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/support/ui_abilities_class_oa.lst",
+    "sha256": "123f008e9a2f31828861df9025f48f5c2f7c78a648553f22dba96a8d8a2e24dc",
+    "line": 80,
+    "record_key": "Thought Eater ~ Assume Knowledge"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

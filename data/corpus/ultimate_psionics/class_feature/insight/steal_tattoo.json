@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Insight ~ Steal Tattoo",
+    "name": "Steal Tattoo",
+    "class": "Insight",
+    "description": "You can attempt to steal the psionic tattoo of a creature within 30 ft. by making a ranged touch attack against that creature.  If the attack is successful, you make a manifester level check against a DC of 11 + manifester level of the psionic tattoo.  If the check is successful, the psionic tattoo is immediately teleported onto your body.  You must have space on your body for an additional psionic tattoo or this ability automatically fails.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Insight ~ Steal Tattoo"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural.CrypticInsight"
+      },
+      {
+        "key": "DESC",
+        "value": "You can attempt to steal the psionic tattoo of a creature within 30 ft. by making a ranged touch attack against that creature.  If the attack is successful, you make a manifester level check against a DC of 11 + manifester level of the psionic tattoo.  If the check is successful, the psionic tattoo is immediately teleported onto your body.  You must have space on your body for an additional psionic tattoo or this ability automatically fails."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.39"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 222,
+    "record_key": "Insight ~ Steal Tattoo"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

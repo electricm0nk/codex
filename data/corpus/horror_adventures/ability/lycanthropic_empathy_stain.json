@@ -1,0 +1,53 @@
+{
+  "codex_generated_name": false,
+  "completeness": "full",
+  "data": {
+    "description": "Your animalistic nature imposes a -%1 penalty on your Bluff, Diplomacy, and Sense Motive skill checks equal to your manifestation level (minimum -2) when dealing with humanoids (and other civilized folk at the GM's discretion).|max(2,LycanthropyManifestationLevel)",
+    "key": "Lycanthropy Corruption ~ Lycanthropic Empathy Stain",
+    "name": "Lycanthropic Empathy Stain",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Lycanthropy Corruption ~ Lycanthropic Empathy Stain"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.LycanthropyLycanthropicEmpathyStain"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.29"
+      },
+      {
+        "key": "DESC",
+        "value": "Your animalistic nature imposes a -%1 penalty on your Bluff, Diplomacy, and Sense Motive skill checks equal to your manifestation level (minimum -2) when dealing with humanoids (and other civilized folk at the GM's discretion).|max(2,LycanthropyManifestationLevel)"
+      },
+      {
+        "key": "BONUS",
+        "value": "SITUATION|Bluff=Against humanoids,Diplomacy=Against humanoids,Sense Motive=Against humanoids|-max(2,LycanthropyManifestationLevel)"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 602,
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
+    "record_key": "Lycanthropy Corruption ~ Lycanthropic Empathy Stain",
+    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:prose_formula_segment"
+  ]
+}

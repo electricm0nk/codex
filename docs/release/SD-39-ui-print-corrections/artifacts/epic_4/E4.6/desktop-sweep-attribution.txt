@@ -1,0 +1,2 @@
+unittests src/main.rs | test result: ok. 1047 passed; 0 failed; 2 ignored; 0 measured; 0 filtered out; finished in 669.11s
+tests/packaged_resources.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/packaged_resources-693e68cf45da1662) | test result: ok. 1 passed; 0 failed

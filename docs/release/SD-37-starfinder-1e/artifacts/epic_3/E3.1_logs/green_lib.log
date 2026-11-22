@@ -1,0 +1,10 @@
+   Compiling codex-ingest v0.1.0 (/home/ubuntu/workspace/worktrees/codex-sd37/crates/codex-ingest)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 13.46s
+     Running unittests src/lib.rs (/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/codex_ingest-06e24ac7d271e507)
+
+running 2 tests
+test pcgen_import::system_books::tests::game_mode_rows_split_on_tabs_and_skip_comments_and_blanks ... ok
+test pcgen_import::system_books::tests::an_include_into_an_excluded_book_is_refused ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 674 filtered out; finished in 0.00s
+

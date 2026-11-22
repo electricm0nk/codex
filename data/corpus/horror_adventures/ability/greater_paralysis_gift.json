@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Ghoul Corruption ~ Greater Paralysis Gift",
+    "name": "Greater Paralysis Gift",
+    "description": "A creature that fails its save against your paralysis manifestation is paralyzed for 1d4 rounds instead of 1 round. Elves are immune to this effect.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ghoul Corruption ~ Greater Paralysis Gift"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.GhoulGreaterParalysisGift"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.21"
+      },
+      {
+        "key": "DESC",
+        "value": "A creature that fails its save against your paralysis manifestation is paralyzed for 1d4 rounds instead of 1 round. Elves are immune to this effect."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
+    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381",
+    "line": 243,
+    "record_key": "Ghoul Corruption ~ Greater Paralysis Gift"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

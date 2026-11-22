@@ -1,0 +1,88 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Terror ~ Sickening Fear",
+    "name": "Sickening Fear",
+    "class": "Terror",
+    "description": "Your attack causes the target to become sickened (Fort DC %1 negates) for %2d%3 rounds.  This is a mind-affecting fear effect.  For every additional power point spent, the target also takes %4 damage per round.|SickeningFearDC|SickeningFearDurationDice|SickeningFearDurationDieType|SickeningFearExtraDamage",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Terror ~ Sickening Fear"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural.DreadTerror"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "TerrorsPrereqLVL,6"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SickeningFearDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SickeningFearDurationDice|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SickeningFearDurationDieType|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SickeningFearExtraDamage|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Your attack causes the target to become sickened (Fort DC %1 negates) for %2d%3 rounds.  This is a mind-affecting fear effect.  For every additional power point spent, the target also takes %4 damage per round.|SickeningFearDC|SickeningFearDurationDice|SickeningFearDurationDieType|SickeningFearExtraDamage"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SickeningFearDC|TerrorDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SickeningFearDurationDice|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SickeningFearDurationDieType|6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SickeningFearExtraDamage|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SickeningFearDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Sickening Fear)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.43"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 309,
+    "record_key": "Terror ~ Sickening Fear"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

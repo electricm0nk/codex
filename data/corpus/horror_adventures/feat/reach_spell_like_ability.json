@@ -1,0 +1,28 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Reach Spell-Like Ability",
+    "category": "Monster",
+    "name": "Reach Spell-Like Ability",
+    "description": "You can use a spell-like ability at a greater range. Choose one of your spell-like abilities, subject to the restrictions described in this feat. You can use the chosen spell-like ability as a reach spell-like ability three times per day (or less, if the ability is normally usable only once or twice per day). When you use a reach spell-like ability, it can alter a spell-like ability with a range of touch, close, or medium to increase its range to a higher range category, using the following order: touch, close, medium, and long. You can select a spell-like ability that duplicates a spell only if its level is less than or equal to 1/2 its caster level (round down) - 1 per increase in range category. For example, a spell-like ability with a range of touch can be increased to long range only if it duplicates a spell with a level less than or equal to 1/2 your caster level (round down) - 3. For a summary, see Table 3-3 on p92. Reach spell-like abilities that normally require melee touch attacks instead require ranged touch attacks. Spell-like abilities that do not have a range of touch, close, or medium do not benefit from this feat. [Special] This feat can be taken multiple times. Each time it is taken, you can apply it to a different spell-like ability.",
+    "prerequisites": [
+      "PRETEXT:Spell-like ability at caster level 4th or higher."
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_feats.lst",
+    "sha256": "b8183ddca5eece895bf40f7765744bb470970418a8baca58aee907487f0140e6",
+    "line": 46,
+    "record_key": "Reach Spell-Like Ability"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

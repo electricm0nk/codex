@@ -1,0 +1,90 @@
+{
+  "completeness": "chassis_plus_extract",
+  "data": {
+    "category": "general",
+    "cost_gp": 100.0,
+    "description": null,
+    "key": "Poison (Belladonna)",
+    "name": "Poison, Belladonna",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Poison (Belladonna)"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Poison, Belladonna"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "Belladonna"
+      },
+      {
+        "key": "TYPE",
+        "value": "Goods.Poison.Consumable"
+      },
+      {
+        "key": "COST",
+        "value": "100"
+      },
+      {
+        "key": "WT",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.558"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Plural|No"
+      },
+      {
+        "key": "SPROP",
+        "value": "Ingested; Fort DC 14; Onset 10 min; Freq 1 min (6); Effect 1d2 Str dmg (plus attempt lycanthropy cure if within 1 hour); Cure 1 save"
+      },
+      {
+        "key": "INFO",
+        "value": "Poison Type|poison, ingested"
+      },
+      {
+        "key": "INFO",
+        "value": "Poison Save|Fortitude DC 14"
+      },
+      {
+        "key": "INFO",
+        "value": "Poison Onset|10 minutes"
+      },
+      {
+        "key": "INFO",
+        "value": "Poison Frequency|1/minute for 6 minutes"
+      },
+      {
+        "key": "INFO",
+        "value": "Poison Effect|1d2 Str damage, target can attempt one save to cure a lycanthropy affliction contracted in the past hour"
+      },
+      {
+        "key": "INFO",
+        "value": "Poison Cure|1 save"
+      }
+    ],
+    "weight_lbs": 0.0
+  },
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 494,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_general.lst",
+    "record_key": "Poison (Belladonna)",
+    "sha256": "2e1b57fbd956b64e9df1584ff580adb9d9aa8e65871b6e638ce6791151f8436d"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

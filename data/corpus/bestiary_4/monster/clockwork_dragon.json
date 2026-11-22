@@ -1,0 +1,195 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "ability_keys": [
+      "bestiary_4:monster_ability:clockwork_dragon_adamantine_weapons",
+      "bestiary_4:monster_ability:clockwork_dragon_breath_weapon",
+      "bestiary_4:monster_ability:clockwork_dragon_construction",
+      "bestiary_4:monster_ability:clockwork_dragon_specialization",
+      "bestiary_4:monster_ability:clockwork_dragon_destroyer",
+      "bestiary_4:monster_ability:clockwork_dragon_flaming_tar",
+      "bestiary_4:monster_ability:clockwork_dragon_efficient_winding",
+      "bestiary_4:monster_ability:clockwork_dragon_infiltrator",
+      "bestiary_4:monster_ability:clockwork_dragon_mithral_construction",
+      "bestiary_4:monster_ability:clockwork_dragon_rusting_breath",
+      "bestiary_4:monster_ability:clockwork_dragon_self_destruction",
+      "bestiary_4:monster_ability:clockwork_dragon_sleep_gas_breath"
+    ],
+    "challenge_rating": "16",
+    "corpus_key": "Clockwork Dragon",
+    "external_ability_refs": [],
+    "key": "bestiary_4:monster:clockwork_dragon",
+    "monster_class": "Construct:25",
+    "name": "Clockwork Dragon",
+    "natural_attacks": [
+      {
+        "damage_dice": null,
+        "name": "Bite"
+      },
+      {
+        "damage_dice": null,
+        "name": "Claw"
+      },
+      {
+        "damage_dice": null,
+        "name": "Tail Slap"
+      },
+      {
+        "damage_dice": null,
+        "name": "Wing"
+      }
+    ],
+    "race_subtype": "Clockwork",
+    "race_type": "Construct",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Bite|Claw|Tail Slap|Wing|Racial Traits ~ Clockwork Dragon"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Fly,Perception|8|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CHA|-10"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|8"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|24"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|20|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BiteSize|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ClawSize|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DarkvisionRange|60|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FireResistanceBonus|20|TYPE=Resistance"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HasLowlightVision|1|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Maneuverability|3"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Mindless|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WingSize|1"
+      },
+      {
+        "key": "CR",
+        "value": "16"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|H"
+      },
+      {
+        "key": "HANDS",
+        "value": "0"
+      },
+      {
+        "key": "KEY",
+        "value": "Clockwork Dragon"
+      },
+      {
+        "key": "KIT",
+        "value": "1|TN"
+      },
+      {
+        "key": "LEGS",
+        "value": "4"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Construct:25"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,60,Fly,100,Swim,60"
+      },
+      {
+        "key": "RACESUBTYPE",
+        "value": "Clockwork"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Construct"
+      },
+      {
+        "key": "REACH",
+        "value": "15"
+      },
+      {
+        "key": "SIZE",
+        "value": "H"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.30"
+      },
+      {
+        "key": "SR",
+        "value": "27"
+      },
+      {
+        "key": "TYPE",
+        "value": "Construct"
+      }
+    ],
+    "size": "H",
+    "source_page": "p.30",
+    "speeds": [
+      {
+        "feet": 60,
+        "mode": "Walk"
+      },
+      {
+        "feet": 100,
+        "mode": "Fly"
+      },
+      {
+        "feet": 60,
+        "mode": "Swim"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-15T01:24:20Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 27,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_races.lst",
+    "record_key": "Clockwork Dragon",
+    "sha256": "94fe7d7506ee86a8ff84127d7adecbb3d04939a26e573f418547eff3f0be52d1"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

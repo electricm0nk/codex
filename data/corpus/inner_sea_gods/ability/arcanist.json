@@ -1,0 +1,44 @@
+{
+  "codex_generated_name": false,
+  "completeness": "chassis_only",
+  "data": {
+    "description": null,
+    "key": "Arcanist",
+    "name": "Arcanist",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Aligned Class"
+      },
+      {
+        "key": "TYPE",
+        "value": "Aligned Class"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Class,Arcanist"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Arcanist_CFP_Level,ArcanistLVL|EvangelistLVL-1"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 72,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities.lst",
+    "record_key": "Arcanist",
+    "sha256": "e31ff7fb4fed812ae719cb19526442b9b9c9575efc25c169c06690f7a236fafd"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

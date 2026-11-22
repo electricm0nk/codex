@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Mythic Path Ability ~ Fistful of Daggers",
+    "name": "Fistful of Daggers",
+    "description": "When you could make a full attack with thrown weapons, you can instead make a single attack roll at your highest attack bonus and apply the result to any number of creatures in a 30-foot cone. Roll damage once and deal it to all creatures hit by the attack. This attack can't deal precision damage. You must throw one weapon at each target. Use the bonuses to attack and damage from the least powerful weapon thrown (for example, if you have one +2 dagger and 20 masterwork daggers, the attacks are treated as masterwork daggers). Apply any effects of concealment for individual targets as normal. If the attack roll is a critical threat, choose one target you hit and attempt to confirm the critical against that target.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Path Ability ~ Fistful of Daggers"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Path Ability.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Mythic Path ~ Champion"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "MythicTierLevel,6"
+      },
+      {
+        "key": "DESC",
+        "value": "When you could make a full attack with thrown weapons, you can instead make a single attack roll at your highest attack bonus and apply the result to any number of creatures in a 30-foot cone. Roll damage once and deal it to all creatures hit by the attack. This attack can't deal precision damage. You must throw one weapon at each target. Use the bonuses to attack and damage from the least powerful weapon thrown (for example, if you have one +2 dagger and 20 masterwork daggers, the attacks are treated as masterwork daggers). Apply any effects of concealment for individual targets as normal. If the attack roll is a critical threat, choose one target you hit and attempt to confirm the critical against that target."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
+    "line": 387,
+    "record_key": "Mythic Path Ability ~ Fistful of Daggers"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

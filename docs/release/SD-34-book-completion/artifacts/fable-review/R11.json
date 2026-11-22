@@ -1,0 +1,87 @@
+{
+  "lane": "R11",
+  "findings": [
+    {
+      "id": "R11-01",
+      "file": "apps/desktop/src-tauri/src/character_hub.rs",
+      "severity": "P1",
+      "category": "bug",
+      "title": "character_id from the frontend is joined into a filesystem path with zero validation, across every character-scoped command",
+      "evidence": "`resolve_character_root` (character_hub.rs:2995-3000) is `resolve_characters_root(app)?.join(character_id)` -- no check for `..`, path separators, or absolute-path strings anywhere in the call chain. It backs every character command registered in main.rs: create_character, clone_character, delete_character, save/load/delete_character_portrait, load/update_character_bio, load/adjust_character_money, load/adjust_character_hp, level_up_character, purchase_equipment, add/remove_*_selection, export/import_character (14+ commands, all taking `character_id: String` straight off IPC). `delete_character` (character_hub.rs:3567-3577) -> `delete_character_at_root` (3554-3562) -> `codex::saved_character::local_store::SavedCharacterStore::delete` (src/saved_character/local_store.rs:173-179) calls `fs::remove_dir_all(root)` on that unvalidated path. A characterId of `../../../Documents` would recursively delete that directory; other commands would read/write/overwrite arbitrary files the OS user can access. In the shipping UI every call site generates `crypto.randomUUID()` for characterId (apps/desktop/src/characterHub/LoadCharacterScreen.tsx:331, CharacterSheet.tsx:3275, CreateCharacterForm.tsx:611), so this is not exploitable through today's normal usage -- but the backend performs zero defense-in-depth validation of a value that crosses the Tauri IPC boundary as an arbitrary string, so an XSS in the webview, a future UI change, or any other IPC caller has an unguarded path-traversal / data-loss primitive.",
+      "proposed_action": "report_only",
+      "confidence": "high",
+      "risk_notes": "In scope of the mandatory report_only rule for the Tauri command surface. Fix would be a single shared `character_id` shape/charset validator applied in `resolve_character_root`, but that touches the whole character-hub command surface and its ~200 existing tests, so it needs a deliberate change, not an auto-fix."
+    },
+    {
+      "id": "R11-02",
+      "file": "apps/desktop/src-tauri/src/reach_gate.rs",
+      "severity": "P1",
+      "category": "hazard",
+      "title": "reach_gate's reachability verdict for 12 corpus content-kind families rests on a Tauri command with zero frontend callers",
+      "evidence": "reach_gate.rs:2168-2258 (`reference_library_reach`, dispatched via the `REFERENCE_LIBRARY_KINDS` table at 2189-2205) marks a `(book, kind)` family `Surfaced` by calling `reference_library_catalog::load_reference_library_entries_prod` directly in-process and checking the returned entries carry a description -- i.e. it proves the Rust function behind `list_reference_library_catalog` produces real payloads, not that any UI screen shows them. `list_reference_library_catalog` (reference_library_catalog.rs:281-294) is registered in main.rs:220 but has no boundary wrapper and zero references anywhere under apps/desktop/src (confirmed by grep for `ReferenceLibrary`/`reference_library` across the whole frontend tree: 0 of 0 hits) -- there is no Reference Library screen at all. So for the 12 kinds in REFERENCE_LIBRARY_KINDS (abilities, class_variants, deities, domains, generic_feats, languages, monster_variants, powers, race_variants, skills, templates, named_traits) across every ingested book, reach_gate reports `Surfaced`/player-reachable while the player-facing app has no path to any of those records. The module's own doc (reach_gate.rs:93-96) already disclaims checking 'that a React component is mounted' -- this is a concrete instance stronger than that disclaimer: not merely unverified-mounted, but demonstrably zero UI consumers exist for the command it calls.",
+      "proposed_action": "report_only",
+      "confidence": "high",
+      "risk_notes": "This is a verification-instrument correctness gap, not a runtime bug -- but any dashboard or closure gate reading reach_gate's per-family 'Surfaced' verdicts for these 12 kind families is counting content as reaching the player when it does not. report_only: fixing this means either wiring a real Reference Library screen or changing what reach_gate treats as proof for this family, both out of this lane's scope."
+    },
+    {
+      "id": "R11-03",
+      "file": "apps/desktop/src-tauri/src/characterHub/appendToCharacter.rs",
+      "severity": "P2",
+      "category": "dead_code",
+      "title": "append_to_character and re_save_character are registered commands with no frontend caller; only the third alternative (recompute_character) is wired",
+      "evidence": "main.rs registers `append_to_character` (line 185, from characterHub/appendToCharacter.rs:195-209, 209 lines of production code before its own `mod tests` at line 210 of 489) and `re_save_character` (main.rs:186, from characterHub/reSaveCharacter.rs:179-193, 193 lines of production code before `mod tests` at line 194 of 397). Grepping all of apps/desktop/src for these two command names finds them named only in doc comments (recomputeCharacter.ts:14-15, CharacterSheet.tsx:3229) as one of three interchangeable candidates ('a real UI affordance wired to one of append_to_character / recompute_character / re_save_character') -- no boundary/*.ts wrapper file and no `invoke()` call site exists for either. `recompute_character` is the one actually wired (CharacterSheet.tsx handleRecompute, boundary/recomputeCharacter.ts). append_to_character and re_save_character are fully implemented, unit-tested alternates from that same design exploration that were never removed after recompute_character was selected.",
+      "proposed_action": "report_only",
+      "confidence": "high",
+      "risk_notes": "Deletion is plausible but touches main.rs's handler list and two whole files plus their `mod tests`; leave to the file owner rather than auto-fix given the no-stub-doctrine emphasis on deliberate removal decisions."
+    },
+    {
+      "id": "R11-04",
+      "file": "apps/desktop/src-tauri/src/campaign_drive.rs",
+      "severity": "P2",
+      "category": "dead_code",
+      "title": "Four of five campaign_drive Tauri commands (full CRUD with conflict detection) have no frontend caller",
+      "evidence": "campaign_drive.rs registers `drive_list_campaigns` (152-183), `drive_load_campaign` (185-220), `drive_save_campaign` (with E2.10 conflict-detection nonce plumbing, 222-269), and `drive_delete_campaign` (271-280) -- all wired into main.rs (lines 204-207). Grepping apps/desktop/src for `driveListCampaigns`/`driveLoadCampaign`/`driveSaveCampaign`/`driveDeleteCampaign`/these four Rust command names returns zero hits; the only campaign_drive.rs command actually invoked from the frontend is `write_campaign_drive_artifacts` (apps/desktop/src/boundary/writeCampaignLocalFolderArtifacts.ts:45), a different write-through path documented at campaignModel.ts:16-17. Roughly 130 lines of fully-implemented, tested CRUD (list/load/save-with-conflict-detection/delete) sit behind commands nothing in the shipped UI calls.",
+      "proposed_action": "report_only",
+      "confidence": "high",
+      "risk_notes": "Same as R11-03: real, tested logic, not stubs -- a removal decision belongs to whoever owns the campaign-drive feature roadmap, not an auto-fix."
+    },
+    {
+      "id": "R11-05",
+      "file": "apps/desktop/src-tauri/src/reach_gate.rs",
+      "severity": "P3",
+      "category": "structure",
+      "title": "The largest file in this lane by line count ships zero lines to users -- reach_gate.rs is entirely #[cfg(test)]",
+      "evidence": "main.rs:28-32 gates the whole module behind `#[cfg(test)] mod reach_gate;` with the comment 'Compiled out of the shipping binary because it is a verification surface, not a runtime one.' reach_gate.rs is 8,127 lines -- larger than pf1_adapter.rs (4,368) and second only to character_hub.rs (9,247) in this crate -- but none of it reaches the shipping binary; it only runs under `cargo test`. This is a deliberate, well-documented choice (not a bug), but worth flagging for anyone scoping a review or line-count budget by `src/` file size: the file sits in `src/` rather than `tests/`, so a size-based priority list (as this review's own brief used) overweights it relative to its actual runtime footprint.",
+      "proposed_action": "report_only",
+      "confidence": "high",
+      "risk_notes": "Purely a scoping/documentation observation; no functional risk. Could be worth relocating under a `tests/` or `dev-support/` tree in a future cleanup, but that is a structural call outside this lane's mandate."
+    },
+    {
+      "id": "R11-06",
+      "file": "apps/desktop/src-tauri/src/browser_handoff.rs",
+      "severity": "P3",
+      "category": "structure",
+      "title": "Module doc comment describes a deferred, non-functional OS-open that the code below it no longer has",
+      "evidence": "browser_handoff.rs:16-20 (module doc) says 'Tauri 2 shell::open... not in the dep tree; adding it requires a forbidden Cargo.toml edit... `opened` here is the \"URL built and validated, ready for the OS to open\" readiness signal. The actual OS shell open is the F4 wiring slice's job.' The actual `handoff_defect_report_to_browser` command (browser_handoff.rs:237-253) already calls the real OS opener via `tauri_plugin_opener::OpenerExt` / `app.opener().open_url(...)`, and its own inline doc at 225-226 and 236-241 correctly states this now performs 'the real OS browser open.' The top-of-file doc was never updated after the F4 slice landed, so a reader who trusts only the module preamble (rather than the function's own doc) would wrongly conclude `opened: true` is not backed by a real browser open today.",
+      "proposed_action": "report_only",
+      "confidence": "high",
+      "risk_notes": "Documentation-only drift; the shipped behavior is correct and honest (verified: `perform_handoff` only returns `opened: true` after `open()` succeeds, browser_handoff.rs:229-235). Low risk, but matches this repo's known 'shipped prose is not a source of truth' pattern -- worth a doc fix, not a code fix."
+    },
+    {
+      "id": "R11-07",
+      "file": "apps/desktop/src-tauri/src/character_hub.rs",
+      "severity": "P3",
+      "category": "structure",
+      "title": "character_hub.rs (9,247 lines) and pf1_adapter.rs (4,368 lines) remain monolithic; the characterHub/ extraction seam is only partially applied",
+      "evidence": "The `characterHub/` submodule (appendToCharacter.rs, reSaveCharacter.rs, recomputeCharacter.rs -- 489/397/558 lines) shows an established, working extraction pattern: pull one command family out of character_hub.rs into its own file under a shared submodule, importing `resolve_character_root` etc. as `pub(crate)` (character_hub.rs:2991-2994 documents exactly this seam). Only 3 of the ~35 commands character_hub.rs's handler list feeds (main.rs:46-57) have been pulled out this way; the other ~32 command families (create/clone/level-up, equipment, spells, feats, money, hp/durability, portraits, bio, export/import, skills) remain in the single 9,247-line file. pf1_adapter.rs (4,368 lines, the pf1 rule-system dispatch adapter) has no equivalent extraction at all.",
+      "proposed_action": "report_only",
+      "confidence": "medium",
+      "risk_notes": "Not a defect -- a maintainability/extraction-seam observation. The existing `_at_root` pure-function split (already used consistently throughout both files for testability) is a reasonable middle ground short of full file-per-feature extraction; further splitting is a judgment call for whoever owns file layout, not something to auto-fix."
+    }
+  ],
+  "lane_summary": {
+    "files_reviewed": 35,
+    "files_skipped_generated": 0,
+    "notes": "Scope: apps/desktop/src-tauri/src, 35 .rs files (30 top-level + characterHub/{mod,appendToCharacter,reSaveCharacter,recomputeCharacter}.rs + update/{mod,transaction}.rs), ~47,072 lines total (42,712 top-level per `wc -l` + 4,360 in characterHub/ and update/); brief cited 37 files/47k lines, close enough that the discrepancy is likely a counting-method difference, not missing files. 0 of 35 files carried a 'GENERATED FILE' marker in their first lines, so 0 were skipped on that basis. Repo-wide `.unwrap()`/`.expect()` scan split by each file's own `mod tests` boundary found ZERO unwraps/expects in production (non-test) code across every file in this lane, including the two named priority files (character_hub.rs, pf1_adapter.rs) -- the 'unchecked unwraps on frontend input' smell the brief asked about does not exist here as literal unwraps; it exists instead as R11-01's unvalidated-string-used-as-path-segment pattern, which is the same class of hazard (unchecked frontend input reaching a filesystem/IO operation) without being a literal panic. Duplication-vs-rules_core check: sampled money math, ability modifiers, encumbrance, damage, and pcgen description rendering across character_hub.rs, pf1_adapter.rs, equipment_catalog.rs, feat_catalog.rs, race_catalog.rs, class_catalog_generic.rs, monster_catalog.rs -- all call into `codex::rules_core::*` rather than reimplementing; found no genuine reimplementation-instead-of-reuse instances worth reporting. Command-reachability check cross-referenced main.rs's `tauri::generate_handler!` list (61 commands) against every `invoke('<name>', ...)` / `callInvoke<...>('<name>', ...)` literal under apps/desktop/src (including the boundary/*.ts wrapper convention) and apps/desktop/dist (stale build, added nothing new): 6 commands have no live frontend caller (R11-01 through R11-04 cover 5 of them in detail; list_reference_library_catalog, append_to_character, re_save_character, drive_list_campaigns, drive_load_campaign, drive_save_campaign, drive_delete_campaign -- 7 counted individually, grouped into 3 findings by owning file/feature). is_install_eligible, perform_restore_previous, and verify_relaunch_artifact initially looked uncalled by a naive grep but are genuinely invoked through update/controllerAdapter.ts's `callInvoke<T>('name', ...)` wrapper -- confirmed live, removed from the dead-command list."
+  }
+}

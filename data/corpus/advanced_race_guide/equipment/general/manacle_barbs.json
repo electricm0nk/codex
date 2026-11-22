@@ -1,0 +1,50 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "general",
+    "cost_gp": 15.0,
+    "description": "A creature secured in barbed manacles takes 1 point of piercing damage if it takes more than a single move action during a round. Rough movement of any kind, such as being struck in combat or falling prone, likewise causes 1 point of damage. Attempting to break out of barbed manacles with a Strength check deals 1d4 points of piercing damage to the captive regardless of the success of the attempt.",
+    "key": "Manacle Barbs",
+    "name": "Manacle Barbs",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Goods.General.Racial.Hobgoblin"
+      },
+      {
+        "key": "COST",
+        "value": "15"
+      },
+      {
+        "key": "WT",
+        "value": "1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.123"
+      },
+      {
+        "key": "SPROP",
+        "value": "A creature secured in barbed manacles takes 1 point of piercing damage if it takes more than a single move action during a round. Rough movement of any kind, such as being struck in combat or falling prone, likewise causes 1 point of damage. Attempting to break out of barbed manacles with a Strength check deals 1d4 points of piercing damage to the captive regardless of the success of the attempt."
+      }
+    ],
+    "weight_lbs": 1.0
+  },
+  "ingested_at": "2026-08-03T19:41:45Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 52,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equip_general.lst",
+    "record_key": "Manacle Barbs",
+    "sha256": "2f2868746ea173e470c2334df18d24c07133cdda0467a613d7146eeb1ba465d0"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

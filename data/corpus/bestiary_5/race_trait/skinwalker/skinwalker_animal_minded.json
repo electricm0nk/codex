@@ -1,0 +1,103 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T23:30:38Z",
+  "data": {
+    "key": "Skinwalker ~ Animal-Minded",
+    "name": "Animal-Minded",
+    "race_key": "Skinwalker",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Skinwalker Racial Trait",
+      "Skinwalker Racial Default",
+      "SpecialQuality"
+    ],
+    "is_racial_default": true,
+    "suppressed_by_flag": "Skinwalker_ReplaceAnimalMinded",
+    "sets_replace_flags": [],
+    "description": "Skinwalkers have a +2 racial bonus on Handle Animal checks and on wild empathy checks.",
+    "source_page": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Skinwalker ~ Animal-Minded"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Skinwalker Racial Trait.Skinwalker Racial Default.SpecialQuality"
+      },
+      {
+        "key": "TYPE",
+        "value": "BuilderFeatSkillTrait"
+      },
+      {
+        "key": "!PREFACT",
+        "value": "1,ABILITIES,Skinwalker_ReplaceAnimalMinded=True"
+      },
+      {
+        "key": "DESC",
+        "value": "Skinwalkers have a +2 racial bonus on Handle Animal checks and on wild empathy checks."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.xx"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Racial Points|2"
+      },
+      {
+        "key": "ASPECT",
+        "value": "RacialSkillModifier|+2 Handle Animal"
+      },
+      {
+        "key": "INFO",
+        "value": "Racial Points|2"
+      }
+    ],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "SKILL",
+          "Handle Animal",
+          "2",
+          "TYPE=Racial"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "ARG_RaceBuilderPoints",
+          "-2"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "WildEmpathy",
+          "2",
+          "TYPE=Racial"
+        ]
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/skinwalker/skinwalker_abilities_race.lst",
+    "sha256": "85db848be3900cc747ef7038cb2e8d480f209cc9b9683399fce207d5407516ee",
+    "line": 19,
+    "record_key": "Skinwalker ~ Animal-Minded"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

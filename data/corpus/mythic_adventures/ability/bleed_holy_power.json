@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Mythic Path Ability ~ Bleed Holy Power",
+    "name": "Bleed Holy Power",
+    "description": "If you channel positive energy, when an undead creature damages you with a melee attack, you can expend one use of channeled energy as an immediate action to channel energy to deal damage to undead creatures around you (as detailed in the channel energy ability). Alternatively, you may focus this channeled energy so it affects only the undead creature that hit you. If you focus solely on that creature, you are considered 4 levels higher in the class that grants you the channel energy feature when determining its effects.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Path Ability ~ Bleed Holy Power"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Path Ability.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Mythic Path ~ Hierophant"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "MythicTierLevel,1"
+      },
+      {
+        "key": "DESC",
+        "value": "If you channel positive energy, when an undead creature damages you with a melee attack, you can expend one use of channeled energy as an immediate action to channel energy to deal damage to undead creatures around you (as detailed in the channel energy ability). Alternatively, you may focus this channeled energy so it affects only the undead creature that hit you. If you focus solely on that creature, you are considered 4 levels higher in the class that grants you the channel energy feature when determining its effects."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.33"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Channel Energy"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
+    "line": 124,
+    "record_key": "Mythic Path Ability ~ Bleed Holy Power"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

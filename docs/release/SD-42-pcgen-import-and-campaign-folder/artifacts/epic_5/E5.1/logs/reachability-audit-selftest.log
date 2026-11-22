@@ -1,0 +1,19 @@
+test_a_dead_ended_class_is_reported_but_does_not_fail_ok (scripts.tests.test_reachability_audit.FabricatedDeadEndTest.test_a_dead_ended_class_is_reported_but_does_not_fail_ok)
+A `wiring_class` with no done-reaching status in the grid must show ... ok
+test_clean_document_passes (scripts.tests.test_reachability_audit.FabricatedDeadEndTest.test_clean_document_passes) ... ok
+test_cli_exits_nonzero_on_fabricated_unmapped_cell (scripts.tests.test_reachability_audit.FabricatedDeadEndTest.test_cli_exits_nonzero_on_fabricated_unmapped_cell) ... ok
+test_cli_exits_zero_on_clean_document (scripts.tests.test_reachability_audit.FabricatedDeadEndTest.test_cli_exits_zero_on_clean_document) ... ok
+test_cli_json_out_writes_the_same_result (scripts.tests.test_reachability_audit.FabricatedDeadEndTest.test_cli_json_out_writes_the_same_result) ... ok
+test_fabricated_unmapped_status_is_reported (scripts.tests.test_reachability_audit.FabricatedDeadEndTest.test_fabricated_unmapped_status_is_reported) ... ok
+test_fabricated_unmapped_wiring_class_at_a_status_the_generic_rules_catch_is_no_done_path_not_unmapped (scripts.tests.test_reachability_audit.FabricatedDeadEndTest.test_fabricated_unmapped_wiring_class_at_a_status_the_generic_rules_catch_is_no_done_path_not_unmapped) ... ok
+test_fabricated_unmapped_wiring_class_is_reported (scripts.tests.test_reachability_audit.FabricatedDeadEndTest.test_fabricated_unmapped_wiring_class_is_reported) ... ok
+test_real_inventory_has_no_unmapped_cells (scripts.tests.test_reachability_audit.RealCorpusStandingGateTest.test_real_inventory_has_no_unmapped_cells) ... ok
+test_real_inventory_reachable_ceiling_agrees_with_its_own_dead_ends (scripts.tests.test_reachability_audit.RealCorpusStandingGateTest.test_real_inventory_reachable_ceiling_agrees_with_its_own_dead_ends)
+PROPERTY: the headline ceiling is exactly the arithmetic of the ... ok
+test_real_inventory_strands_no_wiring_class_that_carries_units (scripts.tests.test_reachability_audit.RealCorpusStandingGateTest.test_real_inventory_strands_no_wiring_class_that_carries_units)
+PROPERTY, not a value pin. ... ok
+
+----------------------------------------------------------------------
+Ran 11 tests in 3.272s
+
+OK

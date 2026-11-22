@@ -1,0 +1,58 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "ArmsArmor",
+    "cost_gp": null,
+    "description": "%d6 bonus damage|HerbalistSeedpodDamage",
+    "key": "Seedpod",
+    "name": "Seedpod",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "PROFICIENCY",
+        "value": "WEAPON|Seedpod"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weapon.Exotic.Ranged.Standard.Thrown.Splash.Bludgeoning.NoAttackPenalty"
+      },
+      {
+        "key": "CRITMULT",
+        "value": "x2"
+      },
+      {
+        "key": "CRITRANGE",
+        "value": "1"
+      },
+      {
+        "key": "DAMAGE",
+        "value": "1d6"
+      },
+      {
+        "key": "RANGE",
+        "value": "20"
+      },
+      {
+        "key": "SPROP",
+        "value": "%d6 bonus damage|HerbalistSeedpodDamage"
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-16T01:34:55Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 5,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_equip_arms_armor.lst",
+    "record_key": "Seedpod",
+    "sha256": "547200df900fdf8aff11a27dfad9e2927d8d2a0e98cc7b665d3d541f4e40c2f6"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

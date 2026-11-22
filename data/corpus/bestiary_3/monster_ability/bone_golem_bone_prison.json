@@ -1,0 +1,55 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Bone Golem ~ Bone Prison",
+    "delivery": "Extraordinary",
+    "description": "As a standard action, a bone golem can throw some of its bones at a creature within 30 feet-it must make a ranged touch attack to hit. These bones magically duplicate and form a cage surrounding struck creatures. Each round, the cage makes a combat maneuver check to deal the golem's slam damage, using the golem's CMB. If the check fails, the target is still trapped but takes no damage. The target can escape the grapple normally, or can break out of the bones by dealing 15 points of damage to the prison, which has the same AC, DR, and saves as the bone golem itself. Damage to the prison has no effect on the golem. The golem can only have one bone prison active at a time. If it wishes to create a second one, it (or some other creature) must first destroy the existing one.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:bone_golem_bone_prison",
+    "name": "Bone Prison",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action, a bone golem can throw some of its bones at a creature within 30 feet-it must make a ranged touch attack to hit. These bones magically duplicate and form a cage surrounding struck creatures. Each round, the cage makes a combat maneuver check to deal the golem's slam damage, using the golem's CMB. If the check fails, the target is still trapped but takes no damage. The target can escape the grapple normally, or can break out of the bones by dealing 15 points of damage to the prison, which has the same AC, DR, and saves as the bone golem itself. Damage to the prison has no effect on the golem. The golem can only have one bone prison active at a time. If it wishes to create a second one, it (or some other creature) must first destroy the existing one."
+      },
+      {
+        "key": "KEY",
+        "value": "Bone Golem ~ Bone Prison"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.133"
+      },
+      {
+        "key": "TYPE",
+        "value": "BoneGolemRacialAbility.SpecialQuality.Extraordinary"
+      }
+    ],
+    "source_page": "p.133",
+    "traits": [
+      "BoneGolemRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T14:09:11Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 935,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Bone Golem ~ Bone Prison",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

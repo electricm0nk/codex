@@ -1,0 +1,25 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:34:12Z",
+  "data": {
+    "key": "Medusa Mask Gaze",
+    "school": "Transmutation",
+    "level": null,
+    "description": "The subject, along with all its carried gear, turns into a mindless, inert statue."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_equipment/ue_spells.lst",
+    "sha256": "f57d8ce3a77af9278a5339d8f597fd3770ad3ec1b615a8c353993b202e132491",
+    "line": 29,
+    "record_key": "Medusa Mask Gaze"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

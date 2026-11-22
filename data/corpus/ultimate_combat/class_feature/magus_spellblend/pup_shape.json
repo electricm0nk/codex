@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-24T03:51:47Z",
+  "data": {
+    "key": "Magus Spellblend ~ Pup Shape",
+    "name": "Pup Shape",
+    "class": "Magus",
+    "description": "Transforms a single animal or magical beast into a younger and cuter version of itself for a short period of time.|!PRERULE:1,DisplayFullSpell",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Magus Spellblend ~ Pup Shape"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "TYPE",
+        "value": "MagusSpellblend.MagusSpellBlendLVL3"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Magus=3|Pup Shape"
+      },
+      {
+        "key": "DESC",
+        "value": "Transforms a single animal or magical beast into a younger and cuter version of itself for a short period of time.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "ITEM",
+        "value": "POTION"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 1834,
+    "record_key": "Magus Spellblend ~ Pup Shape"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

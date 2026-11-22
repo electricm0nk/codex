@@ -1,0 +1,68 @@
+{
+  "codex_generated_name": false,
+  "completeness": "full",
+  "data": {
+    "description": "See in the dark 90 ft.; Dazzled in bright light, -2 untyped penalty on saves vs. light effects.",
+    "key": "Builder Racial Trait ~ Minesight",
+    "name": "Minesight",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Builder Racial Trait ~ Minesight"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary.RacialTrait.BuilderSensesTrait.Standard.Sense"
+      },
+      {
+        "key": "DESC",
+        "value": "See in the dark 90 ft.; Dazzled in bright light, -2 untyped penalty on saves vs. light effects."
+      },
+      {
+        "key": "DESC",
+        "value": "[Cost: %1]|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ARG_RaceBuilderPoints|-2"
+      },
+      {
+        "key": "VISION",
+        "value": "Darkvision (90')"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.236"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SaveBonus|-2 untyped penalty on saves vs. light effects."
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 558,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_builder.lst",
+    "record_key": "Builder Racial Trait ~ Minesight",
+    "sha256": "a028d62d1281055c61ef830d0bbe5aafffa4c33970173c421d936a2d3371b3ff"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

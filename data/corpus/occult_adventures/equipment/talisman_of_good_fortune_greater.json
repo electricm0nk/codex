@@ -1,0 +1,58 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "General",
+    "cost_gp": 16800.0,
+    "description": "The first time that the wearer rolls a natural 1 on a d20 roll (such as on an ability check, attack roll, saving throw, or skill check), he can immediately roll again and take the new result instead",
+    "key": "Talisman of Good Fortune (Greater)",
+    "name": "Talisman of Good Fortune, greater",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Talisman of Good Fortune (Greater)"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.LesserMedium"
+      },
+      {
+        "key": "COST",
+        "value": "16800"
+      },
+      {
+        "key": "WT",
+        "value": "1"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Ability ~ Uses per Day / 1|CHARGES[1]"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.264"
+      },
+      {
+        "key": "SPROP",
+        "value": "The first time that the wearer rolls a natural 1 on a d20 roll (such as on an ability check, attack roll, saving throw, or skill check), he can immediately roll again and take the new result instead"
+      }
+    ],
+    "weight_lbs": 1.0
+  },
+  "ingested_at": "2026-08-17T08:18:39Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 112,
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_equip.lst",
+    "record_key": "Talisman of Good Fortune (Greater)",
+    "sha256": "48877b9621bd36c3812d91cc603838c92eda6199fd2bd116d16d47523cbc1cbc"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

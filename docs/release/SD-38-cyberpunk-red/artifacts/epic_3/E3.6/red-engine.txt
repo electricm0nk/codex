@@ -1,0 +1,687 @@
+   Compiling codex v0.1.0 (/home/ubuntu/workspace/repos/codex/.worktrees/sd38-e3)
+error[E0425]: cannot find type `CprKitCatalog` in this scope
+  --> src/rules_core/cpr/kit.rs:16:21
+   |
+16 |     fn catalog() -> CprKitCatalog {
+   |                     ^^^^^^^^^^^^^ not found in this scope
+
+error[E0425]: cannot find type `CprKitPurchase` in this scope
+  --> src/rules_core/cpr/kit.rs:24:77
+   |
+24 |     fn buy(kind: &str, name: &str, variant: Option<&str>, quantity: u32) -> CprKitPurchase {
+   |                                                                             ^^^^^^^^^^^^^^ not found in this scope
+
+error[E0422]: cannot find struct, variant or union type `CprKitPurchase` in this scope
+  --> src/rules_core/cpr/kit.rs:25:9
+   |
+25 |         CprKitPurchase { kind: kind.to_owned(), name: name.to_owned(), variant: variant.map(str::to_owned), quantity }
+   |         ^^^^^^^^^^^^^^ not found in this scope
+
+error[E0425]: cannot find type `ComputationExplanation` in this scope
+  --> src/rules_core/cpr/kit.rs:28:20
+   |
+28 |     fn row(rows: &[ComputationExplanation], id: &str) -> i16 {
+   |                    ^^^^^^^^^^^^^^^^^^^^^^ not found in this scope
+   |
+help: consider importing this struct through its public re-export
+   |
+ 6 +     use crate::rules_core::pilot_compute::ComputationExplanation;
+   |
+
+error[E0425]: cannot find type `CprKitOutcome` in this scope
+  --> src/rules_core/cpr/kit.rs:32:32
+   |
+32 |     fn refused(outcome: Result<CprKitOutcome, Vec<String>>, words: &[&str]) {
+   |                                ^^^^^^^^^^^^^ not found in this scope
+   |
+help: you might be missing a type parameter
+   |
+32 |     fn refused<CprKitOutcome>(outcome: Result<CprKitOutcome, Vec<String>>, words: &[&str]) {
+   |               +++++++++++++++
+
+error[E0433]: cannot find type `CprRole` in this scope
+  --> src/rules_core/cpr/kit.rs:46:24
+   |
+46 |             let role = CprRole::from_name(kit["role"].as_str().unwrap()).unwrap();
+   |                        ^^^^^^^ use of undeclared type `CprRole`
+   |
+help: consider importing this enum
+   |
+ 6 +     use crate::rules_core::cpr::roles::CprRole;
+   |
+
+error[E0433]: cannot find type `CprRole` in this scope
+  --> src/rules_core/cpr/kit.rs:85:40
+   |
+85 |         let menu = catalog.fixed_lines(CprRole::Lawman).expect("Lawman kit");
+   |                                        ^^^^^^^ use of undeclared type `CprRole`
+   |
+help: consider importing this enum
+   |
+ 6 +     use crate::rules_core::cpr::roles::CprRole;
+   |
+
+error[E0422]: cannot find struct, variant or union type `CprKitChoices` in this scope
+  --> src/rules_core/cpr/kit.rs:89:35
+   |
+89 |         let pick = |option: &str| CprKitChoices {
+   |                                   ^^^^^^^^^^^^^ not found in this scope
+
+error[E0422]: cannot find struct, variant or union type `CprKitPick` in this scope
+  --> src/rules_core/cpr/kit.rs:90:25
+   |
+90 |             picks: vec![CprKitPick { line: index, option: option.to_owned() }],
+   |                         ^^^^^^^^^^ not found in this scope
+
+error[E0433]: cannot find type `CprRole` in this scope
+  --> src/rules_core/cpr/kit.rs:93:37
+   |
+93 |         let outcome = catalog.build(CprRole::Lawman, CprKitMethod::Fixed, &pick("Basic Slug Ammunition")).unwrap();
+   |                                     ^^^^^^^ use of undeclared type `CprRole`
+   |
+help: consider importing this enum
+   |
+ 6 +     use crate::rules_core::cpr::roles::CprRole;
+   |
+
+error[E0433]: cannot find type `CprRole` in this scope
+  --> src/rules_core/cpr/kit.rs:96:31
+   |
+96 |         refused(catalog.build(CprRole::Lawman, CprKitMethod::Fixed, &pick("Basic Arrow Ammunition")), &["not an option"]);
+   |                               ^^^^^^^ use of undeclared type `CprRole`
+   |
+help: consider importing this enum
+   |
+ 6 +     use crate::rules_core::cpr::roles::CprRole;
+   |
+
+error[E0433]: cannot find type `CprRole` in this scope
+   --> src/rules_core/cpr/kit.rs:100:17
+    |
+100 |                 CprRole::Lawman,
+    |                 ^^^^^^^ use of undeclared type `CprRole`
+    |
+help: consider importing this enum
+    |
+  6 +     use crate::rules_core::cpr::roles::CprRole;
+    |
+
+error[E0422]: cannot find struct, variant or union type `CprKitChoices` in this scope
+   --> src/rules_core/cpr/kit.rs:102:18
+    |
+102 |                 &CprKitChoices { picks: vec![CprKitPick { line: plain, option: "Assault Rifle".to_owned() }], purchases: Vec::new() },
+    |                  ^^^^^^^^^^^^^ not found in this scope
+
+error[E0422]: cannot find struct, variant or union type `CprKitPick` in this scope
+   --> src/rules_core/cpr/kit.rs:102:46
+    |
+102 |                 &CprKitChoices { picks: vec![CprKitPick { line: plain, option: "Assault Rifle".to_owned() }], purchases: Vec::new() },
+    |                                              ^^^^^^^^^^ not found in this scope
+
+error[E0433]: cannot find type `CprRole` in this scope
+   --> src/rules_core/cpr/kit.rs:108:17
+    |
+108 |                 CprRole::Lawman,
+    |                 ^^^^^^^ use of undeclared type `CprRole`
+    |
+help: consider importing this enum
+    |
+  6 +     use crate::rules_core::cpr::roles::CprRole;
+    |
+
+error[E0422]: cannot find struct, variant or union type `CprKitChoices` in this scope
+   --> src/rules_core/cpr/kit.rs:110:18
+    |
+110 |                 &CprKitChoices { picks: vec![CprKitPick { line: 99, option: "Shotgun".to_owned() }], purchases: Vec::new() },
+    |                  ^^^^^^^^^^^^^ not found in this scope
+
+error[E0422]: cannot find struct, variant or union type `CprKitPick` in this scope
+   --> src/rules_core/cpr/kit.rs:110:46
+    |
+110 |                 &CprKitChoices { picks: vec![CprKitPick { line: 99, option: "Shotgun".to_owned() }], purchases: Vec::new() },
+    |                                              ^^^^^^^^^^ not found in this scope
+
+error[E0433]: cannot find type `CprRole` in this scope
+   --> src/rules_core/cpr/kit.rs:115:27
+    |
+115 |             catalog.build(CprRole::Lawman, CprKitMethod::CompletePackage, &pick("Basic Slug Ammunition")),
+    |                           ^^^^^^^ use of undeclared type `CprRole`
+    |
+help: consider importing this enum
+    |
+  6 +     use crate::rules_core::cpr::roles::CprRole;
+    |
+
+error[E0422]: cannot find struct, variant or union type `CprKitChoices` in this scope
+   --> src/rules_core/cpr/kit.rs:125:23
+    |
+125 |         let choices = CprKitChoices {
+    |                       ^^^^^^^^^^^^^ not found in this scope
+
+error[E0433]: cannot find type `CprRole` in this scope
+   --> src/rules_core/cpr/kit.rs:129:37
+    |
+129 |         let outcome = catalog.build(CprRole::Solo, CprKitMethod::Fixed, &choices).unwrap();
+    |                                     ^^^^^^^ use of undeclared type `CprRole`
+    |
+help: consider importing this enum
+    |
+  6 +     use crate::rules_core::cpr::roles::CprRole;
+    |
+
+error[E0433]: cannot find type `CprRole` in this scope
+   --> src/rules_core/cpr/kit.rs:138:17
+    |
+138 |                 CprRole::Solo,
+    |                 ^^^^^^^ use of undeclared type `CprRole`
+    |
+help: consider importing this enum
+    |
+  6 +     use crate::rules_core::cpr::roles::CprRole;
+    |
+
+error[E0422]: cannot find struct, variant or union type `CprKitChoices` in this scope
+   --> src/rules_core/cpr/kit.rs:140:18
+    |
+140 |                 &CprKitChoices { picks: Vec::new(), purchases: vec![buy("weapon", "Assault Rifle", None, 2)] },
+    |                  ^^^^^^^^^^^^^ not found in this scope
+
+error[E0422]: cannot find struct, variant or union type `CprKitChoices` in this scope
+   --> src/rules_core/cpr/kit.rs:151:23
+    |
+151 |         let choices = CprKitChoices {
+    |                       ^^^^^^^^^^^^^ not found in this scope
+
+error[E0433]: cannot find type `CprRole` in this scope
+   --> src/rules_core/cpr/kit.rs:171:37
+    |
+171 |         let outcome = catalog.build(CprRole::Solo, CprKitMethod::CompletePackage, &choices).unwrap();
+    |                                     ^^^^^^^ use of undeclared type `CprRole`
+    |
+help: consider importing this enum
+    |
+  6 +     use crate::rules_core::cpr::roles::CprRole;
+    |
+
+error[E0433]: cannot find type `CprRole` in this scope
+   --> src/rules_core/cpr/kit.rs:202:17
+    |
+202 |                 CprRole::Media,
+    |                 ^^^^^^^ use of undeclared type `CprRole`
+    |
+help: consider importing this enum
+    |
+  6 +     use crate::rules_core::cpr::roles::CprRole;
+    |
+
+error[E0422]: cannot find struct, variant or union type `CprKitChoices` in this scope
+   --> src/rules_core/cpr/kit.rs:204:18
+    |
+204 |                 &CprKitChoices { picks: Vec::new(), purchases: vec![buy("fashion", "Asia Pop", Some("Jacket"), n)] },
+    |                  ^^^^^^^^^^^^^ not found in this scope
+
+error[E0433]: cannot find type `CprRole` in this scope
+   --> src/rules_core/cpr/kit.rs:214:17
+    |
+214 |                 CprRole::Media,
+    |                 ^^^^^^^ use of undeclared type `CprRole`
+    |
+help: consider importing this enum
+    |
+  6 +     use crate::rules_core::cpr::roles::CprRole;
+    |
+
+error[E0422]: cannot find struct, variant or union type `CprKitChoices` in this scope
+   --> src/rules_core/cpr/kit.rs:216:18
+    |
+216 |                 &CprKitChoices { picks: Vec::new(), purchases: vec![buy("weapon", "Malorian Arms 3516", None, 1)] },
+    |                  ^^^^^^^^^^^^^ not found in this scope
+
+error[E0425]: cannot find type `CprKitPurchase` in this scope
+   --> src/rules_core/cpr/kit.rs:225:23
+    |
+225 |         let one = |p: CprKitPurchase| CprKitChoices { picks: Vec::new(), purchases: vec![p] };
+    |                       ^^^^^^^^^^^^^^ not found in this scope
+
+error[E0422]: cannot find struct, variant or union type `CprKitChoices` in this scope
+   --> src/rules_core/cpr/kit.rs:225:39
+    |
+225 |         let one = |p: CprKitPurchase| CprKitChoices { picks: Vec::new(), purchases: vec![p] };
+    |                                       ^^^^^^^^^^^^^ not found in this scope
+
+error[E0433]: cannot find type `CprRole` in this scope
+   --> src/rules_core/cpr/kit.rs:227:31
+    |
+227 |         refused(catalog.build(CprRole::Solo, cp, &one(buy("weapon", "Lightsaber", None, 1))), &["Lightsaber", "not"]);
+    |                               ^^^^^^^ use of undeclared type `CprRole`
+    |
+help: consider importing this enum
+    |
+  6 +     use crate::rules_core::cpr::roles::CprRole;
+    |
+
+error[E0433]: cannot find type `CprRole` in this scope
+   --> src/rules_core/cpr/kit.rs:228:31
+    |
+228 |         refused(catalog.build(CprRole::Solo, cp, &one(buy("vehicle", "Roadbike", None, 1))), &["vehicle"]);
+    |                               ^^^^^^^ use of undeclared type `CprRole`
+    |
+help: consider importing this enum
+    |
+  6 +     use crate::rules_core::cpr::roles::CprRole;
+    |
+
+error[E0433]: cannot find type `CprRole` in this scope
+   --> src/rules_core/cpr/kit.rs:229:31
+    |
+229 |         refused(catalog.build(CprRole::Solo, cp, &one(buy("gear", "Flashlight", None, 0))), &["quantity"]);
+    |                               ^^^^^^^ use of undeclared type `CprRole`
+    |
+help: consider importing this enum
+    |
+  6 +     use crate::rules_core::cpr::roles::CprRole;
+    |
+
+error[E0433]: cannot find type `CprRole` in this scope
+   --> src/rules_core/cpr/kit.rs:230:31
+    |
+230 |         refused(catalog.build(CprRole::Solo, cp, &one(buy("armor", "Light Armorjack", None, 1))), &["Body or Head"]);
+    |                               ^^^^^^^ use of undeclared type `CprRole`
+    |
+help: consider importing this enum
+    |
+  6 +     use crate::rules_core::cpr::roles::CprRole;
+    |
+
+error[E0433]: cannot find type `CprRole` in this scope
+   --> src/rules_core/cpr/kit.rs:231:31
+    |
+231 |         refused(catalog.build(CprRole::Solo, cp, &one(buy("armor", "Bulletproof Shield", Some("Body"), 1))), &["held"]);
+    |                               ^^^^^^^ use of undeclared type `CprRole`
+    |
+help: consider importing this enum
+    |
+  6 +     use crate::rules_core::cpr::roles::CprRole;
+    |
+
+error[E0433]: cannot find type `CprRole` in this scope
+   --> src/rules_core/cpr/kit.rs:232:31
+    |
+232 |         refused(catalog.build(CprRole::Solo, cp, &one(buy("fashion", "Asia Pop", Some("Cape"), 1))), &["Cape"]);
+    |                               ^^^^^^^ use of undeclared type `CprRole`
+    |
+help: consider importing this enum
+    |
+  6 +     use crate::rules_core::cpr::roles::CprRole;
+    |
+
+error[E0433]: cannot find type `CprRole` in this scope
+   --> src/rules_core/cpr/kit.rs:234:31
+    |
+234 |         refused(catalog.build(CprRole::Solo, cp, &one(buy("ammo", "Basic Ammunition", Some("Rifle"), 15))), &["increments of 10"]);
+    |                               ^^^^^^^ use of undeclared type `CprRole`
+    |
+help: consider importing this enum
+    |
+  6 +     use crate::rules_core::cpr::roles::CprRole;
+    |
+
+error[E0433]: cannot find type `CprRole` in this scope
+   --> src/rules_core/cpr/kit.rs:236:31
+    |
+236 |         refused(catalog.build(CprRole::Solo, cp, &one(buy("ammo", "Flashbang Ammunition", Some("Rifle"), 10))), &["Grenades only"]);
+    |                               ^^^^^^^ use of undeclared type `CprRole`
+    |
+help: consider importing this enum
+    |
+  6 +     use crate::rules_core::cpr::roles::CprRole;
+    |
+
+error[E0433]: cannot find type `CprRole` in this scope
+   --> src/rules_core/cpr/kit.rs:237:31
+    |
+237 |         refused(catalog.build(CprRole::Solo, cp, &one(buy("ammo", "Basic Ammunition", Some("Laser"), 10))), &["Laser"]);
+    |                               ^^^^^^^ use of undeclared type `CprRole`
+    |
+help: consider importing this enum
+    |
+  6 +     use crate::rules_core::cpr::roles::CprRole;
+    |
+
+error[E0433]: cannot find type `CprRole` in this scope
+   --> src/rules_core/cpr/kit.rs:238:31
+    |
+238 |         refused(catalog.build(CprRole::Solo, cp, &one(buy("weapon", "Heavy Pistol", Some("Gold"), 1))), &["takes no"]);
+    |                               ^^^^^^^ use of undeclared type `CprRole`
+    |
+help: consider importing this enum
+    |
+  6 +     use crate::rules_core::cpr::roles::CprRole;
+    |
+
+error[E0425]: cannot find type `BTreeSet` in this scope
+   --> src/rules_core/cpr/kit.rs:253:95
+    |
+253 |         let with = |parts: &[&[&str]]| parts.iter().flat_map(|p| p.iter().copied()).collect::<BTreeSet<&str>>();
+    |                                                                                               ^^^^^^^^ not found in this scope
+    |
+    = note: struct `crate::rules_core::sheet_rule::schema_publish_tests::BTreeSet` exists but is inaccessible
+help: consider importing this struct
+    |
+  6 +     use std::collections::BTreeSet;
+    |
+
+error[E0425]: cannot find type `BTreeSet` in this scope
+   --> src/rules_core/cpr/kit.rs:254:34
+    |
+254 |         let expected: Vec<(&str, BTreeSet<&str>)> = vec![
+    |                                  ^^^^^^^^ not found in this scope
+    |
+    = note: struct `crate::rules_core::sheet_rule::schema_publish_tests::BTreeSet` exists but is inaccessible
+help: consider importing this struct
+    |
+  6 +     use std::collections::BTreeSet;
+    |
+
+error[E0425]: cannot find type `BTreeSet` in this scope
+   --> src/rules_core/cpr/kit.rs:272:54
+    |
+272 |             assert_eq!(got.iter().copied().collect::<BTreeSet<&str>>(), *want, "{name}");
+    |                                                      ^^^^^^^^ not found in this scope
+    |
+    = note: struct `crate::rules_core::sheet_rule::schema_publish_tests::BTreeSet` exists but is inaccessible
+help: consider importing this struct
+    |
+  6 +     use std::collections::BTreeSet;
+    |
+
+error[E0425]: cannot find type `CprShopItem` in this scope
+   --> src/rules_core/cpr/kit.rs:301:26
+    |
+301 |         let listed: Vec<&CprShopItem> = menu.iter().filter(|i| i.kind == "fashion").collect();
+    |                          ^^^^^^^^^^^ not found in this scope
+    |
+help: you might be missing a type parameter
+    |
+278 |     fn the_shop_lists_every_priced_record_of_the_buyable_kinds<CprShopItem>() {
+    |                                                               +++++++++++++
+
+error[E0433]: cannot find type `CprRole` in this scope
+   --> src/rules_core/cpr/kit.rs:317:34
+    |
+317 |         let solo = catalog.build(CprRole::Solo, CprKitMethod::Fixed, &CprKitChoices::default()).unwrap().sheet();
+    |                                  ^^^^^^^ use of undeclared type `CprRole`
+    |
+help: consider importing this enum
+    |
+  6 +     use crate::rules_core::cpr::roles::CprRole;
+    |
+
+error[E0422]: cannot find struct, variant or union type `CprWornArmor` in this scope
+   --> src/rules_core/cpr/kit.rs:322:17
+    |
+322 |                 CprWornArmor { name: "Light Armorjack".to_owned(), location: CprArmorLocation::Body },
+    |                 ^^^^^^^^^^^^ not found in this scope
+    |
+help: consider importing this struct
+    |
+  6 +     use crate::rules_core::cpr::armor::CprWornArmor;
+    |
+
+error[E0433]: cannot find type `CprArmorLocation` in this scope
+   --> src/rules_core/cpr/kit.rs:322:78
+    |
+322 |                 CprWornArmor { name: "Light Armorjack".to_owned(), location: CprArmorLocation::Body },
+    |                                                                              ^^^^^^^^^^^^^^^^ use of undeclared type `CprArmorLocation`
+    |
+help: consider importing this enum
+    |
+  6 +     use crate::rules_core::cpr::armor::CprArmorLocation;
+    |
+
+error[E0422]: cannot find struct, variant or union type `CprWornArmor` in this scope
+   --> src/rules_core/cpr/kit.rs:323:17
+    |
+323 |                 CprWornArmor { name: "Light Armorjack".to_owned(), location: CprArmorLocation::Head },
+    |                 ^^^^^^^^^^^^ not found in this scope
+    |
+help: consider importing this struct
+    |
+  6 +     use crate::rules_core::cpr::armor::CprWornArmor;
+    |
+
+error[E0433]: cannot find type `CprArmorLocation` in this scope
+   --> src/rules_core/cpr/kit.rs:323:78
+    |
+323 |                 CprWornArmor { name: "Light Armorjack".to_owned(), location: CprArmorLocation::Head },
+    |                                                                              ^^^^^^^^^^^^^^^^ use of undeclared type `CprArmorLocation`
+    |
+help: consider importing this enum
+    |
+  6 +     use crate::rules_core::cpr::armor::CprArmorLocation;
+    |
+
+error[E0433]: cannot find type `CprRole` in this scope
+   --> src/rules_core/cpr/kit.rs:327:40
+    |
+327 |         let menu = catalog.fixed_lines(CprRole::Solo).unwrap();
+    |                                        ^^^^^^^ use of undeclared type `CprRole`
+    |
+help: consider importing this enum
+    |
+  6 +     use crate::rules_core::cpr::roles::CprRole;
+    |
+
+error[E0433]: cannot find type `CprRole` in this scope
+   --> src/rules_core/cpr/kit.rs:331:17
+    |
+331 |                 CprRole::Solo,
+    |                 ^^^^^^^ use of undeclared type `CprRole`
+    |
+help: consider importing this enum
+    |
+  6 +     use crate::rules_core::cpr::roles::CprRole;
+    |
+
+error[E0422]: cannot find struct, variant or union type `CprKitChoices` in this scope
+   --> src/rules_core/cpr/kit.rs:333:18
+    |
+333 |                 &CprKitChoices {
+    |                  ^^^^^^^^^^^^^ not found in this scope
+
+error[E0422]: cannot find struct, variant or union type `CprKitPick` in this scope
+   --> src/rules_core/cpr/kit.rs:334:33
+    |
+334 |                     picks: vec![CprKitPick { line: shield_line, option: "Bulletproof Shield".to_owned() }],
+    |                                 ^^^^^^^^^^ not found in this scope
+
+error[E0433]: cannot find type `CprRole` in this scope
+   --> src/rules_core/cpr/kit.rs:341:36
+    |
+341 |         let runner = catalog.build(CprRole::Netrunner, CprKitMethod::Fixed, &CprKitChoices::default()).unwrap().sheet();
+    |                                    ^^^^^^^ use of undeclared type `CprRole`
+    |
+help: consider importing this enum
+    |
+  6 +     use crate::rules_core::cpr::roles::CprRole;
+    |
+
+error[E0433]: cannot find type `CprRole` in this scope
+   --> src/rules_core/cpr/kit.rs:348:17
+    |
+348 |                 CprRole::Solo,
+    |                 ^^^^^^^ use of undeclared type `CprRole`
+    |
+help: consider importing this enum
+    |
+  6 +     use crate::rules_core::cpr::roles::CprRole;
+    |
+
+error[E0422]: cannot find struct, variant or union type `CprKitChoices` in this scope
+   --> src/rules_core/cpr/kit.rs:350:18
+    |
+350 |                 &CprKitChoices { picks: Vec::new(), purchases: vec![buy("program", "Sword", None, 1)] },
+    |                  ^^^^^^^^^^^^^ not found in this scope
+
+warning: unused import: `super::*`
+ --> src/rules_core/cpr/kit.rs:6:9
+  |
+6 |     use super::*;
+  |         ^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+error[E0433]: cannot find type `CprKitCatalog` in this scope
+  --> src/rules_core/cpr/kit.rs:17:9
+   |
+17 |         CprKitCatalog::load(&corpus_dir()).expect("the kit catalog loads")
+   |         ^^^^^^^^^^^^^ use of undeclared type `CprKitCatalog`
+
+error[E0433]: cannot find type `CprKitMethod` in this scope
+  --> src/rules_core/cpr/kit.rs:72:47
+   |
+72 |             let outcome = catalog.build(role, CprKitMethod::Fixed, &CprKitChoices::default()).expect("the default kit builds");
+   |                                               ^^^^^^^^^^^^ use of undeclared type `CprKitMethod`
+
+error[E0433]: cannot find type `CprKitChoices` in this scope
+  --> src/rules_core/cpr/kit.rs:72:69
+   |
+72 |             let outcome = catalog.build(role, CprKitMethod::Fixed, &CprKitChoices::default()).expect("the default kit builds");
+   |                                                                     ^^^^^^^^^^^^^ use of undeclared type `CprKitChoices`
+
+error[E0433]: cannot find type `CprKitMethod` in this scope
+  --> src/rules_core/cpr/kit.rs:93:54
+   |
+93 |         let outcome = catalog.build(CprRole::Lawman, CprKitMethod::Fixed, &pick("Basic Slug Ammunition")).unwrap();
+   |                                                      ^^^^^^^^^^^^ use of undeclared type `CprKitMethod`
+
+error[E0433]: cannot find type `CprKitMethod` in this scope
+  --> src/rules_core/cpr/kit.rs:96:48
+   |
+96 |         refused(catalog.build(CprRole::Lawman, CprKitMethod::Fixed, &pick("Basic Arrow Ammunition")), &["not an option"]);
+   |                                                ^^^^^^^^^^^^ use of undeclared type `CprKitMethod`
+
+error[E0433]: cannot find type `CprKitMethod` in this scope
+   --> src/rules_core/cpr/kit.rs:101:17
+    |
+101 |                 CprKitMethod::Fixed,
+    |                 ^^^^^^^^^^^^ use of undeclared type `CprKitMethod`
+
+error[E0433]: cannot find type `CprKitMethod` in this scope
+   --> src/rules_core/cpr/kit.rs:109:17
+    |
+109 |                 CprKitMethod::Fixed,
+    |                 ^^^^^^^^^^^^ use of undeclared type `CprKitMethod`
+
+error[E0433]: cannot find type `CprKitMethod` in this scope
+   --> src/rules_core/cpr/kit.rs:115:44
+    |
+115 |             catalog.build(CprRole::Lawman, CprKitMethod::CompletePackage, &pick("Basic Slug Ammunition")),
+    |                                            ^^^^^^^^^^^^ use of undeclared type `CprKitMethod`
+
+error[E0433]: cannot find type `CprKitMethod` in this scope
+   --> src/rules_core/cpr/kit.rs:129:52
+    |
+129 |         let outcome = catalog.build(CprRole::Solo, CprKitMethod::Fixed, &choices).unwrap();
+    |                                                    ^^^^^^^^^^^^ use of undeclared type `CprKitMethod`
+
+error[E0433]: cannot find type `CprKitMethod` in this scope
+   --> src/rules_core/cpr/kit.rs:139:17
+    |
+139 |                 CprKitMethod::Fixed,
+    |                 ^^^^^^^^^^^^ use of undeclared type `CprKitMethod`
+
+error[E0433]: cannot find type `CprKitMethod` in this scope
+   --> src/rules_core/cpr/kit.rs:171:52
+    |
+171 |         let outcome = catalog.build(CprRole::Solo, CprKitMethod::CompletePackage, &choices).unwrap();
+    |                                                    ^^^^^^^^^^^^ use of undeclared type `CprKitMethod`
+
+error[E0433]: cannot find type `CprKitMethod` in this scope
+   --> src/rules_core/cpr/kit.rs:203:17
+    |
+203 |                 CprKitMethod::CompletePackage,
+    |                 ^^^^^^^^^^^^ use of undeclared type `CprKitMethod`
+
+error[E0433]: cannot find type `CprKitMethod` in this scope
+   --> src/rules_core/cpr/kit.rs:215:17
+    |
+215 |                 CprKitMethod::CompletePackage,
+    |                 ^^^^^^^^^^^^ use of undeclared type `CprKitMethod`
+
+error[E0433]: cannot find type `CprKitMethod` in this scope
+   --> src/rules_core/cpr/kit.rs:226:18
+    |
+226 |         let cp = CprKitMethod::CompletePackage;
+    |                  ^^^^^^^^^^^^ use of undeclared type `CprKitMethod`
+
+error[E0308]: mismatched types
+   --> src/rules_core/cpr/kit.rs:255:51
+    |
+255 |             ("Basic Ammunition", with(&[&bullets, &["Slug", "Shotgun Shell", "Arrow"]])),
+    |                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ expected an array with a size of 4, found one with a size of 3
+
+error[E0308]: mismatched types
+   --> src/rules_core/cpr/kit.rs:259:55
+    |
+259 |             ("Expansive Ammunition", with(&[&bullets, &["Slug", "Arrow"]])),
+    |                                                       ^^^^^^^^^^^^^^^^^^ expected an array with a size of 4, found one with a size of 2
+
+error[E0308]: mismatched types
+   --> src/rules_core/cpr/kit.rs:261:56
+    |
+261 |             ("Incendiary Ammunition", with(&[&bullets, &["Arrow", "Grenade", "Shotgun Shell"]])),
+    |                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ expected an array with a size of 4, found one with a size of 3
+
+error[E0308]: mismatched types
+   --> src/rules_core/cpr/kit.rs:263:52
+    |
+263 |             ("Rubber Ammunition", with(&[&bullets, &["Slug", "Arrow"]])),
+    |                                                    ^^^^^^^^^^^^^^^^^^ expected an array with a size of 4, found one with a size of 2
+
+error[E0308]: mismatched types
+   --> src/rules_core/cpr/kit.rs:265:51
+    |
+265 |             ("Smart Ammunition", with(&[&bullets, &["Slug", "Arrow", "Rocket"]])),
+    |                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^ expected an array with a size of 4, found one with a size of 3
+
+error[E0433]: cannot find type `CprKitMethod` in this scope
+   --> src/rules_core/cpr/kit.rs:317:49
+    |
+317 |         let solo = catalog.build(CprRole::Solo, CprKitMethod::Fixed, &CprKitChoices::default()).unwrap().sheet();
+    |                                                 ^^^^^^^^^^^^ use of undeclared type `CprKitMethod`
+
+error[E0433]: cannot find type `CprKitChoices` in this scope
+   --> src/rules_core/cpr/kit.rs:317:71
+    |
+317 |         let solo = catalog.build(CprRole::Solo, CprKitMethod::Fixed, &CprKitChoices::default()).unwrap().sheet();
+    |                                                                       ^^^^^^^^^^^^^ use of undeclared type `CprKitChoices`
+
+error[E0433]: cannot find type `CprKitMethod` in this scope
+   --> src/rules_core/cpr/kit.rs:332:17
+    |
+332 |                 CprKitMethod::Fixed,
+    |                 ^^^^^^^^^^^^ use of undeclared type `CprKitMethod`
+
+error[E0433]: cannot find type `CprKitMethod` in this scope
+   --> src/rules_core/cpr/kit.rs:341:56
+    |
+341 |         let runner = catalog.build(CprRole::Netrunner, CprKitMethod::Fixed, &CprKitChoices::default()).unwrap().sheet();
+    |                                                        ^^^^^^^^^^^^ use of undeclared type `CprKitMethod`
+
+error[E0433]: cannot find type `CprKitChoices` in this scope
+   --> src/rules_core/cpr/kit.rs:341:78
+    |
+341 |         let runner = catalog.build(CprRole::Netrunner, CprKitMethod::Fixed, &CprKitChoices::default()).unwrap().sheet();
+    |                                                                              ^^^^^^^^^^^^^ use of undeclared type `CprKitChoices`
+
+error[E0433]: cannot find type `CprKitMethod` in this scope
+   --> src/rules_core/cpr/kit.rs:349:17
+    |
+349 |                 CprKitMethod::CompletePackage,
+    |                 ^^^^^^^^^^^^ use of undeclared type `CprKitMethod`
+
+Some errors have detailed explanations: E0308, E0422, E0425, E0433.
+For more information about an error, try `rustc --explain E0308`.
+warning: `codex` (lib test) generated 1 warning
+error: could not compile `codex` (lib test) due to 81 previous errors; 1 warning emitted

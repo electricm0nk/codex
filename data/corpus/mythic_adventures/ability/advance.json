@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Mythic Path Feature ~ Advance",
+    "name": "Advance",
+    "description": "As a swift action, you can expend one use of mythic power to inspire a tactical advance on the field of battle. This allows you and each of your allies within 30 feet to take either a single move action of the character's choice or a 5-foot step, as long as you or your ally has the ability to take such an action (for example, an unconscious character still can't take an action). The action granted by this ability doesn't count toward the number or type of actions a creature is allowed to take on its turn.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Path Feature ~ Advance"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Path Feature.Marshal Path Feature.SpecialQuality"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Mythic Path ~ Marshal"
+      },
+      {
+        "key": "DESC",
+        "value": "As a swift action, you can expend one use of mythic power to inspire a tactical advance on the field of battle. This allows you and each of your allies within 30 feet to take either a single move action of the character's choice or a 5-foot step, as long as you or your ally has the ability to take such an action (for example, an unconscious character still can't take an action). The action granted by this ability doesn't count toward the number or type of actions a creature is allowed to take on its turn."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.38"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Mythic Power"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
+    "line": 80,
+    "record_key": "Mythic Path Feature ~ Advance"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

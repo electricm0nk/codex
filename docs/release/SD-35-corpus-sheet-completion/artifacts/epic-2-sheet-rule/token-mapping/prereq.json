@@ -1,0 +1,3419 @@
+[
+ {
+  "token_type": "PREABILITY",
+  "family": "prereq",
+  "instances": 3411,
+  "instances_source": "this lane: every raw_tokens entry across data/corpus (48,706 records with raw_tokens, 37 books, all statuses); feat records with a prerequisites list counted in their own row",
+  "units": 2414,
+  "units_denominator": "non-DONE units (completion_atlas._bucket_of != DONE) joined to a corpus record carrying this token, of 23,315 non-DONE / 49,438",
+  "maps_to": "Applies",
+  "resolvability": "filter (per-character-resolvable)",
+  "rule": "PREABILITY:N,[CHECKMULT,]CATEGORY=<cat>,<item>... -> Applies::AtLeast{n:N, of:[Holds{Rule(id)}...]}. Each <item> is resolved at convert time to a rule id by (category, key) join over the corpus (Special Ability 2,612/2,897 items resolve, FEAT 1,247/1,790, Archetype 245/251, Internal 236/240, Background 0/35 -- denominators are named items corpus-wide). TYPE.<facet> / TYPE=<facet> items become Holds{RuleTag{category, tag}} (a tag is any dot-segment of the target's TYPE:). CHECKMULT counts copies of a MULT:YES rule. An item that resolves to no rule id becomes Words(\"requires <item>\") on that clause only.",
+  "expr_shape": "n/a",
+  "expr_gaps": [],
+  "applies_shape": "AtLeast{n, of: [Holds{Rule(id)|RuleTag{cat,tag}, count:1}]}",
+  "prose_effect": "none (the picker shows the unmet requirement text; the sheet prints only held rules)",
+  "examples": [
+   {
+    "record": "occult_adventures:class_feature:Psychic Bloodline ~ Undercasting Prodigy",
+    "source": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst:1883",
+    "raw": "PREABILITY:1,CATEGORY=Special Ability,Sorcerer Bloodline ~ Psychic",
+    "sheet_line": "F1 (human Fighter 3): excluded -- requires holding rule 'Sorcerer Bloodline ~ Psychic' [Special Ability]; F1 holds no Special Ability rule of that id"
+   },
+   {
+    "record": "occult_adventures:class_feature:Psychic Bloodline ~ Psychic Strike",
+    "source": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst:1881",
+    "raw": "PREABILITY:1,CATEGORY=Special Ability,Sorcerer Bloodline ~ Psychic",
+    "sheet_line": "F1 (human Fighter 3): excluded -- requires holding rule 'Sorcerer Bloodline ~ Psychic' [Special Ability]; F1 holds no Special Ability rule of that id"
+   },
+   {
+    "record": "occult_adventures:class_feature:Psychic Bloodline ~ Thoughtsense",
+    "source": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst:1884",
+    "raw": "PREABILITY:1,CATEGORY=Special Ability,Sorcerer Bloodline ~ Psychic",
+    "sheet_line": "F1 (human Fighter 3): excluded -- requires holding rule 'Sorcerer Bloodline ~ Psychic' [Special Ability]; F1 holds no Special Ability rule of that id"
+   }
+  ],
+  "oracle_check": "held-set parity: SA.COUNT and SA.<n>.NAME from scripts/oracle_harness/charbuild-remainder.txt.ftl for a built character list exactly the Special Ability rules PCGen judged held; our held set (applies evaluated true) must equal it",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": [
+   "FEAT items that fail the key join are mostly parameterised feats (\"Weapon Focus (Longsword)\"): decide whether Holds{Rule(id), option} keys on the base feat plus its chosen option, or on a synthesized per-option id",
+   "Background category (35 items, Ultimate Campaign) has no corpus records -> stays Words until backgrounds are ingested"
+  ]
+ },
+ {
+  "token_type": "PREMULT",
+  "family": "prereq",
+  "instances": 4708,
+  "instances_source": "this lane: every raw_tokens entry across data/corpus (48,706 records with raw_tokens, 37 books, all statuses); feat records with a prerequisites list counted in their own row",
+  "units": 2729,
+  "units_denominator": "non-DONE units (completion_atlas._bucket_of != DONE) joined to a corpus record carrying this token, of 23,315 non-DONE / 49,438",
+  "maps_to": "Applies",
+  "resolvability": "filter (per-character-resolvable)",
+  "rule": "PREMULT:N,[clause],[clause]... -> Applies::AtLeast{n:N, of:[converted sub-clauses]}. Sub-clauses recurse through this same table (nesting is real: PREMULT+PRETYPE 43 instances). The live filter folds three-valued: met if N sub-gates are true; excluded only if even counting every Words sub-gate as true still falls short; otherwise included-with-note. This is pre_tokens.rs evaluate_mult's fold, carried over as the evaluator's semantics for AtLeast.",
+  "expr_shape": "n/a",
+  "expr_gaps": [],
+  "applies_shape": "AtLeast{n, of: Vec<Applies>}",
+  "prose_effect": "none",
+  "examples": [
+   {
+    "record": "occult_adventures:class_feature:Wild Talent ~ Entangling Infusion",
+    "source": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst:689",
+    "raw": "PREMULT:1,[PREVARGTEQ:KineticistLVL_Earth,4],[PREVARGTEQ:KineticistLVL_Water,4]",
+    "sheet_line": "F1 (human Fighter 3): excluded -- requires 1 of: Kineticist (element) level N; F1 has no Kineticist levels"
+   },
+   {
+    "record": "occult_adventures:class_feature:Wild Talent ~ Cold Adaptation",
+    "source": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst:739",
+    "raw": "PREMULT:1,[PREVARGTEQ:KineticistLVL_Fire,1],[PREVARGTEQ:KineticistLVL_Water,1]",
+    "sheet_line": "F1 (human Fighter 3): excluded -- requires 1 of: Kineticist (element) level N; F1 has no Kineticist levels"
+   },
+   {
+    "record": "occult_adventures:class_feature:Wild Talent ~ Cloud",
+    "source": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst:684",
+    "raw": "PREMULT:1,[PREVARGTEQ:KineticistLVL_Air,14],[PREVARGTEQ:KineticistLVL_Water,14]",
+    "sheet_line": "F1 (human Fighter 3): excluded -- requires 1 of: Kineticist (element) level N; F1 has no Kineticist levels"
+   }
+  ],
+  "oracle_check": "held-set parity: SA.COUNT and SA.<n>.NAME from scripts/oracle_harness/charbuild-remainder.txt.ftl for a built character list exactly the Special Ability rules PCGen judged held; our held set (applies evaluated true) must equal it",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": [
+   "327 PREMULT instances (corpus-wide) have a [redacted PI] body: the PI redaction removed the sub-clauses; those 327 convert to Words(\"requirement withheld\") -- count them under the PI residue, not under this row"
+  ]
+ },
+ {
+  "token_type": "PREVARGTEQ",
+  "family": "prereq",
+  "instances": 4213,
+  "instances_source": "this lane: every raw_tokens entry across data/corpus (48,706 records with raw_tokens, 37 books, all statuses); feat records with a prerequisites list counted in their own row",
+  "units": 2848,
+  "units_denominator": "non-DONE units (completion_atlas._bucket_of != DONE) joined to a corpus record carrying this token, of 23,315 non-DONE / 49,438",
+  "maps_to": "Applies",
+  "resolvability": "filter for classes a-c (about 90% of instances); Words for d-e",
+  "rule": "PREVAR<op>:<var>,<threshold> -> Applies::Compare{lhs: resolve(var), op, rhs: Expr(threshold)}. resolve(var) is a CONVERTER-SIDE variable-setter index over every DEFINE:/BONUS:VAR in the corpus (tool side, allowed to read PCGen): (a) a variable whose setters are all level formulas (RogueTalentLVL, MonkBonusFeatLVL, <X>LVL, MasterLevel, MythicTierLevel, and the (charbonusto(\"PCLEVEL\",C)+classlevel(C)) idiom) -> ClassLevel(C) or Level via the map-formula lane's F1..F9 parser (2,666 of 5,118 PREVAR* instances corpus-wide, 52%); (b) PreStatScore_<ABBR> -> AbilityScore(ABBR) (56 instances); (c) a variable set to a constant by exactly one or more rule records and never by a formula (a flag: VigilanteIsStalker, KB_Tier tiers, Sorcerer_BonusSpell_*) -> Holds{Rule(setter)} or AtLeast{1, [Holds(setter)...]} (~1,900 'other-var' + 210 flag instances); (d) a pool counter (EidolonSTRIncreaseCount, TempEvolutionTaken, *Count/*Taken/*Pool, 300 instances) -> Compare{lhs: ChoiceCount(pool), ...} which stays Words until the choice machinery lands; (e) var(\"AC.Natural\") / count(\"ABILITIES\"...) calls (40 instances) -> Words. The threshold side goes through the same formula parser (PREVARLT:X,1+(EidolonLVL/4) is real). No variable name survives into the output.",
+  "expr_shape": "Compare{ClassLevel(C) >= Const(n)} for the 52% level-alias class; AbilityScore(A) >= Const(n) for PreStatScore_",
+  "expr_gaps": [
+   "Expr::ChoiceCount(ChoiceId) -- pool counters (class d) have no Expr form",
+   "Expr::HeldCount{category, tag} -- count(\"ABILITIES\",\"CATEGORY=...\") (class e)"
+  ],
+  "applies_shape": "Compare{lhs: Expr, op: Gte|Gt|Lt|Lte|Eq|Ne, rhs: Expr} | Holds{Rule(setter)} | Words",
+  "prose_effect": "none",
+  "examples": [
+   {
+    "record": "occult_adventures:class_feature:Occultist Expanded Arcana 2x8",
+    "source": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst:2061",
+    "raw": "PREVARGTEQ:(charbonusto(\"PCLEVEL\",\"Occultist\") + classlevel(\"Occultist\")),18",
+    "sheet_line": "F1 (human Fighter 3): excluded -- resolves to ClassLevel(<class named in the token>) >= N; F1 has no levels in that class"
+   },
+   {
+    "record": "occult_adventures:class_feature:Psychic Detective Expanded Arcana 1x1",
+    "source": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst:1995",
+    "raw": "PREVARGTEQ:(charbonusto(\"PCLEVEL\",\"Psychic Detective\") + classlevel(\"Psychic Detective\")),1",
+    "sheet_line": "F1 (human Fighter 3): excluded -- resolves to ClassLevel(<class named in the token>) >= N; F1 has no levels in that class"
+   },
+   {
+    "record": "occult_adventures:class_feature:Psychic Expanded Arcana 2x1",
+    "source": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst:1962",
+    "raw": "PREVARGTEQ:(charbonusto(\"PCLEVEL\",\"Psychic\") + classlevel(\"Psychic\")),4",
+    "sheet_line": "F1 (human Fighter 3): excluded -- resolves to ClassLevel(<class named in the token>) >= N; F1 has no levels in that class"
+   }
+  ],
+  "oracle_check": "held-set parity: SA.COUNT and SA.<n>.NAME from scripts/oracle_harness/charbuild-remainder.txt.ftl for a built character list exactly the Special Ability rules PCGen judged held; our held set (applies evaluated true) must equal it",
+  "refuse_reason": "",
+  "confidence": "medium",
+  "open_questions": [
+   "the variable-setter index is a new converter component shared with map-formula (they need it for BONUS:VAR|X reads too) -- name one owner",
+   "a flag variable with several setters means \"any of these rules\" (AtLeast 1); confirm against PCGen sum semantics that a setter granting 0 does not count"
+  ]
+ },
+ {
+  "token_type": "PREVARGT",
+  "family": "prereq",
+  "instances": 69,
+  "instances_source": "this lane: every raw_tokens entry across data/corpus (48,706 records with raw_tokens, 37 books, all statuses); feat records with a prerequisites list counted in their own row",
+  "units": 67,
+  "units_denominator": "non-DONE units (completion_atlas._bucket_of != DONE) joined to a corpus record carrying this token, of 23,315 non-DONE / 49,438",
+  "maps_to": "Applies",
+  "resolvability": "filter (per-character-resolvable)",
+  "rule": "Same rule as PREVARGTEQ with op Gt. 56 of 69 instances are AstralSuitPrereqLVL (Ultimate Psionics, level alias -> ClassLevel(Aegis)).",
+  "expr_shape": "n/a",
+  "expr_gaps": [],
+  "applies_shape": "Compare{..., op: Gt}",
+  "prose_effect": "none",
+  "examples": [
+   {
+    "record": "bestiary_2:template:Ravener",
+    "source": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_templates.lst:89",
+    "raw": "PREVARGT:DragonAgeCategory,9",
+    "sheet_line": "F1 (human Fighter 3): excluded -- flag/level variable resolves to a rule F1 does not hold"
+   },
+   {
+    "record": "advanced_class_guide:class_feature:Investigator Talent ~ Rapid Reload",
+    "source": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:3357",
+    "raw": "PREVARGT:InvestigatorTalent_Rapid_Reload,0",
+    "sheet_line": "F1 (human Fighter 3): excluded -- flag/level variable resolves to a rule F1 does not hold"
+   },
+   {
+    "record": "ultimate_psionics:ability:Psionic Deed ~ Explosive Shot",
+    "source": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_uc.lst:59",
+    "raw": "PREVARGT:IsPsionic,0",
+    "sheet_line": "F1 (human Fighter 3): excluded -- flag/level variable resolves to a rule F1 does not hold"
+   }
+  ],
+  "oracle_check": "held-set parity: SA.COUNT and SA.<n>.NAME from scripts/oracle_harness/charbuild-remainder.txt.ftl for a built character list exactly the Special Ability rules PCGen judged held; our held set (applies evaluated true) must equal it",
+  "refuse_reason": "",
+  "confidence": "medium",
+  "open_questions": []
+ },
+ {
+  "token_type": "PREVARLT",
+  "family": "prereq",
+  "instances": 506,
+  "instances_source": "this lane: every raw_tokens entry across data/corpus (48,706 records with raw_tokens, 37 books, all statuses); feat records with a prerequisites list counted in their own row",
+  "units": 402,
+  "units_denominator": "non-DONE units (completion_atlas._bucket_of != DONE) joined to a corpus record carrying this token, of 23,315 non-DONE / 49,438",
+  "maps_to": "Applies",
+  "resolvability": "Words for counters (about 45%), filter for level/flag variables",
+  "rule": "Same rule as PREVARGTEQ with op Lt. Dominated by pool counters (TempEvolutionTaken 120, AnimalCompanionSkill 90) and Wizard_CF_SchoolPower* flags (72): the counters stay Words until Expr::ChoiceCount exists; the flags resolve to Not(Holds{setter}) shapes.",
+  "expr_shape": "n/a",
+  "expr_gaps": [
+   "Expr::ChoiceCount(ChoiceId)"
+  ],
+  "applies_shape": "Compare{..., op: Lt} | Words",
+  "prose_effect": "none",
+  "examples": [
+   {
+    "record": "bestiary_3:race_trait_generic:Unfettered Eidolon Evolution ~ Weapon Training",
+    "source": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst:1755",
+    "raw": "PREVARLT:UnfetteredEidolonWeaponTrainingLVL,2",
+    "sheet_line": "F1 (human Fighter 3): included, not checked -- pool counter or eidolon variable; F1 has no eidolon"
+   },
+   {
+    "record": "bestiary_3:race_trait_generic:Unfettered Eidolon Evolution ~ Improved Natural Armor",
+    "source": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst:1743",
+    "raw": "PREVARLT:UnfetteredEidolonEvolutionImprovedNaturalArmor,1+(EidolonLVL/4)",
+    "sheet_line": "F1 (human Fighter 3): included, not checked -- pool counter or eidolon variable; F1 has no eidolon"
+   },
+   {
+    "record": "bestiary_3:template:Fey Creature Has No Flight Maneuverability",
+    "source": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_templates.lst:15",
+    "raw": "PREVARLT:Maneuverability,3",
+    "sheet_line": "F1 (human Fighter 3): included, not checked -- pool counter or eidolon variable; F1 has no eidolon"
+   }
+  ],
+  "oracle_check": "held-set parity: SA.COUNT and SA.<n>.NAME from scripts/oracle_harness/charbuild-remainder.txt.ftl for a built character list exactly the Special Ability rules PCGen judged held; our held set (applies evaluated true) must equal it",
+  "refuse_reason": "",
+  "confidence": "medium",
+  "open_questions": []
+ },
+ {
+  "token_type": "PREVARLTEQ",
+  "family": "prereq",
+  "instances": 22,
+  "instances_source": "this lane: every raw_tokens entry across data/corpus (48,706 records with raw_tokens, 37 books, all statuses); feat records with a prerequisites list counted in their own row",
+  "units": 22,
+  "units_denominator": "non-DONE units (completion_atlas._bucket_of != DONE) joined to a corpus record carrying this token, of 23,315 non-DONE / 49,438",
+  "maps_to": "Applies",
+  "resolvability": "situational (prints as words; never blocks)",
+  "rule": "Same rule as PREVARGTEQ with op Lte; 22 instances, all pool counters or retraining limits -> Words until Expr::ChoiceCount exists. RHS formulas (MasterLevel/6, 1+INT) parse through the map-formula lane.",
+  "expr_shape": "n/a",
+  "expr_gaps": [
+   "Expr::ChoiceCount(ChoiceId)"
+  ],
+  "applies_shape": "Compare{ChoiceCount(pool) <= Expr} (deferred) | Words",
+  "prose_effect": "none",
+  "examples": [
+   {
+    "record": "ultimate_campaign:ability:Retrain ~ Hit Point",
+    "source": "pathfinder/paizo/roleplaying_game/ultimate_campaign/uca_abilities_retraining.lst:13",
+    "raw": "PREVARLTEQ:RetrainHPLimit,999",
+    "sheet_line": "F1 (human Fighter 3): included, not checked -- prints as words: \"RetrainHPLimit,999\""
+   },
+   {
+    "record": "advanced_players_guide:companion:Evolution ~ Improved Natural Armor",
+    "source": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_companion.lst:84",
+    "raw": "PREVARLTEQ:EvoImpNatArmCount,MasterLevel/5",
+    "sheet_line": "F1 (human Fighter 3): included, not checked -- prints as words: \"EvoImpNatArmCount,MasterLevel/5\""
+   },
+   {
+    "record": "advanced_players_guide:companion:Evolution ~ Ability Increase Dex",
+    "source": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_companion.lst:116",
+    "raw": "PREVARLTEQ:EvoAbiIncDex,MasterLevel/6",
+    "sheet_line": "F1 (human Fighter 3): included, not checked -- prints as words: \"EvoAbiIncDex,MasterLevel/6\""
+   }
+  ],
+  "oracle_check": "held-set parity: SA.COUNT and SA.<n>.NAME from scripts/oracle_harness/charbuild-remainder.txt.ftl for a built character list exactly the Special Ability rules PCGen judged held; our held set (applies evaluated true) must equal it",
+  "refuse_reason": "",
+  "confidence": "medium",
+  "open_questions": []
+ },
+ {
+  "token_type": "PREVAREQ",
+  "family": "prereq",
+  "instances": 304,
+  "instances_source": "this lane: every raw_tokens entry across data/corpus (48,706 records with raw_tokens, 37 books, all statuses); feat records with a prerequisites list counted in their own row",
+  "units": 256,
+  "units_denominator": "non-DONE units (completion_atlas._bucket_of != DONE) joined to a corpus record carrying this token, of 23,315 non-DONE / 49,438",
+  "maps_to": "Applies",
+  "resolvability": "filter (per-character-resolvable)",
+  "rule": "Same rule as PREVARGTEQ with op Eq. Two real sub-shapes: PREVAREQ:<Flag>,1 = Holds{Rule(setter)} (VigilanteIsZealot, EidolonSubtype_*, KB_Tier,N); PREVAREQ:<Flag>,0 = Not(Holds{setter}) (FamiliarIsSpiritAnimal,0; DisallowWizardArcaneSchoolArchetype). UsePathfinderUnchainedSkills / UseConsolidatedSkills (24) are campaign option flags -> Metadata: the product does not offer those options, so the gate is Always for the default value and Never for the other.",
+  "expr_shape": "n/a",
+  "expr_gaps": [],
+  "applies_shape": "Holds{Rule(setter)} | Not(Holds) | Always/Never",
+  "prose_effect": "none",
+  "examples": [
+   {
+    "record": "inner_sea_intrigue:class_feature:Vigilante Talent ~ Harsh Judgment",
+    "source": "pathfinder/paizo/campaign_setting/inner_sea_intrigue/isi_abilities_class.lst:321",
+    "raw": "PREVAREQ:VigilanteIsZealot,1",
+    "sheet_line": "F1 (human Fighter 3): excluded -- flag variable resolves to a rule (vigilante specialization / eidolon subtype) F1 does not hold"
+   },
+   {
+    "record": "pathfinder_unchained:race_trait_generic:Eidolon Subtype ~ Protean",
+    "source": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_race.lst:36",
+    "raw": "PREVAREQ:EidolonSubtype_Protean,0",
+    "sheet_line": "F1 (human Fighter 3): excluded -- flag variable resolves to a rule (vigilante specialization / eidolon subtype) F1 does not hold"
+   },
+   {
+    "record": "pathfinder_unchained:race_trait_generic:Eidolon Subtype ~ Psychopomp",
+    "source": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_race.lst:37",
+    "raw": "PREVAREQ:EidolonSubtype_Psychopomp,0",
+    "sheet_line": "F1 (human Fighter 3): excluded -- flag variable resolves to a rule (vigilante specialization / eidolon subtype) F1 does not hold"
+   }
+  ],
+  "oracle_check": "held-set parity: SA.COUNT and SA.<n>.NAME from scripts/oracle_harness/charbuild-remainder.txt.ftl for a built character list exactly the Special Ability rules PCGen judged held; our held set (applies evaluated true) must equal it",
+  "refuse_reason": "",
+  "confidence": "medium",
+  "open_questions": [
+   "PREVAREQ:var(\"AC.Natural\"),0 (Fey Creature template, bestiary_3) reads a computed total -> Words; 2 instances"
+  ]
+ },
+ {
+  "token_type": "PREVARNEQ",
+  "family": "prereq",
+  "instances": 4,
+  "instances_source": "this lane: every raw_tokens entry across data/corpus (48,706 records with raw_tokens, 37 books, all statuses); feat records with a prerequisites list counted in their own row",
+  "units": 4,
+  "units_denominator": "non-DONE units (completion_atlas._bucket_of != DONE) joined to a corpus record carrying this token, of 23,315 non-DONE / 49,438",
+  "maps_to": "Applies",
+  "resolvability": "situational (prints as words; never blocks)",
+  "rule": "Same rule as PREVARGTEQ with op Ne. All 4 instances read var(\"SKILL.<name>.MISC\") on inner_sea_bestiary sub-skills -> Words (computed-total read, class e).",
+  "expr_shape": "n/a",
+  "expr_gaps": [],
+  "applies_shape": "Words",
+  "prose_effect": "none",
+  "examples": [
+   {
+    "record": "inner_sea_bestiary:skill:Stealth (Dim Light)",
+    "source": "pathfinder/paizo/campaign_setting/inner_sea_bestiary/isb_skills.lst:7",
+    "raw": "PREVARNEQ:var(\"SKILL.Stealth (Dim Light).MISC\"),var(\"SKILL.Stealth.MISC\")",
+    "sheet_line": "F1 (human Fighter 3): included, not checked -- compares two computed skill totals; prints as words"
+   }
+  ],
+  "oracle_check": "sheet-line only -- no PCGen total covers it; held-set parity via SA.<n>.NAME in charbuild-remainder.txt.ftl is the nearest oracle",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": []
+ },
+ {
+  "token_type": "PRECLASS",
+  "family": "prereq",
+  "instances": 1282,
+  "instances_source": "this lane: every raw_tokens entry across data/corpus (48,706 records with raw_tokens, 37 books, all statuses); feat records with a prerequisites list counted in their own row",
+  "units": 1184,
+  "units_denominator": "non-DONE units (completion_atlas._bucket_of != DONE) joined to a corpus record carrying this token, of 23,315 non-DONE / 49,438",
+  "maps_to": "Applies",
+  "resolvability": "filter (per-character-resolvable)",
+  "rule": "PRECLASS:N,<Class>=<lvl>[,<Class>=<lvl>] -> AtLeast{N, [Compare{ClassLevel(class_id) >= Const(lvl)}...]}. <Class> joins to a class record id (case-insensitive key). SPELLCASTER / SPELLCASTER.Arcane / SPELLCASTER.Divine (6 instances) -> Compare{HighestSpellLevel(kind) >= Const(1)} once that Expr exists, Words until then.",
+  "expr_shape": "Compare{ClassLevel(C) >= Const(n)}",
+  "expr_gaps": [
+   "Expr::HighestSpellLevel(SpellKind) for the SPELLCASTER.* form (6 instances)"
+  ],
+  "applies_shape": "AtLeast{n, [Compare{ClassLevel(C) >= Const(lvl)}]}",
+  "prose_effect": "none",
+  "examples": [
+   {
+    "record": "occult_adventures:class_feature:Investigator Archetype ~ Psychic Detective",
+    "source": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst:1755",
+    "raw": "PRECLASS:1,Investigator=1",
+    "sheet_line": "F1 (human Fighter 3): excluded -- requires Investigator 1"
+   },
+   {
+    "record": "occult_adventures:class_feature:Alchemist Archetype ~ Ectochymist",
+    "source": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst:1649",
+    "raw": "PRECLASS:1,Alchemist=1",
+    "sheet_line": "F1 (human Fighter 3): excluded -- requires Alchemist 1"
+   },
+   {
+    "record": "occult_adventures:class_feature:Psychic Archetype ~ Formless Adept",
+    "source": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst:1553",
+    "raw": "PRECLASS:1,Psychic=1",
+    "sheet_line": "F1 (human Fighter 3): excluded -- requires Psychic 1"
+   }
+  ],
+  "oracle_check": "held-set parity: SA.COUNT and SA.<n>.NAME from scripts/oracle_harness/charbuild-remainder.txt.ftl for a built character list exactly the Special Ability rules PCGen judged held; our held set (applies evaluated true) must equal it",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": []
+ },
+ {
+  "token_type": "PRECLASSLEVELMAX",
+  "family": "prereq",
+  "instances": 1,
+  "instances_source": "this lane: every raw_tokens entry across data/corpus (48,706 records with raw_tokens, 37 books, all statuses); feat records with a prerequisites list counted in their own row",
+  "units": 1,
+  "units_denominator": "non-DONE units (completion_atlas._bucket_of != DONE) joined to a corpus record carrying this token, of 23,315 non-DONE / 49,438",
+  "maps_to": "Applies",
+  "resolvability": "filter (per-character-resolvable)",
+  "rule": "PRECLASSLEVELMAX:1,<Class>=<n> -> Compare{ClassLevel(C) <= Const(n)}. 1 instance.",
+  "expr_shape": "n/a",
+  "expr_gaps": [],
+  "applies_shape": "Compare{ClassLevel(C) <= Const(n)}",
+  "prose_effect": "none",
+  "examples": [
+   {
+    "record": "advanced_race_guide:class_feature:Spell Dancer ~ Dance of Avoidance",
+    "source": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst:124",
+    "raw": "PRECLASSLEVELMAX:1,Magus=12",
+    "sheet_line": "F1 (human Fighter 3): held -- requires Magus level 12 or lower (F1 has 0 Magus levels); note: vacuously true for a non-Magus, pair with the PRECLASS on the same record"
+   }
+  ],
+  "oracle_check": "sheet-line only -- no PCGen total covers it; held-set parity via SA.<n>.NAME in charbuild-remainder.txt.ftl is the nearest oracle",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": []
+ },
+ {
+  "token_type": "PRESUBCLASS",
+  "family": "prereq",
+  "instances": 17,
+  "instances_source": "this lane: every raw_tokens entry across data/corpus (48,706 records with raw_tokens, 37 books, all statuses); feat records with a prerequisites list counted in their own row",
+  "units": 17,
+  "units_denominator": "non-DONE units (completion_atlas._bucket_of != DONE) joined to a corpus record carrying this token, of 23,315 non-DONE / 49,438",
+  "maps_to": "Applies",
+  "resolvability": "filter (per-character-resolvable)",
+  "rule": "PRESUBCLASS:1,<Subclass> -> Holds{Rule(id)} where the subclass (Illusionist, Diviner: the wizard arcane-school choice) is the class_feature record the school choice grants. 17 instances, all Focused Arcane School records.",
+  "expr_shape": "n/a",
+  "expr_gaps": [],
+  "applies_shape": "Holds{Rule(school_record_id)}",
+  "prose_effect": "none",
+  "examples": [
+   {
+    "record": "adventurers_guide:class_feature:Focused Arcane School ~ Deception School",
+    "source": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst:1236",
+    "raw": "PRESUBCLASS:1,Illusionist",
+    "sheet_line": "F1 (human Fighter 3): excluded -- requires the arcane school rule named in the token; F1 is not a wizard"
+   },
+   {
+    "record": "advanced_players_guide:class_feature:Focused Arcane School ~ Foresight School",
+    "source": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst:3319",
+    "raw": "PRESUBCLASS:1,Diviner",
+    "sheet_line": "F1 (human Fighter 3): excluded -- requires the arcane school rule named in the token; F1 is not a wizard"
+   },
+   {
+    "record": "advanced_players_guide:class_feature:Focused Arcane School ~ Scryer School",
+    "source": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst:3324",
+    "raw": "PRESUBCLASS:1,Diviner",
+    "sheet_line": "F1 (human Fighter 3): excluded -- requires the arcane school rule named in the token; F1 is not a wizard"
+   }
+  ],
+  "oracle_check": "sheet-line only -- no PCGen total covers it; held-set parity via SA.<n>.NAME in charbuild-remainder.txt.ftl is the nearest oracle",
+  "refuse_reason": "",
+  "confidence": "medium",
+  "open_questions": [
+   "confirm the school records carry the SUBCLASS name as a key or FACT the converter can join on"
+  ]
+ },
+ {
+  "token_type": "PRESTAT",
+  "family": "prereq",
+  "instances": 272,
+  "instances_source": "this lane: every raw_tokens entry across data/corpus (48,706 records with raw_tokens, 37 books, all statuses); feat records with a prerequisites list counted in their own row",
+  "units": 242,
+  "units_denominator": "non-DONE units (completion_atlas._bucket_of != DONE) joined to a corpus record carrying this token, of 23,315 non-DONE / 49,438",
+  "maps_to": "Applies",
+  "resolvability": "filter (per-character-resolvable)",
+  "rule": "PRESTAT:N,<ABBR>=<score>[,...] -> AtLeast{N, [Compare{AbilityScore(A) >= Const(score)}...]}. Final (racially adjusted) score, matching PCGen DEXSCORE.",
+  "expr_shape": "Compare{AbilityScore(A) >= Const(n)}",
+  "expr_gaps": [],
+  "applies_shape": "AtLeast{n, [Compare]}",
+  "prose_effect": "none",
+  "examples": [
+   {
+    "record": "inner_sea_world_guide:feat_generic:Codex-Named Unit (feat_inner_sea_world_guide_iswg_feats_lst_10)",
+    "source": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_feats.lst:10",
+    "raw": "PRESTAT:1,CHA=13",
+    "sheet_line": "F1 (human Fighter 3): excluded -- requires CHA 13 (F1 has CHA 8)"
+   },
+   {
+    "record": "pathfinder_unchained:class_feature:Unchained Rogue Talent ~ Minor Magic",
+    "source": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst:647",
+    "raw": "PRESTAT:1,INT=10",
+    "sheet_line": "F1 (human Fighter 3): held -- requires INT 10 (F1 has INT 10)"
+   },
+   {
+    "record": "advanced_class_guide:ability:Warpriest Bonus Feat ~ Cleave Through",
+    "source": "pathfinder/paizo/roleplaying_game/advanced_class_guide/support/acg_abilities_arg.lst:5",
+    "raw": "PRESTAT:1,STR=13",
+    "sheet_line": "F1 (human Fighter 3): held -- requires STR 13 (F1 has STR 15)"
+   }
+  ],
+  "oracle_check": "STAT.<i>.SCORE from charbuild-remainder.txt.ftl gives the oracle score for the same fixture; the gate is then arithmetic",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": []
+ },
+ {
+  "token_type": "PRESKILL",
+  "family": "prereq",
+  "instances": 198,
+  "instances_source": "this lane: every raw_tokens entry across data/corpus (48,706 records with raw_tokens, 37 books, all statuses); feat records with a prerequisites list counted in their own row",
+  "units": 143,
+  "units_denominator": "non-DONE units (completion_atlas._bucket_of != DONE) joined to a corpus record carrying this token, of 23,315 non-DONE / 49,438",
+  "maps_to": "Applies",
+  "resolvability": "filter (per-character-resolvable)",
+  "rule": "PRESKILL:N,<Skill>=<ranks>[,...] -> AtLeast{N, [Compare{SkillRanks(skill_id) >= Const(ranks)}...]}. Ranks, not total bonus (PCGen PreSkillTester reads ranks). TYPE.<x> skill facets (Perform (oratory) is a named skill, not a facet) resolve to a skill-tag set.",
+  "expr_shape": "Compare{SkillRanks(S) >= Const(n)}",
+  "expr_gaps": [
+   "Expr::SkillRanks(SkillId) -- technical-design §1 has no skill-rank variant"
+  ],
+  "applies_shape": "AtLeast{n, [Compare]}",
+  "prose_effect": "none",
+  "examples": [
+   {
+    "record": "adventurers_guide:feat_generic:Mounted Blade",
+    "source": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_feats.lst:45",
+    "raw": "PRESKILL:1,Ride=3",
+    "sheet_line": "F1 (human Fighter 3): held -- requires 1 of: Ride 3 ranks (F1: Ride 3, Intimidate 2)"
+   },
+   {
+    "record": "adventurers_guide:feat_generic:Improved Horse Whisperer",
+    "source": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_feats.lst:39",
+    "raw": "PRESKILL:2,Handle Animal=5,Ride=5",
+    "sheet_line": "F1 (human Fighter 3): excluded -- requires 2 of: Handle Animal 5 ranks, Ride 5 ranks (F1: Ride 3, Intimidate 2)"
+   },
+   {
+    "record": "adventurers_guide:feat_generic:Mounted Onslaught",
+    "source": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_feats.lst:46",
+    "raw": "PRESKILL:1,Ride=5",
+    "sheet_line": "F1 (human Fighter 3): excluded -- requires 1 of: Ride 5 ranks (F1: Ride 3, Intimidate 2)"
+   }
+  ],
+  "oracle_check": "sheet-line only -- no PCGen total covers it; held-set parity via SA.<n>.NAME in charbuild-remainder.txt.ftl is the nearest oracle",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": []
+ },
+ {
+  "token_type": "PRECSKILL",
+  "family": "prereq",
+  "instances": 9,
+  "instances_source": "this lane: every raw_tokens entry across data/corpus (48,706 records with raw_tokens, 37 books, all statuses); feat records with a prerequisites list counted in their own row",
+  "units": 9,
+  "units_denominator": "non-DONE units (completion_atlas._bucket_of != DONE) joined to a corpus record carrying this token, of 23,315 non-DONE / 49,438",
+  "maps_to": "Applies",
+  "resolvability": "filter (per-character-resolvable)",
+  "rule": "PRECSKILL:N,<Skill>[,...] -> AtLeast{N, [Holds{ClassSkill(skill_id)}...]}. Class skills are a held-fact set built from the character's CSKILL grants (see the CSKILL row). 9 instances.",
+  "expr_shape": "n/a",
+  "expr_gaps": [],
+  "applies_shape": "AtLeast{n, [Holds{ClassSkill(S)}]}",
+  "prose_effect": "none",
+  "examples": [
+   {
+    "record": "ultimate_psionics:template:Inner Peace both",
+    "source": "pathfinder/dreamscarred_press/ultimate_psionics/up_templates.lst:71",
+    "raw": "PRECSKILL:2,Knowledge (Psionics),Knowledge (Religion)",
+    "sheet_line": "F1 (human Fighter 3): excluded -- requires class skill(s) Knowledge (Psionics), Knowledge (Religion) (F1: Fighter list)"
+   },
+   {
+    "record": "inner_sea_magic:ability:SS ~ KnowArcana",
+    "source": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_abilities_other.lst:57",
+    "raw": "PRECSKILL:1,Knowledge (Arcana)",
+    "sheet_line": "F1 (human Fighter 3): excluded -- requires class skill(s) Knowledge (Arcana) (F1: Fighter list)"
+   },
+   {
+    "record": "inner_sea_magic:ability:SS ~ Spellcraft",
+    "source": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_abilities_other.lst:63",
+    "raw": "PRECSKILL:1,Spellcraft",
+    "sheet_line": "F1 (human Fighter 3): excluded -- requires class skill(s) Spellcraft (F1: Fighter list)"
+   }
+  ],
+  "oracle_check": "sheet-line only -- no PCGen total covers it; held-set parity via SA.<n>.NAME in charbuild-remainder.txt.ftl is the nearest oracle",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": []
+ },
+ {
+  "token_type": "PRETOTALAB",
+  "family": "prereq",
+  "instances": 90,
+  "instances_source": "this lane: every raw_tokens entry across data/corpus (48,706 records with raw_tokens, 37 books, all statuses); feat records with a prerequisites list counted in their own row",
+  "units": 67,
+  "units_denominator": "non-DONE units (completion_atlas._bucket_of != DONE) joined to a corpus record carrying this token, of 23,315 non-DONE / 49,438",
+  "maps_to": "Applies",
+  "resolvability": "filter (per-character-resolvable)",
+  "rule": "PRETOTALAB:<n> -> Compare{BaseAttack >= Const(n)}. Expr::BaseAttack exists.",
+  "expr_shape": "Compare{BaseAttack >= Const(n)}",
+  "expr_gaps": [],
+  "applies_shape": "Compare",
+  "prose_effect": "none",
+  "examples": [
+   {
+    "record": "adventurers_guide:feat_generic:Redistributed Might",
+    "source": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_feats.lst:50",
+    "raw": "PRETOTALAB:4",
+    "sheet_line": "F1 (human Fighter 3): excluded -- requires base attack bonus +4 (F1 has +3)"
+   },
+   {
+    "record": "adventurers_guide:feat_generic:Falling Water Gambit",
+    "source": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_feats.lst:34",
+    "raw": "PRETOTALAB:8",
+    "sheet_line": "F1 (human Fighter 3): excluded -- requires base attack bonus +8 (F1 has +3)"
+   },
+   {
+    "record": "adventurers_guide:feat_generic:Codex-Named Unit (feat_adventurers_guide_ag_feats_lst_13)",
+    "source": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_feats.lst:13",
+    "raw": "PRETOTALAB:2",
+    "sheet_line": "F1 (human Fighter 3): held -- requires base attack bonus +2 (F1 has +3)"
+   }
+  ],
+  "oracle_check": "sheet-line only; BAB itself is oracle-checked by the existing totals path",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": []
+ },
+ {
+  "token_type": "PRECHECKBASE",
+  "family": "prereq",
+  "instances": 2,
+  "instances_source": "this lane: every raw_tokens entry across data/corpus (48,706 records with raw_tokens, 37 books, all statuses); feat records with a prerequisites list counted in their own row",
+  "units": 2,
+  "units_denominator": "non-DONE units (completion_atlas._bucket_of != DONE) joined to a corpus record carrying this token, of 23,315 non-DONE / 49,438",
+  "maps_to": "Applies",
+  "resolvability": "filter (per-character-resolvable)",
+  "rule": "PRECHECKBASE:1,<Save>=<n> -> Compare{BaseSave(save) >= Const(n)}. 2 instances (Heroic Recovery).",
+  "expr_shape": "n/a",
+  "expr_gaps": [
+   "Expr::BaseSave(Save) -- no base-save variant in technical-design §1"
+  ],
+  "applies_shape": "Compare",
+  "prose_effect": "none",
+  "examples": [
+   {
+    "record": "advanced_players_guide:class_feature:Sorcerer Bloodline Feat ~ Heroic Recovery",
+    "source": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst:3053",
+    "raw": "PRECHECKBASE:1,Fortitude=4",
+    "sheet_line": "F1 (human Fighter 3): excluded -- requires base Fortitude save +4 (Fighter 3 base Fort is +3)"
+   },
+   {
+    "record": "ultimate_wilderness:companion:Animal Companion Feat ~ Heroic Recovery",
+    "source": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst:683",
+    "raw": "PRECHECKBASE:1,Fortitude=4",
+    "sheet_line": "F1 (human Fighter 3): excluded -- requires base Fortitude save +4 (Fighter 3 base Fort is +3)"
+   }
+  ],
+  "oracle_check": "sheet-line only -- no PCGen total covers it; held-set parity via SA.<n>.NAME in charbuild-remainder.txt.ftl is the nearest oracle",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": []
+ },
+ {
+  "token_type": "PRELEVEL",
+  "family": "prereq",
+  "instances": 26,
+  "instances_source": "this lane: every raw_tokens entry across data/corpus (48,706 records with raw_tokens, 37 books, all statuses); feat records with a prerequisites list counted in their own row",
+  "units": 16,
+  "units_denominator": "non-DONE units (completion_atlas._bucket_of != DONE) joined to a corpus record carrying this token, of 23,315 non-DONE / 49,438",
+  "maps_to": "Applies",
+  "resolvability": "filter (per-character-resolvable)",
+  "rule": "PRELEVEL:MIN=<n>[,MAX=<m>] -> All([Compare{Level >= n}, Compare{Level <= m}]). Character level (sum of class levels).",
+  "expr_shape": "Compare{Level >= Const(n)}",
+  "expr_gaps": [],
+  "applies_shape": "All[Compare...]",
+  "prose_effect": "none",
+  "examples": [
+   {
+    "record": "advanced_class_guide:ability:Warpriest Bonus Feat ~ Inner Flame",
+    "source": "pathfinder/paizo/roleplaying_game/advanced_class_guide/support/acg_abilities_arg.lst:46",
+    "raw": "PRELEVEL:MIN=7",
+    "sheet_line": "F1 (human Fighter 3): excluded -- requires character level min 7 (F1 is level 3)"
+   },
+   {
+    "record": "advanced_class_guide:ability:Warpriest Bonus Feat ~ Blazing Aura",
+    "source": "pathfinder/paizo/roleplaying_game/advanced_class_guide/support/acg_abilities_arg.lst:44",
+    "raw": "PRELEVEL:MIN=13",
+    "sheet_line": "F1 (human Fighter 3): excluded -- requires character level min 13 (F1 is level 3)"
+   },
+   {
+    "record": "advanced_class_guide:class_feature:Rage Power ~ Linnorm Death Curse (Tor)",
+    "source": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:1763",
+    "raw": "PRELEVEL:MIN=8",
+    "sheet_line": "F1 (human Fighter 3): excluded -- requires character level min 8 (F1 is level 3)"
+   }
+  ],
+  "oracle_check": "sheet-line only -- no PCGen total covers it; held-set parity via SA.<n>.NAME in charbuild-remainder.txt.ftl is the nearest oracle",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": []
+ },
+ {
+  "token_type": "PREPCLEVEL",
+  "family": "prereq",
+  "instances": 61,
+  "instances_source": "this lane: every raw_tokens entry across data/corpus (48,706 records with raw_tokens, 37 books, all statuses); feat records with a prerequisites list counted in their own row",
+  "units": 2,
+  "units_denominator": "non-DONE units (completion_atlas._bucket_of != DONE) joined to a corpus record carrying this token, of 23,315 non-DONE / 49,438",
+  "maps_to": "Applies",
+  "resolvability": "filter (per-character-resolvable)",
+  "rule": "Same as PRELEVEL (PC class levels only; for the PC races this product builds the two are equal, as pre_tokens.rs already relies on). 61 instances, 59 of them DONE core_rulebook \"PC Level N\" templates.",
+  "expr_shape": "n/a",
+  "expr_gaps": [],
+  "applies_shape": "All[Compare{Level ...}]",
+  "prose_effect": "none",
+  "examples": [
+   {
+    "record": "ultimate_magic:feat_generic:Eldritch Heritage",
+    "source": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_feats.lst:37",
+    "raw": "PREPCLEVEL:MIN=3",
+    "sheet_line": "F1 (human Fighter 3): held -- requires character level min 3 (F1 is level 3)"
+   },
+   {
+    "record": "ultimate_magic:class_feature:Sorcerer Bloodline Feat ~ Eldritch Heritage",
+    "source": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst:546",
+    "raw": "PREPCLEVEL:MIN=3",
+    "sheet_line": "F1 (human Fighter 3): held -- requires character level min 3 (F1 is level 3)"
+   },
+   {
+    "record": "core_rulebook:template:PC Level 11",
+    "source": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_templates.lst:120",
+    "raw": "PREPCLEVEL:MIN=11,MAX=11",
+    "sheet_line": "F1 (human Fighter 3): excluded -- requires character level min 11, max 11 (F1 is level 3)"
+   }
+  ],
+  "oracle_check": "sheet-line only -- no PCGen total covers it; held-set parity via SA.<n>.NAME in charbuild-remainder.txt.ftl is the nearest oracle",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": []
+ },
+ {
+  "token_type": "PRELEVELMAX",
+  "family": "prereq",
+  "instances": 1,
+  "instances_source": "this lane: every raw_tokens entry across data/corpus (48,706 records with raw_tokens, 37 books, all statuses); feat records with a prerequisites list counted in their own row",
+  "units": 1,
+  "units_denominator": "non-DONE units (completion_atlas._bucket_of != DONE) joined to a corpus record carrying this token, of 23,315 non-DONE / 49,438",
+  "maps_to": "Applies",
+  "resolvability": "filter (per-character-resolvable)",
+  "rule": "PRELEVELMAX:<n> -> Compare{Level <= Const(n)}. 1 instance.",
+  "expr_shape": "n/a",
+  "expr_gaps": [],
+  "applies_shape": "Compare",
+  "prose_effect": "none",
+  "examples": [
+   {
+    "record": "ultimate_psionics:ability:Ninja Archetype ~ Empty Caste",
+    "source": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_uc.lst:43",
+    "raw": "PRELEVELMAX:1",
+    "sheet_line": "F1 (human Fighter 3): excluded -- requires character level 1 or lower (F1 is level 3)"
+   }
+  ],
+  "oracle_check": "sheet-line only -- no PCGen total covers it; held-set parity via SA.<n>.NAME in charbuild-remainder.txt.ftl is the nearest oracle",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": []
+ },
+ {
+  "token_type": "PREHD",
+  "family": "prereq",
+  "instances": 3,
+  "instances_source": "this lane: every raw_tokens entry across data/corpus (48,706 records with raw_tokens, 37 books, all statuses); feat records with a prerequisites list counted in their own row",
+  "units": 3,
+  "units_denominator": "non-DONE units (completion_atlas._bucket_of != DONE) joined to a corpus record carrying this token, of 23,315 non-DONE / 49,438",
+  "maps_to": "Applies",
+  "resolvability": "filter (per-character-resolvable)",
+  "rule": "PREHD:MIN=<n>|MAX=<n> -> Compare{HitDice op Const(n)}. Expr::HitDice exists. 3 instances, all bestiary templates.",
+  "expr_shape": "n/a",
+  "expr_gaps": [],
+  "applies_shape": "Compare",
+  "prose_effect": "none",
+  "examples": [
+   {
+    "record": "bestiary:template:Skeleton HitDice",
+    "source": "pathfinder/paizo/roleplaying_game/bestiary/b1_templates.lst:99",
+    "raw": "PREHD:MAX=0",
+    "sheet_line": "F1 (human Fighter 3): excluded -- requires 0 racial hit dice as MAX (skeleton conversion of a class-level creature); F1 has 3 HD"
+   },
+   {
+    "record": "bestiary:template:Skeletal Champion HitDice",
+    "source": "pathfinder/paizo/roleplaying_game/bestiary/b1_templates.lst:100",
+    "raw": "PREHD:MAX=0",
+    "sheet_line": "F1 (human Fighter 3): excluded -- requires 0 racial hit dice as MAX (skeleton conversion of a class-level creature); F1 has 3 HD"
+   },
+   {
+    "record": "bestiary_4:template:Nosferatu",
+    "source": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_templates.lst:178",
+    "raw": "PREHD:MIN=5",
+    "sheet_line": "F1 (human Fighter 3): excluded -- requires 5 hit dice (F1 has 3)"
+   }
+  ],
+  "oracle_check": "sheet-line only -- no PCGen total covers it; held-set parity via SA.<n>.NAME in charbuild-remainder.txt.ftl is the nearest oracle",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": []
+ },
+ {
+  "token_type": "PRERACE",
+  "family": "prereq",
+  "instances": 305,
+  "instances_source": "this lane: every raw_tokens entry across data/corpus (48,706 records with raw_tokens, 37 books, all statuses); feat records with a prerequisites list counted in their own row",
+  "units": 106,
+  "units_denominator": "non-DONE units (completion_atlas._bucket_of != DONE) joined to a corpus record carrying this token, of 23,315 non-DONE / 49,438",
+  "maps_to": "Applies",
+  "resolvability": "filter (per-character-resolvable)",
+  "rule": "PRERACE:N,<item>[,...] -> AtLeast{N, [...]} with <item> = race name -> Holds{Race(id)}; RACETYPE=<t> -> Holds{RaceType(t)}; RACESUBTYPE=<s> -> Holds{RaceSubtype(s)}; a trailing % (Dragon%, Astral Construct%; 2 instances) is a name-prefix wildcard the converter expands at ingest to the set of matching race ids (AtLeast 1 of them). RaceType/RaceSubtype are facts declared by RACETYPE:/RACESUBTYPE: on the race and template records (see those rows). 305 instances; 244 named, 38 RACETYPE, 22 RACESUBTYPE.",
+  "expr_shape": "n/a",
+  "expr_gaps": [],
+  "applies_shape": "AtLeast{n, [Holds{Race|RaceType|RaceSubtype}]}",
+  "prose_effect": "none",
+  "examples": [
+   {
+    "record": "inner_sea_world_guide:template:Clockwork",
+    "source": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/_pfs/pfs_iswg_templates.lst:6",
+    "raw": "PRERACE:1,RACETYPE=Construct",
+    "sheet_line": "F1 (human Fighter 3): excluded -- requires race RACETYPE=Construct (F1 is Human, type Humanoid)"
+   },
+   {
+    "record": "inner_sea_world_guide:template:Nascent Demon Lord Traits",
+    "source": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/_pfs/pfs_iswg_templates.lst:7",
+    "raw": "PRERACE:1,RACESUBTYPE=Demon",
+    "sheet_line": "F1 (human Fighter 3): excluded -- requires race RACESUBTYPE=Demon (F1 is Human, type Humanoid)"
+   },
+   {
+    "record": "bestiary_3:equipment:Shears",
+    "source": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_equip_arms_armor.lst:11",
+    "raw": "PRERACE:1,Norn",
+    "sheet_line": "F1 (human Fighter 3): excluded -- requires race Norn (F1 is Human, type Humanoid)"
+   }
+  ],
+  "oracle_check": "held-set parity: SA.COUNT and SA.<n>.NAME from scripts/oracle_harness/charbuild-remainder.txt.ftl for a built character list exactly the Special Ability rules PCGen judged held; our held set (applies evaluated true) must equal it",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": []
+ },
+ {
+  "token_type": "PREFACT",
+  "family": "prereq",
+  "instances": 727,
+  "instances_source": "this lane: every raw_tokens entry across data/corpus (48,706 records with raw_tokens, 37 books, all statuses); feat records with a prerequisites list counted in their own row",
+  "units": 516,
+  "units_denominator": "non-DONE units (completion_atlas._bucket_of != DONE) joined to a corpus record carrying this token, of 23,315 non-DONE / 49,438",
+  "maps_to": "Applies",
+  "resolvability": "filter (per-character-resolvable)",
+  "rule": "PREFACT:N,<FactSet>,<Name>=<value> -> Holds{Rule(declarer)} where the declarer is the record whose FACT:<Name>|<value> token declares that fact (ABILITIES facts: the OccultistSchool_* / Fighter_CF_* / Oracle_CF_* records; TEMPLATES facts: the IsDwarf / IsTiefling race-heritage templates). The converter builds a fact-declaration index (tool side); a fact with no declarer in the corpus becomes Words. 727 instances; the top shapes are 7 Occultist implement schools (425) and Is<Race> templates.",
+  "expr_shape": "n/a",
+  "expr_gaps": [],
+  "applies_shape": "Holds{Rule(fact_declarer_id)} | AtLeast{1, [...]} when several records declare the same fact",
+  "prose_effect": "none",
+  "examples": [
+   {
+    "record": "occult_adventures:class_feature:Implement School Focus Power ~ Energy Shield",
+    "source": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst:1023",
+    "raw": "PREFACT:1,ABILITIES,OccultistSchool_Abjuration=true",
+    "sheet_line": "F1 (human Fighter 3): excluded -- requires the rule that declares fact OccultistSchool_Abjuration (an Occultist implement-school pick); F1 holds none"
+   },
+   {
+    "record": "occult_adventures:class_feature:Implement School Focus Power ~ Necromantic Servant",
+    "source": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst:1109",
+    "raw": "PREFACT:1,ABILITIES,OccultistSchool_Necromancy=true",
+    "sheet_line": "F1 (human Fighter 3): excluded -- requires the rule that declares fact OccultistSchool_Necromancy (an Occultist implement-school pick); F1 holds none"
+   },
+   {
+    "record": "occult_adventures:class_feature:Implement School Focus Power ~ Mind Steed",
+    "source": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst:1037",
+    "raw": "PREFACT:1,ABILITIES,OccultistSchool_Conjuration=true",
+    "sheet_line": "F1 (human Fighter 3): excluded -- requires the rule that declares fact OccultistSchool_Conjuration (an Occultist implement-school pick); F1 holds none"
+   }
+  ],
+  "oracle_check": "held-set parity: SA.COUNT and SA.<n>.NAME from scripts/oracle_harness/charbuild-remainder.txt.ftl for a built character list exactly the Special Ability rules PCGen judged held; our held set (applies evaluated true) must equal it",
+  "refuse_reason": "",
+  "confidence": "medium",
+  "open_questions": [
+   "FACT:IsPC (63 declarations) and BaseSize are chassis facts, not rules -- the index must route those to the character fact set, not to Holds{Rule}"
+  ]
+ },
+ {
+  "token_type": "PRETEMPLATE",
+  "family": "prereq",
+  "instances": 67,
+  "instances_source": "this lane: every raw_tokens entry across data/corpus (48,706 records with raw_tokens, 37 books, all statuses); feat records with a prerequisites list counted in their own row",
+  "units": 65,
+  "units_denominator": "non-DONE units (completion_atlas._bucket_of != DONE) joined to a corpus record carrying this token, of 23,315 non-DONE / 49,438",
+  "maps_to": "Applies",
+  "resolvability": "filter (per-character-resolvable)",
+  "rule": "PRETEMPLATE:N,<Template>[,...] -> AtLeast{N, [Holds{Template(id)}...]}. Templates are held rules once TEMPLATE: grants convert (see TEMPLATE row). 67 instances, 65 non-DONE, mostly bestiary template stacking and Mythic \"Racial Heritage ~ <Race>\".",
+  "expr_shape": "n/a",
+  "expr_gaps": [],
+  "applies_shape": "AtLeast{n, [Holds{Template(id)}]}",
+  "prose_effect": "none",
+  "examples": [
+   {
+    "record": "bestiary_3:template:Imperial Foo Creature",
+    "source": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_templates.lst:23",
+    "raw": "PRETEMPLATE:1,Foo Creature",
+    "sheet_line": "F1 (human Fighter 3): excluded -- requires template Foo Creature; F1 has no templates"
+   },
+   {
+    "record": "bestiary_2:template:Zombie (Void)",
+    "source": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_templates.lst:10",
+    "raw": "PRETEMPLATE:1,Zombie (Fast)",
+    "sheet_line": "F1 (human Fighter 3): excluded -- requires template Zombie (Fast); F1 has no templates"
+   },
+   {
+    "record": "book_of_the_damned_volume_2:class_feature:Stat Bonus ~ JezeldaAfflicted",
+    "source": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_2/botd2_abilities_classes.lst:140",
+    "raw": "PRETEMPLATE:1,Natural Werewolf",
+    "sheet_line": "F1 (human Fighter 3): excluded -- requires template Natural Werewolf; F1 has no templates"
+   }
+  ],
+  "oracle_check": "held-set parity: SA.COUNT and SA.<n>.NAME from scripts/oracle_harness/charbuild-remainder.txt.ftl for a built character list exactly the Special Ability rules PCGen judged held; our held set (applies evaluated true) must equal it",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": []
+ },
+ {
+  "token_type": "PRESIZEEQ",
+  "family": "prereq",
+  "instances": 885,
+  "instances_source": "this lane: every raw_tokens entry across data/corpus (48,706 records with raw_tokens, 37 books, all statuses); feat records with a prerequisites list counted in their own row",
+  "units": 885,
+  "units_denominator": "non-DONE units (completion_atlas._bucket_of != DONE) joined to a corpus record carrying this token, of 23,315 non-DONE / 49,438",
+  "maps_to": "Applies",
+  "resolvability": "filter (per-character-resolvable)",
+  "rule": "PRESIZEEQ:<code> -> Compare{Size == Const(rank)} with F/D/T/S/M/L/H/G/C -> 0..8 (pre_tokens.rs size_rank). Expr::Size exists. All 885 instances are size-variant rows of bestiary templates (Petitioner Bite ~ T ... Worm that Walks Slam ~ M): one rule per size, the character holds exactly one. Not in pre_tokens.rs today (unmodelled there); mechanical here.",
+  "expr_shape": "Compare{Size == Const(r)}",
+  "expr_gaps": [],
+  "applies_shape": "Compare",
+  "prose_effect": "none",
+  "examples": [
+   {
+    "record": "bestiary_2:template:Petitioner Bite ~ T",
+    "source": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_templates.lst:63",
+    "raw": "PRESIZEEQ:T",
+    "sheet_line": "F1 (human Fighter 3): excluded -- requires size exactly Tiny (F1 is Medium)"
+   },
+   {
+    "record": "bestiary_2:template:Worm that Walks Slam ~ S",
+    "source": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_templates.lst:109",
+    "raw": "PRESIZEEQ:S",
+    "sheet_line": "F1 (human Fighter 3): excluded -- requires size exactly Small (F1 is Medium)"
+   },
+   {
+    "record": "bestiary_2:template:Worm that Walks Slam ~ M",
+    "source": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_templates.lst:110",
+    "raw": "PRESIZEEQ:M",
+    "sheet_line": "F1 (human Fighter 3): held -- requires size exactly Medium (F1 is Medium)"
+   }
+  ],
+  "oracle_check": "sheet-line only -- no PCGen total covers it; held-set parity via SA.<n>.NAME in charbuild-remainder.txt.ftl is the nearest oracle",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": []
+ },
+ {
+  "token_type": "PRESIZEGTEQ",
+  "family": "prereq",
+  "instances": 8,
+  "instances_source": "this lane: every raw_tokens entry across data/corpus (48,706 records with raw_tokens, 37 books, all statuses); feat records with a prerequisites list counted in their own row",
+  "units": 8,
+  "units_denominator": "non-DONE units (completion_atlas._bucket_of != DONE) joined to a corpus record carrying this token, of 23,315 non-DONE / 49,438",
+  "maps_to": "Applies",
+  "resolvability": "filter (per-character-resolvable)",
+  "rule": "PRESIZEGTEQ:<code> -> Compare{Size >= Const(rank)}.",
+  "expr_shape": "n/a",
+  "expr_gaps": [],
+  "applies_shape": "Compare",
+  "prose_effect": "none",
+  "examples": [
+   {
+    "record": "bestiary_2:template:Ogrekin",
+    "source": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_templates.lst:44",
+    "raw": "PRESIZEGTEQ:M",
+    "sheet_line": "F1 (human Fighter 3): held -- requires size at least Medium (F1 is Medium)"
+   },
+   {
+    "record": "advanced_players_guide:template:Medium Claws",
+    "source": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_templates.lst:71",
+    "raw": "PRESIZEGTEQ:M",
+    "sheet_line": "F1 (human Fighter 3): held -- requires size at least Medium (F1 is Medium)"
+   },
+   {
+    "record": "advanced_players_guide:companion:Evolution ~ Trample",
+    "source": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_companion.lst:147",
+    "raw": "PRESIZEGTEQ:M",
+    "sheet_line": "F1 (human Fighter 3): held -- requires size at least Medium (F1 is Medium)"
+   }
+  ],
+  "oracle_check": "sheet-line only -- no PCGen total covers it; held-set parity via SA.<n>.NAME in charbuild-remainder.txt.ftl is the nearest oracle",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": []
+ },
+ {
+  "token_type": "PRESIZELTEQ",
+  "family": "prereq",
+  "instances": 10,
+  "instances_source": "this lane: every raw_tokens entry across data/corpus (48,706 records with raw_tokens, 37 books, all statuses); feat records with a prerequisites list counted in their own row",
+  "units": 9,
+  "units_denominator": "non-DONE units (completion_atlas._bucket_of != DONE) joined to a corpus record carrying this token, of 23,315 non-DONE / 49,438",
+  "maps_to": "Applies",
+  "resolvability": "filter (per-character-resolvable)",
+  "rule": "PRESIZELTEQ:<code> -> Compare{Size <= Const(rank)}.",
+  "expr_shape": "n/a",
+  "expr_gaps": [],
+  "applies_shape": "Compare",
+  "prose_effect": "none",
+  "examples": [
+   {
+    "record": "advanced_class_guide:ability:Warpriest Bonus Feat ~ Tangle Feet",
+    "source": "pathfinder/paizo/roleplaying_game/advanced_class_guide/support/acg_abilities_arg.lst:41",
+    "raw": "PRESIZELTEQ:S",
+    "sheet_line": "F1 (human Fighter 3): excluded -- requires size at most Small (F1 is Medium)"
+   },
+   {
+    "record": "advanced_class_guide:class_feature:Warpriest Bonus Feat ~ Under and Over",
+    "source": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:4388",
+    "raw": "PRESIZELTEQ:S",
+    "sheet_line": "F1 (human Fighter 3): excluded -- requires size at most Small (F1 is Medium)"
+   },
+   {
+    "record": "advanced_class_guide:class_feature:Warpriest Bonus Feat ~ Underfoot",
+    "source": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:4389",
+    "raw": "PRESIZELTEQ:S",
+    "sheet_line": "F1 (human Fighter 3): excluded -- requires size at most Small (F1 is Medium)"
+   }
+  ],
+  "oracle_check": "sheet-line only -- no PCGen total covers it; held-set parity via SA.<n>.NAME in charbuild-remainder.txt.ftl is the nearest oracle",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": []
+ },
+ {
+  "token_type": "PRESIZELT",
+  "family": "prereq",
+  "instances": 1,
+  "instances_source": "this lane: every raw_tokens entry across data/corpus (48,706 records with raw_tokens, 37 books, all statuses); feat records with a prerequisites list counted in their own row",
+  "units": 1,
+  "units_denominator": "non-DONE units (completion_atlas._bucket_of != DONE) joined to a corpus record carrying this token, of 23,315 non-DONE / 49,438",
+  "maps_to": "Applies",
+  "resolvability": "filter (per-character-resolvable)",
+  "rule": "PRESIZELT:<code> -> Compare{Size < Const(rank)}. 1 instance.",
+  "expr_shape": "n/a",
+  "expr_gaps": [],
+  "applies_shape": "Compare",
+  "prose_effect": "none",
+  "examples": [
+   {
+    "record": "bestiary:template:Giant Creature",
+    "source": "pathfinder/paizo/roleplaying_game/core_essentials/ce_templates.lst:1039",
+    "raw": "PRESIZELT:C",
+    "sheet_line": "F1 (human Fighter 3): held -- requires size smaller than Colossal (F1 is Medium)"
+   }
+  ],
+  "oracle_check": "sheet-line only -- no PCGen total covers it; held-set parity via SA.<n>.NAME in charbuild-remainder.txt.ftl is the nearest oracle",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": []
+ },
+ {
+  "token_type": "PREBASESIZEGTEQ",
+  "family": "prereq",
+  "instances": 19,
+  "instances_source": "this lane: every raw_tokens entry across data/corpus (48,706 records with raw_tokens, 37 books, all statuses); feat records with a prerequisites list counted in their own row",
+  "units": 19,
+  "units_denominator": "non-DONE units (completion_atlas._bucket_of != DONE) joined to a corpus record carrying this token, of 23,315 non-DONE / 49,438",
+  "maps_to": "Applies",
+  "resolvability": "filter (per-character-resolvable)",
+  "rule": "PREBASESIZEGTEQ:<code> -> Compare{BaseSize >= Const(rank)} where BaseSize is the race's printed size before size-changing templates/evolutions (PCGen FACT:BaseSize, 1,782 declarations on race records). 19 instances (Animal Lord forms).",
+  "expr_shape": "n/a",
+  "expr_gaps": [
+   "Expr::BaseSize -- the race-table size before modifiers; Expr::Size is the current size"
+  ],
+  "applies_shape": "Compare",
+  "prose_effect": "none",
+  "examples": [
+   {
+    "record": "bestiary_3:race_trait_generic:Animal Lord ~ Serpent Lord (Venomous)",
+    "source": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst:354",
+    "raw": "PREBASESIZEGTEQ:S",
+    "sheet_line": "F1 (human Fighter 3): held -- requires base size at least Small (F1 is Medium)"
+   },
+   {
+    "record": "bestiary_3:race_trait_generic:Animal Lord ~ Cat Lord (Lion)",
+    "source": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst:343",
+    "raw": "PREBASESIZEGTEQ:M",
+    "sheet_line": "F1 (human Fighter 3): held -- requires base size at least Medium (F1 is Medium)"
+   },
+   {
+    "record": "bestiary_3:race_trait_generic:Animal Lord ~ Shark Lord",
+    "source": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst:352",
+    "raw": "PREBASESIZEGTEQ:M",
+    "sheet_line": "F1 (human Fighter 3): held -- requires base size at least Medium (F1 is Medium)"
+   }
+  ],
+  "oracle_check": "sheet-line only -- no PCGen total covers it; held-set parity via SA.<n>.NAME in charbuild-remainder.txt.ftl is the nearest oracle",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": []
+ },
+ {
+  "token_type": "PREBASESIZEEQ",
+  "family": "prereq",
+  "instances": 16,
+  "instances_source": "this lane: every raw_tokens entry across data/corpus (48,706 records with raw_tokens, 37 books, all statuses); feat records with a prerequisites list counted in their own row",
+  "units": 16,
+  "units_denominator": "non-DONE units (completion_atlas._bucket_of != DONE) joined to a corpus record carrying this token, of 23,315 non-DONE / 49,438",
+  "maps_to": "Applies",
+  "resolvability": "filter (per-character-resolvable)",
+  "rule": "PREBASESIZEEQ:<code> -> Compare{BaseSize == Const(rank)}. 16 instances (Shifter claw damage by size).",
+  "expr_shape": "n/a",
+  "expr_gaps": [
+   "Expr::BaseSize"
+  ],
+  "applies_shape": "Compare",
+  "prose_effect": "none",
+  "examples": [
+   {
+    "record": "ultimate_wilderness:class_feature:Shifter Claw 1 (Tiny)",
+    "source": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst:1380",
+    "raw": "PREBASESIZEEQ:T",
+    "sheet_line": "F1 (human Fighter 3): excluded -- requires base size exactly Tiny (F1 is Medium)"
+   },
+   {
+    "record": "ultimate_wilderness:class_feature:Shifter Claw 2 (Gargantuan)",
+    "source": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst:1394",
+    "raw": "PREBASESIZEEQ:G",
+    "sheet_line": "F1 (human Fighter 3): excluded -- requires base size exactly Gargantuan (F1 is Medium)"
+   },
+   {
+    "record": "ultimate_wilderness:class_feature:Shifter Claw 2 (Colossal)",
+    "source": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst:1395",
+    "raw": "PREBASESIZEEQ:C",
+    "sheet_line": "F1 (human Fighter 3): excluded -- requires base size exactly Colossal (F1 is Medium)"
+   }
+  ],
+  "oracle_check": "sheet-line only -- no PCGen total covers it; held-set parity via SA.<n>.NAME in charbuild-remainder.txt.ftl is the nearest oracle",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": []
+ },
+ {
+  "token_type": "PREBASESIZELT",
+  "family": "prereq",
+  "instances": 6,
+  "instances_source": "this lane: every raw_tokens entry across data/corpus (48,706 records with raw_tokens, 37 books, all statuses); feat records with a prerequisites list counted in their own row",
+  "units": 6,
+  "units_denominator": "non-DONE units (completion_atlas._bucket_of != DONE) joined to a corpus record carrying this token, of 23,315 non-DONE / 49,438",
+  "maps_to": "Applies",
+  "resolvability": "filter (per-character-resolvable)",
+  "rule": "PREBASESIZELT:<code> -> Compare{BaseSize < Const(rank)}. 6 instances (unchained eidolon evolutions).",
+  "expr_shape": "n/a",
+  "expr_gaps": [
+   "Expr::BaseSize"
+  ],
+  "applies_shape": "Compare",
+  "prose_effect": "none",
+  "examples": [
+   {
+    "record": "pathfinder_unchained:race_trait_generic:Unchained Evolution ~ INT +2",
+    "source": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_race.lst:299",
+    "raw": "PREBASESIZELT:L",
+    "sheet_line": "F1 (human Fighter 3): held -- requires base size smaller than Large (F1 is Medium)"
+   },
+   {
+    "record": "pathfinder_unchained:race_trait_generic:Unchained Evolution ~ DEX +2",
+    "source": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_race.lst:296",
+    "raw": "PREBASESIZELT:L",
+    "sheet_line": "F1 (human Fighter 3): held -- requires base size smaller than Large (F1 is Medium)"
+   },
+   {
+    "record": "pathfinder_unchained:race_trait_generic:Unchained Evolution ~ CON +2",
+    "source": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_race.lst:297",
+    "raw": "PREBASESIZELT:L",
+    "sheet_line": "F1 (human Fighter 3): held -- requires base size smaller than Large (F1 is Medium)"
+   }
+  ],
+  "oracle_check": "sheet-line only -- no PCGen total covers it; held-set parity via SA.<n>.NAME in charbuild-remainder.txt.ftl is the nearest oracle",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": []
+ },
+ {
+  "token_type": "PREALIGN",
+  "family": "prereq",
+  "instances": 141,
+  "instances_source": "this lane: every raw_tokens entry across data/corpus (48,706 records with raw_tokens, 37 books, all statuses); feat records with a prerequisites list counted in their own row",
+  "units": 117,
+  "units_denominator": "non-DONE units (completion_atlas._bucket_of != DONE) joined to a corpus record carrying this token, of 23,315 non-DONE / 49,438",
+  "maps_to": "Applies",
+  "resolvability": "filter once alignment is a character fact; Words today",
+  "rule": "PREALIGN:<A>[,<A>...] -> Holds{Alignment(set)} (character alignment in the set; PCGen also accepts Deity as a code, 0 instances here). Alignment is NOT on CharacterInput today (pre_tokens.rs UNMODELLED reason); the Applies variant is defined now and evaluates to Words until the fact lands. 141 instances.",
+  "expr_shape": "n/a",
+  "expr_gaps": [],
+  "applies_shape": "Holds{Alignment({LG,NG,...})}",
+  "prose_effect": "none",
+  "examples": [
+   {
+    "record": "occult_adventures:class_feature:Bard Archetype ~ Silver Balladeer",
+    "source": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst:1677",
+    "raw": "PREALIGN:LG,NG,CG",
+    "sheet_line": "F1 (human Fighter 3): excluded -- requires alignment in LG, NG, CG (F1 is LN; alignment is not yet a live character fact -> Words until it is)"
+   },
+   {
+    "record": "inner_sea_world_guide:feat_generic:Codex-Named Unit (feat_inner_sea_world_guide_iswg_feats_lst_36)",
+    "source": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_feats.lst:36",
+    "raw": "PREALIGN:NE",
+    "sheet_line": "F1 (human Fighter 3): excluded -- requires alignment in NE (F1 is LN; alignment is not yet a live character fact -> Words until it is)"
+   },
+   {
+    "record": "bestiary_3:template:Animal Lord",
+    "source": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_templates.lst:8",
+    "raw": "PREALIGN:NG,TN,NE,CN,LN",
+    "sheet_line": "F1 (human Fighter 3): held -- requires alignment in NG, TN, NE, CN, LN (F1 is LN; alignment is not yet a live character fact -> Words until it is)"
+   }
+  ],
+  "oracle_check": "sheet-line only -- no PCGen total covers it; held-set parity via SA.<n>.NAME in charbuild-remainder.txt.ftl is the nearest oracle",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": [
+   "character fact gap: alignment (needed by 141 PREALIGN + 37 !PREALIGN + 808 DOMAINS gates)"
+  ]
+ },
+ {
+  "token_type": "PREDEITY",
+  "family": "prereq",
+  "instances": 50,
+  "instances_source": "this lane: every raw_tokens entry across data/corpus (48,706 records with raw_tokens, 37 books, all statuses); feat records with a prerequisites list counted in their own row",
+  "units": 50,
+  "units_denominator": "non-DONE units (completion_atlas._bucket_of != DONE) joined to a corpus record carrying this token, of 23,315 non-DONE / 49,438",
+  "maps_to": "Applies",
+  "resolvability": "filter once deity is a character fact; Words today",
+  "rule": "PREDEITY:1,Y -> Holds{Deity(Any)}; PREDEITY:1,<Name>[,<Name>] -> AtLeast{1, [Holds{Deity(id)}...]}; PREDEITY:1,N -> Not(Holds{Deity(Any)}). Deity is not a character fact today -> Words until it is. 50 instances (Deific/Demonic Obedience feats).",
+  "expr_shape": "n/a",
+  "expr_gaps": [],
+  "applies_shape": "Holds{Deity(Any|id)}",
+  "prose_effect": "none",
+  "examples": [
+   {
+    "record": "inner_sea_faiths:feat_generic:Deific Obedience",
+    "source": "pathfinder/paizo/campaign_setting/inner_sea_faiths/isf_abilities_feat.lst:7",
+    "raw": "PREDEITY:1,Y",
+    "sheet_line": "F1 (human Fighter 3): included, not checked -- requires a patron deity (Y); deity is not yet a live character fact"
+   },
+   {
+    "record": "adventurers_guide:class_feature:Warpriest Archetype ~ Mantis Zealot",
+    "source": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst:1118",
+    "raw": "PREDEITY:1,Achaekek",
+    "sheet_line": "F1 (human Fighter 3): included, not checked -- requires a patron deity (Achaekek); deity is not yet a live character fact"
+   },
+   {
+    "record": "book_of_the_damned_volume_2:feat_generic:Demonic Obedience ~ Mazmezz",
+    "source": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_2/botd2_abilities_classes.lst:56",
+    "raw": "PREDEITY:1,Mazmezz",
+    "sheet_line": "F1 (human Fighter 3): included, not checked -- requires a patron deity (Mazmezz); deity is not yet a live character fact"
+   }
+  ],
+  "oracle_check": "sheet-line only -- no PCGen total covers it; held-set parity via SA.<n>.NAME in charbuild-remainder.txt.ftl is the nearest oracle",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": [
+   "character fact gap: deity"
+  ]
+ },
+ {
+  "token_type": "PREDEITYDOMAIN",
+  "family": "prereq",
+  "instances": 37,
+  "instances_source": "this lane: every raw_tokens entry across data/corpus (48,706 records with raw_tokens, 37 books, all statuses); feat records with a prerequisites list counted in their own row",
+  "units": 2,
+  "units_denominator": "non-DONE units (completion_atlas._bucket_of != DONE) joined to a corpus record carrying this token, of 23,315 non-DONE / 49,438",
+  "maps_to": "Applies",
+  "resolvability": "filter once deity is a character fact",
+  "rule": "PREDEITYDOMAIN:1,<Domain>[,...] -> AtLeast{1, [Holds{DeityGrantsDomain(domain_id)}...]}: true when the character's deity record has a DOMAINS: grant for that domain. Converter joins domain names to domain record ids. 37 instances, 35 DONE.",
+  "expr_shape": "n/a",
+  "expr_gaps": [],
+  "applies_shape": "Holds{DeityGrantsDomain(id)}",
+  "prose_effect": "none",
+  "examples": [
+   {
+    "record": "advanced_race_guide:class_feature:Cleric Archetype ~ Forgemaster",
+    "source": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst:32",
+    "raw": "PREDEITYDOMAIN:1,Artifice",
+    "sheet_line": "F1 (human Fighter 3): included, not checked -- requires a deity granting the Artifice domain; no deity fact yet"
+   },
+   {
+    "record": "advanced_race_guide:class_feature:Inquisitor Archetype ~ Immolator",
+    "source": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst:600",
+    "raw": "PREDEITYDOMAIN:1,Fire",
+    "sheet_line": "F1 (human Fighter 3): included, not checked -- requires a deity granting the Fire domain; no deity fact yet"
+   },
+   {
+    "record": "inner_sea_magic:class_feature:Divine Scion ~ Darkness Specialization",
+    "source": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_abilities_class.lst:55",
+    "raw": "PREDEITYDOMAIN:1,Darkness",
+    "sheet_line": "F1 (human Fighter 3): included, not checked -- requires a deity granting the Darkness domain; no deity fact yet"
+   }
+  ],
+  "oracle_check": "sheet-line only -- no PCGen total covers it; held-set parity via SA.<n>.NAME in charbuild-remainder.txt.ftl is the nearest oracle",
+  "refuse_reason": "",
+  "confidence": "medium",
+  "open_questions": []
+ },
+ {
+  "token_type": "PREDEITYALIGN",
+  "family": "prereq",
+  "instances": 8,
+  "instances_source": "this lane: every raw_tokens entry across data/corpus (48,706 records with raw_tokens, 37 books, all statuses); feat records with a prerequisites list counted in their own row",
+  "units": 8,
+  "units_denominator": "non-DONE units (completion_atlas._bucket_of != DONE) joined to a corpus record carrying this token, of 23,315 non-DONE / 49,438",
+  "maps_to": "Applies",
+  "resolvability": "filter once deity is a character fact",
+  "rule": "PREDEITYALIGN:<A>[,...] -> Holds{DeityAlignment(set)} read off the deity record's ALIGN: token. 8 instances.",
+  "expr_shape": "n/a",
+  "expr_gaps": [],
+  "applies_shape": "Holds{DeityAlignment(set)}",
+  "prose_effect": "none",
+  "examples": [
+   {
+    "record": "adventurers_guide:class_feature:Cleric Archetype ~ Blossoming Light",
+    "source": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst:773",
+    "raw": "PREDEITYALIGN:LG,NG,CG,LN,TN,CN",
+    "sheet_line": "F1 (human Fighter 3): included, not checked -- requires a deity of alignment LG,NG,CG,LN,TN,CN; no deity fact yet"
+   },
+   {
+    "record": "adventurers_guide:class_feature:Codex-Named Unit (class_feature_adventurers_guide_ag_abilities_class_lst_968)",
+    "source": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst:968",
+    "raw": "PREDEITYALIGN:LG",
+    "sheet_line": "F1 (human Fighter 3): included, not checked -- requires a deity of alignment LG; no deity fact yet"
+   },
+   {
+    "record": "advanced_class_guide:class_feature:Divine Commander ~ Unbiased Mount",
+    "source": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:3988",
+    "raw": "PREDEITYALIGN:TN",
+    "sheet_line": "F1 (human Fighter 3): included, not checked -- requires a deity of alignment TN; no deity fact yet"
+   }
+  ],
+  "oracle_check": "sheet-line only -- no PCGen total covers it; held-set parity via SA.<n>.NAME in charbuild-remainder.txt.ftl is the nearest oracle",
+  "refuse_reason": "",
+  "confidence": "medium",
+  "open_questions": []
+ },
+ {
+  "token_type": "PREDOMAIN",
+  "family": "prereq",
+  "instances": 8,
+  "instances_source": "this lane: every raw_tokens entry across data/corpus (48,706 records with raw_tokens, 37 books, all statuses); feat records with a prerequisites list counted in their own row",
+  "units": 5,
+  "units_denominator": "non-DONE units (completion_atlas._bucket_of != DONE) joined to a corpus record carrying this token, of 23,315 non-DONE / 49,438",
+  "maps_to": "Applies",
+  "resolvability": "filter (per-character-resolvable)",
+  "rule": "PREDOMAIN:N,<Domain>[,...] -> AtLeast{N, [Holds{Rule(domain_record_id)}...]}. A chosen domain is a held rule (the domain record) so this is a plain Holds. 8 instances.",
+  "expr_shape": "n/a",
+  "expr_gaps": [],
+  "applies_shape": "AtLeast{n, [Holds{Rule(domain)}]}",
+  "prose_effect": "none",
+  "examples": [
+   {
+    "record": "advanced_race_guide:class_feature:Druid Archetype ~ Undine Adept",
+    "source": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst:798",
+    "raw": "PREDOMAIN:1,Community,Water",
+    "sheet_line": "F1 (human Fighter 3): excluded -- requires domain Community; F1 has no domains"
+   },
+   {
+    "record": "advanced_race_guide:class_feature:Cleric Archetype ~ Fiendish Vessel",
+    "source": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst:786",
+    "raw": "PREDOMAIN:1,Daemon Subdomain,Demon Subdomain (Evil),Demon Subdomain (Chaos),Devil Subdomain (Evil),Devil Subdomian (Law)",
+    "sheet_line": "F1 (human Fighter 3): excluded -- requires domain Daemon Subdomain; F1 has no domains"
+   },
+   {
+    "record": "advanced_race_guide:class_feature:Cleric Archetype ~ Demonic Apostle",
+    "source": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst:508",
+    "raw": "PREDOMAIN:1,Chaos,Evil,Demon",
+    "sheet_line": "F1 (human Fighter 3): excluded -- requires domain Chaos; F1 has no domains"
+   }
+  ],
+  "oracle_check": "sheet-line only -- no PCGen total covers it; held-set parity via SA.<n>.NAME in charbuild-remainder.txt.ftl is the nearest oracle",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": []
+ },
+ {
+  "token_type": "PREWEAPONPROF",
+  "family": "prereq",
+  "instances": 12,
+  "instances_source": "this lane: every raw_tokens entry across data/corpus (48,706 records with raw_tokens, 37 books, all statuses); feat records with a prerequisites list counted in their own row",
+  "units": 11,
+  "units_denominator": "non-DONE units (completion_atlas._bucket_of != DONE) joined to a corpus record carrying this token, of 23,315 non-DONE / 49,438",
+  "maps_to": "Applies",
+  "resolvability": "filter (per-character-resolvable)",
+  "rule": "PREWEAPONPROF:N,<Weapon|TYPE.Martial>[,...] -> AtLeast{N, [Holds{Proficiency(Weapon(id)|WeaponGroup(tag))}...]}. Proficiencies are a held-fact set built from AUTO:WEAPONPROF grants (see AUTO row). 12 instances.",
+  "expr_shape": "n/a",
+  "expr_gaps": [],
+  "applies_shape": "AtLeast{n, [Holds{Proficiency}]}",
+  "prose_effect": "none",
+  "examples": [
+   {
+    "record": "advanced_class_guide:ability:Warpriest Bonus Feat ~ Gnome Weapon Focus",
+    "source": "pathfinder/paizo/roleplaying_game/advanced_class_guide/support/acg_abilities_arg.lst:14",
+    "raw": "PREWEAPONPROF:1,TYPE.Martial",
+    "sheet_line": "F1 (human Fighter 3): held -- requires proficiency with martial weapons (Fighter grants all martial)"
+   },
+   {
+    "record": "advanced_class_guide:class_feature:Warpriest Bonus Feat ~ Arc Slinger",
+    "source": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:4407",
+    "raw": "PREWEAPONPROF:1,Sling,Sling Staff (Halfling)",
+    "sheet_line": "F1 (human Fighter 3): excluded -- requires proficiency with Sling,Sling Staff (Halfling) (F1: simple + martial only)"
+   },
+   {
+    "record": "advanced_class_guide:class_feature:Warpriest Bonus Feat ~ Net Adept",
+    "source": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:4496",
+    "raw": "PREWEAPONPROF:1,Net",
+    "sheet_line": "F1 (human Fighter 3): excluded -- requires proficiency with Net (F1: simple + martial only)"
+   }
+  ],
+  "oracle_check": "sheet-line only -- no PCGen total covers it; held-set parity via SA.<n>.NAME in charbuild-remainder.txt.ftl is the nearest oracle",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": [
+   "Holdable::Proficiency is a new Applies target; AUTO:WEAPONPROF|TYPE=Martial style group grants must expand to the weapon-group tag, not to a weapon list"
+  ]
+ },
+ {
+  "token_type": "PREPROFWITHSHIELD",
+  "family": "prereq",
+  "instances": 1,
+  "instances_source": "this lane: every raw_tokens entry across data/corpus (48,706 records with raw_tokens, 37 books, all statuses); feat records with a prerequisites list counted in their own row",
+  "units": 1,
+  "units_denominator": "non-DONE units (completion_atlas._bucket_of != DONE) joined to a corpus record carrying this token, of 23,315 non-DONE / 49,438",
+  "maps_to": "Applies",
+  "resolvability": "filter (per-character-resolvable)",
+  "rule": "PREPROFWITHSHIELD:1,TYPE.Light,TYPE.Heavy -> AtLeast{1, [Holds{Proficiency(ShieldGroup(tag))}]}. 1 instance.",
+  "expr_shape": "n/a",
+  "expr_gaps": [],
+  "applies_shape": "Holds{Proficiency}",
+  "prose_effect": "none",
+  "examples": [
+   {
+    "record": "ultimate_magic:feat_generic:Channeled Shield Wall",
+    "source": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_feats.lst:23",
+    "raw": "PREPROFWITHSHIELD:1,TYPE.Light,TYPE.Heavy",
+    "sheet_line": "F1 (human Fighter 3): held -- Fighter grants shield proficiency"
+   }
+  ],
+  "oracle_check": "sheet-line only -- no PCGen total covers it; held-set parity via SA.<n>.NAME in charbuild-remainder.txt.ftl is the nearest oracle",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": []
+ },
+ {
+  "token_type": "PREARMORTYPE",
+  "family": "prereq",
+  "instances": 1,
+  "instances_source": "this lane: every raw_tokens entry across data/corpus (48,706 records with raw_tokens, 37 books, all statuses); feat records with a prerequisites list counted in their own row",
+  "units": 1,
+  "units_denominator": "non-DONE units (completion_atlas._bucket_of != DONE) joined to a corpus record carrying this token, of 23,315 non-DONE / 49,438",
+  "maps_to": "Applies",
+  "resolvability": "situational (prints as words; never blocks)",
+  "rule": "PREARMORTYPE:1,TYPE.Heavy = the character is WEARING heavy armor (equipped state, PCGen PreArmorTypeTester) -> Words(\"while wearing heavy armor\"). 1 instance.",
+  "expr_shape": "n/a",
+  "expr_gaps": [],
+  "applies_shape": "Words",
+  "prose_effect": "none",
+  "examples": [
+   {
+    "record": "adventurers_guide:feat_generic:Agile Maiden",
+    "source": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_feats.lst:8",
+    "raw": "PREARMORTYPE:1,TYPE.Heavy",
+    "sheet_line": "F1 (human Fighter 3): included, not checked -- prints as words: \"1,TYPE.Heavy\""
+   }
+  ],
+  "oracle_check": "sheet-line only -- no PCGen total covers it; held-set parity via SA.<n>.NAME in charbuild-remainder.txt.ftl is the nearest oracle",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": []
+ },
+ {
+  "token_type": "PRESPELL",
+  "family": "prereq",
+  "instances": 16,
+  "instances_source": "this lane: every raw_tokens entry across data/corpus (48,706 records with raw_tokens, 37 books, all statuses); feat records with a prerequisites list counted in their own row",
+  "units": 12,
+  "units_denominator": "non-DONE units (completion_atlas._bucket_of != DONE) joined to a corpus record carrying this token, of 23,315 non-DONE / 49,438",
+  "maps_to": "Applies",
+  "resolvability": "filter (per-character-resolvable)",
+  "rule": "PRESPELL:N,<Spell>[,...] -> AtLeast{N, [Holds{Spell(id)}...]} over the character's known/prepared spell list (a fact the spellbook path already holds). 16 instances.",
+  "expr_shape": "n/a",
+  "expr_gaps": [],
+  "applies_shape": "AtLeast{n, [Holds{Spell(id)}]}",
+  "prose_effect": "none",
+  "examples": [
+   {
+    "record": "adventurers_guide:feat_generic:Devil Sense",
+    "source": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_feats.lst:24",
+    "raw": "PRESPELL:1,Detect Evil",
+    "sheet_line": "F1 (human Fighter 3): excluded -- requires the spell Detect Evil known; F1 casts nothing"
+   },
+   {
+    "record": "advanced_class_guide:class_feature:Warpriest Bonus Feat ~ Nightmare Weaver",
+    "source": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:4502",
+    "raw": "PRESPELL:1,Darkness",
+    "sheet_line": "F1 (human Fighter 3): excluded -- requires the spell Darkness known; F1 casts nothing"
+   },
+   {
+    "record": "advanced_class_guide:class_feature:Warpriest Bonus Feat ~ Nightmare Striker",
+    "source": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:4501",
+    "raw": "PRESPELL:1,Faerie Fire",
+    "sheet_line": "F1 (human Fighter 3): excluded -- requires the spell Faerie Fire known; F1 casts nothing"
+   }
+  ],
+  "oracle_check": "sheet-line only -- no PCGen total covers it; held-set parity via SA.<n>.NAME in charbuild-remainder.txt.ftl is the nearest oracle",
+  "refuse_reason": "",
+  "confidence": "medium",
+  "open_questions": [
+   "Holdable::Spell needs the spellbook path to expose known spells by corpus id"
+  ]
+ },
+ {
+  "token_type": "PRESPELLTYPE",
+  "family": "prereq",
+  "instances": 10,
+  "instances_source": "this lane: every raw_tokens entry across data/corpus (48,706 records with raw_tokens, 37 books, all statuses); feat records with a prerequisites list counted in their own row",
+  "units": 10,
+  "units_denominator": "non-DONE units (completion_atlas._bucket_of != DONE) joined to a corpus record carrying this token, of 23,315 non-DONE / 49,438",
+  "maps_to": "Applies",
+  "resolvability": "filter once Expr::HighestSpellLevel exists",
+  "rule": "PRESPELLTYPE:1,<Arcane|Divine|Psychic>=<n> -> Compare{HighestSpellLevel(kind) >= Const(n)}. 10 instances.",
+  "expr_shape": "n/a",
+  "expr_gaps": [
+   "Expr::HighestSpellLevel(SpellKind)"
+  ],
+  "applies_shape": "Compare",
+  "prose_effect": "none",
+  "examples": [
+   {
+    "record": "adventurers_guide:feat_generic:Mask Focus",
+    "source": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_feats.lst:42",
+    "raw": "PRESPELLTYPE:1,Arcane=3",
+    "sheet_line": "F1 (human Fighter 3): excluded -- requires casting Arcane spells of level 3; F1 casts nothing"
+   },
+   {
+    "record": "ultimate_magic:class_feature:Split 3rd to 2 1st",
+    "source": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst:768",
+    "raw": "PRESPELLTYPE:1,Arcane=3",
+    "sheet_line": "F1 (human Fighter 3): excluded -- requires casting Arcane spells of level 3; F1 casts nothing"
+   },
+   {
+    "record": "ultimate_magic:class_feature:Split 7th to 2 5th",
+    "source": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst:772",
+    "raw": "PRESPELLTYPE:1,Arcane=7",
+    "sheet_line": "F1 (human Fighter 3): excluded -- requires casting Arcane spells of level 7; F1 casts nothing"
+   }
+  ],
+  "oracle_check": "sheet-line only -- no PCGen total covers it; held-set parity via SA.<n>.NAME in charbuild-remainder.txt.ftl is the nearest oracle",
+  "refuse_reason": "",
+  "confidence": "medium",
+  "open_questions": []
+ },
+ {
+  "token_type": "PRESPELLCAST",
+  "family": "prereq",
+  "instances": 5,
+  "instances_source": "this lane: every raw_tokens entry across data/corpus (48,706 records with raw_tokens, 37 books, all statuses); feat records with a prerequisites list counted in their own row",
+  "units": 5,
+  "units_denominator": "non-DONE units (completion_atlas._bucket_of != DONE) joined to a corpus record carrying this token, of 23,315 non-DONE / 49,438",
+  "maps_to": "Applies",
+  "resolvability": "filter (per-character-resolvable)",
+  "rule": "PRESPELLCAST:MEMORIZE=N -> Holds{ClassTag(spontaneous)} (any class the character has that casts spontaneously); PRESPELLCAST:TYPE=Arcane,TYPE=Divine,TYPE=Psychic -> AtLeast{1, [Holds{ClassTag(casts kind)}]}. Class casting kind/style come from the class record chassis (SPELLSTAT/SPELLTYPE/MEMORIZE fields the spellcasting_class parser already reads). 5 instances.",
+  "expr_shape": "n/a",
+  "expr_gaps": [],
+  "applies_shape": "Holds{ClassTag}",
+  "prose_effect": "none",
+  "examples": [
+   {
+    "record": "horror_adventures:ability:Lich Corruption ~ Necromantic Knowledge",
+    "source": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst:531",
+    "raw": "PRESPELLCAST:TYPE=Arcane,TYPE=Divine,TYPE=Psychic",
+    "sheet_line": "F1 (human Fighter 3): excluded -- requires a spellcasting class of the named style; F1 casts nothing"
+   },
+   {
+    "record": "advanced_players_guide:feat_generic:Expanded Arcana",
+    "source": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_feats.lst:82",
+    "raw": "PRESPELLCAST:MEMORIZE=N",
+    "sheet_line": "F1 (human Fighter 3): excluded -- requires a spellcasting class of the named style; F1 casts nothing"
+   },
+   {
+    "record": "advanced_players_guide:class_feature:Sorcerer Bloodline Feat ~ Expanded Arcana",
+    "source": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst:3049",
+    "raw": "PRESPELLCAST:MEMORIZE=N",
+    "sheet_line": "F1 (human Fighter 3): excluded -- requires a spellcasting class of the named style; F1 casts nothing"
+   }
+  ],
+  "oracle_check": "sheet-line only -- no PCGen total covers it; held-set parity via SA.<n>.NAME in charbuild-remainder.txt.ftl is the nearest oracle",
+  "refuse_reason": "",
+  "confidence": "medium",
+  "open_questions": []
+ },
+ {
+  "token_type": "PRESPELLBOOK",
+  "family": "prereq",
+  "instances": 1,
+  "instances_source": "this lane: every raw_tokens entry across data/corpus (48,706 records with raw_tokens, 37 books, all statuses); feat records with a prerequisites list counted in their own row",
+  "units": 1,
+  "units_denominator": "non-DONE units (completion_atlas._bucket_of != DONE) joined to a corpus record carrying this token, of 23,315 non-DONE / 49,438",
+  "maps_to": "Applies",
+  "resolvability": "filter (per-character-resolvable)",
+  "rule": "PRESPELLBOOK:YES -> Holds{ClassTag(prepares from a spellbook)}. 1 instance (no sample survived the index cap; record exists in the count).",
+  "expr_shape": "n/a",
+  "expr_gaps": [],
+  "applies_shape": "Holds{ClassTag}",
+  "prose_effect": "none",
+  "examples": [
+   {
+    "record": "adventurers_guide:feat_generic:Cypher Script",
+    "source": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_feats.lst:23",
+    "raw": "PRESPELLBOOK:YES",
+    "sheet_line": "F1 (human Fighter 3): excluded -- requires a class that prepares spells from a spellbook; F1 casts nothing"
+   }
+  ],
+  "oracle_check": "sheet-line only -- no PCGen total covers it; held-set parity via SA.<n>.NAME in charbuild-remainder.txt.ftl is the nearest oracle",
+  "refuse_reason": "",
+  "confidence": "medium",
+  "open_questions": []
+ },
+ {
+  "token_type": "PRESPELLDESCRIPTOR",
+  "family": "prereq",
+  "instances": 1,
+  "instances_source": "this lane: every raw_tokens entry across data/corpus (48,706 records with raw_tokens, 37 books, all statuses); feat records with a prerequisites list counted in their own row",
+  "units": 1,
+  "units_denominator": "non-DONE units (completion_atlas._bucket_of != DONE) joined to a corpus record carrying this token, of 23,315 non-DONE / 49,438",
+  "maps_to": "Applies",
+  "resolvability": "filter once Holdable::Spell carries descriptors; Words until then",
+  "rule": "PRESPELLDESCRIPTOR:1,Force=0 -> Holds{SpellWithDescriptor(Force)} over known spells. 1 instance.",
+  "expr_shape": "n/a",
+  "expr_gaps": [],
+  "applies_shape": "Holds{SpellWithDescriptor}",
+  "prose_effect": "none",
+  "examples": [
+   {
+    "record": "advanced_class_guide:class_feature:Warpriest Bonus Feat ~ Channeling Force",
+    "source": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:4144",
+    "raw": "PRESPELLDESCRIPTOR:1,Force=0",
+    "sheet_line": "F1 (human Fighter 3): excluded -- requires a known [force] spell; F1 casts nothing"
+   }
+  ],
+  "oracle_check": "sheet-line only -- no PCGen total covers it; held-set parity via SA.<n>.NAME in charbuild-remainder.txt.ftl is the nearest oracle",
+  "refuse_reason": "",
+  "confidence": "low",
+  "open_questions": []
+ },
+ {
+  "token_type": "PREMOVE",
+  "family": "prereq",
+  "instances": 11,
+  "instances_source": "this lane: every raw_tokens entry across data/corpus (48,706 records with raw_tokens, 37 books, all statuses); feat records with a prerequisites list counted in their own row",
+  "units": 7,
+  "units_denominator": "non-DONE units (completion_atlas._bucket_of != DONE) joined to a corpus record carrying this token, of 23,315 non-DONE / 49,438",
+  "maps_to": "Applies",
+  "resolvability": "filter (per-character-resolvable)",
+  "rule": "PREMOVE:1,<Mode>=<speed> -> Holds{Movement(mode, min_speed)} read from the character's movement facts (race MOVE: grants + templates). 11 instances, bestiary templates and Obedience boons.",
+  "expr_shape": "n/a",
+  "expr_gaps": [],
+  "applies_shape": "Holds{Movement(mode, >= n)}",
+  "prose_effect": "none",
+  "examples": [
+   {
+    "record": "bestiary_2:template:Juju Zombie Magical Flight",
+    "source": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_templates.lst:132",
+    "raw": "PREMOVE:1,Fly=1",
+    "sheet_line": "F1 (human Fighter 3): excluded -- requires a Fly speed of at least 1; F1 has land 30 only"
+   },
+   {
+    "record": "bestiary_2:template:Juju Zombie Winged Flight",
+    "source": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_templates.lst:131",
+    "raw": "PREMOVE:1,Fly=1",
+    "sheet_line": "F1 (human Fighter 3): excluded -- requires a Fly speed of at least 1; F1 has land 30 only"
+   },
+   {
+    "record": "book_of_the_damned_volume_2:class_feature:Extra Swim Speed ~ Dagon",
+    "source": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_2/botd2_abilities_classes.lst:120",
+    "raw": "PREMOVE:1,Swim=5",
+    "sheet_line": "F1 (human Fighter 3): excluded -- requires a Swim speed of at least 5; F1 has land 30 only"
+   }
+  ],
+  "oracle_check": "sheet-line only -- no PCGen total covers it; held-set parity via SA.<n>.NAME in charbuild-remainder.txt.ftl is the nearest oracle",
+  "refuse_reason": "",
+  "confidence": "medium",
+  "open_questions": [
+   "Holdable::Movement depends on the grant lane converting MOVE: into movement facts"
+  ]
+ },
+ {
+  "token_type": "PREVISION",
+  "family": "prereq",
+  "instances": 6,
+  "instances_source": "this lane: every raw_tokens entry across data/corpus (48,706 records with raw_tokens, 37 books, all statuses); feat records with a prerequisites list counted in their own row",
+  "units": 6,
+  "units_denominator": "non-DONE units (completion_atlas._bucket_of != DONE) joined to a corpus record carrying this token, of 23,315 non-DONE / 49,438",
+  "maps_to": "Applies",
+  "resolvability": "filter (per-character-resolvable)",
+  "rule": "PREVISION:1,<Mode>=<ANY|range> -> Holds{Vision(mode, min_range)} from race VISION: facts. 6 instances.",
+  "expr_shape": "n/a",
+  "expr_gaps": [],
+  "applies_shape": "Holds{Vision}",
+  "prose_effect": "none",
+  "examples": [
+   {
+    "record": "inner_sea_intrigue:template:Lantern Bearer Bonus Darkvision",
+    "source": "pathfinder/paizo/campaign_setting/inner_sea_intrigue/isi_templates.lst:10",
+    "raw": "PREVISION:1,Darkvision=ANY",
+    "sheet_line": "F1 (human Fighter 3): excluded -- requires Darkvision; humans have normal vision"
+   },
+   {
+    "record": "adventurers_guide:template:Lantern Lighter Bonus Darkvision",
+    "source": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_templates.lst:5",
+    "raw": "PREVISION:1,Darkvision=ANY",
+    "sheet_line": "F1 (human Fighter 3): excluded -- requires Darkvision; humans have normal vision"
+   },
+   {
+    "record": "advanced_players_guide:template:Vision Lowlight",
+    "source": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_templates.lst:75",
+    "raw": "PREVISION:1,Low-Light Vision=ANY",
+    "sheet_line": "F1 (human Fighter 3): excluded -- requires Low-Light Vision; humans have normal vision"
+   }
+  ],
+  "oracle_check": "sheet-line only -- no PCGen total covers it; held-set parity via SA.<n>.NAME in charbuild-remainder.txt.ftl is the nearest oracle",
+  "refuse_reason": "",
+  "confidence": "medium",
+  "open_questions": []
+ },
+ {
+  "token_type": "PRELANG",
+  "family": "prereq",
+  "instances": 1,
+  "instances_source": "this lane: every raw_tokens entry across data/corpus (48,706 records with raw_tokens, 37 books, all statuses); feat records with a prerequisites list counted in their own row",
+  "units": 1,
+  "units_denominator": "non-DONE units (completion_atlas._bucket_of != DONE) joined to a corpus record carrying this token, of 23,315 non-DONE / 49,438",
+  "maps_to": "Applies",
+  "resolvability": "filter (per-character-resolvable)",
+  "rule": "PRELANG:1,ANY -> Holds{Language(Any)} (always true for a PC with Common); named languages -> Holds{Language(id)}. 1 instance.",
+  "expr_shape": "n/a",
+  "expr_gaps": [],
+  "applies_shape": "Holds{Language}",
+  "prose_effect": "none",
+  "examples": [
+   {
+    "record": "ultimate_wilderness:companion:Familiar Archetype ~ Ambassador",
+    "source": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst:533",
+    "raw": "PRELANG:1,ANY",
+    "sheet_line": "F1 (human Fighter 3): held -- requires any language (F1 speaks Common)"
+   }
+  ],
+  "oracle_check": "sheet-line only -- no PCGen total covers it; held-set parity via SA.<n>.NAME in charbuild-remainder.txt.ftl is the nearest oracle",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": []
+ },
+ {
+  "token_type": "PREGENDER",
+  "family": "prereq",
+  "instances": 3,
+  "instances_source": "this lane: every raw_tokens entry across data/corpus (48,706 records with raw_tokens, 37 books, all statuses); feat records with a prerequisites list counted in their own row",
+  "units": 2,
+  "units_denominator": "non-DONE units (completion_atlas._bucket_of != DONE) joined to a corpus record carrying this token, of 23,315 non-DONE / 49,438",
+  "maps_to": "Applies",
+  "resolvability": "Words today; filter once the fact exists",
+  "rule": "PREGENDER:<F|Female|M> -> Holds{Gender(g)}. Gender is not a character fact today -> Words until it is. 3 instances.",
+  "expr_shape": "n/a",
+  "expr_gaps": [],
+  "applies_shape": "Holds{Gender}",
+  "prose_effect": "none",
+  "examples": [
+   {
+    "record": "adventurers_guide:feat_generic:Codex-Named Unit (feat_adventurers_guide_ag_feats_lst_37)",
+    "source": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_feats.lst:37",
+    "raw": "PREGENDER:Female",
+    "sheet_line": "F1 (human Fighter 3): included, not checked -- requires gender Female; gender is not a live character fact"
+   },
+   {
+    "record": "advanced_race_guide:race:Changeling",
+    "source": "pathfinder/paizo/roleplaying_game/core_essentials/races/changeling/changeling_races.lst:6",
+    "raw": "PREGENDER:F",
+    "sheet_line": "F1 (human Fighter 3): included, not checked -- requires gender F; gender is not a live character fact"
+   },
+   {
+    "record": "bestiary_4:race_generic:Changeling",
+    "source": "pathfinder/paizo/roleplaying_game/core_essentials/races/changeling/changeling_races.lst:6",
+    "raw": "PREGENDER:F",
+    "sheet_line": "F1 (human Fighter 3): included, not checked -- requires gender F; gender is not a live character fact"
+   }
+  ],
+  "oracle_check": "sheet-line only -- no PCGen total covers it; held-set parity via SA.<n>.NAME in charbuild-remainder.txt.ftl is the nearest oracle",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": [
+   "character fact gap: gender"
+  ]
+ },
+ {
+  "token_type": "PREAGESET",
+  "family": "prereq",
+  "instances": 1,
+  "instances_source": "this lane: every raw_tokens entry across data/corpus (48,706 records with raw_tokens, 37 books, all statuses); feat records with a prerequisites list counted in their own row",
+  "units": 0,
+  "units_denominator": "non-DONE units (completion_atlas._bucket_of != DONE) joined to a corpus record carrying this token, of 23,315 non-DONE / 49,438",
+  "maps_to": "Applies",
+  "resolvability": "Words today; filter once the fact exists",
+  "rule": "PREAGESET:1,<AgeSet> -> Holds{AgeCategory(set)}. Age category is not a character fact -> Words. 2 instances (Timeless Body templates; 1 DONE).",
+  "expr_shape": "n/a",
+  "expr_gaps": [],
+  "applies_shape": "Holds{AgeCategory}",
+  "prose_effect": "none",
+  "examples": [
+   {
+    "record": "core_rulebook:template:Timeless Body ~ Venerable",
+    "source": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_templates.lst:21",
+    "raw": "PREAGESET:1,Venerable",
+    "sheet_line": "F1 (human Fighter 3): included, not checked -- requires age category Venerable; age is not a live character fact"
+   }
+  ],
+  "oracle_check": "sheet-line only -- no PCGen total covers it; held-set parity via SA.<n>.NAME in charbuild-remainder.txt.ftl is the nearest oracle",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": [
+   "character fact gap: age category"
+  ]
+ },
+ {
+  "token_type": "PREEQUIP",
+  "family": "prereq",
+  "instances": 2,
+  "instances_source": "this lane: every raw_tokens entry across data/corpus (48,706 records with raw_tokens, 37 books, all statuses); feat records with a prerequisites list counted in their own row",
+  "units": 0,
+  "units_denominator": "non-DONE units (completion_atlas._bucket_of != DONE) joined to a corpus record carrying this token, of 23,315 non-DONE / 49,438",
+  "maps_to": "Applies",
+  "resolvability": "situational (prints as words; never blocks)",
+  "rule": "PREEQUIP:1,<Item> = the item is currently equipped -> Words(\"while <item> is equipped\"). 2 instances, both DONE equipment.",
+  "expr_shape": "n/a",
+  "expr_gaps": [],
+  "applies_shape": "Words",
+  "prose_effect": "none",
+  "examples": [
+   {
+    "record": "advanced_players_guide:equipment:Folding Plate",
+    "source": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_equip_arms_armor.lst:31",
+    "raw": "PREEQUIP:1,Brooch (Folding Plate)",
+    "sheet_line": "F1 (human Fighter 3): included, not checked -- prints as words: \"1,Brooch (Folding Plate)\""
+   },
+   {
+    "record": "ultimate_equipment:equipment:Hammer of Thunderbolts (Major Form)",
+    "source": "pathfinder/paizo/roleplaying_game/ultimate_equipment/ue_equip_arms_armor.lst:564",
+    "raw": "PREEQUIP:1,Belt of Giant Strength",
+    "sheet_line": "F1 (human Fighter 3): included, not checked -- prints as words: \"1,Belt of Giant Strength\""
+   }
+  ],
+  "oracle_check": "sheet-line only -- no PCGen total covers it; held-set parity via SA.<n>.NAME in charbuild-remainder.txt.ftl is the nearest oracle",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": []
+ },
+ {
+  "token_type": "PREDR",
+  "family": "prereq",
+  "instances": 1,
+  "instances_source": "this lane: every raw_tokens entry across data/corpus (48,706 records with raw_tokens, 37 books, all statuses); feat records with a prerequisites list counted in their own row",
+  "units": 1,
+  "units_denominator": "non-DONE units (completion_atlas._bucket_of != DONE) joined to a corpus record carrying this token, of 23,315 non-DONE / 49,438",
+  "maps_to": "Applies",
+  "resolvability": "situational (prints as words; never blocks)",
+  "rule": "PREDR:1,ANY=1 -> Words(\"requires damage reduction\"). Creature-body fact; 1 instance.",
+  "expr_shape": "n/a",
+  "expr_gaps": [],
+  "applies_shape": "Words",
+  "prose_effect": "none",
+  "examples": [
+   {
+    "record": "advanced_class_guide:class_feature:Warpriest Bonus Feat ~ Rebuffing Reduction",
+    "source": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:4524",
+    "raw": "PREDR:1,ANY=1",
+    "sheet_line": "F1 (human Fighter 3): included, not checked -- prints as words: \"1,ANY=1\""
+   }
+  ],
+  "oracle_check": "sheet-line only -- no PCGen total covers it; held-set parity via SA.<n>.NAME in charbuild-remainder.txt.ftl is the nearest oracle",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": []
+ },
+ {
+  "token_type": "PREHANDSGTEQ",
+  "family": "prereq",
+  "instances": 1,
+  "instances_source": "this lane: every raw_tokens entry across data/corpus (48,706 records with raw_tokens, 37 books, all statuses); feat records with a prerequisites list counted in their own row",
+  "units": 1,
+  "units_denominator": "non-DONE units (completion_atlas._bucket_of != DONE) joined to a corpus record carrying this token, of 23,315 non-DONE / 49,438",
+  "maps_to": "Applies",
+  "resolvability": "situational (prints as words; never blocks)",
+  "rule": "PREHANDSGTEQ:3 -> Words(\"requires three or more hands\"). 1 instance (Multiweapon Fighting). No hands fact, as pre_tokens.rs already records.",
+  "expr_shape": "n/a",
+  "expr_gaps": [],
+  "applies_shape": "Words",
+  "prose_effect": "none",
+  "examples": [
+   {
+    "record": "bestiary:feat_generic:Multiweapon Fighting",
+    "source": "pathfinder/paizo/roleplaying_game/core_essentials/ce_feats.lst:20",
+    "raw": "PREHANDSGTEQ:3",
+    "sheet_line": "F1 (human Fighter 3): included, not checked -- prints as words: \"3\""
+   }
+  ],
+  "oracle_check": "sheet-line only -- no PCGen total covers it; held-set parity via SA.<n>.NAME in charbuild-remainder.txt.ftl is the nearest oracle",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": []
+ },
+ {
+  "token_type": "PREREACHGTEQ",
+  "family": "prereq",
+  "instances": 1,
+  "instances_source": "this lane: every raw_tokens entry across data/corpus (48,706 records with raw_tokens, 37 books, all statuses); feat records with a prerequisites list counted in their own row",
+  "units": 1,
+  "units_denominator": "non-DONE units (completion_atlas._bucket_of != DONE) joined to a corpus record carrying this token, of 23,315 non-DONE / 49,438",
+  "maps_to": "Applies",
+  "resolvability": "situational (prints as words; never blocks)",
+  "rule": "PREREACHGTEQ:10 -> Words(\"requires reach 10 ft. or more\"). 1 instance.",
+  "expr_shape": "n/a",
+  "expr_gaps": [],
+  "applies_shape": "Words",
+  "prose_effect": "none",
+  "examples": [
+   {
+    "record": "ultimate_psionics:class_feature:Aegis ~ Pull",
+    "source": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst:69",
+    "raw": "PREREACHGTEQ:10",
+    "sheet_line": "F1 (human Fighter 3): included, not checked -- prints as words: \"10\""
+   }
+  ],
+  "oracle_check": "sheet-line only -- no PCGen total covers it; held-set parity via SA.<n>.NAME in charbuild-remainder.txt.ftl is the nearest oracle",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": []
+ },
+ {
+  "token_type": "PRETEXT",
+  "family": "prereq",
+  "instances": 168,
+  "instances_source": "this lane: every raw_tokens entry across data/corpus (48,706 records with raw_tokens, 37 books, all statuses); feat records with a prerequisites list counted in their own row",
+  "units": 139,
+  "units_denominator": "non-DONE units (completion_atlas._bucket_of != DONE) joined to a corpus record carrying this token, of 23,315 non-DONE / 49,438",
+  "maps_to": "Applies",
+  "resolvability": "situational (prints as words; never blocks)",
+  "rule": "PRETEXT:<text> -> Words(text). Never filters, never blocks; the picker shows it as \"not checked\". This is also the fallback text source for any clause on the same record that converts to Words without its own words. 168 instances in raw_tokens plus 236 inside feat prerequisites lists.",
+  "expr_shape": "n/a",
+  "expr_gaps": [],
+  "applies_shape": "Words(text)",
+  "prose_effect": "the text is shown in the picker as an unchecked requirement; it is not appended to the sheet prose",
+  "examples": [
+   {
+    "record": "occult_adventures:class_feature:Wild Talent ~ Telekinetic Haul",
+    "source": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst:785",
+    "raw": "PRETEXT:Prerequisite basic telekinesis",
+    "sheet_line": "F1 (human Fighter 3): included, not checked -- prints as words: \"Prerequisite basic telekinesis\""
+   },
+   {
+    "record": "occult_adventures:class_feature:Wild Talent ~ Flame Jet (Greater)",
+    "source": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst:752",
+    "raw": "PRETEXT:Prerequisite flame jet",
+    "sheet_line": "F1 (human Fighter 3): included, not checked -- prints as words: \"Prerequisite flame jet\""
+   },
+   {
+    "record": "occult_adventures:class_feature:Wild Talent ~ Snake",
+    "source": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst:717",
+    "raw": "PRETEXT:Prerequisite extended range",
+    "sheet_line": "F1 (human Fighter 3): included, not checked -- prints as words: \"Prerequisite extended range\""
+   }
+  ],
+  "oracle_check": "sheet-line only -- no PCGen total covers it; held-set parity via SA.<n>.NAME in charbuild-remainder.txt.ftl is the nearest oracle",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": []
+ },
+ {
+  "token_type": "PRETYPE",
+  "family": "prereq",
+  "instances": 1252,
+  "instances_source": "this lane: every raw_tokens entry across data/corpus (48,706 records with raw_tokens, 37 books, all statuses); feat records with a prerequisites list counted in their own row",
+  "units": 190,
+  "units_denominator": "non-DONE units (completion_atlas._bucket_of != DONE) joined to a corpus record carrying this token, of 23,315 non-DONE / 49,438",
+  "maps_to": "Applies",
+  "resolvability": "filter over item facts (equipment chassis has TYPE:)",
+  "rule": "PRETYPE:N,<tag>[,...] on equipment/eqmod records gates on the ITEM's TYPE, not the character -> Applies::ItemHas{tags, n} evaluated by the equipment picker against the base item (Wooden, Weapon, WeaponEnhancement.Weapon, EQMODTYPE=Mundane). 1,252 instances, 190 non-DONE; 1,063 records, all equipment-kind. Subject is the item: the converter marks the rule's subject as Item so the live filter reads item facts.",
+  "expr_shape": "n/a",
+  "expr_gaps": [],
+  "applies_shape": "ItemHas{tags: Vec<tag>, at_least: n} with SheetRule.subject = Item",
+  "prose_effect": "none",
+  "examples": [
+   {
+    "record": "inner_sea_world_guide:equipment:Material ~ Paueliel Wood",
+    "source": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_equipmods.lst:9",
+    "raw": "PRETYPE:1,Wooden",
+    "sheet_line": "eqmod attaches only to an item whose type carries Wooden; not a character gate"
+   },
+   {
+    "record": "bestiary_3:equipment:PPRCT",
+    "source": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_equipmods.lst:16",
+    "raw": "PRETYPE:1,Weapon",
+    "sheet_line": "eqmod attaches only to an item whose type carries Weapon; not a character gate"
+   },
+   {
+    "record": "bestiary_3:equipment:Special Ability ~ Bleed ~ Monster",
+    "source": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_equipmods.lst:8",
+    "raw": "PRETYPE:1,WeaponEnhancement.Weapon",
+    "sheet_line": "eqmod attaches only to an item whose type carries WeaponEnhancement.Weapon; not a character gate"
+   }
+  ],
+  "oracle_check": "sheet-line only -- no PCGen total covers it; held-set parity via SA.<n>.NAME in charbuild-remainder.txt.ftl is the nearest oracle",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": [
+   "Applies needs a subject notion (Character | Item); technical-design §1 assumes a character subject"
+  ]
+ },
+ {
+  "token_type": "PRERULE",
+  "family": "prereq",
+  "instances": 7,
+  "instances_source": "this lane: every raw_tokens entry across data/corpus (48,706 records with raw_tokens, 37 books, all statuses); feat records with a prerequisites list counted in their own row",
+  "units": 7,
+  "units_denominator": "non-DONE units (completion_atlas._bucket_of != DONE) joined to a corpus record carrying this token, of 23,315 non-DONE / 49,438",
+  "maps_to": "Metadata(ignored-by-sheet)",
+  "resolvability": "metadata (consumed by the converter, not printed)",
+  "rule": "PRERULE:1,DISPLAYSKILLUSE (7 instances, inner_sea_bestiary sub-skills) is a PCGen house-rule display flag -> Metadata(ignored-by-sheet): the product does not expose PCGen rule toggles; treat as Always. pre_tokens.rs excludes PRERULE from pre_guard already.",
+  "expr_shape": "n/a",
+  "expr_gaps": [],
+  "applies_shape": "Always (metadata)",
+  "prose_effect": "none",
+  "examples": [
+   {
+    "record": "inner_sea_bestiary:skill:Perception (Dim Light)",
+    "source": "pathfinder/paizo/campaign_setting/inner_sea_bestiary/isb_skills.lst:6",
+    "raw": "PRERULE:1,DISPLAYSKILLUSE",
+    "sheet_line": "no gate; PCGen UI option flag"
+   },
+   {
+    "record": "inner_sea_bestiary:skill:Stealth (Cane Fields)",
+    "source": "pathfinder/paizo/campaign_setting/inner_sea_bestiary/isb_skills.lst:9",
+    "raw": "PRERULE:1,DISPLAYSKILLUSE",
+    "sheet_line": "no gate; PCGen UI option flag"
+   },
+   {
+    "record": "inner_sea_bestiary:skill:Stealth (Dim Light)",
+    "source": "pathfinder/paizo/campaign_setting/inner_sea_bestiary/isb_skills.lst:7",
+    "raw": "PRERULE:1,DISPLAYSKILLUSE",
+    "sheet_line": "no gate; PCGen UI option flag"
+   }
+  ],
+  "oracle_check": "sheet-line only -- no PCGen total covers it; held-set parity via SA.<n>.NAME in charbuild-remainder.txt.ftl is the nearest oracle",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": []
+ },
+ {
+  "token_type": "PRECAMPAIGN",
+  "family": "prereq",
+  "instances": 4,
+  "instances_source": "this lane: every raw_tokens entry across data/corpus (48,706 records with raw_tokens, 37 books, all statuses); feat records with a prerequisites list counted in their own row",
+  "units": 0,
+  "units_denominator": "non-DONE units (completion_atlas._bucket_of != DONE) joined to a corpus record carrying this token, of 23,315 non-DONE / 49,438",
+  "maps_to": "Metadata(ignored-by-sheet)",
+  "resolvability": "metadata (consumed by the converter, not printed)",
+  "rule": "PRECAMPAIGN:1,<Book> / !PRECAMPAIGN:1,<Book> gate on which PCGen source is loaded (24 instances: Mythic Adventures colossus abilities; BotD2 deities hidden when ISWG is loaded). The product loads every ingested book, so PRECAMPAIGN:<ingested book> -> Always and !PRECAMPAIGN:<ingested book> -> Never (the unit is a duplicate of the other book's record: route through the supersession register, not the sheet).",
+  "expr_shape": "n/a",
+  "expr_gaps": [],
+  "applies_shape": "Always | Never",
+  "prose_effect": "none",
+  "examples": [
+   {
+    "record": "bestiary_4:monster_ability:bestiary_4:monster_ability:colossus_mythic_creation",
+    "source": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_races_ce.lst:110",
+    "raw": "PRECAMPAIGN:1,Mythic Adventures",
+    "sheet_line": "Always -- Mythic Adventures is ingested"
+   },
+   {
+    "record": "bestiary_4:monster_ability:bestiary_4:monster_ability:colossus_mythic_resilience",
+    "source": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_races_ce.lst:111",
+    "raw": "PRECAMPAIGN:1,Mythic Adventures",
+    "sheet_line": "Always -- Mythic Adventures is ingested"
+   },
+   {
+    "record": "bestiary_4:monster_ability:bestiary_4:monster_ability:colossus_stone_self_repair",
+    "source": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst:410",
+    "raw": "PRECAMPAIGN:1,Mythic Adventures",
+    "sheet_line": "Always -- Mythic Adventures is ingested"
+   }
+  ],
+  "oracle_check": "sheet-line only -- no PCGen total covers it; held-set parity via SA.<n>.NAME in charbuild-remainder.txt.ftl is the nearest oracle",
+  "refuse_reason": "",
+  "confidence": "medium",
+  "open_questions": [
+   "20 !PRECAMPAIGN BotD2 deity records: confirm with the supersession register that the ISWG copy wins and these are out of scope, before mapping them Never"
+  ]
+ },
+ {
+  "token_type": "PRECHARACTERTYPE",
+  "family": "prereq",
+  "instances": 2,
+  "instances_source": "this lane: every raw_tokens entry across data/corpus (48,706 records with raw_tokens, 37 books, all statuses); feat records with a prerequisites list counted in their own row",
+  "units": 2,
+  "units_denominator": "non-DONE units (completion_atlas._bucket_of != DONE) joined to a corpus record carrying this token, of 23,315 non-DONE / 49,438",
+  "maps_to": "Metadata(ignored-by-sheet)",
+  "resolvability": "metadata (consumed by the converter, not printed)",
+  "rule": "PRECHARACTERTYPE:1,PC -> Always (this product builds PCs); !PRECHARACTERTYPE:1,PC -> Never (NPC-only shape: Witch Hex ~ Cauldron NPC variant, Drow-Blooded PFS variant). 2 + 72 instances. A Never rule is written but never held; its unit is sheet-complete because its converted record exists and the evaluator omits it from every PC's held set.",
+  "expr_shape": "n/a",
+  "expr_gaps": [],
+  "applies_shape": "Always | Never",
+  "prose_effect": "none",
+  "examples": [
+   {
+    "record": "horror_adventures:ability:Rules ~ Use Sanity",
+    "source": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst:7",
+    "raw": "PRECHARACTERTYPE:1,PC",
+    "sheet_line": "Always -- F1 is a PC"
+   },
+   {
+    "record": "advanced_players_guide:ability:Rules ~ Use Hero Points",
+    "source": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities.lst:278",
+    "raw": "PRECHARACTERTYPE:1,PC",
+    "sheet_line": "Always -- F1 is a PC"
+   }
+  ],
+  "oracle_check": "sheet-line only -- no PCGen total covers it; held-set parity via SA.<n>.NAME in charbuild-remainder.txt.ftl is the nearest oracle",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": []
+ },
+ {
+  "token_type": "PRE",
+  "family": "prereq",
+  "instances": 1,
+  "instances_source": "this lane: every raw_tokens entry across data/corpus (48,706 records with raw_tokens, 37 books, all statuses); feat records with a prerequisites list counted in their own row",
+  "units": 1,
+  "units_denominator": "non-DONE units (completion_atlas._bucket_of != DONE) joined to a corpus record carrying this token, of 23,315 non-DONE / 49,438",
+  "maps_to": "Metadata(ignored-by-sheet)",
+  "resolvability": "metadata (consumed by the converter, not printed)",
+  "rule": "PRE:.CLEAR (1 instance, a .MOD row) is a closure directive: drop every PRE* inherited from the base row before applying this row's own. Handled by the converter's closure fold (see the .MOD row); never a gate.",
+  "expr_shape": "n/a",
+  "expr_gaps": [],
+  "applies_shape": "closure operation",
+  "prose_effect": "none",
+  "examples": [
+   {
+    "record": "advanced_class_guide:class_feature:Skald ~ Extra Performance",
+    "source": "pathfinder/paizo/roleplaying_game/advanced_class_guide/_pfs/pfs_acg_abilities_class.lst:115",
+    "raw": "PRE:.CLEAR",
+    "sheet_line": "closure directive; the Skald ~ Extra Performance PFS .MOD row clears the base prerequisites"
+   }
+  ],
+  "oracle_check": "sheet-line only -- no PCGen total covers it; held-set parity via SA.<n>.NAME in charbuild-remainder.txt.ftl is the nearest oracle",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": []
+ },
+ {
+  "token_type": "!PRE* (all negated forms)",
+  "family": "prereq",
+  "instances": 2559,
+  "instances_source": "this lane: every raw_tokens entry across data/corpus (48,706 records with raw_tokens, 37 books, all statuses); feat records with a prerequisites list counted in their own row",
+  "units": 1516,
+  "units_denominator": "non-DONE units (completion_atlas._bucket_of != DONE) joined to a corpus record carrying this token, of 23,315 non-DONE / 49,438 -- for this wrapper row the figure is !PREABILITY alone (the index keeps per-type record sets, not their union)",
+  "maps_to": "Applies",
+  "resolvability": "filter (per-character-resolvable)",
+  "rule": "Every !PRE<kind> token converts as Applies::Not(<the PRE<kind> conversion>). Not() inverts a true/false gate and leaves Words alone (negating \"not checked\" would fabricate a verdict -- pre_tokens.rs negate()). Per-type instance counts corpus-wide: !PREABILITY 1712, !PREFACT 457, !PRETYPE 180, !PRECHARACTERTYPE 72, !PREALIGN 37, !PRERACE 20, !PRECAMPAIGN 20, !PRECLASS 18, !PRESTAT 10, !PRECSKILL 9, !PREVISION 6, !PRESKILL 6, !PRETEMPLATE 5, !PREMOVE 4, !PRESPELL 1, !PREAGESET 1, !PREKIT 1. The dominant shapes are !PREABILITY (archetype exclusivity: \"not the Storyteller archetype\") and !PREFACT (racial-trait replacement flags: Ratfolk_ReplaceTinker), both filter-grade.",
+  "expr_shape": "n/a",
+  "expr_gaps": [],
+  "applies_shape": "Not(Box<Applies>)",
+  "prose_effect": "none",
+  "examples": [
+   {
+    "record": "occult_adventures:class_feature:Medium ~ Champion Seance Boon",
+    "source": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst:845",
+    "raw": "!PREABILITY:1,CATEGORY=Archetype,Medium Archetype ~ Storyteller",
+    "sheet_line": "F1 (human Fighter 3): held -- requires NOT holding rule 'Medium Archetype ~ Storyteller' [Archetype]; F1 holds no Archetype rule of that id"
+   },
+   {
+    "record": "occult_adventures:class_feature:Medium ~ Archmage Spirit",
+    "source": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst:829",
+    "raw": "!PREABILITY:1,CATEGORY=Archetype,Medium Archetype ~ Kami Medium",
+    "sheet_line": "F1 (human Fighter 3): held -- requires NOT holding rule 'Medium Archetype ~ Kami Medium' [Archetype]; F1 holds no Archetype rule of that id"
+   },
+   {
+    "record": "bestiary_3:race_trait_generic:Ratfolk ~ Tinker",
+    "source": "pathfinder/paizo/roleplaying_game/core_essentials/races/ratfolk/ratfolk_abilities_race.lst:21",
+    "raw": "!PREFACT:1,ABILITIES,Ratfolk_ReplaceTinker=True",
+    "sheet_line": "F1 (human Fighter 3): held -- requires NOT holding the alternate racial trait that sets Ratfolk_ReplaceTinker; F1 holds none"
+   }
+  ],
+  "oracle_check": "held-set parity: SA.COUNT and SA.<n>.NAME from scripts/oracle_harness/charbuild-remainder.txt.ftl for a built character list exactly the Special Ability rules PCGen judged held; our held set (applies evaluated true) must equal it",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": []
+ },
+ {
+  "token_type": "feat.prerequisites (token-less feat records)",
+  "family": "prereq",
+  "instances": 2270,
+  "instances_source": "this lane: every raw_tokens entry across data/corpus (48,706 records with raw_tokens, 37 books, all statuses); feat records with a prerequisites list counted in their own row",
+  "units": 351,
+  "units_denominator": "non-DONE units (completion_atlas._bucket_of != DONE) joined to a corpus record carrying this token, of 23,315 non-DONE / 49,438",
+  "maps_to": "Applies",
+  "resolvability": "filter (per-character-resolvable)",
+  "rule": "1,411 feat records in data/corpus carry no raw_tokens; 1,079 of them carry a `prerequisites` string list holding verbatim PRE* tokens (2,270 tokens: PREABILITY 770, PREVARGTEQ 429, PRETEXT 236, PREMULT 231, PRESKILL 113, PRETOTALAB 104, PRESTAT 85, PREDEITY 79, PRECLASS 40, PREFACT 37, PRETEMPLATE 34, ...). The converter reads that list as the record's PRE closure and applies this table unchanged. 351 non-DONE feat units carry such a list.",
+  "expr_shape": "n/a",
+  "expr_gaps": [],
+  "applies_shape": "same as the token rows",
+  "prose_effect": "none",
+  "examples": [
+   {
+    "record": "ultimate_campaign:feat:Fearless Zeal",
+    "source": "pathfinder/paizo/roleplaying_game/ultimate_campaign/uca_feats.lst:66",
+    "raw": "PRETEXT:Prerequisite:You must be ordained as a sacred (or profane) champion of your faith by a high-ranking member of its clergy, or have the Devoted, Faith-Bringer, or Moral Debt background. Such an honor goes above and beyond the normal oaths required of a cleric or paladin.",
+    "sheet_line": "F1 (human Fighter 3): included, not checked -- prints as words"
+   },
+   {
+    "record": "occult_adventures:feat:Extra Touch Treatment",
+    "source": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_feats.lst (record key Extra Touch Treatment; line not carried on token-less feat records)",
+    "raw": "PREABILITY:1,CATEGORY=Special Ability,Mesmerist ~ Touch Treatment",
+    "sheet_line": "F1 (human Fighter 3): excluded -- requires the Mesmerist ~ Touch Treatment rule"
+   }
+  ],
+  "oracle_check": "sheet-line only -- no PCGen total covers it; held-set parity via SA.<n>.NAME in charbuild-remainder.txt.ftl is the nearest oracle",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": [
+   "token-less feat records carry no source line in data; the converter must take provenance from the parser, or the corpus must be regenerated with raw_tokens for feats"
+  ]
+ },
+ {
+  "token_type": "KEY",
+  "family": "prereq",
+  "instances": 31498,
+  "instances_source": "this lane: every raw_tokens entry across data/corpus (48,706 records with raw_tokens, 37 books, all statuses); feat records with a prerequisites list counted in their own row",
+  "units": 15245,
+  "units_denominator": "non-DONE units (completion_atlas._bucket_of != DONE) joined to a corpus record carrying this token, of 23,315 non-DONE / 49,438",
+  "maps_to": "Metadata(ignored-by-sheet)",
+  "resolvability": "metadata (consumed by the converter, not printed)",
+  "rule": "KEY:<name> is the record identity; SheetRule.id = <book>:<kind>:<slug(KEY)>. Every Holds{Rule(id)} in this table joins on it (case-insensitive, whitespace-trimmed).",
+  "expr_shape": "n/a",
+  "expr_gaps": [],
+  "applies_shape": "id source for Holds{Rule}",
+  "prose_effect": "none",
+  "examples": [
+   {
+    "record": "occult_adventures:race_trait_generic:Emotional Focus / Despair ~ Inescapable Despair",
+    "source": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_race.lst:84",
+    "raw": "KEY:Emotional Focus / Despair ~ Inescapable Despair",
+    "sheet_line": "id only"
+   }
+  ],
+  "oracle_check": "sheet-line only -- no PCGen total covers it; held-set parity via SA.<n>.NAME in charbuild-remainder.txt.ftl is the nearest oracle",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": []
+ },
+ {
+  "token_type": "CATEGORY",
+  "family": "prereq",
+  "instances": 30997,
+  "instances_source": "this lane: every raw_tokens entry across data/corpus (48,706 records with raw_tokens, 37 books, all statuses); feat records with a prerequisites list counted in their own row",
+  "units": 17385,
+  "units_denominator": "non-DONE units (completion_atlas._bucket_of != DONE) joined to a corpus record carrying this token, of 23,315 non-DONE / 49,438",
+  "maps_to": "Metadata(ignored-by-sheet)",
+  "resolvability": "metadata (consumed by the converter, not printed)",
+  "rule": "CATEGORY:<cat> names the pool the rule lives in (Special Ability 25,281; Internal 2,971; Archetype 959; FEAT 433; ...). Stored as SheetRule.pool. Consumed by: PREABILITY CATEGORY= joins, Holds{RuleTag{cat, ..}}, and CHOOSE:ABILITYSELECTION|CATEGORY= option sets. CATEGORY:Internal rules are never printed (helper records).",
+  "expr_shape": "n/a",
+  "expr_gaps": [],
+  "applies_shape": "pool field; RuleTag category component",
+  "prose_effect": "none",
+  "examples": [
+   {
+    "record": "occult_adventures:race_trait_generic:Phantom Companion ~ Deliver Touch Spells",
+    "source": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_race.lst:10",
+    "raw": "CATEGORY:Special Ability",
+    "sheet_line": "pool = Special Ability"
+   },
+   {
+    "record": "occult_adventures:race_trait_generic:Emotional Focus / Despair ~ Despairing Shout",
+    "source": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_race.lst:83",
+    "raw": "CATEGORY:Special Ability",
+    "sheet_line": "pool = Special Ability"
+   },
+   {
+    "record": "occult_adventures:race_trait_generic:Emotional Focus / Zeal ~ Good Saves",
+    "source": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_race.lst:115",
+    "raw": "CATEGORY:Special Ability",
+    "sheet_line": "pool = Special Ability"
+   }
+  ],
+  "oracle_check": "sheet-line only -- no PCGen total covers it; held-set parity via SA.<n>.NAME in charbuild-remainder.txt.ftl is the nearest oracle",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": []
+ },
+ {
+  "token_type": "TYPE",
+  "family": "prereq",
+  "instances": 41700,
+  "instances_source": "this lane: every raw_tokens entry across data/corpus (48,706 records with raw_tokens, 37 books, all statuses); feat records with a prerequisites list counted in their own row",
+  "units": 18216,
+  "units_denominator": "non-DONE units (completion_atlas._bucket_of != DONE) joined to a corpus record carrying this token, of 23,315 non-DONE / 49,438",
+  "maps_to": "Metadata(ignored-by-sheet)",
+  "resolvability": "metadata (consumed by the converter, not printed)",
+  "rule": "TYPE:<a>.<b>.<c> is a dot-separated tag set on the rule (SheetRule.tags). Consumed by Holds{RuleTag}, PREABILITY TYPE.<facet>, CHOOSE option filters, and PRETYPE item gates. 597 instances have a [redacted PI] tag: those records keep their other tags and lose that one.",
+  "expr_shape": "n/a",
+  "expr_gaps": [],
+  "applies_shape": "tags field; RuleTag tag component",
+  "prose_effect": "none",
+  "examples": [
+   {
+    "record": "occult_adventures:race_trait_generic:Phantom Manifestation ~ Incorporeal",
+    "source": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_race.lst:36",
+    "raw": "TYPE:Phantom Racial Trait.Phantom Manifestation.SpecialQuality",
+    "sheet_line": "tags = Phantom Racial Trait, Phantom Manifestation, SpecialQuality"
+   },
+   {
+    "record": "occult_adventures:race_trait_generic:Emotional Focus / Anger ~ Powerful Strike",
+    "source": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_race.lst:63",
+    "raw": "TYPE:Emotional Focus / Anger.SpecialQuality.Extraordinary",
+    "sheet_line": "tags = Emotional Focus / Anger, SpecialQuality, Extraordinary"
+   },
+   {
+    "record": "occult_adventures:race_trait_generic:Emotional Focus / Hatred ~ Hated Target",
+    "source": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_race.lst:99",
+    "raw": "TYPE:Emotional Focus / Hatred.SpecialQuality.Supernatural",
+    "sheet_line": "tags = Emotional Focus / Hatred, SpecialQuality, Supernatural"
+   }
+  ],
+  "oracle_check": "sheet-line only -- no PCGen total covers it; held-set parity via SA.<n>.NAME in charbuild-remainder.txt.ftl is the nearest oracle",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": []
+ },
+ {
+  "token_type": "VISIBLE",
+  "family": "prereq",
+  "instances": 7505,
+  "instances_source": "this lane: every raw_tokens entry across data/corpus (48,706 records with raw_tokens, 37 books, all statuses); feat records with a prerequisites list counted in their own row",
+  "units": 4775,
+  "units_denominator": "non-DONE units (completion_atlas._bucket_of != DONE) joined to a corpus record carrying this token, of 23,315 non-DONE / 49,438",
+  "maps_to": "Metadata(ignored-by-sheet)",
+  "resolvability": "metadata (consumed by the converter, not printed)",
+  "rule": "VISIBLE:NO / DISPLAY / EXPORT -> SheetRule.visible = false for NO: the rule may be held and may grant, but the sheet never prints it (hidden helper records: size templates, class selectors). 7,505 instances. Shared surface with the prose lane; listed here because it decides whether a held rule reaches the sheet.",
+  "expr_shape": "n/a",
+  "expr_gaps": [],
+  "applies_shape": "visible flag on the rule",
+  "prose_effect": "none",
+  "examples": [
+   {
+    "record": "occult_adventures:class:Psychic Detective",
+    "source": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_classes.lst:192",
+    "raw": "VISIBLE:NO",
+    "sheet_line": "held silently; not printed"
+   },
+   {
+    "record": "occult_adventures:template:MEDIUM",
+    "source": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_templates.lst:6",
+    "raw": "VISIBLE:NO",
+    "sheet_line": "held silently; not printed"
+   },
+   {
+    "record": "occult_adventures:template:Psychic Detective",
+    "source": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_templates.lst:10",
+    "raw": "VISIBLE:NO",
+    "sheet_line": "held silently; not printed"
+   }
+  ],
+  "oracle_check": "sheet-line only -- no PCGen total covers it; held-set parity via SA.<n>.NAME in charbuild-remainder.txt.ftl is the nearest oracle",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": []
+ },
+ {
+  "token_type": "ABILITY",
+  "family": "prereq",
+  "instances": 18559,
+  "instances_source": "this lane: every raw_tokens entry across data/corpus (48,706 records with raw_tokens, 37 books, all statuses); feat records with a prerequisites list counted in their own row",
+  "units": 5976,
+  "units_denominator": "non-DONE units (completion_atlas._bucket_of != DONE) joined to a corpus record carrying this token, of 23,315 non-DONE / 49,438",
+  "maps_to": "Applies",
+  "resolvability": "filter (grant edge evaluated per character)",
+  "rule": "ABILITY:<cat>|<nature>|<target>[|<target>...][|PRE...] on a holder record H is a GRANT edge: the rule <target> (joined by (cat, key)) gets granted_by += Grant{by: Rule(H), when: <trailing PRE converted>}. Nature AUTOMATIC (16,441) and VIRTUAL (1,789) both grant automatically (VIRTUAL rules are held without counting toward a pool); NORMAL (34) adds the target to a pool the player picks from -> Grant{by: Choice}. A target of %LIST (198 records) grants whichever option the holder's CHOOSE picked -> Grant{by: Rule(H), when: Chosen{choice_id, option}}. A target with a .MOD/.COPY suffix routes through the closure. 18,559 instances on 9,633 records; 5,976 non-DONE units carry one.",
+  "expr_shape": "n/a",
+  "expr_gaps": [],
+  "applies_shape": "Grant{by: Rule(holder), when: Applies} appended to the TARGET rule's granted_by",
+  "prose_effect": "none",
+  "examples": [
+   {
+    "record": "occult_adventures:race_trait_generic:Emotional Focus ~ Jealousy",
+    "source": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_race.lst:53",
+    "raw": "ABILITY:Special Ability|AUTOMATIC|Emotional Focus / Jealousy ~ Skills|PREVARGTEQ:PhantomMasterLevel,1",
+    "sheet_line": "grants Emotional Focus / Jealousy ~ Skills to whoever holds the host rule when PREVARGTEQ passes"
+   },
+   {
+    "record": "occult_adventures:race_trait_generic:Emotional Focus / Fear ~ Stealthy",
+    "source": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_race.lst:89",
+    "raw": "ABILITY:FEAT|AUTOMATIC|Stealthy",
+    "sheet_line": "grants Stealthy to whoever holds the host rule"
+   },
+   {
+    "record": "occult_adventures:race_trait_generic:Emotional Focus ~ Zeal",
+    "source": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_race.lst:54",
+    "raw": "ABILITY:Special Ability|AUTOMATIC|Emotional Focus / Zeal ~ Skills|PREVARGTEQ:PhantomMasterLevel,1",
+    "sheet_line": "grants Emotional Focus / Zeal ~ Skills to whoever holds the host rule when PREVARGTEQ passes"
+   }
+  ],
+  "oracle_check": "held-set parity: SA.COUNT and SA.<n>.NAME from scripts/oracle_harness/charbuild-remainder.txt.ftl for a built character list exactly the Special Ability rules PCGen judged held; our held set (applies evaluated true) must equal it",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": [
+   "a %LIST target needs the holder's CHOOSE option set to be a rule set; for CHOOSE:SKILL/WEAPONPROFICIENCY the target is a fact, not a rule (see AUTO)"
+  ]
+ },
+ {
+  "token_type": "AUTO",
+  "family": "prereq",
+  "instances": 1298,
+  "instances_source": "this lane: every raw_tokens entry across data/corpus (48,706 records with raw_tokens, 37 books, all statuses); feat records with a prerequisites list counted in their own row",
+  "units": 246,
+  "units_denominator": "non-DONE units (completion_atlas._bucket_of != DONE) joined to a corpus record carrying this token, of 23,315 non-DONE / 49,438",
+  "maps_to": "Applies",
+  "resolvability": "filter (fact grant)",
+  "rule": "AUTO:LANG|<l>... (954), AUTO:WEAPONPROF|<w>|TYPE=Martial|%LIST (270), AUTO:ARMORPROF (28), AUTO:SHIELDPROF (13), AUTO:EQUIP|<item> (29) -> fact grants on the holder: FactGrant{Language(id) | Proficiency(Weapon(id) | WeaponGroup(tag) | ArmorGroup | ShieldGroup) | Equipment(item)}, when: trailing PRE. %LIST (33 records) -> the option chosen by the holder's CHOOSE:WEAPONPROFICIENCY. These facts feed Holds{Proficiency}, Holds{Language} and the totals path.",
+  "expr_shape": "n/a",
+  "expr_gaps": [],
+  "applies_shape": "FactGrant{fact, when} on the holder",
+  "prose_effect": "none",
+  "examples": [
+   {
+    "record": "occult_adventures:class_feature:Mesmerist ~ Weapon and Armor Proficiency",
+    "source": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst:914",
+    "raw": "AUTO:WEAPONPROF|Crossbow (Hand)|Sap|Sword Cane|Whip",
+    "sheet_line": "F1 gains proficiency/language facts: WEAPONPROF|Crossbow (Hand)|Sap|Sword Cane|Whip"
+   },
+   {
+    "record": "occult_adventures:class_feature:Spiritualist ~ Weapon and Armor Proficiency",
+    "source": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst:1272",
+    "raw": "AUTO:WEAPONPROF|Kukri|Sap|Scythe",
+    "sheet_line": "F1 gains proficiency/language facts: WEAPONPROF|Kukri|Sap|Scythe"
+   },
+   {
+    "record": "occult_adventures:class_feature:Champion Weapon Choice",
+    "source": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst:903",
+    "raw": "AUTO:WEAPONPROF|%LIST",
+    "sheet_line": "grants the weapon the player chose on this rule"
+   }
+  ],
+  "oracle_check": "sheet-line only; proficiency is not an exported total",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": [
+   "AUTO:EQUIP (29) grants an item, which is equipment-lane territory; only the grant edge is mapped here"
+  ]
+ },
+ {
+  "token_type": "TEMPLATE",
+  "family": "prereq",
+  "instances": 838,
+  "instances_source": "this lane: every raw_tokens entry across data/corpus (48,706 records with raw_tokens, 37 books, all statuses); feat records with a prerequisites list counted in their own row",
+  "units": 465,
+  "units_denominator": "non-DONE units (completion_atlas._bucket_of != DONE) joined to a corpus record carrying this token, of 23,315 non-DONE / 49,438",
+  "maps_to": "Applies",
+  "resolvability": "filter (grant edge)",
+  "rule": "TEMPLATE:<name>[|<name>] -> Grant{by: Rule(holder), target: Template(id)}; TEMPLATE:CHOOSE:<name>... -> the holder offers a template choice (Choice{from: Templates(set)}); TEMPLATE:%LIST -> grants the chosen template; TEMPLATE:<name>.REMOVE -> Revokes(Template(id)). A held template is a rule whose own tokens (size, HD, ability adjustments, PREs) convert like any record. 838 instances; 67 have a [redacted PI] name and convert to Words on the grant (PI residue).",
+  "expr_shape": "n/a",
+  "expr_gaps": [],
+  "applies_shape": "Grant{target: Template(id)} | Choice | Revokes",
+  "prose_effect": "none",
+  "examples": [
+   {
+    "record": "inner_sea_world_guide:ability:Codex-Named Unit (ability_inner_sea_world_guide_iswg_abilities_lst_10)",
+    "source": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_abilities.lst:10",
+    "raw": "TEMPLATE:[redacted PI]",
+    "sheet_line": "grant of template [redacted PI] -- name withheld (PI)"
+   },
+   {
+    "record": "pathfinder_unchained:class:Monk ~ Unchained Class",
+    "source": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_classes.lst (class record; line in corpus source field)",
+    "raw": "TEMPLATE:Monk ~ Unchained HD",
+    "sheet_line": "the class grants its hit-die template to every character with a level in it"
+   }
+  ],
+  "oracle_check": "sheet-line only -- no PCGen total covers it; held-set parity via SA.<n>.NAME in charbuild-remainder.txt.ftl is the nearest oracle",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": []
+ },
+ {
+  "token_type": "KIT",
+  "family": "prereq",
+  "instances": 1632,
+  "instances_source": "this lane: every raw_tokens entry across data/corpus (48,706 records with raw_tokens, 37 books, all statuses); feat records with a prerequisites list counted in their own row",
+  "units": 107,
+  "units_denominator": "non-DONE units (completion_atlas._bucket_of != DONE) joined to a corpus record carrying this token, of 23,315 non-DONE / 49,438",
+  "maps_to": "Metadata(ignored-by-sheet)",
+  "resolvability": "metadata (consumed by the converter, not printed)",
+  "rule": "KIT:1|<alignment code> on monster records (1,604 of 1,632 instances) is the default-alignment kit PCGen applies to a monster; the monster stat block already prints alignment from the record. 12 instances are [redacted PI]. Nothing for a PC sheet; Metadata.",
+  "expr_shape": "n/a",
+  "expr_gaps": [],
+  "applies_shape": "none",
+  "prose_effect": "none",
+  "examples": [
+   {
+    "record": "inner_sea_world_guide:monster:inner_sea_world_guide:monster:dragon_spine",
+    "source": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_races.lst:15",
+    "raw": "KIT:1|CN",
+    "sheet_line": "monster default alignment CN"
+   },
+   {
+    "record": "inner_sea_world_guide:monster:inner_sea_world_guide:monster:aluum",
+    "source": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_races.lst:10",
+    "raw": "KIT:1|TN",
+    "sheet_line": "monster default alignment TN"
+   },
+   {
+    "record": "inner_sea_world_guide:monster:inner_sea_world_guide:monster:spider_drain",
+    "source": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_races_bestiary.lst:9",
+    "raw": "KIT:1|TN",
+    "sheet_line": "monster default alignment TN"
+   }
+  ],
+  "oracle_check": "sheet-line only -- no PCGen total covers it; held-set parity via SA.<n>.NAME in charbuild-remainder.txt.ftl is the nearest oracle",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": []
+ },
+ {
+  "token_type": "CSKILL",
+  "family": "prereq",
+  "instances": 842,
+  "instances_source": "this lane: every raw_tokens entry across data/corpus (48,706 records with raw_tokens, 37 books, all statuses); feat records with a prerequisites list counted in their own row",
+  "units": 495,
+  "units_denominator": "non-DONE units (completion_atlas._bucket_of != DONE) joined to a corpus record carrying this token, of 23,315 non-DONE / 49,438",
+  "maps_to": "Applies",
+  "resolvability": "filter (fact grant)",
+  "rule": "CSKILL:<skill>|TYPE=<group>|%LIST|.CLEAR -> FactGrant{ClassSkill(skill_id | SkillGroup(tag))} on the holder; %LIST (87) -> the skill chosen by the holder's CHOOSE:SKILL. Feeds Holds{ClassSkill} and the totals path (class-skill +3). 842 instances.",
+  "expr_shape": "n/a",
+  "expr_gaps": [],
+  "applies_shape": "FactGrant{ClassSkill}",
+  "prose_effect": "none",
+  "examples": [
+   {
+    "record": "occult_adventures:class_feature:Kineticist Primary Element ~ Water",
+    "source": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst:591",
+    "raw": "CSKILL:Knowledge (nature)|Swim",
+    "sheet_line": "F1 gains class skills: Knowledge (nature)|Swim"
+   },
+   {
+    "record": "occult_adventures:class_feature:Kineticist Primary Element ~ Aether",
+    "source": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst:587",
+    "raw": "CSKILL:Knowledge (Engineering)|Sleight of Hand",
+    "sheet_line": "F1 gains class skills: Knowledge (Engineering)|Sleight of Hand"
+   },
+   {
+    "record": "occult_adventures:class_feature:Kineticist Primary Element ~ Earth",
+    "source": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst:589",
+    "raw": "CSKILL:Climb|Knowledge (dungeoneering)",
+    "sheet_line": "F1 gains class skills: Climb|Knowledge (dungeoneering)"
+   }
+  ],
+  "oracle_check": "the +3 class-skill bonus is checked by the existing skill totals path",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": []
+ },
+ {
+  "token_type": "CCSKILL",
+  "family": "prereq",
+  "instances": 9,
+  "instances_source": "this lane: every raw_tokens entry across data/corpus (48,706 records with raw_tokens, 37 books, all statuses); feat records with a prerequisites list counted in their own row",
+  "units": 8,
+  "units_denominator": "non-DONE units (completion_atlas._bucket_of != DONE) joined to a corpus record carrying this token, of 23,315 non-DONE / 49,438",
+  "maps_to": "Applies",
+  "resolvability": "filter (fact revoke)",
+  "rule": "CCSKILL:<skill> -> FactGrant{CrossClassSkill(skill)} (archetype class-skill removal list, 9 instances, ARG archetypes). Removes the class-skill fact on the holder.",
+  "expr_shape": "n/a",
+  "expr_gaps": [],
+  "applies_shape": "FactRevoke{ClassSkill}",
+  "prose_effect": "none",
+  "examples": [
+   {
+    "record": "advanced_race_guide:class_feature:Feral Child ~ Class Skills",
+    "source": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst:367",
+    "raw": "CCSKILL:Fly|TYPE=Profession",
+    "sheet_line": "archetype removes class skill Fly|TYPE=Profession"
+   },
+   {
+    "record": "advanced_race_guide:class_feature:Dreamweaver ~ Class Skills",
+    "source": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst:821",
+    "raw": "CCSKILL:Heal",
+    "sheet_line": "archetype removes class skill Heal"
+   },
+   {
+    "record": "advanced_race_guide:class_feature:Eldritch Raider ~ Class Skills",
+    "source": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst:845",
+    "raw": "CCSKILL:Disguise|TYPE=Perform|Sleight of Hand",
+    "sheet_line": "archetype removes class skill Disguise|TYPE=Perform|Sleight of Hand"
+   }
+  ],
+  "oracle_check": "sheet-line only -- no PCGen total covers it; held-set parity via SA.<n>.NAME in charbuild-remainder.txt.ftl is the nearest oracle",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": []
+ },
+ {
+  "token_type": "MONCSKILL",
+  "family": "prereq",
+  "instances": 403,
+  "instances_source": "this lane: every raw_tokens entry across data/corpus (48,706 records with raw_tokens, 37 books, all statuses); feat records with a prerequisites list counted in their own row",
+  "units": 21,
+  "units_denominator": "non-DONE units (completion_atlas._bucket_of != DONE) joined to a corpus record carrying this token, of 23,315 non-DONE / 49,438",
+  "maps_to": "Applies",
+  "resolvability": "filter (fact grant)",
+  "rule": "MONCSKILL:<skill>|... on monster records -> FactGrant{ClassSkill} for the monster's racial HD class. 403 instances, 21 non-DONE. Same shape as CSKILL, monster subject.",
+  "expr_shape": "n/a",
+  "expr_gaps": [],
+  "applies_shape": "FactGrant{ClassSkill}",
+  "prose_effect": "none",
+  "examples": [
+   {
+    "record": "bestiary_3:monster:bestiary_3:monster:magmin",
+    "source": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_races.lst:184",
+    "raw": "MONCSKILL:Acrobatics|Climb",
+    "sheet_line": "monster class skills: Acrobatics|Climb"
+   },
+   {
+    "record": "bestiary_3:monster:bestiary_3:monster:oni_kuwa",
+    "source": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_races.lst:208",
+    "raw": "MONCSKILL:Disguise|Intimidate|Knowledge (Arcana)|Use Magic Device",
+    "sheet_line": "monster class skills: Disguise|Intimidate|Knowledge (Arcana)|Use Magic Device"
+   },
+   {
+    "record": "bestiary_3:monster:bestiary_3:monster:cerberi",
+    "source": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_races.lst:51",
+    "raw": "MONCSKILL:Acrobatics",
+    "sheet_line": "monster class skills: Acrobatics"
+   }
+  ],
+  "oracle_check": "sheet-line only -- no PCGen total covers it; held-set parity via SA.<n>.NAME in charbuild-remainder.txt.ftl is the nearest oracle",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": []
+ },
+ {
+  "token_type": "CLASSES",
+  "family": "prereq",
+  "instances": 5199,
+  "instances_source": "this lane: every raw_tokens entry across data/corpus (48,706 records with raw_tokens, 37 books, all statuses); feat records with a prerequisites list counted in their own row",
+  "units": 1228,
+  "units_denominator": "non-DONE units (completion_atlas._bucket_of != DONE) joined to a corpus record carrying this token, of 23,315 non-DONE / 49,438",
+  "maps_to": "Applies",
+  "resolvability": "filter (grant edge)",
+  "rule": "CLASSES:<Class>=<lvl>|<Class>=<lvl>[PRE...] on spell-shaped records (and a few class_feature records that are spell grants) -> Grant{by: Class(id), at_spell_level: lvl, when: bracketed PRE}. Decides which class lists hold the spell and at what level; the spell-grant lane owns the spell list itself, this lane owns the ownership edge and the bracketed gate. 5,199 instances, 1,228 non-DONE units.",
+  "expr_shape": "n/a",
+  "expr_gaps": [],
+  "applies_shape": "Grant{by: Class(id), spell_level: n, when}",
+  "prose_effect": "none",
+  "examples": [
+   {
+    "record": "occult_adventures:class_feature:Psychic Discipline Rapport ~ Share Memory",
+    "source": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst:1244",
+    "raw": "CLASSES:Medium,Mesmerist=2",
+    "sheet_line": "held on the Mesmerist list at the stated level"
+   },
+   {
+    "record": "occult_adventures:class_feature:Spirit Walker ~ Command Undead",
+    "source": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst:1483",
+    "raw": "CLASSES:Mesmerist=2[PREABILITY:1,CATEGORY=Special Ability,Spirit Walker ~ Spells]",
+    "sheet_line": "held on the Mesmerist list at the stated level when the bracketed prerequisite passes"
+   },
+   {
+    "record": "occult_adventures:class_feature:Psychic Discipline ~ Dream",
+    "source": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst:1189",
+    "raw": "CLASSES:Medium=3|Mesmerist=4|Spiritualist=5",
+    "sheet_line": "held on the Medium list at the stated level"
+   }
+  ],
+  "oracle_check": "sheet-line only -- no PCGen total covers it; held-set parity via SA.<n>.NAME in charbuild-remainder.txt.ftl is the nearest oracle",
+  "refuse_reason": "",
+  "confidence": "medium",
+  "open_questions": [
+   "CLASSES:Medium,Mesmerist=2 (comma list before one level) means both classes at level 2 -- confirm the parser splits it that way"
+  ]
+ },
+ {
+  "token_type": "DOMAINS",
+  "family": "prereq",
+  "instances": 808,
+  "instances_source": "this lane: every raw_tokens entry across data/corpus (48,706 records with raw_tokens, 37 books, all statuses); feat records with a prerequisites list counted in their own row",
+  "units": 435,
+  "units_denominator": "non-DONE units (completion_atlas._bucket_of != DONE) joined to a corpus record carrying this token, of 23,315 non-DONE / 49,438",
+  "maps_to": "Applies",
+  "resolvability": "filter once alignment and deity are character facts",
+  "rule": "DOMAINS:<d>,<d>,...|PREALIGN:<set> on deity records -> for each domain, Grant{by: Deity(id), target: Rule(domain_id), when: Holds{Alignment(set)}}. 808 instances (452 with a trailing PRE). Feeds PREDEITYDOMAIN and the cleric domain picker.",
+  "expr_shape": "n/a",
+  "expr_gaps": [],
+  "applies_shape": "Grant{by: Deity, target: Rule(domain), when}",
+  "prose_effect": "none",
+  "examples": [
+   {
+    "record": "inner_sea_world_guide:deity:Codex-Named Unit (deity_inner_sea_world_guide_iswg_deities_lst_65)",
+    "source": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_deities.lst:65",
+    "raw": "DOMAINS:Destruction,Travel,Water|PREALIGN:TN,LE,NE,CE",
+    "sheet_line": "deity offers domains Destruction,Travel,Water to clerics of alignment TN,LE,NE,CE"
+   },
+   {
+    "record": "inner_sea_world_guide:deity:Codex-Named Unit (deity_inner_sea_world_guide_iswg_deities_lst_39)",
+    "source": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_deities.lst:39",
+    "raw": "DOMAINS:Chaos,Destruction,Evil,War|PREALIGN:NE,CN,CE",
+    "sheet_line": "deity offers domains Chaos,Destruction,Evil,War to clerics of alignment NE,CN,CE"
+   },
+   {
+    "record": "inner_sea_world_guide:deity:Codex-Named Unit (deity_inner_sea_world_guide_iswg_deities_lst_64)",
+    "source": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_deities.lst:64",
+    "raw": "DOMAINS:Air,Destruction,Weather|PREALIGN:TN,LE,NE,CE",
+    "sheet_line": "deity offers domains Air,Destruction,Weather to clerics of alignment TN,LE,NE,CE"
+   }
+  ],
+  "oracle_check": "sheet-line only -- no PCGen total covers it; held-set parity via SA.<n>.NAME in charbuild-remainder.txt.ftl is the nearest oracle",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": []
+ },
+ {
+  "token_type": "RACETYPE",
+  "family": "prereq",
+  "instances": 1853,
+  "instances_source": "this lane: every raw_tokens entry across data/corpus (48,706 records with raw_tokens, 37 books, all statuses); feat records with a prerequisites list counted in their own row",
+  "units": 111,
+  "units_denominator": "non-DONE units (completion_atlas._bucket_of != DONE) joined to a corpus record carrying this token, of 23,315 non-DONE / 49,438",
+  "maps_to": "Metadata(ignored-by-sheet)",
+  "resolvability": "metadata (consumed by the converter, not printed)",
+  "rule": "RACETYPE:<t> on race/monster records declares the RaceType fact the holder carries (Humanoid, Undead, Plant...). Stored as a fact declaration on the rule; consumed by PRERACE RACETYPE= gates. 1,853 instances.",
+  "expr_shape": "n/a",
+  "expr_gaps": [],
+  "applies_shape": "FactDeclare{RaceType}",
+  "prose_effect": "none",
+  "examples": [
+   {
+    "record": "bestiary_3:monster:bestiary_3:monster:leshy_leaf",
+    "source": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_races.lst:174",
+    "raw": "RACETYPE:Plant",
+    "sheet_line": "declares creature type Plant"
+   },
+   {
+    "record": "bestiary_3:monster:bestiary_3:monster:behemoth_tempest",
+    "source": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_races.lst:37",
+    "raw": "RACETYPE:Magical Beast",
+    "sheet_line": "declares creature type Magical Beast"
+   },
+   {
+    "record": "bestiary_3:monster:bestiary_3:monster:baykok",
+    "source": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_races.lst:36",
+    "raw": "RACETYPE:Undead",
+    "sheet_line": "declares creature type Undead"
+   }
+  ],
+  "oracle_check": "sheet-line only -- no PCGen total covers it; held-set parity via SA.<n>.NAME in charbuild-remainder.txt.ftl is the nearest oracle",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": []
+ },
+ {
+  "token_type": "RACESUBTYPE",
+  "family": "prereq",
+  "instances": 1066,
+  "instances_source": "this lane: every raw_tokens entry across data/corpus (48,706 records with raw_tokens, 37 books, all statuses); feat records with a prerequisites list counted in their own row",
+  "units": 207,
+  "units_denominator": "non-DONE units (completion_atlas._bucket_of != DONE) joined to a corpus record carrying this token, of 23,315 non-DONE / 49,438",
+  "maps_to": "Metadata(ignored-by-sheet)",
+  "resolvability": "metadata (consumed by the converter, not printed)",
+  "rule": "RACESUBTYPE:<s> on race/template records declares a RaceSubtype fact (Aquatic, Ratfolk, Incorporeal). Consumed by PRERACE RACESUBTYPE= gates. 1,066 instances.",
+  "expr_shape": "n/a",
+  "expr_gaps": [],
+  "applies_shape": "FactDeclare{RaceSubtype}",
+  "prose_effect": "none",
+  "examples": [
+   {
+    "record": "inner_sea_world_guide:template:Race Builder Subtype ~ Aquatic",
+    "source": "pathfinder/paizo/roleplaying_game/core_essentials/races/gillman/gillman_templates.lst:20",
+    "raw": "RACESUBTYPE:Aquatic",
+    "sheet_line": "declares subtype Aquatic"
+   },
+   {
+    "record": "inner_sea_world_guide:template:Race Builder Subtype ~ Strix",
+    "source": "pathfinder/paizo/roleplaying_game/core_essentials/races/strix/strix_templates.lst:19",
+    "raw": "RACESUBTYPE:Strix",
+    "sheet_line": "declares subtype Strix"
+   },
+   {
+    "record": "bestiary_3:template:Ratfolk",
+    "source": "pathfinder/paizo/roleplaying_game/core_essentials/ce_templates.lst:1168",
+    "raw": "RACESUBTYPE:Ratfolk",
+    "sheet_line": "declares subtype Ratfolk"
+   }
+  ],
+  "oracle_check": "sheet-line only -- no PCGen total covers it; held-set parity via SA.<n>.NAME in charbuild-remainder.txt.ftl is the nearest oracle",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": []
+ },
+ {
+  "token_type": "SUBRACE",
+  "family": "prereq",
+  "instances": 146,
+  "instances_source": "this lane: every raw_tokens entry across data/corpus (48,706 records with raw_tokens, 37 books, all statuses); feat records with a prerequisites list counted in their own row",
+  "units": 146,
+  "units_denominator": "non-DONE units (completion_atlas._bucket_of != DONE) joined to a corpus record carrying this token, of 23,315 non-DONE / 49,438",
+  "maps_to": "Metadata(ignored-by-sheet)",
+  "resolvability": "metadata (consumed by the converter, not printed)",
+  "rule": "SUBRACE:<name> on ethnicity templates (146 instances, ISWG human ethnicities) declares a Subrace fact printed as part of the race line (\"Human (Keleshite)\"). No gate consumes it in the corpus (0 PRESUBRACE).",
+  "expr_shape": "n/a",
+  "expr_gaps": [],
+  "applies_shape": "FactDeclare{Subrace}",
+  "prose_effect": "appends the ethnicity to the race label",
+  "examples": [
+   {
+    "record": "inner_sea_world_guide:template:Human Ethnicity (Keleshite)",
+    "source": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_templates.lst:15",
+    "raw": "SUBRACE:Keleshite",
+    "sheet_line": "race line reads Human (Keleshite)"
+   },
+   {
+    "record": "inner_sea_world_guide:template:Human Ethnicity (Kellid)",
+    "source": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_templates.lst:16",
+    "raw": "SUBRACE:Kellid",
+    "sheet_line": "race line reads Human (Kellid)"
+   },
+   {
+    "record": "inner_sea_world_guide:template:Human Ethnicity (Bonuwat)",
+    "source": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_templates.lst:18",
+    "raw": "SUBRACE:Bonuwat",
+    "sheet_line": "race line reads Human (Bonuwat)"
+   }
+  ],
+  "oracle_check": "sheet-line only -- no PCGen total covers it; held-set parity via SA.<n>.NAME in charbuild-remainder.txt.ftl is the nearest oracle",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": []
+ },
+ {
+  "token_type": "FACT / FACTSET",
+  "family": "prereq",
+  "instances": 9690,
+  "instances_source": "this lane: every raw_tokens entry across data/corpus (48,706 records with raw_tokens, 37 books, all statuses); feat records with a prerequisites list counted in their own row",
+  "units": 0,
+  "units_denominator": "non-DONE units (completion_atlas._bucket_of != DONE) joined to a corpus record carrying this token, of 23,315 non-DONE / 49,438",
+  "maps_to": "Metadata(ignored-by-sheet)",
+  "resolvability": "metadata (consumed by the converter, not printed)",
+  "rule": "FACT:<Name>|<value> and FACTSET:<Name>|<v>|<v> declare named facts on a record. Two populations: chassis facts routed to the character fact set (BaseSize 1,782 -> Expr::BaseSize; IsPC 63; ClassType 147; Abb; Pantheon/Symbol/Title/Colors on deities = display text) and rule flags (OccultistSchool_*|True, Fighter_CF_WeaponTraining, Oracle_CF_*) that PREFACT joins on via Holds{Rule(declarer)}. The converter's fact-declaration index is built from these. Counted in TOKEN-MODEL as metadata (8,635 + 1,055 instances); not re-counted by this lane.",
+  "expr_shape": "n/a",
+  "expr_gaps": [],
+  "applies_shape": "FactDeclare{name, value} -> fact index",
+  "prose_effect": "none",
+  "examples": [
+   {
+    "record": "occult_adventures:class_feature:(Occultist implement school records)",
+    "source": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst (several rows)",
+    "raw": "FACT:OccultistSchool_Evocation|True",
+    "sheet_line": "declares the fact PREFACT:1,ABILITIES,OccultistSchool_Evocation=true joins on"
+   }
+  ],
+  "oracle_check": "sheet-line only -- no PCGen total covers it; held-set parity via SA.<n>.NAME in charbuild-remainder.txt.ftl is the nearest oracle",
+  "refuse_reason": "",
+  "confidence": "medium",
+  "open_questions": [
+   "units not re-derived by this lane; TOKEN-MODEL counts FACT on 1,630 and FACTSET on 463 remainder units"
+  ]
+ },
+ {
+  "token_type": "SERVESAS",
+  "family": "prereq",
+  "instances": 318,
+  "instances_source": "this lane: every raw_tokens entry across data/corpus (48,706 records with raw_tokens, 37 books, all statuses); feat records with a prerequisites list counted in their own row",
+  "units": 136,
+  "units_denominator": "non-DONE units (completion_atlas._bucket_of != DONE) joined to a corpus record carrying this token, of 23,315 non-DONE / 49,438",
+  "maps_to": "Applies",
+  "resolvability": "filter (per-character-resolvable)",
+  "rule": "SERVESAS:ABILITY=<cat>|<name>[|<name>] -> CountsAs{Rule(id)} on the holder: for every Holds{Rule(id)} test the holder satisfies it as if it held <name> (Escapologist ~ Elusive counts as Rogue ~ Trapfinding). The live filter checks Holds against the union of held ids and counts-as ids. 318 instances, 136 non-DONE units.",
+  "expr_shape": "n/a",
+  "expr_gaps": [],
+  "applies_shape": "CountsAs{Rule(id)} on the holder; Holds{Rule} reads held ∪ counts_as",
+  "prose_effect": "none",
+  "examples": [
+   {
+    "record": "occult_adventures:class_feature:Escapologist ~ Elusive",
+    "source": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst:1899",
+    "raw": "SERVESAS:ABILITY=Special Ability|Rogue ~ Trapfinding",
+    "sheet_line": "holder counts as Rogue ~ Trapfinding for prerequisites"
+   },
+   {
+    "record": "inner_sea_intrigue:class_feature:Investigator ~ Atheist Inspiration",
+    "source": "pathfinder/paizo/campaign_setting/inner_sea_intrigue/isi_abilities_class.lst:146",
+    "raw": "SERVESAS:ABILITY=FEAT|Divine Defiance",
+    "sheet_line": "holder counts as Divine Defiance for prerequisites"
+   },
+   {
+    "record": "adventurers_guide:class_feature:Codex-Named Unit (class_feature_adventurers_guide_ag_abilities_class_lst_751)",
+    "source": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst:751",
+    "raw": "SERVESAS:ABILITY=FEAT|Spring Attack",
+    "sheet_line": "holder counts as Spring Attack for prerequisites"
+   }
+  ],
+  "oracle_check": "held-set parity: SA.COUNT and SA.<n>.NAME from scripts/oracle_harness/charbuild-remainder.txt.ftl for a built character list exactly the Special Ability rules PCGen judged held; our held set (applies evaluated true) must equal it",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": []
+ },
+ {
+  "token_type": "QUALIFY",
+  "family": "prereq",
+  "instances": 7,
+  "instances_source": "this lane: every raw_tokens entry across data/corpus (48,706 records with raw_tokens, 37 books, all statuses); feat records with a prerequisites list counted in their own row",
+  "units": 4,
+  "units_denominator": "non-DONE units (completion_atlas._bucket_of != DONE) joined to a corpus record carrying this token, of 23,315 non-DONE / 49,438",
+  "maps_to": "Applies",
+  "resolvability": "filter (per-character-resolvable)",
+  "rule": "QUALIFY:ABILITY=<cat>|<name>[|<name>] -> Waives{Rule(id)} on the holder: the named rule's `requires` is treated as Always for this character (Shifter ~ Wild Shape waives Natural Spell's prerequisites). 7 instances.",
+  "expr_shape": "n/a",
+  "expr_gaps": [],
+  "applies_shape": "Waives{Rule(id)} on the holder",
+  "prose_effect": "none",
+  "examples": [
+   {
+    "record": "horror_adventures:class_feature:Gaslighter ~ Consummate Cruelty",
+    "source": "pathfinder/paizo/roleplaying_game/horror_adventures/support/ha_abilities_class_oa.lst:173",
+    "raw": "QUALIFY:ABILITY=FEAT|Improved Dirty Trick",
+    "sheet_line": "holder may take Improved Dirty Trick without meeting its prerequisites"
+   },
+   {
+    "record": "ultimate_wilderness:class_feature:Shifter ~ Wild Shape",
+    "source": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst:19",
+    "raw": "QUALIFY:ABILITY=FEAT|Natural Spell",
+    "sheet_line": "holder may take Natural Spell without meeting its prerequisites"
+   },
+   {
+    "record": "ultimate_psionics:ability:Blade Skill ~ Advanced Talents",
+    "source": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_apg.lst:87",
+    "raw": "QUALIFY:ABILITY=Special Ability|Rogue Talent ~ Stealthy Sniper",
+    "sheet_line": "holder may take Rogue Talent ~ Stealthy Sniper without meeting its prerequisites"
+   }
+  ],
+  "oracle_check": "sheet-line only -- no PCGen total covers it; held-set parity via SA.<n>.NAME in charbuild-remainder.txt.ftl is the nearest oracle",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": []
+ },
+ {
+  "token_type": "REMOVE",
+  "family": "prereq",
+  "instances": 10,
+  "instances_source": "this lane: every raw_tokens entry across data/corpus (48,706 records with raw_tokens, 37 books, all statuses); feat records with a prerequisites list counted in their own row",
+  "units": 7,
+  "units_denominator": "non-DONE units (completion_atlas._bucket_of != DONE) joined to a corpus record carrying this token, of 23,315 non-DONE / 49,438",
+  "maps_to": "Applies",
+  "resolvability": "filter (per-character-resolvable)",
+  "rule": "REMOVE:FEAT|<name>[,<name>] -> Revokes{Rule(feat_id)} on the holder: the feat is dropped from the held set even if another grant gives it (archetypes trading away Brew Potion or armor proficiencies). 10 instances.",
+  "expr_shape": "n/a",
+  "expr_gaps": [],
+  "applies_shape": "Revokes{Rule(id)} on the holder; held set = grants − revokes",
+  "prose_effect": "none",
+  "examples": [
+   {
+    "record": "advanced_class_guide:class_feature:Shaman Hex ~ Fetish",
+    "source": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:1431",
+    "raw": "REMOVE:FEAT|Craft Wondrous Item",
+    "sheet_line": "holder loses Craft Wondrous Item"
+   },
+   {
+    "record": "advanced_players_guide:class_feature:Alchemist ~ Brew Potion",
+    "source": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst:74",
+    "raw": "REMOVE:FEAT|Brew Potion",
+    "sheet_line": "holder loses Brew Potion"
+   },
+   {
+    "record": "advanced_race_guide:class_feature:Feral Child ~ Weapon and Armor Proficiency",
+    "source": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst:366",
+    "raw": "REMOVE:FEAT|Martial Weapon Proficiency (Scimitar),Martial Weapon Proficiency (Scythe),Martial Weapon Proficiency (Sickle),Shield Proficiency",
+    "sheet_line": "holder loses Martial Weapon Proficiency (Scimitar),Martial Weapon Profici"
+   }
+  ],
+  "oracle_check": "sheet-line only -- no PCGen total covers it; held-set parity via SA.<n>.NAME in charbuild-remainder.txt.ftl is the nearest oracle",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": []
+ },
+ {
+  "token_type": "ADD",
+  "family": "prereq",
+  "instances": 113,
+  "instances_source": "this lane: every raw_tokens entry across data/corpus (48,706 records with raw_tokens, 37 books, all statuses); feat records with a prerequisites list counted in their own row",
+  "units": 42,
+  "units_denominator": "non-DONE units (completion_atlas._bucket_of != DONE) joined to a corpus record carrying this token, of 23,315 non-DONE / 49,438",
+  "maps_to": "Applies",
+  "resolvability": "Choice (filter once the option set is typed); Words for SPELLCASTER",
+  "rule": "ADD:<kind>|<spec>: ADD:LANGUAGE|<n>|<set> (13), ADD:FEAT|<n>|<set> (3), ADD:VFEAT (1), ADD:ABILITY|<n>|<cat>|<nature>|<set> (6) -> the holder OFFERS a choice: Choice{id, count: Expr(n), from: OptionSet}; the chosen rule/fact is granted with Grant{by: Rule(holder), when: Chosen}. ADD:EQUIP (5) -> equipment lane. ADD:SPELLCASTER|<Class> (85, all bestiary monsters: \"casts as a 9th-level sorcerer\") -> Words on the monster rule (monster spellcasting is stat-block text, not a PC choice). 113 instances.",
+  "expr_shape": "n/a",
+  "expr_gaps": [],
+  "applies_shape": "Choice{count, from} on the holder; Grant{when: Chosen} on the option",
+  "prose_effect": "none",
+  "examples": [
+   {
+    "record": "bestiary_3:monster:bestiary_3:monster:rakshasa_marai",
+    "source": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_races.lst:228",
+    "raw": "ADD:SPELLCASTER|Sorcerer",
+    "sheet_line": "monster casts spells as a Sorcerer -- printed as words"
+   },
+   {
+    "record": "bestiary_3:monster:bestiary_3:monster:kirin",
+    "source": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_races.lst:166",
+    "raw": "ADD:SPELLCASTER|Sorcerer/Cleric (Arcane)",
+    "sheet_line": "monster casts spells as a Sorcerer/Cleric (Arcane) -- printed as words"
+   }
+  ],
+  "oracle_check": "sheet-line only -- no PCGen total covers it; held-set parity via SA.<n>.NAME in charbuild-remainder.txt.ftl is the nearest oracle",
+  "refuse_reason": "",
+  "confidence": "medium",
+  "open_questions": []
+ },
+ {
+  "token_type": "CHOOSE",
+  "family": "prereq",
+  "instances": 2098,
+  "instances_source": "this lane: every raw_tokens entry across data/corpus (48,706 records with raw_tokens, 37 books, all statuses); feat records with a prerequisites list counted in their own row",
+  "units": 1777,
+  "units_denominator": "non-DONE units (completion_atlas._bucket_of != DONE) joined to a corpus record carrying this token, of 23,315 non-DONE / 49,438",
+  "maps_to": "Applies",
+  "resolvability": "Choice: filter over the option set once made; Words while unmade",
+  "rule": "CHOOSE:<selector>|<args> on a record R makes R choice-bearing: SheetRule.offers = Choice{id: R.id, count: SELECT value or 1, from: OptionSet}. OptionSet by selector: NOCHOICE (1,174) -> none, R is not choice-bearing (a no-op marker); NUMCHOICES (224) -> a number the player sets (the pool count, printed as words until picked); ABILITYSELECTION / ABILITY (144) -> Rules{category, tags, PRE filter} -- the E5-004 join: option = every rule in the pool whose `requires` passes for this character; SKILL (109), WEAPONPROFICIENCY (76), SHIELDPROFICIENCY (4), LANG (15), SCHOOLS (9), CLASS (59), TEMPLATE (5), EQUIPMENT (3), PCSTAT (2) -> typed fact sets; SPELLS|CLASSLIST=<c>[LEVELMIN..] (71) -> Spells{class, level range}; STRING / USERINPUT (68) -> free text (the choice prints verbatim); NUMBER (35) -> a number; EQBUILDER.SPELL (80) -> equipment-lane item creation. Every %CHOICE / %LIST elsewhere on R resolves to Expr::Choice(R.id) or Chosen{R.id}. 2,098 instances; 1,777 non-DONE units (1,080 of them NOCHOICE).",
+  "expr_shape": "n/a",
+  "expr_gaps": [],
+  "applies_shape": "offers: Choice{id, count: Expr, from: OptionSet}; consumers use Chosen{choice, option} / Expr::Choice",
+  "prose_effect": "none",
+  "examples": [
+   {
+    "record": "occult_adventures:class_feature:Medium Cleric Spell 6",
+    "source": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst:901",
+    "raw": "CHOOSE:SPELLS|CLASSLIST=Cleric[LEVELMIN=6;LEVELMAX=6]",
+    "sheet_line": "the player picks from: SPELLS|CLASSLIST=Cleric[LEVELMIN=6;LEVELMAX=6]"
+   },
+   {
+    "record": "occult_adventures:class_feature:Occultist Abjuration Implement Focus",
+    "source": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst:1007",
+    "raw": "CHOOSE:NOCHOICE",
+    "sheet_line": "no player choice (marker only)"
+   },
+   {
+    "record": "occult_adventures:class_feature:Mesmerist Expanded Arcana 1x9",
+    "source": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst:2049",
+    "raw": "CHOOSE:NOCHOICE",
+    "sheet_line": "no player choice (marker only)"
+   }
+  ],
+  "oracle_check": "sheet-line only; a picked option's own value is oracle-checked through its own rule",
+  "refuse_reason": "",
+  "confidence": "medium",
+  "open_questions": [
+   "OptionSet::Rules needs the pool definition (ABILITYCATEGORY) that is NOT in the corpus -- see that row",
+   "CHOOSE:STRING/USERINPUT output is free text; the sheet prints it verbatim (no PI concern: player-authored)"
+  ]
+ },
+ {
+  "token_type": "SELECT",
+  "family": "prereq",
+  "instances": 93,
+  "instances_source": "this lane: every raw_tokens entry across data/corpus (48,706 records with raw_tokens, 37 books, all statuses); feat records with a prerequisites list counted in their own row",
+  "units": 74,
+  "units_denominator": "non-DONE units (completion_atlas._bucket_of != DONE) joined to a corpus record carrying this token, of 23,315 non-DONE / 49,438",
+  "maps_to": "Applies",
+  "resolvability": "Choice count (per-character number)",
+  "rule": "SELECT:<formula> -> Choice.count = Expr via the map-formula parser (SELECT:2 -> Const(2); SELECT:3+INT -> Sum([Const(3), AbilityMod(Int)]); SELECT:1+(MagusHighestSpellLVL>...) -> needs the comparison-as-value form the F-grammar has, mapped to Expr (gap: a boolean-to-int Expr)). 93 instances.",
+  "expr_shape": "Const(n) | Sum([Const, AbilityMod])",
+  "expr_gaps": [
+   "Expr::Cmp-as-value (a comparison used as 0/1) for the 5 MagusHighestSpellLVL forms"
+  ],
+  "applies_shape": "Choice.count",
+  "prose_effect": "none",
+  "examples": [
+   {
+    "record": "inner_sea_world_guide:class_feature:Codex-Named Unit (class_feature_inner_sea_world_guide_iswg_abilities_class_lst_180)",
+    "source": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_abilities_class.lst:180",
+    "raw": "SELECT:2",
+    "sheet_line": "pick 2 options"
+   },
+   {
+    "record": "inner_sea_world_guide:class_feature:Codex-Named Unit (class_feature_inner_sea_world_guide_iswg_abilities_class_lst_179)",
+    "source": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_abilities_class.lst:179",
+    "raw": "SELECT:2",
+    "sheet_line": "pick 2 options"
+   },
+   {
+    "record": "inner_sea_world_guide:class_feature:Codex-Named Unit (class_feature_inner_sea_world_guide_iswg_abilities_class_lst_177)",
+    "source": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_abilities_class.lst:177",
+    "raw": "SELECT:2",
+    "sheet_line": "pick 2 options"
+   }
+  ],
+  "oracle_check": "sheet-line only -- no PCGen total covers it; held-set parity via SA.<n>.NAME in charbuild-remainder.txt.ftl is the nearest oracle",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": []
+ },
+ {
+  "token_type": "MULT",
+  "family": "prereq",
+  "instances": 2107,
+  "instances_source": "this lane: every raw_tokens entry across data/corpus (48,706 records with raw_tokens, 37 books, all statuses); feat records with a prerequisites list counted in their own row",
+  "units": 1779,
+  "units_denominator": "non-DONE units (completion_atlas._bucket_of != DONE) joined to a corpus record carrying this token, of 23,315 non-DONE / 49,438",
+  "maps_to": "Metadata(ignored-by-sheet)",
+  "resolvability": "metadata (consumed by the converter, not printed)",
+  "rule": "MULT:YES -> SheetRule.repeatable = true (the rule may be held more than once, each copy re-running its CHOOSE); MULT:NO -> once. Consumed by PREABILITY CHECKMULT counting. 2,107 instances.",
+  "expr_shape": "n/a",
+  "expr_gaps": [],
+  "applies_shape": "repeatable flag",
+  "prose_effect": "none",
+  "examples": [
+   {
+    "record": "occult_adventures:class_feature:Psychic Expanded Arcana 2x5",
+    "source": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst:1966",
+    "raw": "MULT:YES",
+    "sheet_line": "may be taken more than once"
+   },
+   {
+    "record": "occult_adventures:class_feature:Mesmerist Expanded Arcana 1x4",
+    "source": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst:2044",
+    "raw": "MULT:YES",
+    "sheet_line": "may be taken more than once"
+   },
+   {
+    "record": "occult_adventures:class_feature:Occultist Expanded Arcana 2x0",
+    "source": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst:2053",
+    "raw": "MULT:YES",
+    "sheet_line": "may be taken more than once"
+   }
+  ],
+  "oracle_check": "sheet-line only -- no PCGen total covers it; held-set parity via SA.<n>.NAME in charbuild-remainder.txt.ftl is the nearest oracle",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": []
+ },
+ {
+  "token_type": "STACK",
+  "family": "prereq",
+  "instances": 1651,
+  "instances_source": "this lane: every raw_tokens entry across data/corpus (48,706 records with raw_tokens, 37 books, all statuses); feat records with a prerequisites list counted in their own row",
+  "units": 1508,
+  "units_denominator": "non-DONE units (completion_atlas._bucket_of != DONE) joined to a corpus record carrying this token, of 23,315 non-DONE / 49,438",
+  "maps_to": "Metadata(ignored-by-sheet)",
+  "resolvability": "metadata (consumed by the converter, not printed)",
+  "rule": "STACK:YES/NO -> whether repeated copies of a MULT:YES rule add their values (map-bonus lane folds the values; this lane records the flag on the rule). 1,651 instances.",
+  "expr_shape": "n/a",
+  "expr_gaps": [],
+  "applies_shape": "stacks flag",
+  "prose_effect": "none",
+  "examples": [
+   {
+    "record": "occult_adventures:race_trait_generic:Homunculus Companion ~ Custom Skills",
+    "source": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_race.lst:187",
+    "raw": "STACK:NO",
+    "sheet_line": "copies do not stack"
+   },
+   {
+    "record": "occult_adventures:race_trait_generic:Homunculus Companion ~ Ability Score Increase",
+    "source": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_race.lst:191",
+    "raw": "STACK:YES",
+    "sheet_line": "copies stack"
+   },
+   {
+    "record": "occult_adventures:class_feature:Medium Wizard Spell 2",
+    "source": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst:889",
+    "raw": "STACK:NO",
+    "sheet_line": "copies do not stack"
+   }
+  ],
+  "oracle_check": "sheet-line only -- no PCGen total covers it; held-set parity via SA.<n>.NAME in charbuild-remainder.txt.ftl is the nearest oracle",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": []
+ },
+ {
+  "token_type": "LANGBONUS",
+  "family": "prereq",
+  "instances": 196,
+  "instances_source": "this lane: every raw_tokens entry across data/corpus (48,706 records with raw_tokens, 37 books, all statuses); feat records with a prerequisites list counted in their own row",
+  "units": 97,
+  "units_denominator": "non-DONE units (completion_atlas._bucket_of != DONE) joined to a corpus record carrying this token, of 23,315 non-DONE / 49,438",
+  "maps_to": "Applies",
+  "resolvability": "Choice",
+  "rule": "LANGBONUS:<l>,<l> on race/ethnicity templates -> OptionSet for the race's bonus-language choice: Choice{id: race.id + \":bonus_language\", count: Expr::Max(AbilityMod(Int), Const(0)), from: Languages(set)}. 196 instances.",
+  "expr_shape": "count = Max(AbilityMod(Int), Const(0))",
+  "expr_gaps": [],
+  "applies_shape": "Choice{from: Languages}",
+  "prose_effect": "none",
+  "examples": [
+   {
+    "record": "inner_sea_world_guide:template:Bonus Language ~ Shoanti",
+    "source": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_templates.lst:84",
+    "raw": "LANGBONUS:Shoanti",
+    "sheet_line": "bonus-language options: Shoanti"
+   },
+   {
+    "record": "inner_sea_world_guide:template:Regional Affinity (Mana Wastes)",
+    "source": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_templates.lst:48",
+    "raw": "LANGBONUS:Kelish,Osiriani",
+    "sheet_line": "bonus-language options: Kelish,Osiriani"
+   },
+   {
+    "record": "inner_sea_world_guide:template:Regional Affinity (Linnorm Kings)",
+    "source": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_templates.lst:46",
+    "raw": "LANGBONUS:Skald",
+    "sheet_line": "bonus-language options: Skald"
+   }
+  ],
+  "oracle_check": "sheet-line only -- no PCGen total covers it; held-set parity via SA.<n>.NAME in charbuild-remainder.txt.ftl is the nearest oracle",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": []
+ },
+ {
+  "token_type": "STARTFEATS",
+  "family": "prereq",
+  "instances": 1410,
+  "instances_source": "this lane: every raw_tokens entry across data/corpus (48,706 records with raw_tokens, 37 books, all statuses); feat records with a prerequisites list counted in their own row",
+  "units": 45,
+  "units_denominator": "non-DONE units (completion_atlas._bucket_of != DONE) joined to a corpus record carrying this token, of 23,315 non-DONE / 49,438",
+  "maps_to": "Metadata(ignored-by-sheet)",
+  "resolvability": "metadata (consumed by the converter, not printed)",
+  "rule": "STARTFEATS:<n> on race records is the number of starting feats (1 for every PC race; monsters vary). The feat pool count is a totals-path constant, not a sheet rule; Metadata. 1,410 instances, 45 non-DONE.",
+  "expr_shape": "n/a",
+  "expr_gaps": [],
+  "applies_shape": "none",
+  "prose_effect": "none",
+  "examples": [
+   {
+    "record": "occult_adventures:monster_generic:Kami (Shikigami)",
+    "source": "pathfinder/paizo/roleplaying_game/occult_adventures/support/oa_races_b3.lst:6",
+    "raw": "STARTFEATS:1",
+    "sheet_line": "starting feat count 1"
+   },
+   {
+    "record": "occult_adventures:race_generic:Homunculus Companion",
+    "source": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_races.lst:9",
+    "raw": "STARTFEATS:1",
+    "sheet_line": "starting feat count 1"
+   }
+  ],
+  "oracle_check": "sheet-line only -- no PCGen total covers it; held-set parity via SA.<n>.NAME in charbuild-remainder.txt.ftl is the nearest oracle",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": []
+ },
+ {
+  "token_type": "LEVELSPERFEAT",
+  "family": "prereq",
+  "instances": 9,
+  "instances_source": "this lane: every raw_tokens entry across data/corpus (48,706 records with raw_tokens, 37 books, all statuses); feat records with a prerequisites list counted in their own row",
+  "units": 9,
+  "units_denominator": "non-DONE units (completion_atlas._bucket_of != DONE) joined to a corpus record carrying this token, of 23,315 non-DONE / 49,438",
+  "maps_to": "Metadata(ignored-by-sheet)",
+  "resolvability": "metadata (consumed by the converter, not printed)",
+  "rule": "LEVELSPERFEAT:0 on 9 Ultimate Psionics NPC classes (no feats per level). Class chassis constant; Metadata.",
+  "expr_shape": "n/a",
+  "expr_gaps": [],
+  "applies_shape": "none",
+  "prose_effect": "none",
+  "examples": [
+   {
+    "record": "ultimate_psionics:class:Horror",
+    "source": "pathfinder/dreamscarred_press/ultimate_psionics/up_classes_apg.lst:10",
+    "raw": "LEVELSPERFEAT:0",
+    "sheet_line": "class chassis constant"
+   }
+  ],
+  "oracle_check": "sheet-line only -- no PCGen total covers it; held-set parity via SA.<n>.NAME in charbuild-remainder.txt.ftl is the nearest oracle",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": []
+ },
+ {
+  "token_type": "%CHOICE / %LIST (value markers)",
+  "family": "prereq",
+  "instances": 798,
+  "instances_source": "this lane: every raw_tokens entry across data/corpus (48,706 records with raw_tokens, 37 books, all statuses); feat records with a prerequisites list counted in their own row",
+  "units": 0,
+  "units_denominator": "non-DONE units (completion_atlas._bucket_of != DONE) joined to a corpus record carrying this token, of 23,315 non-DONE / 49,438",
+  "maps_to": "Applies",
+  "resolvability": "Choice-bound: filter/number once chosen, Words before",
+  "rule": "A %CHOICE or %LIST inside another token's value binds that value to the record's own CHOOSE: in a compute field -> Expr::Choice(R.id) (BONUS:STAT|%LIST|1: the chosen ability); in a grant target -> Grant{when: Chosen{R.id, option}} (ABILITY:FEAT|AUTOMATIC|%LIST; AUTO:WEAPONPROF|%LIST; TEMPLATE:%LIST); in prose -> the chosen option's label substituted by the prose lane. Records with a marker by host token (corpus-wide): ABILITY 198, BONUS 166, TEMPBONUS 153, SPROP 100, DESC 86, COST 37, AUTO 33, ASPECT 18, TEMPLATE 5, SR 2.",
+  "expr_shape": "Expr::Choice(ChoiceId) (exists)",
+  "expr_gaps": [],
+  "applies_shape": "Chosen{choice, option}",
+  "prose_effect": "none",
+  "examples": [
+   {
+    "record": "occult_adventures:class_feature:Champion Weapon Choice",
+    "source": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst:903",
+    "raw": "AUTO:WEAPONPROF|%LIST",
+    "sheet_line": "proficient with (the weapon the player chose) -- Words until chosen"
+   }
+  ],
+  "oracle_check": "sheet-line only -- no PCGen total covers it; held-set parity via SA.<n>.NAME in charbuild-remainder.txt.ftl is the nearest oracle",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": [
+   "units for this synthetic row are records-with-a-marker corpus-wide (798), not non-DONE units; TOKEN-MODEL §4 counts 384 remainder units with %CHOICE/%LIST values"
+  ]
+ },
+ {
+  "token_type": "class LEVEL grants (CLASS .lst level lines)",
+  "family": "prereq",
+  "instances": 65,
+  "instances_source": "this lane: every raw_tokens entry across data/corpus (48,706 records with raw_tokens, 37 books, all statuses); feat records with a prerequisites list counted in their own row",
+  "units": 12109,
+  "units_denominator": "non-DONE units (completion_atlas._bucket_of != DONE) joined to a corpus record carrying this token, of 23,315 non-DONE / 49,438",
+  "maps_to": "Applies",
+  "resolvability": "filter (grant edge)",
+  "rule": "A class .lst level line `<lvl>\\tABILITY:<cat>|AUTOMATIC|<feature>[|PRE...]` is the grant edge Grant{by: Class(id), at_level: lvl, when}. It is NOT in data/corpus for 164 of 168 class records (only 4 records -- the Unchained classes -- carry a structured feature_grants list, 65 entries, with min_level and suppressed_by_var). lst_parser/class.rs already parses the lines (ClassLevelLine{level, raw_line}); the converter must take the level lines from the parser at ingest, or the corpus must be regenerated to carry them. 17,132 of 18,074 class_feature records name their class in `data.class` (12,109 non-DONE), but the LEVEL at which the class grants them is only on the .lst. Without this row no class_feature rule has a holder.",
+  "expr_shape": "n/a",
+  "expr_gaps": [],
+  "applies_shape": "Grant{by: Class(id), at_level: n, when: Applies}; suppressed_by_var -> Not(Holds{archetype rule that sets the var})",
+  "prose_effect": "none",
+  "examples": [
+   {
+    "record": "pathfinder_unchained:class:Monk ~ Unchained Class",
+    "source": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_classes.lst (feature_grants[6])",
+    "raw": "{'feature_key': 'Unchained Monk ~ Evasion', 'min_level': 2, 'granted_by_key': 'Monk ~ Unchained Class', 'suppressed_by_var': 'Monk_CF_Evasion'}",
+    "sheet_line": "Unchained Monk 2+ holds Evasion unless an archetype rule sets Monk_CF_Evasion"
+   },
+   {
+    "record": "core_rulebook:class:Fighter",
+    "source": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_classes.lst (level lines not carried in data/corpus/core_rulebook/class/fighter.json, whose raw_tokens hold only 8 BONUS/FACT/HD/TYPE/MAXLEVEL/SOURCEPAGE/DEFINE/ROLE tokens)",
+    "raw": "(absent from the corpus record)",
+    "sheet_line": "F1 (Fighter 3) should hold Bonus Feat (1), Bravery (2), Armor Training (3): no corpus token says so today"
+   }
+  ],
+  "oracle_check": "sheet-line only -- no PCGen total covers it; held-set parity via SA.<n>.NAME in charbuild-remainder.txt.ftl is the nearest oracle",
+  "refuse_reason": "",
+  "confidence": "medium",
+  "open_questions": [
+   "CONVERTER INPUT GAP: class level lines are parsed but not persisted; decide parser-side read vs corpus regeneration before AT-35-E2-001 (regeneration is the cleaner provenance, but data/corpus is frozen by §9 -- needs a ruling)",
+   "the `units` figure is non-DONE class_feature records with a class name (12,109 of 23,315); every one needs a class grant edge to be held by anyone"
+  ]
+ },
+ {
+  "token_type": ".MOD / .COPY closure rows",
+  "family": "prereq",
+  "instances": 0,
+  "instances_source": "this lane: every raw_tokens entry across data/corpus (48,706 records with raw_tokens, 37 books, all statuses); feat records with a prerequisites list counted in their own row",
+  "units": 874,
+  "units_denominator": "non-DONE units (completion_atlas._bucket_of != DONE) joined to a corpus record carrying this token, of 23,315 non-DONE / 49,438",
+  "maps_to": "Metadata(ignored-by-sheet)",
+  "resolvability": "metadata (consumed by the converter, not printed)",
+  "rule": "A `<Name>.MOD` row adds its tokens (including PRE*, ABILITY, BONUS) to the base record; `.COPY=<New>` clones a base then modifies. wiring_class.rs token_closure_rows already resolves both from the raw .lst tree (build_mod_index walks every .lst, not data/corpus). The converter takes the closure, folds PRE:.CLEAR (drop inherited PREs) and .CLEAR variants, then applies this table to the union. 874 units in the inventory are mod_only (their record exists only as a .MOD row); they convert like any record.",
+  "expr_shape": "n/a",
+  "expr_gaps": [],
+  "applies_shape": "closure fold before mapping",
+  "prose_effect": "none",
+  "examples": [
+   {
+    "record": "advanced_class_guide:class_feature:Arcane Bloodrager Bloodline ~ Feat Tracker",
+    "source": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:621",
+    "raw": "BONUS:VAR|Bloodrager_BloodlineFeat_CombatReflexes|1",
+    "sheet_line": "mod_only record: converts on its own closure; hidden helper (sets flags PREVAREQ gates read)"
+   },
+   {
+    "record": "advanced_class_guide:class_feature:Skald ~ Extra Performance (PFS .MOD)",
+    "source": "pathfinder/paizo/roleplaying_game/advanced_class_guide/_pfs/pfs_acg_abilities_class.lst:115",
+    "raw": "PRE:.CLEAR",
+    "sheet_line": "inherited prerequisites cleared before this row's own apply"
+   }
+  ],
+  "oracle_check": "sheet-line only -- no PCGen total covers it; held-set parity via SA.<n>.NAME in charbuild-remainder.txt.ftl is the nearest oracle",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": [
+   "instances not counted by this lane (closure rows live in the .lst tree, not in raw_tokens)"
+  ]
+ },
+ {
+  "token_type": "trailing |PRE... on host tokens (per-addend gates)",
+  "family": "prereq",
+  "instances": 21889,
+  "instances_source": "this lane: every raw_tokens entry across data/corpus (48,706 records with raw_tokens, 37 books, all statuses); feat records with a prerequisites list counted in their own row",
+  "units": 0,
+  "units_denominator": "non-DONE units (completion_atlas._bucket_of != DONE) joined to a corpus record carrying this token, of 23,315 non-DONE / 49,438",
+  "maps_to": "Applies",
+  "resolvability": "filter (per-character-resolvable)",
+  "rule": "Any token that carries `|PRE<kind>:...` (or `[PRE...]` on CLASSES) after its value converts its own gate as `when: Applies` on THAT grant or addend, not on the whole rule: BONUS:VAR|X|1|PREVARGTEQ:WitchHexAbilityLVL,8 is an addend that counts only when the gate passes (bonus_stack_reader.rs semantics, oracle-traced). Host-token instance counts corpus-wide: ABILITY 9,871; BONUS 8,910; SPELLKNOWN 1,194; SPELLS 1,104; DOMAINS 452; CLASSES 171; TEMPBONUS 129; DR 25; VISION 17; AUTO 16 (records: ABILITY 3,110, BONUS 2,487, SPELLS 368, DOMAINS 452, CLASSES 171, SPELLKNOWN 152, TEMPBONUS 97, DR 20, VISION 14, AUTO 14). The value side belongs to the owning lane (map-bonus, spell-grant); the gate shape is this table's.",
+  "expr_shape": "n/a",
+  "expr_gaps": [],
+  "applies_shape": "when: Applies on the addend/grant",
+  "prose_effect": "none",
+  "examples": [
+   {
+    "record": "occult_adventures:class_feature:KB Selector",
+    "source": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst:607",
+    "raw": "ABILITY:Internal|AUTOMATIC|KB ~ 03d6|PREVAREQ:KB_Tier,03",
+    "sheet_line": "grants the 3d6 blast rule only when KB_Tier resolves to 3, i.e. Compare{Max(Const(1), Div(Sum([ClassLevel(kineticist), Const(1)]), Const(2))) == Const(3)}"
+   },
+   {
+    "record": "occult_adventures:race_trait_generic:Emotional Focus ~ Anger",
+    "source": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_race.lst:48",
+    "raw": "ABILITY:Special Ability|AUTOMATIC|Emotional Focus / Anger ~ Skills|PREVARGTEQ:PhantomMasterLevel,1",
+    "sheet_line": "grant gated on the phantom's master level >= 1"
+   },
+   {
+    "record": "occult_adventures:class_feature:Spirit Walker ~ Command Undead",
+    "source": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst:1483",
+    "raw": "CLASSES:Mesmerist=2[PREABILITY:1,CATEGORY=Special Ability,Spirit Walker ~ Spells]",
+    "sheet_line": "on the Mesmerist list at level 2 only for a character holding Spirit Walker ~ Spells"
+   }
+  ],
+  "oracle_check": "bonus_stack_reader.rs already proves the addend-gate semantics against the pinned oracle; SA parity covers the grant gates",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": [
+   "units for this synthetic row are not re-derived (hosts overlap with their own rows); the record counts above are corpus-wide"
+  ]
+ },
+ {
+  "token_type": "ABILITYCATEGORY (pool declarations)",
+  "family": "prereq",
+  "instances": 0,
+  "instances_source": "this lane: every raw_tokens entry across data/corpus (48,706 records with raw_tokens, 37 books, all statuses); feat records with a prerequisites list counted in their own row",
+  "units": 1091,
+  "units_denominator": "non-DONE units (completion_atlas._bucket_of != DONE) joined to a corpus record carrying this token, of 23,315 non-DONE / 49,438",
+  "maps_to": "REFUSE",
+  "resolvability": "blocked on ingest",
+  "rule": "PCGen declares every selectable pool (Rogue Talents, Rage Powers, Bonus Feats...) in ABILITYCATEGORY: rows of *_abilitycategories.lst: the pool's CATEGORY, TYPE filter, PRE filter, and display plural. That is the OptionSet definition the E5-004 filter needs for CHOOSE:ABILITYSELECTION and for every BONUS:ABILITYPOOL count (1,091 remainder units per TOKEN-MODEL §4). It appears in ZERO data/corpus records and in no raw_tokens; it is only referenced from src/pcgen_import/corpus_traps.rs and two hand tables. Not refused per record: refused as a converter INPUT gap -- the converter cannot map to OptionSet::Rules without ingesting the abilitycategories files (tool side, allowed).",
+  "expr_shape": "n/a",
+  "expr_gaps": [],
+  "applies_shape": "OptionSet::Rules{category, tags, requires} -- the pool definition",
+  "prose_effect": "none",
+  "examples": [],
+  "oracle_check": "sheet-line only -- no PCGen total covers it; held-set parity via SA.<n>.NAME in charbuild-remainder.txt.ftl is the nearest oracle",
+  "refuse_reason": "converter input missing, not per-record judgment: ABILITYCATEGORY records are not ingested. Affected: every choice-bearing unit whose option set is a rule pool -- 1,091 BONUS:ABILITYPOOL units + 144 CHOOSE:ABILITYSELECTION/ABILITY records (corpus-wide) until the files are read",
+  "confidence": "high",
+  "open_questions": [
+   "ingest *_abilitycategories.lst on the tool side (one parser, ~30 lines: CATEGORY, TYPE, PLURAL, PRE) -- this is the smallest unblock for AT-35-E5-004"
+  ]
+ }
+]

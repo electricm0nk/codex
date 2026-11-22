@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Ravager ~ Ravage the Mind",
+    "name": "Ravage the Mind",
+    "class": "Ravager",
+    "description": "As long as you are maintaining psionic focus, you gain a +%1 bonus to saves against mind-affecting effects.  If you succeed on the saving throw, you can as an immediate action cause the source of the effect to take 1 point of Wisdom damage.|RavageTheMindBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ravager ~ Ravage the Mind"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "CrypticClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RavageTheMindBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "As long as you are maintaining psionic focus, you gain a +%1 bonus to saves against mind-affecting effects.  If you succeed on the saving throw, you can as an immediate action cause the source of the effect to take 1 point of Wisdom damage.|RavageTheMindBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RavageTheMindBonus|min(5,floor((CrypticLVL+3)/4))"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.318"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1846,
+    "record_key": "Ravager ~ Ravage the Mind"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

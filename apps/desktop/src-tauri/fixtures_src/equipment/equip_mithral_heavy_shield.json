@@ -1,0 +1,60 @@
+{
+  "completeness": "full",
+  "data": {
+    "key": "Mithral Heavy Shield",
+    "name": "Mithral Heavy Shield",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "COMBAT",
+          "AC",
+          "2",
+          "TYPE=Shield",
+          "PREVAREQ:DisableShieldBonus,0"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "PROFICIENCY",
+        "value": "SHIELD|Shield (Heavy)"
+      },
+      {
+        "key": "TYPE",
+        "value": "Shield.Magic.Specific.LesserMinor.Heavy"
+      },
+      {
+        "key": "COST",
+        "value": "20"
+      },
+      {
+        "key": "WT",
+        "value": "5"
+      },
+      {
+        "key": "ACCHECK",
+        "value": "0"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Material ~ Mithril ~ Shield"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.132"
+      },
+      {
+        "key": "SPELLFAILURE",
+        "value": "5"
+      }
+    ]
+  },
+  "license": "OGL",
+  "population": "in_scope",
+  "source": {
+    "kind": "desktop_ui_fixture",
+    "line": 1,
+    "path": "apps/desktop/src-tauri/fixtures_src/equip_mithral_heavy_shield.txt",
+    "record_key": "Mithral Heavy Shield"
+  }
+}

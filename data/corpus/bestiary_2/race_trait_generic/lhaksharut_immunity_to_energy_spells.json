@@ -1,0 +1,50 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Lhaksharut ~ Immunity to Energy Spells",
+    "name": "Immunity to Energy Spells",
+    "description": "A lhaksharut is immune to any spell or spell-like ability with the acid, cold, electricity, fire, or sonic descriptor that allows spell resistance.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Lhaksharut ~ Immunity to Energy Spells"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Extraordinary.Immunity"
+      },
+      {
+        "key": "DESC",
+        "value": "A lhaksharut is immune to any spell or spell-like ability with the acid, cold, electricity, fire, or sonic descriptor that allows spell resistance."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.164"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Immunity|Energy Spells"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 708,
+    "record_key": "Lhaksharut ~ Immunity to Energy Spells"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,2 @@
+# Fixture for desktop Market +N (AC and attack rows), source: ue_equip_arms_armor.lst, KEY: Wahaika
+Wahaika																				PROFICIENCY:WEAPON|Wahaika								TYPE:Weapon.Resizable.Melee.OneHanded.Ranged.Thrown.Exotic.Bludgeoning																																		COST:3	WT:3										CRITMULT:x2	CRITRANGE:1							DAMAGE:1d6					EQMOD:Material ~ Wood																																									WIELD:OneHanded		RANGE:10				SIZE:M	SOURCEPAGE:p.40

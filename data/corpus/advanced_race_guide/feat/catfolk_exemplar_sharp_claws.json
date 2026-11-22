@@ -1,0 +1,28 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Catfolk Exemplar ~ Sharp Claws",
+    "category": "CatfolkExemplarOption",
+    "name": "Sharp Claws",
+    "description": "If you do not have the cat's claws racial trait or the claws of the beast manifestation from the Aspect of the Beast feat , you gain the cat's claws racial trait. If you have either the cat's claws racial trait or the claws of the beast manifestation, your claw damage increases to 1d6.",
+    "prerequisites": [
+      "PREFACT:1,TEMPLATES,IsCatfolk=true"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_feats.lst",
+    "sha256": "420384054e43adeb60135c7e379a4645e5817ea1f2e78a8de8c7c687fc510fec",
+    "line": 240,
+    "record_key": "Catfolk Exemplar ~ Sharp Claws"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

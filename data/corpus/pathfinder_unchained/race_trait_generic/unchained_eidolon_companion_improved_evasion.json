@@ -1,0 +1,46 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Unchained Eidolon Companion ~ Improved Evasion",
+    "name": "Improved Evasion",
+    "description": "When subjected to an attack that allows a Reflex saving throw for half damage, an eidolon takes no damage if it succeeds at its saving throw and only half damage if it fails.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Unchained Eidolon Companion ~ Improved Evasion"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Unchained Eidolon Companion.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "When subjected to an attack that allows a Reflex saving throw for half damage, an eidolon takes no damage if it succeeds at its saving throw and only half damage if it fails."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_race.lst",
+    "sha256": "700bcd41e1ee925d0a727c86097de8fa37bed2768529e4a750bdb8249c4d8b8d",
+    "line": 22,
+    "record_key": "Unchained Eidolon Companion ~ Improved Evasion"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

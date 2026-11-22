@@ -1,0 +1,85 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T23:30:38Z",
+  "data": {
+    "key": "Nagaji ~ Serpent's Sense",
+    "name": "Serpent's Sense",
+    "race_key": "Nagaji",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Nagaji Racial Trait",
+      "Nagaji Racial Default",
+      "SpecialQuality",
+      "Extraordinary"
+    ],
+    "is_racial_default": true,
+    "suppressed_by_flag": "Nagaji_ReplaceSerpentsSense",
+    "sets_replace_flags": [],
+    "description": "Nagaji receive a +2 racial bonus on Handle Animal checks against reptiles, and a +2 racial bonus on Perception checks.",
+    "source_page": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Nagaji ~ Serpent's Sense"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Nagaji Racial Trait.Nagaji Racial Default.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "!PREFACT",
+        "value": "1,ABILITIES,Nagaji_ReplaceSerpentsSense=True"
+      },
+      {
+        "key": "DESC",
+        "value": "Nagaji receive a +2 racial bonus on Handle Animal checks against reptiles, and a +2 racial bonus on Perception checks."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.xx"
+      },
+      {
+        "key": "ASPECT",
+        "value": "RacialSkillModifier|+2 Handle Animal against reptiles, +2 Perception"
+      }
+    ],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "SITUATION",
+          "Handle Animal=against reptiles",
+          "2",
+          "TYPE=Racial"
+        ]
+      },
+      {
+        "qualifiers": [
+          "SKILL",
+          "Perception",
+          "2",
+          "TYPE=Racial"
+        ]
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/nagaji/nagaji_abilities_race.lst",
+    "sha256": "6cddf94332e28fcf6cc9ee86e2a89d547e8a0c34e822613ab52478eecae4361a",
+    "line": 21,
+    "record_key": "Nagaji ~ Serpent's Sense"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

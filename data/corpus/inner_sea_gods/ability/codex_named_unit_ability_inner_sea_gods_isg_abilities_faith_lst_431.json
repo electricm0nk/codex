@@ -1,0 +1,69 @@
+{
+  "codex_generated_name": true,
+  "completeness": "chassis_only",
+  "data": {
+    "description": null,
+    "key": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_431)",
+    "name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_431)",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "NAMEISPI",
+        "value": "YES"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Divine Boon Choice|TIMES=3|CASTERLEVEL=TL|Sanctuary|PREVARGTEQ:SentinelBoonLVL,3"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Divine Boon Choice|TIMES=2|CASTERLEVEL=TL|Shield of Faith|PREVARGTEQ:SentinelBoonLVL,3"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Divine Boon Choice|TIMES=1|CASTERLEVEL=TL|Prayer|PREVARGTEQ:SentinelBoonLVL,3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Domain Power ~ Artificer's Touch|PREMULT:2,[PREVARGTEQ:SentinelBoonLVL,6],[PREDOMAIN:1,Artifice]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainArtificeLVL|TL|TYPE=Domain|PREVARGTEQ:SentinelBoonLVL,6"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Warhammer|TOHIT|1"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "license": "PI-REDACTED",
+  "pi_field": "name,raw_tokens",
+  "pi_marker": "redacted",
+  "population": "in_scope",
+  "rename": {
+    "coordinate": "inner_sea_gods:isg_abilities_faith.lst:431",
+    "reason": "name_pi_blocked"
+  },
+  "source": {
+    "kind": "lst_token",
+    "line": 431,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities_faith.lst",
+    "record_key": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_431)",
+    "sha256": "55f9ffcb82ea861db396063e8801becfb46e368a510ec6d413d87c2935f3419e"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus",
+    "derived:spells"
+  ]
+}

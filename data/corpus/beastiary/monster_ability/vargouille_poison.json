@@ -1,0 +1,69 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Vargouille ~ Poison",
+    "delivery": "Supernatural",
+    "description": "Bite--injury; save Fort DC %1; frequency once; effect damage caused by bite can only be healed with magic if the spellcaster succeeds on a DC 20 caster level check; cure 1 save.",
+    "description_variables": [
+      "PoisonSaveDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:vargouille_poison",
+    "name": "Poison",
+    "owners": [
+      "beastiary:monster:vargouille"
+    ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Poison"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(Bite--injury; save Fort DC %1)|PoisonSaveDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PoisonSaveDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Poison)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Bite--injury; save Fort DC %1; frequency once; effect damage caused by bite can only be healed with magic if the spellcaster succeeds on a DC 20 caster level check; cure 1 save.|PoisonSaveDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Vargouille ~ Poison"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.272"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
+    "source_page": "p.272",
+    "traits": []
+  },
+  "ingested_at": "2026-08-20T15:15:41Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1225,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "record_key": "Vargouille ~ Poison",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

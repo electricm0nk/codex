@@ -1,0 +1,26 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:46:05Z",
+  "data": {
+    "key": "Transfer Tattoo",
+    "school": "Transmutation",
+    "level": 1,
+    "description": "With this spell, you can transfer one magic tattoo from one creature to another. A target that isn't willing to have his tattoo removed or to receive the transferred tattoo can resist this spell with a Fortitude save-if successful, the transfer fails and the caster of this spell is staggered for 1 round by the backlash of magical energy. A tattoo can be transferred from a dead creature in this manner to a living host, provided the body has been dead no longer than one hour per caster level."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_spells.lst",
+    "sha256": "e1e7d1aab79b5fe0bb7d8ae8f77ac908fbb327e81c81a9482c0da6b673892661",
+    "line": 43,
+    "record_key": "Transfer Tattoo"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

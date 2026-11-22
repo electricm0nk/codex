@@ -1,0 +1,4 @@
+usage: token_coverage.py [-h] [--check] [--inventory INVENTORY]
+                         [--package PACKAGE] [--table TABLE] [--out OUT]
+token_coverage.py: error: unrecognized arguments: --sf-formula
+exit=2

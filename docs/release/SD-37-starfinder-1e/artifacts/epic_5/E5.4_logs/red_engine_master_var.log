@@ -1,0 +1,12 @@
+   Compiling codex v0.1.0 (/home/ubuntu/workspace/worktrees/codex-sd37)
+error[E0609]: no field `master_vars` on type `sheet_rule::CharacterFacts`
+    --> src/rules_core/sheet_rule.rs:3097:15
+     |
+3097 |         facts.master_vars.insert(var_id("DroneCompanionLVL"), 3);
+     |               ^^^^^^^^^^^ unknown field
+     |
+     = note: available fields are: `level`, `class_levels`, `ability_scores`, `ability_mods`, `size` ... and 27 others
+
+For more information about this error, try `rustc --explain E0609`.
+error: could not compile `codex` (lib test) due to 1 previous error
+exit=101

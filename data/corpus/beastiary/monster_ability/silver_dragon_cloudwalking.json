@@ -1,0 +1,57 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Silver Dragon ~ Cloudwalking",
+    "delivery": "Supernatural",
+    "description": "A very young or older silver dragon can tread on clouds or fog as though on solid ground.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "beastiary:monster_ability:silver_dragon_cloudwalking",
+    "name": "Cloudwalking",
+    "owners": [
+      "beastiary:monster:dragon_silver"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A very young or older silver dragon can tread on clouds or fog as though on solid ground."
+      },
+      {
+        "key": "KEY",
+        "value": "Silver Dragon ~ Cloudwalking"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.110"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.ModifyMovement"
+      }
+    ],
+    "source_page": "p.110",
+    "traits": [
+      "ModifyMovement"
+    ]
+  },
+  "ingested_at": "2026-08-20T15:15:41Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 498,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "record_key": "Silver Dragon ~ Cloudwalking",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

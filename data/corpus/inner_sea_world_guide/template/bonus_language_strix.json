@@ -1,0 +1,35 @@
+{
+  "codex_generated_name": false,
+  "completeness": "chassis_only",
+  "data": {
+    "key": "Bonus Language ~ Strix",
+    "name": "Bonus Language ~ Strix",
+    "raw_tokens": [
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "LANGBONUS",
+        "value": "Strix"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T22:22:16Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 6,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/strix/strix_templates_language.lst",
+    "record_key": "Bonus Language ~ Strix",
+    "sha256": "e7581e6cbeabda323bb927c06038fa3bbd0cdf207b942a97c5657016e1f0ca30"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

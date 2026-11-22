@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Fleshbinder ~ Fleshbound Familiar",
+    "name": "Fleshbound Familiar",
+    "class": "Fleshbinder",
+    "description": "You gain a familiar, but the familiar gains the share powers ability instead of share spells.  In addition, when manifesting a psychometabolism power with a range of personal, you can expend your psionic focus and spend 2 additional power points to have that power also affect your familiar and not require the familiar to be within 5 feet of you.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Fleshbinder ~ Fleshbound Familiar"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "PsionClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FamiliarMasterLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a familiar, but the familiar gains the share powers ability instead of share spells.  In addition, when manifesting a psychometabolism power with a range of personal, you can expend your psionic focus and spend 2 additional power points to have that power also affect your familiar and not require the familiar to be within 5 feet of you."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FamiliarMasterLVL|PsionLVL"
+      },
+      {
+        "key": "FOLLOWERS",
+        "value": "Familiar|1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Standard Familiar List"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.337"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2014,
+    "record_key": "Fleshbinder ~ Fleshbound Familiar"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

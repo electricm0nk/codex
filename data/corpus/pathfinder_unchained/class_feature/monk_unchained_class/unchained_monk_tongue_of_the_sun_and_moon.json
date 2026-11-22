@@ -1,0 +1,65 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-03T17:43:07Z",
+  "data": {
+    "key": "Unchained Monk ~ Tongue of the Sun and Moon",
+    "name": "Tongue of the Sun and Moon",
+    "class_key": "Monk ~ Unchained Class",
+    "base_class_key": "Monk",
+    "category": "Special Ability",
+    "type_tokens": [
+      "Unchained Monk Class Feature",
+      "SpecialQuality",
+      "Extraordinary",
+      "Tongue of the Sun and Moon"
+    ],
+    "min_level": 13,
+    "is_granted": true,
+    "visible": null,
+    "class_skills": [],
+    "description": "At 13th level, a monk can understand and speak with any living creature, as if under a permanent tongues effect.",
+    "source_page": "p.19",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Unchained Monk ~ Tongue of the Sun and Moon"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Unchained Monk Class Feature.SpecialQuality.Extraordinary.Tongue of the Sun and Moon"
+      },
+      {
+        "key": "SERVESAS",
+        "value": "ABILITY=Special Ability|Monk ~ Tongue of the Sun and Moon"
+      },
+      {
+        "key": "DESC",
+        "value": "At 13th level, a monk can understand and speak with any living creature, as if under a permanent tongues effect."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.19"
+      }
+    ],
+    "raw_bonus_chains": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst",
+    "sha256": "2becbb0524bd4c367cc1273434c20bcd8e42e3e08abd372f99b005e69e8c4725",
+    "line": 473,
+    "record_key": "Unchained Monk ~ Tongue of the Sun and Moon"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

@@ -1,0 +1,162 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "ability_keys": [],
+    "challenge_rating": "9",
+    "corpus_key": "Elemental (Magma/Greater)",
+    "external_ability_refs": [
+      "Burn",
+      "Magma Elemental ~ Earth Glide",
+      "Magma Elemental ~ Lava Puddle"
+    ],
+    "key": "bestiary_2:monster:elemental_magma_greater",
+    "monster_class": "Outsider (Fort/Ref):13",
+    "name": "Elemental (Magma/Greater)",
+    "natural_attacks": [
+      {
+        "damage_dice": "2d8",
+        "name": "Slam"
+      }
+    ],
+    "race_subtype": "Earth|Elemental|Extraplanar|Fire",
+    "race_type": "Outsider",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Burn|Magma Elemental ~ Earth Glide|Magma Elemental ~ Lava Puddle"
+      },
+      {
+        "key": "AUTO",
+        "value": "LANG|Ignan"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CON|8"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|-2"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT|-2"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|14"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|16|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BurnDC|-2|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BurnDamageDice|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BurnDamageDieSize|6"
+      },
+      {
+        "key": "CR",
+        "value": "9"
+      },
+      {
+        "key": "DR",
+        "value": "10/-"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|H"
+      },
+      {
+        "key": "HANDS",
+        "value": "2"
+      },
+      {
+        "key": "LEGS",
+        "value": "2"
+      },
+      {
+        "key": "MONCSKILL",
+        "value": "Climb|Intimidate|Knowledge (Dungeoneering)"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Outsider (Fort/Ref):13"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,20,Burrow,20"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Slam,Weapon.Natural.Weapon Group Natural.Melee.Finesseable.Bludgeoning.Burn,*2,2d8"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "Magma Elemental, Greater"
+      },
+      {
+        "key": "RACESUBTYPE",
+        "value": "Earth|Elemental|Extraplanar|Fire"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Outsider"
+      },
+      {
+        "key": "REACH",
+        "value": "15"
+      },
+      {
+        "key": "ROLE",
+        "value": "Combat"
+      },
+      {
+        "key": "SIZE",
+        "value": "H"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.119"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      }
+    ],
+    "size": "H",
+    "source_page": "p.119",
+    "speeds": [
+      {
+        "feet": 20,
+        "mode": "Walk"
+      },
+      {
+        "feet": 20,
+        "mode": "Burrow"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-15T01:24:19Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 354,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+    "record_key": "Elemental (Magma/Greater)",
+    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

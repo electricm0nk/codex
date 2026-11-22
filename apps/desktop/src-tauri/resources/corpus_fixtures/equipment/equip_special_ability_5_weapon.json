@@ -1,0 +1,15 @@
+{
+  "completeness": "full",
+  "data": {
+    "key": "Special Ability ~ +5 ~ Weapon",
+    "name": "+5 (Enhancement to Weapon)"
+  },
+  "license": "OGL",
+  "population": "in_scope",
+  "source": {
+    "kind": "desktop_ui_fixture",
+    "line": 1,
+    "path": "apps/desktop/src-tauri/fixtures_src/equip_special_ability_5_weapon.txt",
+    "record_key": "Special Ability ~ +5 ~ Weapon"
+  }
+}

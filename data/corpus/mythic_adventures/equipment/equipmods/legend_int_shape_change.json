@@ -1,0 +1,89 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "Equipmods",
+    "cost_gp": 10000.0,
+    "description": "The item can change its shape into one other form of the same size.",
+    "key": "LEGEND_INT_SHAPE_CHANGE",
+    "name": "LEGEND_INT_SHAPE_CHANGE",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "VAR",
+          "IntItemCost",
+          "10000"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "IntelligentItemEgo",
+          "2"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "KEY",
+        "value": "Legendary Item ~ Intelligent Item ~ Shape Change"
+      },
+      {
+        "key": "NAMEOPT",
+        "value": "NOTHING"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic.Intelligent"
+      },
+      {
+        "key": "COST",
+        "value": "10000"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "QUALIFY"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.172"
+      },
+      {
+        "key": "PRETYPE",
+        "value": "1,Item Has Alignment"
+      },
+      {
+        "key": "PRETYPE",
+        "value": "2,Mythic,Intelligent"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Intelligent Item|AUTOMATIC|Item Power ~ Change Shape"
+      },
+      {
+        "key": "DESC",
+        "value": "The item can change its shape into one other form of the same size."
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-17T12:09:37Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 195,
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_equipmods.lst",
+    "record_key": "LEGEND_INT_SHAPE_CHANGE",
+    "sha256": "abb04fbe2a924fe90ce1d2a6517e423141d9b79b24642f5ac76878f2e7e43876"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

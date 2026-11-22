@@ -1,0 +1,6 @@
+test rules_core::cpr::improvement::tests::a_role_switch_is_refused_at_rank_3_and_allowed_at_rank_4_at_the_a1_price ... ok
+test rules_core::cpr::improvement::tests::after_a_switch_the_next_switch_is_locked_until_the_new_role_reaches_rank_4 ... ok
+test rules_core::cpr::improvement::tests::a_held_role_cannot_be_bought_again_and_an_unheld_role_cannot_be_raised ... ok
+test rules_core::cpr::improvement::tests::a_skipped_level_a_non_increase_and_a_level_past_10_are_refused ... ok
+test rules_core::cpr::improvement::tests::every_cell_of_the_3_by_10_ip_cost_table_equals_the_printed_page ... ok
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 2982 filtered out; finished in 0.00s

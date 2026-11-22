@@ -1,0 +1,13 @@
+pi-sweep: 22 hits over src/rules_core/rules_tables (11) + data/rules_tables (11), 11 baseline rows, 0 package stamps disagree
+pi-sweep: UNBASELINED data/rules_tables/acg/archetype_tables/archetype_swap_tables.json:28 [Sarenrae] grants.2.description
+pi-sweep: UNBASELINED data/rules_tables/acg/shaman_spell_list/SHAMAN_SPELL_LIST.json:94 [Nex] 0
+pi-sweep: UNBASELINED data/rules_tables/acg/spell_list/SPELL_LIST.json:40 [Jarn] description
+pi-sweep: UNBASELINED data/rules_tables/acg/spell_list/SPELL_LIST.json:40 [Nex] key
+pi-sweep: UNBASELINED data/rules_tables/advanced_race_guide/archetype_tables/archetype_swap_tables.json:13 [Asmodeus] grants.3.description
+pi-sweep: UNBASELINED data/rules_tables/apg/witch_spell_list/WITCH_SPELL_LIST.json:92 [Nex] 0
+pi-sweep: UNBASELINED data/rules_tables/crb/bard_spell_list/BARD_SPELL_LIST.json:69 [Nex] 0
+pi-sweep: UNBASELINED data/rules_tables/crb/sorcerer_spell_list/SORCERER_SPELL_LIST.json:138 [Nex] 0
+pi-sweep: UNBASELINED data/rules_tables/crb/wizard_spell_list/WIZARD_SPELL_LIST.json:138 [Nex] 0
+pi-sweep: UNBASELINED data/rules_tables/ultimate_magic/equipment_tables/GENERAL_TABLE.json:23 [Geb] key
+pi-sweep: UNBASELINED data/rules_tables/ultimate_magic/equipment_tables/GENERAL_TABLE.json:23 [Geb] name
+pi-sweep: FAIL — 11 unbaselined hit(s), 0 stale row(s), 0 bad package stamp(s). A hit is a hard stop for that record.

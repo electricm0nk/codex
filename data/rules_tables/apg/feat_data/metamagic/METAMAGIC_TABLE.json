@@ -1,0 +1,146 @@
+{
+  "format": "codex.rules_tables/1",
+  "table": "apg/feat_data/metamagic/METAMAGIC_TABLE",
+  "licence": {
+    "license": "OGL",
+    "book": "apg",
+    "screen": "pi_screening::classify_field",
+    "pi_hits": [],
+    "redacted": []
+  },
+  "rows": [
+    {
+      "key": "Bouncing Spell",
+      "category": "Metamagic",
+      "name": "Bouncing Spell",
+      "description": "You can direct a failed spell against a different target.",
+      "effect": null
+    },
+    {
+      "key": "Dazing Spell",
+      "category": "Metamagic",
+      "name": "Dazing Spell",
+      "description": "You can daze creatures with the power of your spells.",
+      "effect": null
+    },
+    {
+      "key": "Disruptive Spell",
+      "category": "Metamagic",
+      "name": "Disruptive Spell",
+      "description": "Your magical energies cling to enemies, interfering with their spellcasting.",
+      "effect": null
+    },
+    {
+      "key": "Ectoplasmic Spell",
+      "category": "Metamagic",
+      "name": "Ectoplasmic Spell",
+      "description": "Your spells breach the gulf between dimensions, sending ghostly emanations into the ether.",
+      "effect": null
+    },
+    {
+      "key": "Elemental Spell",
+      "category": "Metamagic",
+      "name": "Elemental Spell",
+      "description": "You can manipulate the elemental nature of your spells.",
+      "effect": null
+    },
+    {
+      "key": "Elemental Spell ~ Acid",
+      "category": "Metamagic",
+      "name": "Elemental Spell (Acid)",
+      "description": "You can manipulate the elemental nature of your spells.",
+      "effect": null
+    },
+    {
+      "key": "Elemental Spell ~ Cold",
+      "category": "Metamagic",
+      "name": "Elemental Spell (Cold)",
+      "description": "You can manipulate the elemental nature of your spells.",
+      "effect": null
+    },
+    {
+      "key": "Elemental Spell ~ Electricity",
+      "category": "Metamagic",
+      "name": "Elemental Spell (Electricity)",
+      "description": "You can manipulate the elemental nature of your spells.",
+      "effect": null
+    },
+    {
+      "key": "Elemental Spell ~ Fire",
+      "category": "Metamagic",
+      "name": "Elemental Spell (Fire)",
+      "description": "You can manipulate the elemental nature of your spells.",
+      "effect": null
+    },
+    {
+      "key": "Focused Spell",
+      "category": "Metamagic",
+      "name": "Focused Spell",
+      "description": "When you cast a spell that affects more than one creature, one opponent finds it more difficult to resist.",
+      "effect": null
+    },
+    {
+      "key": "Intensified Spell",
+      "category": "Metamagic",
+      "name": "Intensified Spell",
+      "description": "Your spells can go beyond several normal limitations.",
+      "effect": null
+    },
+    {
+      "key": "Lingering Spell",
+      "category": "Metamagic",
+      "name": "Lingering Spell",
+      "description": "You spell clings to existence, slowly fading from the world.",
+      "effect": null
+    },
+    {
+      "key": "Merciful Spell",
+      "category": "Metamagic",
+      "name": "Merciful Spell",
+      "description": "Your damaging spells subdue rather than kill.",
+      "effect": null
+    },
+    {
+      "key": "Persistent Spell",
+      "category": "Metamagic",
+      "name": "Persistent Spell",
+      "description": "You can modify a spell to become more tenacious when its targets resist its effect.",
+      "effect": null
+    },
+    {
+      "key": "Preferred Spell",
+      "category": "Metamagic",
+      "name": "Preferred Spell",
+      "description": "You find it very easy to cast one particular spell.",
+      "effect": null
+    },
+    {
+      "key": "Reach Spell",
+      "category": "Metamagic",
+      "name": "Reach Spell",
+      "description": "Your spells go farther than normal.",
+      "effect": null
+    },
+    {
+      "key": "Selective Spell",
+      "category": "Metamagic",
+      "name": "Selective Spell",
+      "description": "Your allies need not fear friendly fire.",
+      "effect": null
+    },
+    {
+      "key": "Sickening Spell",
+      "category": "Metamagic",
+      "name": "Sickening Spell",
+      "description": "You can sicken creatures with your spells.",
+      "effect": null
+    },
+    {
+      "key": "Thundering Spell",
+      "category": "Metamagic",
+      "name": "Thundering Spell",
+      "description": "You can conjure your spells into existence with blaring thunder or fearful shrieks, deafening creatures damaged by their effects.",
+      "effect": null
+    }
+  ]
+}

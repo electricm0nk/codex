@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Expanded Power List (Dread)",
+    "name": "Expanded Power List (Dread)",
+    "class": null,
+    "description": "Add dark tempest powers to the dread list.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "DarkTempestClassFeatures.SpecialQuality.DarkTempestExpandedPowerListClass"
+      },
+      {
+        "key": "DESC",
+        "value": "Add dark tempest powers to the dread list."
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "CLASS|Dread=1|Deceleration,Deja Vu,Energy Ray,Entangling Ectoplasm,Feat Leech,Mind Thrust,Slumber,Stomp"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "CLASS|Dread=2|Cloud Mind,Ectoplasmic Grapnel,Ego Whip,Energy Push,Id Insinuation,Psionic Lion's Charge,Recall Agony,Swarm of Crystals"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "CLASS|Dread=3|Crisis of Breath,Dispatch,Empathic Transfer (Hostile),Energy Bolt,Eradicate Invisibility,Expose Weakness,Psionic Blast,Telekinetic Force"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "CLASS|Dread=4|Barrage,Mindwipe,Personality Parasite,Psychokinetic Charge,Schism,Shatter Mind Blank,Telekinetic Maneuver,Vanishing Strike"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "CLASS|Dread=5|Adapt Body,Baleful Teleport,Catapsi,Energy Current,Mind Probe,Psychic Crush,Shrapnel Burst,Summoning Strike"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "CLASS|Dread=6|Breath of the Black Dragon,Brutalize Wounds,CoOpt Concentration,Decerebrate,Defer Fatality,Disintegration,Retrieve,Temporal Acceleration"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1204,
+    "record_key": "Expanded Power List (Dread)"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

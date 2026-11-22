@@ -1,0 +1,270 @@
+//! Print (SD-39 E8.1; `decisions.md §4`, operator rulings R1, R2, R3, R5, R19).
+//!
+//! Rust makes the sheet's PDF: the character's `LoadSavedCharacterResponse` -- the very response
+//! the Character Sheet renders -- goes through the system's layout file (`layout/`) into a
+//! `SheetDocument` (`model.rs`), which the shared Typst frame (`resources/print/*.typ`) typesets
+//! with the bundled fonts only (`typst.rs`). The print path computes no number (NR-2).
+//!
+//! The two sinks (operator rulings R5, R19): `save_sheet_pdf` writes the PDF where the frontend's
+//! save-as dialog said and opens it; `print_sheet_pdf` writes it to a temp file and opens that in
+//! the system's PDF viewer, where the player prints. Both open through `tauri-plugin-opener`.
+
+pub mod blocks;
+pub mod layout;
+pub mod model;
+mod typst;
+
+use std::path::{Path, PathBuf};
+
+use serde::{Deserialize, Serialize};
+
+use crate::character_custom::{custom_or_empty, CharacterCustomDto};
+use crate::character_hub::{
+    character_portrait_path_at_root, list_held_equipment_stacks_at_root, load_character_bio_at_root, load_character_portrait_bytes_at_root,
+    resolve_character_root,
+};
+use crate::character_ledger::list_progression_ledger_at_root;
+use crate::rule_system_adapter::load_saved_character_via_envelope;
+use crate::sf_adapter::STARFINDER_RULE_SYSTEM_ID;
+pub use model::Paper;
+
+/// What to print: the paper and the sections ticked (SD-40 `decisions.md §23.4`, §24.3.7, §24.9).
+/// Every field defaults: a request naming only the paper prints the first-time ticks, Primary,
+/// Abilities and Feats and Inventory.
+#[derive(Debug, Clone, PartialEq, Eq, Default, Deserialize, Serialize)]
+#[serde(rename_all = "camelCase", default)]
+pub struct PrintRequest {
+    pub paper: Paper,
+    /// The dialog's section boxes; `None` prints `PrintSections::FIRST_TIME`.
+    pub sections: Option<PrintSections>,
+    /// The campaigns whose party lists this character. They live in the frontend's store
+    /// (`campaignModel.ts`), which the backend cannot read, so the caller sends them.
+    pub campaigns: Vec<CampaignNote>,
+}
+
+impl PrintRequest {
+    /// The sections to print: the request's, or, while it sends none, the first-time ticks.
+    pub fn sections(&self) -> PrintSections {
+        self.sections.unwrap_or(PrintSections::FIRST_TIME)
+    }
+}
+
+/// The print dialog's eight section boxes, in box order (`decisions.md §24.3.7`, §24.9): (1) Primary,
+/// page 1; (2) Abilities and Feats; (3) Inventory; (4) Spellbook; (5) Bio; (6) Progression and (8)
+/// Notes, Pathfinder only; (7) Math. Starfinder and Cyberpunk RED read 1, 4, 5 and 7.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Default, Deserialize, Serialize)]
+#[serde(rename_all = "camelCase", default)]
+pub struct PrintSections {
+    pub main: bool,
+    pub feats: bool,
+    pub inventory: bool,
+    pub spellbook: bool,
+    pub bio: bool,
+    pub progression: bool,
+    pub math: bool,
+    pub notes: bool,
+}
+
+impl PrintSections {
+    /// The dialog's first-time ticks (`decisions.md §23.4`): Primary, Abilities and Feats, Inventory.
+    pub const FIRST_TIME: PrintSections =
+        PrintSections { main: true, feats: true, inventory: true, spellbook: false, bio: false, progression: false, math: false, notes: false };
+
+    /// Whether the box `section` is ticked.
+    pub fn has(&self, section: Section) -> bool {
+        match section {
+            Section::Main => self.main,
+            Section::Feats => self.feats,
+            Section::Inventory => self.inventory,
+            Section::Spellbook => self.spellbook,
+            Section::Bio => self.bio,
+            Section::Progression => self.progression,
+            Section::Math => self.math,
+            Section::Notes => self.notes,
+        }
+    }
+}
+
+/// One section box, as `PrintSections::has` reads it.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum Section {
+    Main,
+    Feats,
+    Inventory,
+    Spellbook,
+    Bio,
+    Progression,
+    Math,
+    Notes,
+}
+
+/// One campaign the character is in: its name and its description, as the Campaign screen saved them.
+#[derive(Debug, Clone, PartialEq, Eq, Default, Deserialize, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct CampaignNote {
+    pub name: String,
+    #[serde(default)]
+    pub description: String,
+}
+
+/// A rendered sheet: the PDF bytes and every warning Typst raised (none, on a sheet that fits).
+#[derive(Debug)]
+pub struct RenderedSheet {
+    pub pdf: Vec<u8>,
+    pub warnings: Vec<String>,
+}
+
+/// The font families the print world holds: the bundled faces, nothing from the system.
+#[cfg(test)]
+pub fn sheet_font_families() -> Vec<String> {
+    typst::font_families()
+}
+
+/// Renders the character saved at `root` to a PDF through its system's layout file (Pathfinder,
+/// Starfinder, Cyberpunk RED); another system is refused by name, never printed as another's sheet.
+pub fn render_sheet_pdf_at_root(root: &Path, request: &PrintRequest) -> Result<RenderedSheet, String> {
+    let document = sheet_document_at_root(root, request)?;
+    let typeset = typst::typeset(&document)?;
+    Ok(RenderedSheet { pdf: typeset.pdf, warnings: typeset.warnings })
+}
+
+/// The sheet the character saved at `root` prints as: its system's layout file over what the
+/// screen reads -- the load response, the owned stacks (`list_held_equipment_stacks_at_root`), the
+/// Custom tab's records and the bio -- and the request's options.
+///
+/// The load is the one the `load_saved_character` command makes (`load_saved_character_via_envelope`,
+/// which serves a Pathfinder save exactly as `load_saved_character_at_root` does). Starfinder and
+/// Cyberpunk RED have no owned-copies list and no Custom tab, so their sources hold none.
+pub fn sheet_document_at_root(root: &Path, request: &PrintRequest) -> Result<model::SheetDocument, String> {
+    let loaded = load_saved_character_via_envelope(root)?;
+    let system = loaded.summary.game_system.as_str();
+    let layout: fn(&blocks::SheetSources) -> model::SheetDocument = match system {
+        "pf1" => layout::pf1e::layout,
+        STARFINDER_RULE_SYSTEM_ID => layout::sf1e::layout,
+        CYBERPUNK_RED_ID => layout::cpr::layout,
+        other => return Err(format!("print.unsupported_system: no print layout for game system `{other}`")),
+    };
+    let (held, custom) =
+        if system == "pf1" { (list_held_equipment_stacks_at_root(root)?, custom_or_empty(root)) } else { (Vec::new(), CharacterCustomDto::default()) };
+    let money = if system == "pf1" { Some(crate::character_hub::load_character_money_at_root(root)?) } else { None };
+    // No saved portrait: the box prints the game system's logo, never the word (SD-41 `decisions.md §34` (7)).
+    let portrait = if system == "pf1" { saved_portrait(root).or_else(|| typst::logo(system)) } else { None };
+    // Read as the Show Progression drawer reads it, and only when the section prints: it runs the engine once per level.
+    let progression = if system == "pf1" && request.sections().progression { Some(list_progression_ledger_at_root(root)?) } else { None };
+    let sources = blocks::SheetSources { loaded: &loaded, held, custom, bio: load_character_bio_at_root(root)?, money, portrait, progression, request };
+    let document = layout(&sources);
+    if document.blocks.is_empty() {
+        return Err("print.no_sections: no section of this sheet is ticked, so there is nothing to print".to_owned());
+    }
+    Ok(document)
+}
+
+/// The character's saved portrait for the portrait box. A file that does not read is still handed
+/// on, with no bytes: Typst cannot print it, so `typst::typeset` prints the empty box and warns,
+/// naming the file; a portrait never fails the print.
+fn saved_portrait(root: &Path) -> Option<model::SheetImage> {
+    let source = character_portrait_path_at_root(root).display().to_string();
+    let bytes = match load_character_portrait_bytes_at_root(root) {
+        Ok(None) => return None,
+        Ok(Some(bytes)) => bytes,
+        Err(_) => Vec::new(),
+    };
+    Some(model::SheetImage { path: "/images/portrait.png".to_owned(), source, bytes })
+}
+
+/// The `game_system` a Cyberpunk RED save carries.
+const CYBERPUNK_RED_ID: &str = codex::rules_core::game_system::GameSystem::CyberpunkRed.id();
+
+/// What a save wrote: where, how many bytes, and any warning Typst raised making it (a sheet
+/// that does not fit its paper says so here rather than printing clipped in silence; NR-4).
+#[derive(Debug, Clone, PartialEq, Eq, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct SavedSheetPdf {
+    pub file_path: String,
+    pub bytes: usize,
+    pub warnings: Vec<String>,
+}
+
+/// Renders the sheet and writes it to `target`. A refused write names the path and writes nothing.
+pub fn write_sheet_pdf_at_root(root: &Path, request: &PrintRequest, target: &Path) -> Result<SavedSheetPdf, String> {
+    let rendered = render_sheet_pdf_at_root(root, request)?;
+    std::fs::write(target, &rendered.pdf).map_err(|err| format!("{}: {err}", target.display()))?;
+    Ok(SavedSheetPdf { file_path: target.display().to_string(), bytes: rendered.pdf.len(), warnings: rendered.warnings })
+}
+
+#[derive(Debug, Clone, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct SaveSheetPdfRequest {
+    pub character_id: String,
+    /// The paper and the option boxes.
+    #[serde(flatten)]
+    pub print: PrintRequest,
+    /// The path the save-as dialog returned.
+    pub file_path: String,
+}
+
+/// Save PDF (operator ruling R5): writes the sheet to the chosen file, then opens it in the
+/// system's PDF viewer. A file that saved but could not be opened is reported as exactly that.
+#[tauri::command]
+pub fn save_sheet_pdf(app: tauri::AppHandle, request: SaveSheetPdfRequest) -> Result<SavedSheetPdf, String> {
+    use tauri_plugin_opener::OpenerExt;
+    let root = resolve_character_root(&app, &request.character_id)?;
+    let target = PathBuf::from(&request.file_path);
+    let saved = write_sheet_pdf_at_root(&root, &request.print, &target)?;
+    app.opener()
+        .open_path(saved.file_path.clone(), None::<&str>)
+        .map_err(|err| format!("Saved {}, but it could not be opened: {err}", saved.file_path))?;
+    Ok(saved)
+}
+
+/// The Print sink's file: `<temp_root>/codex-print/<character_id>.pdf`, replaced by each print of
+/// that character, so printing never piles up files.
+pub fn write_print_copy_at_root(
+    root: &Path,
+    character_id: &str,
+    request: &PrintRequest,
+    temp_root: &Path,
+) -> Result<SavedSheetPdf, String> {
+    let dir = temp_root.join("codex-print");
+    std::fs::create_dir_all(&dir).map_err(|err| format!("{}: {err}", dir.display()))?;
+    write_sheet_pdf_at_root(root, request, &dir.join(format!("{character_id}.pdf")))
+}
+
+#[derive(Debug, Clone, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct PrintSheetPdfRequest {
+    pub character_id: String,
+    /// The paper and the option boxes.
+    #[serde(flatten)]
+    pub print: PrintRequest,
+}
+
+/// Print (operator ruling R19): makes the PDF in the system temp directory and opens it in the
+/// system's PDF viewer; the player prints from there. The same opener works on Linux, macOS and
+/// Windows (`decisions.md §25`).
+#[tauri::command]
+pub fn print_sheet_pdf(app: tauri::AppHandle, request: PrintSheetPdfRequest) -> Result<SavedSheetPdf, String> {
+    use tauri_plugin_opener::OpenerExt;
+    // `resolve_character_root` refuses an id that is not a plain character id, so the file name
+    // below cannot leave the print directory.
+    let root = resolve_character_root(&app, &request.character_id)?;
+    let saved = write_print_copy_at_root(
+        &root,
+        &request.character_id,
+        &request.print,
+        &std::env::temp_dir(),
+    )?;
+    app.opener()
+        .open_path(saved.file_path.clone(), None::<&str>)
+        .map_err(|err| format!("Made {}, but it could not be opened: {err}", saved.file_path))?;
+    Ok(saved)
+}
+
+#[cfg(test)]
+mod print_smoke;
+
+#[cfg(test)]
+mod print_golden;
+
+#[cfg(test)]
+mod print_proof;

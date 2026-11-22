@@ -1,0 +1,693 @@
+{
+  "format": "codex.rules_tables/1",
+  "table": "equipment_gap_tables/INNER_SEA_MAGIC_GAP_ROWS",
+  "licence": {
+    "license": "OGL",
+    "book": "equipment_gap_tables",
+    "screen": "pi_screening::classify_field",
+    "pi_hits": [],
+    "redacted": []
+  },
+  "rows": [
+    {
+      "book": "ISM",
+      "key": "Caster's Tattoo (Lesser)",
+      "name": "Caster's Tattoo (Lesser)",
+      "category": "General",
+      "cost_gp": 6000.0,
+      "weight_lbs": 0.0,
+      "description": "A lesser caster's tattoo is infused with potential magical energy that aids in casting spells of up to third level that normally utilize verbal and somatic components. Once per day, a spellcaster may activate her caster's tattoo as a swift action to automatically enhance the next spell of third level or lower that she casts in that round with both the Still Spell and Silent Spell feats. When she casts the spell, the caster's tattoo flares with light for a moment, then grows faint and faded-it replenishes its energy in 24 hours, after which it becomes bold and colorful and can be used again. Required material components or foci must be in the creature's possession to cast the spell (and are consumed as normal), but need not be held when the spell is cast.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISM",
+      "key": "Caster's Tattoo (Normal)",
+      "name": "Caster's Tattoo (Normal)",
+      "category": "General",
+      "cost_gp": 21000.0,
+      "weight_lbs": 0.0,
+      "description": "A caster's tattoo is infused with potential magical energy that aids in casting spells of up to sixth level that normally utilize verbal and somatic components. Once per day, a spellcaster may activate her caster's tattoo as a swift action to automatically enhance the next spell of sixth level or lower that she casts in that round with both the Still Spell and Silent Spell feats. When she casts the spell, the caster's tattoo flares with light for a moment, then grows faint and faded-it replenishes its energy in 24 hours, after which it becomes bold and colorful and can be used again. Required material components or foci must be in the creature's possession to cast the spell (and are consumed as normal), but need not be held when the spell is cast.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISM",
+      "key": "Caster's Tattoo (Greater)",
+      "name": "Caster's Tattoo (Greater)",
+      "category": "General",
+      "cost_gp": 48000.0,
+      "weight_lbs": 0.0,
+      "description": "A greater caster's tattoo is infused with potential magical energy that aids in casting spells of up to ninth level that normally utilize verbal and somatic components. Once per day, a spellcaster may activate her caster's tattoo as a swift action to automatically enhance the next spell of ninth level or lower that she casts in that round with both the Still Spell and Silent Spell feats. When she casts the spell, the caster's tattoo flares with light for a moment, then grows faint and faded-it replenishes its energy in 24 hours, after which it becomes bold and colorful and can be used again. Required material components or foci must be in the creature's possession to cast the spell (and are consumed as normal), but need not be held when the spell is cast.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISM",
+      "key": "Reservoir Tattoo",
+      "name": "Reservoir Tattoo",
+      "category": "General",
+      "cost_gp": 10000.0,
+      "weight_lbs": 0.0,
+      "description": "Once per day as a standard action, the bearer can transfer into the tattoo an ongoing single-target spell (of up to 3rd level). The spell must be one the bearer cast on itself. While stored in the tattoo, the spell's effects are suppressed, and the spell's duration is similarly suspended. As a standard action, the bearer can bring the spell back into effect on itself. Spells stored in reservoir tattoos are lost when the bearer next prepares spells.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISM",
+      "key": "Spell Tattoo",
+      "name": "Spell Tattoo",
+      "category": "General",
+      "cost_gp": 0.0,
+      "weight_lbs": 0.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISM",
+      "key": "Riffle Scroll",
+      "name": "Riffle Scroll",
+      "category": "General",
+      "cost_gp": 0.0,
+      "weight_lbs": 1.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISM",
+      "key": "Special Quality ~ Magical Tattoo / Belt",
+      "name": "Magical Tattoo",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Tattoo",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISM",
+      "key": "Special Quality ~ Magical Tattoo / Body",
+      "name": "Magical Tattoo",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Tattoo",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISM",
+      "key": "Special Quality ~ Magical Tattoo / Chest",
+      "name": "Magical Tattoo",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Tattoo",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISM",
+      "key": "Special Quality ~ Magical Tattoo / Feet",
+      "name": "Magical Tattoo",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Tattoo",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISM",
+      "key": "Special Quality ~ Magical Tattoo / Hands",
+      "name": "Magical Tattoo",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Tattoo",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISM",
+      "key": "Special Quality ~ Magical Tattoo / Head",
+      "name": "Magical Tattoo",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Tattoo",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISM",
+      "key": "Special Quality ~ Magical Tattoo / Neck",
+      "name": "Magical Tattoo",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Tattoo",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISM",
+      "key": "Special Quality ~ Magical Tattoo / Ring",
+      "name": "Magical Tattoo",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Tattoo",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISM",
+      "key": "Special Quality ~ Magical Tattoo / Shoulders",
+      "name": "Magical Tattoo",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Tattoo",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISM",
+      "key": "Special Quality ~ Magical Tattoo / Wrist",
+      "name": "Magical Tattoo",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Tattoo",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISM",
+      "key": "Special Ability ~ Spell Effect / Completion / Spell Tattoo / Arcane",
+      "name": "Spell Effect (Single Use/Completion)",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISM",
+      "key": "Special Ability ~ Spell Effect / Completion / Spell Tattoo / Divine",
+      "name": "Spell Effect (Single Use/Completion)",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISM",
+      "key": "Special Ability ~ Spell Effect / Completion / Riffle Scroll / Arcane",
+      "name": "Spell Effect (Single Use/Completion)",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISM",
+      "key": "Special Ability ~ Spell Effect / Completion / Riffle Scroll / Divine",
+      "name": "Spell Effect (Single Use/Completion)",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISM",
+      "key": "TattooBelt",
+      "name": "TattooBelt",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Tattoo",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISM",
+      "key": "TattooGirdle",
+      "name": "TattooGirdle",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Tattoo",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISM",
+      "key": "TattooBodywear",
+      "name": "TattooBodywear",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Tattoo",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISM",
+      "key": "TattooRobe",
+      "name": "TattooRobe",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Tattoo",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISM",
+      "key": "TattooMantle",
+      "name": "TattooMantle",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Tattoo",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISM",
+      "key": "TattooVest",
+      "name": "TattooVest",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Tattoo",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISM",
+      "key": "TattooShirt",
+      "name": "TattooShirt",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Tattoo",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISM",
+      "key": "TattooChest",
+      "name": "TattooChest",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Tattoo",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISM",
+      "key": "TattooFootwear",
+      "name": "TattooFootwear",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Tattoo",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISM",
+      "key": "TattooBoot",
+      "name": "TattooBoot",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Tattoo",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISM",
+      "key": "TattooFeet",
+      "name": "TattooFeet",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Tattoo",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISM",
+      "key": "TattooShoes",
+      "name": "TattooShoes",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Tattoo",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISM",
+      "key": "TattooSlippers",
+      "name": "TattooSlippers",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Tattoo",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISM",
+      "key": "TattooHandwear",
+      "name": "TattooHandwear",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Tattoo",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISM",
+      "key": "TattooGlove",
+      "name": "TattooGlove",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Tattoo",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISM",
+      "key": "TattooHands",
+      "name": "TattooHands",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Tattoo",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISM",
+      "key": "TattooGauntlet",
+      "name": "TattooGauntlet",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Tattoo",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISM",
+      "key": "TattooHeadgear",
+      "name": "TattooHeadgear",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Tattoo",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISM",
+      "key": "TattooHead",
+      "name": "TattooHead",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Tattoo",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISM",
+      "key": "TattooCirclet",
+      "name": "TattooCirclet",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Tattoo",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISM",
+      "key": "TattooCrown",
+      "name": "TattooCrown",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Tattoo",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISM",
+      "key": "TattooHat",
+      "name": "TattooHat",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Tattoo",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISM",
+      "key": "TattooHelm",
+      "name": "TattooHelm",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Tattoo",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISM",
+      "key": "TattooMask",
+      "name": "TattooMask",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Tattoo",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISM",
+      "key": "TattooNeckwear",
+      "name": "TattooNeckwear",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Tattoo",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISM",
+      "key": "TattooAmulet",
+      "name": "TattooAmulet",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Tattoo",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISM",
+      "key": "TattooNeck",
+      "name": "TattooNeck",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Tattoo",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISM",
+      "key": "TattooBrooch",
+      "name": "TattooBrooch",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Tattoo",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISM",
+      "key": "TattooMedallion",
+      "name": "TattooMedallion",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Tattoo",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISM",
+      "key": "TattooNecklace",
+      "name": "TattooNecklace",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Tattoo",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISM",
+      "key": "TattooPeriapt",
+      "name": "TattooPeriapt",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Tattoo",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISM",
+      "key": "TattooScarab",
+      "name": "TattooScarab",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Tattoo",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISM",
+      "key": "TattooRing",
+      "name": "TattooRing",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Tattoo",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISM",
+      "key": "TattooCape",
+      "name": "TattooCape",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Tattoo",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISM",
+      "key": "TattooShoulders",
+      "name": "TattooShoulders",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Tattoo",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISM",
+      "key": "TattooCloak",
+      "name": "TattooCloak",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Tattoo",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISM",
+      "key": "TattooArmwear",
+      "name": "TattooArmwear",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Tattoo",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISM",
+      "key": "TattooBracer",
+      "name": "TattooBracer",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Tattoo",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISM",
+      "key": "TattooWrist",
+      "name": "TattooWrist",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Tattoo",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISM",
+      "key": "TattooBracelet",
+      "name": "TattooBracelet",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Tattoo",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISM",
+      "key": "TATTOO_DIVINE",
+      "name": "Divine",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISM",
+      "key": "TATTOO_ARCANE",
+      "name": "Arcane",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISM",
+      "key": "TATTA_1USE",
+      "name": "TATTA_1USE",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISM",
+      "key": "TATTD_1USE",
+      "name": "TATTD_1USE",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISM",
+      "key": "RIFFLE_DIVINE",
+      "name": "Divine",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISM",
+      "key": "RIFFLE_ARCANE",
+      "name": "Arcane",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISM",
+      "key": "RIFFA_1USE",
+      "name": "RIFFA_1USE",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISM",
+      "key": "RIFFD_1USE",
+      "name": "RIFFD_1USE",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    }
+  ]
+}

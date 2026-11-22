@@ -1,0 +1,51 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Clockwork Dragon ~ Mithral Construction",
+    "delivery": "Extraordinary",
+    "description": "Once per day as a swift action, the clockwork dragon can gain the benefits of the haste spell for 1d4 rounds.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:clockwork_dragon_mithral_construction",
+    "name": "Mithral Construction",
+    "owners": [
+      "bestiary_4:monster:clockwork_dragon"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Once per day as a swift action, the clockwork dragon can gain the benefits of the haste spell for 1d4 rounds."
+      },
+      {
+        "key": "KEY",
+        "value": "Clockwork Dragon ~ Mithral Construction"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary"
+      }
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "ingested_at": "2026-08-15T01:24:20Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 383,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "record_key": "Clockwork Dragon ~ Mithral Construction",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

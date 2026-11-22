@@ -1,0 +1,29 @@
+== P1 cp_63_accepted: apps/desktop/src-tauri/src/cpr_creation.rs 'if spent != total {' -> 'if false && spent != total {' (the refusal removed); reverted with git checkout
+command: RUN_DESKTOP_AGENT=sd38-e3.mc node scripts/ui-smoke/run.mjs --only create-cyberpunk-complete-package-refuses-63,landing-select-pathfinder
+FAIL  create-cyberpunk-complete-package-refuses-63  -- expected string missing: 'the STATs spend 63 points; a Complete Package spends exactly 62 (p. 79)'; forbidden string present: 'Your character was computed and saved.'; forbidden string present: 'is ready'
+PASS  landing-select-pathfinder
+1/2 green, 1 red, 0 blocked, 0 manual, 0 not-run (M = 2 rows)
+
+== P2 pack_hl_plus_one: src/rules_core/cpr/cyberware.rs:605 '.sum();' -> '.sum::<i16>() + 1;' (every installed set's Humanity Loss off by 1); reverted
+command: ... --only create-cyberpunk-streetrat-sheet,create-cyberpunk-edgerunner-sheet,create-cyberpunk-complete-package-sheet,landing-select-pathfinder
+FAIL  create-cyberpunk-streetrat-sheet  -- expected string missing: 'EMP	6	5'; expected string missing: 'Humanity	50 / 60'; expected string missing: 'Humanity Loss	10'
+FAIL  create-cyberpunk-edgerunner-sheet  -- expected string missing: 'Humanity Loss	14'
+FAIL  create-cyberpunk-complete-package-sheet  -- expected string missing: 'Humanity	73 / 80'; expected string missing: 'Humanity Loss	7'
+PASS  landing-select-pathfinder
+1/4 green, 3 red, 0 blocked, 0 manual, 0 not-run (M = 4 rows)
+
+== P3 adapter_twin: apps/desktop/src-tauri/src/cpr_adapter.rs:265 the load response's cpr.derived.hit_points value + 1 (a load path that differs from compose_sheet); reverted
+command: ... --only create-cyberpunk-edgerunner-sheet,landing-select-pathfinder with capture.py, then sheet_tool + compare.mts
+PASS  create-cyberpunk-edgerunner-sheet
+PASS  landing-select-pathfinder
+2/2 green, 0 red, 0 blocked, 0 manual, 0 not-run (M = 2 rows)
+(the row's own expects do not hold HP: the comparison is the check)
+compare: missA ['Hit Points 40'] missB ['Hit Points 41'] missC []
+
+== P4 tsx_twin: apps/desktop/src/characterHub/cyberpunkSheetModel.ts:244 the cpr.derived.seriously_wounded cell shows row.value + 1 (a TSX re-derivation); reverted
+command: as P3
+PASS  create-cyberpunk-edgerunner-sheet
+PASS  landing-select-pathfinder
+2/2 green, 0 red, 0 blocked, 0 manual, 0 not-run (M = 2 rows)
+compare: missA [] missB [] missC [['cpr.derived.seriously_wounded', '21']]
+(A and B pass: the expected sheet is rendered by the same planted component; C, cell = its row, is the guard for a TSX twin)

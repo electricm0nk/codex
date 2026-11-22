@@ -1,0 +1,33 @@
+{
+  "codex_generated_name": false,
+  "completeness": "chassis_only",
+  "data": {
+    "description": null,
+    "key": "Tiefling",
+    "name": "Tiefling",
+    "raw_tokens": [
+      {
+        "key": "DEFINE",
+        "value": "Tiefling_ReplaceAbilityScores|0"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 10,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/tiefling/tiefling_abilities_globalvar.lst",
+    "record_key": "Tiefling",
+    "sha256": "0a19c98b85e15a60a963cde1d526bbc31a156daf7bcf130fcadd9dafb65ab274"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "static:literal_magnitudes_only"
+  ]
+}

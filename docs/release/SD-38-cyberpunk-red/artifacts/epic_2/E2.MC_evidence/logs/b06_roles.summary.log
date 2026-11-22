@@ -1,0 +1,5 @@
+test rules_core::cpr::roles::tests::a_rank_outside_1_to_10_is_refused ... ok
+test rules_core::cpr::roles::tests::lawman_backup_combat_number_at_ranks_8_9_10_is_16_15_14_as_printed ... ok
+test rules_core::cpr::roles::tests::every_row_detail_cites_the_rank_and_a_page ... ok
+test rules_core::cpr::roles::tests::every_rank_of_every_role_equals_the_fixture ... ok
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 2983 filtered out; finished in 0.01s

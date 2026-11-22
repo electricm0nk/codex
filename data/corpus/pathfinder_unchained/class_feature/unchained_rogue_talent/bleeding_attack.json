@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Unchained Rogue Talent ~ Bleeding Attack",
+    "name": "Bleeding Attack*",
+    "class": "Unchained Rogue Talent",
+    "description": "You can cause living opponents to bleed when hitting them with a sneak attack. This attack causes the target to take %1 additional points of damage each round. Bleeding creatures take that amount of damage every round at the start of their turns. The bleeding can be stopped by a DC 15 Heal check or the application of any effect that heals hit point damage. Bleeding damage from this ability does not stack with itself. Bleeding damage bypasses any damage reduction the creature might possess.|SneakAttackDice",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Unchained Rogue Talent ~ Bleeding Attack"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary.Unchained Rogue Talent.AttackOption"
+      },
+      {
+        "key": "SERVESAS",
+        "value": "ABILITY=Special Ability|Rogue Talent ~ Bleeding Attack"
+      },
+      {
+        "key": "DESC",
+        "value": "You can cause living opponents to bleed when hitting them with a sneak attack. This attack causes the target to take %1 additional points of damage each round. Bleeding creatures take that amount of damage every round at the start of their turns. The bleeding can be stopped by a DC 15 Heal check or the application of any effect that heals hit point damage. Bleeding damage from this ability does not stack with itself. Bleeding damage bypasses any damage reduction the creature might possess.|SneakAttackDice"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.20"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst",
+    "sha256": "2becbb0524bd4c367cc1273434c20bcd8e42e3e08abd372f99b005e69e8c4725",
+    "line": 632,
+    "record_key": "Unchained Rogue Talent ~ Bleeding Attack"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

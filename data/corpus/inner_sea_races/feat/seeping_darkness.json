@@ -1,0 +1,30 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Seeping Darkness",
+    "category": "Teamwork",
+    "name": "Seeping Darkness",
+    "description": "Your innate magical darkness seeps through your skin and strengthens when you're near another creature whose soul is as wicked as yours. Whenever you're adjacent to a drow ally who also has this feat, you can spend a move action to gain concealment (20% miss chance) for 1 round.",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=Special Ability,Drow ~ Spell-Like Abilities",
+      "PREFACT:1,TEMPLATES,IsDrow=true",
+      "PRETEXT:Drow, darkness racial spell-like ability."
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_feats.lst",
+    "sha256": "082b55d0a2908a9c20bc977758f596c73e29a512f7a1407f62b977793587b649",
+    "line": 54,
+    "record_key": "Seeping Darkness"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

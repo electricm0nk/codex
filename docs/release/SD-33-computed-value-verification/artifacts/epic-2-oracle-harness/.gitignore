@@ -1,0 +1,8 @@
+# Scratch PCGen oracle checkout built by AT-33-E2-001/002 cycles.
+# The pinned PCGen source/data is fetched fresh each time from
+# scripts/pcgen-oracle-pin.env -- never vendored into this repo (matches
+# scripts/pcgen-oracle-pin.env's own "public repo, never vendored" rule).
+# Committed deliverables (the .pcg, the .ftl template, the emitted output,
+# and the build/run transcripts) live as siblings of this file, not inside
+# the checkout.
+pcgen-oracle-checkout/

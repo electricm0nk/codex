@@ -1,0 +1,49 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Star-Spawn of Cthulhu ~ Limited Starflight",
+    "delivery": "Extraordinary",
+    "description": "A star-spawn of Cthulhu can survive in the void of outer space, and its wings allow it to use its fly speed in outer space despite the lack of air. Unlike full starflight (like that of the mi-go), a star-spawn of Cthulhu's ability to fly in outer space does not allow it to reach unusual speeds. When it wishes to fly to another world, the creature relies entirely upon its immortality and patience to complete the journey. When speed is required, it instead uses its gate ability to make the journey quickly.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:star_spawn_of_cthulhu_limited_starflight",
+    "name": "Limited Starflight",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A star-spawn of Cthulhu can survive in the void of outer space, and its wings allow it to use its fly speed in outer space despite the lack of air. Unlike full starflight (like that of the mi-go), a star-spawn of Cthulhu's ability to fly in outer space does not allow it to reach unusual speeds. When it wishes to fly to another world, the creature relies entirely upon its immortality and patience to complete the journey. When speed is required, it instead uses its gate ability to make the journey quickly."
+      },
+      {
+        "key": "KEY",
+        "value": "Star-Spawn of Cthulhu ~ Limited Starflight"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary"
+      }
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T14:10:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1336,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "record_key": "Star-Spawn of Cthulhu ~ Limited Starflight",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

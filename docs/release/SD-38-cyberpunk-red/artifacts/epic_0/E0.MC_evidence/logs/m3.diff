@@ -1,0 +1,13 @@
+diff --git a/src/rules_core/game_system.rs b/src/rules_core/game_system.rs
+index b224777e6d..c2995779b5 100644
+--- a/src/rules_core/game_system.rs
++++ b/src/rules_core/game_system.rs
+@@ -83,7 +83,7 @@ impl GameSystem {
+     /// `scripts/verify.sh`'s `tauri-resources-tracked` stage reads the `Some("…")` arms.
+     pub const fn sheet_rules_relative(self) -> Option<&'static str> {
+         match self {
+-            GameSystem::Pathfinder1e => Some("data/sheet_rules"),
++            GameSystem::Pathfinder1e => Some("data/sheet_rules_moved"),
+             GameSystem::Starfinder1e => Some("data/starfinder-1e/sheet_rules"),
+             GameSystem::CyberpunkRed => None,
+         }

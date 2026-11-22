@@ -1,0 +1,59 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Ogrekin ~ Weak Mind",
+    "delivery": null,
+    "description": "The ogrekin's head is huge and misshapen.  It gains a -2 penalty on Will saving throws.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_2:monster_ability:ogrekin_weak_mind",
+    "name": "Weak Mind",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "BONUS",
+        "value": "SAVE|Will|-2"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "The ogrekin's head is huge and misshapen.  It gains a -2 penalty on Will saving throws."
+      },
+      {
+        "key": "KEY",
+        "value": "Ogrekin ~ Weak Mind"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.204"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.OgrekinDisadvantageousDeformity"
+      }
+    ],
+    "source_page": "p.204",
+    "traits": [
+      "OgrekinDisadvantageousDeformity"
+    ]
+  },
+  "ingested_at": "2026-08-23T14:07:19Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 924,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Ogrekin ~ Weak Mind",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

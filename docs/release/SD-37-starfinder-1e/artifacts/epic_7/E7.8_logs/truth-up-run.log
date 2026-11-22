@@ -1,0 +1,11 @@
+# graphify run 2026-10-07T18:45:25Z
+# cmd: /home/ubuntu/.local/bin/graphify cluster-only /home/ubuntu/workspace/worktrees/codex-sd37 --budget 500000 --exclude node_modules,target,dist,build,.git,out,dist-ssr,.next,coverage
+# exit: 1
+
+--- stdout ---
+
+--- stderr ---
+  warning: skill at /home/ubuntu/.hermes/skills/graphify is from graphify 0.8.33, package is 0.9.64. Run 'graphify install --platform hermes' to update it (a plain 'graphify install' refreshes only the detected platform).
+  warning: skill at /home/ubuntu/.claude/skills/graphify is from graphify 0.8.33, package is 0.9.64. Run 'graphify install --platform claude' to update it (a plain 'graphify install' refreshes only the detected platform).
+error: no graph found at /home/ubuntu/workspace/worktrees/codex-sd37/graphify-out/graph.json — run /graphify first
+

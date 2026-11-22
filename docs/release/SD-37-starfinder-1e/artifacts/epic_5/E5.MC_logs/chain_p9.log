@@ -1,0 +1,6 @@
+## E5.3 P9 on its own link: armor_infrared_sensors price -> 201 on ef2589c219, base e49a1669d1
+price 200 -> 201
+equipment_modifier_principals=336 oracle_cost=223 package_bulk_rows=108 package_item_level_rows=135 package_price_rows=222 mismatches=1
+  MISMATCH core:equipment_modifier:armor_infrared_sensors: package ['201']/['1']/['Bulk: L'] oracle '200'/['1']/['Bulk: L']
+verdict=FAIL
+plant_exit=1

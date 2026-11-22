@@ -1,0 +1,76 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Insight ~ Light-Bending Pattern",
+    "name": "Light-Bending Pattern",
+    "class": "Insight",
+    "description": "You learn how to mask your pattern entirely.  As a standard action, you can become invisible for %1 rounds.  The effect ends as soon as you attack any creature.  This insight can be used %2/day.|LightBendingPatternDuration|LightBendingPatternTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Insight ~ Light-Bending Pattern"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.CrypticInsight"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "CrypticInsightLVL,10"
+      },
+      {
+        "key": "DEFINE",
+        "value": "LightBendingPatternDuration|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "LightBendingPatternTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You learn how to mask your pattern entirely.  As a standard action, you can become invisible for %1 rounds.  The effect ends as soon as you attack any creature.  This insight can be used %2/day.|LightBendingPatternDuration|LightBendingPatternTimes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|LightBendingPatternDuration|CrypticInsightLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|LightBendingPatternTimes|3+CrypticInsightStat"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.38"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|LightBendingPatternTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 208,
+    "record_key": "Insight ~ Light-Bending Pattern"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

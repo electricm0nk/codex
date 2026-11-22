@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Hellbound Corruption ~ Darkest Desires",
+    "name": "Darkest Desires",
+    "description": "Your dark patron offers to grant you wishes to tempt you.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Hellbound Corruption ~ Darkest Desires"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "HellboundManifestation"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "HellboundManifestationLevel,9"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.22"
+      },
+      {
+        "key": "DESC",
+        "value": "Your dark patron offers to grant you wishes to tempt you."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Hellbound Corruption ~ Darkest Desires Gift|Hellbound Corruption ~ Darkest Desires Stain"
+      },
+      {
+        "key": "DESC",
+        "value": "[Special] Upon receiving this manifestation, you must take both the gift and the stain, even with the useful corruption or vile corruption variants.|PREABILITY:1,CATEGORY=Internal,Rules ~ Use Corruption (Useful),Rules ~ Use Corruption (Vile)"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
+    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381",
+    "line": 298,
+    "record_key": "Hellbound Corruption ~ Darkest Desires"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

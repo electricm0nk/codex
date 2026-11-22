@@ -1,0 +1,54 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "MagicItems",
+    "cost_gp": 30000.0,
+    "description": "When wearer fails a save vs a hex, spell or ability with the curse descriptor, or a hag's ability, he can attempt a second save; if successful, the creature that targeted him must save at the same DC or suffer the effect. Only usable 1/day. Up to 3 talismans may be worn at one time.",
+    "key": "Talisman (Greater/Hamsa)",
+    "name": "Talisman (Greater/Hamsa)",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "OUTPUTNAME",
+        "value": "Greater Talisman (Hamsa)"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.Necklace"
+      },
+      {
+        "key": "COST",
+        "value": "30000"
+      },
+      {
+        "key": "WT",
+        "value": "1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.223"
+      },
+      {
+        "key": "SPROP",
+        "value": "When wearer fails a save vs a hex, spell or ability with the curse descriptor, or a hag's ability, he can attempt a second save; if successful, the creature that targeted him must save at the same DC or suffer the effect. Only usable 1/day. Up to 3 talismans may be worn at one time."
+      }
+    ],
+    "weight_lbs": 1.0
+  },
+  "ingested_at": "2026-08-17T08:18:39Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 35,
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_equip_magic_items.lst",
+    "record_key": "Talisman (Greater/Hamsa)",
+    "sha256": "500c71ebdeab1408dd9550ead46f2fe0298a9874b4bf47743641ab05a6e932b8"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

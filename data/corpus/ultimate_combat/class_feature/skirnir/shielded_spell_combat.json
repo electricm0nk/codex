@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Skirnir ~ Shielded Spell Combat",
+    "name": "Shielded Spell Combat",
+    "class": "Skirnir",
+    "description": "At 8th level, a skirnir gains the spell combat ability, but only when wielding his bonded shield. A skirnir may use his shield hand to perform somatic components for magus spells, forfeiting the shield's bonus to AC until the beginning of his next turn; if the bonded shield is a buckler, he retains its bonus to AC. At 14th level, he gains the benefits of improved spell combat. At 19th level, he retains his shield's bonus to AC when using any type of shield with spell combat. This ability replaces improved spell combat, greater spell combat, and greater spell access.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Skirnir ~ Shielded Spell Combat"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MagusClassFeatures.Supernatural.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 8th level, a skirnir gains the spell combat ability, but only when wielding his bonded shield. A skirnir may use his shield hand to perform somatic components for magus spells, forfeiting the shield's bonus to AC until the beginning of his next turn; if the bonded shield is a buckler, he retains its bonus to AC. At 14th level, he gains the benefits of improved spell combat. At 19th level, he retains his shield's bonus to AC when using any type of shield with spell combat. This ability replaces improved spell combat, greater spell combat, and greater spell access."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.56"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/support/uc_abilities_class_um.lst",
+    "sha256": "b8cff28b7be84f4f3c6b650c3e375a3027ff13bf4226233a514d34385bdfb67a",
+    "line": 55,
+    "record_key": "Skirnir ~ Shielded Spell Combat"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

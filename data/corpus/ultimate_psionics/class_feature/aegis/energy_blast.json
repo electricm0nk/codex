@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Aegis ~ Energy Blast",
+    "name": "Energy Blast",
+    "class": "Aegis",
+    "description": "The ranged attack gained from the ranged attack customization is now treated as a ranged touch attack and instead deals %1d6 points of damage of your active energy type, but requires a standard action to use and cannot be used as part of a full attack.  This effect can be turned on or off as a move action.|RangedAttackDice",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Aegis ~ Energy Blast"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "AstralSuitCustomization.SpecialAttack"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Aegis ~ Ranged Attack"
+      },
+      {
+        "key": "PREVARGT",
+        "value": "AstralSuitPrereqLVL,4"
+      },
+      {
+        "key": "DESC",
+        "value": "The ranged attack gained from the ranged attack customization is now treated as a ranged touch attack and instead deals %1d6 points of damage of your active energy type, but requires a standard action to use and cannot be used as part of a full attack.  This effect can be turned on or off as a move action.|RangedAttackDice"
+      },
+      {
+        "key": "COST",
+        "value": "2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.32"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 97,
+    "record_key": "Aegis ~ Energy Blast"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

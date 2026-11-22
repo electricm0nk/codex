@@ -1,0 +1,71 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Corrupting Gaze",
+    "delivery": "Supernatural",
+    "description": "The ghost is disfigured through age or violence, and has a gaze attack with a range of 30 feet that causes 2d10 damage and 1d4 Charisma damage (Fortitude save DC %1 negates Charisma damage but not physical damage).",
+    "description_variables": [
+      "CorruptingGazeDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:corrupting_gaze",
+    "name": "Corrupting Gaze",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Corrupting Gaze"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CorruptingGazeDC|10+(TL/2)+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CorruptingGazeDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Corrupting Gaze)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CorruptingGazeDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The ghost is disfigured through age or violence, and has a gaze attack with a range of 30 feet that causes 2d10 damage and 1d4 Charisma damage (Fortitude save DC %1 negates Charisma damage but not physical damage).|CorruptingGazeDC"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.144"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.GhostAbility.AttackOption.Supernatural"
+      }
+    ],
+    "source_page": "p.144",
+    "traits": [
+      "GhostAbility",
+      "AttackOption"
+    ]
+  },
+  "ingested_at": "2026-08-23T12:58:07Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1302,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "record_key": "Corrupting Gaze",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

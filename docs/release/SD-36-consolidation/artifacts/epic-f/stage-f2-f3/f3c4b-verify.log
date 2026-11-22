@@ -1,0 +1,41 @@
+# F3c4b verify (final tree)
+## cargo run --locked --quiet -j 8 -p codex-ingest --bin sheet_rule_convert -- --check
+records=49450 converted=49450 refused=0 rules=73360 var_tables=6209 verdict=PASS (429.3s)
+## cargo test --locked -j 8 -p codex-ingest --no-fail-fast -- --test-threads=8
+167 result lines, 1760 passed, 0 failed, 43 ignored
+EXIT=0
+## cargo test --locked -j 8 --no-fail-fast -- --test-threads=8 (root, before the kinds pin moved)
+289 result lines, 6355 passed, 1 failed, 27 ignored
+test rules_core::sheet_rule::evaluate_tests::every_kind_in_the_package_evaluates_to_a_well_formed_line ... FAILED
+kind=pool_option number=56 dice=0 words=234
+## cargo test --locked -j 8 --lib -- --test-threads=8 (after the pin moved 20 -> 21)
+test result: ok. 2723 passed; 0 failed; 6 ignored; 0 measured; 0 filtered out; finished in 189.50s
+## cargo test --locked -j 8 --test sd36_bloodline_pick_option -- --test-threads=8
+test result: ok. 2 passed; 0 failed
+## cargo test --locked -j 8 --no-fail-fast --manifest-path apps/desktop/src-tauri/Cargo.toml -- --test-threads=8
+test result: ok. 615 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 368.02s
+## cargo clippy --locked -j 8 -p codex-ingest --tests -- -D warnings
+exit 0
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 41.75s
+## cargo clippy --locked --tests -j 8 -- -D warnings
+exit 0
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 39.56s
+## cargo run --locked -j 8 --bin class_census -- --json <scratch>/census-f3c4b.json
+ids=137 computed=63 blocked=0
+prestige_swept=74 prestige_alone_blocked=74 prestige_mix_computed=67 prestige_mix_unknown=0
+mix_panel_swept=185 mix_panel_computed=185 mix_panel_blocked=0
+per-key diff vs census-f3c3.json: only generated_at differs
+## python3 scripts/check_class_census_baselines.py <census> (env floors 135/63/74/185/67)
+OK ids=137 computed=63 prestige_alone_blocked=74 mix_panel_computed=185 prestige_mix_computed=67
+## python3 scripts/pcgen_residue_gate.py --check --closure
+identifier_files=0 identifier_hits=0
+shipped_data_files=0 shipped_data_hits=0 shipped_scanned=70043
+live_files=0 live_hits=0 verdict=PASS
+## python3 scripts/site/check_frozen_status.py --check
+OK: /home/ubuntu/workspace/worktrees/codex-epic-f2/site/status-data.json is frozen at 100% (49450 units)
+## node scripts/gen-corpus-bundle.mjs
+files_copied=14029 dst=apps/desktop/src-tauri/resources/corpus_bundle
+## python3 .../scripts/structural_diff_test.py
+Ran 34 tests in 0.387s
+## python3 .../scripts/structural_diff.py data/sheet_rules --baseline <tranche/16 cc21cac195>
+verdict=PASS

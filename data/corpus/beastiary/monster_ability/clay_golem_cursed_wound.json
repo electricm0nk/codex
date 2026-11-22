@@ -1,0 +1,57 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Clay Golem ~ Cursed Wound",
+    "delivery": "Extraordinary",
+    "description": "The damage a clay golem deals doesn't heal naturally and resists magical healing. A character attempting to use magical healing on a creature damaged by a clay golem must succeed on a DC 26 caster level check, or the healing has no effect on the injured creature.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "beastiary:monster_ability:clay_golem_cursed_wound",
+    "name": "Cursed Wound",
+    "owners": [
+      "beastiary:monster:golem_clay"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "The damage a clay golem deals doesn't heal naturally and resists magical healing. A character attempting to use magical healing on a creature damaged by a clay golem must succeed on a DC 26 caster level check, or the healing has no effect on the injured creature."
+      },
+      {
+        "key": "KEY",
+        "value": "Clay Golem ~ Cursed Wound"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.159"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary.AttackOption"
+      }
+    ],
+    "source_page": "p.159",
+    "traits": [
+      "AttackOption"
+    ]
+  },
+  "ingested_at": "2026-08-15T01:24:18Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 714,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "record_key": "Clay Golem ~ Cursed Wound",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

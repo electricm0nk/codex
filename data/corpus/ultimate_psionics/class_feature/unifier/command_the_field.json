@@ -1,0 +1,80 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Unifier ~ Command the Field",
+    "name": "Command the Field",
+    "class": "Unifier",
+    "description": "You can create a telekinetic field around yourself or a target within 30 ft. and make the immediate vicinity hard to navigate.  The target's square and all squares within %1 ft. are considered to be difficult terrain for %2 rounds.  You can dismiss this effect as a free action. This effect does not move with the target and you are not affected by the difficult terrain of the effect.  You can use this ability %3/day.|CommandTheFieldRadius|CommandTheFieldDuration|CommandTheFieldTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Unifier ~ Command the Field"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "TacticianClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CommandTheFieldRadius|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CommandTheFieldDuration|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CommandTheFieldTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can create a telekinetic field around yourself or a target within 30 ft. and make the immediate vicinity hard to navigate.  The target's square and all squares within %1 ft. are considered to be difficult terrain for %2 rounds.  You can dismiss this effect as a free action. This effect does not move with the target and you are not affected by the difficult terrain of the effect.  You can use this ability %3/day.|CommandTheFieldRadius|CommandTheFieldDuration|CommandTheFieldTimes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CommandTheFieldRadius|min(20,5*floor((TacticianLVL+3)/4))"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CommandTheFieldDuration|max(1,TacticianPrimeStat)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CommandTheFieldTimes|3+TacticianPrimeStat"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.325"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|CommandTheFieldTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2299,
+    "record_key": "Unifier ~ Command the Field"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

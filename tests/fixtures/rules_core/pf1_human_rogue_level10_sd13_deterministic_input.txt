@@ -1,0 +1,40 @@
+# SD13-E5 deterministic Human Rogue level 10 progression fixture.
+# Widens the accepted SD13-E3/E5 deterministic PF1 Core Rulebook Human Rogue
+# level-1..level-9 martial-skirmisher baseline to level 10 as chosen input
+# only. It names selections; it does not contain derived, computed, or
+# parity values. It preserves the accepted Human race-choice seam
+# (ability-bonus and bonus-feat) and the deterministic ability/feat/skill
+# posture from the level-1..level-9 fixtures, adding only the level bump
+# this bounded tranche needs. No rogue-talent choice-slot line is present
+# (rogue talents are a level-2+/4+/6+/8+ choice-list feature this tranche
+# deliberately does not implement — a genuinely open-ended talent tree, not
+# a flat arithmetic burden), so no new choice= line is required beyond the
+# level-1..level-9 baseline.
+#
+# It deliberately avoids every later Rogue burden surface: no
+# check-execution engine, no trap DC resolution, no magic-trap disarm
+# engine, no rogue talent, and no level-11+ progression. The PF1 Core
+# Rulebook Rogue class table's level-10 "Special" column reads "Advanced
+# talents, rogue talent" (verified independently against d20pfsrd and
+# legacy.aonprd.com) — both parts of the same genuinely open-ended
+# choice-list feature already deliberately left named-but-unproven at
+# levels 2/4/6/8 (the advanced-talent unlock is a list expansion of that
+# feature, not a new pillar), so no new pillar is grounded at level 10 —
+# only the existing pillars are widened: sneak attack stays 5d6
+# ((10 + 1) / 2, the odd-level cadence), Trap Sense stays +3 (10 / 3), and
+# Trapfinding genuinely rises to +5 (max(10 / 2, 1)).
+case_id=pf1-crb-human-rogue-level10
+source_package_id=pf1.core_rulebook
+race_id=race:human
+class_level=class:rogue:10
+ability=strength:10
+ability=dexterity:17
+ability=constitution:12
+ability=intelligence:12
+ability=wisdom:10
+ability=charisma:10
+feat=feat:weapon_finesse
+skill=skill:stealth:1
+choice=choice:human_bonus_feat:feat:dodge
+choice=choice:human_ability_bonus:ability:dexterity
+provenance=programs/codex/requirements/SD-13-core-class-race-roster-and-level-10-progression-matrix/artifacts/core-roster-and-support-state-matrix.md

@@ -1,0 +1,6 @@
+PASS  sheet-market-cyberpunk-open
+PASS  sheet-market-restore-pathfinder
+PASS  sheet-market-open-weapons
+PASS  sheet-market-buy
+FAIL  sheet-tab-gear  -- target not found: 'character-name (no element named 'character-name')' at setup create-character-fill-and-submit step 1/10 (click "character-name")
+4/5 green, 1 red, 0 blocked, 0 manual, 0 not-run (M = 5 rows)

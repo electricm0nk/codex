@@ -1,0 +1,61 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Yaoguai ~ Grab and Constrict",
+    "delivery": "Extraordinary",
+    "description": null,
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:yaoguai_grab_and_constrict",
+    "name": "Grab and Constrict",
+    "owners": [
+      "bestiary_4:monster:yaoguai"
+    ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Grab ~ Tentacle|Constrict"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ConstrictBonusDamage|6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ConstrictDieSize|8"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "KEY",
+        "value": "Yaoguai ~ Grab and Constrict"
+      },
+      {
+        "key": "TYPE",
+        "value": "YaoguaiMakersGift.SpecialAttack.Extraordinary"
+      }
+    ],
+    "source_page": null,
+    "traits": [
+      "YaoguaiMakersGift"
+    ]
+  },
+  "ingested_at": "2026-08-23T09:31:46Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1477,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "record_key": "Yaoguai ~ Grab and Constrict",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

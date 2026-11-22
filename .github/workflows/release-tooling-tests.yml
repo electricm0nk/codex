@@ -1,0 +1,49 @@
+name: Release tooling tests
+
+# The publish workflow's gates (version stamp, notes resolution, manifest writer, consistency check)
+# are code. A gate nobody tests can rot into a rubber stamp, so its own tests run on every change to
+# the tooling, the manifest schema, or the publish workflow itself.
+on:
+  pull_request:
+    paths:
+      - 'tools/release/**'
+      - 'scripts/release/**'
+      - 'schemas/update/**'
+      - 'docs/release/current-release.json'
+      - '.github/workflows/publish-tester-release.yml'
+      - '.github/workflows/release-tooling-tests.yml'
+  push:
+    branches: [develop]
+    paths:
+      - 'tools/release/**'
+      - 'scripts/release/**'
+      - 'schemas/update/**'
+      - 'docs/release/current-release.json'
+      - '.github/workflows/publish-tester-release.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  release-tooling:
+    name: Release tooling tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Install test dependencies
+        run: python3 -m pip install --quiet --no-cache-dir jsonschema==4.21.1 pytest
+
+      - name: Python tooling tests (tools/release)
+        run: python3 -m pytest tools/release -q
+
+      - name: Shell self-tests (scripts/release)
+        run: |
+          set -euo pipefail
+          for t in scripts/release/__tests__/*.sh; do
+            echo "== ${t}"
+            bash "${t}"
+          done
+
+      - name: Pointer resolves against the repo as checked in
+        run: python3 tools/release/resolve_release_notes.py --repo-root .

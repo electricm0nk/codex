@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Aegis ~ Cannibalize Suit",
+    "name": "Cannibalize Suit",
+    "class": "Aegis",
+    "description": "You can dismiss your astral suit to heal %1 hit points, %2/day.  The suit cannot be reformed for one minute.|CustomPoints|CannibalizeTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Aegis ~ Cannibalize Suit"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "AegisClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CannibalizeTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can dismiss your astral suit to heal %1 hit points, %2/day.  The suit cannot be reformed for one minute.|CustomPoints|CannibalizeTimes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CannibalizeTimes|floor((AegisLVL-10)/2)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.30"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|CannibalizeTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 33,
+    "record_key": "Aegis ~ Cannibalize Suit"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

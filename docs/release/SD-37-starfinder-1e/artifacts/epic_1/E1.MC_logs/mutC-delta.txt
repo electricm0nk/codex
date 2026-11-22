@@ -1,0 +1,8 @@
+aldric top-level keys changed: ['resolvedRacialTraits', 'sheetLines']
+ resolvedRacialTraits keys changed: ['raceId', 'raceKey', 'raceName', 'book', 'appliedTraits', 'renderedTraitDescriptions', 'errors']
+ errors after mutation: ['no race in the loaded corpus matches "race:human"']
+ sheetLines: 48 -> 46
+elowen top-level keys changed: ['resolvedRacialTraits', 'sheetLines']
+ resolvedRacialTraits keys changed: ['raceId', 'raceKey', 'raceName', 'book', 'appliedTraits', 'renderedTraitDescriptions', 'errors']
+ errors after mutation: ['no race in the loaded corpus matches "race:human"']
+ sheetLines: 64 -> 62

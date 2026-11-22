@@ -1,0 +1,13 @@
+codex verify — mode: --only, jobs: 2
+repo:  /home/ubuntu/workspace/worktrees/codex-sd37
+logs:  /tmp/codex-verify-TeYi3S
+---------------------------------------------------------------
+==> rules-schema-check — regenerate schemas/rules/*.schema.json from the serde types and diff
+    FAIL  rules-schema-check  (a published schema drifts from the serde types, or a schema test did not run (regen=1 diff=0 tests=0) — /tmp/codex-verify-TeYi3S/rules-schema-check.log)
+---------------------------------------------------------------
+SUMMARY
+  passed:  0  
+  FAILED:  1  rules-schema-check
+
+RESULT: FAIL — logs in /tmp/codex-verify-TeYi3S
+missing-file exit 1

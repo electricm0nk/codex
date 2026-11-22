@@ -1,0 +1,80 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "Wall of spirits blocks movement on Material Plane and Ethereal Plane and causes fear.",
+    "key": "Wall of Ectoplasm",
+    "level": 5,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Cleric,Psychic,Sorcerer,Spiritualist,Wizard=5"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, M (small bit of gauze)"
+      },
+      {
+        "key": "DESC",
+        "value": "Wall of spirits blocks movement on Material Plane and Ethereal Plane and causes fear."
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) minutes"
+      },
+      {
+        "key": "RANGE",
+        "value": "Close"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "None, and Will negates; see text"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Evocation"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://aonprd.com/SpellDisplay.aspx?ItemName=Wall of Ectoplasm"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.190"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "Opaque sheet of ectoplasm up to (CASTERLEVEL*10) ft. square or a sphere or hemisphere with a radius of up to (CASTERLEVEL) ft."
+      },
+      {
+        "key": "TYPE",
+        "value": "Arcane.Divine.Psychic"
+      }
+    ],
+    "school": "Evocation"
+  },
+  "ingested_at": "2026-08-16T12:10:17Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 146,
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_spells.lst",
+    "record_key": "Wall of Ectoplasm",
+    "sha256": "a979548b72ec236ee7c63ef86ce53a17535039e5084ed948c9a709a5c45a7f31"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "derived:range_keyword"
+  ]
+}

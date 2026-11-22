@@ -1,0 +1,65 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Insight ~ Nightmare Made Flesh",
+    "name": "Nightmare Made Flesh",
+    "class": "Insight",
+    "description": "Learn form of doom; can manifest unaugmented form of doom 1/day.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Insight ~ Nightmare Made Flesh"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.CrypticInsight"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "CanTakeVoidInsights,1"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "CrypticInsightLVL,16"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=1|CASTERLEVEL=CrypticML|Form of Doom"
+      },
+      {
+        "key": "DESC",
+        "value": "Learn form of doom; can manifest unaugmented form of doom 1/day."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.266"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Cryptic=6|Form of Doom"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1834,
+    "record_key": "Insight ~ Nightmare Made Flesh"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:spells"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

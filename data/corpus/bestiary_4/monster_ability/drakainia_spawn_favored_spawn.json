@@ -1,0 +1,65 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Drakainia Spawn ~ Favored Spawn",
+    "delivery": "Supernatural",
+    "description": "Favored spawn are those a drakainia has marked as successful or quasi-successful mutations. These powerful spawn gain a +4 luck bonus on all saving throws, a +4 increase to natural armor, a +4 inherent bonus to two ability scores, and 1 mythic rank.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:drakainia_spawn_favored_spawn",
+    "name": "Favored Spawn",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Drakainia Spawn Stat Bonus|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "SAVE|ALL|4|TYPE=Luck"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|4|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Mythic_Rank|1"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Favored spawn are those a drakainia has marked as successful or quasi-successful mutations. These powerful spawn gain a +4 luck bonus on all saving throws, a +4 increase to natural armor, a +4 inherent bonus to two ability scores, and 1 mythic rank."
+      },
+      {
+        "key": "KEY",
+        "value": "Drakainia Spawn ~ Favored Spawn"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      }
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T14:10:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 569,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "record_key": "Drakainia Spawn ~ Favored Spawn",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

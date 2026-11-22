@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Blade Skill ~ Dazzling Blade",
+    "name": "Dazzling Blade",
+    "class": "Blade Skill",
+    "description": "You may, as a standard action, dazzle all creatures within 30 ft. (Fort DC %1 negates).|DazzlingBladeDC",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Blade Skill ~ Dazzling Blade"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "BladeSkill.SpecialAttack"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DazzlingBladeDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You may, as a standard action, dazzle all creatures within 30 ft. (Fort DC %1 negates).|DazzlingBladeDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DazzlingBladeDC|BladeSkillDC"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.60"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 757,
+    "record_key": "Blade Skill ~ Dazzling Blade"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

@@ -1,0 +1,63 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Peafowl ~ Drift",
+    "delivery": "Extraordinary",
+    "description": "A Peafowl flies in short bursts, and can't use its fly speed to hover. When it flies, a Peafowl must end its move action by landing or perching on a solid surface.",
+    "description_variables": [],
+    "description_variants": [],
+    "facet": "SpecialQuality",
+    "key": "ultimate_wilderness:companion:peafowl_drift",
+    "name": "Drift",
+    "owners": [
+      "ultimate_wilderness:companion:familiar_peafowl",
+      "ultimate_wilderness:companion:peafowl"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A Peafowl flies in short bursts, and can't use its fly speed to hover. When it flies, a Peafowl must end its move action by landing or perching on a solid surface."
+      },
+      {
+        "key": "KEY",
+        "value": "Peafowl ~ Drift"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.201"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary.PeafowlRacialTrait"
+      }
+    ],
+    "record_type": "ability",
+    "source_page": "p.201",
+    "stat_adjustments": [],
+    "type_segments": [
+      "SpecialQuality",
+      "Extraordinary",
+      "PeafowlRacialTrait"
+    ]
+  },
+  "ingested_at": "2026-08-15T01:24:11Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 297,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+    "record_key": "Peafowl ~ Drift",
+    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

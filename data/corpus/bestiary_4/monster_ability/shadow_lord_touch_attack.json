@@ -1,0 +1,56 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Shadow Lord ~ Touch Attack",
+    "delivery": "Supernatural",
+    "description": "A shadow lord gains a melee touch attack that deals 1d6 points of damage (Fortitude negates). The save DC is %1. On a critical hit, the shadow lord's touch attack also deals 1 point of Constitution damage (also negated by the saving throw).",
+    "description_variables": [
+      "10+HD/2+CHA"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:shadow_lord_touch_attack",
+    "name": "Touch Attack",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A shadow lord gains a melee touch attack that deals 1d6 points of damage (Fortitude negates). The save DC is %1. On a critical hit, the shadow lord's touch attack also deals 1 point of Constitution damage (also negated by the saving throw).|10+HD/2+CHA"
+      },
+      {
+        "key": "KEY",
+        "value": "Shadow Lord ~ Touch Attack"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Touch,Natural.Melee.Finesseable.Weapon.Touch,*1,1d6,SPROP=Fortitude negates"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T14:10:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1265,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "record_key": "Shadow Lord ~ Touch Attack",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ]
+}

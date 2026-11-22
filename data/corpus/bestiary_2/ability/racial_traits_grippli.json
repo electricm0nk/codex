@@ -1,0 +1,36 @@
+{
+  "codex_generated_name": false,
+  "completeness": "chassis_only",
+  "data": {
+    "description": null,
+    "key": "Racial Traits ~ Grippli",
+    "name": "Racial Traits ~ Grippli",
+    "raw_tokens": [
+      {
+        "key": "DEFINE",
+        "value": "Grippli_ReplaceAbilityScores|0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Grippli Racial Trait|AUTOMATIC|Grippli ~ Ability Scores|PREVAREQ:Grippli_ReplaceAbilityScores,0"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 10,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/grippli/grippli_abilities_globalvar.lst",
+    "record_key": "Racial Traits ~ Grippli",
+    "sha256": "179b15e79d1b76900c61b226564e5b541f3b47c5b39800e6329eeeb09e3322c7"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

@@ -1,0 +1,52 @@
+{
+  "codex_generated_name": false,
+  "completeness": "full",
+  "data": {
+    "description": "Your natural armor bonus to your AC from the armored manifestation increases by 2.",
+    "key": "Promethean Corruption ~ Greater Armored Gift",
+    "name": "Greater Armored Gift",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Promethean Corruption ~ Greater Armored Gift"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.PrometheanGreaterArmoredGift"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.32"
+      },
+      {
+        "key": "DESC",
+        "value": "Your natural armor bonus to your AC from the armored manifestation increases by 2."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PrometheanArmoredBonus|2"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 728,
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
+    "record_key": "Promethean Corruption ~ Greater Armored Gift",
+    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

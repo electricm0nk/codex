@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Hellbound Corruption ~ Passage through Pit Stain",
+    "name": "Passage through the Pit Stain",
+    "description": "You register as lawful evil as well as your own alignment to effects that reveal alignments. This alignment aura is strong, as if you were a lawful evil cleric. You are treated as an extraplanar lawful evil outsider with the devil subtype by abjurations that protect against such creatures.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Hellbound Corruption ~ Passage through Pit Stain"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.HellboundPassageThroughPitStain"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.23"
+      },
+      {
+        "key": "DESC",
+        "value": "You register as lawful evil as well as your own alignment to effects that reveal alignments. This alignment aura is strong, as if you were a lawful evil cleric. You are treated as an extraplanar lawful evil outsider with the devil subtype by abjurations that protect against such creatures."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
+    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381",
+    "line": 349,
+    "record_key": "Hellbound Corruption ~ Passage through Pit Stain"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

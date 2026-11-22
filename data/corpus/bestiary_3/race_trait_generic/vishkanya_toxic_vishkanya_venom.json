@@ -1,0 +1,30 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Vishkanya ~ Toxic ~ Vishkanya Venom",
+    "name": "Vishkanya ~ Toxic ~ Vishkanya Venom",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.281"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race_pc.lst",
+    "sha256": "4543328143a2cd4aede595f7a5032205373af8fe69a32d7b3bb2e6e6504bbde4",
+    "line": 109,
+    "record_key": "Vishkanya ~ Toxic ~ Vishkanya Venom"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

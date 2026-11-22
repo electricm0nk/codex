@@ -1,0 +1,80 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Psychic Warrior Archetype ~ Protector",
+    "name": "Protector",
+    "class": "Psychic Warrior",
+    "description": "You train in unique tactics to protect your allies from harm and to absorb their damage.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Psychic Warrior Archetype ~ Protector"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.PsychicWarriorArchetype.PsychicWarriorBonusFeat1.PsychicWarriorBonusFeat5.PsychicWarriorMartialPower.PsychicWarriorTwistingPath"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Psychic Warrior=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Psychic Warrior Archetype ~ Protector],[!PREABILITY:1,CATEGORY=Archetype,TYPE.PsychicWarriorBonusFeat1,TYPE.PsychicWarriorBonusFeat5,TYPE.PsychicWarriorMartialPower,TYPE.PsychicWarriorTwistingPath]"
+      },
+      {
+        "key": "DESC",
+        "value": "You train in unique tactics to protect your allies from harm and to absorb their damage."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Psychic Warrior Class Feature|AUTOMATIC|Protector ~ Resilience|PRECLASS:1,Psychic Warrior=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Psychic Warrior Class Feature|AUTOMATIC|Protector ~ Swap Places|PRECLASS:1,Psychic Warrior=5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Psychic Warrior Class Feature|AUTOMATIC|Protector ~ Dual Effect|PRECLASS:1,Psychic Warrior=6"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Psychic Warrior Class Feature|AUTOMATIC|Protector ~ In Harm's Way|PRECLASS:1,Psychic Warrior=12"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Psychic Warrior Feat|-1"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.277"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2025,
+    "record_key": "Psychic Warrior Archetype ~ Protector"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

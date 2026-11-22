@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Miasmic ~ Disease Mastery",
+    "name": "Disease Mastery",
+    "class": "Miasmic",
+    "description": "You are immune to all diseases, including supernatural, magical, and psionic diseases, including mummy rot.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Miasmic ~ Disease Mastery"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "VitalistClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "You are immune to all diseases, including supernatural, magical, and psionic diseases, including mummy rot."
+      },
+      {
+        "key": "DESC",
+        "value": "With a touch, and by expending your focus, you can absorb any mundane or supernatural disease affecting the target. You immediately suffer the effect of the disease unless you make a successful save against the disease's save (if a save is normally allowed). A successful save negates the disease's effect, while on a failed save, you suffer the effects of the disease until the end of your next turn, after which you become immune to that application of the disease.|PRECLASS:1,Vitalist=7"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.289"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2324,
+    "record_key": "Miasmic ~ Disease Mastery"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

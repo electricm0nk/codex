@@ -1,0 +1,60 @@
+{
+  "codex_generated_name": false,
+  "completeness": "full",
+  "data": {
+    "description": "Treat Charisma as 2 points higher for sorcerer spells and class abilities if bloodline matches elemental type; +1 untyped bonus to caster level to appropriate domain spells",
+    "key": "Builder Racial Trait ~ Elemental Affinity",
+    "name": "Elemental Affinity",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Builder Racial Trait ~ Elemental Affinity"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary.RacialTrait.BuilderMagicalTrait.Standard"
+      },
+      {
+        "key": "DESC",
+        "value": "Treat Charisma as 2 points higher for sorcerer spells and class abilities if bloodline matches elemental type; +1 untyped bonus to caster level to appropriate domain spells"
+      },
+      {
+        "key": "DESC",
+        "value": "[Cost: %1]|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ARG_RaceBuilderPoints|-1"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.227"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 332,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_builder.lst",
+    "record_key": "Builder Racial Trait ~ Elemental Affinity",
+    "sha256": "a028d62d1281055c61ef830d0bbe5aafffa4c33970173c421d936a2d3371b3ff"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

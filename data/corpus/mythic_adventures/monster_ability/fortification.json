@@ -1,0 +1,31 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T17:11:45Z",
+  "data": {
+    "corpus_key": "Fortification",
+    "delivery": "Extraordinary",
+    "description": "The monster has an 50%% chance to treat any critical hit or sneak attack as a normal hit, as if wearing moderate fortification armor.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "mythic_adventures:monster_ability:fortification",
+    "name": "Fortification",
+    "owners": [],
+    "source_page": "p.227",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities_race.lst",
+    "sha256": "9dc17c2fc1ba84d040fb04d6175b48b6ff52cc30ad113933d5dff3d75ea2652a",
+    "line": 348,
+    "record_key": "Fortification"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

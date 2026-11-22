@@ -1,0 +1,42 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Amorphous",
+    "name": "Amorphous",
+    "description": "Your body is malleable and shapeless. You are immune to precision damage (like sneak attacks) and critical hits, and can move through an area as small as one-quarter of your space without squeezing or one eighth of your space when squeezing.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Extraordinary.Defensive"
+      },
+      {
+        "key": "DESC",
+        "value": "Your body is malleable and shapeless. You are immune to precision damage (like sneak attacks) and critical hits, and can move through an area as small as one-quarter of your space without squeezing or one eighth of your space when squeezing."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.294"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9",
+    "line": 1843,
+    "record_key": "Amorphous"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

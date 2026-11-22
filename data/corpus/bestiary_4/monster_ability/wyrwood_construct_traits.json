@@ -1,0 +1,78 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Wyrwood ~ Construct Traits",
+    "delivery": null,
+    "description": "Constructs have no Constitution score. Any DCs or other statistics that rely on a Constitution score treat a construct as having a score of 10 (no bonus or penalty). Constructs have immunity to all mind-affecting effects (charms, compulsions, morale effects, patterns, and phantasms) and immunity to bleed, disease, death effects, necromancy effects, paralysis, poison, sleep effects, and stunning. A construct cannot heal damage on its own, but can be repaired through the use of the Craft Construct feat. Constructs can also be healed through spells such as make whole. A construct with the fast healing special quality still benefits from that quality. Constructs are not subject to ability damage, ability drain, fatigue, exhaustion, energy drain, or nonlethal damage. Constructs have immunity to any effect that requires a Fortitude save (unless the effect also works on objects, or is harmless). Constructs are not at risk of death from massive damage and are immediately destroyed when reduced to 0 hit points or less. A construct cannot be raised or resurrected. A construct is hard to destroy, and gains %1 bonus hit points (based on size). Constructs do not breathe, eat, or sleep.",
+    "description_variables": [
+      "(max(SIZE-2,0)+max(SIZE-6,0))*10"
+    ],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:wyrwood_construct_traits",
+    "name": "Construct Traits",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Constructs have no Constitution score. Any DCs or other statistics that rely on a Constitution score treat a construct as having a score of 10 (no bonus or penalty). Constructs have immunity to all mind-affecting effects (charms, compulsions, morale effects, patterns, and phantasms) and immunity to bleed, disease, death effects, necromancy effects, paralysis, poison, sleep effects, and stunning. A construct cannot heal damage on its own, but can be repaired through the use of the Craft Construct feat. Constructs can also be healed through spells such as make whole. A construct with the fast healing special quality still benefits from that quality. Constructs are not subject to ability damage, ability drain, fatigue, exhaustion, energy drain, or nonlethal damage. Constructs have immunity to any effect that requires a Fortitude save (unless the effect also works on objects, or is harmless). Constructs are not at risk of death from massive damage and are immediately destroyed when reduced to 0 hit points or less. A construct cannot be raised or resurrected. A construct is hard to destroy, and gains %1 bonus hit points (based on size). Constructs do not breathe, eat, or sleep.|(max(SIZE-2,0)+max(SIZE-6,0))*10"
+      },
+      {
+        "key": "KEY",
+        "value": "Wyrwood ~ Construct Traits"
+      },
+      {
+        "key": "SERVESAS",
+        "value": "ABILITY=Special Ability|Immunity to Ability Damage|Immunity to Ability Drain|Immunity to Death Effects|Immunity to Death from Massive Damage|Immunity to Disease|Immunity to Energy Drain|Immunity to Exhaustion|Immunity to Fatigue|Immunity to Mind-Affecting Effects|Immunity to Necromancy|Immunity to Nonlethal Damage|Immunity to Paralysis|Immunity to Poison|Immunity to Sleep|Immunity to Stunning"
+      },
+      {
+        "key": "SOURCEDATE",
+        "value": "2009-10"
+      },
+      {
+        "key": "SOURCELONG",
+        "value": "Bestiary"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.307"
+      },
+      {
+        "key": "SOURCESHORT",
+        "value": "B1"
+      },
+      {
+        "key": "SOURCEWEB",
+        "value": "http://paizo.com/store/downloads/pathfinder/pathfinderRPG/v5748btpy8auu"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Immunity"
+      }
+    ],
+    "source_page": "p.307",
+    "traits": [
+      "Immunity"
+    ]
+  },
+  "ingested_at": "2026-08-23T14:10:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 24,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/wyrwood/wyrwood_abilities_race.lst",
+    "record_key": "Wyrwood ~ Construct Traits",
+    "sha256": "c42ff94153eb4f0c731a7aa3db89d3a9cd1d48f2a82f28fb172ceaba3e85888d"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ]
+}

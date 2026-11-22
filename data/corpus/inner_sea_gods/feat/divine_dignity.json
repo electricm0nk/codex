@@ -1,0 +1,31 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Divine Dignity",
+    "category": "General",
+    "name": "Divine Dignity",
+    "description": "Secrets of the First Vault help you perfect your spellcasting. Three times per day, as a free action when you cast a harmless divine spell or a domain spell, you can choose for the casting to not provoke attacks of opportunity. Special: You can take this feat multiple times. When you do, you can use this feat three more times per day.",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=FEAT,Combat Casting",
+      "PREDEITY:[redacted PI]",
+      "PRESPELLTYPE:1,Divine=1",
+      "PRETEXT:[redacted PI]"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities_feat.lst",
+    "sha256": "91f53f0051455ec8e7daca4e0286799e397009fe7fdae555ebe342f40085256e",
+    "line": 39,
+    "record_key": "Divine Dignity"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

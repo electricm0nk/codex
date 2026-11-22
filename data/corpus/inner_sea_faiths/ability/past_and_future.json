@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Sentinel Boon ~ Alseta ~ Past and Future",
+    "name": "Past and Future",
+    "description": "If you have performed your daily obedience, you catch glimpses of the future that allow you to avoid your enemies' strikes. You gain improved uncanny dodge as a rogue of a level equal to your Hit Dice. If you already possess the improved uncanny dodge ability, or if you would gain it later, you instead gain a +2 sacred or profane bonus (of the same type as that provided by your obedience) on attack and damage rolls against creatures that are currently flanking you.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sentinel Boon ~ Alseta ~ Past and Future"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Faith Based Boon.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "If you have performed your daily obedience, you catch glimpses of the future that allow you to avoid your enemies' strikes. You gain improved uncanny dodge as a rogue of a level equal to your Hit Dice. If you already possess the improved uncanny dodge ability, or if you would gain it later, you instead gain a +2 sacred or profane bonus (of the same type as that provided by your obedience) on attack and damage rolls against creatures that are currently flanking you."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.11"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_faiths/isf_abilities_faith.lst",
+    "sha256": "e3a3596c61200c9e94e7975a4b1c250cdfb843673360c5ae3f11c00895c44a04",
+    "line": 52,
+    "record_key": "Sentinel Boon ~ Alseta ~ Past and Future"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

@@ -1,0 +1,55 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Ice Yai ~ Icy Missile",
+    "delivery": "Supernatural",
+    "description": "As a swift action, the ice yai can fire a dart of ice from its third eye. This dart is a ranged touch attack (+20 attack bonus), dealing 4d6 points of cold damage on a hit. This attack has a range of 180 feet with no range increment.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:ice_yai_icy_missile",
+    "name": "Icy Missile",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "As a swift action, the ice yai can fire a dart of ice from its third eye. This dart is a ranged touch attack (+20 attack bonus), dealing 4d6 points of cold damage on a hit. This attack has a range of 180 feet with no range increment."
+      },
+      {
+        "key": "KEY",
+        "value": "Ice Yai ~ Icy Missile"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.207"
+      },
+      {
+        "key": "TYPE",
+        "value": "IceYaiRacialAbility.SpecialQuality.Supernatural"
+      }
+    ],
+    "source_page": "p.207",
+    "traits": [
+      "IceYaiRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T14:09:11Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1343,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Ice Yai ~ Icy Missile",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

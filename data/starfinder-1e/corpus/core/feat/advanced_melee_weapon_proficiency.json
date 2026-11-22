@@ -1,0 +1,20 @@
+{
+  "data": {
+    "category": "FEAT",
+    "key": "Advanced Melee Weapon Proficiency",
+    "name": "Advanced Melee Weapon Proficiency",
+    "type": "Combat"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 8,
+    "path": "starfinder/paizo/core/scr_feats.lst",
+    "record_key": "Advanced Melee Weapon Proficiency",
+    "sha256": "65ecef5ee331db46ca8dc7170577882615406ae6525023644f4e6c7a9042cbde"
+  },
+  "unit_id": "core:feat:advanced_melee_weapon_proficiency"
+}

@@ -1,0 +1,43 @@
+name=sf_operative_1
+race=Human
+class=Operative
+level=1
+stat.STR=10
+stat.DEX=18
+stat.CON=12
+stat.INT=12
+stat.WIS=11
+stat.CHA=10
+hp=10
+stamina=7
+resolve=5
+eac=15
+kac=16
+initiative=+5
+bab=+0
+save.Fortitude=+1
+save.Reflex=+6
+save.Will=+2
+attack.melee=+0
+attack.ranged=+4
+skill.Acrobatics=9|ranks=1.0|untrained=Y
+skill.Athletics=1|ranks=0.0|untrained=Y
+skill.Bluff=1|ranks=0.0|untrained=Y
+skill.Diplomacy=1|ranks=0.0|untrained=Y
+skill.Disguise=1|ranks=0.0|untrained=Y
+skill.Intimidate=1|ranks=0.0|untrained=Y
+skill.Perception=5|ranks=1.0|untrained=Y
+skill.Piloting=10|ranks=1.0|untrained=Y
+skill.Sense Motive=1|ranks=0.0|untrained=Y
+skill.Stealth=9|ranks=1.0|untrained=Y
+skill.Survival=1|ranks=0.0|untrained=Y
+weapon.*Laser pistol, azimuth=+4|damage=1d4|category=Non-Standard-Ranged
+weapon.Baton, tactical=+4|damage=1d4|category=OPERATIVE-Melee
+bulk=0.3 lbs.
+credits=0
+credits.spent=690 cr
+acp=+0
+abilities.feat=
+abilities.theme=Ace Pilot, THEME KNOWLEDGE
+abilities.class_feature=Operative's Edge, Specialization, Trick Attack
+abilities.racial_trait=SIZE AND TYPE, BONUS FEAT, SKILLED

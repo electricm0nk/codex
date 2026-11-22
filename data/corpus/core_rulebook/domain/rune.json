@@ -1,0 +1,67 @@
+{
+  "codex_generated_name": false,
+  "completeness": "full",
+  "data": {
+    "key": "Rune",
+    "name": "Rune",
+    "raw_tokens": [
+      {
+        "key": "PREMULT",
+        "value": "1,[PREVARLT:DomainNotAllowed,1],[PREVAREQ:AllowDomainRune,1]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Core Domain ~ Rune Domain|!PREABILITY:1,CATEGORY=Special Ability,TYPE.RuneDomainReplacement"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Scribe Scroll"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainRuneLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainRuneDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainRuneTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainRuneAbilityTriggerLVL|0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.47"
+      },
+      {
+        "key": "DESC",
+        "value": "In strange and eldritch runes you find potent magic. You gain Scribe Scroll as a bonus feat."
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Rune=1|Erase|Rune=2|Secret Page|Rune=3|Glyph of Warding|Rune=4|Explosive Runes|Rune=5|Planar Binding (Lesser)|Rune=6|Glyph of Warding (Greater)|Rune=7|Instant Summons|Rune=8|Symbol of Death|Rune=9|Teleportation Circle"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T15:18:10Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 37,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_domains.lst",
+    "record_key": "Rune",
+    "sha256": "1b6a671beb757f213bf73a7cab0b977521794f44db731c3f3e33e9df94662999"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

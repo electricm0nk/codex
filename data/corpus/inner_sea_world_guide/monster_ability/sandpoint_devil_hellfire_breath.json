@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:10:40Z",
+  "data": {
+    "corpus_key": "Sandpoint Devil ~ Hellfire Breath",
+    "delivery": "Supernatural",
+    "description": "Once every 1d4 rounds, the Sandpoint Devil can unleash a blast of infernal flame from its mouth as a standard action. This hellfire fills a 30-ft. cone and causes 10d6 points of fire damage (Reflex DC %1 half). Anyone who takes damage from this breath weapon must also make a DC %1 Wo;; save to avoid becoming cursed by the infernal flames--those who become cursed take a -4 penalty on all attack rolls, saving throws, and skill checks for a number of days equal to the damage taken--during this time, the victim's skin appears to be horribly burned in places regardless of any healing applied. This curse effect functions at caster level %2.",
+    "description_variables": [
+      "10+(HD/2)+CON",
+      "HD"
+    ],
+    "facet": "SpecialAttack",
+    "key": "inner_sea_world_guide:monster_ability:sandpoint_devil_hellfire_breath",
+    "name": "Hellfire Breath",
+    "owners": [],
+    "source_page": "p.312",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_abilities_race.lst",
+    "sha256": "776debf1cea780aac4b3518c47baf43523d6b06deb0aea80de08b640ffc03c15",
+    "line": 51,
+    "record_key": "Sandpoint Devil ~ Hellfire Breath"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ]
+}

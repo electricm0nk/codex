@@ -1,0 +1,136 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Mesmerist Archetype ~ Enigma",
+    "name": "Enigma",
+    "class": "Mesmerist",
+    "description": "An enigma spends his life dedicated to developing psychic abilities that allow him to operate unnoticed. While the target of a mesmerist's hypnotic stare might not realize that the mesmerist is the source of the strange thoughts invading his mind, an enigma takes that mental obfuscation to a more extreme level. Enigmas often end up serving as master spies and infiltration experts.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mesmerist Archetype ~ Enigma"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.MesmeristArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Mesmerist=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Mesmerist Archetype ~ Enigma],[!PREFACT:1,ABILITIES,Mesmerist_Archetype_HypnoticStare=True,Mesmerist_Archetype_ConsummateLiar=True,Mesmerist_Archetype_PainfulStare=True,Mesmerist_Archetype_TouchTreatment=True,Mesmerist_Archetype_ManifoldTricks=True,Mesmerist_Archetype_GlibLie=True,Mesmerist_Archetype_RuleMinds=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "An enigma spends his life dedicated to developing psychic abilities that allow him to operate unnoticed. While the target of a mesmerist's hypnotic stare might not realize that the mesmerist is the source of the strange thoughts invading his mind, an enigma takes that mental obfuscation to a more extreme level. Enigmas often end up serving as master spies and infiltration experts."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Enigma ~ Solipsism|PRECLASS:1,Mesmerist=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Enigma ~ Veiled Steps|PRECLASS:1,Mesmerist=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Enigma ~ Enigmatic Stare|PRECLASS:1,Mesmerist=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Enigma ~ Transfer Affliction|PRECLASS:1,Mesmerist=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Enigma ~ Sneak Attack|PRECLASS:1,Mesmerist=5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Enigma ~ Detection Void|PRECLASS:1,Mesmerist=11"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Enigma ~ Absentia|PRECLASS:1,Mesmerist=20"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.36"
+      },
+      {
+        "key": "FACT",
+        "value": "Mesmerist_Archetype_HypnoticStare|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Mesmerist_Archetype_ConsummateLiar|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Mesmerist_Archetype_PainfulStare|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Mesmerist_Archetype_TouchTreatment|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Mesmerist_Archetype_ManifoldTricks|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Mesmerist_Archetype_GlibLie|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Mesmerist_Archetype_RuleMinds|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Mesmerist_CF_ConsummateLiar|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Mesmerist_CF_PainfulStare|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Mesmerist_CF_ManifoldTricks|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Mesmerist_CF_GlibLie|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Mesmerist_CF_RuleMinds|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/support/ui_abilities_class_oa.lst",
+    "sha256": "123f008e9a2f31828861df9025f48f5c2f7c78a648553f22dba96a8d8a2e24dc",
+    "line": 44,
+    "record_key": "Mesmerist Archetype ~ Enigma"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

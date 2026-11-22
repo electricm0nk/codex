@@ -1,0 +1,93 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Marksman ~ Sniper Style",
+    "name": "Sniper Style",
+    "class": "Marksman",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Marksman ~ Sniper Style"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MarksmanClassFeatures.SpecialQuality.MarksmanStyle"
+      },
+      {
+        "key": "MULT",
+        "value": "NO"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Marksman Class Feature|AUTOMATIC|Sniper Style ~ Sniper Technique|PREVARGT:MarksmanStyleLVL,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Marksman Class Feature|AUTOMATIC|Sniper Style ~ Sniper Mantra|PREVARGT:MarksmanStyleLVL,2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Marksman Class Feature|AUTOMATIC|Sniper Style ~ Second Chance|PREVARGT:MarksmanStyleLVL,3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Marksman Class Feature|AUTOMATIC|Sniper Style ~ Augmented Shot|PREMULT:2,[PREVARGT:MarksmanStyleLVL,7],[!PREABILITY:1,CATEGORY=Archetype,TYPE.MarksmanStyleAbility8]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Marksman Class Feature|AUTOMATIC|Sniper Style ~ Unstoppable Force|PREVARGT:MarksmanStyleLVL,11"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Marksman Class Feature|AUTOMATIC|Sniper Style ~ Critical Master|PREVARGT:MarksmanStyleLVL,15"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Marksman Class Feature|AUTOMATIC|Sniper Style ~ Through the Eye of the Needle|PREVARGT:MarksmanStyleLVL,19"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Sniper Marksman Bonus Feat|(MarksmanStyleLVL-2)/3"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Sniper Marksman Bonus Feat|-1|PREMULT:2,[PREABILITY:1,CATEGORY=Archetype,TYPE.MarksmanBonusFeat5],[PRECLASS:1,Marksman=5]"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Sniper Marksman Bonus Feat|-1|PREMULT:2,[PREABILITY:1,CATEGORY=Archetype,TYPE.MarksmanBonusFeat8],[PRECLASS:1,Marksman=8]"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Stealth|StyleSkill|PREVARGT:MarksmanStyleLVL,2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.47"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 350,
+    "record_key": "Marksman ~ Sniper Style"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

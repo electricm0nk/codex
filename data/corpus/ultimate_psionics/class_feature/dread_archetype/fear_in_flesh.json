@@ -1,0 +1,80 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Dread Archetype ~ Fear in Flesh",
+    "name": "Fear in Flesh",
+    "class": "Dread",
+    "description": "You sacrifice the devastating touch ability to infuse your body with the power of fear.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Dread Archetype ~ Fear in Flesh"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.DreadArchetype.DreadDevastatingTouch.DreadChannelTerror.DreadTerror4.DreadMartialWeaponProficiency"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Dread=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Dread Archetype ~ Fear in Flesh],[!PREABILITY:1,CATEGORY=Archetype,TYPE.DreadDevastatingTouch,TYPE.DreadChannelFear,TYPE.DreadTerror4,TYPE.DreadMartialWeaponProficiency]"
+      },
+      {
+        "key": "DESC",
+        "value": "You sacrifice the devastating touch ability to infuse your body with the power of fear."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Dread Class Feature|AUTOMATIC|Fear in Flesh ~ Fear Made Flesh|PRECLASS:1,Dread=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Dread Class Feature|AUTOMATIC|Fear in Flesh ~ Terrors|PRECLASS:1,Dread=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Dread Class Feature|AUTOMATIC|Fear in Flesh ~ Intimidating Strike|PRECLASS:1,Dread=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Dread Class Feature|AUTOMATIC|Fear in Flesh ~ Strengthened by Fear|PRECLASS:1,Dread=4"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Terror|-1|PRECLASS:1,Dread=4"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.267"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1861,
+    "record_key": "Dread Archetype ~ Fear in Flesh"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

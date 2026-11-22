@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Medium ~ Lich ~ Necromantic Arcana",
+    "name": "Necromantic Arcana",
+    "class": "Medium",
+    "description": "(Lesser) Instead of your normal spells per day for your medium level, you use the spells per day from Table: Mesmerist. For each level of spell you can now cast (including level 0), each time you channel an archmage spirit,  you gain the following spells at the indicated spell levels (even if they are not the usual spell levels for the sorcerer/wizard spell list) to add to your medium spell list and spells known until you lose contact with the archmage. When you cast these spells, they count as arcane (though not for the purpose of fulfilling prerequisites), and thus you must provide verbal and somatic components instead of thought and emotion components. 0-bleed; 1st-chill touch; 2nd-command undead; 3rd-animate dead; 4th-enervation; 5th-magic jar; 6th-create greater undead.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Medium ~ Lich ~ Necromantic Arcana"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MediumClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.59"
+      },
+      {
+        "key": "DESC",
+        "value": "(Lesser) Instead of your normal spells per day for your medium level, you use the spells per day from Table: Mesmerist. For each level of spell you can now cast (including level 0), each time you channel an archmage spirit,  you gain the following spells at the indicated spell levels (even if they are not the usual spell levels for the sorcerer/wizard spell list) to add to your medium spell list and spells known until you lose contact with the archmage. When you cast these spells, they count as arcane (though not for the purpose of fulfilling prerequisites), and thus you must provide verbal and somatic components instead of thought and emotion components. 0-bleed; 1st-chill touch; 2nd-command undead; 3rd-animate dead; 4th-enervation; 5th-magic jar; 6th-create greater undead."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Medium To Mesmerist Spells 1|Medium To Mesmerist Spells 2|Medium To Mesmerist Spells 3|Medium To Mesmerist Spells 4|Medium To Mesmerist Spells 5|Medium To Mesmerist Spells 6"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Medium=0|Bleed|Medium=1|Chill Touch|Medium=2|Command Undead|Medium=3|Animate Dead|Medium=4|Enervation|Medium=5|Magic Jar|Medium=6|Create Greater Undead"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/support/ha_abilities_class_oa.lst",
+    "sha256": "9c111f652f8442433ea215fa11e67258c7e6c15c75d1c1753fa6fef34827f46c",
+    "line": 115,
+    "record_key": "Medium ~ Lich ~ Necromantic Arcana"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

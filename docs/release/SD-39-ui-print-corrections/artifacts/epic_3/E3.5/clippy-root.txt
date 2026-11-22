@@ -1,0 +1,8 @@
+    Checking serde_core v1.0.228
+    Checking memchr v2.8.3
+    Checking dyn-clone v1.0.20
+    Checking serde v1.0.228
+    Checking serde_json v1.0.150
+    Checking schemars v0.8.22
+    Checking codex v0.1.0 (/home/ubuntu/workspace/repos/codex/.worktrees/sd39-sf-cpr)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 1m 32s

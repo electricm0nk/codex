@@ -1,0 +1,57 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Phantom Fungus ~ Phantom Flesh",
+    "delivery": "Supernatural",
+    "description": "As a move action, a phantom fungus can turn invisible as if using greater invisibility (caster level 4th). A moment after it attacks with invisibility, the creature appears briefly as a semitransparent version of its normal self. This allows any viewer with line of sight to the phantom fungus to pinpoint its location at the time of the attack (though if the creature moves after it attacks, opponents have to pinpoint it again). An opponent can ready an action to strike at the fungus when it momentarily appears, in which case the creature only has concealment instead of invisibility (20%% miss chance). The fungus can turn completely visible as a move action, though it normally remains invisible all the time. If killed while invisible, it becomes visible 1d4 minutes later.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:phantom_fungus_phantom_flesh",
+    "name": "Phantom Flesh",
+    "owners": [
+      "bestiary_3:monster:phantom_fungus"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "As a move action, a phantom fungus can turn invisible as if using greater invisibility (caster level 4th). A moment after it attacks with invisibility, the creature appears briefly as a semitransparent version of its normal self. This allows any viewer with line of sight to the phantom fungus to pinpoint its location at the time of the attack (though if the creature moves after it attacks, opponents have to pinpoint it again). An opponent can ready an action to strike at the fungus when it momentarily appears, in which case the creature only has concealment instead of invisibility (20%% miss chance). The fungus can turn completely visible as a move action, though it normally remains invisible all the time. If killed while invisible, it becomes visible 1d4 minutes later."
+      },
+      {
+        "key": "KEY",
+        "value": "Phantom Fungus ~ Phantom Flesh"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.219"
+      },
+      {
+        "key": "TYPE",
+        "value": "PhantomFungusRacialAbility.SpecialQuality.Supernatural"
+      }
+    ],
+    "source_page": "p.219",
+    "traits": [
+      "PhantomFungusRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T10:26:03Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1413,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Phantom Fungus ~ Phantom Flesh",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

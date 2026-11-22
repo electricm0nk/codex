@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Arcane Mind ~ Strange Synergy",
+    "name": "Strange Synergy",
+    "class": "Arcane Mind",
+    "description": "When making a manifester check to overcome spell or power resistance, you gain a +%1 bonus.|StrangeSynergyBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Arcane Mind ~ Strange Synergy"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "PsionClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "StrangeSynergyBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "When making a manifester check to overcome spell or power resistance, you gain a +%1 bonus.|StrangeSynergyBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|StrangeSynergyBonus|1+min(1,floor(PsionLVL/10))"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.274"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1950,
+    "record_key": "Arcane Mind ~ Strange Synergy"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

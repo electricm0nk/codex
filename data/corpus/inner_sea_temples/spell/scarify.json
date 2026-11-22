@@ -1,0 +1,25 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:46:05Z",
+  "data": {
+    "key": "Scarify",
+    "school": "Necromancy",
+    "level": 1,
+    "description": "Your touch causes a single creature's skin to produce fibrous tissue that sutures the creature's wounds, rapidly closing them and leaving jagged scars where the wounds were. The process is painful, and converts 2d6+min(5,CASTERLEVEL) points of damage into nonlethal damage. If the target creature is immune to nonlethal damage, the spell fails. Damage resistance against nonlethal damage reduces the amount of damage converted. This effect counts as healing for the purpose of stopping bleed damage."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_temples/istem_spells.lst",
+    "sha256": "3011dc07f51b9c160a6c8e9b38c1467a23d4fe4b8528653e554e203b43fe2a50",
+    "line": 17,
+    "record_key": "Scarify"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

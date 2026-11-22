@@ -1,0 +1,10 @@
+# live PCGen run of $PCGEN_REPO_DIR/code/testsuite/PCGfiles/sf_soldier.pcg (base-xml.ftl) vs the checked-in PCGen golden csheets/sf_soldier.xml
+$ git -C $PCGEN_REPO_DIR rev-parse HEAD
+7f818006e371188e5717fd18d74d18a420747fc6
+$ diff <(golden) <(live) | awk "END{print NR}"  (lines of diff output)
+0
+$ diff golden live
+$ grep hit_points block (live)
+241:		<points>74</points>
+242:		<alternate>90</alternate>
+243:		<die>(10d1)+64</die>

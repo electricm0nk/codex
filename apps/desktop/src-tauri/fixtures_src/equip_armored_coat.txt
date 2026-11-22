@@ -1,0 +1,2 @@
+# Fixture for desktop Market +N (AC and attack rows), source: apg_equip_arms_armor.lst, KEY: Armored Coat
+Armored Coat											PROFICIENCY:ARMOR|Armored Coat	TYPE:Armor.Medium.ArmorProfMedium.Suit.Standard				COST:50	WT:20								ACCHECK:-2		EQMOD:Material ~ Leather|Material ~ Steel															MAXDEX:3		SOURCEPAGE:p.180	SPELLFAILURE:20																																																																						BONUS:COMBAT|AC|4|TYPE=Armor|PREVAREQ:DisableArmorBonus,0

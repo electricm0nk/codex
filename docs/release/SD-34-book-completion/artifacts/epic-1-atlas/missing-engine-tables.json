@@ -1,0 +1,6 @@
+{
+  "kinds": {},
+  "population": 0,
+  "re_derive_command": "python3 scripts/missing_engine_tables.py --check",
+  "source": "docs/work-inventory.json (status == engine-does-not-hold, evidence contains 'has_no_engine_table')"
+}

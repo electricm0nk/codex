@@ -1,0 +1,55 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Psicrystal ~ Channel Power",
+    "delivery": "SpellLike",
+    "description": "The owner can manifest powers through the psicrystal if the psicrystal is up to 1 mile away.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "ultimate_psionics:monster_ability:psicrystal_channel_power",
+    "name": "Channel Power",
+    "owners": [
+      "ultimate_psionics:monster:psicrystal"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "The owner can manifest powers through the psicrystal if the psicrystal is up to 1 mile away."
+      },
+      {
+        "key": "KEY",
+        "value": "Psicrystal ~ Channel Power"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.50"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.SpellLike"
+      }
+    ],
+    "source_page": "p.50",
+    "traits": []
+  },
+  "ingested_at": "2026-08-13T02:27:44Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 750,
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_race.lst",
+    "record_key": "Psicrystal ~ Channel Power",
+    "sha256": "3368f2a5e87f65a202fb5dce31ecbe9bf6a0b8d0b715abc99d8233796131d9c7"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

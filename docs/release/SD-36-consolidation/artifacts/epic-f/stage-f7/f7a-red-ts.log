@@ -1,0 +1,6 @@
+== RED skillsModel.test.ts (HEAD skillsModel.ts)
+SyntaxError: The requested module './skillsModel' does not provide an export named 'allocationFromPersisted'
+== RED abilityScoresModel.test.ts (no model)
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/ubuntu/workspace/worktrees/codex-epic-f7/apps/desktop/src/characterHub/abilityScoresModel' imported from /home/ubuntu/workspace/worktrees/codex-epic-f7/apps/desktop/src/characterHub/abilityScoresModel.test.ts
+== RED classFactsModel.test.ts (F6 wire)
+Error: Magus prints no named weapon beyond Simple and Martial: expected , got Grapple, Spells (Ray), Spells (Touch), Splash Weapon, Unarmed Strike

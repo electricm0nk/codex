@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Combat Trick ~ Bloody Assault",
+    "name": "Bloody Assault",
+    "description": "Each round you use this feat, you can spend up to 5 stamina points. If you do, until the end of your next turn, you reduce the penalty on all your attack rolls by an amount equal to the number of stamina points you spent.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Combat Trick ~ Bloody Assault"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Combat Trick"
+      },
+      {
+        "key": "DESC",
+        "value": "Each round you use this feat, you can spend up to 5 stamina points. If you do, until the end of your next turn, you reduce the penalty on all your attack rolls by an amount equal to the number of stamina points you spent."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "114"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SourceBook|APG"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/support/ability_apg.lst",
+    "sha256": "485862d2019840c9c67d4cb4145bd6c2f5e0ec192d95ce0ef78779f0bb057a9c",
+    "line": 7,
+    "record_key": "Combat Trick ~ Bloody Assault"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

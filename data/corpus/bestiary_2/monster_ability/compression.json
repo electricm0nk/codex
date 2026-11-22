@@ -1,0 +1,61 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Compression",
+    "delivery": "Extraordinary",
+    "description": "The creature can move through an area as small as one-quarter its space without squeezing or one-eighth its space when squeezing.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_2:monster_ability:compression",
+    "name": "Compression",
+    "owners": [
+      "bestiary_2:monster:beetle_slicer",
+      "bestiary_2:monster:demon_omox",
+      "bestiary_2:monster:faceless_stalker",
+      "bestiary_2:monster:gug",
+      "bestiary_2:monster:jellyfish_death_s_head",
+      "bestiary_2:monster:jellyfish_crimson",
+      "bestiary_2:monster:jellyfish_giant",
+      "bestiary_2:monster:jellyfish_sapphire",
+      "bestiary_2:monster:jellyfish_vampire",
+      "bestiary_2:monster:jellyfish_whaler",
+      "bestiary_2:monster:sandman"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "The creature can move through an area as small as one-quarter its space without squeezing or one-eighth its space when squeezing."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.295"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary"
+      }
+    ],
+    "source_page": "p.295",
+    "traits": []
+  },
+  "ingested_at": "2026-08-17T12:26:27Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1849,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "record_key": "Compression",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

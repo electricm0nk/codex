@@ -1,0 +1,178 @@
+import {
+  buildListSavedCharactersArgs,
+  buildRecomputeCharacterRequest,
+  characterCreationGate,
+  resolveRuleSystemId,
+} from './characterHubRuntime';
+import { RULE_SETS } from './LandingScreen';
+import { toRowSurface } from './buildCharacterHubListSurface';
+import { assert, assertEqual } from '../testSupport/asserts';
+
+/**
+ * SD-25 Criterion 3.5 RED (`cycles/3_5.md`): before `resolveRuleSystemId` /
+ * `buildRecomputeCharacterRequest` existed in this module, the panel had no
+ * concept of "the active rule-system adapter" at all — every mutation call
+ * site was hard-wired to whatever the Rust command defaulted to, and the
+ * `RuleSetId` the landing screen already lets the operator pick
+ * (`LandingScreen.tsx`) never flowed anywhere past that screen's own local
+ * state. GREEN (this file, present tense): `resolveRuleSystemId` maps the
+ * UI's `RuleSetId` to the wire-level `ruleSystemId` the Rust
+ * `resolve_rule_system_adapter` dispatch seam understands (`cycles/3_4.md`),
+ * and `buildRecomputeCharacterRequest` proves a real call site threads that
+ * resolved id through rather than hardcoding `"pf1"`.
+ */
+
+function testResolveRuleSystemIdMapsPathfinderToTheRealAdapterId() {
+  assertEqual(
+    resolveRuleSystemId('pathfinder-1e'),
+    'pf1',
+    'pathfinder-1e is the only rule set with a real adapter today, so it resolves to "pf1"'
+  );
+}
+
+function testResolveRuleSystemIdPassesThroughUnimplementedRuleSetsHonestly() {
+  // Every other RuleSetId must NOT be silently rewritten to "pf1" — that
+  // would make an unimplemented rule set masquerade as PF1 behavior server
+  // side. Passing the id through unchanged means it honestly routes to
+  // `StubAdapter` (the shared `resolve_rule_system_adapter`'s `other` arm).
+  assertEqual(
+    resolveRuleSystemId('traveller'),
+    'traveller',
+    'an unimplemented rule set must pass through unchanged, not borrow pf1 silently'
+  );
+}
+
+function testBuildRecomputeCharacterRequestRoutesPf1ThroughTheRealAdapter() {
+  const request = buildRecomputeCharacterRequest('char-1', 'pathfinder-1e');
+  assertEqual(request.characterId, 'char-1', 'characterId is carried through verbatim');
+  assertEqual(request.ruleSystemId, 'pf1', 'the active adapter for pathfinder-1e resolves to pf1');
+}
+
+function testBuildRecomputeCharacterRequestRoutesOtherRuleSetsToStubAdapterHonestly() {
+  const request = buildRecomputeCharacterRequest('char-2', 'world-of-darkness');
+  assertEqual(request.characterId, 'char-2', 'characterId is carried through verbatim');
+  assertEqual(
+    request.ruleSystemId,
+    'world-of-darkness',
+    'an unimplemented rule set is not silently rewritten to pf1 in the outgoing request'
+  );
+}
+
+/**
+ * SD-37 E6.1: the landing's Starfinder 1e chip is selectable, and selecting it
+ * routes to the Rust `StarfinderAdapter`. `resolve_rule_system_adapter`
+ * (`apps/desktop/src-tauri/src/rule_system_adapter.rs`) maps exactly the wire id
+ * `"starfinder-1e"` (`sf_adapter::STARFINDER_RULE_SYSTEM_ID`) to that adapter.
+ */
+function testStarfinderIsSelectableOnTheLandingAndRoutesToTheStarfinderAdapter() {
+  const starfinder = RULE_SETS.find((ruleSet) => ruleSet.id === 'starfinder-1e');
+  assert(starfinder !== undefined, 'the landing lists Starfinder 1e');
+  assertEqual(starfinder?.available, true, 'the Starfinder 1e chip is selectable');
+  assertEqual(
+    resolveRuleSystemId('starfinder-1e'),
+    'starfinder-1e',
+    'starfinder-1e resolves to the wire id the Rust resolver maps to StarfinderAdapter'
+  );
+  const request = buildRecomputeCharacterRequest('sf-char', 'starfinder-1e');
+  assertEqual(request.ruleSystemId, 'starfinder-1e', 'a Starfinder sheet recompute routes to StarfinderAdapter');
+  // Only the systems with a rule-system adapter (Pathfinder, Cyberpunk RED since SD-38 E0.4,
+  // Starfinder) are selectable; the other chips stay unselectable.
+  const selectable = RULE_SETS.filter((ruleSet) => ruleSet.available).map((ruleSet) => ruleSet.id);
+  assertEqual(
+    selectable.join(','),
+    'pathfinder-1e,cyberpunk-red,starfinder-1e',
+    'exactly the three systems with an adapter are selectable'
+  );
+}
+
+/**
+ * SD-38 E0.5: the landing's Cyberpunk Red chip is `cyberpunk-red` and selectable;
+ * its Load list comes from the Rust `CyberpunkAdapter`, which
+ * `resolve_rule_system_adapter` (`rule_system_adapter.rs`) maps from exactly the wire id
+ * `"cyberpunk-red"` (`GameSystem::CyberpunkRed.id()`); New Character opens its own
+ * creation flow (E3.2).
+ */
+function testCyberpunkRedIsSelectableListsThroughItsAdapterAndCreationOpensItsForm() {
+  const cyberpunk = RULE_SETS.find((ruleSet) => ruleSet.name === 'Cyberpunk Red');
+  assert(cyberpunk !== undefined, 'the landing lists Cyberpunk Red');
+  assertEqual(cyberpunk?.id, 'cyberpunk-red', 'the Cyberpunk Red chip carries the engine id cyberpunk-red');
+  assertEqual(cyberpunk?.available, true, 'the Cyberpunk Red chip is selectable');
+  assertEqual(
+    buildListSavedCharactersArgs('cyberpunk-red').ruleSystemId,
+    'cyberpunk-red',
+    'with Cyberpunk Red selected the Load list comes from CyberpunkAdapter'
+  );
+  assertEqual(
+    buildRecomputeCharacterRequest('cpr-char', 'cyberpunk-red').ruleSystemId,
+    'cyberpunk-red',
+    'a Cyberpunk Red call site routes to CyberpunkAdapter, never pf1'
+  );
+  // SD-38 E3.2: New Character opens the Cyberpunk RED flow (`CyberpunkCreateForm`).
+  const gate = characterCreationGate('cyberpunk-red');
+  assertEqual(gate.enabled, true, 'Cyberpunk Red creation opens');
+  assertEqual(gate.form, 'cyberpunk', 'it opens the Cyberpunk form (never the Pathfinder form)');
+  assertEqual(gate.disabledHint, undefined, 'an open gate carries no disabled reason');
+}
+
+/** The Load list asks the active system's adapter for its characters. */
+function testTheLoadListRoutesThroughTheActiveRuleSystem() {
+  assertEqual(
+    buildListSavedCharactersArgs('starfinder-1e').ruleSystemId,
+    'starfinder-1e',
+    'with Starfinder selected the list comes from StarfinderAdapter'
+  );
+  assertEqual(
+    buildListSavedCharactersArgs('pathfinder-1e').ruleSystemId,
+    'pf1',
+    'with Pathfinder selected the list comes from Pf1Adapter'
+  );
+}
+
+/** A saved Starfinder character's row names its system. */
+function testAStarfinderRowNamesItsSystem() {
+  const row = toRowSurface({
+    characterId: 'sf-char',
+    displayLabel: 'SF',
+    gameSystem: 'starfinder-1e',
+    schemaVersion: 2,
+    savedAt: '2026-10-05T00:00:00Z',
+    raceId: 'core:race:human',
+    classSummary: 'core:class:soldier:3',
+  });
+  assertEqual(row.gameSystemLabel, 'Starfinder 1st Edition', 'the row label names Starfinder');
+}
+
+/**
+ * Pathfinder creation stays open on its own form. Starfinder opens the
+ * Starfinder flow (SD-37 E6.2), never the Pathfinder form; a rule set with no
+ * creation flow keeps "New Character" disabled with its reason.
+ */
+function testCreationGateNeverOpensThePathfinderFormForStarfinder() {
+  assertEqual(characterCreationGate('pathfinder-1e').enabled, true, 'Pathfinder creation is open');
+  assertEqual(characterCreationGate('pathfinder-1e').form, 'pathfinder', 'Pathfinder opens its own form');
+  // SD-37 E6.2: Starfinder creation is open, and opens the Starfinder flow -- never the
+  // Pathfinder form (E6.1 kept it closed until this flow existed).
+  const gate = characterCreationGate('starfinder-1e');
+  assertEqual(gate.enabled, true, 'Starfinder creation is open');
+  assertEqual(gate.form, 'starfinder', 'the Pathfinder creation form never opens for Starfinder');
+  const closed = characterCreationGate('traveller');
+  assertEqual(closed.enabled, false, 'a rule set with no creation flow stays closed');
+  assert((closed.disabledHint ?? '').includes('Traveller'), 'the disabled banner names why');
+}
+
+async function main() {
+  testStarfinderIsSelectableOnTheLandingAndRoutesToTheStarfinderAdapter();
+  testCyberpunkRedIsSelectableListsThroughItsAdapterAndCreationOpensItsForm();
+  testTheLoadListRoutesThroughTheActiveRuleSystem();
+  testAStarfinderRowNamesItsSystem();
+  testCreationGateNeverOpensThePathfinderFormForStarfinder();
+  testResolveRuleSystemIdMapsPathfinderToTheRealAdapterId();
+  testResolveRuleSystemIdPassesThroughUnimplementedRuleSetsHonestly();
+  testBuildRecomputeCharacterRequestRoutesPf1ThroughTheRealAdapter();
+  testBuildRecomputeCharacterRequestRoutesOtherRuleSetsToStubAdapterHonestly();
+}
+
+main().catch((error: unknown) => {
+  console.error(error);
+  throw error;
+});

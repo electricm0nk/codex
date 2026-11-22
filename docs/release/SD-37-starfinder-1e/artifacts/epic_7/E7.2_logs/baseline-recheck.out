@@ -1,0 +1,15 @@
+codex verify — mode: --only, jobs: 8
+repo:  /home/ubuntu/workspace/worktrees/codex-sd37
+logs:  /home/ubuntu/workspace/worktrees/e72-logs2
+---------------------------------------------------------------
+==> root-lib — cargo test --locked --lib -j 8  (repo root)
+    PASS  root-lib  (2838 passed)
+---------------------------------------------------------------
+==> frontend-test — npm test  (apps/desktop)
+    PASS  frontend-test  (137/137 files)
+---------------------------------------------------------------
+SUMMARY
+  passed:  2  root-lib frontend-test
+
+RESULT: PASS
+logs in /home/ubuntu/workspace/worktrees/e72-logs2

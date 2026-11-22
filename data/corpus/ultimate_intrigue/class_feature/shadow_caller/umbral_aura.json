@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Shadow Caller ~ Umbral Aura",
+    "name": "Umbral Aura",
+    "class": "Spiritualist",
+    "description": "At 10th level, a shadow caller is wreathed in an aura of darkness while her shade inhabits her shadow, gaining 50%% concealment against creatures without darkvision or the see in darkness ability. Additionally, the shadow caller's square and all adjacent squares are treated as areas of dim illumination while she benefits from this ability; this second effect counts as a 4th-level darkness spell for the purpose of adjudicating light and darkness effects. While her shade inhabits her shadow, the shadow caller can hide in plain sight, even if an observing creature has darkvision or see in darkness.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shadow Caller ~ Umbral Aura"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Spiritualist Class Features.ShadowCallerClassFeatures.SpecialQuality.Supernatural.SpellLike"
+      },
+      {
+        "key": "DESC",
+        "value": "At 10th level, a shadow caller is wreathed in an aura of darkness while her shade inhabits her shadow, gaining 50%% concealment against creatures without darkvision or the see in darkness ability. Additionally, the shadow caller's square and all adjacent squares are treated as areas of dim illumination while she benefits from this ability; this second effect counts as a 4th-level darkness spell for the purpose of adjudicating light and darkness effects. While her shade inhabits her shadow, the shadow caller can hide in plain sight, even if an observing creature has darkvision or see in darkness."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.50"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/support/ui_abilities_class_oa.lst",
+    "sha256": "123f008e9a2f31828861df9025f48f5c2f7c78a648553f22dba96a8d8a2e24dc",
+    "line": 130,
+    "record_key": "Shadow Caller ~ Umbral Aura"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

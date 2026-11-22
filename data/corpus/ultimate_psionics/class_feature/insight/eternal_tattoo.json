@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Insight ~ Eternal Tattoo",
+    "name": "Eternal Tattoo",
+    "class": "Insight",
+    "description": "If you tap a tattoo that you extend, the effects of that tattoo become permanent until you choose to make another tattoo effect permanent.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Insight ~ Eternal Tattoo"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary.CrypticInsight"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Insight ~ Extend Tattoo"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "CrypticInsightLVL,16"
+      },
+      {
+        "key": "DESC",
+        "value": "If you tap a tattoo that you extend, the effects of that tattoo become permanent until you choose to make another tattoo effect permanent."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.37"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 201,
+    "record_key": "Insight ~ Eternal Tattoo"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

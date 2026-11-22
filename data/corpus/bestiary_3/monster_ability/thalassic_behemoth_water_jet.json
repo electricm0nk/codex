@@ -1,0 +1,75 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Thalassic Behemoth ~ Water Jet",
+    "delivery": "Supernatural",
+    "description": "A thalassic behemoth can blast water from its blowhole with surprising force and accuracy. This water jet has a range of 240 feet with no range penalties. A target hit by the water jet is subject to the behemoth's push ability and must succeed at a DC %%1 Fortitude save or be stunned for 1d4+1 rounds. The save DC is Constitution-based.",
+    "description_variables": [
+      "WaterJetDC"
+    ],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:thalassic_behemoth_water_jet",
+    "name": "Water Jet",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Water Jet"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WaterJetDC|10+(TL/2)+CON"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WaterJetDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Water Jet)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WaterJetDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A thalassic behemoth can blast water from its blowhole with surprising force and accuracy. This water jet has a range of 240 feet with no range penalties. A target hit by the water jet is subject to the behemoth's push ability and must succeed at a DC %%1 Fortitude save or be stunned for 1d4+1 rounds. The save DC is Constitution-based.|WaterJetDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Thalassic Behemoth ~ Water Jet"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.38"
+      },
+      {
+        "key": "TYPE",
+        "value": "ThalassicBehemothRacialAbility.SpecialQuality.Supernatural.Water Jet"
+      }
+    ],
+    "source_page": "p.38",
+    "traits": [
+      "ThalassicBehemothRacialAbility",
+      "Water Jet"
+    ]
+  },
+  "ingested_at": "2026-08-23T14:09:11Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 488,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Thalassic Behemoth ~ Water Jet",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

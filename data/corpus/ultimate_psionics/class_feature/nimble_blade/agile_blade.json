@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Nimble Blade ~ Agile Blade",
+    "name": "Agile Blade",
+    "class": "Nimble Blade",
+    "description": "You treat your mind blade as if it had the agile weapon special ability.  This does not count towards your mind blade's enhancement bonus.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Nimble Blade ~ Agile Blade"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SoulknifeClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "You treat your mind blade as if it had the agile weapon special ability.  This does not count towards your mind blade's enhancement bonus."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.283"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2192,
+    "record_key": "Nimble Blade ~ Agile Blade"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

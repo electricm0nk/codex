@@ -1,0 +1,49 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Mummified Creature ~ Burst of Vengeance",
+    "delivery": "Supernatural",
+    "description": "Despite its slow, lumbering nature, a mummified creature is capable of lurching forward to attack with a short but surprising explosion of speed. Twice per day as a swift action, a mummified creature may act as if affected by a haste spell for 1 round.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:mummified_creature_burst_of_vengeance",
+    "name": "Burst of Vengeance",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Despite its slow, lumbering nature, a mummified creature is capable of lurching forward to attack with a short but surprising explosion of speed. Twice per day as a swift action, a mummified creature may act as if affected by a haste spell for 1 round."
+      },
+      {
+        "key": "KEY",
+        "value": "Mummified Creature ~ Burst of Vengeance"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      }
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T14:10:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1096,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "record_key": "Mummified Creature ~ Burst of Vengeance",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

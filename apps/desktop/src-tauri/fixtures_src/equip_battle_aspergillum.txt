@@ -1,0 +1,2 @@
+# Fixture for desktop Market +N (AC and attack rows), source: apg_equip_arms_armor.lst, KEY: Battle Aspergillum
+Battle Aspergillum														PROFICIENCY:WEAPON|Mace (Light)		TYPE:Weapon.Resizable.Melee.Light.Finesseable.Simple.Standard.Bludgeoning.Mace.Hammer									COST:5	WT:4		CRITMULT:x2	CRITRANGE:1	DAMAGE:1d6				EQMOD:Material ~ Steel													WIELD:Light							SIZE:M	SOURCEPAGE:p.177

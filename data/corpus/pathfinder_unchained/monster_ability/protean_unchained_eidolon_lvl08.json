@@ -1,0 +1,55 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Protean ~ Unchained Eidolon LVL08",
+    "delivery": null,
+    "description": "At 8th level, protean eidolons gain the constrict evolution.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "pathfinder_unchained:monster_ability:protean_unchained_eidolon_lvl08",
+    "name": "Eidolon Progession Lv.8",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "BONUS",
+        "value": "VAR|Pool_UnchainedEidolonConstrict|2"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "At 8th level, protean eidolons gain the constrict evolution."
+      },
+      {
+        "key": "KEY",
+        "value": "Protean ~ Unchained Eidolon LVL08"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.ProteanLVL8"
+      }
+    ],
+    "source_page": null,
+    "traits": [
+      "ProteanLVL8"
+    ]
+  },
+  "ingested_at": "2026-08-23T16:17:34Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 170,
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_race.lst",
+    "record_key": "Protean ~ Unchained Eidolon LVL08",
+    "sha256": "700bcd41e1ee925d0a727c86097de8fa37bed2768529e4a750bdb8249c4d8b8d"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

@@ -1,0 +1,93 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "You cause the creature to believe she has a debilitating affliction. The target can attempt a Will save to recognize the affliction as unreal. If that save fails, the creature suffers an imaginary affliction of your choice. Curse: The target believes she has been cursed. She takes a permanent -4 penalty on attack rolls, saves, ability checks, and skill checks for %1 hours. After her save to disbelieve, the target attempts a second Will save to negate this effect. Poison: The target believes she has been poisoned. Choose a physical ability score. Each round for %2 rounds the target takes 1d3 points of damage to the chosen ability score. Each turn, the creature can attempt a Fortitude save to negate the damage and end the ongoing damage. Wasting: The target believes she has contracted a wasting disease. Each day, the creature takes 1d4 points of Constitution damage and becomes fatigued. A successful Fortitude save prevents this damage. Two consecutive successful saves end the effect. Since the affliction exists entirely in the creature's mind, phantasmal affliction is not affected by normal cures like neutralize poison or remove disease, or other effects like delay poison or the Heal skill. Ordinary immunities do not apply in this case (though a creature immune to the affliction receives a +4 bonus on the Will save to disbelieve the illusion). Constitution damage from the affliction can't kill the target. Instead, it causes the target to fall unconscious like other forms of ability damage. Phantasmal affliction is a spell effect and can be dispelled normally. Placebo effect counters and dispels phantasmal affliction.|CASTERLEVEL|6+(CASTERLEVEL/5)|PRERULE:1,DisplayFullSpell",
+    "key": "Phantasmal Affliction",
+    "level": 2,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Mesmerist=2|Psychic,Sorcerer,Witch,Wizard=3"
+      },
+      {
+        "key": "COMPS",
+        "value": "V,S,M"
+      },
+      {
+        "key": "DESC",
+        "value": "Convince a target that it contracted an affliction.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "You cause the creature to believe she has a debilitating affliction. The target can attempt a Will save to recognize the affliction as unreal. If that save fails, the creature suffers an imaginary affliction of your choice. Curse: The target believes she has been cursed. She takes a permanent -4 penalty on attack rolls, saves, ability checks, and skill checks for %1 hours. After her save to disbelieve, the target attempts a second Will save to negate this effect. Poison: The target believes she has been poisoned. Choose a physical ability score. Each round for %2 rounds the target takes 1d3 points of damage to the chosen ability score. Each turn, the creature can attempt a Fortitude save to negate the damage and end the ongoing damage. Wasting: The target believes she has contracted a wasting disease. Each day, the creature takes 1d4 points of Constitution damage and becomes fatigued. A successful Fortitude save prevents this damage. Two consecutive successful saves end the effect. Since the affliction exists entirely in the creature's mind, phantasmal affliction is not affected by normal cures like neutralize poison or remove disease, or other effects like delay poison or the Heal skill. Ordinary immunities do not apply in this case (though a creature immune to the affliction receives a +4 bonus on the Will save to disbelieve the illusion). Constitution damage from the affliction can't kill the target. Instead, it causes the target to fall unconscious like other forms of ability damage. Phantasmal affliction is a spell effect and can be dispelled normally. Placebo effect counters and dispels phantasmal affliction.|CASTERLEVEL|6+(CASTERLEVEL/5)|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESCRIPTOR",
+        "value": "Mind-Affecting"
+      },
+      {
+        "key": "DURATION",
+        "value": "See text"
+      },
+      {
+        "key": "RANGE",
+        "value": "Close"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Will disbelief, then Fortitude or Will negates; see text"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Illusion"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://aonprd.com/SpellDisplay.aspx?ItemName=Phantasmal Affliction"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.221"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes"
+      },
+      {
+        "key": "SUBSCHOOL",
+        "value": "Phantasm"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "Living creature"
+      },
+      {
+        "key": "TYPE",
+        "value": "Arcane.Psychic"
+      }
+    ],
+    "school": "Illusion"
+  },
+  "ingested_at": "2026-08-16T12:10:17Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 85,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_spells.lst",
+    "record_key": "Phantasmal Affliction",
+    "sha256": "5f4a23b7b02b3d3b2cd4a20d8f06ec24f49e39592d0822d32cdb80d13f3e6324"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "derived:prose_formula_segment",
+    "derived:range_keyword"
+  ]
+}

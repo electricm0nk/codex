@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Preparation Ritual ~ Defensive Boon",
+    "name": "Defensive Boon",
+    "description": "You throw up a quick burst of arcane energy that deflects an incoming spell attack. As an immediate action when targeted with a touch spell or spell-like ability, you can spend this boon's effect to gain a +4 deflection bonus  to AC against the triggering attack.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Preparation Ritual ~ Defensive Boon"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.PreparationRitual"
+      },
+      {
+        "key": "DESC",
+        "value": "You throw up a quick burst of arcane energy that deflects an incoming spell attack. As an immediate action when targeted with a touch spell or spell-like ability, you can spend this boon's effect to gain a +4 deflection bonus  to AC against the triggering attack."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.127"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities.lst",
+    "sha256": "a08f7ed509102fe180c11544de6877bffe963ed196ba721f4894c5e4b081a5b6",
+    "line": 46,
+    "record_key": "Preparation Ritual ~ Defensive Boon"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

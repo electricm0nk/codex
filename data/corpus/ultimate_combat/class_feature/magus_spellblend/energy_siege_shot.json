@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-24T03:51:47Z",
+  "data": {
+    "key": "Magus Spellblend ~ Energy Siege Shot",
+    "name": "Energy Siege Shot",
+    "class": "Magus",
+    "description": "A Large siege engine deals energy damage that you designate with other effects depending on the type of energy you choose.|!PRERULE:1,DisplayFullSpell",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Magus Spellblend ~ Energy Siege Shot"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "TYPE",
+        "value": "MagusSpellblend.MagusSpellBlendLVL5"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Magus=5|Energy Siege Shot"
+      },
+      {
+        "key": "TYPE",
+        "value": "PFSNotLegal"
+      },
+      {
+        "key": "!PRECHARACTERTYPE",
+        "value": "1,PC"
+      },
+      {
+        "key": "DESC",
+        "value": "A Large siege engine deals energy damage that you designate with other effects depending on the type of energy you choose.|!PRERULE:1,DisplayFullSpell"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 1791,
+    "record_key": "Magus Spellblend ~ Energy Siege Shot"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

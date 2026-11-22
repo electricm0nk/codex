@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Skill unlock ~ perception 05 Ranks",
+    "name": "Skill unlock perception 5 Ranks",
+    "class": "Skill unlock",
+    "description": "You remain alert to sounds even in your sleep, and the normal DC increase to Perception checks when you are sleeping is halved. The distance modifier on the DC of Perception checks you attempt is reduced to +1 per 20 feet.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Skill unlock ~ perception 05 Ranks"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Rogue's Edge perception 05"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Signature Skill 05"
+      },
+      {
+        "key": "PRESKILL",
+        "value": "1,perception=5"
+      },
+      {
+        "key": "DESC",
+        "value": "You remain alert to sounds even in your sleep, and the normal DC increase to Perception checks when you are sleeping is halved. The distance modifier on the DC of Perception checks you attempt is reduced to +1 per 20 feet."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst",
+    "sha256": "2becbb0524bd4c367cc1273434c20bcd8e42e3e08abd372f99b005e69e8c4725",
+    "line": 1076,
+    "record_key": "Skill unlock ~ perception 05 Ranks"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

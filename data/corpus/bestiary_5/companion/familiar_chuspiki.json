@@ -1,0 +1,85 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-24T01:11:33Z",
+  "data": {
+    "ability_keys": [],
+    "corpus_key": "Familiar (Chuspiki)",
+    "external_ability_refs": [],
+    "key": "bestiary_5:companion:familiar_chuspiki",
+    "monster_class": "Magical Beast:3",
+    "name": "Familiar (Chuspiki)",
+    "natural_armor": null,
+    "natural_attacks": [
+      {
+        "damage_dice": "1d4",
+        "name": "Tail Fan"
+      },
+      {
+        "damage_dice": "0",
+        "name": "Air Blast"
+      }
+    ],
+    "race_subtype": "Air",
+    "race_type": "Magical Beast",
+    "reach_feet": 0,
+    "record_type": "creature",
+    "size": "T",
+    "source_page": "p.56",
+    "speeds": [
+      {
+        "feet": 30,
+        "mode": "Walk"
+      },
+      {
+        "feet": 60,
+        "mode": "Fly"
+      }
+    ],
+    "stat_adjustments": [
+      {
+        "ability": "STR",
+        "amount": -4
+      },
+      {
+        "ability": "DEX",
+        "amount": 6
+      },
+      {
+        "ability": "CON",
+        "amount": 2
+      },
+      {
+        "ability": "INT",
+        "amount": 2
+      },
+      {
+        "ability": "WIS",
+        "amount": -2
+      },
+      {
+        "ability": "CHA",
+        "amount": 2
+      }
+    ],
+    "type_segments": [
+      "Companion",
+      "Familiar",
+      "Magical Beast"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_5/support/b5_races_companion_oa.lst",
+    "sha256": "791058bf0b2adae7ec9eb5785dd4af4764375a7ac4cdf87b6094b1ecad45adb0",
+    "line": 6,
+    "record_key": "Familiar (Chuspiki)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

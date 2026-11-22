@@ -1,0 +1,64 @@
+{
+  "codex_generated_name": false,
+  "completeness": "full",
+  "data": {
+    "description": "GM Award of Natural Armor",
+    "key": "+1 Deflection Bonus",
+    "name": "+1 Deflection Bonus",
+    "raw_tokens": [
+      {
+        "key": "SORTKEY",
+        "value": "Z_Award"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "GM_Award.SpecialQuality"
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|AC|1|TYPE=Deflection.STACK"
+      },
+      {
+        "key": "STACK",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "NOCHOICE"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "DESC",
+        "value": "GM Award of Natural Armor"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 531,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities.lst",
+    "record_key": "+1 Deflection Bonus",
+    "sha256": "ab77788e05536453a16a22bef8a5e74c209e536cb5b8cdcdb1130f712cc2402f"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice"
+  ]
+}

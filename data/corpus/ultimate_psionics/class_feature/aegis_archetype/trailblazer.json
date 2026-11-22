@@ -1,0 +1,80 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Aegis Archetype ~ Trailblazer",
+    "name": "Trailblazer",
+    "class": "Aegis",
+    "description": "You develop skills to aid you in tracking prey and avoiding obstacles, rather than in the learning how to manipulate and craft psionic items.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Aegis Archetype ~ Trailblazer"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.AegisArchetype.AegisCraftsman.AegisReconfigure.AegisAugmentSuit.AegisMasterCraftsman.AegisUseMagicDevice"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Aegis=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Aegis Archetype ~ Trailblazer],[!PREABILITY:1,CATEGORY=Archetype,TYPE.AegisCraftsman,TYPE.AegisReconfigure,TYPE.AegisMasterCraftsman,TYPE.AegisAugmentSuit,TYPE.AegisUseMagicDevice]"
+      },
+      {
+        "key": "DESC",
+        "value": "You develop skills to aid you in tracking prey and avoiding obstacles, rather than in the learning how to manipulate and craft psionic items."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Trailblazer ~ Track|PRECLASS:1,Aegis=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Aegis Class Feature|AUTOMATIC|Trailblazer ~ Rapid Adjustment|PRECLASS:1,Aegis=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Aegis Class Feature|AUTOMATIC|Trailblazer ~ Undetected Tracker|PRECLASS:1,Aegis=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Trailblazer ~ Trapfinding|PRECLASS:1,Aegis=5"
+      },
+      {
+        "key": "CSKILL",
+        "value": "Survival"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.264"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1627,
+    "record_key": "Aegis Archetype ~ Trailblazer"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

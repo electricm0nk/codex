@@ -1,0 +1,86 @@
+{
+  "lane": "PC1",
+  "findings": [
+    {
+      "id": "PC1-1",
+      "file": "src/rules_core/pilot_compute/mod.rs",
+      "line_start": 7200,
+      "line_end": 7591,
+      "severity": "P2",
+      "category": "duplication",
+      "title": "ground_wolf_companion_stat_block and ground_horse_companion_stat_block are ~150-line near-duplicates",
+      "evidence": "fn ground_wolf_companion_stat_block(id_prefix, owner_class_label, companion_level, explanations) at line 7200 and fn ground_horse_companion_stat_block(...) at line 7406 compute identical formulas (base_attack_bonus = hd*3/4, fort/reflex = hd/2+2, will = hd/3, strength_bonus/natural_armor via the shared animal_companion_* helpers, armor_class = 10+natural_armor, attack damage = 1.5x str mod floored, hp via animal_companion_hit_points) and push the same six explanation-record shapes with only species constants (WOLF_* vs HORSE_*) and one label swap (bite vs hoof) differing. ground_wolf_companion_link_and_share_spells_vacuous (7347) and ground_horse_companion_link_vacuous (7568) are the same pattern one level down. The module's own doc comment for companion_base_stat_table (line ~207) states this exact pair was already identified as the case a table-driven generalization should replace, but both hand-written copies are still present and still called from the compute-chassis dispatch (grep hits at lines ~36749/42779-equivalent outside this chunk use the same per-species pattern).",
+      "proposed_action": "report_only",
+      "confidence": "high",
+      "fix_description": "Route both through the already-existing companion_base_stat_table module (or a single ground_companion_stat_block(id_prefix, owner_class_label, companion_level, species: &CompanionSpecies, explanations) parameterized on species constants + primary-attack label) so the six-record shape is written once.",
+      "risk_notes": "The in-file doc comments (7380-7405) explicitly record that a prior review deliberately kept these separate to avoid any risk to Druid's/Hunter's already-shipped Wolf output when Cavalier Mount was added. Any consolidation must be proven byte-identical against the existing wolf/horse test fixtures before landing; this is exactly the kind of change the repo's own precedent (task #49 folding four Monk slow-fall consts into one formula) shows the team does eventually do once confidence is high, but it is not a mechanical/auto_fix-safe change."
+    },
+    {
+      "id": "PC1-2",
+      "file": "src/rules_core/pilot_compute/mod.rs",
+      "line_start": 1520,
+      "line_end": 2289,
+      "severity": "P3",
+      "category": "duplication",
+      "title": "ground_ranger_combat_style_feat_pool and ground_sorcerer_bloodline_feat_pool share an identical 'grounded feat-pool' skeleton",
+      "evidence": "Both functions (fn ground_ranger_combat_style_feat_pool(level: u8, explanations: &mut Vec<ComputationExplanation>, diagnostics: &mut Vec<ComputationDiagnostic>) at 1520, and fn ground_sorcerer_bloodline_feat_pool(sorcerer_level: u8, explanations, diagnostics) at 2234) follow the identical shape: compute a slot_count from a level formula, push one ComputationExplanation with a slot_count==0 vs >0 templated detail string, early-return if 0, then loop over a static eligible-feat slice pushing one non-claim-blocking ComputationDiagnostic per feat with a templated 'not_modelled' message (with the sorcerer variant additionally skipping an exclusion list). The doc comments on both explicitly call out the shared 'ratified Fighter/Cavalier/Brawler/Arcane-bloodline treatment' precedent, implying more call sites of this same shape exist elsewhere in the file outside this chunk.",
+      "proposed_action": "report_only",
+      "confidence": "medium",
+      "fix_description": "Extract a generic fn ground_feat_pool(id_prefix: &str, slot_count: i16, eligible: &[&str], exclusions: &[&str], detail_zero: impl FnOnce()->String, detail_nonzero: impl FnOnce()->String, explanations, diagnostics) and have both (and any Fighter/Cavalier/Brawler equivalents in other chunks) call it.",
+      "risk_notes": "Cross-chunk: search for other 'ground_.*_feat_pool' or hand-inlined equivalents (Fighter/Cavalier/Brawler bonus-feat pools) in chunks covering lines beyond 7592 before proposing a shared helper, since only 2 of the 4+ classes named in the doc comments have a same-named function inside this chunk."
+    },
+    {
+      "id": "PC1-3",
+      "file": "src/rules_core/pilot_compute/mod.rs",
+      "line_start": 609,
+      "line_end": 1279,
+      "severity": "P3",
+      "category": "bloat",
+      "title": "Repeated per-tier (LEVEL, CHOICE_ID[, SELECTION]) const triples for Paladin Mercy, Ranger Favored Enemy, and Ranger Favored Terrain would collapse into small static tables",
+      "evidence": "Paladin Mercy: PALADIN_MERCY_LEVEL/_CHOICE_ID (609,655) then PALADIN_{SECOND,THIRD,FOURTH,FIFTH,SIXTH}_MERCY_GRANT_LEVEL/_CHOICE_ID (668-707), 6 near-identical pairs. Ranger Favored Enemy: RANGER_FAVORED_ENEMY_{SECOND,THIRD,FOURTH,FIFTH}_INTERVAL_LEVEL/_CHOICE_ID plus matching BONUS_INCREASE_*_SELECTION consts (1038-1137), a 4-tier repeat. Ranger Favored Terrain: the identical shape again for terrain (1185-1279), a 4-tier repeat. Each tier's const pair differs only in its ordinal name and literal level/id string; the values are already effectively a table (interval = base + 5*n) that is hand-unrolled into ~30 named consts total across the three features.",
+      "proposed_action": "report_only",
+      "confidence": "medium",
+      "fix_description": "Replace each family with a single &[(u8, &str)] (or a small struct slice) plus one small loop/lookup function, mirroring the pattern already used for HUNTER_ANIMAL_FOCUS_TIERED_OPTIONS (line 2631) and RANGER_COMBAT_STYLE_FEAT_POOL, and the precedent set by task #49's own consolidation of four Monk slow-fall consts into one formula (cited in this same file around line 6057).",
+      "risk_notes": "Every one of these consts is very likely referenced by name at its own call site and by name in test assertions and diagnostic-id strings elsewhere in the file (outside this chunk); a table swap must preserve every existing choice-id string and diagnostic id verbatim or it will regress corpus-facing diagnostics. Not auto-fixable."
+    },
+    {
+      "id": "PC1-4",
+      "file": "src/rules_core/pilot_compute/mod.rs",
+      "line_start": 1,
+      "line_end": 7592,
+      "severity": "P3",
+      "category": "structure",
+      "title": "Chunk is ~75% doc-comment prose (5,694 of 7,592 lines) covering one const catalog per class; natural per-class submodule seam",
+      "evidence": "grep -c '^\\s*//' over lines 1-7592 returns 5694; grep -c '^const|^pub(crate) const|^pub const' returns 549, against only 22 free functions in the same span. The file already extracts class_slayer and class_ultimate_combat into their own submodules (see mod.rs lines 172-173, 230-231); the Paladin/Ranger/Sorcerer/Bard-Skald/Bloodrager/Brawler/Hunter/Cavalier/Alchemist/Inquisitor/Warpriest/Oracle constant-and-doc blocks in this chunk have the same self-contained shape (a class id const, a run of level-gate consts each with an extensive verification-history doc comment, and 0-6 small pure functions) but are not split out.",
+      "proposed_action": "report_only",
+      "confidence": "medium",
+      "fix_description": "Extract each class's constant block plus its small helper functions into its own submodule file (paladin.rs, ranger.rs, sorcerer.rs, cavalier.rs, ...) under pilot_compute/, re-exported with `use class_x::*;` exactly the way class_slayer/class_ultimate_combat already are, as a pure code-move with no behavior change.",
+      "risk_notes": "This mirrors a move already done twice in this same file (see the SD31-E4-F1-005 comment at line 156 describing the class_feature_grant_consumer/prestige_class_entry_gate/untabled_base_class_chassis split), so the pattern and its risk profile are already proven in this codebase; still a large mechanical move best done per-class rather than in one shot, so report_only rather than auto_fix."
+    },
+    {
+      "id": "PC1-5",
+      "file": "src/rules_core/pilot_compute/mod.rs",
+      "line_start": 7183,
+      "line_end": 7396,
+      "severity": "P3",
+      "category": "duplication",
+      "title": "wolf_companion_hit_dice and horse_companion_hit_dice are byte-identical one-line wrappers",
+      "evidence": "fn wolf_companion_hit_dice(companion_level: u8) -> u8 { ANIMAL_COMPANION_HIT_DICE_BY_MASTER_LEVEL[animal_companion_table_index(companion_level)] } (7183-7185) and fn horse_companion_hit_dice(companion_level: u8) -> u8 { ANIMAL_COMPANION_HIT_DICE_BY_MASTER_LEVEL[animal_companion_table_index(companion_level)] } (7394-7396) have identical bodies; the doc comment on the horse variant (7380-7393) explains this is deliberate (kept separate so future edits to one never touch the other's call sites), so it is a named, intentional duplication rather than an oversight.",
+      "proposed_action": "report_only",
+      "confidence": "high",
+      "fix_description": "Could be folded into a single fn companion_hit_dice(companion_level: u8) -> u8 shared by both call sites if the team revisits the isolation tradeoff; not urgent given the explicit rationale already on record.",
+      "risk_notes": "Same isolation rationale as PC1-1; bundle with that fix rather than doing it alone."
+    }
+  ],
+  "lane_summary": {
+    "files_reviewed": 1,
+    "files_skipped_generated": 0,
+    "cross_chunk": [
+      "fn ground_<class>_feat_pool(level_param: u8, explanations: &mut Vec<ComputationExplanation>, diagnostics: &mut Vec<ComputationDiagnostic>) -- seen here as ground_ranger_combat_style_feat_pool (line 1520) and ground_sorcerer_bloodline_feat_pool (line 2234); doc comments on both cite a 'ratified Fighter/Cavalier/Brawler/Arcane-bloodline treatment' -- check later chunks for Fighter/Cavalier/Brawler bonus-feat-pool grounding functions (likely inlined rather than named 'ground_..._feat_pool') to see if the same skeleton recurs 4+ times total.",
+      "fn ground_<species>_companion_stat_block(id_prefix: &str, owner_class_label: &str, companion_level: u8, explanations: &mut Vec<ComputationExplanation>) -- seen here as ground_wolf_companion_stat_block (7200) and ground_horse_companion_stat_block (7406), ~150 lines each, near-identical bodies differing only in species constants and one attack-name label. Check later chunks (and src/rules_core/pilot_compute/companion_base_stat_table.rs / generic_class_chassis.rs, declared pub(crate)/mod at lines 215/219 of this same file) for whether any third species (e.g. an ACG/APG companion) repeats this shape a third time, and whether companion_base_stat_table.rs already supersedes these two but was never wired in.",
+      "fn animal_companion_table_index/animal_companion_natural_armor_bonus/animal_companion_stat_bonus/animal_companion_hit_points (lines 7083-7144) are already correctly shared helpers consumed by both wolf and horse groundings -- confirms the remaining duplication in PC1-1/PC1-5 is specifically in the per-species explanation-record assembly, not the underlying math.",
+      "Repeated (LEVEL, CHOICE_ID) tier-const pattern (PC1-3): PALADIN_*_MERCY_*, RANGER_FAVORED_ENEMY_*, RANGER_FAVORED_TERRAIN_* in this chunk; grep other chunks for similarly-named *_SECOND_*/_THIRD_*/_FOURTH_* level-gate const families (e.g. any per-class multi-tier choice progression) to size a shared table-collapse refactor across the whole file rather than three isolated spots."
+    ],
+    "notes": "Covered lines 1-7592 of 78506 (snapped to the end of ground_horse_companion_link_vacuous, the enclosing top-level fn, and the start of the next #[cfg(test)] module at line 7592, which belongs to the next lane). 0 files skipped as generated (this file's header is a normal '//! GE-06 pilot...' doc comment, not a GENERATED FILE marker). This span is almost entirely per-class constant catalogs and their justification doc comments (5,694 of 7,592 lines are comment lines; 549 const declarations vs 22 free functions), not dense logic: no .unwrap()/.expect() panics on external/untrusted data (the 3 .expect() calls at lines 1588/1600/1629 are all inside #[cfg(test)] modules asserting on values the same test just constructed), no .clone() calls, no TODO/FIXME markers, and no silent fallback-swallowing found in this span. The two production correctness/duplication findings worth auto_fix-level attention (PC1-1, wolf/horse companion groundings) are explicitly flagged in the code's own comments as a deliberate isolation tradeoff already reviewed once, so they are report_only rather than auto_fix regardless. No P1 (correctness bug / data-loss hazard) findings were found in this span."
+  }
+}

@@ -1,0 +1,8 @@
+## mutation 1: cowardice sent as a deed (CprReputationEventKind::Cowardice => CprReputationKind::Deed)
+test cpr_improve::tests::a_cowardice_event_makes_the_facedown_use_a_negative_reputation ... FAILED
+test result: FAILED. 26 passed; 1 failed; 0 ignored; 0 measured; 863 filtered out; finished in 12.34s
+restored-1
+## mutation 2: an equal Level replaces (reputation.rs: event.level > self.level() -> >=)
+test cpr_improve::tests::a_new_positive_deed_replaces_the_old_only_if_higher ... FAILED
+test result: FAILED. 26 passed; 1 failed; 0 ignored; 0 measured; 863 filtered out; finished in 12.44s
+restored-2

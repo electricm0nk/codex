@@ -1,0 +1,13 @@
+M1 (swap ALTHP<->CURRENTMAX) -> FAIL (exit 1)
+    records=8582 converted=8582 refused=0 rules=10611 var_tables=168 verdict=FAIL problems=11
+      stale on disk: character_operations_manual/class/biohacker.json
+      stale on disk: character_operations_manual/class/vanguard.json
+M2 (drop HD from Hit Points) -> PASS (exit 0)
+    records=8582 converted=8582 refused=0 rules=10611 var_tables=168 verdict=PASS (27.6s)
+M3 (route CON*TL into Hit Points) -> PASS (exit 0)
+    records=8582 converted=8582 refused=0 rules=10611 var_tables=168 verdict=PASS (28.0s)
+M4 (drop RaceHP from Hit Points) -> PASS (exit 0)
+    records=8582 converted=8582 refused=0 rules=10611 var_tables=168 verdict=PASS (27.7s)
+restored (table sha256 5f6fd4a01fb106d1 == 5f6fd4a01fb106d1) -> PASS (exit 0)
+verdict=FAIL
+exit=1

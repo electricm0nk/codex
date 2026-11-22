@@ -1,0 +1,73 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Brine Dragon ~ Desiccating Bite",
+    "delivery": "Supernatural",
+    "description": "An ancient brine dragon's bite causes weakness, dealing 1d2 points of Strength drain in addition to its normal damage.  A great wyrm's bite deals 1d4 points of Strength drain.  A Fortitude save (DC %1) negates the Strength drain.",
+    "description_variables": [
+      "BreathWeaponDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:brine_dragon_desiccating_bite",
+    "name": "Desiccating Bite",
+    "owners": [
+      "bestiary_2:monster:dragon_brine"
+    ],
+    "raw_tokens": [
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(bite, 1d%1 Str)|DesiccatingBiteDamage"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DesiccatingBiteDamage|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DesiccatingBiteDamage|2|PREVARGTEQ:DragonAgeCategory,12"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DesiccatingBiteDamage|0"
+      },
+      {
+        "key": "DESC",
+        "value": "An ancient brine dragon's bite causes weakness, dealing 1d2 points of Strength drain in addition to its normal damage.  A great wyrm's bite deals 1d4 points of Strength drain.  A Fortitude save (DC %1) negates the Strength drain.|BreathWeaponDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Brine Dragon ~ Desiccating Bite"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.94"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
+    "source_page": "p.94",
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T10:25:56Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 473,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Brine Dragon ~ Desiccating Bite",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

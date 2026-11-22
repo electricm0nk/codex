@@ -1,0 +1,132 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Mesmerist Archetype ~ Hate-Monger",
+    "name": "Hate-Monger",
+    "class": "Mesmerist",
+    "description": "Hate-mongers are xenophobic and judgmental rabble-rousers who whip up mobs against enemies real or imagined.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mesmerist Archetype ~ Hate-Monger"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.MesmeristArchetype"
+      },
+      {
+        "key": "PREALIGN",
+        "value": "LN,TN,CN,LE,NE,CE"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.61"
+      },
+      {
+        "key": "DESC",
+        "value": "Hate-mongers are xenophobic and judgmental rabble-rousers who whip up mobs against enemies real or imagined."
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Mesmerist=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Mesmerist Archetype ~ Hate-Monger],[!PREFACT:1,ABILITIES,Mesmerist_Archetype_ConsummateLiar=True,Mesmerist_Archetype_MesmeristTricks=True,Mesmerist_Archetype_TouchTreatment=True,Mesmerist_Archetype_ManifoldTricks=True,Mesmerist_Archetype_MentalPotency=True,Mesmerist_Archetype_BoldStare7=True,Mesmerist_Archetype_GlibLie=True]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Hate-Monger ~ Mental Manipulator|PRECLASS:1,Mesmerist=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Hate-Monger ~ Insidious Hatred|PRECLASS:1,Mesmerist=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Hate-Monger ~ Xenophobe|PRECLASS:1,Mesmerist=5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Hate-Monger ~ Out for Blood|PRECLASS:1,Mesmerist=7"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Hate-Monger ~ Insidious Emotions|PRECLASS:1,Mesmerist=11"
+      },
+      {
+        "key": "FACT",
+        "value": "Mesmerist_Archetype_ConsummateLiar|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Mesmerist_Archetype_MesmeristTricks|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Mesmerist_Archetype_TouchTreatment|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Mesmerist_Archetype_ManifoldTricks|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Mesmerist_Archetype_MentalPotency|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Mesmerist_Archetype_BoldStare7|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Mesmerist_Archetype_GlibLie|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Mesmerist_CF_ConsummateLiar|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Mesmerist_CF_ManifoldTricks|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Mesmerist_CF_MentalPotency|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Mesmerist_CF_BoldStare7|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Mesmerist_CF_GlibLie|true"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/support/ha_abilities_class_oa.lst",
+    "sha256": "9c111f652f8442433ea215fa11e67258c7e6c15c75d1c1753fa6fef34827f46c",
+    "line": 137,
+    "record_key": "Mesmerist Archetype ~ Hate-Monger"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

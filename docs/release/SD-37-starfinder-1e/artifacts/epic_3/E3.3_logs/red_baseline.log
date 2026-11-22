@@ -1,0 +1,8 @@
+$ test -e docs/release/SD-37-starfinder-1e/artifacts/epic_3/token-mapping/sf-mapping-table.v1.json; echo exit=$?
+exit=1
+$ python3 docs/release/SD-37-starfinder-1e/artifacts/epic_3/token-mapping/sf_mapping_mutations.py
+python3: can't open file '/home/ubuntu/workspace/worktrees/codex-sd37/docs/release/SD-37-starfinder-1e/artifacts/epic_3/token-mapping/sf_mapping_mutations.py': [Errno 2] No such file or directory
+exit=2
+$ ls crates/codex-ingest/src/pcgen_import/sheet_rule/sf_mapping.rs
+ls: cannot access 'crates/codex-ingest/src/pcgen_import/sheet_rule/sf_mapping.rs': No such file or directory
+exit=2

@@ -1,0 +1,113 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Monk ~ Unarmed Damage",
+    "name": "Monk ~ Unarmed Damage",
+    "class": "Monk",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MonkUnarmedDamageProgression|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MonkUnarmedDamageLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "UDAMAttackSize|0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Monk Unarmed Damage LVL 1|PREVAREQ:MonkUnarmedDamageProgression,0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Monk Unarmed Damage LVL 4|PREVAREQ:MonkUnarmedDamageProgression,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Monk Unarmed Damage LVL 8|PREVAREQ:MonkUnarmedDamageProgression,2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Monk Unarmed Damage LVL 12|PREVAREQ:MonkUnarmedDamageProgression,3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Monk Unarmed Damage LVL 16|PREVAREQ:MonkUnarmedDamageProgression,4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Monk Unarmed Damage LVL 20|PREVAREQ:MonkUnarmedDamageProgression,5"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkUnarmedDamageLVL|MonkLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkUnarmedDamageProgression|(min(5,MonkUnarmedDamageLVL/4))"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|UDAMAttackSize|1|PREBASESIZEEQ:F"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|UDAMAttackSize|2|PREBASESIZEEQ:D"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|UDAMAttackSize|3|PREBASESIZEEQ:T"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|UDAMAttackSize|4|PREBASESIZEEQ:S"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|UDAMAttackSize|5|PREBASESIZEEQ:M"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|UDAMAttackSize|6|PREBASESIZEEQ:L"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|UDAMAttackSize|7|PREBASESIZEEQ:H"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|UDAMAttackSize|8|PREBASESIZEEQ:G"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|UDAMAttackSize|9|PREBASESIZEEQ:C"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 1280,
+    "record_key": "Monk ~ Unarmed Damage"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

@@ -1,0 +1,84 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Tactician Archetype ~ Metanexus",
+    "name": "Metanexus",
+    "class": "Tactician",
+    "description": "You harness your allies and redefine them as needed.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Tactician Archetype ~ Metanexus"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.TacticianArchetype.TacticianImprovedShare.TacticianPower8.TacticianStrategy16"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Tactician=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Tactician Archetype ~ Metanexus],[!PREABILITY:1,CATEGORY=Archetype,TYPE.TacticianImprovedShare,TYPE.TacticianPower8,TYPE.TacticianStrategy16]"
+      },
+      {
+        "key": "DESC",
+        "value": "You harness your allies and redefine them as needed."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Tactician Class Feature|AUTOMATIC|Metanexus ~ Bridged Power|PRECLASS:1,Tactician=5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Tactician Class Feature|AUTOMATIC|Metanexus ~ Pooled Traits|PRECLASS:1,Tactician=8"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Tactician Class Feature|AUTOMATIC|Metanexus ~ Harness Ally|PRECLASS:1,Tactician=11"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Tactician Class Feature|AUTOMATIC|Metanexus ~ Collective Knowledge|PRECLASS:1,Tactician=16"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Tactician Strategy|-1|PRECLASS:1,Tactician=16"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLKNOWN|CLASS=Tactician;LEVEL=4|-1|PRECLASS:1,Tactician=8"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.287"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2230,
+    "record_key": "Tactician Archetype ~ Metanexus"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

@@ -1,0 +1,3493 @@
+[
+  {
+    "key": "Bomb",
+    "reason": "a monster or class-feature item (bestiary gear, a class ability, a test record), not sold; d20pfsrd states no price",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/weapons/"
+    ]
+  },
+  {
+    "key": "Fake Rapier",
+    "reason": "a monster or class-feature item (bestiary gear, a class ability, a test record), not sold; d20pfsrd states no price",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/weapons/"
+    ]
+  },
+  {
+    "key": "Amentum (Javelin)",
+    "reason": "d20pfsrd lists it at '—' (no cost); a price of 0 is not a positive price",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/weapons/weapon-descriptions/amentum/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/weapons/"
+    ]
+  },
+  {
+    "key": "Seedpod",
+    "reason": "a monster or class-feature item (bestiary gear, a class ability, a test record), not sold; d20pfsrd states no price",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/weapons/"
+    ]
+  },
+  {
+    "key": "Padded Barding (Base)",
+    "reason": "d20pfsrd prices barding as the armor’s price ×2 (Medium mount) or ×4 (Large); the row names no mount size",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/goods-and-services/containers-bags-boxes-more/"
+    ]
+  },
+  {
+    "key": "Leather Barding (Base)",
+    "reason": "d20pfsrd prices barding as the armor’s price ×2 (Medium mount) or ×4 (Large); the row names no mount size",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/goods-and-services/containers-bags-boxes-more/"
+    ]
+  },
+  {
+    "key": "Studded Leather Barding (Base)",
+    "reason": "d20pfsrd prices barding as the armor’s price ×2 (Medium mount) or ×4 (Large); the row names no mount size",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/armor/",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/armor/studded-leather/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/goods-and-services/containers-bags-boxes-more/"
+    ]
+  },
+  {
+    "key": "Chain Shirt Barding (Base)",
+    "reason": "d20pfsrd prices barding as the armor’s price ×2 (Medium mount) or ×4 (Large); the row names no mount size",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/armor/",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/armor/chain-shirt/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/goods-and-services/containers-bags-boxes-more/"
+    ]
+  },
+  {
+    "key": "Hide Barding (Base)",
+    "reason": "d20pfsrd prices barding as the armor’s price ×2 (Medium mount) or ×4 (Large); the row names no mount size",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/goods-and-services/containers-bags-boxes-more/"
+    ]
+  },
+  {
+    "key": "Scale Mail Barding (Base)",
+    "reason": "d20pfsrd prices barding as the armor’s price ×2 (Medium mount) or ×4 (Large); the row names no mount size",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/armor/",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/armor/scale-mail/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/goods-and-services/containers-bags-boxes-more/"
+    ]
+  },
+  {
+    "key": "Chainmail Barding (Base)",
+    "reason": "d20pfsrd prices barding as the armor’s price ×2 (Medium mount) or ×4 (Large); the row names no mount size",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/armor/",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/armor/chainmail/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/goods-and-services/containers-bags-boxes-more/"
+    ]
+  },
+  {
+    "key": "Breastplate Barding (Base)",
+    "reason": "d20pfsrd prices barding as the armor’s price ×2 (Medium mount) or ×4 (Large); the row names no mount size",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/armor/",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/armor/breastplate/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/goods-and-services/containers-bags-boxes-more/"
+    ]
+  },
+  {
+    "key": "Splint Mail Barding (Base)",
+    "reason": "d20pfsrd prices barding as the armor’s price ×2 (Medium mount) or ×4 (Large); the row names no mount size",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/armor/",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/armor/splint-mail/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/goods-and-services/containers-bags-boxes-more/"
+    ]
+  },
+  {
+    "key": "Banded Mail Barding (Base)",
+    "reason": "d20pfsrd prices barding as the armor’s price ×2 (Medium mount) or ×4 (Large); the row names no mount size",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/armor/",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/armor/banded-mail/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/goods-and-services/containers-bags-boxes-more/"
+    ]
+  },
+  {
+    "key": "Half-Plate Barding (Base)",
+    "reason": "d20pfsrd prices barding as the armor’s price ×2 (Medium mount) or ×4 (Large); the row names no mount size",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/armor/",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/armor/half-plate/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/goods-and-services/containers-bags-boxes-more/"
+    ]
+  },
+  {
+    "key": "Full Plate Barding (Base)",
+    "reason": "d20pfsrd prices barding as the armor’s price ×2 (Medium mount) or ×4 (Large); the row names no mount size",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/armor/",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/armor/full-plate/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/goods-and-services/containers-bags-boxes-more/"
+    ]
+  },
+  {
+    "key": "Barding (Padded)",
+    "reason": "d20pfsrd prices barding as the armor’s price ×2 (Medium mount) or ×4 (Large); the row names no mount size",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/armor/",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/goods-and-services/animals-animal-gear/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/goods-and-services/containers-bags-boxes-more/"
+    ]
+  },
+  {
+    "key": "Barding (Leather)",
+    "reason": "d20pfsrd prices barding as the armor’s price ×2 (Medium mount) or ×4 (Large); the row names no mount size",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/armor/",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/goods-and-services/animals-animal-gear/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/goods-and-services/containers-bags-boxes-more/"
+    ]
+  },
+  {
+    "key": "Barding (Studded Leather)",
+    "reason": "d20pfsrd prices barding as the armor’s price ×2 (Medium mount) or ×4 (Large); the row names no mount size",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/armor/",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/goods-and-services/animals-animal-gear/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/goods-and-services/containers-bags-boxes-more/"
+    ]
+  },
+  {
+    "key": "Barding (Chain Shirt)",
+    "reason": "d20pfsrd prices barding as the armor’s price ×2 (Medium mount) or ×4 (Large); the row names no mount size",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/armor/",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/goods-and-services/animals-animal-gear/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/goods-and-services/containers-bags-boxes-more/"
+    ]
+  },
+  {
+    "key": "Barding (Hide)",
+    "reason": "d20pfsrd prices barding as the armor’s price ×2 (Medium mount) or ×4 (Large); the row names no mount size",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/armor/",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/goods-and-services/animals-animal-gear/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/goods-and-services/containers-bags-boxes-more/"
+    ]
+  },
+  {
+    "key": "Barding (Scale Mail)",
+    "reason": "d20pfsrd prices barding as the armor’s price ×2 (Medium mount) or ×4 (Large); the row names no mount size",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/armor/",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/goods-and-services/animals-animal-gear/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/goods-and-services/containers-bags-boxes-more/"
+    ]
+  },
+  {
+    "key": "Barding (Chainmail)",
+    "reason": "d20pfsrd prices barding as the armor’s price ×2 (Medium mount) or ×4 (Large); the row names no mount size",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/armor/",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/goods-and-services/animals-animal-gear/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/goods-and-services/containers-bags-boxes-more/"
+    ]
+  },
+  {
+    "key": "Barding (Breastplate)",
+    "reason": "d20pfsrd prices barding as the armor’s price ×2 (Medium mount) or ×4 (Large); the row names no mount size",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/armor/",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/goods-and-services/animals-animal-gear/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/goods-and-services/containers-bags-boxes-more/"
+    ]
+  },
+  {
+    "key": "Barding (Splint Mail)",
+    "reason": "d20pfsrd prices barding as the armor’s price ×2 (Medium mount) or ×4 (Large); the row names no mount size",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/armor/",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/goods-and-services/animals-animal-gear/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/goods-and-services/containers-bags-boxes-more/"
+    ]
+  },
+  {
+    "key": "Barding (Banded Mail)",
+    "reason": "d20pfsrd prices barding as the armor’s price ×2 (Medium mount) or ×4 (Large); the row names no mount size",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/armor/",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/goods-and-services/animals-animal-gear/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/goods-and-services/containers-bags-boxes-more/"
+    ]
+  },
+  {
+    "key": "Barding (Half-Plate)",
+    "reason": "d20pfsrd prices barding as the armor’s price ×2 (Medium mount) or ×4 (Large); the row names no mount size",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/armor/",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/goods-and-services/animals-animal-gear/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/goods-and-services/containers-bags-boxes-more/"
+    ]
+  },
+  {
+    "key": "Barding (Full Plate)",
+    "reason": "d20pfsrd prices barding as the armor’s price ×2 (Medium mount) or ×4 (Large); the row names no mount size",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/armor/",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/goods-and-services/animals-animal-gear/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/goods-and-services/containers-bags-boxes-more/"
+    ]
+  },
+  {
+    "key": "Holly and Mistletoe",
+    "reason": "d20pfsrd lists it at '—' (no cost); a price of 0 is not a positive price",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/goods-and-services/herbs-oils-other-substances/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/goods-and-services/containers-bags-boxes-more/"
+    ]
+  },
+  {
+    "key": "Holy Symbol",
+    "reason": "d20pfsrd prices a holy symbol by material (wooden 1 gp … platinum 500 gp); the row names none",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/goods-and-services/toys-games-puzzles/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/goods-and-services/containers-bags-boxes-more/"
+    ]
+  },
+  {
+    "key": "Unholy Symbol",
+    "reason": "d20pfsrd prices a holy symbol by material (wooden 1 gp … platinum 500 gp); the row names none",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/goods-and-services/containers-bags-boxes-more/"
+    ]
+  },
+  {
+    "key": "Poison (Black Smear)",
+    "reason": "a monster or class-feature item (bestiary gear, a class ability, a test record), not sold; d20pfsrd states no price",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/magic/all-spells/p/poison/",
+      "d20pfsrd:https://www.d20pfsrd.com/gamemastering/afflictions/poison/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/goods-and-services/containers-bags-boxes-more/"
+    ]
+  },
+  {
+    "key": "Raft",
+    "reason": "d20pfsrd lists it at '—' (no cost); a price of 0 is not a positive price",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/goods-and-services/furniture-trade-goods-vehicles/",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/vehicles/water-vehicles/raft/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/goods-and-services/containers-bags-boxes-more/"
+    ]
+  },
+  {
+    "key": "Holy Symbol (Compartment)",
+    "reason": "d20pfsrd states only a surcharge (+N gp) over the item it is added to",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/goods-and-services/toys-games-puzzles/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/goods-and-services/containers-bags-boxes-more/"
+    ]
+  },
+  {
+    "key": "Holy Symbol (Flask)",
+    "reason": "d20pfsrd states only a surcharge (+N gp) over the item it is added to",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/goods-and-services/toys-games-puzzles/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/goods-and-services/containers-bags-boxes-more/"
+    ]
+  },
+  {
+    "key": "Dust Knuckles.FORGET",
+    "reason": "a PCGen removal directive served as a row, not an item (E2.8 hides it)",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/goods-and-services/containers-bags-boxes-more/"
+    ]
+  },
+  {
+    "key": "False Face.FORGET",
+    "reason": "a PCGen removal directive served as a row, not an item (E2.8 hides it)",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/goods-and-services/containers-bags-boxes-more/"
+    ]
+  },
+  {
+    "key": "Reverse Capacitor",
+    "reason": "its d20pfsrd entry states no price",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/3rd-party-rules-systems/psionics-unleashed/equipment/psionic-items/cursed-psionic-items/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/3rd-party-rules-systems/psionics-unleashed/equipment/psionic-items/universal-items/",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/3rd-party-rules-systems/psionics-unleashed/equipment/psionic-items/psionic-artifacts/"
+    ]
+  },
+  {
+    "key": "Crown of Chaos",
+    "reason": "no d20pfsrd page names it (sitemap of every page searched by name, and its category pages read)",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/3rd-party-rules-systems/psionics-unleashed/equipment/psionic-items/universal-items/",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/3rd-party-rules-systems/psionics-unleashed/equipment/psionic-items/psionic-artifacts/"
+    ]
+  },
+  {
+    "key": "Disruptor",
+    "reason": "no d20pfsrd page names it (sitemap of every page searched by name, and its category pages read)",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/3rd-party-rules-systems/psionics-unleashed/equipment/psionic-items/universal-items/",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/3rd-party-rules-systems/psionics-unleashed/equipment/psionic-items/psionic-artifacts/"
+    ]
+  },
+  {
+    "key": "Dissonance",
+    "reason": "no d20pfsrd page names it (sitemap of every page searched by name, and its category pages read)",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/magic/3rd-party-spells/frog-god-games/dissonance/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/3rd-party-rules-systems/psionics-unleashed/equipment/psionic-items/universal-items/",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/3rd-party-rules-systems/psionics-unleashed/equipment/psionic-items/psionic-artifacts/"
+    ]
+  },
+  {
+    "key": "Groundscorn Boots",
+    "reason": "no d20pfsrd page names it (sitemap of every page searched by name, and its category pages read)",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/3rd-party-rules-systems/psionics-unleashed/equipment/psionic-items/universal-items/",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/3rd-party-rules-systems/psionics-unleashed/equipment/psionic-items/psionic-artifacts/"
+    ]
+  },
+  {
+    "key": "Helm of the Hydra",
+    "reason": "no d20pfsrd page names it (sitemap of every page searched by name, and its category pages read)",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/3rd-party-rules-systems/psionics-unleashed/equipment/psionic-items/universal-items/",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/3rd-party-rules-systems/psionics-unleashed/equipment/psionic-items/psionic-artifacts/"
+    ]
+  },
+  {
+    "key": "Moldev",
+    "reason": "no d20pfsrd page names it (sitemap of every page searched by name, and its category pages read)",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/3rd-party-rules-systems/psionics-unleashed/equipment/psionic-items/universal-items/",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/3rd-party-rules-systems/psionics-unleashed/equipment/psionic-items/psionic-artifacts/"
+    ]
+  },
+  {
+    "key": "Severis",
+    "reason": "no d20pfsrd page names it (sitemap of every page searched by name, and its category pages read)",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/3rd-party-rules-systems/psionics-unleashed/equipment/psionic-items/universal-items/",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/3rd-party-rules-systems/psionics-unleashed/equipment/psionic-items/psionic-artifacts/"
+    ]
+  },
+  {
+    "key": "Tempest's Blade",
+    "reason": "no d20pfsrd page names it (sitemap of every page searched by name, and its category pages read)",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/3rd-party-rules-systems/psionics-unleashed/equipment/psionic-items/universal-items/",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/3rd-party-rules-systems/psionics-unleashed/equipment/psionic-items/psionic-artifacts/"
+    ]
+  },
+  {
+    "key": "Breezeblown Dandelion Flower",
+    "reason": "no d20pfsrd page names it (sitemap of every page searched by name, and its category pages read)",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/wondrous-items/"
+    ]
+  },
+  {
+    "key": "Haunted Doll",
+    "reason": "no d20pfsrd page names it (sitemap of every page searched by name, and its category pages read)",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/cursed-items/"
+    ]
+  },
+  {
+    "key": "Maniac Hand",
+    "reason": "no d20pfsrd page names it (sitemap of every page searched by name, and its category pages read)",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/cursed-items/"
+    ]
+  },
+  {
+    "key": "Mirror of Soul Snaring",
+    "reason": "no d20pfsrd page names it (sitemap of every page searched by name, and its category pages read)",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/cursed-items/"
+    ]
+  },
+  {
+    "key": "Portal Network",
+    "reason": "an artifact: d20pfsrd and the book state no price",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/minor-artifacts/",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/major-artifacts/"
+    ]
+  },
+  {
+    "key": "Primordial Symbol",
+    "reason": "an artifact: d20pfsrd and the book state no price",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/minor-artifacts/",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/major-artifacts/"
+    ]
+  },
+  {
+    "key": "Soul Portrait",
+    "reason": "an artifact: d20pfsrd and the book state no price",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/minor-artifacts/",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/major-artifacts/"
+    ]
+  },
+  {
+    "key": "Stannum Crown",
+    "reason": "an artifact: d20pfsrd and the book state no price",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/minor-artifacts/",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/major-artifacts/"
+    ]
+  },
+  {
+    "key": "Thought Record",
+    "reason": "an artifact: d20pfsrd and the book state no price",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/minor-artifacts/",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/major-artifacts/"
+    ]
+  },
+  {
+    "key": "Bullroarers of Outburst",
+    "reason": "an artifact: d20pfsrd and the book state no price",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/paizo-rules-systems/mythic/mythic-magic-items/artifacts/",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/minor-artifacts/bullroarers-of-outburst-minor-artifact/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/paizo-rules-systems/mythic/mythic-magic-items/other-magic-items/"
+    ]
+  },
+  {
+    "key": "Elemental Chain",
+    "reason": "an artifact: d20pfsrd and the book state no price",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/paizo-rules-systems/mythic/mythic-magic-items/artifacts/",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/minor-artifacts/elemental-chain-minor-artifact/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/paizo-rules-systems/mythic/mythic-magic-items/other-magic-items/"
+    ]
+  },
+  {
+    "key": "Fleshhook of Mythic Sustenance",
+    "reason": "an artifact: d20pfsrd and the book state no price",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/paizo-rules-systems/mythic/mythic-magic-items/artifacts/",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/minor-artifacts/fleshhook-of-mythic-sustenance-minor-artifact/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/paizo-rules-systems/mythic/mythic-magic-items/other-magic-items/"
+    ]
+  },
+  {
+    "key": "Fortune's Arrow",
+    "reason": "an artifact: d20pfsrd and the book state no price",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/paizo-rules-systems/mythic/mythic-magic-items/artifacts/",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/minor-artifacts/fortunes-arrow-minor-artifact/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/paizo-rules-systems/mythic/mythic-magic-items/other-magic-items/"
+    ]
+  },
+  {
+    "key": "Glabrezu Claw",
+    "reason": "an artifact: d20pfsrd and the book state no price",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/paizo-rules-systems/mythic/mythic-magic-items/artifacts/",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/minor-artifacts/glabrezu-claw-minor-artifact/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/paizo-rules-systems/mythic/mythic-magic-items/other-magic-items/"
+    ]
+  },
+  {
+    "key": "Hermetic Flask",
+    "reason": "an artifact: d20pfsrd and the book state no price",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/paizo-rules-systems/mythic/mythic-magic-items/artifacts/",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/minor-artifacts/hermetic-flask-minor-artifact/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/paizo-rules-systems/mythic/mythic-magic-items/other-magic-items/"
+    ]
+  },
+  {
+    "key": "Ring of Equilibrium",
+    "reason": "an artifact: d20pfsrd and the book state no price",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/paizo-rules-systems/mythic/mythic-magic-items/artifacts/",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/minor-artifacts/ring-of-equilibrium-minor-artifact/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/paizo-rules-systems/mythic/mythic-magic-items/other-magic-items/"
+    ]
+  },
+  {
+    "key": "Rod of Spell Sundering",
+    "reason": "an artifact: d20pfsrd and the book state no price",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/paizo-rules-systems/mythic/mythic-magic-items/artifacts/",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/minor-artifacts/rod-of-spell-sundering-minor-artifact/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/paizo-rules-systems/mythic/mythic-magic-items/other-magic-items/"
+    ]
+  },
+  {
+    "key": "Staff of Eldritch sovereignty",
+    "reason": "an artifact: d20pfsrd and the book state no price",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/paizo-rules-systems/mythic/mythic-magic-items/artifacts/",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/minor-artifacts/staff-of-eldritch-sovereignty-minor-artifact/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/paizo-rules-systems/mythic/mythic-magic-items/other-magic-items/"
+    ]
+  },
+  {
+    "key": "Torc of the Heavens",
+    "reason": "an artifact: d20pfsrd and the book state no price",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/paizo-rules-systems/mythic/mythic-magic-items/artifacts/",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/minor-artifacts/torc-of-the-heavens-minor-artifact/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/paizo-rules-systems/mythic/mythic-magic-items/other-magic-items/"
+    ]
+  },
+  {
+    "key": "Apocalypse Box",
+    "reason": "an artifact: d20pfsrd and the book state no price",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/paizo-rules-systems/mythic/mythic-magic-items/artifacts/",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/major-artifacts/apocalypse-box/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/paizo-rules-systems/mythic/mythic-magic-items/other-magic-items/"
+    ]
+  },
+  {
+    "key": "Diadem of Nod",
+    "reason": "an artifact: d20pfsrd and the book state no price",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/paizo-rules-systems/mythic/mythic-magic-items/artifacts/",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/major-artifacts/diadem-of-nod-major-artifact/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/paizo-rules-systems/mythic/mythic-magic-items/other-magic-items/"
+    ]
+  },
+  {
+    "key": "Emperor's Mammoth",
+    "reason": "an artifact: d20pfsrd and the book state no price",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/paizo-rules-systems/mythic/mythic-magic-items/artifacts/",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/major-artifacts/emperors-mammoth-major-artifact/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/paizo-rules-systems/mythic/mythic-magic-items/other-magic-items/"
+    ]
+  },
+  {
+    "key": "Frozen Heart of Cocytus",
+    "reason": "an artifact: d20pfsrd and the book state no price",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/paizo-rules-systems/mythic/mythic-magic-items/artifacts/",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/major-artifacts/frozen-heart-of-cocytus-major-artifact/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/paizo-rules-systems/mythic/mythic-magic-items/other-magic-items/"
+    ]
+  },
+  {
+    "key": "Netherworld Cauldron",
+    "reason": "an artifact: d20pfsrd and the book state no price",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/paizo-rules-systems/mythic/mythic-magic-items/artifacts/",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/major-artifacts/netherworld-cauldron-major-artifact/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/paizo-rules-systems/mythic/mythic-magic-items/other-magic-items/"
+    ]
+  },
+  {
+    "key": "Nimbus of Radiant Truth",
+    "reason": "an artifact: d20pfsrd and the book state no price",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/paizo-rules-systems/mythic/mythic-magic-items/artifacts/",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/major-artifacts/nimbus-of-radiant-truth-major-artifact-2/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/paizo-rules-systems/mythic/mythic-magic-items/other-magic-items/"
+    ]
+  },
+  {
+    "key": "Plaguebringer",
+    "reason": "an artifact: d20pfsrd and the book state no price",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/paizo-rules-systems/mythic/mythic-magic-items/artifacts/",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/major-artifacts/plaguebringer-major-artifact-2/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/paizo-rules-systems/mythic/mythic-magic-items/other-magic-items/"
+    ]
+  },
+  {
+    "key": "Shadowwraith Heart",
+    "reason": "an artifact: d20pfsrd and the book state no price",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/paizo-rules-systems/mythic/mythic-magic-items/artifacts/",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/major-artifacts/shadowwraith-heart-major-artifact-2/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/paizo-rules-systems/mythic/mythic-magic-items/other-magic-items/"
+    ]
+  },
+  {
+    "key": "Silver Maiden",
+    "reason": "an artifact: d20pfsrd and the book state no price",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/paizo-rules-systems/mythic/mythic-magic-items/artifacts/",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/major-artifacts/silver-maiden-major-artifact/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/paizo-rules-systems/mythic/mythic-magic-items/other-magic-items/"
+    ]
+  },
+  {
+    "key": "Tarnhelm",
+    "reason": "an artifact: d20pfsrd and the book state no price",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/paizo-rules-systems/mythic/mythic-magic-items/artifacts/",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/major-artifacts/tarnhelm-major-artifact/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/paizo-rules-systems/mythic/mythic-magic-items/other-magic-items/"
+    ]
+  },
+  {
+    "key": "Trueforge",
+    "reason": "an artifact: d20pfsrd and the book state no price",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/paizo-rules-systems/mythic/mythic-magic-items/artifacts/",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/major-artifacts/trueforge-major-artifact/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/paizo-rules-systems/mythic/mythic-magic-items/other-magic-items/"
+    ]
+  },
+  {
+    "key": "Rod (Storm Kindler's)",
+    "reason": "an artifact: d20pfsrd and the book state no price",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/minor-artifacts/storm-kindlers-rod-minor-artifact/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/wondrous-items/"
+    ]
+  },
+  {
+    "key": "Demon Armor Claw Attack",
+    "reason": "a natural attack or part granted by another item; priced with that item, not on its own",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/weapons/"
+    ]
+  },
+  {
+    "key": "Armor Spikes",
+    "reason": "d20pfsrd states only a surcharge (+N gp) over the item it is added to",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/armor/",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/armor/armor-spikes/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/weapons/"
+    ]
+  },
+  {
+    "key": "Club (Base)",
+    "reason": "d20pfsrd lists it at '—' (no cost); a price of 0 is not a positive price",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/weapons/",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/weapons/weapon-descriptions/club/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml"
+    ]
+  },
+  {
+    "key": "Quarterstaff (Base)",
+    "reason": "d20pfsrd lists it at '—' (no cost); a price of 0 is not a positive price",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/weapons/",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/weapons/weapon-descriptions/quarterstaff/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml"
+    ]
+  },
+  {
+    "key": "Spiked Armor (Base)",
+    "reason": "d20pfsrd's weapon table prices spiked armor as 'special' (the armor's price plus spikes)",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/weapons/",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/weapons/weapon-descriptions/spiked-armor/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml"
+    ]
+  },
+  {
+    "key": "Gauntlet (Part of Armor Suit)",
+    "reason": "a natural attack or part granted by another item; priced with that item, not on its own",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/weapons/",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/weapons/weapon-descriptions/gauntlet/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml"
+    ]
+  },
+  {
+    "key": "Flurry of Blows",
+    "reason": "an attack form or class feature, not a purchasable item; d20pfsrd states no price",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/weapons/"
+    ]
+  },
+  {
+    "key": "Shieldbash (Light)",
+    "reason": "an attack form or class feature, not a purchasable item; d20pfsrd states no price",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/weapons/"
+    ]
+  },
+  {
+    "key": "Shieldbash (Heavy)",
+    "reason": "an attack form or class feature, not a purchasable item; d20pfsrd states no price",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/weapons/"
+    ]
+  },
+  {
+    "key": "Touch Attack (Ray)",
+    "reason": "an attack form or class feature, not a purchasable item; d20pfsrd states no price",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/weapons/"
+    ]
+  },
+  {
+    "key": "Unarmed Strike",
+    "reason": "an attack form or class feature, not a purchasable item; d20pfsrd states no price",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/weapons/",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/weapons/weapon-descriptions/strike-unarmed/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml"
+    ]
+  },
+  {
+    "key": "Sling (Base)",
+    "reason": "d20pfsrd lists it at '—' (no cost); a price of 0 is not a positive price",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/weapons/",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/weapons/weapon-descriptions/sling/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml"
+    ]
+  },
+  {
+    "key": "Improvised Weapon (1d2)",
+    "reason": "an attack form or class feature, not a purchasable item; d20pfsrd states no price",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/weapons/"
+    ]
+  },
+  {
+    "key": "Improvised Weapon (1d3)",
+    "reason": "an attack form or class feature, not a purchasable item; d20pfsrd states no price",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/weapons/"
+    ]
+  },
+  {
+    "key": "Improvised Weapon (1d4)",
+    "reason": "an attack form or class feature, not a purchasable item; d20pfsrd states no price",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/weapons/"
+    ]
+  },
+  {
+    "key": "Improvised Weapon (1d6)",
+    "reason": "an attack form or class feature, not a purchasable item; d20pfsrd states no price",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/weapons/"
+    ]
+  },
+  {
+    "key": "Improvised Weapon (1d8)",
+    "reason": "an attack form or class feature, not a purchasable item; d20pfsrd states no price",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/weapons/"
+    ]
+  },
+  {
+    "key": "Improvised Weapon (1d10)",
+    "reason": "an attack form or class feature, not a purchasable item; d20pfsrd states no price",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/weapons/"
+    ]
+  },
+  {
+    "key": "Improvised Weapon (1d12)",
+    "reason": "an attack form or class feature, not a purchasable item; d20pfsrd states no price",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/weapons/"
+    ]
+  },
+  {
+    "key": "Improvised Weapon (2d4)",
+    "reason": "an attack form or class feature, not a purchasable item; d20pfsrd states no price",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/weapons/"
+    ]
+  },
+  {
+    "key": "Improvised Weapon (2d6)",
+    "reason": "an attack form or class feature, not a purchasable item; d20pfsrd states no price",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/weapons/"
+    ]
+  },
+  {
+    "key": "Improvised Weapon (2d8)",
+    "reason": "an attack form or class feature, not a purchasable item; d20pfsrd states no price",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/weapons/"
+    ]
+  },
+  {
+    "key": "Improvised Weapon (2d10)",
+    "reason": "an attack form or class feature, not a purchasable item; d20pfsrd states no price",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/weapons/"
+    ]
+  },
+  {
+    "key": "Improvised Weapon (Thrown) (1d2)",
+    "reason": "an attack form or class feature, not a purchasable item; d20pfsrd states no price",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/weapons/"
+    ]
+  },
+  {
+    "key": "Improvised Weapon (Thrown) (1d3)",
+    "reason": "an attack form or class feature, not a purchasable item; d20pfsrd states no price",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/weapons/"
+    ]
+  },
+  {
+    "key": "Improvised Weapon (Thrown) (1d4)",
+    "reason": "an attack form or class feature, not a purchasable item; d20pfsrd states no price",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/weapons/"
+    ]
+  },
+  {
+    "key": "Improvised Weapon (Thrown) (1d6)",
+    "reason": "an attack form or class feature, not a purchasable item; d20pfsrd states no price",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/weapons/"
+    ]
+  },
+  {
+    "key": "Improvised Weapon (Thrown) (1d8)",
+    "reason": "an attack form or class feature, not a purchasable item; d20pfsrd states no price",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/weapons/"
+    ]
+  },
+  {
+    "key": "Improvised Weapon (Thrown) (1d10)",
+    "reason": "an attack form or class feature, not a purchasable item; d20pfsrd states no price",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/weapons/"
+    ]
+  },
+  {
+    "key": "Improvised Weapon (Thrown) (1d12)",
+    "reason": "an attack form or class feature, not a purchasable item; d20pfsrd states no price",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/weapons/"
+    ]
+  },
+  {
+    "key": "Improvised Weapon (Thrown) (2d4)",
+    "reason": "an attack form or class feature, not a purchasable item; d20pfsrd states no price",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/weapons/"
+    ]
+  },
+  {
+    "key": "Improvised Weapon (Thrown) (2d6)",
+    "reason": "an attack form or class feature, not a purchasable item; d20pfsrd states no price",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/weapons/"
+    ]
+  },
+  {
+    "key": "Improvised Weapon (Thrown) (2d8)",
+    "reason": "an attack form or class feature, not a purchasable item; d20pfsrd states no price",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/weapons/"
+    ]
+  },
+  {
+    "key": "Improvised Weapon (Thrown) (2d10)",
+    "reason": "an attack form or class feature, not a purchasable item; d20pfsrd states no price",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/weapons/"
+    ]
+  },
+  {
+    "key": "Stake (Wood)",
+    "reason": "d20pfsrd lists it at '—' (no cost); a price of 0 is not a positive price",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/weapons/",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/weapons/weapon-descriptions/stake-wooden/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml"
+    ]
+  },
+  {
+    "key": "Improvised Weapon (One-Handed)",
+    "reason": "an attack form or class feature, not a purchasable item; d20pfsrd states no price",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/weapons/"
+    ]
+  },
+  {
+    "key": "Improvised Weapon (Two-Handed)",
+    "reason": "an attack form or class feature, not a purchasable item; d20pfsrd states no price",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/weapons/"
+    ]
+  },
+  {
+    "key": "Brawler's Flurry",
+    "reason": "an attack form or class feature, not a purchasable item; d20pfsrd states no price",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/weapons/"
+    ]
+  },
+  {
+    "key": "Mystic Bolts",
+    "reason": "an attack form or class feature, not a purchasable item; d20pfsrd states no price",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/weapons/"
+    ]
+  },
+  {
+    "key": "Demon Prince Armor Claw Attack",
+    "reason": "a natural attack or part granted by another item; priced with that item, not on its own",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/weapons/"
+    ]
+  },
+  {
+    "key": "Ring of Rat Fangs Bite Attack",
+    "reason": "a natural attack or part granted by another item; priced with that item, not on its own",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/weapons/"
+    ]
+  },
+  {
+    "key": "Amentum",
+    "reason": "d20pfsrd lists it at '—' (no cost); a price of 0 is not a positive price",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/weapons/weapon-descriptions/amentum/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/weapons/"
+    ]
+  },
+  {
+    "key": "Scroll Blade",
+    "reason": "no d20pfsrd page names it (sitemap of every page searched by name, and its category pages read)",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/weapons/"
+    ]
+  },
+  {
+    "key": "Astral Suit Ram 1",
+    "reason": "a psionic class-feature construct (soulknife mind blade, aegis astral suit) or a power, not a purchasable item",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/goods-and-services/animals-animal-gear/",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/3rd-party-rules-systems/psionics-unleashed/classes/aegis/astral-suits/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/3rd-party-rules-systems/psionics-unleashed/equipment/psionic-items/universal-items/",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/3rd-party-rules-systems/psionics-unleashed/equipment/psionic-items/psionic-artifacts/"
+    ]
+  },
+  {
+    "key": "Astral Suit Ram 2",
+    "reason": "a psionic class-feature construct (soulknife mind blade, aegis astral suit) or a power, not a purchasable item",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/goods-and-services/animals-animal-gear/",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/3rd-party-rules-systems/psionics-unleashed/classes/aegis/astral-suits/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/3rd-party-rules-systems/psionics-unleashed/equipment/psionic-items/universal-items/",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/3rd-party-rules-systems/psionics-unleashed/equipment/psionic-items/psionic-artifacts/"
+    ]
+  },
+  {
+    "key": "Astral Suit Ram 3",
+    "reason": "a psionic class-feature construct (soulknife mind blade, aegis astral suit) or a power, not a purchasable item",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/goods-and-services/animals-animal-gear/",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/3rd-party-rules-systems/psionics-unleashed/classes/aegis/astral-suits/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/3rd-party-rules-systems/psionics-unleashed/equipment/psionic-items/universal-items/",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/3rd-party-rules-systems/psionics-unleashed/equipment/psionic-items/psionic-artifacts/"
+    ]
+  },
+  {
+    "key": "Astral Suit Ram 4",
+    "reason": "a psionic class-feature construct (soulknife mind blade, aegis astral suit) or a power, not a purchasable item",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/goods-and-services/animals-animal-gear/",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/3rd-party-rules-systems/psionics-unleashed/classes/aegis/astral-suits/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/3rd-party-rules-systems/psionics-unleashed/equipment/psionic-items/universal-items/",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/3rd-party-rules-systems/psionics-unleashed/equipment/psionic-items/psionic-artifacts/"
+    ]
+  },
+  {
+    "key": "Mind Blade (Light Bludgeoning)",
+    "reason": "a psionic class-feature construct (soulknife mind blade, aegis astral suit) or a power, not a purchasable item",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/3rd-party-rules-systems/psionics-unleashed/feats/mind-blade-knight/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/3rd-party-rules-systems/psionics-unleashed/equipment/psionic-items/universal-items/",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/3rd-party-rules-systems/psionics-unleashed/equipment/psionic-items/psionic-artifacts/"
+    ]
+  },
+  {
+    "key": "Mind Blade (Light Piercing)",
+    "reason": "a psionic class-feature construct (soulknife mind blade, aegis astral suit) or a power, not a purchasable item",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/3rd-party-rules-systems/psionics-unleashed/feats/mind-blade-knight/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/3rd-party-rules-systems/psionics-unleashed/equipment/psionic-items/universal-items/",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/3rd-party-rules-systems/psionics-unleashed/equipment/psionic-items/psionic-artifacts/"
+    ]
+  },
+  {
+    "key": "Mind Blade (Light Slashing)",
+    "reason": "a psionic class-feature construct (soulknife mind blade, aegis astral suit) or a power, not a purchasable item",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/3rd-party-rules-systems/psionics-unleashed/feats/mind-blade-knight/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/3rd-party-rules-systems/psionics-unleashed/equipment/psionic-items/universal-items/",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/3rd-party-rules-systems/psionics-unleashed/equipment/psionic-items/psionic-artifacts/"
+    ]
+  },
+  {
+    "key": "Mind Blade (One-Handed Bludgeoning)",
+    "reason": "a psionic class-feature construct (soulknife mind blade, aegis astral suit) or a power, not a purchasable item",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/3rd-party-rules-systems/psionics-unleashed/feats/mind-blade-knight/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/3rd-party-rules-systems/psionics-unleashed/equipment/psionic-items/universal-items/",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/3rd-party-rules-systems/psionics-unleashed/equipment/psionic-items/psionic-artifacts/"
+    ]
+  },
+  {
+    "key": "Mind Blade (One-Handed Piercing)",
+    "reason": "a psionic class-feature construct (soulknife mind blade, aegis astral suit) or a power, not a purchasable item",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/3rd-party-rules-systems/psionics-unleashed/feats/mind-blade-knight/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/3rd-party-rules-systems/psionics-unleashed/equipment/psionic-items/universal-items/",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/3rd-party-rules-systems/psionics-unleashed/equipment/psionic-items/psionic-artifacts/"
+    ]
+  },
+  {
+    "key": "Mind Blade (One-Handed Slashing)",
+    "reason": "a psionic class-feature construct (soulknife mind blade, aegis astral suit) or a power, not a purchasable item",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/3rd-party-rules-systems/psionics-unleashed/feats/mind-blade-knight/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/3rd-party-rules-systems/psionics-unleashed/equipment/psionic-items/universal-items/",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/3rd-party-rules-systems/psionics-unleashed/equipment/psionic-items/psionic-artifacts/"
+    ]
+  },
+  {
+    "key": "Mind Blade (Two-Handed Bludgeoning)",
+    "reason": "a psionic class-feature construct (soulknife mind blade, aegis astral suit) or a power, not a purchasable item",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/3rd-party-rules-systems/psionics-unleashed/feats/mind-blade-knight/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/3rd-party-rules-systems/psionics-unleashed/equipment/psionic-items/universal-items/",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/3rd-party-rules-systems/psionics-unleashed/equipment/psionic-items/psionic-artifacts/"
+    ]
+  },
+  {
+    "key": "Mind Blade (Two-Handed Piercing)",
+    "reason": "a psionic class-feature construct (soulknife mind blade, aegis astral suit) or a power, not a purchasable item",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/3rd-party-rules-systems/psionics-unleashed/feats/mind-blade-knight/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/3rd-party-rules-systems/psionics-unleashed/equipment/psionic-items/universal-items/",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/3rd-party-rules-systems/psionics-unleashed/equipment/psionic-items/psionic-artifacts/"
+    ]
+  },
+  {
+    "key": "Mind Blade (Two-Handed Slashing)",
+    "reason": "a psionic class-feature construct (soulknife mind blade, aegis astral suit) or a power, not a purchasable item",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/3rd-party-rules-systems/psionics-unleashed/feats/mind-blade-knight/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/3rd-party-rules-systems/psionics-unleashed/equipment/psionic-items/universal-items/",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/3rd-party-rules-systems/psionics-unleashed/equipment/psionic-items/psionic-artifacts/"
+    ]
+  },
+  {
+    "key": "Mind Dagger",
+    "reason": "a psionic class-feature construct (soulknife mind blade, aegis astral suit) or a power, not a purchasable item",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/3rd-party-rules-systems/psionics-unleashed/equipment/psionic-items/universal-items/",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/3rd-party-rules-systems/psionics-unleashed/equipment/psionic-items/psionic-artifacts/"
+    ]
+  },
+  {
+    "key": "Deadly Fist",
+    "reason": "an attack form or class feature, not a purchasable item; d20pfsrd states no price",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/3rd-party-rules-systems/psionics-unleashed/classes/soulknife/archetypes/dreamscarred-press/deadly-fist/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/3rd-party-rules-systems/psionics-unleashed/equipment/psionic-items/universal-items/",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/3rd-party-rules-systems/psionics-unleashed/equipment/psionic-items/psionic-artifacts/"
+    ]
+  },
+  {
+    "key": "Mind Arrow",
+    "reason": "a psionic class-feature construct (soulknife mind blade, aegis astral suit) or a power, not a purchasable item",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/3rd-party-rules-systems/psionics-unleashed/equipment/psionic-items/universal-items/",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/3rd-party-rules-systems/psionics-unleashed/equipment/psionic-items/psionic-artifacts/"
+    ]
+  },
+  {
+    "key": "Mind Xephyr Knife",
+    "reason": "a psionic class-feature construct (soulknife mind blade, aegis astral suit) or a power, not a purchasable item",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/3rd-party-rules-systems/psionics-unleashed/equipment/psionic-items/universal-items/",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/3rd-party-rules-systems/psionics-unleashed/equipment/psionic-items/psionic-artifacts/"
+    ]
+  },
+  {
+    "key": "Mind Bolt (Long Range Bludgeoning)",
+    "reason": "a psionic class-feature construct (soulknife mind blade, aegis astral suit) or a power, not a purchasable item",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/3rd-party-rules-systems/psionics-unleashed/equipment/psionic-items/universal-items/",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/3rd-party-rules-systems/psionics-unleashed/equipment/psionic-items/psionic-artifacts/"
+    ]
+  },
+  {
+    "key": "Mind Bolt (Long Range Piercing)",
+    "reason": "a psionic class-feature construct (soulknife mind blade, aegis astral suit) or a power, not a purchasable item",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/3rd-party-rules-systems/psionics-unleashed/equipment/psionic-items/universal-items/",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/3rd-party-rules-systems/psionics-unleashed/equipment/psionic-items/psionic-artifacts/"
+    ]
+  },
+  {
+    "key": "Mind Bolt (Long Range Slashing)",
+    "reason": "a psionic class-feature construct (soulknife mind blade, aegis astral suit) or a power, not a purchasable item",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/3rd-party-rules-systems/psionics-unleashed/equipment/psionic-items/universal-items/",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/3rd-party-rules-systems/psionics-unleashed/equipment/psionic-items/psionic-artifacts/"
+    ]
+  },
+  {
+    "key": "Mind Bolt (Medium Range Bludgeoning)",
+    "reason": "a psionic class-feature construct (soulknife mind blade, aegis astral suit) or a power, not a purchasable item",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/3rd-party-rules-systems/psionics-unleashed/equipment/psionic-items/universal-items/",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/3rd-party-rules-systems/psionics-unleashed/equipment/psionic-items/psionic-artifacts/"
+    ]
+  },
+  {
+    "key": "Mind Bolt (Medium Range Piercing)",
+    "reason": "a psionic class-feature construct (soulknife mind blade, aegis astral suit) or a power, not a purchasable item",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/3rd-party-rules-systems/psionics-unleashed/equipment/psionic-items/universal-items/",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/3rd-party-rules-systems/psionics-unleashed/equipment/psionic-items/psionic-artifacts/"
+    ]
+  },
+  {
+    "key": "Mind Bolt (Medium Range Slashing)",
+    "reason": "a psionic class-feature construct (soulknife mind blade, aegis astral suit) or a power, not a purchasable item",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/3rd-party-rules-systems/psionics-unleashed/equipment/psionic-items/universal-items/",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/3rd-party-rules-systems/psionics-unleashed/equipment/psionic-items/psionic-artifacts/"
+    ]
+  },
+  {
+    "key": "Mind Bolt (Short Range Bludgeoning)",
+    "reason": "a psionic class-feature construct (soulknife mind blade, aegis astral suit) or a power, not a purchasable item",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/3rd-party-rules-systems/psionics-unleashed/equipment/psionic-items/universal-items/",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/3rd-party-rules-systems/psionics-unleashed/equipment/psionic-items/psionic-artifacts/"
+    ]
+  },
+  {
+    "key": "Mind Bolt (Short Range Piercing)",
+    "reason": "a psionic class-feature construct (soulknife mind blade, aegis astral suit) or a power, not a purchasable item",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/3rd-party-rules-systems/psionics-unleashed/equipment/psionic-items/universal-items/",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/3rd-party-rules-systems/psionics-unleashed/equipment/psionic-items/psionic-artifacts/"
+    ]
+  },
+  {
+    "key": "Mind Bolt (Short Range Slashing)",
+    "reason": "a psionic class-feature construct (soulknife mind blade, aegis astral suit) or a power, not a purchasable item",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/3rd-party-rules-systems/psionics-unleashed/equipment/psionic-items/universal-items/",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/3rd-party-rules-systems/psionics-unleashed/equipment/psionic-items/psionic-artifacts/"
+    ]
+  },
+  {
+    "key": "Flurry of Fists",
+    "reason": "an attack form or class feature, not a purchasable item; d20pfsrd states no price",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/3rd-party-rules-systems/psionics-unleashed/equipment/psionic-items/universal-items/",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/3rd-party-rules-systems/psionics-unleashed/equipment/psionic-items/psionic-artifacts/"
+    ]
+  },
+  {
+    "key": "Flurry of Strikes",
+    "reason": "an attack form or class feature, not a purchasable item; d20pfsrd states no price",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/3rd-party-rules-systems/psionics-unleashed/equipment/psionic-items/universal-items/",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/3rd-party-rules-systems/psionics-unleashed/equipment/psionic-items/psionic-artifacts/"
+    ]
+  },
+  {
+    "key": "Crystal Shard",
+    "reason": "a psionic class-feature construct (soulknife mind blade, aegis astral suit) or a power, not a purchasable item",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/3rd-party-rules-systems/psionics-unleashed/psionic-powers/c/crystal-shard/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/3rd-party-rules-systems/psionics-unleashed/equipment/psionic-items/universal-items/",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/3rd-party-rules-systems/psionics-unleashed/equipment/psionic-items/psionic-artifacts/"
+    ]
+  },
+  {
+    "key": "Rock (Small)",
+    "reason": "a monster or class-feature item (bestiary gear, a class ability, a test record), not sold; d20pfsrd states no price",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/weapons/"
+    ]
+  },
+  {
+    "key": "Rock (Medium)",
+    "reason": "a monster or class-feature item (bestiary gear, a class ability, a test record), not sold; d20pfsrd states no price",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/weapons/"
+    ]
+  },
+  {
+    "key": "Living Grimoire Holy Text",
+    "reason": "a monster or class-feature item (bestiary gear, a class ability, a test record), not sold; d20pfsrd states no price",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/weapons/"
+    ]
+  },
+  {
+    "key": "Ranged Cannon ~ Clockwork Goliath",
+    "reason": "a monster or class-feature item (bestiary gear, a class ability, a test record), not sold; d20pfsrd states no price",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/weapons/"
+    ]
+  },
+  {
+    "key": "Rock (Fine)",
+    "reason": "a monster or class-feature item (bestiary gear, a class ability, a test record), not sold; d20pfsrd states no price",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/weapons/"
+    ]
+  },
+  {
+    "key": "Rock (Large)",
+    "reason": "a monster or class-feature item (bestiary gear, a class ability, a test record), not sold; d20pfsrd states no price",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/weapons/"
+    ]
+  },
+  {
+    "key": "Skull",
+    "reason": "a monster or class-feature item (bestiary gear, a class ability, a test record), not sold; d20pfsrd states no price",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/weapons/"
+    ]
+  },
+  {
+    "key": "Rag Armor (Dark Creeper)",
+    "reason": "a monster or class-feature item (bestiary gear, a class ability, a test record), not sold; d20pfsrd states no price",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/armor/"
+    ]
+  },
+  {
+    "key": "Astral Armor",
+    "reason": "a psionic class-feature construct (soulknife mind blade, aegis astral suit) or a power, not a purchasable item",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/3rd-party-rules-systems/psionics-unleashed/classes/aegis/astral-suits/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/3rd-party-rules-systems/psionics-unleashed/equipment/psionic-items/universal-items/",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/3rd-party-rules-systems/psionics-unleashed/equipment/psionic-items/psionic-artifacts/"
+    ]
+  },
+  {
+    "key": "Astral Juggernaut",
+    "reason": "a psionic class-feature construct (soulknife mind blade, aegis astral suit) or a power, not a purchasable item",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/3rd-party-rules-systems/psionics-unleashed/classes/aegis/astral-suits/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/3rd-party-rules-systems/psionics-unleashed/equipment/psionic-items/universal-items/",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/3rd-party-rules-systems/psionics-unleashed/equipment/psionic-items/psionic-artifacts/"
+    ]
+  },
+  {
+    "key": "Mind Armor (Light)",
+    "reason": "a psionic class-feature construct (soulknife mind blade, aegis astral suit) or a power, not a purchasable item",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/3rd-party-rules-systems/psionics-unleashed/equipment/psionic-items/universal-items/",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/3rd-party-rules-systems/psionics-unleashed/equipment/psionic-items/psionic-artifacts/"
+    ]
+  },
+  {
+    "key": "Mind Armor (Medium)",
+    "reason": "a psionic class-feature construct (soulknife mind blade, aegis astral suit) or a power, not a purchasable item",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/3rd-party-rules-systems/psionics-unleashed/equipment/psionic-items/universal-items/",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/3rd-party-rules-systems/psionics-unleashed/equipment/psionic-items/psionic-artifacts/"
+    ]
+  },
+  {
+    "key": "Mind Armor (Heavy)",
+    "reason": "a psionic class-feature construct (soulknife mind blade, aegis astral suit) or a power, not a purchasable item",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/3rd-party-rules-systems/psionics-unleashed/equipment/psionic-items/universal-items/",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/3rd-party-rules-systems/psionics-unleashed/equipment/psionic-items/psionic-artifacts/"
+    ]
+  },
+  {
+    "key": "Improved Mind Armor (Light)",
+    "reason": "a psionic class-feature construct (soulknife mind blade, aegis astral suit) or a power, not a purchasable item",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/3rd-party-rules-systems/psionics-unleashed/equipment/psionic-items/universal-items/",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/3rd-party-rules-systems/psionics-unleashed/equipment/psionic-items/psionic-artifacts/"
+    ]
+  },
+  {
+    "key": "Improved Mind Armor (Medium)",
+    "reason": "a psionic class-feature construct (soulknife mind blade, aegis astral suit) or a power, not a purchasable item",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/3rd-party-rules-systems/psionics-unleashed/equipment/psionic-items/universal-items/",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/3rd-party-rules-systems/psionics-unleashed/equipment/psionic-items/psionic-artifacts/"
+    ]
+  },
+  {
+    "key": "Improved Mind Armor (Heavy)",
+    "reason": "a psionic class-feature construct (soulknife mind blade, aegis astral suit) or a power, not a purchasable item",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/3rd-party-rules-systems/psionics-unleashed/equipment/psionic-items/universal-items/",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/3rd-party-rules-systems/psionics-unleashed/equipment/psionic-items/psionic-artifacts/"
+    ]
+  },
+  {
+    "key": "Scroll Shield",
+    "reason": "no d20pfsrd page names it (sitemap of every page searched by name, and its category pages read)",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/armor/"
+    ]
+  },
+  {
+    "key": "Mind Shield",
+    "reason": "a psionic class-feature construct (soulknife mind blade, aegis astral suit) or a power, not a purchasable item",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/3rd-party-rules-systems/psionics-unleashed/equipment/psionic-items/universal-items/",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/3rd-party-rules-systems/psionics-unleashed/equipment/psionic-items/psionic-artifacts/"
+    ]
+  },
+  {
+    "key": "Mind Shield (Heavy)",
+    "reason": "a psionic class-feature construct (soulknife mind blade, aegis astral suit) or a power, not a purchasable item",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/3rd-party-rules-systems/psionics-unleashed/equipment/psionic-items/universal-items/",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/3rd-party-rules-systems/psionics-unleashed/equipment/psionic-items/psionic-artifacts/"
+    ]
+  },
+  {
+    "key": "Mind Shield (Tower)",
+    "reason": "a psionic class-feature construct (soulknife mind blade, aegis astral suit) or a power, not a purchasable item",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/3rd-party-rules-systems/psionics-unleashed/equipment/psionic-items/universal-items/",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/3rd-party-rules-systems/psionics-unleashed/equipment/psionic-items/psionic-artifacts/"
+    ]
+  },
+  {
+    "key": "Belt",
+    "reason": "a generic slot or item-kind placeholder (the base a magic item is built on); d20pfsrd prices only the named items of its kind",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/goods-and-services/containers-bags-boxes-more/"
+    ]
+  },
+  {
+    "key": "Girdle",
+    "reason": "a generic slot or item-kind placeholder (the base a magic item is built on); d20pfsrd prices only the named items of its kind",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/goods-and-services/containers-bags-boxes-more/"
+    ]
+  },
+  {
+    "key": "Robe",
+    "reason": "a generic slot or item-kind placeholder (the base a magic item is built on); d20pfsrd prices only the named items of its kind",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/goods-and-services/containers-bags-boxes-more/"
+    ]
+  },
+  {
+    "key": "Vestment",
+    "reason": "a generic slot or item-kind placeholder (the base a magic item is built on); d20pfsrd prices only the named items of its kind",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/goods-and-services/containers-bags-boxes-more/"
+    ]
+  },
+  {
+    "key": "Mantle",
+    "reason": "a generic slot or item-kind placeholder (the base a magic item is built on); d20pfsrd prices only the named items of its kind",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/goods-and-services/containers-bags-boxes-more/"
+    ]
+  },
+  {
+    "key": "Shirt",
+    "reason": "a generic slot or item-kind placeholder (the base a magic item is built on); d20pfsrd prices only the named items of its kind",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/goods-and-services/containers-bags-boxes-more/"
+    ]
+  },
+  {
+    "key": "Vest",
+    "reason": "a generic slot or item-kind placeholder (the base a magic item is built on); d20pfsrd prices only the named items of its kind",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/goods-and-services/containers-bags-boxes-more/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml"
+    ]
+  },
+  {
+    "key": "Eye Lenses",
+    "reason": "a generic slot or item-kind placeholder (the base a magic item is built on); d20pfsrd prices only the named items of its kind",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/goods-and-services/containers-bags-boxes-more/"
+    ]
+  },
+  {
+    "key": "Goggles",
+    "reason": "a generic slot or item-kind placeholder (the base a magic item is built on); d20pfsrd prices only the named items of its kind",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/goods-and-services/containers-bags-boxes-more/"
+    ]
+  },
+  {
+    "key": "Boots",
+    "reason": "a generic slot or item-kind placeholder (the base a magic item is built on); d20pfsrd prices only the named items of its kind",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/goods-and-services/containers-bags-boxes-more/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml"
+    ]
+  },
+  {
+    "key": "Shoes",
+    "reason": "a generic slot or item-kind placeholder (the base a magic item is built on); d20pfsrd prices only the named items of its kind",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/goods-and-services/containers-bags-boxes-more/"
+    ]
+  },
+  {
+    "key": "Slippers",
+    "reason": "a generic slot or item-kind placeholder (the base a magic item is built on); d20pfsrd prices only the named items of its kind",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/goods-and-services/containers-bags-boxes-more/"
+    ]
+  },
+  {
+    "key": "Gauntlets",
+    "reason": "a generic slot or item-kind placeholder (the base a magic item is built on); d20pfsrd prices only the named items of its kind",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/goods-and-services/containers-bags-boxes-more/"
+    ]
+  },
+  {
+    "key": "Gloves",
+    "reason": "a generic slot or item-kind placeholder (the base a magic item is built on); d20pfsrd prices only the named items of its kind",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/goods-and-services/containers-bags-boxes-more/"
+    ]
+  },
+  {
+    "key": "Circlet",
+    "reason": "a generic slot or item-kind placeholder (the base a magic item is built on); d20pfsrd prices only the named items of its kind",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/goods-and-services/containers-bags-boxes-more/"
+    ]
+  },
+  {
+    "key": "Crown",
+    "reason": "a generic slot or item-kind placeholder (the base a magic item is built on); d20pfsrd prices only the named items of its kind",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/goods-and-services/containers-bags-boxes-more/"
+    ]
+  },
+  {
+    "key": "Hat",
+    "reason": "a generic slot or item-kind placeholder (the base a magic item is built on); d20pfsrd prices only the named items of its kind",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/goods-and-services/containers-bags-boxes-more/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml"
+    ]
+  },
+  {
+    "key": "Helmet",
+    "reason": "a generic slot or item-kind placeholder (the base a magic item is built on); d20pfsrd prices only the named items of its kind",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/goods-and-services/containers-bags-boxes-more/"
+    ]
+  },
+  {
+    "key": "Mask",
+    "reason": "a generic slot or item-kind placeholder (the base a magic item is built on); d20pfsrd prices only the named items of its kind",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/goods-and-services/containers-bags-boxes-more/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml"
+    ]
+  },
+  {
+    "key": "Headband",
+    "reason": "a generic slot or item-kind placeholder (the base a magic item is built on); d20pfsrd prices only the named items of its kind",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/goods-and-services/containers-bags-boxes-more/"
+    ]
+  },
+  {
+    "key": "Phylactery",
+    "reason": "a generic slot or item-kind placeholder (the base a magic item is built on); d20pfsrd prices only the named items of its kind",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/goods-and-services/containers-bags-boxes-more/"
+    ]
+  },
+  {
+    "key": "Amulet",
+    "reason": "a generic slot or item-kind placeholder (the base a magic item is built on); d20pfsrd prices only the named items of its kind",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/goods-and-services/containers-bags-boxes-more/"
+    ]
+  },
+  {
+    "key": "Brooch",
+    "reason": "a generic slot or item-kind placeholder (the base a magic item is built on); d20pfsrd prices only the named items of its kind",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/goods-and-services/containers-bags-boxes-more/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml"
+    ]
+  },
+  {
+    "key": "Medallion",
+    "reason": "a generic slot or item-kind placeholder (the base a magic item is built on); d20pfsrd prices only the named items of its kind",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/goods-and-services/containers-bags-boxes-more/"
+    ]
+  },
+  {
+    "key": "Necklace",
+    "reason": "a generic slot or item-kind placeholder (the base a magic item is built on); d20pfsrd prices only the named items of its kind",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/goods-and-services/containers-bags-boxes-more/"
+    ]
+  },
+  {
+    "key": "Periapt",
+    "reason": "a generic slot or item-kind placeholder (the base a magic item is built on); d20pfsrd prices only the named items of its kind",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/goods-and-services/containers-bags-boxes-more/"
+    ]
+  },
+  {
+    "key": "Scarab",
+    "reason": "a generic slot or item-kind placeholder (the base a magic item is built on); d20pfsrd prices only the named items of its kind",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/goods-and-services/containers-bags-boxes-more/"
+    ]
+  },
+  {
+    "key": "Ring",
+    "reason": "a generic slot or item-kind placeholder (the base a magic item is built on); d20pfsrd prices only the named items of its kind",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/goods-and-services/containers-bags-boxes-more/"
+    ]
+  },
+  {
+    "key": "Cape",
+    "reason": "a generic slot or item-kind placeholder (the base a magic item is built on); d20pfsrd prices only the named items of its kind",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/goods-and-services/containers-bags-boxes-more/"
+    ]
+  },
+  {
+    "key": "Cloak",
+    "reason": "a generic slot or item-kind placeholder (the base a magic item is built on); d20pfsrd prices only the named items of its kind",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/wondrous-items/c-d/cloak/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/goods-and-services/containers-bags-boxes-more/"
+    ]
+  },
+  {
+    "key": "Bracelets",
+    "reason": "a generic slot or item-kind placeholder (the base a magic item is built on); d20pfsrd prices only the named items of its kind",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/goods-and-services/containers-bags-boxes-more/"
+    ]
+  },
+  {
+    "key": "Bracers",
+    "reason": "a generic slot or item-kind placeholder (the base a magic item is built on); d20pfsrd prices only the named items of its kind",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/goods-and-services/containers-bags-boxes-more/"
+    ]
+  },
+  {
+    "key": "Spell Component",
+    "reason": "a generic slot or item-kind placeholder (the base a magic item is built on); d20pfsrd prices only the named items of its kind",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/goods-and-services/containers-bags-boxes-more/"
+    ]
+  },
+  {
+    "key": "Spell Focus",
+    "reason": "a generic slot or item-kind placeholder (the base a magic item is built on); d20pfsrd prices only the named items of its kind",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/paizo-rules-systems/mythic/mythic-feats/spell-focus-mythic/",
+      "d20pfsrd:https://www.d20pfsrd.com/feats/general-feats/spell-focus/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/goods-and-services/containers-bags-boxes-more/"
+    ]
+  },
+  {
+    "key": "Art",
+    "reason": "a generic slot or item-kind placeholder (the base a magic item is built on); d20pfsrd prices only the named items of its kind",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/goods-and-services/containers-bags-boxes-more/"
+    ]
+  },
+  {
+    "key": "Gem",
+    "reason": "a generic slot or item-kind placeholder (the base a magic item is built on); d20pfsrd prices only the named items of its kind",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/goods-and-services/containers-bags-boxes-more/"
+    ]
+  },
+  {
+    "key": "Tattoo Head",
+    "reason": "a generic slot or item-kind placeholder (the base a magic item is built on); d20pfsrd prices only the named items of its kind",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/goods-and-services/containers-bags-boxes-more/"
+    ]
+  },
+  {
+    "key": "Tattoo Shoulders",
+    "reason": "a generic slot or item-kind placeholder (the base a magic item is built on); d20pfsrd prices only the named items of its kind",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/goods-and-services/containers-bags-boxes-more/"
+    ]
+  },
+  {
+    "key": "Tattoo Neck",
+    "reason": "a generic slot or item-kind placeholder (the base a magic item is built on); d20pfsrd prices only the named items of its kind",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/goods-and-services/containers-bags-boxes-more/"
+    ]
+  },
+  {
+    "key": "Tattoo Chest",
+    "reason": "a generic slot or item-kind placeholder (the base a magic item is built on); d20pfsrd prices only the named items of its kind",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/goods-and-services/containers-bags-boxes-more/"
+    ]
+  },
+  {
+    "key": "Tattoo Body",
+    "reason": "a generic slot or item-kind placeholder (the base a magic item is built on); d20pfsrd prices only the named items of its kind",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/goods-and-services/containers-bags-boxes-more/"
+    ]
+  },
+  {
+    "key": "Tattoo Belt",
+    "reason": "a generic slot or item-kind placeholder (the base a magic item is built on); d20pfsrd prices only the named items of its kind",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/goods-and-services/containers-bags-boxes-more/"
+    ]
+  },
+  {
+    "key": "Tattoo Wrist",
+    "reason": "a generic slot or item-kind placeholder (the base a magic item is built on); d20pfsrd prices only the named items of its kind",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/goods-and-services/containers-bags-boxes-more/"
+    ]
+  },
+  {
+    "key": "Tattoo Hands",
+    "reason": "a generic slot or item-kind placeholder (the base a magic item is built on); d20pfsrd prices only the named items of its kind",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/goods-and-services/containers-bags-boxes-more/"
+    ]
+  },
+  {
+    "key": "Tattoo Ring",
+    "reason": "a generic slot or item-kind placeholder (the base a magic item is built on); d20pfsrd prices only the named items of its kind",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/goods-and-services/containers-bags-boxes-more/"
+    ]
+  },
+  {
+    "key": "Tattoo Feet",
+    "reason": "a generic slot or item-kind placeholder (the base a magic item is built on); d20pfsrd prices only the named items of its kind",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/goods-and-services/containers-bags-boxes-more/"
+    ]
+  },
+  {
+    "key": "Forked Metal Rod",
+    "reason": "a plane shift focus; d20pfsrd states no price for it",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/goods-and-services/containers-bags-boxes-more/"
+    ]
+  },
+  {
+    "key": "Forked Metal Rod (Abyss)",
+    "reason": "a plane shift focus; d20pfsrd states no price for it",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/goods-and-services/containers-bags-boxes-more/"
+    ]
+  },
+  {
+    "key": "Forked Metal Rod (Astral Plane)",
+    "reason": "a plane shift focus; d20pfsrd states no price for it",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/goods-and-services/containers-bags-boxes-more/"
+    ]
+  },
+  {
+    "key": "Forked Metal Rod (Elysium)",
+    "reason": "a plane shift focus; d20pfsrd states no price for it",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/goods-and-services/containers-bags-boxes-more/"
+    ]
+  },
+  {
+    "key": "Forked Metal Rod (Ethereal Plane)",
+    "reason": "a plane shift focus; d20pfsrd states no price for it",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/goods-and-services/containers-bags-boxes-more/"
+    ]
+  },
+  {
+    "key": "Forked Metal Rod (Heaven)",
+    "reason": "a plane shift focus; d20pfsrd states no price for it",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/goods-and-services/containers-bags-boxes-more/"
+    ]
+  },
+  {
+    "key": "Forked Metal Rod (Hell)",
+    "reason": "a plane shift focus; d20pfsrd states no price for it",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/goods-and-services/containers-bags-boxes-more/"
+    ]
+  },
+  {
+    "key": "Forked Metal Rod (Material Plane)",
+    "reason": "a plane shift focus; d20pfsrd states no price for it",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/goods-and-services/containers-bags-boxes-more/"
+    ]
+  },
+  {
+    "key": "Forked Metal Rod (Negative Energy Plane)",
+    "reason": "a plane shift focus; d20pfsrd states no price for it",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/goods-and-services/containers-bags-boxes-more/"
+    ]
+  },
+  {
+    "key": "Forked Metal Rod (Plane of Air)",
+    "reason": "a plane shift focus; d20pfsrd states no price for it",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/goods-and-services/containers-bags-boxes-more/"
+    ]
+  },
+  {
+    "key": "Forked Metal Rod (Plane of Earth)",
+    "reason": "a plane shift focus; d20pfsrd states no price for it",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/goods-and-services/containers-bags-boxes-more/"
+    ]
+  },
+  {
+    "key": "Forked Metal Rod (Plane of Fire)",
+    "reason": "a plane shift focus; d20pfsrd states no price for it",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/goods-and-services/containers-bags-boxes-more/"
+    ]
+  },
+  {
+    "key": "Forked Metal Rod (Plane of Water)",
+    "reason": "a plane shift focus; d20pfsrd states no price for it",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/goods-and-services/containers-bags-boxes-more/"
+    ]
+  },
+  {
+    "key": "Forked Metal Rod (Positive Energy Plane)",
+    "reason": "a plane shift focus; d20pfsrd states no price for it",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/goods-and-services/containers-bags-boxes-more/"
+    ]
+  },
+  {
+    "key": "Forked Metal Rod (Shadow Plane)",
+    "reason": "a plane shift focus; d20pfsrd states no price for it",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/goods-and-services/containers-bags-boxes-more/"
+    ]
+  },
+  {
+    "key": "Quick-Change Outfit",
+    "reason": "priced relative to another item (the outfits mimicked, the poison countered); no fixed price",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/goods-and-services/containers-bags-boxes-more/"
+    ]
+  },
+  {
+    "key": "Brilliant Plan Encumberance",
+    "reason": "a monster or class-feature item (bestiary gear, a class ability, a test record), not sold; d20pfsrd states no price",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/goods-and-services/containers-bags-boxes-more/"
+    ]
+  },
+  {
+    "key": "Jewelry",
+    "reason": "a generic slot or item-kind placeholder (the base a magic item is built on); d20pfsrd prices only the named items of its kind",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/goods-and-services/containers-bags-boxes-more/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml"
+    ]
+  },
+  {
+    "key": "Powder Keg",
+    "reason": "no d20pfsrd page names it (sitemap of every page searched by name, and its category pages read)",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/goods-and-services/containers-bags-boxes-more/"
+    ]
+  },
+  {
+    "key": "Gaff",
+    "reason": "a monster or class-feature item (bestiary gear, a class ability, a test record), not sold; d20pfsrd states no price",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/goods-and-services/containers-bags-boxes-more/"
+    ]
+  },
+  {
+    "key": "Rock (Korred)",
+    "reason": "a monster or class-feature item (bestiary gear, a class ability, a test record), not sold; d20pfsrd states no price",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/goods-and-services/containers-bags-boxes-more/"
+    ]
+  },
+  {
+    "key": "Rock (Huge)",
+    "reason": "a monster or class-feature item (bestiary gear, a class ability, a test record), not sold; d20pfsrd states no price",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/goods-and-services/containers-bags-boxes-more/"
+    ]
+  },
+  {
+    "key": "Antidote (Vial)",
+    "reason": "priced relative to another item (the outfits mimicked, the poison countered); no fixed price",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/goods-and-services/containers-bags-boxes-more/"
+    ]
+  },
+  {
+    "key": "Spell Tattoo",
+    "reason": "a generic slot or item-kind placeholder (the base a magic item is built on); d20pfsrd prices only the named items of its kind",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/wondrous-items/r-z/tattoo-spell/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/goods-and-services/containers-bags-boxes-more/"
+    ]
+  },
+  {
+    "key": "Riffle Scroll",
+    "reason": "a generic slot or item-kind placeholder (the base a magic item is built on); d20pfsrd prices only the named items of its kind",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/wondrous-items/r-z/scroll-riffle/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/equipment/goods-and-services/containers-bags-boxes-more/"
+    ]
+  },
+  {
+    "key": "Potion",
+    "reason": "a generic slot or item-kind placeholder (the base a magic item is built on); d20pfsrd prices only the named items of its kind",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/wondrous-items/"
+    ]
+  },
+  {
+    "key": "Rod",
+    "reason": "a generic slot or item-kind placeholder (the base a magic item is built on); d20pfsrd prices only the named items of its kind",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/wondrous-items/"
+    ]
+  },
+  {
+    "key": "Scroll",
+    "reason": "a generic slot or item-kind placeholder (the base a magic item is built on); d20pfsrd prices only the named items of its kind",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/wondrous-items/"
+    ]
+  },
+  {
+    "key": "Staff",
+    "reason": "a generic slot or item-kind placeholder (the base a magic item is built on); d20pfsrd prices only the named items of its kind",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/wondrous-items/"
+    ]
+  },
+  {
+    "key": "Wand",
+    "reason": "a generic slot or item-kind placeholder (the base a magic item is built on); d20pfsrd prices only the named items of its kind",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/wondrous-items/"
+    ]
+  },
+  {
+    "key": "Amulet of Mighty Fists",
+    "reason": "d20pfsrd prices it by bonus or spell level (a table of prices); the row names neither",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/wondrous-items/a-b/amulet-of-mighty-fists/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/wondrous-items/"
+    ]
+  },
+  {
+    "key": "Book of Infinite Spells",
+    "reason": "an artifact: d20pfsrd and the book state no price",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/minor-artifacts/book-of-infinite-spells/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/minor-artifacts/",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/major-artifacts/"
+    ]
+  },
+  {
+    "key": "Deck of Many Things",
+    "reason": "an artifact: d20pfsrd and the book state no price",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/minor-artifacts/deck-of-many-things/",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/minor-artifacts/deck-of-many-things-harrow/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/minor-artifacts/",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/major-artifacts/"
+    ]
+  },
+  {
+    "key": "Philosopher's Stone",
+    "reason": "an artifact: d20pfsrd and the book state no price",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/minor-artifacts/philosopher-s-stone/",
+      "d20pfsrd:https://www.d20pfsrd.com/classes/base-classes/alchemist/discoveries/paizo-alchemist-grand-discoveries/philosopher-s-stone/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/minor-artifacts/",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/major-artifacts/"
+    ]
+  },
+  {
+    "key": "Sphere of Annihilation",
+    "reason": "an artifact: d20pfsrd and the book state no price",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/minor-artifacts/sphere-of-annihilation/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/minor-artifacts/",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/major-artifacts/"
+    ]
+  },
+  {
+    "key": "Staff of the Magi",
+    "reason": "an artifact: d20pfsrd and the book state no price",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/minor-artifacts/staff-of-the-magi/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/minor-artifacts/",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/major-artifacts/"
+    ]
+  },
+  {
+    "key": "Talisman of Pure Good",
+    "reason": "an artifact: d20pfsrd and the book state no price",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/minor-artifacts/talisman-of-pure-good/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/minor-artifacts/",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/major-artifacts/"
+    ]
+  },
+  {
+    "key": "Talisman of the Sphere",
+    "reason": "an artifact: d20pfsrd and the book state no price",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/minor-artifacts/talisman-of-the-sphere/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/minor-artifacts/",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/major-artifacts/"
+    ]
+  },
+  {
+    "key": "Talisman of Ultimate Evil",
+    "reason": "an artifact: d20pfsrd and the book state no price",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/minor-artifacts/talisman-of-ultimate-evil/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/minor-artifacts/",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/major-artifacts/"
+    ]
+  },
+  {
+    "key": "Codex of the Infinite Planes",
+    "reason": "an artifact: d20pfsrd and the book state no price",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/major-artifacts/codex-of-the-infinite-planes/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/minor-artifacts/",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/major-artifacts/"
+    ]
+  },
+  {
+    "key": "Orb of Dragonkind (Black)",
+    "reason": "an artifact: d20pfsrd and the book state no price",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/minor-artifacts/",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/major-artifacts/"
+    ]
+  },
+  {
+    "key": "Orb of Dragonkind (Blue)",
+    "reason": "an artifact: d20pfsrd and the book state no price",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/minor-artifacts/",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/major-artifacts/"
+    ]
+  },
+  {
+    "key": "Orb of Dragonkind (Brass)",
+    "reason": "an artifact: d20pfsrd and the book state no price",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/minor-artifacts/",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/major-artifacts/"
+    ]
+  },
+  {
+    "key": "Orb of Dragonkind (Bronze)",
+    "reason": "an artifact: d20pfsrd and the book state no price",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/minor-artifacts/",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/major-artifacts/"
+    ]
+  },
+  {
+    "key": "Orb of Dragonkind (Copper)",
+    "reason": "an artifact: d20pfsrd and the book state no price",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/minor-artifacts/",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/major-artifacts/"
+    ]
+  },
+  {
+    "key": "Orb of Dragonkind (Gold)",
+    "reason": "an artifact: d20pfsrd and the book state no price",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/minor-artifacts/",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/major-artifacts/"
+    ]
+  },
+  {
+    "key": "Orb of Dragonkind (Green)",
+    "reason": "an artifact: d20pfsrd and the book state no price",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/minor-artifacts/",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/major-artifacts/"
+    ]
+  },
+  {
+    "key": "Orb of Dragonkind (Red)",
+    "reason": "an artifact: d20pfsrd and the book state no price",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/minor-artifacts/",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/major-artifacts/"
+    ]
+  },
+  {
+    "key": "Orb of Dragonkind (Silver)",
+    "reason": "an artifact: d20pfsrd and the book state no price",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/minor-artifacts/",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/major-artifacts/"
+    ]
+  },
+  {
+    "key": "Orb of Dragonkind (White)",
+    "reason": "an artifact: d20pfsrd and the book state no price",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/minor-artifacts/",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/major-artifacts/"
+    ]
+  },
+  {
+    "key": "Shadowstaff",
+    "reason": "an artifact: d20pfsrd and the book state no price",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/major-artifacts/shadowstaff/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/minor-artifacts/",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/major-artifacts/"
+    ]
+  },
+  {
+    "key": "Beacon of True Faith",
+    "reason": "an artifact: d20pfsrd and the book state no price",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/minor-artifacts/beacon-of-true-faith/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/minor-artifacts/",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/major-artifacts/"
+    ]
+  },
+  {
+    "key": "Knucklebone of Fickle Fortune",
+    "reason": "an artifact: d20pfsrd and the book state no price",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/minor-artifacts/knucklebone-of-fickle-fortune/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/minor-artifacts/",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/major-artifacts/"
+    ]
+  },
+  {
+    "key": "Perfect Golden Lute",
+    "reason": "an artifact: d20pfsrd and the book state no price",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/minor-artifacts/perfect-golden-lute/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/minor-artifacts/",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/major-artifacts/"
+    ]
+  },
+  {
+    "key": "Spindle of Perfect Knowledge",
+    "reason": "an artifact: d20pfsrd and the book state no price",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/minor-artifacts/spindle-of-perfect-knowledge/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/minor-artifacts/",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/major-artifacts/"
+    ]
+  },
+  {
+    "key": "Talisman of Reluctant Wishes",
+    "reason": "an artifact: d20pfsrd and the book state no price",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/minor-artifacts/talisman-of-reluctant-wishes/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/minor-artifacts/",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/major-artifacts/"
+    ]
+  },
+  {
+    "key": "Bottle of the Bound",
+    "reason": "an artifact: d20pfsrd and the book state no price",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/major-artifacts/bottle-of-the-bound/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/minor-artifacts/",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/major-artifacts/"
+    ]
+  },
+  {
+    "key": "Cloud Castle of the Storm King",
+    "reason": "an artifact: d20pfsrd and the book state no price",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/major-artifacts/cloud-castle-of-the-storm-king/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/minor-artifacts/",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/major-artifacts/"
+    ]
+  },
+  {
+    "key": "The Moaning Diamond",
+    "reason": "an artifact: d20pfsrd and the book state no price",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/major-artifacts/moaning-diamond-major-artifact/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/minor-artifacts/",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/major-artifacts/"
+    ]
+  },
+  {
+    "key": "The Shield of the Sun",
+    "reason": "an artifact: d20pfsrd and the book state no price",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/major-artifacts/shield-of-the-sun/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/minor-artifacts/",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/major-artifacts/"
+    ]
+  },
+  {
+    "key": "Rod of Arson",
+    "reason": "a cursed item: d20pfsrd's entry for it states no price (only the CRB table's items carry one)",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/cursed-items/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml"
+    ]
+  },
+  {
+    "key": "Cannibal Ring",
+    "reason": "a cursed item: d20pfsrd's entry for it states no price (only the CRB table's items carry one)",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/cursed-items/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml"
+    ]
+  },
+  {
+    "key": "Ring of Truth",
+    "reason": "a cursed item: d20pfsrd's entry for it states no price (only the CRB table's items carry one)",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/3rd-party-magic-items/magic-items-legendary-games/ring-of-truth/",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/cursed-items/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml"
+    ]
+  },
+  {
+    "key": "Cloak of Immolation",
+    "reason": "a cursed item: d20pfsrd's entry for it states no price (only the CRB table's items carry one)",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/cursed-items/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml"
+    ]
+  },
+  {
+    "key": "Crown of Blindness",
+    "reason": "a cursed item: d20pfsrd's entry for it states no price (only the CRB table's items carry one)",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/cursed-items/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml"
+    ]
+  },
+  {
+    "key": "Hat of Hatreds",
+    "reason": "a cursed item: d20pfsrd's entry for it states no price (only the CRB table's items carry one)",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/cursed-items/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml"
+    ]
+  },
+  {
+    "key": "Girdle of Opposite Gender",
+    "reason": "a cursed item: d20pfsrd's entry for it states no price (only the CRB table's items carry one)",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/cursed-items/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml"
+    ]
+  },
+  {
+    "key": "Riot Pipes",
+    "reason": "a cursed item: d20pfsrd's entry for it states no price (only the CRB table's items carry one)",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/cursed-items/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml"
+    ]
+  },
+  {
+    "key": "Heartstone (Night Hag)",
+    "reason": "a monster or class-feature item (bestiary gear, a class ability, a test record), not sold; d20pfsrd states no price",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/wondrous-items/"
+    ]
+  },
+  {
+    "key": "Fetish Mask",
+    "reason": "a monster or class-feature item (bestiary gear, a class ability, a test record), not sold; d20pfsrd states no price",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/wondrous-items/"
+    ]
+  },
+  {
+    "key": "Ornery Pistol",
+    "reason": "no d20pfsrd page names it (sitemap of every page searched by name, and its category pages read)",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/cursed-items/"
+    ]
+  },
+  {
+    "key": "Unstable Musket",
+    "reason": "no d20pfsrd page names it (sitemap of every page searched by name, and its category pages read)",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/cursed-items/"
+    ]
+  },
+  {
+    "key": "Cursed Sword (-2)",
+    "reason": "a cursed item: d20pfsrd's entry for it states no price (only the CRB table's items carry one)",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/cursed-items/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml"
+    ]
+  },
+  {
+    "key": "Biting Battleaxe",
+    "reason": "no d20pfsrd page names it (sitemap of every page searched by name, and its category pages read)",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/cursed-items/"
+    ]
+  },
+  {
+    "key": "Heavy Hammer",
+    "reason": "no d20pfsrd page names it (sitemap of every page searched by name, and its category pages read)",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/cursed-items/"
+    ]
+  },
+  {
+    "key": "Unwieldy Glaive",
+    "reason": "no d20pfsrd page names it (sitemap of every page searched by name, and its category pages read)",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/cursed-items/"
+    ]
+  },
+  {
+    "key": "Deadly Returns Throwing Axe",
+    "reason": "no d20pfsrd page names it (sitemap of every page searched by name, and its category pages read)",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/cursed-items/"
+    ]
+  },
+  {
+    "key": "Arrowbreak Bow",
+    "reason": "no d20pfsrd page names it (sitemap of every page searched by name, and its category pages read)",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/cursed-items/"
+    ]
+  },
+  {
+    "key": "Nearfiring Bow",
+    "reason": "no d20pfsrd page names it (sitemap of every page searched by name, and its category pages read)",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/cursed-items/"
+    ]
+  },
+  {
+    "key": "Amulet of Inescapable Location",
+    "reason": "a cursed item: d20pfsrd's entry for it states no price (only the CRB table's items carry one)",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/cursed-items/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml"
+    ]
+  },
+  {
+    "key": "Belt of Weakness",
+    "reason": "no d20pfsrd page names it (sitemap of every page searched by name, and its category pages read)",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/cursed-items/"
+    ]
+  },
+  {
+    "key": "Boots of Dancing",
+    "reason": "d20pfsrd's cursed-item table prices it '*' (as the item it appears to be)",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/cursed-items/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml"
+    ]
+  },
+  {
+    "key": "Broom of Animated Attack",
+    "reason": "a cursed item: d20pfsrd's entry for it states no price (only the CRB table's items carry one)",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/cursed-items/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml"
+    ]
+  },
+  {
+    "key": "Cape of Anchoring",
+    "reason": "no d20pfsrd page names it (sitemap of every page searched by name, and its category pages read)",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/cursed-items/"
+    ]
+  },
+  {
+    "key": "Drums of Lethargy",
+    "reason": "no d20pfsrd page names it (sitemap of every page searched by name, and its category pages read)",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/cursed-items/"
+    ]
+  },
+  {
+    "key": "Dust of Sneezing and Choking",
+    "reason": "a cursed item: d20pfsrd's entry for it states no price (only the CRB table's items carry one)",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/cursed-items/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml"
+    ]
+  },
+  {
+    "key": "Eyes of Blindness",
+    "reason": "no d20pfsrd page names it (sitemap of every page searched by name, and its category pages read)",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/cursed-items/"
+    ]
+  },
+  {
+    "key": "Gauntlets of Fumbling",
+    "reason": "d20pfsrd's cursed-item table prices it '*' (as the item it appears to be)",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/cursed-items/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml"
+    ]
+  },
+  {
+    "key": "Headband of Stupidity",
+    "reason": "no d20pfsrd page names it (sitemap of every page searched by name, and its category pages read)",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/cursed-items/"
+    ]
+  },
+  {
+    "key": "Helm of Opposite Alignment",
+    "reason": "a cursed item: d20pfsrd's entry for it states no price (only the CRB table's items carry one)",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/cursed-items/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml"
+    ]
+  },
+  {
+    "key": "Incense of Obsession",
+    "reason": "a cursed item: d20pfsrd's entry for it states no price (only the CRB table's items carry one)",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/cursed-items/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml"
+    ]
+  },
+  {
+    "key": "Mask of Ugliness",
+    "reason": "no d20pfsrd page names it (sitemap of every page searched by name, and its category pages read)",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/cursed-items/"
+    ]
+  },
+  {
+    "key": "Medallion of Thought Projection",
+    "reason": "a cursed item: d20pfsrd's entry for it states no price (only the CRB table's items carry one)",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/cursed-items/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml"
+    ]
+  },
+  {
+    "key": "Pauldrons of the Jackass",
+    "reason": "no d20pfsrd page names it (sitemap of every page searched by name, and its category pages read)",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/cursed-items/"
+    ]
+  },
+  {
+    "key": "Periapt of Foul Rotting",
+    "reason": "a cursed item: d20pfsrd's entry for it states no price (only the CRB table's items carry one)",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/cursed-items/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml"
+    ]
+  },
+  {
+    "key": "Petrifying Cloak",
+    "reason": "no d20pfsrd page names it (sitemap of every page searched by name, and its category pages read)",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/cursed-items/"
+    ]
+  },
+  {
+    "key": "Poisonous Cloak",
+    "reason": "a cursed item: d20pfsrd's entry for it states no price (only the CRB table's items carry one)",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/cursed-items/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml"
+    ]
+  },
+  {
+    "key": "Ring of Lifebleed",
+    "reason": "no d20pfsrd page names it (sitemap of every page searched by name, and its category pages read)",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/cursed-items/"
+    ]
+  },
+  {
+    "key": "Ring of Spell Devouring",
+    "reason": "no d20pfsrd page names it (sitemap of every page searched by name, and its category pages read)",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/cursed-items/"
+    ]
+  },
+  {
+    "key": "Robe of Powerlessness",
+    "reason": "a cursed item: d20pfsrd's entry for it states no price (only the CRB table's items carry one)",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/cursed-items/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml"
+    ]
+  },
+  {
+    "key": "Rod of Foiled Magic",
+    "reason": "no d20pfsrd page names it (sitemap of every page searched by name, and its category pages read)",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/cursed-items/"
+    ]
+  },
+  {
+    "key": "Scattershot Bracers",
+    "reason": "no d20pfsrd page names it (sitemap of every page searched by name, and its category pages read)",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/cursed-items/"
+    ]
+  },
+  {
+    "key": "Staff of Occasional Wonder",
+    "reason": "no d20pfsrd page names it (sitemap of every page searched by name, and its category pages read)",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/cursed-items/"
+    ]
+  },
+  {
+    "key": "Unguent of Aging",
+    "reason": "no d20pfsrd page names it (sitemap of every page searched by name, and its category pages read)",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/cursed-items/"
+    ]
+  },
+  {
+    "key": "Unlucky Figurine",
+    "reason": "no d20pfsrd page names it (sitemap of every page searched by name, and its category pages read)",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/cursed-items/"
+    ]
+  },
+  {
+    "key": "Vacuous Grimoire",
+    "reason": "a cursed item: d20pfsrd's entry for it states no price (only the CRB table's items carry one)",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/cursed-items/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml"
+    ]
+  },
+  {
+    "key": "Branch of Life",
+    "reason": "an artifact: d20pfsrd and the book state no price",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/minor-artifacts/branch-of-life/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/minor-artifacts/",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/major-artifacts/"
+    ]
+  },
+  {
+    "key": "Crown of the Iron King",
+    "reason": "an artifact: d20pfsrd and the book state no price",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/minor-artifacts/crown-of-the-iron/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/minor-artifacts/",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/major-artifacts/"
+    ]
+  },
+  {
+    "key": "Monkey's Paw",
+    "reason": "an artifact: d20pfsrd and the book state no price",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/minor-artifacts/monkey-s-paw/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/cursed-items/"
+    ]
+  },
+  {
+    "key": "Runescarred Dragonship",
+    "reason": "an artifact: d20pfsrd and the book state no price",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/minor-artifacts/runescarred-dragonship/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/minor-artifacts/",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/major-artifacts/"
+    ]
+  },
+  {
+    "key": "Weird Queen's Magpie",
+    "reason": "an artifact: d20pfsrd and the book state no price",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/minor-artifacts/weird-queen-s-magpie/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/minor-artifacts/",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/major-artifacts/"
+    ]
+  },
+  {
+    "key": "Brazen Egg",
+    "reason": "an artifact: d20pfsrd and the book state no price",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/major-artifacts/brazen-egg/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/minor-artifacts/",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/major-artifacts/"
+    ]
+  },
+  {
+    "key": "Celestial Lens",
+    "reason": "an artifact: d20pfsrd and the book state no price",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/major-artifacts/celestial-lens/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/minor-artifacts/",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/major-artifacts/"
+    ]
+  },
+  {
+    "key": "Flame of Guidance",
+    "reason": "an artifact: d20pfsrd and the book state no price",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/major-artifacts/flame-of-guidance/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/minor-artifacts/",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/major-artifacts/"
+    ]
+  },
+  {
+    "key": "Jar of Dragon's Teeth",
+    "reason": "an artifact: d20pfsrd and the book state no price",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/major-artifacts/jar-of-dragon-s-teeth/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/minor-artifacts/",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/major-artifacts/"
+    ]
+  },
+  {
+    "key": "Horns of Naraga",
+    "reason": "an artifact: d20pfsrd and the book state no price",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/minor-artifacts/",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/major-artifacts/"
+    ]
+  },
+  {
+    "key": "Moaning Diamond",
+    "reason": "an artifact: d20pfsrd and the book state no price",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/major-artifacts/moaning-diamond-major-artifact/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/minor-artifacts/",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/major-artifacts/"
+    ]
+  },
+  {
+    "key": "Perfection's Key",
+    "reason": "an artifact: d20pfsrd and the book state no price",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/major-artifacts/perfection-s-key/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/minor-artifacts/",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/major-artifacts/"
+    ]
+  },
+  {
+    "key": "Skullsoul",
+    "reason": "an artifact: d20pfsrd and the book state no price",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/major-artifacts/skull-soul/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/minor-artifacts/",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/major-artifacts/"
+    ]
+  },
+  {
+    "key": "Page of Spell Knowledge",
+    "reason": "d20pfsrd prices it by bonus or spell level (a table of prices); the row names neither",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/wondrous-items/m-p/page-of-spell-knowledge/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/wondrous-items/"
+    ]
+  },
+  {
+    "key": "Astral Skin",
+    "reason": "a psionic class-feature construct (soulknife mind blade, aegis astral suit) or a power, not a purchasable item",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/3rd-party-rules-systems/psionics-unleashed/classes/aegis/astral-suits/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/3rd-party-rules-systems/psionics-unleashed/equipment/psionic-items/universal-items/",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/3rd-party-rules-systems/psionics-unleashed/equipment/psionic-items/psionic-artifacts/"
+    ]
+  },
+  {
+    "key": "Dorje",
+    "reason": "a generic slot or item-kind placeholder (the base a magic item is built on); d20pfsrd prices only the named items of its kind",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/3rd-party-rules-systems/psionics-unleashed/equipment/psionic-items/universal-items/",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/3rd-party-rules-systems/psionics-unleashed/equipment/psionic-items/psionic-artifacts/"
+    ]
+  },
+  {
+    "key": "Power Stone",
+    "reason": "a generic slot or item-kind placeholder (the base a magic item is built on); d20pfsrd prices only the named items of its kind",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/3rd-party-rules-systems/psionics-unleashed/equipment/psionic-items/universal-items/",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/3rd-party-rules-systems/psionics-unleashed/equipment/psionic-items/psionic-artifacts/"
+    ]
+  },
+  {
+    "key": "Psicrown",
+    "reason": "a generic slot or item-kind placeholder (the base a magic item is built on); d20pfsrd prices only the named items of its kind",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/3rd-party-rules-systems/psionics-unleashed/equipment/psionic-items/universal-items/",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/3rd-party-rules-systems/psionics-unleashed/equipment/psionic-items/psionic-artifacts/"
+    ]
+  },
+  {
+    "key": "Psionic Tattoo",
+    "reason": "a generic slot or item-kind placeholder (the base a magic item is built on); d20pfsrd prices only the named items of its kind",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/3rd-party-rules-systems/psionics-unleashed/equipment/psionic-items/universal-items/",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/3rd-party-rules-systems/psionics-unleashed/equipment/psionic-items/psionic-artifacts/"
+    ]
+  },
+  {
+    "key": "Crawling Tattoo",
+    "reason": "a generic slot or item-kind placeholder (the base a magic item is built on); d20pfsrd prices only the named items of its kind",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/3rd-party-rules-systems/psionics-unleashed/equipment/psionic-items/universal-items/",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/3rd-party-rules-systems/psionics-unleashed/equipment/psionic-items/psionic-artifacts/"
+    ]
+  },
+  {
+    "key": "Mind Stone",
+    "reason": "d20pfsrd prices it by bonus or spell level (a table of prices); the row names neither",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/3rd-party-rules-systems/psionics-unleashed/equipment/psionic-items/universal-items/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/3rd-party-rules-systems/psionics-unleashed/equipment/psionic-items/psionic-artifacts/"
+    ]
+  },
+  {
+    "key": "Mind Stone (Greater)",
+    "reason": "d20pfsrd prices it by bonus or spell level (a table of prices); the row names neither",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/3rd-party-rules-systems/psionics-unleashed/equipment/psionic-items/universal-items/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/3rd-party-rules-systems/psionics-unleashed/equipment/psionic-items/psionic-artifacts/"
+    ]
+  },
+  {
+    "key": "Sutra of Tranquil Thought",
+    "reason": "an artifact: d20pfsrd and the book state no price",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/3rd-party-rules-systems/psionics-unleashed/equipment/psionic-items/psionic-artifacts/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/3rd-party-rules-systems/psionics-unleashed/equipment/psionic-items/universal-items/"
+    ]
+  },
+  {
+    "key": "Annulus",
+    "reason": "an artifact: d20pfsrd and the book state no price",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/3rd-party-rules-systems/psionics-unleashed/equipment/psionic-items/psionic-artifacts/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/3rd-party-rules-systems/psionics-unleashed/equipment/psionic-items/universal-items/"
+    ]
+  },
+  {
+    "key": "Psicrown of the Crystal Mind",
+    "reason": "an artifact: d20pfsrd and the book state no price",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/3rd-party-rules-systems/psionics-unleashed/equipment/psionic-items/psionic-artifacts/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/alternative-rule-systems/3rd-party-rules-systems/psionics-unleashed/equipment/psionic-items/universal-items/"
+    ]
+  },
+  {
+    "key": "Book of Perilous Journeys",
+    "reason": "a cursed item: d20pfsrd's entry for it states no price (only the CRB table's items carry one)",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/cursed-items/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml"
+    ]
+  },
+  {
+    "key": "Needful Doll",
+    "reason": "a cursed item: d20pfsrd's entry for it states no price (only the CRB table's items carry one)",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/cursed-items/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml"
+    ]
+  },
+  {
+    "key": "Cup of Forbidden Knowledge",
+    "reason": "an artifact: d20pfsrd and the book state no price",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/minor-artifacts/cup-of-forbidden-knowledge/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/minor-artifacts/",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/major-artifacts/"
+    ]
+  },
+  {
+    "key": "Dark Grimoire",
+    "reason": "an artifact: d20pfsrd and the book state no price",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/minor-artifacts/dark-grimoire/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/minor-artifacts/",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/major-artifacts/"
+    ]
+  },
+  {
+    "key": "Elder Sign",
+    "reason": "an artifact: d20pfsrd and the book state no price",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/minor-artifacts/elder-sign/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/minor-artifacts/",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/major-artifacts/"
+    ]
+  },
+  {
+    "key": "Final Blade",
+    "reason": "an artifact: d20pfsrd and the book state no price",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/minor-artifacts/",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/major-artifacts/"
+    ]
+  },
+  {
+    "key": "Sun Orchid Elixir",
+    "reason": "an artifact: d20pfsrd and the book state no price",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/minor-artifacts/",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/major-artifacts/"
+    ]
+  },
+  {
+    "key": "Wardstone",
+    "reason": "an artifact: d20pfsrd and the book state no price",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/minor-artifacts/",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/major-artifacts/"
+    ]
+  },
+  {
+    "key": "Book of the Damned (Demonic)",
+    "reason": "an artifact: d20pfsrd and the book state no price",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/major-artifacts/book-of-the-damned-demonic/",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/major-artifacts/book-of-the-damned-original/",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/minor-artifacts/",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/artifacts/major-artifacts/"
+    ]
+  },
+  {
+    "key": "Halcyon Bonded Mask",
+    "reason": "a monster or class-feature item (bestiary gear, a class ability, a test record), not sold; d20pfsrd states no price",
+    "tried": [
+      "converter",
+      "d20pfsrd:https://www.d20pfsrd.com/wp-sitemap.xml",
+      "d20pfsrd:https://www.d20pfsrd.com/magic-items/wondrous-items/"
+    ]
+  }
+]

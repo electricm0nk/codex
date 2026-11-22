@@ -1,0 +1,32 @@
+# SD13-E5 deterministic Human Bard level 4 progression fixture.
+# Widens the accepted SD13-E4/E5 deterministic PF1 Core Rulebook Human Bard
+# level-1/level-2/level-3 spontaneous arcane spell-bearing baseline to level 4
+# as chosen input only. It names selections; it does not contain derived,
+# computed, or parity values. It preserves the accepted Human race-choice
+# seam (ability-bonus and bonus-feat), the deterministic ability/feat/
+# performance posture from the level-1/level-2/level-3 fixtures, adding only
+# the level bump this bounded tranche needs.
+#
+# It deliberately avoids every later Bard burden surface: no performance-state
+# engine (start/maintain action economy, round tracking/consumption), no
+# Countersong or Distraction, no Versatile Performance execution (the PF1 Core
+# Rulebook 2nd-level Bard class feature substituting a chosen Perform skill
+# for its associated skills — a choice-gated substitution engine this bounded
+# seam deliberately does not ground), and no spontaneous known-spell / slot
+# posture burden.
+case_id=pf1-crb-human-bard-level4
+source_package_id=pf1.core_rulebook
+race_id=race:human
+class_level=class:bard:4
+ability=strength:10
+ability=dexterity:14
+ability=constitution:12
+ability=intelligence:13
+ability=wisdom:8
+ability=charisma:15
+feat=feat:dodge
+choice=choice:bard_bardic_knowledge:flag:enabled
+choice=choice:bard_bardic_music:performance:inspire_courage
+choice=choice:human_bonus_feat:feat:dodge
+choice=choice:human_ability_bonus:ability:charisma
+provenance=programs/codex/requirements/SD-13-core-class-race-roster-and-level-10-progression-matrix/artifacts/sd13-e4-r2-spellcasting-and-hybrid-level-10-progression-execution-handoff-2026-07-01.md

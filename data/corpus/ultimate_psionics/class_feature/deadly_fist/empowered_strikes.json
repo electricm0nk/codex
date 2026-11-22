@@ -1,0 +1,96 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Deadly Fist ~ Empowered Strikes",
+    "name": "Empowered Strikes",
+    "class": "Deadly Fist",
+    "description": "Your unarmed strikes deal 1d6 points of damage (or your normal unarmed strike damage, if higher) and are considered to be magic weapons for overcoming damage resistance.  You can change the damage type of your unarmed strikes between bludgeoning, piercing, and slashing.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Deadly Fist ~ Empowered Strikes"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SoulknifeClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "SERVESAS",
+        "value": "ABILITY=Special Ability|Soulknife ~ Form Mind Blade"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MndBladeLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PsychicStrikeDie|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PsychicStrikeDiceNumber|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WeaponSpecialCount|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MndBladeLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BladeSkillDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BladeSkillPrereqLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Your unarmed strikes deal 1d6 points of damage (or your normal unarmed strike damage, if higher) and are considered to be magic weapons for overcoming damage resistance.  You can change the damage type of your unarmed strikes between bludgeoning, piercing, and slashing."
+      },
+      {
+        "key": "AUTO",
+        "value": "WEAPONPROF|Deadly Fist"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BladeSkillPrereqLVL|MndBladeLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MndBladeLVL|SoulknifeLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BladeSkillDC|10+BAB"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.280"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2159,
+    "record_key": "Deadly Fist ~ Empowered Strikes"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

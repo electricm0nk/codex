@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Hellbound Corruption ~ Diabolical Servitor Gift",
+    "name": "Diabolical Servitor Gift",
+    "description": "Once per day as a spell-like ability, you can summon  a lawful evil outsider, as",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Hellbound Corruption ~ Diabolical Servitor Gift"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.HellboundDiabolicalServitorGift"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.22"
+      },
+      {
+        "key": "DESC",
+        "value": "Once per day as a spell-like ability, you can summon  a lawful evil outsider, as"
+      },
+      {
+        "key": "DESC",
+        "value": "summon monster II|PREVARLT:HellboundManifestationLevel,4"
+      },
+      {
+        "key": "DESC",
+        "value": "summon monster III, but summon an accuser devil (Bestiary 2 84),|PREVARGTEQ:HellboundManifestationLevel,4|PREVARLT:HellboundManifestationLevel,6"
+      },
+      {
+        "key": "DESC",
+        "value": "summon monster IV|PREVARGTEQ:HellboundManifestationLevel,6|PREVARLT:HellboundManifestationLevel,8"
+      },
+      {
+        "key": "DESC",
+        "value": "summon monster V|PREVARGTEQ:HellboundManifestationLevel,8"
+      },
+      {
+        "key": "DESC",
+        "value": "with a duration of %1 minutes.|HellboundManifestationLevel"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
+    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381",
+    "line": 323,
+    "record_key": "Hellbound Corruption ~ Diabolical Servitor Gift"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

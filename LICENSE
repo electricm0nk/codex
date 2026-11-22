@@ -1,3 +1,22 @@
+Codex is dual-licensed.
+
+SOURCE CODE — MIT License (full text below).
+Applies to all source code in this repository, including the LST
+parser, data model, UI, and build tooling.
+
+GAME RULES DATA — NOT MIT LICENSED.
+Any game rules content distributed with or alongside this repository is
+governed by its own license, found in the corresponding dataset
+directory. This includes content under the Open Game License v1.0a,
+Creative Commons licenses, and the ORC License. Those licenses impose
+attribution and notice obligations that the MIT License does not, and
+they may not be relicensed under MIT. See LICENSING.md for details.
+
+Nothing in the MIT License below grants any right to relicense,
+sublicense, or redistribute third-party game content.
+
+--------------------------------------------------------------------
+
 MIT License
 
 Copyright (c) 2026 electricm0nk

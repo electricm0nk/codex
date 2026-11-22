@@ -1,0 +1,50 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "general",
+    "cost_gp": 40.0,
+    "description": "A creature struck with a direct hit must succeed at a DC 15 Fortitude save or be sickened for 2d6 rounds. If the target fails its save, it must make a second Fortitude save or be nauseated for 1 round. Creatures in the splash area must make a Fortitude save or be sickened for 1 round. A creature that drinks brewed reek does not get a saving throw and is sickened for 2d6 rounds and nauseated for 1 round.",
+    "key": "Brewed Reek",
+    "name": "Brewed Reek",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Goods.Alchemical.Flask.Consumable.Racial.Hobgoblin"
+      },
+      {
+        "key": "COST",
+        "value": "40"
+      },
+      {
+        "key": "WT",
+        "value": "1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.123"
+      },
+      {
+        "key": "SPROP",
+        "value": "A creature struck with a direct hit must succeed at a DC 15 Fortitude save or be sickened for 2d6 rounds. If the target fails its save, it must make a second Fortitude save or be nauseated for 1 round. Creatures in the splash area must make a Fortitude save or be sickened for 1 round. A creature that drinks brewed reek does not get a saving throw and is sickened for 2d6 rounds and nauseated for 1 round."
+      }
+    ],
+    "weight_lbs": 1.0
+  },
+  "ingested_at": "2026-08-03T19:41:45Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 24,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equip_general.lst",
+    "record_key": "Brewed Reek",
+    "sha256": "2f2868746ea173e470c2334df18d24c07133cdda0467a613d7146eeb1ba465d0"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

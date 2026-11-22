@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Bloodline Arcana (Psychic)",
+    "name": "Bloodline Arcana (Psychic)",
+    "class": "Sorcerer",
+    "description": "Whenever you cast a [Force] or [Mind-affecting] spell, increase the DC of that spell by +1.",
+    "raw_tokens": [
+      {
+        "key": "OUTPUTNAME",
+        "value": "Bloodline Arcana"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Sorcerer Class Feature.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "Whenever you cast a [Force] or [Mind-affecting] spell, increase the DC of that spell by +1."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Wild Talent"
+      },
+      {
+        "key": "BONUS",
+        "value": "DC|DESCRIPTOR.Force|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "DC|DESCRIPTOR.Mind-affecting|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.295"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1106,
+    "record_key": "Bloodline Arcana (Psychic)"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

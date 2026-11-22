@@ -1,0 +1,28 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:28:11Z",
+  "data": {
+    "key": "Mantis Blade",
+    "category": "ArmsArmor",
+    "name": "Mantis Blade",
+    "cost_gp": 35.0,
+    "weight_lbs": 2.0,
+    "description": "Intelligent; LE; Ego 16; Int 10, Wis 12, Cha 14; Senses 60 ft, darkvision; Telepathy; Special Purpose-slay all; 1/day when wounding a creature, the wielder can activate the Bane special ability as a swift action (only against the creature type wounded, lasts 10 min)"
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_equip_arms_armor.lst",
+    "sha256": "003c6e783a46f7a8a12246c003a9f020b2aae51eebd26ab9b23751a5e320b955",
+    "line": 25,
+    "record_key": "Mantis Blade"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

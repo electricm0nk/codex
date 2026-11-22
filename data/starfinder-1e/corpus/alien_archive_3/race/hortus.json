@@ -1,0 +1,19 @@
+{
+  "data": {
+    "key": "Hortus",
+    "name": "Hortus",
+    "type": "Plant"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 11,
+    "path": "starfinder/paizo/alien_archive_3/saa3_races.lst",
+    "record_key": "Hortus",
+    "sha256": "8804a105abdd0aa1f5bcb026f9cfc64acb7e320906b9c444fd422b1c05e314c3"
+  },
+  "unit_id": "alien_archive_3:race:hortus"
+}

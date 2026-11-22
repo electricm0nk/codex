@@ -1,0 +1,65 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "description": null,
+    "key": "Evolution ~ Minor Burning Hands 1",
+    "name": "Minor Magic ~ Burning Hands (1/day)",
+    "origin": "declared",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Evolution ~ Minor Burning Hands 1"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpellLike.EidMinorMagic"
+      },
+      {
+        "key": "PRESTAT",
+        "value": "1,CHA=11"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "MasterLevel,4"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BurningHandsEidSLAPerDay|0"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=BurningHandsEidSLAPerDay|CASTERLEVEL=(max(HD-2,1))|Burning Hands,10+HD/2+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BurningHandsEidSLAPerDay|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.77"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T12:25:21Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 142,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_companion.lst",
+    "record_key": "Evolution ~ Minor Burning Hands 1",
+    "sha256": "a151f524147c1bb94426c32bb6e353a7b2658a39a5bf82331e1e9bf4c549b7a3"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:spells"
+  ]
+}

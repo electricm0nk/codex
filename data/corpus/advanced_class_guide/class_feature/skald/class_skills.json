@@ -1,0 +1,44 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Skald ~ Class Skills",
+    "name": "Class Skills",
+    "class": "Skald",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Skald ~ Class Skills"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "TYPE",
+        "value": "Skald Class Feature"
+      },
+      {
+        "key": "CSKILL",
+        "value": "Acrobatics|Appraise|Bluff|Climb|TYPE=Craft|Diplomacy|Escape Artist|Handle Animal|Intimidate|TYPE=Knowledge|Linguistics|Perception|Perform (Oratory)|Perform (Percussion Instruments)|Perform (Sing)|Perform (String Instruments)|Perform (Wind Instruments)|TYPE=Profession|Ride|Sense Motive|Spellcraft|Swim|Use Magic Device"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1720,
+    "record_key": "Skald ~ Class Skills"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

@@ -1,0 +1,53 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Enigma ~ Veiled Steps",
+    "name": "Veiled Steps",
+    "class": "Mesmerist",
+    "description": "An enigma gains a +%1 bonus to his Stealth checks.|max(1,MesmeristLVL/4)",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Enigma ~ Veiled Steps"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mesmerist Class Features.EnigmaClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "An enigma gains a +%1 bonus to his Stealth checks.|max(1,MesmeristLVL/4)"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Stealth|max(1,MesmeristLVL/4)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.36"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/support/ui_abilities_class_oa.lst",
+    "sha256": "123f008e9a2f31828861df9025f48f5c2f7c78a648553f22dba96a8d8a2e24dc",
+    "line": 53,
+    "record_key": "Enigma ~ Veiled Steps"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:prose_formula_segment"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

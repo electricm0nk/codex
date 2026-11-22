@@ -1,0 +1,36 @@
+{
+  "codex_generated_name": false,
+  "completeness": "chassis_only",
+  "data": {
+    "description": null,
+    "key": "Racial Traits ~ Drow",
+    "name": "Racial Traits ~ Drow",
+    "raw_tokens": [
+      {
+        "key": "DEFINE",
+        "value": "Drow_ReplaceAbilityScores|0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Drow Racial Trait|AUTOMATIC|Drow ~ Ability Scores|PREVAREQ:Drow_ReplaceAbilityScores,0"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 10,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/drow/drow_abilities_globalvar.lst",
+    "record_key": "Racial Traits ~ Drow",
+    "sha256": "c2b74f65fa9a632df8fa96f2cd9d3cb85c0e5576a7565dffc544af336ecb5f46"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

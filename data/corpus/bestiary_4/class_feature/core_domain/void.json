@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Core Domain ~ Void Domain",
+    "name": "Void",
+    "class": "Cleric",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Core Domain ~ Void Domain"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "TYPE",
+        "value": "Internal.DomainAbility"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Domain Power ~ Guarded Mind|!PREABILITY:1,CATEGORY=Internal,DisableDomainLVL1 (Void)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Domain Power ~ Part the Veil|PREVARGTEQ:DomainVoidLVL,8"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Domain Base ~ Void"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_class.lst",
+    "sha256": "41456433df73d16e6f9ac98d4c7f780df067186da8f76c4700cb1cae017fed09",
+    "line": 6,
+    "record_key": "Core Domain ~ Void Domain"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

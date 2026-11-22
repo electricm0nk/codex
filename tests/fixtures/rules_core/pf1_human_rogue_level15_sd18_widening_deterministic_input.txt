@@ -1,0 +1,28 @@
+# SD18 deterministic Human Rogue level 15 widening fixture.
+# Widens the accepted SD18 deterministic Human Rogue pilot from the bounded
+# level-14 ceiling (tests/sd18_rogue_level14_widening.rs) to level 15 as
+# chosen input only. It names selections; it does not contain derived,
+# computed, or parity values. It preserves the accepted Human race-choice
+# seam and the deterministic ability/feat/skill posture from the level-14
+# fixture, including all seven numbered rogue-talent choice slots (level 15
+# is NOT a rogue-talent level -- talents land at 2/4/6/8/10/12/14/16 per
+# "Starting at 2nd level, a rogue gains one rogue talent. She gains an
+# additional rogue talent for every 2 levels of rogue attained after 2nd
+# level.", so no eighth slot appears here), adding only the level bump.
+case_id=pf1-crb-human-rogue-level15-sd18-widening
+source_package_id=pf1.core_rulebook
+race_id=race:human
+class_level=class:rogue:15
+ability=strength:10
+ability=dexterity:17
+ability=constitution:12
+ability=intelligence:12
+ability=wisdom:10
+ability=charisma:10
+feat=feat:weapon_finesse
+skill=skill:stealth:1
+choice=choice:rogue_talent_6:talent:combat_trick
+choice=choice:rogue_talent_7:talent:fast_stealth
+choice=choice:human_bonus_feat:feat:dodge
+choice=choice:human_ability_bonus:ability:dexterity
+provenance=programs/codex/requirements/SD-18-core-rules-breadth/artifacts/core-roster-and-support-state-matrix.md

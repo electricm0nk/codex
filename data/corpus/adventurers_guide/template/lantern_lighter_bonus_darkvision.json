@@ -1,0 +1,39 @@
+{
+  "codex_generated_name": false,
+  "completeness": "chassis_only",
+  "data": {
+    "key": "Lantern Lighter Bonus Darkvision",
+    "name": "Lantern Lighter Bonus Darkvision",
+    "raw_tokens": [
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "PREVISION",
+        "value": "1,Darkvision=ANY"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DarkvisionRange|30"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T16:43:13Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 5,
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_templates.lst",
+    "record_key": "Lantern Lighter Bonus Darkvision",
+    "sha256": "5e9d10789d33dce65c644f7bf256c66287fbc40be2c91a3bf7c4983dbaf7026b"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

@@ -1,0 +1,44 @@
+[
+  {
+    "name": "Imp",
+    "source_page": "p213",
+    "rez": 15,
+    "interface": 3,
+    "net_actions": 2,
+    "combat_number": 14,
+    "cost_eb": 1000,
+    "price_category": "Very Expensive",
+    "icon": "Small orange sphere of light with red horns.",
+    "text": "Demons have an Interface and a Combat Number. This Combat Number combines both STAT and Skill for them. You add a d10 roll to this Combat Number for the purpose of attacking and defending with drones, turrets, etc., which they are Controlling. They are unable to run Programs or Black ICE. With their Interface, Demons have access to only 2 Netrunner Abilities with which to use their NET Actions: Zap (to defend themselves) and Control (to operate Control Nodes). Even when operated by a Demon, each Control Node can still only be activated once per Turn. Demons can have control of multiple Control Nodes just like Netrunners. Demons have no SPD or PER score. Because of this, you cannot Slide away from a Demon, and the Demon doesn't have a chance to get a free hit on you when it discovers you. Demons don't have DEF either, and defend just as a Netrunner does with Interface + 1d10. A Demon enters the Initiative Queue at the top when it detects an intruder with one of its Observation Cameras, or when a Netrunner enters its Architecture. On their Turn, Demons prioritize acting on Control Node triggers using their NET Actions, and only Zap an enemy Netrunner with their leftover NET Actions.",
+    "transcription_note": "p213 prints no Demon cost; cost from the Buying-a-NET-Architecture table (p219; same on p373, which prints 'Very Expensive'). Demons are too big for Cyberdecks (p206).",
+    "kind": "demon"
+  },
+  {
+    "name": "Efreet",
+    "source_page": "p213",
+    "rez": 25,
+    "interface": 4,
+    "net_actions": 3,
+    "combat_number": 14,
+    "cost_eb": 5000,
+    "price_category": "Luxury",
+    "icon": "Tall, powerfully built Black man, dressed in elegant evening clothes completed with a fez and dagger.",
+    "text": "Demons have an Interface and a Combat Number. This Combat Number combines both STAT and Skill for them. You add a d10 roll to this Combat Number for the purpose of attacking and defending with drones, turrets, etc., which they are Controlling. They are unable to run Programs or Black ICE. With their Interface, Demons have access to only 2 Netrunner Abilities with which to use their NET Actions: Zap (to defend themselves) and Control (to operate Control Nodes). Even when operated by a Demon, each Control Node can still only be activated once per Turn. Demons can have control of multiple Control Nodes just like Netrunners. Demons have no SPD or PER score. Because of this, you cannot Slide away from a Demon, and the Demon doesn't have a chance to get a free hit on you when it discovers you. Demons don't have DEF either, and defend just as a Netrunner does with Interface + 1d10. A Demon enters the Initiative Queue at the top when it detects an intruder with one of its Observation Cameras, or when a Netrunner enters its Architecture. On their Turn, Demons prioritize acting on Control Node triggers using their NET Actions, and only Zap an enemy Netrunner with their leftover NET Actions.",
+    "transcription_note": "p213 prints no Demon cost; cost from the Buying-a-NET-Architecture table (p219; same on p373, which prints 'Very Expensive'). Demons are too big for Cyberdecks (p206).",
+    "kind": "demon"
+  },
+  {
+    "name": "Balron",
+    "source_page": "p213",
+    "rez": 30,
+    "interface": 7,
+    "net_actions": 4,
+    "combat_number": 14,
+    "cost_eb": 10000,
+    "price_category": "Super Luxury",
+    "icon": "Huge humanoid monster in futuristic black arm or covered with hissing green glowing tentacles.",
+    "text": "Demons have an Interface and a Combat Number. This Combat Number combines both STAT and Skill for them. You add a d10 roll to this Combat Number for the purpose of attacking and defending with drones, turrets, etc., which they are Controlling. They are unable to run Programs or Black ICE. With their Interface, Demons have access to only 2 Netrunner Abilities with which to use their NET Actions: Zap (to defend themselves) and Control (to operate Control Nodes). Even when operated by a Demon, each Control Node can still only be activated once per Turn. Demons can have control of multiple Control Nodes just like Netrunners. Demons have no SPD or PER score. Because of this, you cannot Slide away from a Demon, and the Demon doesn't have a chance to get a free hit on you when it discovers you. Demons don't have DEF either, and defend just as a Netrunner does with Interface + 1d10. A Demon enters the Initiative Queue at the top when it detects an intruder with one of its Observation Cameras, or when a Netrunner enters its Architecture. On their Turn, Demons prioritize acting on Control Node triggers using their NET Actions, and only Zap an enemy Netrunner with their leftover NET Actions.",
+    "transcription_note": "p213 prints no Demon cost; cost from the Buying-a-NET-Architecture table (p219; same on p373, which prints 'Very Expensive'). Demons are too big for Cyberdecks (p206).",
+    "kind": "demon"
+  }
+]

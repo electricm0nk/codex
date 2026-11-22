@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Gray Maiden Initiate ~ Tamed and Broken",
+    "name": "Tamed and Broken",
+    "description": "You reach your full potential only when magically compelled. Whenever you are under the effects of an enemy's compulsion spell, you gain a number of temporary hit points equal to the spell's level. These temporary hit points last for the duration of the spell effect.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Gray Maiden Initiate ~ Tamed and Broken"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "GrayMaidenInitiateTraining.SpecialQuality"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.85"
+      },
+      {
+        "key": "DESC",
+        "value": "You reach your full potential only when magically compelled. Whenever you are under the effects of an enemy's compulsion spell, you gain a number of temporary hit points equal to the spell's level. These temporary hit points last for the duration of the spell effect."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities.lst",
+    "sha256": "98f14777441cb86902ffe2b2cad2bba6be68cd2f3b0ff2fd0eef906fe2b9765b",
+    "line": 29,
+    "record_key": "Gray Maiden Initiate ~ Tamed and Broken"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

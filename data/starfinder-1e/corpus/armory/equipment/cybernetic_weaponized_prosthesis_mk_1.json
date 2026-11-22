@@ -1,0 +1,19 @@
+{
+  "data": {
+    "key": "Cybernetic ~ Weaponized prosthesis (mk 1)",
+    "name": "Weaponized prosthesis, mk 1",
+    "type": "Cybernetic.ItemLevel_.4.Arm and hand"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 922,
+    "path": "starfinder/paizo/armory/sa_equip.lst",
+    "record_key": "Cybernetic ~ Weaponized prosthesis (mk 1)",
+    "sha256": "16a1e2005f35a11d8cd4257261849d989dc1785163c445080b169de86002c057"
+  },
+  "unit_id": "armory:equipment:cybernetic_weaponized_prosthesis_mk_1"
+}

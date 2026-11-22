@@ -1,0 +1,1932 @@
+{
+  "format": "codex.rules_tables/1",
+  "table": "bestiary_3/companion_data/COMPANIONS",
+  "licence": {
+    "license": "OGL",
+    "book": "bestiary_3",
+    "screen": "pi_screening::classify_field",
+    "pi_hits": [],
+    "redacted": []
+  },
+  "rows": [
+    {
+      "key": "Familiar (Flying Squirrel)",
+      "name": "Flying Squirrel",
+      "size": "T",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 20
+        },
+        {
+          "mode": "Fly",
+          "feet": 40
+        }
+      ],
+      "reach_feet": 0,
+      "race_type": "Animal",
+      "race_subtype": null,
+      "monster_class": "Animal:1",
+      "type_segments": [
+        "Animal"
+      ],
+      "natural_attacks": [
+        {
+          "name": "Bite",
+          "damage_dice": "1d3"
+        }
+      ],
+      "natural_attack_damage_bonuses": [],
+      "skill_ability_diff_bonuses": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": -8
+        },
+        {
+          "ability": "DEX",
+          "amount": 4
+        },
+        {
+          "ability": "CON",
+          "amount": -2
+        },
+        {
+          "ability": "INT",
+          "amount": -10
+        },
+        {
+          "ability": "WIS",
+          "amount": 2
+        },
+        {
+          "ability": "CHA",
+          "amount": -4
+        }
+      ],
+      "natural_armor": null,
+      "source_page": "p.111",
+      "ability_keys": [
+        "Flying Squirrel ~ Glide"
+      ],
+      "external_ability_refs": [
+        "Flight Maneuverability"
+      ],
+      "external_ability_ref_conditions": [],
+      "source_file": "b3_races_familiar",
+      "source_line": 5
+    },
+    {
+      "key": "Companion (Antelope)",
+      "name": "Companion (Antelope)",
+      "size": "S",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 60
+        }
+      ],
+      "reach_feet": 5,
+      "race_type": "Companion",
+      "race_subtype": null,
+      "monster_class": "Companion:2",
+      "type_segments": [],
+      "natural_attacks": [
+        {
+          "name": "Gore",
+          "damage_dice": null
+        }
+      ],
+      "natural_attack_damage_bonuses": [],
+      "skill_ability_diff_bonuses": [],
+      "stat_adjustments": [
+        {
+          "ability": "DEX",
+          "amount": 6
+        },
+        {
+          "ability": "CON",
+          "amount": 4
+        },
+        {
+          "ability": "WIS",
+          "amount": 2
+        },
+        {
+          "ability": "CHA",
+          "amount": -6
+        }
+      ],
+      "natural_armor": 1,
+      "source_page": null,
+      "ability_keys": [
+        "Companion Advancement ~ Antelope"
+      ],
+      "external_ability_refs": [],
+      "external_ability_ref_conditions": [],
+      "source_file": "b3_races_companion",
+      "source_line": 6
+    },
+    {
+      "key": "Familiar (Fox)",
+      "name": "Fox",
+      "size": "T",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 40
+        }
+      ],
+      "reach_feet": 0,
+      "race_type": "Animal",
+      "race_subtype": null,
+      "monster_class": "Animal:1",
+      "type_segments": [
+        "Animal"
+      ],
+      "natural_attacks": [
+        {
+          "name": "Bite",
+          "damage_dice": "1d3"
+        }
+      ],
+      "natural_attack_damage_bonuses": [],
+      "skill_ability_diff_bonuses": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": -2
+        },
+        {
+          "ability": "DEX",
+          "amount": 4
+        },
+        {
+          "ability": "CON",
+          "amount": 2
+        },
+        {
+          "ability": "INT",
+          "amount": -8
+        },
+        {
+          "ability": "WIS",
+          "amount": 2
+        },
+        {
+          "ability": "CHA",
+          "amount": -4
+        }
+      ],
+      "natural_armor": null,
+      "source_page": "p.111",
+      "ability_keys": [],
+      "external_ability_refs": [],
+      "external_ability_ref_conditions": [],
+      "source_file": "b3_races_familiar",
+      "source_line": 6
+    },
+    {
+      "key": "Companion (Archelon)",
+      "name": "Companion (Archelon)",
+      "size": "M",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 15
+        },
+        {
+          "mode": "Swim",
+          "feet": 50
+        }
+      ],
+      "reach_feet": 5,
+      "race_type": "Companion",
+      "race_subtype": null,
+      "monster_class": "Companion:2",
+      "type_segments": [],
+      "natural_attacks": [
+        {
+          "name": "Bite",
+          "damage_dice": null
+        }
+      ],
+      "natural_attack_damage_bonuses": [],
+      "skill_ability_diff_bonuses": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": -2
+        },
+        {
+          "ability": "DEX",
+          "amount": 0
+        },
+        {
+          "ability": "CON",
+          "amount": -2
+        },
+        {
+          "ability": "WIS",
+          "amount": 2
+        },
+        {
+          "ability": "CHA",
+          "amount": -4
+        }
+      ],
+      "natural_armor": 10,
+      "source_page": null,
+      "ability_keys": [
+        "Companion Advancement ~ Archelon"
+      ],
+      "external_ability_refs": [
+        "Hold Breath",
+        "Scent"
+      ],
+      "external_ability_ref_conditions": [],
+      "source_file": "b3_races_companion",
+      "source_line": 7
+    },
+    {
+      "key": "Familiar (Goat)",
+      "name": "Goat",
+      "size": "S",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 30
+        }
+      ],
+      "reach_feet": null,
+      "race_type": "Animal",
+      "race_subtype": null,
+      "monster_class": "Animal:1",
+      "type_segments": [
+        "Animal"
+      ],
+      "natural_attacks": [
+        {
+          "name": "Gore",
+          "damage_dice": "1d4"
+        }
+      ],
+      "natural_attack_damage_bonuses": [],
+      "skill_ability_diff_bonuses": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 2
+        },
+        {
+          "ability": "DEX",
+          "amount": 2
+        },
+        {
+          "ability": "CON",
+          "amount": 2
+        },
+        {
+          "ability": "INT",
+          "amount": -8
+        },
+        {
+          "ability": "WIS",
+          "amount": 0
+        },
+        {
+          "ability": "CHA",
+          "amount": -6
+        }
+      ],
+      "natural_armor": 1,
+      "source_page": "p.111",
+      "ability_keys": [],
+      "external_ability_refs": [],
+      "external_ability_ref_conditions": [],
+      "source_file": "b3_races_familiar",
+      "source_line": 7
+    },
+    {
+      "key": "Companion (Axe Beak)",
+      "name": "Companion (Axe Beak)",
+      "size": "M",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 50
+        }
+      ],
+      "reach_feet": 5,
+      "race_type": "Companion",
+      "race_subtype": null,
+      "monster_class": "Companion:2",
+      "type_segments": [],
+      "natural_attacks": [
+        {
+          "name": "Bite",
+          "damage_dice": null
+        }
+      ],
+      "natural_attack_damage_bonuses": [
+        {
+          "attack": "Bite",
+          "formula": "max(0,(STR/2))",
+          "conditions": []
+        }
+      ],
+      "skill_ability_diff_bonuses": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 0
+        },
+        {
+          "ability": "DEX",
+          "amount": 6
+        },
+        {
+          "ability": "CON",
+          "amount": 2
+        },
+        {
+          "ability": "WIS",
+          "amount": 0
+        },
+        {
+          "ability": "CHA",
+          "amount": 0
+        }
+      ],
+      "natural_armor": null,
+      "source_page": null,
+      "ability_keys": [
+        "Companion Advancement ~ Axe Beak",
+        "Axe Beak ~ Sudden Charge"
+      ],
+      "external_ability_refs": [],
+      "external_ability_ref_conditions": [],
+      "source_file": "b3_races_companion",
+      "source_line": 8
+    },
+    {
+      "key": "Familiar (Otter)",
+      "name": "Otter",
+      "size": "T",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 20
+        },
+        {
+          "mode": "Swim",
+          "feet": 30
+        }
+      ],
+      "reach_feet": 0,
+      "race_type": "Animal",
+      "race_subtype": null,
+      "monster_class": "Animal:1",
+      "type_segments": [
+        "Animal"
+      ],
+      "natural_attacks": [
+        {
+          "name": "Bite",
+          "damage_dice": "1d3"
+        }
+      ],
+      "natural_attack_damage_bonuses": [],
+      "skill_ability_diff_bonuses": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": -8
+        },
+        {
+          "ability": "DEX",
+          "amount": 6
+        },
+        {
+          "ability": "CON",
+          "amount": 0
+        },
+        {
+          "ability": "INT",
+          "amount": -8
+        },
+        {
+          "ability": "WIS",
+          "amount": 2
+        },
+        {
+          "ability": "CHA",
+          "amount": -6
+        }
+      ],
+      "natural_armor": null,
+      "source_page": "p.112",
+      "ability_keys": [],
+      "external_ability_refs": [],
+      "external_ability_ref_conditions": [],
+      "source_file": "b3_races_familiar",
+      "source_line": 8
+    },
+    {
+      "key": "Companion (Baluchitherium)",
+      "name": "Companion (Baluchitherium)",
+      "size": "M",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 40
+        }
+      ],
+      "reach_feet": 5,
+      "race_type": "Companion",
+      "race_subtype": null,
+      "monster_class": "Companion:2",
+      "type_segments": [],
+      "natural_attacks": [
+        {
+          "name": "Hoof",
+          "damage_dice": null
+        }
+      ],
+      "natural_attack_damage_bonuses": [],
+      "skill_ability_diff_bonuses": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 4
+        },
+        {
+          "ability": "DEX",
+          "amount": 4
+        },
+        {
+          "ability": "CON",
+          "amount": 4
+        },
+        {
+          "ability": "WIS",
+          "amount": 2
+        },
+        {
+          "ability": "CHA",
+          "amount": -4
+        }
+      ],
+      "natural_armor": 4,
+      "source_page": null,
+      "ability_keys": [
+        "Companion Advancement ~ Baluchitherium"
+      ],
+      "external_ability_refs": [
+        "Scent"
+      ],
+      "external_ability_ref_conditions": [],
+      "source_file": "b3_races_companion",
+      "source_line": 9
+    },
+    {
+      "key": "Familiar (Pig)",
+      "name": "Pig",
+      "size": "S",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 30
+        }
+      ],
+      "reach_feet": null,
+      "race_type": "Animal",
+      "race_subtype": null,
+      "monster_class": "Animal:1",
+      "type_segments": [
+        "Animal"
+      ],
+      "natural_attacks": [
+        {
+          "name": "Bite",
+          "damage_dice": "1d4"
+        }
+      ],
+      "natural_attack_damage_bonuses": [],
+      "skill_ability_diff_bonuses": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 0
+        },
+        {
+          "ability": "DEX",
+          "amount": 2
+        },
+        {
+          "ability": "CON",
+          "amount": 4
+        },
+        {
+          "ability": "INT",
+          "amount": -8
+        },
+        {
+          "ability": "WIS",
+          "amount": 2
+        },
+        {
+          "ability": "CHA",
+          "amount": -6
+        }
+      ],
+      "natural_armor": 1,
+      "source_page": "p.112",
+      "ability_keys": [],
+      "external_ability_refs": [],
+      "external_ability_ref_conditions": [],
+      "source_file": "b3_races_familiar",
+      "source_line": 9
+    },
+    {
+      "key": "Companion (Basilosaurus)",
+      "name": "Companion (Basilosaurus)",
+      "size": "M",
+      "speeds": [
+        {
+          "mode": "Swim",
+          "feet": 40
+        }
+      ],
+      "reach_feet": 5,
+      "race_type": "Companion",
+      "race_subtype": null,
+      "monster_class": "Companion:2",
+      "type_segments": [],
+      "natural_attacks": [
+        {
+          "name": "Bite",
+          "damage_dice": null
+        },
+        {
+          "name": "Tail Slap",
+          "damage_dice": null
+        }
+      ],
+      "natural_attack_damage_bonuses": [],
+      "skill_ability_diff_bonuses": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 0
+        },
+        {
+          "ability": "DEX",
+          "amount": 4
+        },
+        {
+          "ability": "CON",
+          "amount": 2
+        },
+        {
+          "ability": "WIS",
+          "amount": 4
+        },
+        {
+          "ability": "CHA",
+          "amount": -4
+        }
+      ],
+      "natural_armor": 1,
+      "source_page": null,
+      "ability_keys": [
+        "Companion Advancement ~ Basilosaurus"
+      ],
+      "external_ability_refs": [
+        "Hold Breath"
+      ],
+      "external_ability_ref_conditions": [],
+      "source_file": "b3_races_companion",
+      "source_line": 10
+    },
+    {
+      "key": "Familiar (Raccoon)",
+      "name": "Raccoon",
+      "size": "T",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 20
+        },
+        {
+          "mode": "Climb",
+          "feet": 20
+        }
+      ],
+      "reach_feet": 0,
+      "race_type": "Animal",
+      "race_subtype": null,
+      "monster_class": "Animal:1",
+      "type_segments": [
+        "Animal"
+      ],
+      "natural_attacks": [
+        {
+          "name": "Bite",
+          "damage_dice": "1d3"
+        }
+      ],
+      "natural_attack_damage_bonuses": [],
+      "skill_ability_diff_bonuses": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": -2
+        },
+        {
+          "ability": "DEX",
+          "amount": 4
+        },
+        {
+          "ability": "CON",
+          "amount": 0
+        },
+        {
+          "ability": "INT",
+          "amount": -8
+        },
+        {
+          "ability": "WIS",
+          "amount": 6
+        },
+        {
+          "ability": "CHA",
+          "amount": -6
+        }
+      ],
+      "natural_armor": 1,
+      "source_page": "p.112",
+      "ability_keys": [],
+      "external_ability_refs": [],
+      "external_ability_ref_conditions": [],
+      "source_file": "b3_races_familiar",
+      "source_line": 10
+    },
+    {
+      "key": "Companion (Dimetrodon)",
+      "name": "Companion (Dimetrodon)",
+      "size": "M",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 30
+        }
+      ],
+      "reach_feet": 5,
+      "race_type": "Companion",
+      "race_subtype": "AnimalCompanionDinosaur",
+      "monster_class": "Companion:2",
+      "type_segments": [],
+      "natural_attacks": [
+        {
+          "name": "Bite",
+          "damage_dice": null
+        }
+      ],
+      "natural_attack_damage_bonuses": [],
+      "skill_ability_diff_bonuses": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 2
+        },
+        {
+          "ability": "DEX",
+          "amount": 6
+        },
+        {
+          "ability": "CON",
+          "amount": 4
+        },
+        {
+          "ability": "WIS",
+          "amount": 2
+        },
+        {
+          "ability": "CHA",
+          "amount": -8
+        }
+      ],
+      "natural_armor": 2,
+      "source_page": null,
+      "ability_keys": [
+        "Dimetrodon ~ Tearing Bite",
+        "Companion Advancement ~ Dimetrodon"
+      ],
+      "external_ability_refs": [],
+      "external_ability_ref_conditions": [],
+      "source_file": "b3_races_companion",
+      "source_line": 11
+    },
+    {
+      "key": "Companion (Elk)",
+      "name": "Companion (Elk)",
+      "size": "M",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 50
+        }
+      ],
+      "reach_feet": 5,
+      "race_type": "Companion",
+      "race_subtype": null,
+      "monster_class": "Companion:2",
+      "type_segments": [],
+      "natural_attacks": [
+        {
+          "name": "Gore",
+          "damage_dice": null
+        },
+        {
+          "name": "Hoof",
+          "damage_dice": null
+        }
+      ],
+      "natural_attack_damage_bonuses": [],
+      "skill_ability_diff_bonuses": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 2
+        },
+        {
+          "ability": "DEX",
+          "amount": 6
+        },
+        {
+          "ability": "CON",
+          "amount": 4
+        },
+        {
+          "ability": "WIS",
+          "amount": 4
+        },
+        {
+          "ability": "CHA",
+          "amount": -6
+        }
+      ],
+      "natural_armor": 1,
+      "source_page": null,
+      "ability_keys": [
+        "Companion Advancement ~ Elk"
+      ],
+      "external_ability_refs": [],
+      "external_ability_ref_conditions": [],
+      "source_file": "b3_races_companion",
+      "source_line": 12
+    },
+    {
+      "key": "Companion (Giant Chameleon)",
+      "name": "Companion (Giant Chameleon)",
+      "size": "M",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 30
+        },
+        {
+          "mode": "Climb",
+          "feet": 30
+        }
+      ],
+      "reach_feet": 5,
+      "race_type": "Companion",
+      "race_subtype": null,
+      "monster_class": "Companion:2",
+      "type_segments": [],
+      "natural_attacks": [
+        {
+          "name": "Bite",
+          "damage_dice": null
+        }
+      ],
+      "natural_attack_damage_bonuses": [],
+      "skill_ability_diff_bonuses": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 2
+        },
+        {
+          "ability": "DEX",
+          "amount": 4
+        },
+        {
+          "ability": "CON",
+          "amount": 4
+        },
+        {
+          "ability": "WIS",
+          "amount": 0
+        },
+        {
+          "ability": "CHA",
+          "amount": -4
+        }
+      ],
+      "natural_armor": null,
+      "source_page": null,
+      "ability_keys": [
+        "Companion Advancement ~ Giant Chameleon",
+        "Giant Chameleon ~ Tongue"
+      ],
+      "external_ability_refs": [],
+      "external_ability_ref_conditions": [],
+      "source_file": "b3_races_companion",
+      "source_line": 13
+    },
+    {
+      "key": "Archon (Harbinger)",
+      "name": "Archon, Harbinger",
+      "size": "T",
+      "speeds": [
+        {
+          "mode": "Fly",
+          "feet": 50
+        }
+      ],
+      "reach_feet": 0,
+      "race_type": "Outsider",
+      "race_subtype": "Archon|Extraplanar|Good|Lawful",
+      "monster_class": "Outsider (Ref/Will):3",
+      "type_segments": [
+        "Outsider"
+      ],
+      "natural_attacks": [
+        {
+          "name": "Blades",
+          "damage_dice": "1d4"
+        }
+      ],
+      "natural_attack_damage_bonuses": [],
+      "skill_ability_diff_bonuses": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": -4
+        },
+        {
+          "ability": "DEX",
+          "amount": 4
+        },
+        {
+          "ability": "CON",
+          "amount": 0
+        },
+        {
+          "ability": "INT",
+          "amount": 0
+        },
+        {
+          "ability": "WIS",
+          "amount": 2
+        },
+        {
+          "ability": "CHA",
+          "amount": 2
+        }
+      ],
+      "natural_armor": 1,
+      "source_page": "p.18",
+      "ability_keys": [
+        "Harbinger Archon ~ Blades",
+        "Harbinger Archon ~ Disassemble",
+        "Harbinger Archon ~ Minor Archon",
+        "Harbinger Archon ~ Wrath",
+        "Harbinger Archon ~ Spell-Like Abilities"
+      ],
+      "external_ability_refs": [
+        "Flight Maneuverability"
+      ],
+      "external_ability_ref_conditions": [],
+      "source_file": "b3_races_familiar",
+      "source_line": 14
+    },
+    {
+      "key": "Companion (Giant Gecko)",
+      "name": "Companion (Giant Gecko)",
+      "size": "S",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 30
+        }
+      ],
+      "reach_feet": 5,
+      "race_type": "Companion",
+      "race_subtype": null,
+      "monster_class": "Companion:2",
+      "type_segments": [],
+      "natural_attacks": [
+        {
+          "name": "Bite",
+          "damage_dice": null
+        }
+      ],
+      "natural_attack_damage_bonuses": [],
+      "skill_ability_diff_bonuses": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 0
+        },
+        {
+          "ability": "DEX",
+          "amount": 4
+        },
+        {
+          "ability": "CON",
+          "amount": 2
+        },
+        {
+          "ability": "WIS",
+          "amount": 4
+        },
+        {
+          "ability": "CHA",
+          "amount": -4
+        }
+      ],
+      "natural_armor": null,
+      "source_page": null,
+      "ability_keys": [
+        "Giant Gecko ~ Expert Climber",
+        "Companion Advancement ~ Giant Gecko"
+      ],
+      "external_ability_refs": [],
+      "external_ability_ref_conditions": [],
+      "source_file": "b3_races_companion",
+      "source_line": 14
+    },
+    {
+      "key": "Carbuncle",
+      "name": "Carbuncle",
+      "size": "T",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 20
+        }
+      ],
+      "reach_feet": null,
+      "race_type": "Magical Beast",
+      "race_subtype": null,
+      "monster_class": "Magical Beast:2",
+      "type_segments": [
+        "Magical Beast"
+      ],
+      "natural_attacks": [
+        {
+          "name": "Bite",
+          "damage_dice": "1d3"
+        }
+      ],
+      "natural_attack_damage_bonuses": [],
+      "skill_ability_diff_bonuses": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": -6
+        },
+        {
+          "ability": "DEX",
+          "amount": -4
+        },
+        {
+          "ability": "CON",
+          "amount": 2
+        },
+        {
+          "ability": "INT",
+          "amount": -4
+        },
+        {
+          "ability": "WIS",
+          "amount": 2
+        },
+        {
+          "ability": "CHA",
+          "amount": 0
+        }
+      ],
+      "natural_armor": 2,
+      "source_page": "p.43",
+      "ability_keys": [
+        "Carbuncle ~ Empath",
+        "Carbuncle ~ Fatal Faker",
+        "Carbuncle ~ Specious Suggestion",
+        "Carbuncle ~ Vulnerability to Suggestion",
+        "Carbuncle ~ Spell-Like Abilities"
+      ],
+      "external_ability_refs": [],
+      "external_ability_ref_conditions": [],
+      "source_file": "b3_races_familiar",
+      "source_line": 15
+    },
+    {
+      "key": "Companion (Giant Vulture)",
+      "name": "Companion (Giant Vulture)",
+      "size": "M",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 10
+        },
+        {
+          "mode": "Fly",
+          "feet": 50
+        }
+      ],
+      "reach_feet": 5,
+      "race_type": "Companion",
+      "race_subtype": null,
+      "monster_class": "Companion:2",
+      "type_segments": [],
+      "natural_attacks": [
+        {
+          "name": "Bite",
+          "damage_dice": null
+        }
+      ],
+      "natural_attack_damage_bonuses": [],
+      "skill_ability_diff_bonuses": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 2
+        },
+        {
+          "ability": "DEX",
+          "amount": 4
+        },
+        {
+          "ability": "CON",
+          "amount": 4
+        },
+        {
+          "ability": "WIS",
+          "amount": 4
+        },
+        {
+          "ability": "CHA",
+          "amount": -4
+        }
+      ],
+      "natural_armor": 2,
+      "source_page": null,
+      "ability_keys": [
+        "Companion Advancement ~ Giant Vulture"
+      ],
+      "external_ability_refs": [],
+      "external_ability_ref_conditions": [],
+      "source_file": "b3_races_companion",
+      "source_line": 15
+    },
+    {
+      "key": "Companion (Iguanodon)",
+      "name": "Companion (Iguanodon)",
+      "size": "M",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 30
+        }
+      ],
+      "reach_feet": 5,
+      "race_type": "Companion",
+      "race_subtype": "AnimalCompanionDinosaur",
+      "monster_class": "Companion:2",
+      "type_segments": [],
+      "natural_attacks": [
+        {
+          "name": "Claw",
+          "damage_dice": null
+        }
+      ],
+      "natural_attack_damage_bonuses": [],
+      "skill_ability_diff_bonuses": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 6
+        },
+        {
+          "ability": "DEX",
+          "amount": 4
+        },
+        {
+          "ability": "CON",
+          "amount": 4
+        },
+        {
+          "ability": "WIS",
+          "amount": 2
+        },
+        {
+          "ability": "CHA",
+          "amount": -4
+        }
+      ],
+      "natural_armor": 3,
+      "source_page": null,
+      "ability_keys": [
+        "Companion Advancement ~ Iguanodon",
+        "Iguanodon ~ Thumb Spikes"
+      ],
+      "external_ability_refs": [],
+      "external_ability_ref_conditions": [],
+      "source_file": "b3_races_companion",
+      "source_line": 16
+    },
+    {
+      "key": "Div (Doru)",
+      "name": "Div, Doru",
+      "size": "T",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 20
+        },
+        {
+          "mode": "Fly",
+          "feet": 40
+        }
+      ],
+      "reach_feet": 0,
+      "race_type": "Outsider",
+      "race_subtype": "Div|Evil|Extraplanar",
+      "monster_class": "Outsider (Fort/Will):3",
+      "type_segments": [
+        "Outsider"
+      ],
+      "natural_attacks": [
+        {
+          "name": "Bite",
+          "damage_dice": "1d4"
+        }
+      ],
+      "natural_attack_damage_bonuses": [],
+      "skill_ability_diff_bonuses": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": -2
+        },
+        {
+          "ability": "DEX",
+          "amount": 6
+        },
+        {
+          "ability": "CON",
+          "amount": 0
+        },
+        {
+          "ability": "INT",
+          "amount": 0
+        },
+        {
+          "ability": "WIS",
+          "amount": 2
+        },
+        {
+          "ability": "CHA",
+          "amount": 4
+        }
+      ],
+      "natural_armor": 3,
+      "source_page": "p.86",
+      "ability_keys": [
+        "Doru ~ Poison",
+        "Doru ~ Spell-Like Abilities"
+      ],
+      "external_ability_refs": [
+        "Flight Maneuverability"
+      ],
+      "external_ability_ref_conditions": [],
+      "source_file": "b3_races_familiar",
+      "source_line": 16
+    },
+    {
+      "key": "Companion (Kangaroo)",
+      "name": "Companion (Kangaroo)",
+      "size": "M",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 40
+        }
+      ],
+      "reach_feet": 5,
+      "race_type": "Companion",
+      "race_subtype": null,
+      "monster_class": "Companion:2",
+      "type_segments": [],
+      "natural_attacks": [
+        {
+          "name": "Kick",
+          "damage_dice": "1d4"
+        }
+      ],
+      "natural_attack_damage_bonuses": [],
+      "skill_ability_diff_bonuses": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 2
+        },
+        {
+          "ability": "DEX",
+          "amount": 4
+        },
+        {
+          "ability": "CON",
+          "amount": 2
+        },
+        {
+          "ability": "WIS",
+          "amount": 0
+        },
+        {
+          "ability": "CHA",
+          "amount": -4
+        }
+      ],
+      "natural_armor": null,
+      "source_page": null,
+      "ability_keys": [
+        "Companion Advancement ~ Kangaroo"
+      ],
+      "external_ability_refs": [
+        "Scent"
+      ],
+      "external_ability_ref_conditions": [],
+      "source_file": "b3_races_companion",
+      "source_line": 17
+    },
+    {
+      "key": "Dragon (Faerie)",
+      "name": "Dragon, Faerie",
+      "size": "T",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 10
+        },
+        {
+          "mode": "Fly",
+          "feet": 60
+        },
+        {
+          "mode": "Swim",
+          "feet": 30
+        }
+      ],
+      "reach_feet": 0,
+      "race_type": "Dragon",
+      "race_subtype": null,
+      "monster_class": "Dragon:3",
+      "type_segments": [
+        "Dragon"
+      ],
+      "natural_attacks": [
+        {
+          "name": "Bite",
+          "damage_dice": "1d3"
+        }
+      ],
+      "natural_attack_damage_bonuses": [],
+      "skill_ability_diff_bonuses": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": -2
+        },
+        {
+          "ability": "DEX",
+          "amount": 6
+        },
+        {
+          "ability": "CON",
+          "amount": 2
+        },
+        {
+          "ability": "INT",
+          "amount": 6
+        },
+        {
+          "ability": "WIS",
+          "amount": 4
+        },
+        {
+          "ability": "CHA",
+          "amount": 6
+        }
+      ],
+      "natural_armor": 2,
+      "source_page": "p.91",
+      "ability_keys": [
+        "Faerie Dragon ~ Breath Weapon",
+        "Faerie Dragon ~ Spells",
+        "Faerie Dragon ~ Spell-Like Abilities"
+      ],
+      "external_ability_refs": [
+        "Flight Maneuverability"
+      ],
+      "external_ability_ref_conditions": [],
+      "source_file": "b3_races_familiar",
+      "source_line": 17
+    },
+    {
+      "key": "Companion (Megalania)",
+      "name": "Companion (Megalania)",
+      "size": "M",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 30
+        }
+      ],
+      "reach_feet": 5,
+      "race_type": "Companion",
+      "race_subtype": null,
+      "monster_class": "Companion:2",
+      "type_segments": [],
+      "natural_attacks": [
+        {
+          "name": "Bite",
+          "damage_dice": "1d6"
+        }
+      ],
+      "natural_attack_damage_bonuses": [],
+      "skill_ability_diff_bonuses": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 2
+        },
+        {
+          "ability": "DEX",
+          "amount": 6
+        },
+        {
+          "ability": "CON",
+          "amount": 2
+        },
+        {
+          "ability": "WIS",
+          "amount": 2
+        },
+        {
+          "ability": "CHA",
+          "amount": -4
+        }
+      ],
+      "natural_armor": 1,
+      "source_page": null,
+      "ability_keys": [
+        "Companion Advancement ~ Megalania",
+        "Megalania ~ Poison"
+      ],
+      "external_ability_refs": [
+        "Scent"
+      ],
+      "external_ability_ref_conditions": [],
+      "source_file": "b3_races_companion",
+      "source_line": 18
+    },
+    {
+      "key": "Kyton (Augur)",
+      "name": "Kyton, Augur",
+      "size": "T",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 20
+        },
+        {
+          "mode": "Fly",
+          "feet": 50
+        }
+      ],
+      "reach_feet": 0,
+      "race_type": "Outsider",
+      "race_subtype": "Evil|Extraplanar|Kyton|Lawful",
+      "monster_class": "Outsider (Ref/Will):3",
+      "type_segments": [
+        "Outsider"
+      ],
+      "natural_attacks": [
+        {
+          "name": "Gore",
+          "damage_dice": "1d4"
+        }
+      ],
+      "natural_attack_damage_bonuses": [],
+      "skill_ability_diff_bonuses": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": -2
+        },
+        {
+          "ability": "DEX",
+          "amount": 6
+        },
+        {
+          "ability": "CON",
+          "amount": 2
+        },
+        {
+          "ability": "INT",
+          "amount": 2
+        },
+        {
+          "ability": "WIS",
+          "amount": 2
+        },
+        {
+          "ability": "CHA",
+          "amount": -4
+        }
+      ],
+      "natural_armor": 2,
+      "source_page": "p.170",
+      "ability_keys": [
+        "Augur ~ Unnerving Gaze",
+        "Augur ~ Spell-Like Abilities"
+      ],
+      "external_ability_refs": [
+        "Flight Maneuverability"
+      ],
+      "external_ability_ref_conditions": [],
+      "source_file": "b3_races_familiar",
+      "source_line": 18
+    },
+    {
+      "key": "Companion (Pachycephalosaurus)",
+      "name": "Companion (Pachycephalosaurus)",
+      "size": "M",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 30
+        }
+      ],
+      "reach_feet": 5,
+      "race_type": "Companion",
+      "race_subtype": "AnimalCompanionDinosaur",
+      "monster_class": "Companion:2",
+      "type_segments": [],
+      "natural_attacks": [
+        {
+          "name": "Gore",
+          "damage_dice": null
+        }
+      ],
+      "natural_attack_damage_bonuses": [],
+      "skill_ability_diff_bonuses": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 4
+        },
+        {
+          "ability": "DEX",
+          "amount": 6
+        },
+        {
+          "ability": "CON",
+          "amount": 2
+        },
+        {
+          "ability": "WIS",
+          "amount": 2
+        },
+        {
+          "ability": "CHA",
+          "amount": -6
+        }
+      ],
+      "natural_armor": 3,
+      "source_page": null,
+      "ability_keys": [
+        "Companion Advancement ~ Pachycephalosaurus",
+        "Pachycephalosaurus ~ Clobbering Charge"
+      ],
+      "external_ability_refs": [],
+      "external_ability_ref_conditions": [],
+      "source_file": "b3_races_companion",
+      "source_line": 19
+    },
+    {
+      "key": "Oni (Spirit)",
+      "name": "Oni, Spirit",
+      "size": "T",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 10
+        },
+        {
+          "mode": "Fly",
+          "feet": 30
+        }
+      ],
+      "reach_feet": null,
+      "race_type": "Outsider",
+      "race_subtype": "Native|Oni",
+      "monster_class": "Outsider (Ref/Will):3",
+      "type_segments": [
+        "Outsider"
+      ],
+      "natural_attacks": [
+        {
+          "name": "Bite",
+          "damage_dice": "1d4"
+        },
+        {
+          "name": "Gore",
+          "damage_dice": "1d4"
+        }
+      ],
+      "natural_attack_damage_bonuses": [],
+      "skill_ability_diff_bonuses": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": -4
+        },
+        {
+          "ability": "DEX",
+          "amount": 8
+        },
+        {
+          "ability": "CON",
+          "amount": 2
+        },
+        {
+          "ability": "INT",
+          "amount": 2
+        },
+        {
+          "ability": "WIS",
+          "amount": 2
+        },
+        {
+          "ability": "CHA",
+          "amount": 4
+        }
+      ],
+      "natural_armor": 1,
+      "source_page": "p.208",
+      "ability_keys": [
+        "Spirit Oni ~ Mask Symbiosis",
+        "Spirit Oni ~ Poison",
+        "Spirit Oni ~ Spell-Like Abilities"
+      ],
+      "external_ability_refs": [
+        "Flight Maneuverability"
+      ],
+      "external_ability_ref_conditions": [],
+      "source_file": "b3_races_familiar",
+      "source_line": 19
+    },
+    {
+      "key": "Companion (Spinosaurus)",
+      "name": "Companion (Spinosaurus)",
+      "size": "M",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 30
+        },
+        {
+          "mode": "Swim",
+          "feet": 20
+        }
+      ],
+      "reach_feet": 5,
+      "race_type": "Companion",
+      "race_subtype": "AnimalCompanionDinosaur",
+      "monster_class": "Companion:2",
+      "type_segments": [],
+      "natural_attacks": [
+        {
+          "name": "Bite",
+          "damage_dice": null
+        },
+        {
+          "name": "Claw",
+          "damage_dice": null
+        }
+      ],
+      "natural_attack_damage_bonuses": [],
+      "skill_ability_diff_bonuses": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 8
+        },
+        {
+          "ability": "DEX",
+          "amount": 4
+        },
+        {
+          "ability": "CON",
+          "amount": 4
+        },
+        {
+          "ability": "WIS",
+          "amount": 2
+        },
+        {
+          "ability": "CHA",
+          "amount": -8
+        }
+      ],
+      "natural_armor": 3,
+      "source_page": null,
+      "ability_keys": [
+        "Companion Advancement ~ Spinosaurus"
+      ],
+      "external_ability_refs": [],
+      "external_ability_ref_conditions": [],
+      "source_file": "b3_races_companion",
+      "source_line": 20
+    },
+    {
+      "key": "Rakshasa (Raktavarna)",
+      "name": "Rakshasa, Raktavarna",
+      "size": "T",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 20
+        },
+        {
+          "mode": "Climb",
+          "feet": 20
+        },
+        {
+          "mode": "Swim",
+          "feet": 20
+        }
+      ],
+      "reach_feet": null,
+      "race_type": "Outsider",
+      "race_subtype": "Native|Rakshasa|Shapechanger",
+      "monster_class": "Outsider (Ref/Will):3",
+      "type_segments": [
+        "Outsider"
+      ],
+      "natural_attacks": [
+        {
+          "name": "Bite",
+          "damage_dice": "1d4"
+        }
+      ],
+      "natural_attack_damage_bonuses": [],
+      "skill_ability_diff_bonuses": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": -4
+        },
+        {
+          "ability": "DEX",
+          "amount": 6
+        },
+        {
+          "ability": "CON",
+          "amount": 4
+        },
+        {
+          "ability": "INT",
+          "amount": 2
+        },
+        {
+          "ability": "WIS",
+          "amount": 2
+        },
+        {
+          "ability": "CHA",
+          "amount": 4
+        }
+      ],
+      "natural_armor": 2,
+      "source_page": "p.228",
+      "ability_keys": [
+        "Raktavarna ~ Change Shape",
+        "Raktavarna ~ Master's Eyes",
+        "Raktavarna ~ Poison",
+        "Raktavarna ~ Spell-Like Abilities"
+      ],
+      "external_ability_refs": [],
+      "external_ability_ref_conditions": [],
+      "source_file": "b3_races_familiar",
+      "source_line": 20
+    },
+    {
+      "key": "Companion (Thylacine)",
+      "name": "Companion (Thylacine)",
+      "size": "S",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 30
+        }
+      ],
+      "reach_feet": 5,
+      "race_type": "Companion",
+      "race_subtype": null,
+      "monster_class": "Companion:2",
+      "type_segments": [],
+      "natural_attacks": [
+        {
+          "name": "Bite",
+          "damage_dice": null
+        }
+      ],
+      "natural_attack_damage_bonuses": [],
+      "skill_ability_diff_bonuses": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 2
+        },
+        {
+          "ability": "DEX",
+          "amount": 4
+        },
+        {
+          "ability": "CON",
+          "amount": 6
+        },
+        {
+          "ability": "WIS",
+          "amount": 2
+        },
+        {
+          "ability": "CHA",
+          "amount": -4
+        }
+      ],
+      "natural_armor": null,
+      "source_page": null,
+      "ability_keys": [
+        "Thylacine ~ Powerful Jaws",
+        "Companion Advancement ~ Thylacine"
+      ],
+      "external_ability_refs": [],
+      "external_ability_ref_conditions": [],
+      "source_file": "b3_races_companion",
+      "source_line": 21
+    },
+    {
+      "key": "Sprite",
+      "name": "Sprite",
+      "size": "D",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 15
+        },
+        {
+          "mode": "Fly",
+          "feet": 60
+        }
+      ],
+      "reach_feet": 0,
+      "race_type": "Fey",
+      "race_subtype": null,
+      "monster_class": "Fey:1",
+      "type_segments": [
+        "Fey"
+      ],
+      "natural_attacks": [],
+      "natural_attack_damage_bonuses": [],
+      "skill_ability_diff_bonuses": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": -8
+        },
+        {
+          "ability": "DEX",
+          "amount": 6
+        },
+        {
+          "ability": "CON",
+          "amount": 0
+        },
+        {
+          "ability": "INT",
+          "amount": -4
+        },
+        {
+          "ability": "WIS",
+          "amount": 0
+        },
+        {
+          "ability": "CHA",
+          "amount": 0
+        }
+      ],
+      "natural_armor": null,
+      "source_page": "p.255",
+      "ability_keys": [
+        "Sprite ~ Luminous",
+        "Sprite ~ Spell-Like Abilities"
+      ],
+      "external_ability_refs": [
+        "Flight Maneuverability"
+      ],
+      "external_ability_ref_conditions": [],
+      "source_file": "b3_races_familiar",
+      "source_line": 21
+    },
+    {
+      "key": "Zoog",
+      "name": "Zoog",
+      "size": "T",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 30
+        },
+        {
+          "mode": "Climb",
+          "feet": 30
+        }
+      ],
+      "reach_feet": null,
+      "race_type": "Magical Beast",
+      "race_subtype": null,
+      "monster_class": "Magical Beast:2",
+      "type_segments": [
+        "Magical Beast"
+      ],
+      "natural_attacks": [
+        {
+          "name": "Bite",
+          "damage_dice": "1d3"
+        },
+        {
+          "name": "Claw",
+          "damage_dice": "1d2"
+        }
+      ],
+      "natural_attack_damage_bonuses": [],
+      "skill_ability_diff_bonuses": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": -4
+        },
+        {
+          "ability": "DEX",
+          "amount": 4
+        },
+        {
+          "ability": "CON",
+          "amount": 0
+        },
+        {
+          "ability": "INT",
+          "amount": -6
+        },
+        {
+          "ability": "WIS",
+          "amount": 2
+        },
+        {
+          "ability": "CHA",
+          "amount": -6
+        }
+      ],
+      "natural_armor": null,
+      "source_page": "p.287",
+      "ability_keys": [
+        "Zoog ~ Otherworldly Touch",
+        "Zoog ~ Spell Sight",
+        "Zoog ~ Spell-Like Abilities"
+      ],
+      "external_ability_refs": [],
+      "external_ability_ref_conditions": [],
+      "source_file": "b3_races_familiar",
+      "source_line": 22
+    }
+  ]
+}

@@ -1,0 +1,444 @@
+   Compiling codex-desktop v0.17.0 (/home/ubuntu/workspace/worktrees/codex-sd37/apps/desktop/src-tauri)
+warning: unused import: `PathBuf`
+  --> src/characterHub/recomputeCharacter.rs:26:23
+   |
+26 | use std::path::{Path, PathBuf};
+   |                       ^^^^^^^
+   |
+   = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: enum `SavedCharacterMutationOp` is never used
+    --> src/character_hub.rs:1373:10
+     |
+1373 | pub enum SavedCharacterMutationOp {
+     |          ^^^^^^^^^^^^^^^^^^^^^^^^
+     |
+     = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: struct `SavedCharacterMutationOpDescriptor` is never constructed
+    --> src/character_hub.rs:1384:12
+     |
+1384 | pub struct SavedCharacterMutationOpDescriptor {
+     |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: constant `SAVED_CHARACTER_MUTATION_OPERATIONS` is never used
+    --> src/character_hub.rs:1408:11
+     |
+1408 | pub const SAVED_CHARACTER_MUTATION_OPERATIONS: [SavedCharacterMutationOpDescriptor; 6] = [
+     |           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `purchase_equipment_at_root` is never used
+    --> src/character_hub.rs:2775:15
+     |
+2775 | pub(crate) fn purchase_equipment_at_root(
+     |               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: fields `slug` and `max_level` are never read
+   --> src/class_catalog_generic.rs:131:9
+    |
+120 | pub struct GenericClassRecord {
+    |            ------------------ fields in this struct
+...
+131 |     pub slug: String,
+    |         ^^^^
+132 |     pub max_level: u8,
+    |         ^^^^^^^^^
+
+warning: constant `BOOKS` is never used
+  --> src/corpus_full.rs:41:7
+   |
+41 | const BOOKS: BookRegistry<&str> = BookRegistry::pathfinder_only(&[
+   |       ^^^^^
+
+warning: function `corpus_root_dir` is never used
+  --> src/corpus_full.rs:50:4
+   |
+50 | fn corpus_root_dir() -> Result<PathBuf, String> {
+   |    ^^^^^^^^^^^^^^^
+
+warning: function `build_full_corpus_bundle` is never used
+  --> src/corpus_full.rs:54:4
+   |
+54 | fn build_full_corpus_bundle() -> SourcePackageContent<'static> {
+   |    ^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `full_corpus_bundle` is never used
+  --> src/corpus_full.rs:78:8
+   |
+78 | pub fn full_corpus_bundle() -> &'static SourcePackageContent<'static> {
+   |        ^^^^^^^^^^^^^^^^^^
+
+warning: function `live_on_disk_record_count` is never used
+   --> src/corpus_ingest_diagnostic.rs:723:4
+    |
+723 | fn live_on_disk_record_count(book_corpus_dir: &Path) -> u32 {
+    |    ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `equipment_catalog_books` is never used
+  --> src/equipment_catalog.rs:94:8
+   |
+94 | pub fn equipment_catalog_books() -> Vec<&'static str> {
+   |        ^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `feat_description_by_exact_name` is never used
+   --> src/feat_catalog.rs:291:8
+    |
+291 | pub fn feat_description_by_exact_name(name: &str) -> Option<String> {
+    |        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `load_record_rows` is never used
+   --> src/intelligent_item_catalog.rs:378:4
+    |
+378 | fn load_record_rows(repo_root: &Path) -> Vec<RecordRow> {
+    |    ^^^^^^^^^^^^^^^^
+
+warning: function `repo_root` is never used
+   --> src/reference_library_catalog.rs:130:4
+    |
+130 | fn repo_root() -> PathBuf {
+    |    ^^^^^^^^^
+
+warning: struct `ClassLevelDelta` is never constructed
+  --> src/rule_system_adapter.rs:64:12
+   |
+64 | pub struct ClassLevelDelta {
+   |            ^^^^^^^^^^^^^^^
+
+warning: methods `rule_system_id`, `chassis_resolve`, and `level_up` are never used
+  --> src/rule_system_adapter.rs:77:8
+   |
+72 | pub trait RuleSystemAdapter {
+   |           ----------------- methods in this trait
+...
+77 |     fn rule_system_id(&self) -> &'static str;
+   |        ^^^^^^^^^^^^^^
+...
+83 |     fn chassis_resolve(&self, input: &CharacterInput) -> PilotBaseChassisComputation;
+   |        ^^^^^^^^^^^^^^^
+...
+88 |     fn level_up(&self, character: &CharacterInput, deltas: &[ClassLevelDelta]) -> LevelUpPlan;
+   |        ^^^^^^^^
+
+warning: associated constant `ALL` is never used
+  --> src/sf_catalog.rs:46:15
+   |
+45 | impl SfCatalogKind {
+   | ------------------ associated constant in this implementation
+46 |     pub const ALL: [SfCatalogKind; 6] = [
+   |               ^^^
+
+warning: constant `BOOK_CRB` is never used
+  --> src/spell_catalog.rs:92:7
+   |
+92 | const BOOK_CRB: &str = "CRB";
+   |       ^^^^^^^^
+
+warning: constant `BOOK_APG` is never used
+  --> src/spell_catalog.rs:93:7
+   |
+93 | const BOOK_APG: &str = "APG";
+   |       ^^^^^^^^
+
+warning: constant `BOOK_ACG` is never used
+  --> src/spell_catalog.rs:94:7
+   |
+94 | const BOOK_ACG: &str = "ACG";
+   |       ^^^^^^^^
+
+warning: constant `BOOK_ARG` is never used
+  --> src/spell_catalog.rs:95:7
+   |
+95 | const BOOK_ARG: &str = "ARG";
+   |       ^^^^^^^^
+
+warning: constant `BOOK_UI` is never used
+  --> src/spell_catalog.rs:96:7
+   |
+96 | const BOOK_UI: &str = "UI";
+   |       ^^^^^^^
+
+warning: constant `BOOK_UM` is never used
+  --> src/spell_catalog.rs:97:7
+   |
+97 | const BOOK_UM: &str = "UM";
+   |       ^^^^^^^
+
+warning: constant `BOOK_OA` is never used
+  --> src/spell_catalog.rs:98:7
+   |
+98 | const BOOK_OA: &str = "OA";
+   |       ^^^^^^^
+
+warning: constant `BOOK_UC` is never used
+  --> src/spell_catalog.rs:99:7
+   |
+99 | const BOOK_UC: &str = "UC";
+   |       ^^^^^^^
+
+warning: constant `BOOK_ISG` is never used
+   --> src/spell_catalog.rs:100:7
+    |
+100 | const BOOK_ISG: &str = "ISG";
+    |       ^^^^^^^^
+
+warning: constant `BOOK_UW` is never used
+   --> src/spell_catalog.rs:101:7
+    |
+101 | const BOOK_UW: &str = "UW";
+    |       ^^^^^^^
+
+warning: constant `BOOK_AG` is never used
+   --> src/spell_catalog.rs:104:7
+    |
+104 | const BOOK_AG: &str = "AG";
+    |       ^^^^^^^
+
+warning: constant `BOOK_ISF` is never used
+   --> src/spell_catalog.rs:108:7
+    |
+108 | const BOOK_ISF: &str = "ISF";
+    |       ^^^^^^^^
+
+warning: constant `BOOK_ISM` is never used
+   --> src/spell_catalog.rs:112:7
+    |
+112 | const BOOK_ISM: &str = "ISM";
+    |       ^^^^^^^^
+
+warning: constant `BOOK_ISTEM` is never used
+   --> src/spell_catalog.rs:116:7
+    |
+116 | const BOOK_ISTEM: &str = "ISTEM";
+    |       ^^^^^^^^^^
+
+warning: constant `BOOK_HA` is never used
+   --> src/spell_catalog.rs:120:7
+    |
+120 | const BOOK_HA: &str = "HA";
+    |       ^^^^^^^
+
+warning: constant `BOOK_B1` is never used
+   --> src/spell_catalog.rs:124:7
+    |
+124 | const BOOK_B1: &str = "B1";
+    |       ^^^^^^^
+
+warning: constant `BOOK_B4` is never used
+   --> src/spell_catalog.rs:125:7
+    |
+125 | const BOOK_B4: &str = "B4";
+    |       ^^^^^^^
+
+warning: constant `BOOK_BOTD1` is never used
+   --> src/spell_catalog.rs:126:7
+    |
+126 | const BOOK_BOTD1: &str = "BOTD1";
+    |       ^^^^^^^^^^
+
+warning: constant `BOOK_BOTD2` is never used
+   --> src/spell_catalog.rs:127:7
+    |
+127 | const BOOK_BOTD2: &str = "BOTD2";
+    |       ^^^^^^^^^^
+
+warning: constant `BOOK_ISI` is never used
+   --> src/spell_catalog.rs:128:7
+    |
+128 | const BOOK_ISI: &str = "ISI";
+    |       ^^^^^^^^
+
+warning: constant `BOOK_ISR` is never used
+   --> src/spell_catalog.rs:129:7
+    |
+129 | const BOOK_ISR: &str = "ISR";
+    |       ^^^^^^^^
+
+warning: constant `BOOK_ISWG` is never used
+   --> src/spell_catalog.rs:130:7
+    |
+130 | const BOOK_ISWG: &str = "ISWG";
+    |       ^^^^^^^^^
+
+warning: constant `BOOK_MC` is never used
+   --> src/spell_catalog.rs:131:7
+    |
+131 | const BOOK_MC: &str = "MC";
+    |       ^^^^^^^
+
+warning: constant `BOOK_MYTHIC` is never used
+   --> src/spell_catalog.rs:132:7
+    |
+132 | const BOOK_MYTHIC: &str = "MYTHIC";
+    |       ^^^^^^^^^^^
+
+warning: constant `BOOK_UE` is never used
+   --> src/spell_catalog.rs:133:7
+    |
+133 | const BOOK_UE: &str = "UE";
+    |       ^^^^^^^
+
+warning: constant `BOOK_UMWP` is never used
+   --> src/spell_catalog.rs:134:7
+    |
+134 | const BOOK_UMWP: &str = "UMWP";
+    |       ^^^^^^^^^
+
+warning: function `map_crb_entry` is never used
+   --> src/spell_catalog.rs:302:4
+    |
+302 | fn map_crb_entry(entry: &crb::spell_list::SpellListEntry) -> SpellCatalogEntryDto {
+    |    ^^^^^^^^^^^^^
+
+warning: function `map_apg_entry` is never used
+   --> src/spell_catalog.rs:314:4
+    |
+314 | fn map_apg_entry(entry: &apg::spell_list::SpellListEntry) -> SpellCatalogEntryDto {
+    |    ^^^^^^^^^^^^^
+
+warning: function `map_acg_entry` is never used
+   --> src/spell_catalog.rs:326:4
+    |
+326 | fn map_acg_entry(entry: &acg::spell_list::SpellListEntry) -> SpellCatalogEntryDto {
+    |    ^^^^^^^^^^^^^
+
+warning: function `map_arg_entry` is never used
+   --> src/spell_catalog.rs:342:4
+    |
+342 | fn map_arg_entry(entry: &advanced_race_guide::spell_list::SpellListEntry) -> SpellCatalogEntryDto {
+    |    ^^^^^^^^^^^^^
+
+warning: function `map_um_entry` is never used
+   --> src/spell_catalog.rs:364:4
+    |
+364 | fn map_um_entry(entry: &ultimate_magic::spell_list::SpellListEntry) -> SpellCatalogEntryDto {
+    |    ^^^^^^^^^^^^
+
+warning: function `map_ui_entry` is never used
+   --> src/spell_catalog.rs:376:4
+    |
+376 | fn map_ui_entry(entry: &ultimate_intrigue::spell_list::SpellListEntry) -> SpellCatalogEntryDto {
+    |    ^^^^^^^^^^^^
+
+warning: function `map_oa_entry` is never used
+   --> src/spell_catalog.rs:392:4
+    |
+392 | fn map_oa_entry(entry: &occult_adventures::spell_list::SpellListEntry) -> SpellCatalogEntryDto {
+    |    ^^^^^^^^^^^^
+
+warning: function `map_uc_entry` is never used
+   --> src/spell_catalog.rs:408:4
+    |
+408 | fn map_uc_entry(entry: &ultimate_combat::spell_list::SpellListEntry) -> SpellCatalogEntryDto {
+    |    ^^^^^^^^^^^^
+
+warning: function `map_isg_entry` is never used
+   --> src/spell_catalog.rs:425:4
+    |
+425 | fn map_isg_entry(entry: &inner_sea_gods::spell_list::SpellListEntry) -> SpellCatalogEntryDto {
+    |    ^^^^^^^^^^^^^
+
+warning: function `map_uw_entry` is never used
+   --> src/spell_catalog.rs:443:4
+    |
+443 | fn map_uw_entry(entry: &ultimate_wilderness::spell_list::SpellListEntry) -> SpellCatalogEntryDto {
+    |    ^^^^^^^^^^^^
+
+warning: function `map_ag_entry` is never used
+   --> src/spell_catalog.rs:459:4
+    |
+459 | fn map_ag_entry(entry: &adventurers_guide::spell_list::SpellListEntry) -> SpellCatalogEntryDto {
+    |    ^^^^^^^^^^^^
+
+warning: function `map_isf_entry` is never used
+   --> src/spell_catalog.rs:477:4
+    |
+477 | fn map_isf_entry(entry: &inner_sea_faiths::spell_list::SpellListEntry) -> SpellCatalogEntryDto {
+    |    ^^^^^^^^^^^^^
+
+warning: function `map_ism_entry` is never used
+   --> src/spell_catalog.rs:492:4
+    |
+492 | fn map_ism_entry(entry: &inner_sea_magic::spell_list::SpellListEntry) -> SpellCatalogEntryDto {
+    |    ^^^^^^^^^^^^^
+
+warning: function `map_istem_entry` is never used
+   --> src/spell_catalog.rs:507:4
+    |
+507 | fn map_istem_entry(entry: &inner_sea_temples::spell_list::SpellListEntry) -> SpellCatalogEntryDto {
+    |    ^^^^^^^^^^^^^^^
+
+warning: function `map_ha_entry` is never used
+   --> src/spell_catalog.rs:523:4
+    |
+523 | fn map_ha_entry(entry: &horror_adventures::spell_list::SpellListEntry) -> SpellCatalogEntryDto {
+    |    ^^^^^^^^^^^^
+
+warning: function `map_b1_entry` is never used
+   --> src/spell_catalog.rs:538:4
+    |
+538 | fn map_b1_entry(entry: &bestiary::spell_list::SpellListEntry) -> SpellCatalogEntryDto {
+    |    ^^^^^^^^^^^^
+
+warning: function `map_b4_entry` is never used
+   --> src/spell_catalog.rs:549:4
+    |
+549 | fn map_b4_entry(entry: &bestiary_4::spell_list::SpellListEntry) -> SpellCatalogEntryDto {
+    |    ^^^^^^^^^^^^
+
+warning: function `map_botd1_entry` is never used
+   --> src/spell_catalog.rs:560:4
+    |
+560 | fn map_botd1_entry(
+    |    ^^^^^^^^^^^^^^^
+
+warning: function `map_botd2_entry` is never used
+   --> src/spell_catalog.rs:573:4
+    |
+573 | fn map_botd2_entry(
+    |    ^^^^^^^^^^^^^^^
+
+warning: function `map_isi_entry` is never used
+   --> src/spell_catalog.rs:586:4
+    |
+586 | fn map_isi_entry(entry: &inner_sea_intrigue::spell_list::SpellListEntry) -> SpellCatalogEntryDto {
+    |    ^^^^^^^^^^^^^
+
+warning: function `map_isr_entry` is never used
+   --> src/spell_catalog.rs:597:4
+    |
+597 | fn map_isr_entry(entry: &inner_sea_races::spell_list::SpellListEntry) -> SpellCatalogEntryDto {
+    |    ^^^^^^^^^^^^^
+
+warning: function `map_iswg_entry` is never used
+   --> src/spell_catalog.rs:608:4
+    |
+608 | fn map_iswg_entry(
+    |    ^^^^^^^^^^^^^^
+
+warning: function `map_mc_entry` is never used
+   --> src/spell_catalog.rs:621:4
+    |
+621 | fn map_mc_entry(entry: &monster_codex::spell_list::SpellListEntry) -> SpellCatalogEntryDto {
+    |    ^^^^^^^^^^^^
+
+warning: function `map_mythic_entry` is never used
+   --> src/spell_catalog.rs:632:4
+    |
+632 | fn map_mythic_entry(
+    |    ^^^^^^^^^^^^^^^^
+
+warning: function `map_ue_entry` is never used
+   --> src/spell_catalog.rs:645:4
+    |
+645 | fn map_ue_entry(entry: &ultimate_equipment::spell_list::SpellListEntry) -> SpellCatalogEntryDto {
+    |    ^^^^^^^^^^^^
+
+warning: function `map_umwp_entry` is never used
+   --> src/spell_catalog.rs:656:4
+    |
+656 | fn map_umwp_entry(
+    |    ^^^^^^^^^^^^^^
+
+warning: `codex-desktop` (bin "codex-desktop") generated 70 warnings (run `cargo fix --bin "codex-desktop" -p codex-desktop` to apply 1 suggestion)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 46.64s
+rc=0

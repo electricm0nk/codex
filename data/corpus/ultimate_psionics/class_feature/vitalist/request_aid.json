@@ -1,0 +1,72 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Vitalist ~ Request Aid",
+    "name": "Request Aid",
+    "class": "Vitalist",
+    "description": "Members of the collective can request healing, %1 hit points per power point, %2/day.|RequestAidAmount|RequestAidTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Vitalist ~ Request Aid"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "VitalistClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RequestAidAmount|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RequestAidTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Members of the collective can request healing, %1 hit points per power point, %2/day.|RequestAidAmount|RequestAidTimes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RequestAidAmount|3"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RequestAidTimes|(3+VitalistPrimeStat)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.72"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|RequestAidTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 962,
+    "record_key": "Vitalist ~ Request Aid"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

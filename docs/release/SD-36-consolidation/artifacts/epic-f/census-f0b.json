@@ -1,0 +1,3693 @@
+{
+  "blocked": 93,
+  "classes": [
+    {
+      "blocking_diagnostics": [
+        {
+          "id": "combat.baseline_weapon_proficiency_unknown",
+          "levels": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20
+          ],
+          "message": "the baseline melee attack bonus applies PF1's -4 nonproficiency penalty only when this character's proficiency with item:longsword is actually known, and it is not: at least one class in [\"class:adept\"] has no ingested rules_tables::crb::weapon_tables::CLASS_WEAPON_PROFICIENCIES record (or the Longsword itself is missing from the weapon table), so the attack total below is NOT claimed to be correct"
+        }
+      ],
+      "books": [
+        "core_rulebook"
+      ],
+      "class_id": "class:adept",
+      "family": "CRB NPC / Ex-* classes",
+      "levels_blocked": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "levels_computed": [],
+      "max_level": 20,
+      "registries": [
+        "crb_untabled_class_chassis"
+      ],
+      "status": "Blocked"
+    },
+    {
+      "blocking_diagnostics": [
+        {
+          "id": "combat.baseline_weapon_proficiency_unknown",
+          "levels": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20
+          ],
+          "message": "the baseline melee attack bonus applies PF1's -4 nonproficiency penalty only when this character's proficiency with item:longsword is actually known, and it is not: at least one class in [\"class:aegis\"] has no ingested rules_tables::crb::weapon_tables::CLASS_WEAPON_PROFICIENCIES record (or the Longsword itself is missing from the weapon table), so the attack total below is NOT claimed to be correct"
+        }
+      ],
+      "books": [
+        "ultimate_psionics"
+      ],
+      "class_id": "class:aegis",
+      "family": "Untabled exotic base classes",
+      "levels_blocked": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "levels_computed": [],
+      "max_level": 20,
+      "registries": [
+        "untabled_base_class_registry",
+        "generic_class_chassis"
+      ],
+      "status": "Blocked"
+    },
+    {
+      "blocking_diagnostics": [],
+      "books": [
+        "advanced_players_guide"
+      ],
+      "class_id": "class:alchemist",
+      "family": "APG",
+      "levels_blocked": [],
+      "levels_computed": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "max_level": 20,
+      "registries": [
+        "apg_class_id"
+      ],
+      "status": "Computed"
+    },
+    {
+      "blocking_diagnostics": [
+        {
+          "id": "combat.baseline_weapon_proficiency_unknown",
+          "levels": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20
+          ],
+          "message": "the baseline melee attack bonus applies PF1's -4 nonproficiency penalty only when this character's proficiency with item:longsword is actually known, and it is not: at least one class in [\"class:antipaladin\"] has no ingested rules_tables::crb::weapon_tables::CLASS_WEAPON_PROFICIENCIES record (or the Longsword itself is missing from the weapon table), so the attack total below is NOT claimed to be correct"
+        }
+      ],
+      "books": [
+        "advanced_players_guide"
+      ],
+      "class_id": "class:antipaladin",
+      "family": "Untabled exotic base classes",
+      "levels_blocked": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "levels_computed": [],
+      "max_level": 20,
+      "registries": [
+        "untabled_base_class_registry"
+      ],
+      "status": "Blocked"
+    },
+    {
+      "blocking_diagnostics": [],
+      "books": [
+        "advanced_class_guide"
+      ],
+      "class_id": "class:arcanist",
+      "family": "ACG",
+      "levels_blocked": [],
+      "levels_computed": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "max_level": 20,
+      "registries": [
+        "acg_class_id"
+      ],
+      "status": "Computed"
+    },
+    {
+      "blocking_diagnostics": [
+        {
+          "id": "combat.baseline_weapon_proficiency_unknown",
+          "levels": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20
+          ],
+          "message": "the baseline melee attack bonus applies PF1's -4 nonproficiency penalty only when this character's proficiency with item:longsword is actually known, and it is not: at least one class in [\"class:aristocrat\"] has no ingested rules_tables::crb::weapon_tables::CLASS_WEAPON_PROFICIENCIES record (or the Longsword itself is missing from the weapon table), so the attack total below is NOT claimed to be correct"
+        }
+      ],
+      "books": [
+        "core_rulebook"
+      ],
+      "class_id": "class:aristocrat",
+      "family": "CRB NPC / Ex-* classes",
+      "levels_blocked": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "levels_computed": [],
+      "max_level": 20,
+      "registries": [
+        "crb_untabled_class_chassis"
+      ],
+      "status": "Blocked"
+    },
+    {
+      "blocking_diagnostics": [],
+      "books": [
+        "core_rulebook"
+      ],
+      "class_id": "class:barbarian",
+      "family": "CRB",
+      "levels_blocked": [],
+      "levels_computed": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "max_level": 20,
+      "registries": [
+        "crb_class_id"
+      ],
+      "status": "Computed"
+    },
+    {
+      "blocking_diagnostics": [],
+      "books": [
+        "core_rulebook"
+      ],
+      "class_id": "class:bard",
+      "family": "CRB",
+      "levels_blocked": [],
+      "levels_computed": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "max_level": 20,
+      "registries": [
+        "crb_class_id"
+      ],
+      "status": "Computed"
+    },
+    {
+      "blocking_diagnostics": [],
+      "books": [
+        "advanced_class_guide"
+      ],
+      "class_id": "class:bloodrager",
+      "family": "ACG",
+      "levels_blocked": [],
+      "levels_computed": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "max_level": 20,
+      "registries": [
+        "acg_class_id"
+      ],
+      "status": "Computed"
+    },
+    {
+      "blocking_diagnostics": [],
+      "books": [
+        "advanced_class_guide"
+      ],
+      "class_id": "class:brawler",
+      "family": "ACG",
+      "levels_blocked": [],
+      "levels_computed": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "max_level": 20,
+      "registries": [
+        "acg_class_id"
+      ],
+      "status": "Computed"
+    },
+    {
+      "blocking_diagnostics": [],
+      "books": [
+        "advanced_players_guide"
+      ],
+      "class_id": "class:cavalier",
+      "family": "APG",
+      "levels_blocked": [],
+      "levels_computed": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "max_level": 20,
+      "registries": [
+        "apg_class_id"
+      ],
+      "status": "Computed"
+    },
+    {
+      "blocking_diagnostics": [],
+      "books": [
+        "core_rulebook"
+      ],
+      "class_id": "class:cleric",
+      "family": "CRB",
+      "levels_blocked": [],
+      "levels_computed": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "max_level": 20,
+      "registries": [
+        "crb_class_id"
+      ],
+      "status": "Computed"
+    },
+    {
+      "blocking_diagnostics": [
+        {
+          "id": "combat.baseline_weapon_proficiency_unknown",
+          "levels": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20
+          ],
+          "message": "the baseline melee attack bonus applies PF1's -4 nonproficiency penalty only when this character's proficiency with item:longsword is actually known, and it is not: at least one class in [\"class:commoner\"] has no ingested rules_tables::crb::weapon_tables::CLASS_WEAPON_PROFICIENCIES record (or the Longsword itself is missing from the weapon table), so the attack total below is NOT claimed to be correct"
+        }
+      ],
+      "books": [
+        "core_rulebook"
+      ],
+      "class_id": "class:commoner",
+      "family": "CRB NPC / Ex-* classes",
+      "levels_blocked": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "levels_computed": [],
+      "max_level": 20,
+      "registries": [
+        "crb_untabled_class_chassis"
+      ],
+      "status": "Blocked"
+    },
+    {
+      "blocking_diagnostics": [
+        {
+          "id": "combat.baseline_weapon_proficiency_unknown",
+          "levels": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20
+          ],
+          "message": "the baseline melee attack bonus applies PF1's -4 nonproficiency penalty only when this character's proficiency with item:longsword is actually known, and it is not: at least one class in [\"class:cryptic\"] has no ingested rules_tables::crb::weapon_tables::CLASS_WEAPON_PROFICIENCIES record (or the Longsword itself is missing from the weapon table), so the attack total below is NOT claimed to be correct"
+        }
+      ],
+      "books": [
+        "ultimate_psionics"
+      ],
+      "class_id": "class:cryptic",
+      "family": "Untabled exotic base classes",
+      "levels_blocked": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "levels_computed": [],
+      "max_level": 20,
+      "registries": [
+        "untabled_base_class_registry",
+        "generic_class_chassis"
+      ],
+      "status": "Blocked"
+    },
+    {
+      "blocking_diagnostics": [
+        {
+          "id": "combat.baseline_weapon_proficiency_unknown",
+          "levels": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20
+          ],
+          "message": "the baseline melee attack bonus applies PF1's -4 nonproficiency penalty only when this character's proficiency with item:longsword is actually known, and it is not: at least one class in [\"class:dread\"] has no ingested rules_tables::crb::weapon_tables::CLASS_WEAPON_PROFICIENCIES record (or the Longsword itself is missing from the weapon table), so the attack total below is NOT claimed to be correct"
+        }
+      ],
+      "books": [
+        "ultimate_psionics"
+      ],
+      "class_id": "class:dread",
+      "family": "Untabled exotic base classes",
+      "levels_blocked": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "levels_computed": [],
+      "max_level": 20,
+      "registries": [
+        "untabled_base_class_registry",
+        "generic_class_chassis"
+      ],
+      "status": "Blocked"
+    },
+    {
+      "blocking_diagnostics": [],
+      "books": [
+        "core_rulebook"
+      ],
+      "class_id": "class:druid",
+      "family": "CRB",
+      "levels_blocked": [],
+      "levels_computed": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "max_level": 20,
+      "registries": [
+        "crb_class_id"
+      ],
+      "status": "Computed"
+    },
+    {
+      "blocking_diagnostics": [
+        {
+          "id": "combat.baseline_weapon_proficiency_unknown",
+          "levels": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20
+          ],
+          "message": "the baseline melee attack bonus applies PF1's -4 nonproficiency penalty only when this character's proficiency with item:longsword is actually known, and it is not: at least one class in [\"class:ex_barbarian\"] has no ingested rules_tables::crb::weapon_tables::CLASS_WEAPON_PROFICIENCIES record (or the Longsword itself is missing from the weapon table), so the attack total below is NOT claimed to be correct"
+        }
+      ],
+      "books": [
+        "core_rulebook"
+      ],
+      "class_id": "class:ex_barbarian",
+      "family": "CRB NPC / Ex-* classes",
+      "levels_blocked": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "levels_computed": [],
+      "max_level": 20,
+      "registries": [
+        "crb_untabled_class_chassis"
+      ],
+      "status": "Blocked"
+    },
+    {
+      "blocking_diagnostics": [
+        {
+          "id": "combat.baseline_weapon_proficiency_unknown",
+          "levels": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20
+          ],
+          "message": "the baseline melee attack bonus applies PF1's -4 nonproficiency penalty only when this character's proficiency with item:longsword is actually known, and it is not: at least one class in [\"class:ex_paladin\"] has no ingested rules_tables::crb::weapon_tables::CLASS_WEAPON_PROFICIENCIES record (or the Longsword itself is missing from the weapon table), so the attack total below is NOT claimed to be correct"
+        }
+      ],
+      "books": [
+        "core_rulebook"
+      ],
+      "class_id": "class:ex_paladin",
+      "family": "CRB NPC / Ex-* classes",
+      "levels_blocked": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "levels_computed": [],
+      "max_level": 20,
+      "registries": [
+        "crb_untabled_class_chassis"
+      ],
+      "status": "Blocked"
+    },
+    {
+      "blocking_diagnostics": [
+        {
+          "id": "combat.baseline_weapon_proficiency_unknown",
+          "levels": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20
+          ],
+          "message": "the baseline melee attack bonus applies PF1's -4 nonproficiency penalty only when this character's proficiency with item:longsword is actually known, and it is not: at least one class in [\"class:expert\"] has no ingested rules_tables::crb::weapon_tables::CLASS_WEAPON_PROFICIENCIES record (or the Longsword itself is missing from the weapon table), so the attack total below is NOT claimed to be correct"
+        }
+      ],
+      "books": [
+        "core_rulebook"
+      ],
+      "class_id": "class:expert",
+      "family": "CRB NPC / Ex-* classes",
+      "levels_blocked": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "levels_computed": [],
+      "max_level": 20,
+      "registries": [
+        "crb_untabled_class_chassis"
+      ],
+      "status": "Blocked"
+    },
+    {
+      "blocking_diagnostics": [],
+      "books": [
+        "core_rulebook"
+      ],
+      "class_id": "class:fighter",
+      "family": "CRB",
+      "levels_blocked": [],
+      "levels_computed": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "max_level": 20,
+      "registries": [
+        "crb_class_id"
+      ],
+      "status": "Computed"
+    },
+    {
+      "blocking_diagnostics": [],
+      "books": [
+        "ultimate_combat"
+      ],
+      "class_id": "class:gunslinger",
+      "family": "Ultimate Combat",
+      "levels_blocked": [],
+      "levels_computed": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "max_level": 20,
+      "registries": [
+        "uc_class_id",
+        "generic_class_chassis"
+      ],
+      "status": "Computed"
+    },
+    {
+      "blocking_diagnostics": [],
+      "books": [
+        "advanced_class_guide"
+      ],
+      "class_id": "class:hunter",
+      "family": "ACG",
+      "levels_blocked": [],
+      "levels_computed": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "max_level": 20,
+      "registries": [
+        "acg_class_id"
+      ],
+      "status": "Computed"
+    },
+    {
+      "blocking_diagnostics": [],
+      "books": [
+        "advanced_players_guide"
+      ],
+      "class_id": "class:inquisitor",
+      "family": "APG",
+      "levels_blocked": [],
+      "levels_computed": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "max_level": 20,
+      "registries": [
+        "apg_class_id"
+      ],
+      "status": "Computed"
+    },
+    {
+      "blocking_diagnostics": [],
+      "books": [
+        "advanced_class_guide"
+      ],
+      "class_id": "class:investigator",
+      "family": "ACG",
+      "levels_blocked": [],
+      "levels_computed": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "max_level": 20,
+      "registries": [
+        "acg_class_id"
+      ],
+      "status": "Computed"
+    },
+    {
+      "blocking_diagnostics": [],
+      "books": [
+        "occult_adventures"
+      ],
+      "class_id": "class:kineticist",
+      "family": "Untabled exotic base classes",
+      "levels_blocked": [],
+      "levels_computed": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "max_level": 20,
+      "registries": [
+        "untabled_base_class_registry",
+        "generic_class_chassis"
+      ],
+      "status": "Computed"
+    },
+    {
+      "blocking_diagnostics": [
+        {
+          "id": "combat.baseline_weapon_proficiency_unknown",
+          "levels": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20
+          ],
+          "message": "the baseline melee attack bonus applies PF1's -4 nonproficiency penalty only when this character's proficiency with item:longsword is actually known, and it is not: at least one class in [\"class:magus\"] has no ingested rules_tables::crb::weapon_tables::CLASS_WEAPON_PROFICIENCIES record (or the Longsword itself is missing from the weapon table), so the attack total below is NOT claimed to be correct"
+        }
+      ],
+      "books": [
+        "ultimate_magic"
+      ],
+      "class_id": "class:magus",
+      "family": "Untabled exotic base classes",
+      "levels_blocked": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "levels_computed": [],
+      "max_level": 20,
+      "registries": [
+        "untabled_base_class_registry",
+        "generic_class_chassis"
+      ],
+      "status": "Blocked"
+    },
+    {
+      "blocking_diagnostics": [
+        {
+          "id": "combat.baseline_weapon_proficiency_unknown",
+          "levels": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20
+          ],
+          "message": "the baseline melee attack bonus applies PF1's -4 nonproficiency penalty only when this character's proficiency with item:longsword is actually known, and it is not: at least one class in [\"class:marksman\"] has no ingested rules_tables::crb::weapon_tables::CLASS_WEAPON_PROFICIENCIES record (or the Longsword itself is missing from the weapon table), so the attack total below is NOT claimed to be correct"
+        }
+      ],
+      "books": [
+        "ultimate_psionics"
+      ],
+      "class_id": "class:marksman",
+      "family": "Untabled exotic base classes",
+      "levels_blocked": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "levels_computed": [],
+      "max_level": 20,
+      "registries": [
+        "untabled_base_class_registry",
+        "generic_class_chassis"
+      ],
+      "status": "Blocked"
+    },
+    {
+      "blocking_diagnostics": [],
+      "books": [
+        "occult_adventures"
+      ],
+      "class_id": "class:medium",
+      "family": "Untabled exotic base classes",
+      "levels_blocked": [],
+      "levels_computed": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "max_level": 20,
+      "registries": [
+        "untabled_base_class_registry",
+        "generic_class_chassis"
+      ],
+      "status": "Computed"
+    },
+    {
+      "blocking_diagnostics": [],
+      "books": [
+        "occult_adventures"
+      ],
+      "class_id": "class:mesmerist",
+      "family": "Untabled exotic base classes",
+      "levels_blocked": [],
+      "levels_computed": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "max_level": 20,
+      "registries": [
+        "untabled_base_class_registry",
+        "generic_class_chassis"
+      ],
+      "status": "Computed"
+    },
+    {
+      "blocking_diagnostics": [],
+      "books": [
+        "core_rulebook"
+      ],
+      "class_id": "class:monk",
+      "family": "CRB",
+      "levels_blocked": [],
+      "levels_computed": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "max_level": 20,
+      "registries": [
+        "crb_class_id"
+      ],
+      "status": "Computed"
+    },
+    {
+      "blocking_diagnostics": [],
+      "books": [
+        "ultimate_combat"
+      ],
+      "class_id": "class:ninja",
+      "family": "Ultimate Combat",
+      "levels_blocked": [],
+      "levels_computed": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "max_level": 20,
+      "registries": [
+        "uc_class_id",
+        "generic_class_chassis"
+      ],
+      "status": "Computed"
+    },
+    {
+      "blocking_diagnostics": [],
+      "books": [
+        "occult_adventures"
+      ],
+      "class_id": "class:occultist",
+      "family": "Untabled exotic base classes",
+      "levels_blocked": [],
+      "levels_computed": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "max_level": 20,
+      "registries": [
+        "untabled_base_class_registry",
+        "generic_class_chassis"
+      ],
+      "status": "Computed"
+    },
+    {
+      "blocking_diagnostics": [],
+      "books": [
+        "advanced_players_guide"
+      ],
+      "class_id": "class:oracle",
+      "family": "APG",
+      "levels_blocked": [],
+      "levels_computed": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "max_level": 20,
+      "registries": [
+        "apg_class_id"
+      ],
+      "status": "Computed"
+    },
+    {
+      "blocking_diagnostics": [],
+      "books": [
+        "core_rulebook"
+      ],
+      "class_id": "class:paladin",
+      "family": "CRB",
+      "levels_blocked": [],
+      "levels_computed": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "max_level": 20,
+      "registries": [
+        "crb_class_id"
+      ],
+      "status": "Computed"
+    },
+    {
+      "blocking_diagnostics": [],
+      "books": [
+        "ultimate_psionics"
+      ],
+      "class_id": "class:psion",
+      "family": "Untabled exotic base classes",
+      "levels_blocked": [],
+      "levels_computed": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "max_level": 20,
+      "registries": [
+        "untabled_base_class_registry",
+        "generic_class_chassis"
+      ],
+      "status": "Computed"
+    },
+    {
+      "blocking_diagnostics": [],
+      "books": [
+        "occult_adventures"
+      ],
+      "class_id": "class:psychic",
+      "family": "Untabled exotic base classes",
+      "levels_blocked": [],
+      "levels_computed": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "max_level": 20,
+      "registries": [
+        "untabled_base_class_registry",
+        "generic_class_chassis"
+      ],
+      "status": "Computed"
+    },
+    {
+      "blocking_diagnostics": [
+        {
+          "id": "combat.baseline_weapon_proficiency_unknown",
+          "levels": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20
+          ],
+          "message": "the baseline melee attack bonus applies PF1's -4 nonproficiency penalty only when this character's proficiency with item:longsword is actually known, and it is not: at least one class in [\"class:psychic_warrior\"] has no ingested rules_tables::crb::weapon_tables::CLASS_WEAPON_PROFICIENCIES record (or the Longsword itself is missing from the weapon table), so the attack total below is NOT claimed to be correct"
+        }
+      ],
+      "books": [
+        "ultimate_psionics"
+      ],
+      "class_id": "class:psychic_warrior",
+      "family": "Untabled exotic base classes",
+      "levels_blocked": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "levels_computed": [],
+      "max_level": 20,
+      "registries": [
+        "untabled_base_class_registry",
+        "generic_class_chassis"
+      ],
+      "status": "Blocked"
+    },
+    {
+      "blocking_diagnostics": [],
+      "books": [
+        "core_rulebook"
+      ],
+      "class_id": "class:ranger",
+      "family": "CRB",
+      "levels_blocked": [],
+      "levels_computed": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "max_level": 20,
+      "registries": [
+        "crb_class_id"
+      ],
+      "status": "Computed"
+    },
+    {
+      "blocking_diagnostics": [],
+      "books": [
+        "core_rulebook"
+      ],
+      "class_id": "class:rogue",
+      "family": "CRB",
+      "levels_blocked": [],
+      "levels_computed": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "max_level": 20,
+      "registries": [
+        "crb_class_id"
+      ],
+      "status": "Computed"
+    },
+    {
+      "blocking_diagnostics": [
+        {
+          "id": "combat.baseline_weapon_proficiency_unknown",
+          "levels": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20
+          ],
+          "message": "the baseline melee attack bonus applies PF1's -4 nonproficiency penalty only when this character's proficiency with item:longsword is actually known, and it is not: at least one class in [\"class:samurai\"] has no ingested rules_tables::crb::weapon_tables::CLASS_WEAPON_PROFICIENCIES record (or the Longsword itself is missing from the weapon table), so the attack total below is NOT claimed to be correct"
+        }
+      ],
+      "books": [
+        "ultimate_combat"
+      ],
+      "class_id": "class:samurai",
+      "family": "Ultimate Combat",
+      "levels_blocked": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "levels_computed": [],
+      "max_level": 20,
+      "registries": [
+        "uc_class_id",
+        "generic_class_chassis"
+      ],
+      "status": "Blocked"
+    },
+    {
+      "blocking_diagnostics": [],
+      "books": [
+        "advanced_class_guide"
+      ],
+      "class_id": "class:shaman",
+      "family": "ACG",
+      "levels_blocked": [],
+      "levels_computed": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "max_level": 20,
+      "registries": [
+        "acg_class_id"
+      ],
+      "status": "Computed"
+    },
+    {
+      "blocking_diagnostics": [],
+      "books": [
+        "ultimate_wilderness"
+      ],
+      "class_id": "class:shifter",
+      "family": "Untabled exotic base classes",
+      "levels_blocked": [],
+      "levels_computed": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "max_level": 20,
+      "registries": [
+        "untabled_base_class_registry",
+        "generic_class_chassis"
+      ],
+      "status": "Computed"
+    },
+    {
+      "blocking_diagnostics": [],
+      "books": [
+        "advanced_class_guide"
+      ],
+      "class_id": "class:skald",
+      "family": "ACG",
+      "levels_blocked": [],
+      "levels_computed": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "max_level": 20,
+      "registries": [
+        "acg_class_id"
+      ],
+      "status": "Computed"
+    },
+    {
+      "blocking_diagnostics": [],
+      "books": [
+        "advanced_class_guide"
+      ],
+      "class_id": "class:slayer",
+      "family": "ACG",
+      "levels_blocked": [],
+      "levels_computed": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "max_level": 20,
+      "registries": [
+        "acg_class_id"
+      ],
+      "status": "Computed"
+    },
+    {
+      "blocking_diagnostics": [],
+      "books": [
+        "core_rulebook"
+      ],
+      "class_id": "class:sorcerer",
+      "family": "CRB",
+      "levels_blocked": [],
+      "levels_computed": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "max_level": 20,
+      "registries": [
+        "crb_class_id"
+      ],
+      "status": "Computed"
+    },
+    {
+      "blocking_diagnostics": [
+        {
+          "id": "combat.baseline_weapon_proficiency_unknown",
+          "levels": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20
+          ],
+          "message": "the baseline melee attack bonus applies PF1's -4 nonproficiency penalty only when this character's proficiency with item:longsword is actually known, and it is not: at least one class in [\"class:soulknife\"] has no ingested rules_tables::crb::weapon_tables::CLASS_WEAPON_PROFICIENCIES record (or the Longsword itself is missing from the weapon table), so the attack total below is NOT claimed to be correct"
+        }
+      ],
+      "books": [
+        "ultimate_psionics"
+      ],
+      "class_id": "class:soulknife",
+      "family": "Untabled exotic base classes",
+      "levels_blocked": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "levels_computed": [],
+      "max_level": 20,
+      "registries": [
+        "untabled_base_class_registry",
+        "generic_class_chassis"
+      ],
+      "status": "Blocked"
+    },
+    {
+      "blocking_diagnostics": [],
+      "books": [
+        "occult_adventures"
+      ],
+      "class_id": "class:spiritualist",
+      "family": "Untabled exotic base classes",
+      "levels_blocked": [],
+      "levels_computed": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "max_level": 20,
+      "registries": [
+        "untabled_base_class_registry",
+        "generic_class_chassis"
+      ],
+      "status": "Computed"
+    },
+    {
+      "blocking_diagnostics": [],
+      "books": [
+        "advanced_players_guide"
+      ],
+      "class_id": "class:summoner",
+      "family": "APG",
+      "levels_blocked": [],
+      "levels_computed": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "max_level": 20,
+      "registries": [
+        "apg_class_id"
+      ],
+      "status": "Computed"
+    },
+    {
+      "blocking_diagnostics": [],
+      "books": [
+        "advanced_class_guide"
+      ],
+      "class_id": "class:swashbuckler",
+      "family": "ACG",
+      "levels_blocked": [],
+      "levels_computed": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "max_level": 20,
+      "registries": [
+        "acg_class_id"
+      ],
+      "status": "Computed"
+    },
+    {
+      "blocking_diagnostics": [
+        {
+          "id": "combat.baseline_weapon_proficiency_unknown",
+          "levels": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20
+          ],
+          "message": "the baseline melee attack bonus applies PF1's -4 nonproficiency penalty only when this character's proficiency with item:longsword is actually known, and it is not: at least one class in [\"class:tactician\"] has no ingested rules_tables::crb::weapon_tables::CLASS_WEAPON_PROFICIENCIES record (or the Longsword itself is missing from the weapon table), so the attack total below is NOT claimed to be correct"
+        }
+      ],
+      "books": [
+        "ultimate_psionics"
+      ],
+      "class_id": "class:tactician",
+      "family": "Untabled exotic base classes",
+      "levels_blocked": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "levels_computed": [],
+      "max_level": 20,
+      "registries": [
+        "untabled_base_class_registry",
+        "generic_class_chassis"
+      ],
+      "status": "Blocked"
+    },
+    {
+      "blocking_diagnostics": [],
+      "books": [
+        "pathfinder_unchained"
+      ],
+      "class_id": "class:unchained_barbarian",
+      "family": "Pathfinder Unchained",
+      "levels_blocked": [],
+      "levels_computed": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "max_level": 20,
+      "registries": [
+        "pu_class_id"
+      ],
+      "status": "Computed"
+    },
+    {
+      "blocking_diagnostics": [],
+      "books": [
+        "pathfinder_unchained"
+      ],
+      "class_id": "class:unchained_monk",
+      "family": "Pathfinder Unchained",
+      "levels_blocked": [],
+      "levels_computed": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "max_level": 20,
+      "registries": [
+        "pu_class_id"
+      ],
+      "status": "Computed"
+    },
+    {
+      "blocking_diagnostics": [],
+      "books": [
+        "pathfinder_unchained"
+      ],
+      "class_id": "class:unchained_rogue",
+      "family": "Pathfinder Unchained",
+      "levels_blocked": [],
+      "levels_computed": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "max_level": 20,
+      "registries": [
+        "pu_class_id"
+      ],
+      "status": "Computed"
+    },
+    {
+      "blocking_diagnostics": [],
+      "books": [
+        "pathfinder_unchained"
+      ],
+      "class_id": "class:unchained_summoner",
+      "family": "Pathfinder Unchained",
+      "levels_blocked": [],
+      "levels_computed": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "max_level": 20,
+      "registries": [
+        "pu_class_id"
+      ],
+      "status": "Computed"
+    },
+    {
+      "blocking_diagnostics": [],
+      "books": [
+        "ultimate_intrigue"
+      ],
+      "class_id": "class:vigilante",
+      "family": "Untabled exotic base classes",
+      "levels_blocked": [],
+      "levels_computed": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "max_level": 20,
+      "registries": [
+        "untabled_base_class_registry",
+        "generic_class_chassis"
+      ],
+      "status": "Computed"
+    },
+    {
+      "blocking_diagnostics": [
+        {
+          "id": "combat.baseline_weapon_proficiency_unknown",
+          "levels": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20
+          ],
+          "message": "the baseline melee attack bonus applies PF1's -4 nonproficiency penalty only when this character's proficiency with item:longsword is actually known, and it is not: at least one class in [\"class:vitalist\"] has no ingested rules_tables::crb::weapon_tables::CLASS_WEAPON_PROFICIENCIES record (or the Longsword itself is missing from the weapon table), so the attack total below is NOT claimed to be correct"
+        }
+      ],
+      "books": [
+        "ultimate_psionics"
+      ],
+      "class_id": "class:vitalist",
+      "family": "Untabled exotic base classes",
+      "levels_blocked": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "levels_computed": [],
+      "max_level": 20,
+      "registries": [
+        "untabled_base_class_registry",
+        "generic_class_chassis"
+      ],
+      "status": "Blocked"
+    },
+    {
+      "blocking_diagnostics": [],
+      "books": [
+        "advanced_class_guide"
+      ],
+      "class_id": "class:warpriest",
+      "family": "ACG",
+      "levels_blocked": [],
+      "levels_computed": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "max_level": 20,
+      "registries": [
+        "acg_class_id"
+      ],
+      "status": "Computed"
+    },
+    {
+      "blocking_diagnostics": [
+        {
+          "id": "combat.baseline_weapon_proficiency_unknown",
+          "levels": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20
+          ],
+          "message": "the baseline melee attack bonus applies PF1's -4 nonproficiency penalty only when this character's proficiency with item:longsword is actually known, and it is not: at least one class in [\"class:warrior\"] has no ingested rules_tables::crb::weapon_tables::CLASS_WEAPON_PROFICIENCIES record (or the Longsword itself is missing from the weapon table), so the attack total below is NOT claimed to be correct"
+        }
+      ],
+      "books": [
+        "core_rulebook"
+      ],
+      "class_id": "class:warrior",
+      "family": "CRB NPC / Ex-* classes",
+      "levels_blocked": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "levels_computed": [],
+      "max_level": 20,
+      "registries": [
+        "crb_untabled_class_chassis"
+      ],
+      "status": "Blocked"
+    },
+    {
+      "blocking_diagnostics": [
+        {
+          "id": "combat.baseline_weapon_proficiency_unknown",
+          "levels": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20
+          ],
+          "message": "the baseline melee attack bonus applies PF1's -4 nonproficiency penalty only when this character's proficiency with item:longsword is actually known, and it is not: at least one class in [\"class:wilder\"] has no ingested rules_tables::crb::weapon_tables::CLASS_WEAPON_PROFICIENCIES record (or the Longsword itself is missing from the weapon table), so the attack total below is NOT claimed to be correct"
+        }
+      ],
+      "books": [
+        "ultimate_psionics"
+      ],
+      "class_id": "class:wilder",
+      "family": "Untabled exotic base classes",
+      "levels_blocked": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "levels_computed": [],
+      "max_level": 20,
+      "registries": [
+        "untabled_base_class_registry",
+        "generic_class_chassis"
+      ],
+      "status": "Blocked"
+    },
+    {
+      "blocking_diagnostics": [],
+      "books": [
+        "advanced_players_guide"
+      ],
+      "class_id": "class:witch",
+      "family": "APG",
+      "levels_blocked": [],
+      "levels_computed": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "max_level": 20,
+      "registries": [
+        "apg_class_id"
+      ],
+      "status": "Computed"
+    },
+    {
+      "blocking_diagnostics": [],
+      "books": [
+        "core_rulebook"
+      ],
+      "class_id": "class:wizard",
+      "family": "CRB",
+      "levels_blocked": [],
+      "levels_computed": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "max_level": 20,
+      "registries": [
+        "crb_class_id"
+      ],
+      "status": "Computed"
+    }
+  ],
+  "computed": 42,
+  "generated_at": "2026-09-21T14:01:44Z",
+  "generated_by": "cargo run --bin class_census -- --json <path>",
+  "ids": 135,
+  "input_posture": "tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt with the class swapped to the class under test, swept over 1..=max_level (per the merged registry's own max_level, not a fixed 20), plus the canonical per-class choice/spell seeds compose_character_input applies (pf1_adapter.rs, mirrored in codex::rules_core::class_seeds). A class counts as computed only when every level in its own sweep reaches HeadlessReceiptStatus::Computed. Prestige ids are listed, never swept alone -- see this binary's module doc comment.",
+  "non_prestige_swept": 61,
+  "prestige": [
+    {
+      "books": [
+        "ultimate_psionics"
+      ],
+      "class_id": "class:adaptive_warrior",
+      "family": "Prestige",
+      "max_level": 10,
+      "registries": [
+        "prestige_tagged_record",
+        "generic_class_chassis"
+      ],
+      "status": "not_swept_yet"
+    },
+    {
+      "books": [
+        "adventurers_guide"
+      ],
+      "class_id": "class:aldori_swordlord",
+      "family": "Prestige",
+      "max_level": 10,
+      "registries": [
+        "prestige_tagged_record",
+        "generic_class_chassis"
+      ],
+      "status": "not_swept_yet"
+    },
+    {
+      "books": [
+        "core_rulebook"
+      ],
+      "class_id": "class:arcane_archer",
+      "family": "Prestige",
+      "max_level": 10,
+      "registries": [
+        "prestige_tagged_record"
+      ],
+      "status": "not_swept_yet"
+    },
+    {
+      "books": [
+        "core_rulebook"
+      ],
+      "class_id": "class:arcane_trickster",
+      "family": "Prestige",
+      "max_level": 10,
+      "registries": [
+        "prestige_tagged_record"
+      ],
+      "status": "not_swept_yet"
+    },
+    {
+      "books": [
+        "adventurers_guide"
+      ],
+      "class_id": "class:argent_dramaturge",
+      "family": "Prestige",
+      "max_level": 10,
+      "registries": [
+        "prestige_tagged_record",
+        "generic_class_chassis"
+      ],
+      "status": "not_swept_yet"
+    },
+    {
+      "books": [
+        "adventurers_guide"
+      ],
+      "class_id": "class:asavir",
+      "family": "Prestige",
+      "max_level": 10,
+      "registries": [
+        "prestige_tagged_record",
+        "generic_class_chassis"
+      ],
+      "status": "not_swept_yet"
+    },
+    {
+      "books": [
+        "adventurers_guide"
+      ],
+      "class_id": "class:aspis_agent",
+      "family": "Prestige",
+      "max_level": 10,
+      "registries": [
+        "prestige_tagged_record",
+        "generic_class_chassis"
+      ],
+      "status": "not_swept_yet"
+    },
+    {
+      "books": [
+        "core_rulebook"
+      ],
+      "class_id": "class:assassin",
+      "family": "Prestige",
+      "max_level": 10,
+      "registries": [
+        "prestige_tagged_record"
+      ],
+      "status": "not_swept_yet"
+    },
+    {
+      "books": [
+        "advanced_players_guide"
+      ],
+      "class_id": "class:battle_herald",
+      "family": "Prestige",
+      "max_level": 10,
+      "registries": [
+        "prestige_tagged_record"
+      ],
+      "status": "not_swept_yet"
+    },
+    {
+      "books": [
+        "adventurers_guide"
+      ],
+      "class_id": "class:bellflower_tiller",
+      "family": "Prestige",
+      "max_level": 10,
+      "registries": [
+        "prestige_tagged_record",
+        "generic_class_chassis"
+      ],
+      "status": "not_swept_yet"
+    },
+    {
+      "books": [
+        "ultimate_psionics"
+      ],
+      "class_id": "class:body_snatcher",
+      "family": "Prestige",
+      "max_level": 6,
+      "registries": [
+        "prestige_tagged_record",
+        "generic_class_chassis"
+      ],
+      "status": "not_swept_yet"
+    },
+    {
+      "books": [
+        "ultimate_psionics"
+      ],
+      "class_id": "class:cerebremancer",
+      "family": "Prestige",
+      "max_level": 10,
+      "registries": [
+        "prestige_tagged_record",
+        "generic_class_chassis"
+      ],
+      "status": "not_swept_yet"
+    },
+    {
+      "books": [
+        "adventurers_guide",
+        "inner_sea_magic"
+      ],
+      "class_id": "class:cyphermage",
+      "family": "Prestige",
+      "max_level": 10,
+      "registries": [
+        "prestige_tagged_record",
+        "generic_class_chassis"
+      ],
+      "status": "not_swept_yet"
+    },
+    {
+      "books": [
+        "ultimate_psionics"
+      ],
+      "class_id": "class:dark_tempest",
+      "family": "Prestige",
+      "max_level": 10,
+      "registries": [
+        "prestige_tagged_record",
+        "generic_class_chassis"
+      ],
+      "status": "not_swept_yet"
+    },
+    {
+      "books": [
+        "adventurers_guide"
+      ],
+      "class_id": "class:death_slayer",
+      "family": "Prestige",
+      "max_level": 10,
+      "registries": [
+        "prestige_tagged_record",
+        "generic_class_chassis"
+      ],
+      "status": "not_swept_yet"
+    },
+    {
+      "books": [
+        "book_of_the_damned_volume_2"
+      ],
+      "class_id": "class:demoniac",
+      "family": "Prestige",
+      "max_level": 10,
+      "registries": [
+        "prestige_tagged_record",
+        "generic_class_chassis"
+      ],
+      "status": "not_swept_yet"
+    },
+    {
+      "books": [
+        "book_of_the_damned_volume_1"
+      ],
+      "class_id": "class:diabolist",
+      "family": "Prestige",
+      "max_level": 10,
+      "registries": [
+        "prestige_tagged_record",
+        "generic_class_chassis"
+      ],
+      "status": "not_swept_yet"
+    },
+    {
+      "books": [
+        "inner_sea_magic"
+      ],
+      "class_id": "class:divine_scion",
+      "family": "Prestige",
+      "max_level": 10,
+      "registries": [
+        "prestige_tagged_record",
+        "generic_class_chassis"
+      ],
+      "status": "not_swept_yet"
+    },
+    {
+      "books": [
+        "core_rulebook"
+      ],
+      "class_id": "class:dragon_disciple",
+      "family": "Prestige",
+      "max_level": 10,
+      "registries": [
+        "prestige_tagged_record"
+      ],
+      "status": "not_swept_yet"
+    },
+    {
+      "books": [
+        "core_rulebook"
+      ],
+      "class_id": "class:duelist",
+      "family": "Prestige",
+      "max_level": 10,
+      "registries": [
+        "prestige_tagged_record"
+      ],
+      "status": "not_swept_yet"
+    },
+    {
+      "books": [
+        "core_rulebook"
+      ],
+      "class_id": "class:eldritch_knight",
+      "family": "Prestige",
+      "max_level": 10,
+      "registries": [
+        "prestige_tagged_record"
+      ],
+      "status": "not_swept_yet"
+    },
+    {
+      "books": [
+        "ultimate_psionics"
+      ],
+      "class_id": "class:elocater",
+      "family": "Prestige",
+      "max_level": 10,
+      "registries": [
+        "prestige_tagged_record",
+        "generic_class_chassis"
+      ],
+      "status": "not_swept_yet"
+    },
+    {
+      "books": [
+        "inner_sea_intrigue"
+      ],
+      "class_id": "class:enchanting_courtesan",
+      "family": "Prestige",
+      "max_level": 10,
+      "registries": [
+        "prestige_tagged_record",
+        "generic_class_chassis"
+      ],
+      "status": "not_swept_yet"
+    },
+    {
+      "books": [
+        "inner_sea_gods"
+      ],
+      "class_id": "class:evangelist",
+      "family": "Prestige",
+      "max_level": 10,
+      "registries": [
+        "prestige_tagged_record",
+        "generic_class_chassis"
+      ],
+      "status": "not_swept_yet"
+    },
+    {
+      "books": [
+        "inner_sea_gods"
+      ],
+      "class_id": "class:exalted",
+      "family": "Prestige",
+      "max_level": 10,
+      "registries": [
+        "prestige_tagged_record",
+        "generic_class_chassis"
+      ],
+      "status": "not_swept_yet"
+    },
+    {
+      "books": [
+        "adventurers_guide"
+      ],
+      "class_id": "class:golden_legionnaire",
+      "family": "Prestige",
+      "max_level": 10,
+      "registries": [
+        "prestige_tagged_record",
+        "generic_class_chassis"
+      ],
+      "status": "not_swept_yet"
+    },
+    {
+      "books": [
+        "adventurers_guide"
+      ],
+      "class_id": "class:gray_corsair",
+      "family": "Prestige",
+      "max_level": 10,
+      "registries": [
+        "prestige_tagged_record",
+        "generic_class_chassis"
+      ],
+      "status": "not_swept_yet"
+    },
+    {
+      "books": [
+        "inner_sea_world_guide"
+      ],
+      "class_id": "class:harrower",
+      "family": "Prestige",
+      "max_level": 10,
+      "registries": [
+        "prestige_tagged_record",
+        "generic_class_chassis"
+      ],
+      "status": "not_swept_yet"
+    },
+    {
+      "books": [
+        "adventurers_guide",
+        "inner_sea_world_guide"
+      ],
+      "class_id": "class:hellknight",
+      "family": "Prestige",
+      "max_level": 10,
+      "registries": [
+        "prestige_tagged_record",
+        "generic_class_chassis"
+      ],
+      "status": "not_swept_yet"
+    },
+    {
+      "books": [
+        "adventurers_guide"
+      ],
+      "class_id": "class:hellknight_signifer",
+      "family": "Prestige",
+      "max_level": 10,
+      "registries": [
+        "prestige_tagged_record",
+        "generic_class_chassis"
+      ],
+      "status": "not_swept_yet"
+    },
+    {
+      "books": [
+        "advanced_players_guide"
+      ],
+      "class_id": "class:holy_vindicator",
+      "family": "Prestige",
+      "max_level": 10,
+      "registries": [
+        "prestige_tagged_record"
+      ],
+      "status": "not_swept_yet"
+    },
+    {
+      "books": [
+        "advanced_players_guide"
+      ],
+      "class_id": "class:horizon_walker",
+      "family": "Prestige",
+      "max_level": 10,
+      "registries": [
+        "prestige_tagged_record"
+      ],
+      "status": "not_swept_yet"
+    },
+    {
+      "books": [
+        "adventurers_guide"
+      ],
+      "class_id": "class:lantern_bearer",
+      "family": "Prestige",
+      "max_level": 10,
+      "registries": [
+        "prestige_tagged_record",
+        "generic_class_chassis"
+      ],
+      "status": "not_swept_yet"
+    },
+    {
+      "books": [
+        "inner_sea_intrigue"
+      ],
+      "class_id": "class:lion_blade",
+      "family": "Prestige",
+      "max_level": 10,
+      "registries": [
+        "prestige_tagged_record",
+        "generic_class_chassis"
+      ],
+      "status": "not_swept_yet"
+    },
+    {
+      "books": [
+        "core_rulebook"
+      ],
+      "class_id": "class:loremaster",
+      "family": "Prestige",
+      "max_level": 10,
+      "registries": [
+        "prestige_tagged_record"
+      ],
+      "status": "not_swept_yet"
+    },
+    {
+      "books": [
+        "inner_sea_world_guide"
+      ],
+      "class_id": "class:low_templar",
+      "family": "Prestige",
+      "max_level": 10,
+      "registries": [
+        "prestige_tagged_record",
+        "generic_class_chassis"
+      ],
+      "status": "not_swept_yet"
+    },
+    {
+      "books": [
+        "adventurers_guide"
+      ],
+      "class_id": "class:magaambyan_arcanist",
+      "family": "Prestige",
+      "max_level": 10,
+      "registries": [
+        "prestige_tagged_record",
+        "generic_class_chassis"
+      ],
+      "status": "not_swept_yet"
+    },
+    {
+      "books": [
+        "adventurers_guide"
+      ],
+      "class_id": "class:mammoth_rider",
+      "family": "Prestige",
+      "max_level": 10,
+      "registries": [
+        "prestige_tagged_record",
+        "generic_class_chassis"
+      ],
+      "status": "not_swept_yet"
+    },
+    {
+      "books": [
+        "advanced_players_guide"
+      ],
+      "class_id": "class:master_chymist",
+      "family": "Prestige",
+      "max_level": 10,
+      "registries": [
+        "prestige_tagged_record"
+      ],
+      "status": "not_swept_yet"
+    },
+    {
+      "books": [
+        "advanced_players_guide"
+      ],
+      "class_id": "class:master_spy",
+      "family": "Prestige",
+      "max_level": 10,
+      "registries": [
+        "prestige_tagged_record"
+      ],
+      "status": "not_swept_yet"
+    },
+    {
+      "books": [
+        "ultimate_psionics"
+      ],
+      "class_id": "class:metaforge",
+      "family": "Prestige",
+      "max_level": 10,
+      "registries": [
+        "prestige_tagged_record",
+        "generic_class_chassis"
+      ],
+      "status": "not_swept_yet"
+    },
+    {
+      "books": [
+        "ultimate_psionics"
+      ],
+      "class_id": "class:metamind",
+      "family": "Prestige",
+      "max_level": 10,
+      "registries": [
+        "prestige_tagged_record",
+        "generic_class_chassis"
+      ],
+      "status": "not_swept_yet"
+    },
+    {
+      "books": [
+        "ultimate_psionics"
+      ],
+      "class_id": "class:metamorph",
+      "family": "Prestige",
+      "max_level": 10,
+      "registries": [
+        "prestige_tagged_record",
+        "generic_class_chassis"
+      ],
+      "status": "not_swept_yet"
+    },
+    {
+      "books": [
+        "ultimate_psionics"
+      ],
+      "class_id": "class:mystic_archer",
+      "family": "Prestige",
+      "max_level": 7,
+      "registries": [
+        "prestige_tagged_record",
+        "generic_class_chassis"
+      ],
+      "status": "not_swept_yet"
+    },
+    {
+      "books": [
+        "core_rulebook"
+      ],
+      "class_id": "class:mystic_theurge",
+      "family": "Prestige",
+      "max_level": 10,
+      "registries": [
+        "prestige_tagged_record"
+      ],
+      "status": "not_swept_yet"
+    },
+    {
+      "books": [
+        "advanced_players_guide"
+      ],
+      "class_id": "class:nature_warden",
+      "family": "Prestige",
+      "max_level": 10,
+      "registries": [
+        "prestige_tagged_record"
+      ],
+      "status": "not_swept_yet"
+    },
+    {
+      "books": [
+        "core_rulebook"
+      ],
+      "class_id": "class:pathfinder_chronicler",
+      "family": "Prestige",
+      "max_level": 10,
+      "registries": [
+        "prestige_tagged_record"
+      ],
+      "status": "not_swept_yet"
+    },
+    {
+      "books": [
+        "adventurers_guide"
+      ],
+      "class_id": "class:pathfinder_delver",
+      "family": "Prestige",
+      "max_level": 10,
+      "registries": [
+        "prestige_tagged_record",
+        "generic_class_chassis"
+      ],
+      "status": "not_swept_yet"
+    },
+    {
+      "books": [
+        "adventurers_guide"
+      ],
+      "class_id": "class:pathfinder_savant",
+      "family": "Prestige",
+      "max_level": 10,
+      "registries": [
+        "prestige_tagged_record",
+        "generic_class_chassis"
+      ],
+      "status": "not_swept_yet"
+    },
+    {
+      "books": [
+        "ultimate_psionics"
+      ],
+      "class_id": "class:phrenic_slayer",
+      "family": "Prestige",
+      "max_level": 10,
+      "registries": [
+        "prestige_tagged_record",
+        "generic_class_chassis"
+      ],
+      "status": "not_swept_yet"
+    },
+    {
+      "books": [
+        "ultimate_psionics"
+      ],
+      "class_id": "class:psicrystal_imprinter",
+      "family": "Prestige",
+      "max_level": 10,
+      "registries": [
+        "prestige_tagged_record",
+        "generic_class_chassis"
+      ],
+      "status": "not_swept_yet"
+    },
+    {
+      "books": [
+        "ultimate_psionics"
+      ],
+      "class_id": "class:psion_uncarnate",
+      "family": "Prestige",
+      "max_level": 10,
+      "registries": [
+        "prestige_tagged_record",
+        "generic_class_chassis"
+      ],
+      "status": "not_swept_yet"
+    },
+    {
+      "books": [
+        "ultimate_psionics"
+      ],
+      "class_id": "class:psychic_fist",
+      "family": "Prestige",
+      "max_level": 10,
+      "registries": [
+        "prestige_tagged_record",
+        "generic_class_chassis"
+      ],
+      "status": "not_swept_yet"
+    },
+    {
+      "books": [
+        "inner_sea_combat"
+      ],
+      "class_id": "class:pure_legion_enforcer",
+      "family": "Prestige",
+      "max_level": 10,
+      "registries": [
+        "prestige_tagged_record",
+        "generic_class_chassis"
+      ],
+      "status": "not_swept_yet"
+    },
+    {
+      "books": [
+        "ultimate_psionics"
+      ],
+      "class_id": "class:pyrokineticist",
+      "family": "Prestige",
+      "max_level": 10,
+      "registries": [
+        "prestige_tagged_record",
+        "generic_class_chassis"
+      ],
+      "status": "not_swept_yet"
+    },
+    {
+      "books": [
+        "advanced_players_guide"
+      ],
+      "class_id": "class:rage_prophet",
+      "family": "Prestige",
+      "max_level": 10,
+      "registries": [
+        "prestige_tagged_record"
+      ],
+      "status": "not_swept_yet"
+    },
+    {
+      "books": [
+        "adventurers_guide",
+        "inner_sea_world_guide"
+      ],
+      "class_id": "class:red_mantis_assassin",
+      "family": "Prestige",
+      "max_level": 10,
+      "registries": [
+        "prestige_tagged_record",
+        "generic_class_chassis"
+      ],
+      "status": "not_swept_yet"
+    },
+    {
+      "books": [
+        "adventurers_guide"
+      ],
+      "class_id": "class:rivethun_emissary",
+      "family": "Prestige",
+      "max_level": 10,
+      "registries": [
+        "prestige_tagged_record",
+        "generic_class_chassis"
+      ],
+      "status": "not_swept_yet"
+    },
+    {
+      "books": [
+        "adventurers_guide"
+      ],
+      "class_id": "class:sanguine_angel",
+      "family": "Prestige",
+      "max_level": 10,
+      "registries": [
+        "prestige_tagged_record",
+        "generic_class_chassis"
+      ],
+      "status": "not_swept_yet"
+    },
+    {
+      "books": [
+        "inner_sea_gods"
+      ],
+      "class_id": "class:sentinel",
+      "family": "Prestige",
+      "max_level": 10,
+      "registries": [
+        "prestige_tagged_record",
+        "generic_class_chassis"
+      ],
+      "status": "not_swept_yet"
+    },
+    {
+      "books": [
+        "core_rulebook"
+      ],
+      "class_id": "class:shadowdancer",
+      "family": "Prestige",
+      "max_level": 10,
+      "registries": [
+        "prestige_tagged_record"
+      ],
+      "status": "not_swept_yet"
+    },
+    {
+      "books": [
+        "ultimate_psionics"
+      ],
+      "class_id": "class:sighted_seeker",
+      "family": "Prestige",
+      "max_level": 10,
+      "registries": [
+        "prestige_tagged_record",
+        "generic_class_chassis"
+      ],
+      "status": "not_swept_yet"
+    },
+    {
+      "books": [
+        "ultimate_psionics"
+      ],
+      "class_id": "class:soul_archer",
+      "family": "Prestige",
+      "max_level": 10,
+      "registries": [
+        "prestige_tagged_record",
+        "generic_class_chassis"
+      ],
+      "status": "not_swept_yet"
+    },
+    {
+      "books": [
+        "advanced_players_guide"
+      ],
+      "class_id": "class:stalwart_defender",
+      "family": "Prestige",
+      "max_level": 10,
+      "registries": [
+        "prestige_tagged_record"
+      ],
+      "status": "not_swept_yet"
+    },
+    {
+      "books": [
+        "adventurers_guide"
+      ],
+      "class_id": "class:steel_falcon",
+      "family": "Prestige",
+      "max_level": 10,
+      "registries": [
+        "prestige_tagged_record",
+        "generic_class_chassis"
+      ],
+      "status": "not_swept_yet"
+    },
+    {
+      "books": [
+        "adventurers_guide"
+      ],
+      "class_id": "class:storm_kindler",
+      "family": "Prestige",
+      "max_level": 10,
+      "registries": [
+        "prestige_tagged_record",
+        "generic_class_chassis"
+      ],
+      "status": "not_swept_yet"
+    },
+    {
+      "books": [
+        "adventurers_guide"
+      ],
+      "class_id": "class:student_of_perfection",
+      "family": "Prestige",
+      "max_level": 10,
+      "registries": [
+        "prestige_tagged_record",
+        "generic_class_chassis"
+      ],
+      "status": "not_swept_yet"
+    },
+    {
+      "books": [
+        "adventurers_guide"
+      ],
+      "class_id": "class:student_of_war",
+      "family": "Prestige",
+      "max_level": 10,
+      "registries": [
+        "prestige_tagged_record",
+        "generic_class_chassis"
+      ],
+      "status": "not_swept_yet"
+    },
+    {
+      "books": [
+        "ultimate_psionics"
+      ],
+      "class_id": "class:telekinetic_weaponmaster",
+      "family": "Prestige",
+      "max_level": 5,
+      "registries": [
+        "prestige_tagged_record",
+        "generic_class_chassis"
+      ],
+      "status": "not_swept_yet"
+    },
+    {
+      "books": [
+        "ultimate_psionics"
+      ],
+      "class_id": "class:thrallherd",
+      "family": "Prestige",
+      "max_level": 10,
+      "registries": [
+        "prestige_tagged_record",
+        "generic_class_chassis"
+      ],
+      "status": "not_swept_yet"
+    },
+    {
+      "books": [
+        "adventurers_guide"
+      ],
+      "class_id": "class:twilight_talon",
+      "family": "Prestige",
+      "max_level": 10,
+      "registries": [
+        "prestige_tagged_record",
+        "generic_class_chassis"
+      ],
+      "status": "not_swept_yet"
+    },
+    {
+      "books": [
+        "inner_sea_combat"
+      ],
+      "class_id": "class:ulfen_guard",
+      "family": "Prestige",
+      "max_level": 10,
+      "registries": [
+        "prestige_tagged_record",
+        "generic_class_chassis"
+      ],
+      "status": "not_swept_yet"
+    },
+    {
+      "books": [
+        "ultimate_psionics"
+      ],
+      "class_id": "class:war_mind",
+      "family": "Prestige",
+      "max_level": 10,
+      "registries": [
+        "prestige_tagged_record",
+        "generic_class_chassis"
+      ],
+      "status": "not_swept_yet"
+    },
+    {
+      "books": [
+        "adventurers_guide"
+      ],
+      "class_id": "class:westcrown_devil",
+      "family": "Prestige",
+      "max_level": 10,
+      "registries": [
+        "prestige_tagged_record",
+        "generic_class_chassis"
+      ],
+      "status": "not_swept_yet"
+    }
+  ],
+  "prestige_not_swept_yet": 74,
+  "source_of_truth": "codex::rules_core::pilot_compute::build_pilot_headless_receipt"
+}

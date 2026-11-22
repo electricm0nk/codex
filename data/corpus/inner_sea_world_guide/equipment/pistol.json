@@ -1,0 +1,78 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "category": "ArmsArmor",
+    "cost_gp": 1000.0,
+    "description": null,
+    "key": "Pistol",
+    "name": "Pistol",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "PROFICIENCY",
+        "value": "WEAPON|Firearms"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weapon.Resizable.Ranged.OneHanded.Exotic.Standard.Bludgeoning.Piercing.Container.Projectile.Firearm"
+      },
+      {
+        "key": "CONTAINS",
+        "value": "1|Firearm Bullet=1"
+      },
+      {
+        "key": "COST",
+        "value": "1000"
+      },
+      {
+        "key": "WT",
+        "value": "4"
+      },
+      {
+        "key": "CRITMULT",
+        "value": "x4"
+      },
+      {
+        "key": "CRITRANGE",
+        "value": "1"
+      },
+      {
+        "key": "FUMBLERANGE",
+        "value": "1"
+      },
+      {
+        "key": "DAMAGE",
+        "value": "1d8"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Material ~ Steel"
+      },
+      {
+        "key": "RANGE",
+        "value": "20"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.292"
+      }
+    ],
+    "weight_lbs": 4.0
+  },
+  "ingested_at": "2026-08-17T08:18:39Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 26,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_equip_arms_armor.lst",
+    "record_key": "Pistol",
+    "sha256": "552092581f8480ce2a536d5358ebd3049ccb2f93a7e65a10a6287acbff6e50fa"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

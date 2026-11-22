@@ -1,0 +1,65 @@
+{
+  "codex_generated_name": true,
+  "completeness": "chassis_only",
+  "data": {
+    "description": null,
+    "key": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_291)",
+    "name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_291)",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "NAMEISPI",
+        "value": "YES"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Divine Boon Choice|TIMES=3|CASTERLEVEL=TL|Magic Weapon|PREVARGTEQ:SentinelBoonLVL,3"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Divine Boon Choice|TIMES=2|CASTERLEVEL=TL|Arrow Eruption|PREVARGTEQ:SentinelBoonLVL,3"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Divine Boon Choice|TIMES=1|CASTERLEVEL=TL|Keen Edge|PREVARGTEQ:SentinelBoonLVL,3"
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|AC|1+min(5,TL/4)|TYPE=Deflection|PREVARGTEQ:SentinelBoonLVL,9"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CombatBonus|+4 sacred or profane bonus on concentration checks."
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "license": "PI-REDACTED",
+  "pi_field": "name,raw_tokens",
+  "pi_marker": "redacted",
+  "population": "in_scope",
+  "rename": {
+    "coordinate": "inner_sea_gods:isg_abilities_faith.lst:291",
+    "reason": "name_pi_blocked"
+  },
+  "source": {
+    "kind": "lst_token",
+    "line": 291,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities_faith.lst",
+    "record_key": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_291)",
+    "sha256": "55f9ffcb82ea861db396063e8801becfb46e368a510ec6d413d87c2935f3419e"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus",
+    "derived:spells"
+  ]
+}

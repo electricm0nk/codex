@@ -1,0 +1,50 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "General",
+    "cost_gp": 160.0,
+    "description": "Reduces time to create a disguise, may reduce penalty to appear as different race.",
+    "key": "Alchemical Dye Kit",
+    "name": "Alchemical Dye Kit",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Goods.Alchemical.Consumable"
+      },
+      {
+        "key": "COST",
+        "value": "160"
+      },
+      {
+        "key": "WT",
+        "value": "6"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.236"
+      },
+      {
+        "key": "SPROP",
+        "value": "Reduces time to create a disguise, may reduce penalty to appear as different race."
+      }
+    ],
+    "weight_lbs": 6.0
+  },
+  "ingested_at": "2026-08-16T05:06:54Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 41,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_equip_general.lst",
+    "record_key": "Alchemical Dye Kit",
+    "sha256": "9d6286b856677f00d123eba26e6b4662c403dc79461dcaa5289ea793ecaea5e2"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

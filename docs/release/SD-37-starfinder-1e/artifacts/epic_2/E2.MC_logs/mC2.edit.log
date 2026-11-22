@@ -1,0 +1,12 @@
+diff --git a/src/rules_core/sheet_rule.rs b/src/rules_core/sheet_rule.rs
+index e2d000e8bc..dce2b39a61 100644
+--- a/src/rules_core/sheet_rule.rs
++++ b/src/rules_core/sheet_rule.rs
+@@ -380,6 +380,7 @@ pub enum BonusTarget {
+     Damage(WeaponRef),
+     Hp,
+     /// Starfinder 1e Energy Armor Class.
++    #[serde(rename = "EacX")]
+     Eac,
+     /// Starfinder 1e Kinetic Armor Class.
+     Kac,

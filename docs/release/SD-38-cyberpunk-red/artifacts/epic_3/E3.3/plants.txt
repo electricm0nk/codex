@@ -1,0 +1,8 @@
+# plant 1: saved language level - 1
+thread 'cpr_creation::tests::the_cultural_origin_language_becomes_a_language_skill_at_4' (1047163) panicked at src/cpr_creation.rs:1343:9:
+test result: FAILED. 16 passed; 1 failed; 0 ignored; 0 measured; 821 filtered out; finished in 9.36s
+# plant 2: die capped at 6 (D-9 ignored)
+thread 'cpr_creation::tests::count_tables_roll_1d10_minus_7_and_answer_each_entry' (1048402) panicked at src/cpr_creation.rs:1226:17:
+thread 'cpr_creation::tests::range_rows_and_the_d9_exec_corp_table_roll_their_whole_range' (1048407) panicked at src/cpr_creation.rs:1261:9:
+thread 'cpr_creation::tests::the_cultural_origin_language_becomes_a_language_skill_at_4' (1048409) panicked at src/cpr_creation.rs:1308:9:
+test result: FAILED. 14 passed; 3 failed; 0 ignored; 0 measured; 821 filtered out; finished in 9.52s

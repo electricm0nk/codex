@@ -1,0 +1,57 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Kappa ~ Head Bowl",
+    "delivery": "Supernatural",
+    "description": "The basin atop a kappa's head contains water from its home river or lake. The water is emptied only if the kappa willingly tips its head or a creature pinning the kappa forces it to do so (requiring a grapple check while pinned). If the water is emptied, the kappa becomes immobile and staggered. It can still take actions, but it cannot move from the spot on its own. If the emptied head bowl is refilled with water, the kappa recovers from this condition immediately. This replacement water doesn't have to be from the kappa's home, but the kappa refills its head bowl from there at its first opportunity.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:kappa_head_bowl",
+    "name": "Head Bowl",
+    "owners": [
+      "bestiary_3:monster:kappa"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "The basin atop a kappa's head contains water from its home river or lake. The water is emptied only if the kappa willingly tips its head or a creature pinning the kappa forces it to do so (requiring a grapple check while pinned). If the water is emptied, the kappa becomes immobile and staggered. It can still take actions, but it cannot move from the spot on its own. If the emptied head bowl is refilled with water, the kappa recovers from this condition immediately. This replacement water doesn't have to be from the kappa's home, but the kappa refills its head bowl from there at its first opportunity."
+      },
+      {
+        "key": "KEY",
+        "value": "Kappa ~ Head Bowl"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.166"
+      },
+      {
+        "key": "TYPE",
+        "value": "KappaRacialAbility.SpecialQuality.Supernatural"
+      }
+    ],
+    "source_page": "p.166",
+    "traits": [
+      "KappaRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T10:26:03Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1140,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Kappa ~ Head Bowl",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

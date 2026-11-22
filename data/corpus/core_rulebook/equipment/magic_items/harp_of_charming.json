@@ -1,0 +1,78 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "magic_items",
+    "cost_gp": 7500.0,
+    "description": "This beautiful and intricately carved harp can be held comfortably in one hand, but both hands are required to utilize its magic. When played, a harp of charming enables the performer to work one suggestion (as the spell, Will DC 14 negates) into the music for each 10 minutes of playing if he can succeed on a DC 14 Perform (string instruments) check. If the check fails, the audience cannot be affected by any further performances from the harpist for 24 hours.",
+    "key": "Harp of Charming",
+    "name": "Harp of Charming",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Harp of Charming"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Harp of Charming"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.Instrument.String"
+      },
+      {
+        "key": "COST",
+        "value": "7500"
+      },
+      {
+        "key": "WT",
+        "value": "5"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.516"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Aura|faint enchantment"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Caster Level|5th"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Slot|none"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Cost|3,750 gp"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Requirements|Craft Wondrous Item, suggestion"
+      },
+      {
+        "key": "DESC",
+        "value": "This beautiful and intricately carved harp can be held comfortably in one hand, but both hands are required to utilize its magic. When played, a harp of charming enables the performer to work one suggestion (as the spell, Will DC 14 negates) into the music for each 10 minutes of playing if he can succeed on a DC 14 Perform (string instruments) check. If the check fails, the audience cannot be affected by any further performances from the harpist for 24 hours."
+      }
+    ],
+    "weight_lbs": 5.0
+  },
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 185,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "record_key": "Harp of Charming",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

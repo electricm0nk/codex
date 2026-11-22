@@ -1,0 +1,28 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:38:17Z",
+  "data": {
+    "key": "Hawkeye",
+    "category": "Combat",
+    "name": "Hawkeye",
+    "description": "Gain +%1 on Perception; increase precision damage range by %2 ft.|if(skillinfo(\"RANK\",\"Perception\")>=10,4,2)|if(skillinfo(\"RANK\",\"Perception\")>=10,30,15)",
+    "prerequisites": [
+      "PREABILITY:2,CATEGORY=FEAT,Far Shot,Point-Blank Shot"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_feats.lst",
+    "sha256": "528096cb97ebe8255b9f9fe67682dd7e045f53b65e32295cd57967002eccb137",
+    "line": 160,
+    "record_key": "Hawkeye"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

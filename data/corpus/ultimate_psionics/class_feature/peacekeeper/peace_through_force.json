@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Peacekeeper ~ Peace Through Force",
+    "name": "Peace Through Force",
+    "class": "Peacekeeper",
+    "description": "You gain the following augment options for any telepathy power.  Augment: By spending two additional power points, the target is also dazed for 1 round if they fail their save.  If the power does not normally allow a saving throw, the target can make a Will save at the standard save DC for the power to negate this effect.  By spending six additional power points, the target is also stunned for 1 round if they fail their saving throw.  If the power does not normally allow a saving throw, the target can make a Will save at the standard save DC for the power to negate this effect.  In addition, whenever you manifest any power that deals hit point damage, you can expend psionic focus to have it deal nonlethal damage instead.  This ability also works for your racial mind thrust psi-like ability.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Peacekeeper ~ Peace Through Force"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "PsionClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain the following augment options for any telepathy power.  Augment: By spending two additional power points, the target is also dazed for 1 round if they fail their save.  If the power does not normally allow a saving throw, the target can make a Will save at the standard save DC for the power to negate this effect.  By spending six additional power points, the target is also stunned for 1 round if they fail their saving throw.  If the power does not normally allow a saving throw, the target can make a Will save at the standard save DC for the power to negate this effect.  In addition, whenever you manifest any power that deals hit point damage, you can expend psionic focus to have it deal nonlethal damage instead.  This ability also works for your racial mind thrust psi-like ability."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.334"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2009,
+    "record_key": "Peacekeeper ~ Peace Through Force"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

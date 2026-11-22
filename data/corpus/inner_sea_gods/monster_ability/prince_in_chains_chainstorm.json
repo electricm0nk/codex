@@ -1,0 +1,38 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T10:26:11Z",
+  "data": {
+    "corpus_key": "Prince in Chains ~ Chainstorm",
+    "delivery": "Extraordinary",
+    "description": "Chains and flesh tendrils constantly lash at anything that approaches the herald. A creature that enters the area or begins its turn within it takes 1d12 points of bludgeoning and slashing damage. The chains entangle any creature so long as it's in the area (Reflex DC %1 negates).",
+    "description_variables": [
+      "ChainstormDC"
+    ],
+    "facet": "SpecialQuality",
+    "key": "inner_sea_gods:monster_ability:prince_in_chains_chainstorm",
+    "name": "Chainstorm",
+    "owners": [
+      "inner_sea_gods:monster:the_prince_in_chains"
+    ],
+    "source_page": null,
+    "traits": [
+      "Aura"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities_races.lst",
+    "sha256": "b309f3f779ee8d564aacff977e2a9119410a70844107ecd3e6bdc0170fe79ea8",
+    "line": 293,
+    "record_key": "Prince in Chains ~ Chainstorm"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

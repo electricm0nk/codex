@@ -1,0 +1,32 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:38:17Z",
+  "data": {
+    "key": "Advanced Interceptor Path",
+    "category": "Psionic",
+    "name": "Advanced Interceptor Path",
+    "description": "When using the Interceptor trance, you can take a -%1 penalty to Armor Class to grant a deflection bonus to Armor Class to one ally threatened by an enemy within your melee reach.  In addition, when using the Interceptor maneuver, if your attack was successful, you can make a free disarm or trip attempt against the enemy struck.|AdvancedInterceptorPathBonus",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=Special Ability,Interceptor Path ~ First,Interceptor Path ~ Second",
+      "PREABILITY:1,CATEGORY=FEAT,Combat Expertise",
+      "PREMULT:1,[PRETOTALAB:6],[PREVARGTEQ:PrereqBAB,6]",
+      "PREVARGTEQ:MaxManifesterLVL,10",
+      "PREVARGTEQ:IsPsionic,1"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_feats.lst",
+    "sha256": "528096cb97ebe8255b9f9fe67682dd7e045f53b65e32295cd57967002eccb137",
+    "line": 28,
+    "record_key": "Advanced Interceptor Path"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,1 @@
+fighter:5 wizard:5 monk:5 samurai:5 magus:5 shaman:5 bloodrager:3 unchained_rogue:5 cleric:5 kineticist:5 fighter:4+wizard:4 monk:4+rogue:3

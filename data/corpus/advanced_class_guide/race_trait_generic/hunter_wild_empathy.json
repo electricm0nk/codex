@@ -1,0 +1,30 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "description": null,
+    "key": "Hunter ~ Wild Empathy",
+    "name": "Hunter ~ Wild Empathy",
+    "raw_tokens": [
+      {
+        "key": "BONUS",
+        "value": "VAR|HunterWildEmpatyBonus|DwarfHunterFavClassBonus/2"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 21,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_race.lst",
+    "record_key": "Hunter ~ Wild Empathy",
+    "sha256": "f57e4d6123c356c9af9b493e691f7224a98998d8cb76dddf894009af4c84820d"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

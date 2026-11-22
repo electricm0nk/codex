@@ -1,0 +1,50 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "General",
+    "cost_gp": 12000.0,
+    "description": "Blow horn up to 3 times per day to be heard up to 5 miles",
+    "key": "Horn of the War-Leader",
+    "name": "Horn of the War-Leader",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous"
+      },
+      {
+        "key": "COST",
+        "value": "12000"
+      },
+      {
+        "key": "WT",
+        "value": "4"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "232"
+      },
+      {
+        "key": "SPROP",
+        "value": "Blow horn up to 3 times per day to be heard up to 5 miles"
+      }
+    ],
+    "weight_lbs": 4.0
+  },
+  "ingested_at": "2026-08-17T08:18:39Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 34,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_equip_general.lst",
+    "record_key": "Horn of the War-Leader",
+    "sha256": "84a3e01dc08eb0973262e16a2d9b0fa29512085f2dbc2f6087f0edf2697f0a6f"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

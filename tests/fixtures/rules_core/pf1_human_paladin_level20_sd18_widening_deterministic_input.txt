@@ -1,0 +1,62 @@
+# SD18 deterministic Human Paladin level 20 widening fixture.
+# Widens the accepted SD18 level-19 fixture
+# (tests/sd18_paladin_level19_widening.rs) to level 20 as chosen input
+# only. It names selections; it does not contain derived, computed, or
+# parity values. It preserves the accepted Human race-choice seam
+# (ability-bonus and bonus-feat), the deterministic Longsword / Chain
+# Shirt / no-shield / Power Attack posture, and the level-3..level-19
+# fixture's six mercy selections unchanged (choice:paladin_mercy ->
+# mercy:shaken, choice:paladin_mercy_4 -> mercy:blinded,
+# choice:paladin_mercy_5 -> mercy:deafened, choice:paladin_mercy_6 ->
+# mercy:sickened) -- 20th is NOT a repeat-mercy-grant level (the
+# 3rd/6th/9th/12th/15th/18th cadence; the next repeat grant would land at
+# 21st, out of scope), so no seventh mercy selection is added.
+#
+# The PF1 CRB Paladin class table's level-20 "Special" column reads
+# "Holy champion" ONLY (verified independently against a raw HTML fetch of
+# d20pfsrd.com's own class table, bypassing AI-summarization, and the
+# Archives of Nethys aonprd.com mirror, both agreeing byte-for-byte) -- the
+# class capstone, a genuinely NEW class feature.
+#
+# The base spells-per-day table's level-20 row is "4/4/3/3" (verified
+# independently against both sources' raw HTML with no disagreement): the
+# 1st/3rd-level columns stay 4/3 unchanged, and the 2nd-level AND
+# 4th-level columns BOTH genuinely rise simultaneously (2nd from 3 to 4,
+# 4th from 2 to 3) -- the first level in this row's own widening history
+# where two columns rise at once, a deliberate deviation from the
+# single-column-rise pattern seen at every prior level, so both raw HTML
+# fetches were checked directly (not summarized) to guard against a
+# tool-extraction artifact; no disagreement was found.
+#
+# It deliberately avoids every later hybrid burden surface: no spell
+# selections, no spells known/prepared posture, no domains, no mercy
+# EFFECT resolution, no channel positive energy healing/damage-resolution
+# execution, no Divine Bond (weapon bond / mount bond) selection or
+# execution, no Aura of Justice's own smite-sharing resolution, no Aura
+# of Faith's own good-alignment-weapon-treatment resolution, no Aura of
+# Righteousness's own damage-reduction/compulsion-immunity resolution, and
+# no Holy Champion's own damage-reduction/banishment/healing-maximization
+# resolution.
+case_id=pf1-crb-human-paladin-level20
+source_package_id=pf1.core_rulebook
+race_id=race:human
+class_level=class:paladin:20
+ability=strength:16
+ability=dexterity:12
+ability=constitution:14
+ability=intelligence:10
+ability=wisdom:10
+ability=charisma:14
+feat=feat:power_attack
+skill=skill:diplomacy:1
+equipment=item:chain_shirt:equipped_worn_active
+equipment=item:longsword:equipped_primary_active
+equipment=item:shield:absent
+choice=choice:level_1_character_feat:feat:power_attack
+choice=choice:human_bonus_feat:feat:dodge
+choice=choice:human_ability_bonus:ability:charisma
+choice=choice:paladin_mercy:mercy:shaken
+choice=choice:paladin_mercy_4:mercy:blinded
+choice=choice:paladin_mercy_5:mercy:deafened
+choice=choice:paladin_mercy_6:mercy:sickened
+provenance=programs/codex/requirements/SD-13-core-class-race-roster-and-level-10-progression-matrix/artifacts/core-roster-and-support-state-matrix.md

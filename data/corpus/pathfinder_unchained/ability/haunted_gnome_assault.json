@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Combat Trick ~ Haunted Gnome Assault",
+    "name": "Haunted Gnome Assault",
+    "description": "When you hit an opponent with a charge attack or conf irm a critical hit, you can spend 2 stamina points to make the target of the attack shaken for 1 round without discharging haunted fey aspectUC.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Combat Trick ~ Haunted Gnome Assault"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Combat Trick"
+      },
+      {
+        "key": "DESC",
+        "value": "When you hit an opponent with a charge attack or conf irm a critical hit, you can spend 2 stamina points to make the target of the attack shaken for 1 round without discharging haunted fey aspectUC."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "122"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SourceBook|UC"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/support/ability_uc.lst",
+    "sha256": "11fe5af3a23ebdf6b90f238bb433207cc58d2f76a5ad62759e2be4ef6b712f14",
+    "line": 73,
+    "record_key": "Combat Trick ~ Haunted Gnome Assault"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

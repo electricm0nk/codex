@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Hellbound Corruption ~ Passage through Pit Gift",
+    "name": "Passage through the Pit Gift",
+    "description": "You can step through Hell to reach other places",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Hellbound Corruption ~ Passage through Pit Gift"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.HellboundPassageThroughPitGift"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.23"
+      },
+      {
+        "key": "DESC",
+        "value": "You can step through Hell to reach other places"
+      },
+      {
+        "key": "DESC",
+        "value": "once per hour.|PREVARLT:HellboundManifestationLevel,6"
+      },
+      {
+        "key": "DESC",
+        "value": "once per minute.|PREVARLT:HellboundManifestationLevel,8|PREVARGTEQ:HellboundManifestationLevel,6"
+      },
+      {
+        "key": "DESC",
+        "value": "at will.|PREVARGTEQ:HellboundManifestationLevel,8"
+      },
+      {
+        "key": "DESC",
+        "value": "As a full-round action, you can choose a direction, then teleport 2d10 x 5 feet away in that direction (or the nearest safe, unoccupied location)."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
+    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381",
+    "line": 347,
+    "record_key": "Hellbound Corruption ~ Passage through Pit Gift"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

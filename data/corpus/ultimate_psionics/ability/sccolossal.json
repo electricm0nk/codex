@@ -1,0 +1,72 @@
+{
+  "codex_generated_name": false,
+  "completeness": "chassis_only",
+  "data": {
+    "description": null,
+    "key": "SCColossal",
+    "name": "SCColossal",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SizeChangeBonus|4|PREVARLTEQ:SizeChange,-8"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SizeChangeBonus|2|PREVARLTEQ:SizeChange,-7"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SizeChangeBonus|1|PREVARLTEQ:SizeChange,-6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SizeChangeBonus|1|PREVARLTEQ:SizeChange,-5"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SizeChangeBonus|1|PREVARLTEQ:SizeChange,-4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SizeChangeBonus|1|PREVARLTEQ:SizeChange,-3"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SizeChangeBonus|2|PREVARLTEQ:SizeChange,-2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SizeChangeBonus|4|PREVARLTEQ:SizeChange,-1"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 269,
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities.lst",
+    "record_key": "SCColossal",
+    "sha256": "ecfd0b8c0786d65416067452f4b648e30acff9d0e8c9c70fb4e4fc6dc0f9723d"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

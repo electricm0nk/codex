@@ -1,0 +1,59 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Vetala ~ Drain Prana",
+    "delivery": null,
+    "description": "A Vetala can drain the mental vitality of a grappled opponent. If the vetala establishes or maintains a pin, it drains this energy, dealing 1d4 points of Charisma damage. Additionally, the victim is affected by the spell Modify Memory, as if the Vetala had spent 5 minutes concentrating. The Vetala gains perfect knowledge of any memory it chooses to eliminate using this ability.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "inner_sea_bestiary:monster_ability:vetala_drain_prana",
+    "name": "Drain Prana",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": " If the vetala establishes or maintains a pin, it drains this energy, dealing 1d4 points of Charisma damage. Additionally, the victim is affected by the spell Modify Memory, as if the Vetala had spent 5 minutes concentrating. The Vetala gains perfect knowledge of any memory it chooses to eliminate using this ability."
+      },
+      {
+        "key": "DESC",
+        "value": "A Vetala can drain the mental vitality of a grappled opponent."
+      },
+      {
+        "key": "KEY",
+        "value": "Vetala ~ Drain Prana"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.55"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural q"
+      }
+    ],
+    "source_page": "p.55",
+    "traits": [
+      "Supernatural q"
+    ]
+  },
+  "ingested_at": "2026-08-23T14:10:32Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 379,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_bestiary/isb_abilities_race.lst",
+    "record_key": "Vetala ~ Drain Prana",
+    "sha256": "d7e5ffd6c7f0421a33b7e7c67872d9364a3f1e5ad82daa9b7f727b64ab71c595"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

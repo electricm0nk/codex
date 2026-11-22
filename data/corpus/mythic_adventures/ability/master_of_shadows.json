@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Mythic Path Ability ~ Master of Shadows",
+    "name": "Master of Shadows",
+    "description": "You are a master of moving unseen and unheard, and adept at guiding others in quiet and undetected movement. When you or any ally within 30 feet attempts Stealth checks, each of you rolls twice and takes the higher result. As a swift action, you can expend one use of mythic power to add your tier to one ally's next Stealth check. The ally must be within 30 feet and the check must occur within the next minute.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Path Ability ~ Master of Shadows"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Path Ability.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Mythic Path ~ Marshal"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "MythicTierLevel,3"
+      },
+      {
+        "key": "DESC",
+        "value": "You are a master of moving unseen and unheard, and adept at guiding others in quiet and undetected movement. When you or any ally within 30 feet attempts Stealth checks, each of you rolls twice and takes the higher result. As a swift action, you can expend one use of mythic power to add your tier to one ally's next Stealth check. The ally must be within 30 feet and the check must occur within the next minute."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
+    "line": 335,
+    "record_key": "Mythic Path Ability ~ Master of Shadows"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

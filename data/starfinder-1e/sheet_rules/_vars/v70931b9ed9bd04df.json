@@ -1,0 +1,1 @@
+{"var":"v70931b9ed9bd04df","label":"Envoy LVL","declared_by":["core:class:envoy"],"contributions":[{"rule_id":"core:class:envoy","expr":{"ClassLevel":"envoy"},"when":"Always"}],"provenance":{}}

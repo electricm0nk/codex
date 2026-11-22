@@ -1,0 +1,359 @@
+Aldric Ironhand
+Identity
+
+Name                                                                              Aldric Ironhand
+Race                                                                                       Human
+Class                                                                                    Fighter 3
+
+Combat
+
+Armor Class                                                                                     16
+Touch                                                                                           12
+Flat-Footed                                                                                     14
+Base Attack Bonus                                                                               +3
+Melee                                                                                           +8
+CMB                                                                                             +7
+CMD                                                                                             18
+Initiative                                                                                      +1
+Fortitude                                                                                       +5
+Reflex                                                                                          +2
+Will                                                                                            +2
+
+Abilities
+
+Strength                                                                                   19   +4
+Dexterity                                                                                  13   +1
+Constitution                                                                               14   +2
+Intelligence                                                                               14   +2
+Wisdom                                                                                     12   +1
+Charisma                                                                                    8   -1
+
+Skills
+
+Skill                                                                                Ranks Total
+Climb                                                                                    1   +7
+Intimidate                                                                               1   +3
+Knowledge (Dungeoneering)                                                                3    —
+Knowledge (Engineering)                                                                  3    —
+Ride                                                                                     3    —
+Survival                                                                                 3    —
+Swim                                                                                     1   +7
+
+Weapons
+
+Weapon                                                     Damage Str   Enh. Critical      Wield
+Longsword                                                     1d8 +4     +0 19-20/x2 One Handed
+Attack bonus (longsword)                                       +8
+Damage bonus (longsword)                                       +0
+Threat range from (longsword)                                  19
+
+Armor
+
+Armor or shield                                                      AC Max Dex Check Failure
+Chain Shirt                                                           +4     +4    -2   20%
+Armor check penalty, all worn                                         -2
+Max Dex, all worn                                                     +4
+Arcane spell failure, all worn                                      20%
+
+                                 Aldric Ironhand · page 1 of 8
+Inventory
+
+Item                                                                                                           State Weight
+Longsword                                                                                         Worn (Wield main)    4 lb
+Chain Shirt                                                                                           Worn (Armor)    25 lb
+Carried weight                                                                                                 29 lb
+Load                                                                                                           Light
+Light load up to                                                                                              116 lb
+Medium load up to                                                                                            233 lb
+Heavy load up to                                                                                             350 lb
+
+Feats
+
+Power Attack
+ You can make exceptionally deadly melee attacks by sacrificing accuracy for strength.
+ You can choose to take a -1 penalty on all melee attack rolls and combat maneuver checks to gain a +2 bonus on all melee
+ damage rolls. This bonus to damage is increased by half (+50%) if you are making an attack with a two-handed weapon, a one
+ handed weapon using two hands, or a primary natural weapon that adds 1-1/2 times your Strength modifier on damage rolls. This
+ bonus to damage is halved (-50%) if you are making an attack with an off-hand weapon or secondary natural weapon. You must
+ choose to use this feat before making an attack roll, and its effects last until your next turn. The bonus damage does not apply to
+ touch attacks or effects that do not deal hit point damage.
+Dodge
+ Your training and reflexes allow you to react swiftly to avoid an opponent's attack.
+ You gain a +1 dodge bonus to your AC. A condition that makes you lose your Dex bonus to AC also makes you lose the benefits of
+ this feat.
+Weapon Focus (longsword)
+ You are especially good at using your chosen weapon.
+ You gain a +1 bonus on all attack rolls you make using the selected weapon.
+Feat slots: level granted                                                                                                             2
+Feat slots: level spent                                                                                                               0
+Feat slots: level remaining                                                                                                           2
+Feat slots: racial granted                                                                                                            1
+Feat slots: racial spent                                                                                                              1
+Feat slots: racial remaining                                                                                                          0
+Feat slots: fighter bonus feat granted                                                                                                2
+Feat slots: fighter bonus feat spent                                                                                                  2
+Feat slots: fighter bonus feat remaining                                                                                              0
+
+Class Features
+
+Fighter
+ Hit die: d10
+ Skill ranks per level: 2
+Fighter (base Fortitude save)                                                                                                     +3
+Fighter (base Reflex save)                                                                                                        +1
+Fighter (base Will save)                                                                                                          +1
+Fighter (base attack)                                                                                                             +3
+Armor Prof ~ Heavy
+Armor Prof ~ Light
+Armor Prof ~ Medium
+Armor Training (accheck)                                                                                                          +1
+ Condition: while armor is equipped
+Armor Training (armor training choice picks)
+ You are more maneuverable while wearing armor. Whenever you are wearing armor, you reduce the armor check penalty by 1 and
+ increase the maximum Dexterity bonus allowed by your armor by +1
+ Unencumbered movement: MediumArmor
+Armor Training (maxdex)                                                                                                           +1
+ Condition: while armor is equipped
+Bonus Feats (fighter bonus feat picks)                                                                                            +2
+ At 1st level, and at every even level thereafter, a fighter gains a bonus feat in addition to those gained from normal advancement
+ (meaning that the fighter gains a feat at every level). These bonus feats must be selected from those listed as combat feats,
+
+                                                    Aldric Ironhand · page 2 of 8
+ sometimes also called "fighter bonus feats." Upon reaching 4th level, and every four levels thereafter (8th, 12th, and so on), a
+ fighter can choose to learn a new bonus feat in place of a bonus feat he has already learned. In effect, the fighter loses the bonus
+ feat in exchange for the new one. The old feat cannot be one that was used as a prerequisite for another feat, prestige class, or
+ other ability. A fighter can only change one feat at any given level and must choose whether or not to swap the feat at the time he
+ gains a new bonus feat for the level.
+Bravery
+ You gain a +1 bonus to Will saves against fear effects.
+ SaveBonus: +1 Will vs. fear
+CMB
+Fighter
+Fighter Core Class Skills
+Shield Prof
+Shield Prof ~ Tower
+Weapon Prof ~ Auto
+Weapon Prof ~ Martial
+Weapon Prof ~ Simple
+
+Spells
+
+No spell is known.
+
+Custom
+
+Conditions                                                                                                                  Normal
+
+Pets
+
+No animal companion or mount.
+
+Actions
+
++2 to One Ability Score
+ Human characters get a +2 bonus to one ability score of their choice at creation to represent their varied nature.
+Bonus Feat
+ Humans select one extra feat at 1st level.
+Languages
+ Humans begin play speaking Common. Humans with high Intelligence scores can choose any languages they want (except secret
+ languages, such as Druidic).
+Medium
+ Humans are Medium creatures and have no bonuses or penalties due to their size.
+Skilled
+ Humans gain an additional skill rank at 1st level and one additional rank whenever they gain a level.
+Normal Speed
+ Humans have a base speed of 30 feet.
+Human
+ Speed: Walk 30 ft.
+Bonus Feat                                                                                                                         +1
+ Humans select one extra feat at 1st level.
+Skilled                                                                                                                            +1
+ Humans gain an additional skill rank at 1st level and one additional rank whenever they gain a level.
+
+
+
+
+                                                     Aldric Ironhand · page 3 of 8
+Spellbook
+
+No spell is known.
+
+
+
+
+                     Aldric Ironhand · page 4 of 8
+Show the Math
+
+Combat · Armor Class                                                                                                                      16
+ defense.baseline_armor_class = 16: Baseline armor class: base 10 + Chain Shirt armor bonus (+4) + Dexterity contribution (+1,
+ DEX modifier +1 within MAXDEX:5) + Medium size modifier (+0, PF1 Table 8-1) + Dodge (+1, only for a character actually carrying
+ feat:dodge) + Barbarian Rage penalty (0, only while actively, validly raging) + Skald Inspired Rage penalty (0, only while actively,
+ validly singing) + Bloodrager Bloodrage penalty (0, only while actively, validly bloodraging) + Brawler AC Bonus (+0, while wearing
+ light or no armor) + Alchemist Mutagen natural armor bonus (+0, only while actively, validly mutated) + Inquisitor Protection
+ judgment sacred/profane bonus (+0, only while actively, validly judging Protection) + Oracle Nature's Whispers Charisma-for-
+ Dexterity substitution (+0, only for a Nature-Mystery Oracle who took that revelation) + Cavalier Challenge penalty (0, only while
+ actively challenging) + Sorcerer Draconic Bloodline Dragon Resistances natural armor bonus (+0, only for a Draconic-bloodline
+ Sorcerer at 3rd level or higher) + ARG Armor of the Pit natural armor bonus (+0, only for a character holding that feat who did NOT
+ take the Scaled Skin alternate racial trait); shield is absent (+0) = 16
+Combat · Touch                                                                                                                            12
+ defense.touch_armor_class = 12: Touch armor class: the armor class above (16) with the contributors a touch attack ignores
+ removed -- Chain Shirt armor bonus (-4), Alchemist Mutagen natural armor (-0), Sorcerer Draconic Bloodline natural armor (-0),
+ ARG Armor of the Pit natural armor (-0); shield is absent (-0). The Dexterity contribution (+1), the Medium size modifier (+0, PF1
+ Table 8-1) and every dodge/sacred/ability bonus and penalty are all retained = 12
+Combat · Flat-Footed                                                                                                                      14
+ defense.flat_footed_armor_class = 14: Flat-footed armor class: the armor class above (16) with the contributors a flat-footed
+ character is denied removed -- the Dexterity contribution (-1, bonus only; a Dexterity penalty is kept) including the Oracle Nature's
+ Whispers Charisma-for-Dexterity substitution (-0, which stands in for that bonus), and every dodge-typed bonus (-1: Dodge's +1,
+ per PF1 "any situation that denies you your Dexterity bonus to Armor Class also denies you dodge bonuses"). The Chain Shirt
+ armor bonus (+4), the Medium size modifier (+0), every natural armor and sacred/profane bonus, every penalty, and Brawler's AC
+ Bonus (+0, whose own rule text applies it even when flat-footed) are all retained = 14
+Combat · Base Attack Bonus                                                                                                                +3
+ class_chassis.base_attack_bonus = 3: Fighter level 3 base attack bonus = 3
+Combat · Melee                                                                                                                            +8
+ combat.baseline_melee_attack_bonus = 8: Baseline melee attack bonus for the Longsword: Fighter base attack bonus (+3) +
+ Strength modifier (+4) + Weapon Focus (Longsword) (+1) + Medium size modifier (+0, PF1 Table 8-1 -- attack rolls take the same
+ size modifier as Armor Class); Power Attack is selected but inactive (+0) = 8
+Combat · CMB                                                                                                                              +7
+ combat.combat_maneuver_bonus = 7: Combat Maneuver Bonus: Fighter base attack bonus (+3) + Strength modifier (+4) +
+ Medium special size modifier (+0) = 7. The special size modifier runs OPPOSITE to Table 8-1's Armor Class column: being smaller
+ makes a creature worse at combat maneuvers, not better. No Improved/Greater maneuver feat or size-changing effect is modelled
+ by this engine, so none is summed here
+Combat · CMD                                                                                                                              18
+ defense.combat_maneuver_defense = 18: Combat Maneuver Defense: base 10 + Fighter base attack bonus (+3) + Strength
+ modifier (+4) + Dexterity modifier (+1) + Medium special size modifier (+0) = 18. These are exactly the terms PF1's published
+ CMD formula prints; the deflection/dodge/insight/luck/morale/profane/sacred bonuses to Armor Class that also apply to CMD in
+ real PF1 are NOT folded in here yet, and are named rather than silently implied
+Combat · Initiative                                                                                                                       +1
+ initiative.total = 1: Initiative +1: Dexterity modifier +1. Bonuses that hold only while a grit or panache point is held are listed on their
+ own and not added here
+Combat · Fortitude                                                                                                                        +5
+ defense.total_save.fortitude = 5: Total Fortitude save: Fighter base Fortitude save (+3) + Constitution modifier (+2) + feat bonus
+ (+0, Great Fortitude if selected) + Good domain Touch of Good sacred bonus (+0, self-applied) + Inquisitor Purity judgment
+ sacred/profane bonus (+0, only while actively, validly judging Purity) + alternate racial trait (+0, only for a character who took one
+ that declares a Fortitude bonus) + character trait (+0, Life of Toil if selected) = 5
+Combat · Reflex                                                                                                                           +2
+ defense.total_save.reflex = 2: Total Reflex save: Fighter base Reflex save (+1) + Dexterity modifier (+1) + feat bonus (+0,
+ Lightning Reflexes if selected) + Good domain Touch of Good sacred bonus (+0, self-applied) + Inquisitor Purity judgment sacred/
+ profane bonus (+0, only while actively, validly judging Purity) + Oracle Sidestep Secret Charisma-for-Dexterity substitution (+0,
+ only for a Lore-Mystery Oracle who took that revelation) + alternate racial trait (+0, only for a character who took one that declares
+ a Reflex modifier -- this one can be NEGATIVE, e.g. Horror Adventures' Half-Elf Mismatched at -2) + character trait (+0, no
+ ultimate_campaign trait currently declares a Reflex bonus, so always 0) = 2
+Combat · Will                                                                                                                             +2
+ defense.total_save.will = 2: Total Will save: Fighter base Will save (+1) + Wisdom modifier (+1) + feat bonus (+0, Iron Will if
+ selected) + Barbarian Rage morale bonus (+0, only while actively, validly raging) + Skald Inspired Rage morale bonus (+0, only
+ while actively, validly singing) + Bloodrager Bloodrage morale bonus (+0, only while actively, validly bloodraging) + Good domain
+ Touch of Good sacred bonus (+0, self-applied) + Inquisitor Purity judgment sacred/profane bonus (+0, only while actively, validly
+ judging Purity) + alternate racial trait (+0, only for a character who took one that declares a Will bonus -- ARG p.42's Half-Elf Dual
+ Minded is the one such trait in the corpus today) + character trait (+0, Indomitable Faith if selected) = 2
+Abilities · Strength                                                                                                                  19 +4
+
+                                                       Aldric Ironhand · page 5 of 8
+ ability_modifier.strength = 4: strength ability modifier from chosen score 19: floor(19 / 2) - 5 = 4
+Abilities · Dexterity                                                                                                            13 +1
+ ability_modifier.dexterity = 1: dexterity ability modifier from chosen score 13: floor(13 / 2) - 5 = 1
+Abilities · Constitution                                                                                                         14 +2
+ ability_modifier.constitution = 2: constitution ability modifier from chosen score 14: floor(14 / 2) - 5 = 2
+Abilities · Intelligence                                                                                                         14 +2
+ ability_modifier.intelligence = 2: intelligence ability modifier from chosen score 14: floor(14 / 2) - 5 = 2
+Abilities · Wisdom                                                                                                               12 +1
+ ability_modifier.wisdom = 1: wisdom ability modifier from chosen score 12: floor(12 / 2) - 5 = 1
+Abilities · Charisma                                                                                                               8 -1
+ ability_modifier.charisma = -1: charisma ability modifier from chosen score 8: floor(8 / 2) - 5 = -1
+Skills · Climb                                                                                                                     1 +7
+ skill.selected_modifier.climb = 7: Selected Climb modifier: rank 1 + Strength modifier (+4) + class-skill bonus (+3) + Chain Shirt
+ armor-check penalty (-1, reduced from -2 by Fighter armor training) + feat bonus (+0, Athletic if selected) = 7
+Skills · Intimidate                                                                                                                1 +3
+ skill.selected_modifier.intimidate = 3: Selected Intimidate modifier: rank 1 + Charisma modifier (-1) + class-skill bonus (+3) + feat
+ bonus (+0, Persuasive and/or Intimidating Prowess if selected) = 3
+Skills · Swim                                                                                                                      1 +7
+ skill.selected_modifier.swim = 7: Selected Swim modifier: rank 1 + Strength modifier (+4) + class-skill bonus (+3) + Chain Shirt
+ armor-check penalty (-1, reduced from -2 by Fighter armor training) + feat bonus (+0, Athletic if selected) + Witch Flight hex (+0) =
+ 7
+Weapons · Longsword                                                                               1d8 +4 +0 19-20/x2 One Handed
+ (no derivation recorded)
+Weapons · Attack bonus (longsword)                                                                                                    +8
+ combat.weapon_attack_bonus.longsword = 8: Attack bonus with the equipped Longsword: base attack bonus (+3) + governing
+ ability modifier (+4) + weapon feats (+1) + nonproficiency penalty (0) + size modifier (+0) = 8. Weapon Focus / Greater Weapon
+ Focus name this weapon, adding +1 to the attack roll. The character is proficient with this weapon (class grant or a Simple/Martial/
+ Exotic Weapon Proficiency feat naming it), so no nonproficiency penalty applies. Only the Focus feats reach this total -- the
+ Specialization feats are damage and Improved Critical is threat range, both grounded separately. Separate from
+ combat.baseline_melee_attack_bonus, which is the Melee number for the first melee weapon in hand.
+Weapons · Damage bonus (longsword)                                                                                                    +0
+ combat.weapon_damage_bonus.longsword = 0: Feat damage bonus with the equipped Longsword: +0. No Weapon
+ Specialization or Greater Weapon Specialization names this weapon, so no feat bonus applies to its damage rolls. This is the feat
+ contribution alone, NOT a damage total: the weapon's own 1d8 damage die and the Strength-to-damage contribution are
+ excluded, because Strength applies at 1x one-handed, 1.5x two-handed and 0.5x off-hand and this engine does not record how a
+ weapon is being wielded
+Weapons · Threat range from (longsword)                                                                                               19
+ combat.weapon_threat_range_low.longsword = 19: Critical threat range with the equipped Longsword: 19-20/x2. Improved Critical
+ does not name this weapon, so its threat range is the weapon's printed one. The value grounded here is the LOW end of the
+ range; the corpus stores CRITRANGE as a width, so the range is 21-width..=20
+Armor · Chain Shirt                                                                                                     +4 +4 -2 20%
+ (no derivation recorded)
+Armor · Armor check penalty, all worn                                                                                                    -2
+ (no derivation recorded)
+Armor · Max Dex, all worn                                                                                                             +4
+ (no derivation recorded)
+Armor · Arcane spell failure, all worn                                                                                             20%
+ (no derivation recorded)
+Inventory · Carried weight                                                                                                        29 lb
+ (no derivation recorded)
+Inventory · Light load up to                                                                                                    116 lb
+ (no derivation recorded)
+Inventory · Medium load up to                                                                                                   233 lb
+ (no derivation recorded)
+Inventory · Heavy load up to                                                                                                    350 lb
+ (no derivation recorded)
+Feats · Feat slots: level granted                                                                                                        2
+ feats.budget.level.granted = 2: Feats granted by a feat at every odd character level
+Feats · Feat slots: level spent                                                                                                          0
+ feats.budget.level.spent = 0: Held feats charged to the level pool
+Feats · Feat slots: level remaining                                                                                                      2
+ feats.budget.level.remaining = 2: Granted minus spent in the level pool
+Feats · Feat slots: racial granted                                                                                                       1
+ feats.budget.racial.granted = 1: Feats granted by Bonus Feat
+Feats · Feat slots: racial spent                                                                                                         1
+
+                                                       Aldric Ironhand · page 6 of 8
+ feats.budget.racial.spent = 1: Held feats charged to the racial pool
+Feats · Feat slots: racial remaining                                                                     0
+ feats.budget.racial.remaining = 0: Granted minus spent in the racial pool
+Feats · Feat slots: fighter bonus feat granted                                                           2
+ feats.budget.fighter_bonus_feat.granted = 2: Feats granted by Bonus Feats (fighter bonus feat picks)
+Feats · Feat slots: fighter bonus feat spent                                                             2
+ feats.budget.fighter_bonus_feat.spent = 2: Held feats charged to the fighter bonus feat pool
+Feats · Feat slots: fighter bonus feat remaining                                                         0
+ feats.budget.fighter_bonus_feat.remaining = 0: Granted minus spent in the fighter bonus feat pool
+Class Features · Fighter (base Fortitude save)                                                          +3
+ (no derivation recorded)
+Class Features · Fighter (base Reflex save)                                                             +1
+ (no derivation recorded)
+Class Features · Fighter (base Will save)                                                               +1
+ (no derivation recorded)
+Class Features · Fighter (base attack)                                                                  +3
+ (no derivation recorded)
+Class Features · Armor Training (accheck)                                                               +1
+ (no derivation recorded)
+Class Features · Armor Training (maxdex)                                                                +1
+ (no derivation recorded)
+Class Features · Bonus Feats (fighter bonus feat picks)                                                 +2
+ (no derivation recorded)
+Actions · Bonus Feat                                                                                    +1
+ (no derivation recorded)
+Actions · Skilled                                                                                       +1
+ (no derivation recorded)
+
+
+
+
+                                                     Aldric Ironhand · page 7 of 8
+Bio and Campaign Notes
+
+No bio is recorded.
+No campaign lists this character.
+
+
+
+
+                                    Aldric Ironhand · page 8 of 8
+

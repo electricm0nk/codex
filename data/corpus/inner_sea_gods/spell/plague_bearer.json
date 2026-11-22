@@ -1,0 +1,83 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "You make the target an asymptomatic carrier for a host of virulent diseases. Creatures that end their turn adjacent to the target must succeed at a Fortitude save or be affected as if by the spell contagion. The target itself does not become diseased, and suffers no ill effects from this spell. Once plague bearer ends, the target is no longer contagious, though any creature it infected remains diseased.",
+    "key": "Plague Bearer",
+    "level": 6,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Alchemist,Antipaladin,Cleric,Druid,Inquisitor,Witch=6|Sorcerer,Wizard=7"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S"
+      },
+      {
+        "key": "DESC",
+        "value": "You make the target an asymptomatic carrier for a host of virulent diseases. Creatures that end their turn adjacent to the target must succeed at a Fortitude save or be affected as if by the spell contagion. The target itself does not become diseased, and suffers no ill effects from this spell. Once plague bearer ends, the target is no longer contagious, though any creature it infected remains diseased."
+      },
+      {
+        "key": "DESCRIPTOR",
+        "value": "Disease|Evil"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) rounds; see text"
+      },
+      {
+        "key": "FACTSET",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "KEY",
+        "value": "Plague Bearer"
+      },
+      {
+        "key": "RANGE",
+        "value": "Touch"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Fortitude negates; see text"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Necromancy"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.238"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "One living creature"
+      }
+    ],
+    "school": "Necromancy"
+  },
+  "ingested_at": "2026-08-17T01:45:11Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 47,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_spells.lst",
+    "record_key": "Plague Bearer",
+    "sha256": "48bcb314dbdf8369982b3bc68d10dbe11baa5fe748d4121d6e197ab414406e68"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr"
+  ]
+}

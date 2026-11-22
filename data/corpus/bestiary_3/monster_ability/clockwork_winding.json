@@ -1,0 +1,50 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Clockwork ~ Winding",
+    "delivery": "Extraordinary",
+    "description": "Clockwork constructs must be wound with special keys in order to function. As a general rule, a fully wound clockwork can remain active for 1 day per Hit Die, but shorter or longer durations are possible.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:clockwork_winding",
+    "name": "Winding",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Clockwork constructs must be wound with special keys in order to function. As a general rule, a fully wound clockwork can remain active for 1 day per Hit Die, but shorter or longer durations are possible."
+      },
+      {
+        "key": "KEY",
+        "value": "Clockwork ~ Winding"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary"
+      }
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T14:09:34Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 2323,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "record_key": "Clockwork ~ Winding",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "display:no_magnitude_token"
+  ]
+}

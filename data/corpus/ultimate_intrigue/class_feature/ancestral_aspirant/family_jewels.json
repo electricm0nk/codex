@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Ancestral Aspirant ~ Family Jewels",
+    "name": "Family Jewels",
+    "class": "Occultist",
+    "description": "An ancestral aspirant's implements are always objects connected to his family history. One of his starting implements must be an implement from the enchantment school. This ability alters implements.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ancestral Aspirant ~ Family Jewels"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Occultist Class Features.AncestralAspirantClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "An ancestral aspirant's implements are always objects connected to his family history. One of his starting implements must be an implement from the enchantment school. This ability alters implements."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.67"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/support/ui_abilities_class_oa.lst",
+    "sha256": "123f008e9a2f31828861df9025f48f5c2f7c78a648553f22dba96a8d8a2e24dc",
+    "line": 101,
+    "record_key": "Ancestral Aspirant ~ Family Jewels"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

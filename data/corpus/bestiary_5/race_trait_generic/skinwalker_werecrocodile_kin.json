@@ -1,0 +1,82 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Skinwalker ~ Werecrocodile-Kin",
+    "name": "Werecrocodile-Kin (Scaleheart)",
+    "description": "[redacted PI]",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Skinwalker ~ Werecrocodile-Kin"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Skinwalker Subrace"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Skinwalker ~ Werecrocodile-Kin],[!PREFACT:1,ABILITIES,Skinwalker_ReplaceAbilityScores=True,Skinwalker_ReplaceAnimalMinded=True,Skinwalker_ReplaceChangeShape=True,Skinwalker_ReplaceSpellLikeAbility=True]"
+      },
+      {
+        "key": "DESCISPI",
+        "value": "YES"
+      },
+      {
+        "key": "DESC",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "Skinwalker ~ Werecrocodile-Kin"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Skinwalker Racial Trait|AUTOMATIC|Werecrocodile-Kin ~ Ability Scores|Werecrocodile-Kin ~ Animal-Minded|Werecrocodile-Kin ~ Change Shape|Werecrocodile-Kin ~ Spell-Like Ability"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ancestry|Werecrocodile"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Typical Alignment|NE"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Alternate Ability Modifiers|+2 Constitution, -2 Wisdom (+2 Strength while shapechanged)."
+      },
+      {
+        "key": "ASPECT",
+        "value": "Alternate Skill Modifiers|Stealth, wild empathy."
+      },
+      {
+        "key": "ASPECT",
+        "value": "Alternate Spell-Like Ability|Scare 1/day."
+      },
+      {
+        "key": "ASPECT",
+        "value": "Alternate Bestial Features|Bite attack that deals 1d6 points of damage, darkvision to a range of 60 feet, swim speed of 30 feet, ferocity (Pathfinder RPG Bestiary)."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/skinwalker/skinwalker_abilities_race_subrace.lst",
+    "sha256": "a5b5c3f65d28e5a01b935ffc2a177752184be170e340fdddc14cdbf3ba6c3b27",
+    "line": 87,
+    "record_key": "Skinwalker ~ Werecrocodile-Kin"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted"
+}

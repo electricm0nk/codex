@@ -1,0 +1,98 @@
+starters ["Jax Moreno", "Nyx Calder", "Imani Okafor"]
+ROUNDTRIP weapon weapon|Assault Rifle| -> ["Very Heavy Pistol", "Heavy Melee Weapon", "Assault Rifle"] [CprWornArmor { name: "Light Armorjack", location: Body }, CprWornArmor { name: "Light Armorjack"
+ROUNDTRIP weapon weapon|Battleglove| -> ["Very Heavy Pistol", "Heavy Melee Weapon", "Assault Rifle"] [CprWornArmor { name: "Light Armorjack", location: Body }, CprWornArmor { name: "Light Armorjack", 
+ROUNDTRIP weapon weapon|Bows & Crossbows| -> ["Very Heavy Pistol", "Heavy Melee Weapon", "Assault Rifle"] [CprWornArmor { name: "Light Armorjack", location: Body }, CprWornArmor { name: "Light Armorja
+ROUNDTRIP weapon weapon|Constitution Arms Hurricane Assault Weapon| -> ["Very Heavy Pistol", "Heavy Melee Weapon", "Assault Rifle"] [CprWornArmor { name: "Light Armorjack", location: Body }, CprWornAr
+NOTHELD weapon weapon|Dartgun| held ["Assault Rifle", "Very Heavy Pistol", "Heavy Melee Weapon", "Basic VH Pistol Ammunition (10 of 30)", "Basic Rifle Ammunition (10 of 70)", "Light Armorjack Body Arm
+ROUNDTRIP weapon weapon|Flamethrower| -> ["Very Heavy Pistol", "Heavy Melee Weapon", "Assault Rifle", "Dartgun"] [CprWornArmor { name: "Light Armorjack", location: Body }, CprWornArmor { name: "Light 
+ROUNDTRIP weapon weapon|Grenade Launcher| -> ["Very Heavy Pistol", "Heavy Melee Weapon", "Assault Rifle", "Dartgun"] [CprWornArmor { name: "Light Armorjack", location: Body }, CprWornArmor { name: "Li
+ROUNDTRIP weapon weapon|Heavy Melee Weapon| -> ["Very Heavy Pistol", "Assault Rifle", "Dartgun", "Heavy Melee Weapon"] [CprWornArmor { name: "Light Armorjack", location: Body }, CprWornArmor { name: "
+ROUNDTRIP weapon weapon|Heavy Pistol| -> ["Very Heavy Pistol", "Assault Rifle", "Dartgun", "Heavy Melee Weapon"] [CprWornArmor { name: "Light Armorjack", location: Body }, CprWornArmor { name: "Light 
+ROUNDTRIP weapon weapon|Heavy SMG| -> ["Very Heavy Pistol", "Assault Rifle", "Dartgun", "Heavy Melee Weapon"] [CprWornArmor { name: "Light Armorjack", location: Body }, CprWornArmor { name: "Light Arm
+ROUNDTRIP weapon weapon|Kendachi Mono-Three| -> ["Very Heavy Pistol", "Assault Rifle", "Dartgun", "Heavy Melee Weapon"] [CprWornArmor { name: "Light Armorjack", location: Body }, CprWornArmor { name: 
+ROUNDTRIP weapon weapon|Light Melee Weapon| -> ["Very Heavy Pistol", "Assault Rifle", "Dartgun", "Heavy Melee Weapon"] [CprWornArmor { name: "Light Armorjack", location: Body }, CprWornArmor { name: "
+ROUNDTRIP weapon weapon|Malorian Arms 3516| -> ["Very Heavy Pistol", "Assault Rifle", "Dartgun", "Heavy Melee Weapon"] [CprWornArmor { name: "Light Armorjack", location: Body }, CprWornArmor { name: "
+ROUNDTRIP weapon weapon|Medium Melee Weapon| -> ["Very Heavy Pistol", "Assault Rifle", "Dartgun", "Heavy Melee Weapon"] [CprWornArmor { name: "Light Armorjack", location: Body }, CprWornArmor { name: 
+ROUNDTRIP weapon weapon|Medium Pistol| -> ["Very Heavy Pistol", "Assault Rifle", "Dartgun", "Heavy Melee Weapon"] [CprWornArmor { name: "Light Armorjack", location: Body }, CprWornArmor { name: "Light
+ROUNDTRIP weapon weapon|Microwaver| -> ["Very Heavy Pistol", "Assault Rifle", "Dartgun", "Heavy Melee Weapon"] [CprWornArmor { name: "Light Armorjack", location: Body }, CprWornArmor { name: "Light Ar
+ROUNDTRIP weapon weapon|Militech "Cowboy" U-56 Grenade Launcher| -> ["Very Heavy Pistol", "Assault Rifle", "Dartgun", "Heavy Melee Weapon"] [CprWornArmor { name: "Light Armorjack", location: Body }, C
+ROUNDTRIP weapon weapon|Rhinemetall EMG-86 Railgun| -> ["Very Heavy Pistol", "Assault Rifle", "Dartgun", "Heavy Melee Weapon"] [CprWornArmor { name: "Light Armorjack", location: Body }, CprWornArmor {
+ROUNDTRIP weapon weapon|Rocket Launcher| -> ["Very Heavy Pistol", "Assault Rifle", "Dartgun", "Heavy Melee Weapon"] [CprWornArmor { name: "Light Armorjack", location: Body }, CprWornArmor { name: "Lig
+ROUNDTRIP weapon weapon|SMG| -> ["Very Heavy Pistol", "Assault Rifle", "Dartgun", "Heavy Melee Weapon"] [CprWornArmor { name: "Light Armorjack", location: Body }, CprWornArmor { name: "Light Armorjack
+ROUNDTRIP weapon weapon|Shotgun| -> ["Very Heavy Pistol", "Assault Rifle", "Dartgun", "Heavy Melee Weapon"] [CprWornArmor { name: "Light Armorjack", location: Body }, CprWornArmor { name: "Light Armor
+ROUNDTRIP weapon weapon|Shrieker| -> ["Very Heavy Pistol", "Assault Rifle", "Dartgun", "Heavy Melee Weapon"] [CprWornArmor { name: "Light Armorjack", location: Body }, CprWornArmor { name: "Light Armo
+ROUNDTRIP weapon weapon|Sniper Rifle| -> ["Very Heavy Pistol", "Assault Rifle", "Dartgun", "Heavy Melee Weapon"] [CprWornArmor { name: "Light Armorjack", location: Body }, CprWornArmor { name: "Light 
+ROUNDTRIP weapon weapon|Stun Baton| -> ["Very Heavy Pistol", "Assault Rifle", "Dartgun", "Heavy Melee Weapon"] [CprWornArmor { name: "Light Armorjack", location: Body }, CprWornArmor { name: "Light Ar
+ROUNDTRIP weapon weapon|Stun Gun| -> ["Very Heavy Pistol", "Assault Rifle", "Dartgun", "Heavy Melee Weapon"] [CprWornArmor { name: "Light Armorjack", location: Body }, CprWornArmor { name: "Light Armo
+ROUNDTRIP weapon weapon|Tsunami Arms Helix| -> ["Very Heavy Pistol", "Assault Rifle", "Dartgun", "Heavy Melee Weapon"] [CprWornArmor { name: "Light Armorjack", location: Body }, CprWornArmor { name: "
+ROUNDTRIP weapon weapon|Very Heavy Melee Weapon| -> ["Very Heavy Pistol", "Assault Rifle", "Dartgun", "Heavy Melee Weapon"] [CprWornArmor { name: "Light Armorjack", location: Body }, CprWornArmor { na
+ROUNDTRIP weapon weapon|Very Heavy Pistol| -> ["Assault Rifle", "Dartgun", "Heavy Melee Weapon", "Very Heavy Pistol"] [CprWornArmor { name: "Light Armorjack", location: Body }, CprWornArmor { name: "L
+weapon: 29 rows
+ROUNDTRIP armor armor|Light Armorjack|Body -> ["Assault Rifle", "Very Heavy Pistol", "Heavy Melee Weapon"] [CprWornArmor { name: "Light Armorjack", location: Head }, CprWornArmor { name: "Light Armorj
+armor: 16 rows
+shield: 1 rows
+NOTHELD gear gear|Audio Recorder| held ["Assault Rifle", "Very Heavy Pistol", "Heavy Melee Weapon", "Basic VH Pistol Ammunition (10 of 30)", "Basic Rifle Ammunition (10 of 70)", "Light Armorjack Body 
+NOTHELD gear gear|Bug Detector| held ["Assault Rifle", "Very Heavy Pistol", "Heavy Melee Weapon", "Basic VH Pistol Ammunition (10 of 30)", "Basic Rifle Ammunition (10 of 70)", "Light Armorjack Body Ar
+NOTHELD gear gear|Chemical Analyzer| held ["Assault Rifle", "Very Heavy Pistol", "Heavy Melee Weapon", "Basic VH Pistol Ammunition (10 of 30)", "Basic Rifle Ammunition (10 of 70)", "Light Armorjack Bo
+NOTHELD gear gear|Cyberdeck (Excellent Quality)| held ["Assault Rifle", "Very Heavy Pistol", "Heavy Melee Weapon", "Basic VH Pistol Ammunition (10 of 30)", "Basic Rifle Ammunition (10 of 70)", "Light 
+NOTHELD gear gear|Cyberdeck (Poor Quality)| held ["Assault Rifle", "Very Heavy Pistol", "Heavy Melee Weapon", "Basic VH Pistol Ammunition (10 of 30)", "Basic Rifle Ammunition (10 of 70)", "Light Armor
+NOTHELD gear gear|Cyberdeck (Standard Quality)| held ["Assault Rifle", "Very Heavy Pistol", "Heavy Melee Weapon", "Basic VH Pistol Ammunition (10 of 30)", "Basic Rifle Ammunition (10 of 70)", "Light A
+NOTHELD gear gear|Homing Tracer| held ["Assault Rifle", "Very Heavy Pistol", "Heavy Melee Weapon", "Basic VH Pistol Ammunition (10 of 30)", "Basic Rifle Ammunition (10 of 70)", "Light Armorjack Body A
+NOTHELD gear gear|Medscanner| held ["Assault Rifle", "Very Heavy Pistol", "Heavy Melee Weapon", "Basic VH Pistol Ammunition (10 of 30)", "Basic Rifle Ammunition (10 of 70)", "Light Armorjack Body Armo
+NOTHELD gear gear|Radar Detector| held ["Assault Rifle", "Very Heavy Pistol", "Heavy Melee Weapon", "Basic VH Pistol Ammunition (10 of 30)", "Basic Rifle Ammunition (10 of 70)", "Light Armorjack Body 
+NOTHELD gear gear|Radio Communicator| held ["Assault Rifle", "Very Heavy Pistol", "Heavy Melee Weapon", "Basic VH Pistol Ammunition (10 of 30)", "Basic Rifle Ammunition (10 of 70)", "Light Armorjack B
+NOTHELD gear gear|Radio Scanner/Music Player| held ["Assault Rifle", "Very Heavy Pistol", "Heavy Melee Weapon", "Basic VH Pistol Ammunition (10 of 30)", "Basic Rifle Ammunition (10 of 70)", "Light Arm
+NOTHELD gear gear|Scrambler/Descrambler| held ["Assault Rifle", "Very Heavy Pistol", "Heavy Melee Weapon", "Basic VH Pistol Ammunition (10 of 30)", "Basic Rifle Ammunition (10 of 70)", "Light Armorjac
+NOTHELD gear gear|Techscanner| held ["Assault Rifle", "Very Heavy Pistol", "Heavy Melee Weapon", "Basic VH Pistol Ammunition (10 of 30)", "Basic Rifle Ammunition (10 of 70)", "Light Armorjack Body Arm
+gear: 207 rows
+Jax Moreno: 18 held, kit 16, ["Assault Rifle", "Very Heavy Pistol", "Heavy Melee Weapon"] [CprWornArmor { name: "Light Armorjack", location: Body }, CprWornArmor { name: "Light Armorjack", location: H
+  sell Assault Rifle -> Ok("250") sheetchanged=true
+  sell Very Heavy Pistol -> Ok("50") sheetchanged=true
+  sell Heavy Melee Weapon -> Ok("50") sheetchanged=true
+  sell Basic VH Pistol Ammunition (10 of 30) -> Ok("5") sheetchanged=true
+  sell Basic Rifle Ammunition (10 of 70) -> Ok("5") sheetchanged=true
+  sell Light Armorjack Body Armor (SP11) -> Ok("50") sheetchanged=true
+  sell Light Armorjack Head Armor (SP11) -> Ok("50") sheetchanged=true
+  sell Agent -> Ok("50") sheetchanged=false
+  sell Leisurewear Footwear -> Ok("25") sheetchanged=false
+  sell Leisurewear Footwear -> Ok("25") sheetchanged=false
+  sell Leisurewear Jacket -> Ok("50") sheetchanged=false
+  sell Leisurewear Jacket -> Ok("50") sheetchanged=false
+  sell Leisurewear Jacket -> Ok("50") sheetchanged=false
+  sell Leisurewear Mirrorshades -> Ok("25") sheetchanged=false
+  sell Leisurewear Bottoms -> Ok("50") sheetchanged=false
+  sell Leisurewear Bottoms -> Ok("50") sheetchanged=false
+  sell Leisurewear Top -> Ok("10") sheetchanged=false
+  sell Leisurewear Top -> Ok("10") sheetchanged=false
+Nyx Calder: 4 held, kit 12, ["Heavy Pistol"] [CprWornArmor { name: "Light Armorjack", location: Body }, CprWornArmor { name: "Light Armorjack", location: Head }] None [("Basic H Pistol Ammunition", 50
+  sell Heavy Pistol -> Ok("50") sheetchanged=true
+  sell Basic H Pistol Ammunition (10 of 50) -> Ok("5") sheetchanged=true
+  sell Light Armorjack Body Armor (SP11) -> Ok("50") sheetchanged=true
+  sell Light Armorjack Head Armor (SP11) -> Ok("50") sheetchanged=true
+Imani Okafor: 26 held, kit 21, ["Assault Rifle"] [CprWornArmor { name: "Light Armorjack", location: Body }, CprWornArmor { name: "Light Armorjack", location: Head }] Some("Bulletproof Shield") [("Basi
+  sell Assault Rifle -> Ok("250") sheetchanged=true
+  sell Basic Rifle Ammunition (10 of 100) -> Ok("5") sheetchanged=true
+  sell Incendiary Rifle Ammunition (10 of 10) -> Ok("50") sheetchanged=true
+  sell Smoke Grenade -> Ok("25") sheetchanged=true
+  sell Smoke Grenade -> Ok("25") sheetchanged=true
+  sell Light Armorjack Body Armor (SP11) -> Ok("50") sheetchanged=true
+  sell Light Armorjack Head Armor (SP11) -> Ok("50") sheetchanged=true
+  sell Bulletproof Shield -> Ok("50") sheetchanged=true
+  sell Agent -> Ok("50") sheetchanged=false
+  sell Airhypo -> Ok("25") sheetchanged=false
+  sell Handcuffs -> Ok("25") sheetchanged=false
+  sell Flashlight -> Ok("10") sheetchanged=false
+  sell Generic Chic Jacket -> Ok("25") sheetchanged=false
+  sell Generic Chic Jacket -> Ok("25") sheetchanged=false
+  sell Generic Chic Jacket -> Ok("25") sheetchanged=false
+  sell Glow Paint -> Ok("10") sheetchanged=false
+  sell Medtech Bag -> Ok("50") sheetchanged=false
+  sell Leisurewear Footwear -> Ok("25") sheetchanged=false
+  sell Leisurewear Bottoms -> Ok("50") sheetchanged=false
+  sell Leisurewear Bottoms -> Ok("50") sheetchanged=false
+  sell Leisurewear Bottoms -> Ok("50") sheetchanged=false
+  sell Leisurewear Top -> Ok("10") sheetchanged=false
+  sell Leisurewear Top -> Ok("10") sheetchanged=false
+  sell Leisurewear Top -> Ok("10") sheetchanged=false
+  sell Leisurewear Top -> Ok("10") sheetchanged=false
+  sell Leisurewear Top -> Ok("10") sheetchanged=false

@@ -1,0 +1,69 @@
+{
+  "completeness": "full",
+  "data": {
+    "codex_generated_name": false,
+    "corpus_key": "Lorthact ~ Spell-Like Abilities",
+    "delivery": "SpellLike",
+    "description": "Lorthact has spell-like abilities",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "inner_sea_bestiary:monster_ability:lorthact_spell_like_abilities",
+    "name": "Spell-Like Abilities",
+    "owners": [
+      "inner_sea_bestiary:monster:lorthact"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Lorthact has spell-like abilities"
+      },
+      {
+        "key": "KEY",
+        "value": "Lorthact ~ Spell-Like Abilities"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.26"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=1|CASTERLEVEL=25|Dominate Monster,32|Limited Wish|Mage's Disjunction,32|Prismatic Sphere|Time Stop"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=3|CASTERLEVEL=25|Banishment,29|Dispel Magic (Greater)|Horrid Wilting,31|Polymorph Any Object,31|Spell Turning"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=ATWILL|CASTERLEVEL=25|Alter Self|Arcane Sight (Greater)|Blasphemy,30|Dispel Magic (Greater)|Dominate Person,28|Freedom of Movement|Invisibility (Greater)|Mind Blank|Programmed Image,29|Scrying (Greater),30|Shadow Conjuration (Greater),30|Shadow Evocation (Greater),31|Suggestion (Mass),29|Teleport (Greater)|Tongues|True Seeing|Unholy Aura,31"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpellLike"
+      }
+    ],
+    "rename": null,
+    "source_page": "p.26",
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T22:08:37Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 194,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_bestiary/isb_abilities_race.lst",
+    "record_key": "Lorthact ~ Spell-Like Abilities",
+    "sha256": "d7e5ffd6c7f0421a33b7e7c67872d9364a3f1e5ad82daa9b7f727b64ab71c595"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

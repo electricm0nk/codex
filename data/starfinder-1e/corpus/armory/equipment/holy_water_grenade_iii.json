@@ -1,0 +1,19 @@
+{
+  "data": {
+    "key": "Holy water grenade III",
+    "name": "Holy water grenade III",
+    "type": "RESIZABLE.Weapon.Ranged.Thrown.ToHit_UseStr.Prof Group Grenade.Weapon Atk Modifier Dex.Splash.Grenade"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 804,
+    "path": "starfinder/paizo/armory/sa_equip.lst",
+    "record_key": "Holy water grenade III",
+    "sha256": "16a1e2005f35a11d8cd4257261849d989dc1785163c445080b169de86002c057"
+  },
+  "unit_id": "armory:equipment:holy_water_grenade_iii"
+}

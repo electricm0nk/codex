@@ -1,0 +1,55 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Blue Dragon ~ Sandstorm",
+    "delivery": "Supernatural",
+    "description": "As a standard action, a great wyrm blue dragon can create a sandstorm centered on itself with a radius of 1,200 feet. Creatures other than the dragon inside the storm take 2d6 points of damage per round in addition to the normal sandstorm penalties. This sandstorm lasts for up to 1 hour, but can be dismissed by the dragon as a free action.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:blue_dragon_sandstorm",
+    "name": "Sandstorm",
+    "owners": [
+      "beastiary:monster:dragon_blue"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action, a great wyrm blue dragon can create a sandstorm centered on itself with a radius of 1,200 feet. Creatures other than the dragon inside the storm take 2d6 points of damage per round in addition to the normal sandstorm penalties. This sandstorm lasts for up to 1 hour, but can be dismissed by the dragon as a free action."
+      },
+      {
+        "key": "KEY",
+        "value": "Blue Dragon ~ Sandstorm"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.94"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
+    "source_page": "p.94",
+    "traits": []
+  },
+  "ingested_at": "2026-08-20T15:15:41Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 418,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "record_key": "Blue Dragon ~ Sandstorm",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

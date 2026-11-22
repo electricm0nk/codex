@@ -1,0 +1,117 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Pack Leader ~ No Spellcasting",
+    "name": "No Spellcasting",
+    "class": "Pack Leader",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Pack Leader ~ No Spellcasting"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RangerClassFeatures.Internal"
+      },
+      {
+        "key": "BONUS",
+        "value": "CASTERLEVEL|Ranger.RESET|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Ranger;LEVEL=1|-floor((WIS+3)/4)|PRECLASS:1,Ranger=4"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Ranger;LEVEL=1|-1|PRECLASS:1,Ranger=5"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Ranger;LEVEL=1|-1|PRECLASS:1,Ranger=9"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Ranger;LEVEL=1|-1|PRECLASS:1,Ranger=13"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Ranger;LEVEL=1|-1|PRECLASS:1,Ranger=17"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Ranger;LEVEL=2|-floor((WIS+2)/4)|PRECLASS:1,Ranger=7"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Ranger;LEVEL=2|-1|PRECLASS:1,Ranger=8"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Ranger;LEVEL=2|-1|PRECLASS:1,Ranger=12"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Ranger;LEVEL=2|-1|PRECLASS:1,Ranger=16"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Ranger;LEVEL=2|-1|PRECLASS:1,Ranger=20"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Ranger;LEVEL=3|-floor((WIS+1)/4)|PRECLASS:1,Ranger=10"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Ranger;LEVEL=3|-1|PRECLASS:1,Ranger=11"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Ranger;LEVEL=3|-1|PRECLASS:1,Ranger=15"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Ranger;LEVEL=3|-1|PRECLASS:1,Ranger=19"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Ranger;LEVEL=4|-floor(WIS/4)|PRECLASS:1,Ranger=13"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Ranger;LEVEL=4|-1|PRECLASS:1,Ranger=14"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Ranger;LEVEL=4|-1|PRECLASS:1,Ranger=18"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Ranger;LEVEL=4|-1|PRECLASS:1,Ranger=20"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2584,
+    "record_key": "Pack Leader ~ No Spellcasting"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

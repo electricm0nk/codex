@@ -1,0 +1,50 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "General",
+    "cost_gp": 50.0,
+    "description": "includes a backpack, a bedroll, a belt pouch, a censer, a flask of ectoplasmic residue, flint and steel, incense (10 sticks), an iron pot, magnetized paper, torches (10), trail rations (5 days), and a waterskin.",
+    "key": "Spiritualist's Kit",
+    "name": "Spiritualist's Kit",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Kit"
+      },
+      {
+        "key": "COST",
+        "value": "50"
+      },
+      {
+        "key": "WT",
+        "value": "34"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.250"
+      },
+      {
+        "key": "SPROP",
+        "value": "includes a backpack, a bedroll, a belt pouch, a censer, a flask of ectoplasmic residue, flint and steel, incense (10 sticks), an iron pot, magnetized paper, torches (10), trail rations (5 days), and a waterskin."
+      }
+    ],
+    "weight_lbs": 34.0
+  },
+  "ingested_at": "2026-08-17T08:18:39Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 33,
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_equip.lst",
+    "record_key": "Spiritualist's Kit",
+    "sha256": "48877b9621bd36c3812d91cc603838c92eda6199fd2bd116d16d47523cbc1cbc"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

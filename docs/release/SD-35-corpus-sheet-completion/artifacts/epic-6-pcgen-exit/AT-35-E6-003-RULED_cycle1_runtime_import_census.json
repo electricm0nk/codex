@@ -1,0 +1,532 @@
+{
+ "total_hits": 58,
+ "total_files": 25,
+ "by_root": {
+  "src/rules_core": 46,
+  "apps/desktop": 12
+ },
+ "rows": [
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/class_feature_pool_catalog.rs",
+   "line": 114,
+   "hits": 1,
+   "group": "trait_and_pool_tokens",
+   "why": "Per-row token readers for racial traits, feature pools and bonus chains. The racial-trait half of this group is the one `AT-35-E6-003-FINISH` cycle 3 already proved removable; the remaining call sites are the pool/catalog half, which has no converted pool-member table yet.",
+   "text": "use crate::pcgen_import::pool_member_tokens;"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/composed_input.rs",
+   "line": 47,
+   "hits": 1,
+   "group": "ir_converter",
+   "why": "The converter's own conversion entry points invoked from live code at run time -- `convert_equipment_record`, `convert_spell_record`, the include resolver, and one `cache_gen::equipment_gap::RenameInfo` field type. The live side is running the conversion instead of reading its output. Needs the converted artefact to be produced at build time and read as data.",
+   "text": "use crate::pcgen_import::include_resolver::{"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/composed_input.rs",
+   "line": 50,
+   "hits": 1,
+   "group": "ir_converter",
+   "why": "The converter's own conversion entry points invoked from live code at run time -- `convert_equipment_record`, `convert_spell_record`, the include resolver, and one `cache_gen::equipment_gap::RenameInfo` field type. The live side is running the conversion instead of reading its output. Needs the converted artefact to be produced at build time and read as data.",
+   "text": "use crate::pcgen_import::ir_converter::{"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/composed_input.rs",
+   "line": 55,
+   "hits": 1,
+   "group": "lst_parser_types",
+   "why": "The ingest-format record STRUCTS (`EquipmentRecord`, `LstSpellRecord`, the class/metadata/race-ability/spellcasting rows) are declared on the converter side and used as the live side's own data type. Not a token read -- a type ownership fact. Needs the live side to own a converted equipment/spell record shape the converter emits into, which does not exist yet.",
+   "text": "use crate::pcgen_import::lst_parser::class::{"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/composed_input.rs",
+   "line": 58,
+   "hits": 1,
+   "group": "lst_parser_types",
+   "why": "The ingest-format record STRUCTS (`EquipmentRecord`, `LstSpellRecord`, the class/metadata/race-ability/spellcasting rows) are declared on the converter side and used as the live side's own data type. Not a token read -- a type ownership fact. Needs the live side to own a converted equipment/spell record shape the converter emits into, which does not exist yet.",
+   "text": "use crate::pcgen_import::lst_parser::equipment::{"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/composed_input.rs",
+   "line": 61,
+   "hits": 1,
+   "group": "lst_parser_types",
+   "why": "The ingest-format record STRUCTS (`EquipmentRecord`, `LstSpellRecord`, the class/metadata/race-ability/spellcasting rows) are declared on the converter side and used as the live side's own data type. Not a token read -- a type ownership fact. Needs the live side to own a converted equipment/spell record shape the converter emits into, which does not exist yet.",
+   "text": "use crate::pcgen_import::lst_parser::metadata::{"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/composed_input.rs",
+   "line": 64,
+   "hits": 1,
+   "group": "lst_parser_types",
+   "why": "The ingest-format record STRUCTS (`EquipmentRecord`, `LstSpellRecord`, the class/metadata/race-ability/spellcasting rows) are declared on the converter side and used as the live side's own data type. Not a token read -- a type ownership fact. Needs the live side to own a converted equipment/spell record shape the converter emits into, which does not exist yet.",
+   "text": "use crate::pcgen_import::lst_parser::race_ability::{"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/composed_input.rs",
+   "line": 67,
+   "hits": 1,
+   "group": "lst_parser_types",
+   "why": "The ingest-format record STRUCTS (`EquipmentRecord`, `LstSpellRecord`, the class/metadata/race-ability/spellcasting rows) are declared on the converter side and used as the live side's own data type. Not a token read -- a type ownership fact. Needs the live side to own a converted equipment/spell record shape the converter emits into, which does not exist yet.",
+   "text": "use crate::pcgen_import::lst_parser::spell::{"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/composed_input.rs",
+   "line": 70,
+   "hits": 1,
+   "group": "lst_parser_types",
+   "why": "The ingest-format record STRUCTS (`EquipmentRecord`, `LstSpellRecord`, the class/metadata/race-ability/spellcasting rows) are declared on the converter side and used as the live side's own data type. Not a token read -- a type ownership fact. Needs the live side to own a converted equipment/spell record shape the converter emits into, which does not exist yet.",
+   "text": "use crate::pcgen_import::lst_parser::spellcasting_class::{"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/corpus_loader.rs",
+   "line": 39,
+   "hits": 1,
+   "group": "lst_parser_types",
+   "why": "The ingest-format record STRUCTS (`EquipmentRecord`, `LstSpellRecord`, the class/metadata/race-ability/spellcasting rows) are declared on the converter side and used as the live side's own data type. Not a token read -- a type ownership fact. Needs the live side to own a converted equipment/spell record shape the converter emits into, which does not exist yet.",
+   "text": "use crate::pcgen_import::lst_parser::equipment::{"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/corpus_loader.rs",
+   "line": 42,
+   "hits": 1,
+   "group": "lst_parser_types",
+   "why": "The ingest-format record STRUCTS (`EquipmentRecord`, `LstSpellRecord`, the class/metadata/race-ability/spellcasting rows) are declared on the converter side and used as the live side's own data type. Not a token read -- a type ownership fact. Needs the live side to own a converted equipment/spell record shape the converter emits into, which does not exist yet.",
+   "text": "use crate::pcgen_import::lst_parser::spell::{LstSpellRecord, LstSpellRecordPayload};"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/corpus_loader.rs",
+   "line": 88,
+   "hits": 1,
+   "group": "ir_converter",
+   "why": "The converter's own conversion entry points invoked from live code at run time -- `convert_equipment_record`, `convert_spell_record`, the include resolver, and one `cache_gen::equipment_gap::RenameInfo` field type. The live side is running the conversion instead of reading its output. Needs the converted artefact to be produced at build time and read as data.",
+   "text": "package.push(crate::pcgen_import::ir_converter::convert_equipment_record(record));"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/corpus_loader.rs",
+   "line": 137,
+   "hits": 1,
+   "group": "ir_converter",
+   "why": "The converter's own conversion entry points invoked from live code at run time -- `convert_equipment_record`, `convert_spell_record`, the include resolver, and one `cache_gen::equipment_gap::RenameInfo` field type. The live side is running the conversion instead of reading its output. Needs the converted artefact to be produced at build time and read as data.",
+   "text": "package.push(crate::pcgen_import::ir_converter::convert_spell_record(record));"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/corpus_loader.rs",
+   "line": 380,
+   "hits": 1,
+   "group": "ingest_record_tokens",
+   "why": "Run-time token-string reads: `token_pairs`, `bonus_chain_qualifiers`, `rebuild_bonus_token`, `token_count`, and the `RaceCacheData` / `RaceTraitCacheData` payload shapes. These are the literal ingest tokens the sheet rule forbids, reached through a function call so no token-syntax pattern fires. Needs the converted package to carry the same facts keyed by `VarId` rather than by source token name.",
+   "text": "for (k, v) in crate::pcgen_import::ingest_record::token_pairs(data) {"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/corpus_loader.rs",
+   "line": 384,
+   "hits": 1,
+   "group": "ingest_record_tokens",
+   "why": "Run-time token-string reads: `token_pairs`, `bonus_chain_qualifiers`, `rebuild_bonus_token`, `token_count`, and the `RaceCacheData` / `RaceTraitCacheData` payload shapes. These are the literal ingest tokens the sheet rule forbids, reached through a function call so no token-syntax pattern fires. Needs the converted package to carry the same facts keyed by `VarId` rather than by source token name.",
+   "text": "for qualifiers in crate::pcgen_import::ingest_record::bonus_chain_qualifiers(data) {"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/corpus_loader.rs",
+   "line": 390,
+   "hits": 1,
+   "group": "ingest_record_tokens",
+   "why": "Run-time token-string reads: `token_pairs`, `bonus_chain_qualifiers`, `rebuild_bonus_token`, `token_count`, and the `RaceCacheData` / `RaceTraitCacheData` payload shapes. These are the literal ingest tokens the sheet rule forbids, reached through a function call so no token-syntax pattern fires. Needs the converted package to carry the same facts keyed by `VarId` rather than by source token name.",
+   "text": "let raw_bonus = crate::pcgen_import::ingest_record::rebuild_bonus_token(&qualifiers);"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/damage_total.rs",
+   "line": 106,
+   "hits": 1,
+   "group": "lst_parser_types",
+   "why": "The ingest-format record STRUCTS (`EquipmentRecord`, `LstSpellRecord`, the class/metadata/race-ability/spellcasting rows) are declared on the converter side and used as the live side's own data type. Not a token read -- a type ownership fact. Needs the live side to own a converted equipment/spell record shape the converter emits into, which does not exist yet.",
+   "text": "use crate::pcgen_import::lst_parser::equipment::EquipmentRecord;"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/derived_evaluator_fixture_check.rs",
+   "line": 29,
+   "hits": 1,
+   "group": "ingest_record_tokens",
+   "why": "Run-time token-string reads: `token_pairs`, `bonus_chain_qualifiers`, `rebuild_bonus_token`, `token_count`, and the `RaceCacheData` / `RaceTraitCacheData` payload shapes. These are the literal ingest tokens the sheet rule forbids, reached through a function call so no token-syntax pattern fires. Needs the converted package to carry the same facts keyed by `VarId` rather than by source token name.",
+   "text": "use crate::pcgen_import::ingest_record;"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/encumbrance.rs",
+   "line": 60,
+   "hits": 1,
+   "group": "lst_parser_types",
+   "why": "The ingest-format record STRUCTS (`EquipmentRecord`, `LstSpellRecord`, the class/metadata/race-ability/spellcasting rows) are declared on the converter side and used as the live side's own data type. Not a token read -- a type ownership fact. Needs the live side to own a converted equipment/spell record shape the converter emits into, which does not exist yet.",
+   "text": "use crate::pcgen_import::lst_parser::equipment::EquipmentRecord;"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/equipment_effects.rs",
+   "line": 51,
+   "hits": 1,
+   "group": "lst_parser_types",
+   "why": "The ingest-format record STRUCTS (`EquipmentRecord`, `LstSpellRecord`, the class/metadata/race-ability/spellcasting rows) are declared on the converter side and used as the live side's own data type. Not a token read -- a type ownership fact. Needs the live side to own a converted equipment/spell record shape the converter emits into, which does not exist yet.",
+   "text": "use crate::pcgen_import::lst_parser::equipment::EquipmentRecord;"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/equipment_resolver.rs",
+   "line": 18,
+   "hits": 1,
+   "group": "lst_parser_types",
+   "why": "The ingest-format record STRUCTS (`EquipmentRecord`, `LstSpellRecord`, the class/metadata/race-ability/spellcasting rows) are declared on the converter side and used as the live side's own data type. Not a token read -- a type ownership fact. Needs the live side to own a converted equipment/spell record shape the converter emits into, which does not exist yet.",
+   "text": "use crate::pcgen_import::lst_parser::equipment::EquipmentRecord;"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/equipment_resolver.rs",
+   "line": 19,
+   "hits": 1,
+   "group": "source_content_payload",
+   "why": "Payload and bonus-reader types re-exported or imported by the live side. Shape-only dependencies on converter-side declarations; they move when the converted equipment/source-content shape above exists.",
+   "text": "use crate::pcgen_import::source_content_payload::SourceContentPayload;"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/race_resolver.rs",
+   "line": 86,
+   "hits": 1,
+   "group": "trait_and_pool_tokens",
+   "why": "Per-row token readers for racial traits, feature pools and bonus chains. The racial-trait half of this group is the one `AT-35-E6-003-FINISH` cycle 3 already proved removable; the remaining call sites are the pool/catalog half, which has no converted pool-member table yet.",
+   "text": "use crate::pcgen_import::bonus_chain_reader::{self, DeclaredBonuses};"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/race_resolver.rs",
+   "line": 87,
+   "hits": 1,
+   "group": "trait_and_pool_tokens",
+   "why": "Per-row token readers for racial traits, feature pools and bonus chains. The racial-trait half of this group is the one `AT-35-E6-003-FINISH` cycle 3 already proved removable; the remaining call sites are the pool/catalog half, which has no converted pool-member table yet.",
+   "text": "use crate::pcgen_import::race_trait_tokens;"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/race_resolver.rs",
+   "line": 95,
+   "hits": 1,
+   "group": "ingest_record_tokens",
+   "why": "Run-time token-string reads: `token_pairs`, `bonus_chain_qualifiers`, `rebuild_bonus_token`, `token_count`, and the `RaceCacheData` / `RaceTraitCacheData` payload shapes. These are the literal ingest tokens the sheet rule forbids, reached through a function call so no token-syntax pattern fires. Needs the converted package to carry the same facts keyed by `VarId` rather than by source token name.",
+   "text": "use crate::pcgen_import::ingest_payload::{RaceCacheData, RaceTraitCacheData};"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/skinwalker_change_shape.rs",
+   "line": 73,
+   "hits": 1,
+   "group": "trait_and_pool_tokens",
+   "why": "Per-row token readers for racial traits, feature pools and bonus chains. The racial-trait half of this group is the one `AT-35-E6-003-FINISH` cycle 3 already proved removable; the remaining call sites are the pool/catalog half, which has no converted pool-member table yet.",
+   "text": "use crate::pcgen_import::race_trait_tokens;"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/source_content.rs",
+   "line": 50,
+   "hits": 1,
+   "group": "source_content_payload",
+   "why": "Payload and bonus-reader types re-exported or imported by the live side. Shape-only dependencies on converter-side declarations; they move when the converted equipment/source-content shape above exists.",
+   "text": "pub use crate::pcgen_import::source_content_payload::SourceContentPayload;"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/spell_resolver.rs",
+   "line": 15,
+   "hits": 1,
+   "group": "lst_parser_types",
+   "why": "The ingest-format record STRUCTS (`EquipmentRecord`, `LstSpellRecord`, the class/metadata/race-ability/spellcasting rows) are declared on the converter side and used as the live side's own data type. Not a token read -- a type ownership fact. Needs the live side to own a converted equipment/spell record shape the converter emits into, which does not exist yet.",
+   "text": "use crate::pcgen_import::lst_parser::spell::LstSpellRecord;"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/spell_resolver.rs",
+   "line": 16,
+   "hits": 1,
+   "group": "source_content_payload",
+   "why": "Payload and bonus-reader types re-exported or imported by the live side. Shape-only dependencies on converter-side declarations; they move when the converted equipment/source-content shape above exists.",
+   "text": "use crate::pcgen_import::source_content_payload::SourceContentPayload;"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/trait_pool.rs",
+   "line": 51,
+   "hits": 1,
+   "group": "ingest_record_tokens",
+   "why": "Run-time token-string reads: `token_pairs`, `bonus_chain_qualifiers`, `rebuild_bonus_token`, `token_count`, and the `RaceCacheData` / `RaceTraitCacheData` payload shapes. These are the literal ingest tokens the sheet rule forbids, reached through a function call so no token-syntax pattern fires. Needs the converted package to carry the same facts keyed by `VarId` rather than by source token name.",
+   "text": "use crate::pcgen_import::ingest_record;"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/equipment_effects/arms_armor.rs",
+   "line": 21,
+   "hits": 1,
+   "group": "source_content_payload",
+   "why": "Payload and bonus-reader types re-exported or imported by the live side. Shape-only dependencies on converter-side declarations; they move when the converted equipment/source-content shape above exists.",
+   "text": "use crate::pcgen_import::equipment_bonus_reader;"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/equipment_effects/arms_armor.rs",
+   "line": 22,
+   "hits": 1,
+   "group": "lst_parser_types",
+   "why": "The ingest-format record STRUCTS (`EquipmentRecord`, `LstSpellRecord`, the class/metadata/race-ability/spellcasting rows) are declared on the converter side and used as the live side's own data type. Not a token read -- a type ownership fact. Needs the live side to own a converted equipment/spell record shape the converter emits into, which does not exist yet.",
+   "text": "use crate::pcgen_import::lst_parser::equipment::EquipmentRecord;"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/equipment_effects/equipmods.rs",
+   "line": 86,
+   "hits": 1,
+   "group": "source_content_payload",
+   "why": "Payload and bonus-reader types re-exported or imported by the live side. Shape-only dependencies on converter-side declarations; they move when the converted equipment/source-content shape above exists.",
+   "text": "use crate::pcgen_import::equipment_bonus_reader;"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/equipment_effects/equipmods.rs",
+   "line": 87,
+   "hits": 1,
+   "group": "lst_parser_types",
+   "why": "The ingest-format record STRUCTS (`EquipmentRecord`, `LstSpellRecord`, the class/metadata/race-ability/spellcasting rows) are declared on the converter side and used as the live side's own data type. Not a token read -- a type ownership fact. Needs the live side to own a converted equipment/spell record shape the converter emits into, which does not exist yet.",
+   "text": "use crate::pcgen_import::lst_parser::equipment::EquipmentRecord;"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/equipment_effects/general.rs",
+   "line": 19,
+   "hits": 1,
+   "group": "lst_parser_types",
+   "why": "The ingest-format record STRUCTS (`EquipmentRecord`, `LstSpellRecord`, the class/metadata/race-ability/spellcasting rows) are declared on the converter side and used as the live side's own data type. Not a token read -- a type ownership fact. Needs the live side to own a converted equipment/spell record shape the converter emits into, which does not exist yet.",
+   "text": "use crate::pcgen_import::lst_parser::equipment::EquipmentRecord;"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/equipment_effects/intelligent_item.rs",
+   "line": 66,
+   "hits": 1,
+   "group": "lst_parser_types",
+   "why": "The ingest-format record STRUCTS (`EquipmentRecord`, `LstSpellRecord`, the class/metadata/race-ability/spellcasting rows) are declared on the converter side and used as the live side's own data type. Not a token read -- a type ownership fact. Needs the live side to own a converted equipment/spell record shape the converter emits into, which does not exist yet.",
+   "text": "use crate::pcgen_import::lst_parser::equipment::EquipmentRecord;"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/equipment_effects/magic_items.rs",
+   "line": 22,
+   "hits": 1,
+   "group": "lst_parser_types",
+   "why": "The ingest-format record STRUCTS (`EquipmentRecord`, `LstSpellRecord`, the class/metadata/race-ability/spellcasting rows) are declared on the converter side and used as the live side's own data type. Not a token read -- a type ownership fact. Needs the live side to own a converted equipment/spell record shape the converter emits into, which does not exist yet.",
+   "text": "use crate::pcgen_import::lst_parser::equipment::EquipmentRecord;"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/pilot_compute/class_feature_grant_consumer.rs",
+   "line": 963,
+   "hits": 1,
+   "group": "renderer",
+   "why": "The PCGen description renderer called at run time on a corpus record's stored `description`. Needs the converted rule's own prose (`resolved_prose::render_description`) seeded from the values the caller already computes, gated by a corpus-wide parity test against the tool-side renderer. The mechanism is proved; `AT-35-E6-003-FINISH` cycle 3 did it for racial traits.",
+   "text": "let mut values = crate::pcgen_import::pcgen_desc::PcgenDisplayValues::new();"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/pilot_compute/class_feature_grant_consumer.rs",
+   "line": 968,
+   "hits": 1,
+   "group": "renderer",
+   "why": "The PCGen description renderer called at run time on a corpus record's stored `description`. Needs the converted rule's own prose (`resolved_prose::render_description`) seeded from the values the caller already computes, gated by a corpus-wide parity test against the tool-side renderer. The mechanism is proved; `AT-35-E6-003-FINISH` cycle 3 did it for racial traits.",
+   "text": "crate::pcgen_import::pcgen_desc::render_pcgen_desc_with_values(&record.raw_description, &values);"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/pilot_compute/class_feature_grant_consumer.rs",
+   "line": 972,
+   "hits": 1,
+   "group": "renderer",
+   "why": "The PCGen description renderer called at run time on a corpus record's stored `description`. Needs the converted rule's own prose (`resolved_prose::render_description`) seeded from the values the caller already computes, gated by a corpus-wide parity test against the tool-side renderer. The mechanism is proved; `AT-35-E6-003-FINISH` cycle 3 did it for racial traits.",
+   "text": "if crate::pcgen_import::pcgen_desc::leaked_pcgen_syntax(&rendered.text).is_some() {"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/pilot_compute/class_feature_grant_consumer.rs",
+   "line": 1036,
+   "hits": 1,
+   "group": "renderer",
+   "why": "The PCGen description renderer called at run time on a corpus record's stored `description`. Needs the converted rule's own prose (`resolved_prose::render_description`) seeded from the values the caller already computes, gated by a corpus-wide parity test against the tool-side renderer. The mechanism is proved; `AT-35-E6-003-FINISH` cycle 3 did it for racial traits.",
+   "text": "let args = crate::pcgen_import::pcgen_desc::desc_token_arguments(&record.raw_description);"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/pilot_compute/class_feature_grant_consumer.rs",
+   "line": 1068,
+   "hits": 1,
+   "group": "renderer",
+   "why": "The PCGen description renderer called at run time on a corpus record's stored `description`. Needs the converted rule's own prose (`resolved_prose::render_description`) seeded from the values the caller already computes, gated by a corpus-wide parity test against the tool-side renderer. The mechanism is proved; `AT-35-E6-003-FINISH` cycle 3 did it for racial traits.",
+   "text": "let mut values = crate::pcgen_import::pcgen_desc::PcgenDisplayValues::new();"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/pilot_compute/class_feature_grant_consumer.rs",
+   "line": 1081,
+   "hits": 1,
+   "group": "renderer",
+   "why": "The PCGen description renderer called at run time on a corpus record's stored `description`. Needs the converted rule's own prose (`resolved_prose::render_description`) seeded from the values the caller already computes, gated by a corpus-wide parity test against the tool-side renderer. The mechanism is proved; `AT-35-E6-003-FINISH` cycle 3 did it for racial traits.",
+   "text": "let rendered = crate::pcgen_import::pcgen_desc::render_pcgen_desc_with_values("
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/pilot_compute/class_feature_grant_consumer.rs",
+   "line": 1088,
+   "hits": 1,
+   "group": "renderer",
+   "why": "The PCGen description renderer called at run time on a corpus record's stored `description`. Needs the converted rule's own prose (`resolved_prose::render_description`) seeded from the values the caller already computes, gated by a corpus-wide parity test against the tool-side renderer. The mechanism is proved; `AT-35-E6-003-FINISH` cycle 3 did it for racial traits.",
+   "text": "if crate::pcgen_import::pcgen_desc::leaked_pcgen_syntax(&rendered.text).is_some() {"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/rules_tables/simple_kind_tables.rs",
+   "line": 168,
+   "hits": 1,
+   "group": "ingest_record_tokens",
+   "why": "Run-time token-string reads: `token_pairs`, `bonus_chain_qualifiers`, `rebuild_bonus_token`, `token_count`, and the `RaceCacheData` / `RaceTraitCacheData` payload shapes. These are the literal ingest tokens the sheet rule forbids, reached through a function call so no token-syntax pattern fires. Needs the converted package to carry the same facts keyed by `VarId` rather than by source token name.",
+   "text": "let raw_token_count = crate::pcgen_import::ingest_record::token_count(data);"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/rules_tables/crb/json_cache.rs",
+   "line": 151,
+   "hits": 1,
+   "group": "ir_converter",
+   "why": "The converter's own conversion entry points invoked from live code at run time -- `convert_equipment_record`, `convert_spell_record`, the include resolver, and one `cache_gen::equipment_gap::RenameInfo` field type. The live side is running the conversion instead of reading its output. Needs the converted artefact to be produced at build time and read as data.",
+   "text": "pub rename: Option<crate::pcgen_import::cache_gen::equipment_gap::RenameInfo>,"
+  },
+  {
+   "root": "apps/desktop",
+   "file": "apps/desktop/src-tauri/src/corpus_fixtures.rs",
+   "line": 23,
+   "hits": 1,
+   "group": "ir_converter",
+   "why": "The converter's own conversion entry points invoked from live code at run time -- `convert_equipment_record`, `convert_spell_record`, the include resolver, and one `cache_gen::equipment_gap::RenameInfo` field type. The live side is running the conversion instead of reading its output. Needs the converted artefact to be produced at build time and read as data.",
+   "text": "use codex::pcgen_import::ir_converter::{convert_equipment_record, convert_spell_record};"
+  },
+  {
+   "root": "apps/desktop",
+   "file": "apps/desktop/src-tauri/src/corpus_fixtures.rs",
+   "line": 24,
+   "hits": 1,
+   "group": "lst_parser_types",
+   "why": "The ingest-format record STRUCTS (`EquipmentRecord`, `LstSpellRecord`, the class/metadata/race-ability/spellcasting rows) are declared on the converter side and used as the live side's own data type. Not a token read -- a type ownership fact. Needs the live side to own a converted equipment/spell record shape the converter emits into, which does not exist yet.",
+   "text": "use codex::pcgen_import::lst_parser::equipment::parse_equipment_entries;"
+  },
+  {
+   "root": "apps/desktop",
+   "file": "apps/desktop/src-tauri/src/corpus_fixtures.rs",
+   "line": 25,
+   "hits": 1,
+   "group": "lst_parser_types",
+   "why": "The ingest-format record STRUCTS (`EquipmentRecord`, `LstSpellRecord`, the class/metadata/race-ability/spellcasting rows) are declared on the converter side and used as the live side's own data type. Not a token read -- a type ownership fact. Needs the live side to own a converted equipment/spell record shape the converter emits into, which does not exist yet.",
+   "text": "use codex::pcgen_import::lst_parser::spell::parse_lst_spell_row;"
+  },
+  {
+   "root": "apps/desktop",
+   "file": "apps/desktop/src-tauri/src/corpus_fixtures.rs",
+   "line": 68,
+   "hits": 1,
+   "group": "lst_parser_types",
+   "why": "The ingest-format record STRUCTS (`EquipmentRecord`, `LstSpellRecord`, the class/metadata/race-ability/spellcasting rows) are declared on the converter side and used as the live side's own data type. Not a token read -- a type ownership fact. Needs the live side to own a converted equipment/spell record shape the converter emits into, which does not exist yet.",
+   "text": "let record: &'static codex::pcgen_import::lst_parser::spell::LstSpellRecord ="
+  },
+  {
+   "root": "apps/desktop",
+   "file": "apps/desktop/src-tauri/src/corpus_fixtures.rs",
+   "line": 79,
+   "hits": 1,
+   "group": "lst_parser_types",
+   "why": "The ingest-format record STRUCTS (`EquipmentRecord`, `LstSpellRecord`, the class/metadata/race-ability/spellcasting rows) are declared on the converter side and used as the live side's own data type. Not a token read -- a type ownership fact. Needs the live side to own a converted equipment/spell record shape the converter emits into, which does not exist yet.",
+   "text": "let entry: &'static codex::pcgen_import::lst_parser::equipment::EquipmentRecord ="
+  },
+  {
+   "root": "apps/desktop",
+   "file": "apps/desktop/src-tauri/src/feat_catalog.rs",
+   "line": 213,
+   "hits": 1,
+   "group": "renderer",
+   "why": "The PCGen description renderer called at run time on a corpus record's stored `description`. Needs the converted rule's own prose (`resolved_prose::render_description`) seeded from the values the caller already computes, gated by a corpus-wide parity test against the tool-side renderer. The mechanism is proved; `AT-35-E6-003-FINISH` cycle 3 did it for racial traits.",
+   "text": "let clean = |text: &str| codex::pcgen_import::pcgen_desc::leaked_pcgen_syntax(text).is_none();"
+  },
+  {
+   "root": "apps/desktop",
+   "file": "apps/desktop/src-tauri/src/race_trait_picker.rs",
+   "line": 114,
+   "hits": 1,
+   "group": "trait_and_pool_tokens",
+   "why": "Per-row token readers for racial traits, feature pools and bonus chains. The racial-trait half of this group is the one `AT-35-E6-003-FINISH` cycle 3 already proved removable; the remaining call sites are the pool/catalog half, which has no converted pool-member table yet.",
+   "text": "use codex::pcgen_import::race_trait_tokens;"
+  },
+  {
+   "root": "apps/desktop",
+   "file": "apps/desktop/src-tauri/src/reach_gate.rs",
+   "line": 3417,
+   "hits": 1,
+   "group": "provenance_prose",
+   "why": "NOT a run-time read: the converter's module PATH written inside a string literal, as the provenance sentence a reach-gate row prints for where its words come from. B14 excused the same sentence in a `//` comment; in a string literal the gate counts it, correctly and deliberately -- widening the pattern to exempt string literals would be exactly the forbidden weakening. Clearing it is a prose edit, and it is left alone here on purpose: trimming it would move the total without moving any dependency.",
+   "text": "these rows' words from their own source rows, `src/pcgen_import/sheet_rule/` \\"
+  },
+  {
+   "root": "apps/desktop",
+   "file": "apps/desktop/src-tauri/src/reach_gate.rs",
+   "line": 3433,
+   "hits": 1,
+   "group": "provenance_prose",
+   "why": "NOT a run-time read: the converter's module PATH written inside a string literal, as the provenance sentence a reach-gate row prints for where its words come from. B14 excused the same sentence in a `//` comment; in a string literal the gate counts it, correctly and deliberately -- widening the pattern to exempt string literals would be exactly the forbidden weakening. Clearing it is a prose edit, and it is left alone here on purpose: trimming it would move the total without moving any dependency.",
+   "text": "converter deriving these rows' words from their own source rows, `src/pcgen_import/\\"
+  },
+  {
+   "root": "apps/desktop",
+   "file": "apps/desktop/src-tauri/src/reach_gate.rs",
+   "line": 3445,
+   "hits": 1,
+   "group": "provenance_prose",
+   "why": "NOT a run-time read: the converter's module PATH written inside a string literal, as the provenance sentence a reach-gate row prints for where its words come from. B14 excused the same sentence in a `//` comment; in a string literal the gate counts it, correctly and deliberately -- widening the pattern to exempt string literals would be exactly the forbidden weakening. Clearing it is a prose edit, and it is left alone here on purpose: trimming it would move the total without moving any dependency.",
+   "text": "converter, `src/pcgen_import/sheet_rule/`.\","
+  },
+  {
+   "root": "apps/desktop",
+   "file": "apps/desktop/src-tauri/src/reach_gate.rs",
+   "line": 3454,
+   "hits": 1,
+   "group": "provenance_prose",
+   "why": "NOT a run-time read: the converter's module PATH written inside a string literal, as the provenance sentence a reach-gate row prints for where its words come from. B14 excused the same sentence in a `//` comment; in a string literal the gate counts it, correctly and deliberately -- widening the pattern to exempt string literals would be exactly the forbidden weakening. Clearing it is a prose edit, and it is left alone here on purpose: trimming it would move the total without moving any dependency.",
+   "text": "words from their own source rows, `src/pcgen_import/sheet_rule/`.\","
+  },
+  {
+   "root": "apps/desktop",
+   "file": "apps/desktop/src-tauri/src/reach_gate.rs",
+   "line": 3475,
+   "hits": 1,
+   "group": "provenance_prose",
+   "why": "NOT a run-time read: the converter's module PATH written inside a string literal, as the provenance sentence a reach-gate row prints for where its words come from. B14 excused the same sentence in a `//` comment; in a string literal the gate counts it, correctly and deliberately -- widening the pattern to exempt string literals would be exactly the forbidden weakening. Clearing it is a prose edit, and it is left alone here on purpose: trimming it would move the total without moving any dependency.",
+   "text": "content exists; otherwise the converter, `src/pcgen_import/sheet_rule/`.\","
+  }
+ ]
+}

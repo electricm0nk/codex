@@ -1,0 +1,88 @@
+--- t16_cleric_5.txt	2026-09-28 13:27:13.893855980 -0400
++++ head_cleric_5.txt	2026-09-28 13:27:07.136615156 -0400
+@@ -166,8 +166,8 @@
+ LINE| id=core_rulebook:feat:power_attack kind=feat label=Power Attack printed= condition=-
+ LINE| id=core_rulebook:feat:weapon_focus kind=feat label=Weapon Focus printed=+1 condition=-
+ LINE| id=core_rulebook:skill:climb kind=skill label=Climb (Climb) printed= condition=-
+-LINE| id=core_rulebook:skill:climb#bonus0 kind=skill label=Climb (Climb) printed=+3 condition=requires climb as a class skill
++LINE| id=core_rulebook:skill:climb#bonus0 kind=skill label=Climb (Climb) printed=+3 condition=requires Climb as a class skill
+ LINE| id=core_rulebook:skill:intimidate kind=skill label=Intimidate (Intimidate) printed= condition=-
+-LINE| id=core_rulebook:skill:intimidate#bonus0 kind=skill label=Intimidate (Intimidate) printed=+3 condition=requires intimidate as a class skill
++LINE| id=core_rulebook:skill:intimidate#bonus0 kind=skill label=Intimidate (Intimidate) printed=+3 condition=requires Intimidate as a class skill
+ LINE| id=core_rulebook:skill:swim kind=skill label=Swim (Swim) printed= condition=-
+-LINE| id=core_rulebook:skill:swim#bonus0 kind=skill label=Swim (Swim) printed=+3 condition=requires swim as a class skill
++LINE| id=core_rulebook:skill:swim#bonus0 kind=skill label=Swim (Swim) printed=+3 condition=requires Swim as a class skill
+--- t16_fighter_1.txt	2026-09-28 13:27:24.161221900 -0400
++++ head_fighter_1.txt	2026-09-28 13:27:18.947036071 -0400
+@@ -157,8 +157,8 @@
+ LINE| id=core_rulebook:feat:power_attack kind=feat label=Power Attack printed= condition=-
+ LINE| id=core_rulebook:feat:weapon_focus kind=feat label=Weapon Focus printed=+1 condition=-
+ LINE| id=core_rulebook:skill:climb kind=skill label=Climb (Climb) printed= condition=-
+-LINE| id=core_rulebook:skill:climb#bonus0 kind=skill label=Climb (Climb) printed=+3 condition=requires climb as a class skill
++LINE| id=core_rulebook:skill:climb#bonus0 kind=skill label=Climb (Climb) printed=+3 condition=requires Climb as a class skill
+ LINE| id=core_rulebook:skill:intimidate kind=skill label=Intimidate (Intimidate) printed= condition=-
+-LINE| id=core_rulebook:skill:intimidate#bonus0 kind=skill label=Intimidate (Intimidate) printed=+3 condition=requires intimidate as a class skill
++LINE| id=core_rulebook:skill:intimidate#bonus0 kind=skill label=Intimidate (Intimidate) printed=+3 condition=requires Intimidate as a class skill
+ LINE| id=core_rulebook:skill:swim kind=skill label=Swim (Swim) printed= condition=-
+-LINE| id=core_rulebook:skill:swim#bonus0 kind=skill label=Swim (Swim) printed=+3 condition=requires swim as a class skill
++LINE| id=core_rulebook:skill:swim#bonus0 kind=skill label=Swim (Swim) printed=+3 condition=requires Swim as a class skill
+--- t16_fighter_3.txt	2026-09-28 13:26:25.696138213 -0400
++++ head_fighter_3.txt	2026-09-28 13:26:18.517882374 -0400
+@@ -170,8 +170,8 @@
+ LINE| id=core_rulebook:feat:power_attack kind=feat label=Power Attack printed= condition=-
+ LINE| id=core_rulebook:feat:weapon_focus kind=feat label=Weapon Focus printed=+1 condition=-
+ LINE| id=core_rulebook:skill:climb kind=skill label=Climb (Climb) printed= condition=-
+-LINE| id=core_rulebook:skill:climb#bonus0 kind=skill label=Climb (Climb) printed=+3 condition=requires climb as a class skill
++LINE| id=core_rulebook:skill:climb#bonus0 kind=skill label=Climb (Climb) printed=+3 condition=requires Climb as a class skill
+ LINE| id=core_rulebook:skill:intimidate kind=skill label=Intimidate (Intimidate) printed= condition=-
+-LINE| id=core_rulebook:skill:intimidate#bonus0 kind=skill label=Intimidate (Intimidate) printed=+3 condition=requires intimidate as a class skill
++LINE| id=core_rulebook:skill:intimidate#bonus0 kind=skill label=Intimidate (Intimidate) printed=+3 condition=requires Intimidate as a class skill
+ LINE| id=core_rulebook:skill:swim kind=skill label=Swim (Swim) printed= condition=-
+-LINE| id=core_rulebook:skill:swim#bonus0 kind=skill label=Swim (Swim) printed=+3 condition=requires swim as a class skill
++LINE| id=core_rulebook:skill:swim#bonus0 kind=skill label=Swim (Swim) printed=+3 condition=requires Swim as a class skill
+--- t16_magus_4_samurai_2.txt	2026-09-28 13:27:00.906393114 -0400
++++ head_magus_4_samurai_2.txt	2026-09-28 13:26:55.470199369 -0400
+@@ -173,11 +173,11 @@
+ LINE| id=core_rulebook:feat:simple_weapon_proficiency kind=feat label=Simple Weapon Proficiency printed= condition=-
+ LINE| id=core_rulebook:feat:weapon_focus kind=feat label=Weapon Focus printed=+1 condition=-
+ LINE| id=core_rulebook:skill:climb kind=skill label=Climb (Climb) printed= condition=-
+-LINE| id=core_rulebook:skill:climb#bonus0 kind=skill label=Climb (Climb) printed=+3 condition=requires climb as a class skill
++LINE| id=core_rulebook:skill:climb#bonus0 kind=skill label=Climb (Climb) printed=+3 condition=requires Climb as a class skill
+ LINE| id=core_rulebook:skill:intimidate kind=skill label=Intimidate (Intimidate) printed= condition=-
+-LINE| id=core_rulebook:skill:intimidate#bonus0 kind=skill label=Intimidate (Intimidate) printed=+3 condition=requires intimidate as a class skill
++LINE| id=core_rulebook:skill:intimidate#bonus0 kind=skill label=Intimidate (Intimidate) printed=+3 condition=requires Intimidate as a class skill
+ LINE| id=core_rulebook:skill:swim kind=skill label=Swim (Swim) printed= condition=-
+-LINE| id=core_rulebook:skill:swim#bonus0 kind=skill label=Swim (Swim) printed=+3 condition=requires swim as a class skill
++LINE| id=core_rulebook:skill:swim#bonus0 kind=skill label=Swim (Swim) printed=+3 condition=requires Swim as a class skill
+ LINE| id=ultimate_combat:ability:samurai kind=ability label=Samurai printed= condition=-
+ LINE| id=ultimate_combat:ability:samurai_class_skill kind=ability label=Samurai ~ Class Skill printed= condition=-
+ LINE| id=ultimate_combat:class:samurai kind=class label=Samurai printed= condition=-
+--- t16_monk_5.txt	2026-09-28 13:26:50.364017385 -0400
++++ head_monk_5.txt	2026-09-28 13:26:43.672778909 -0400
+@@ -202,8 +202,8 @@
+ LINE| id=core_rulebook:feat:power_attack kind=feat label=Power Attack printed= condition=-
+ LINE| id=core_rulebook:feat:weapon_focus kind=feat label=Weapon Focus printed=+1 condition=-
+ LINE| id=core_rulebook:skill:climb kind=skill label=Climb (Climb) printed= condition=-
+-LINE| id=core_rulebook:skill:climb#bonus0 kind=skill label=Climb (Climb) printed=+3 condition=requires climb as a class skill
++LINE| id=core_rulebook:skill:climb#bonus0 kind=skill label=Climb (Climb) printed=+3 condition=requires Climb as a class skill
+ LINE| id=core_rulebook:skill:intimidate kind=skill label=Intimidate (Intimidate) printed= condition=-
+-LINE| id=core_rulebook:skill:intimidate#bonus0 kind=skill label=Intimidate (Intimidate) printed=+3 condition=requires intimidate as a class skill
++LINE| id=core_rulebook:skill:intimidate#bonus0 kind=skill label=Intimidate (Intimidate) printed=+3 condition=requires Intimidate as a class skill
+ LINE| id=core_rulebook:skill:swim kind=skill label=Swim (Swim) printed= condition=-
+-LINE| id=core_rulebook:skill:swim#bonus0 kind=skill label=Swim (Swim) printed=+3 condition=requires swim as a class skill
++LINE| id=core_rulebook:skill:swim#bonus0 kind=skill label=Swim (Swim) printed=+3 condition=requires Swim as a class skill
+--- t16_wizard_5.txt	2026-09-28 13:26:36.325517051 -0400
++++ head_wizard_5.txt	2026-09-28 13:26:31.042328755 -0400
+@@ -199,9 +199,9 @@
+ LINE| id=core_rulebook:feat:power_attack kind=feat label=Power Attack printed= condition=-
+ LINE| id=core_rulebook:feat:weapon_focus kind=feat label=Weapon Focus printed=+1 condition=-
+ LINE| id=core_rulebook:skill:climb kind=skill label=Climb (Climb) printed= condition=-
+-LINE| id=core_rulebook:skill:climb#bonus0 kind=skill label=Climb (Climb) printed=+3 condition=requires climb as a class skill
++LINE| id=core_rulebook:skill:climb#bonus0 kind=skill label=Climb (Climb) printed=+3 condition=requires Climb as a class skill
+ LINE| id=core_rulebook:skill:intimidate kind=skill label=Intimidate (Intimidate) printed= condition=-
+-LINE| id=core_rulebook:skill:intimidate#bonus0 kind=skill label=Intimidate (Intimidate) printed=+3 condition=requires intimidate as a class skill
++LINE| id=core_rulebook:skill:intimidate#bonus0 kind=skill label=Intimidate (Intimidate) printed=+3 condition=requires Intimidate as a class skill
+ LINE| id=core_rulebook:skill:swim kind=skill label=Swim (Swim) printed= condition=-
+-LINE| id=core_rulebook:skill:swim#bonus0 kind=skill label=Swim (Swim) printed=+3 condition=requires swim as a class skill
++LINE| id=core_rulebook:skill:swim#bonus0 kind=skill label=Swim (Swim) printed=+3 condition=requires Swim as a class skill
+ LINE| id=core_rulebook:spell:light kind=spell label=Light printed= condition=-

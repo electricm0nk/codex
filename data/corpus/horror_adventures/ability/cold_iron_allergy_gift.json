@@ -1,0 +1,52 @@
+{
+  "codex_generated_name": false,
+  "completeness": "full",
+  "data": {
+    "description": "You gain damage reduction %1/cold iron.|AccursedManifestationLevel",
+    "key": "Accursed Corruption ~ Cold Iron Allergy Gift",
+    "name": "Cold Iron Allergy Gift",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Accursed Corruption ~ Cold Iron Allergy Gift"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.AccursedColdIronAllergyGift"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.16"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain damage reduction %1/cold iron.|AccursedManifestationLevel"
+      },
+      {
+        "key": "DR",
+        "value": "AccursedManifestationLevel/Cold Iron"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 42,
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
+    "record_key": "Accursed Corruption ~ Cold Iron Allergy Gift",
+    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:dr"
+  ]
+}

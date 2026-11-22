@@ -1,0 +1,3430 @@
+[
+ {
+  "token_type": "DEFINE",
+  "family": "formula",
+  "instances": "15818 corpus-wide, own count 2026-09-07 over 51,474 data/corpus/<book>/<kind>/*.json records (recursive walk, _parity excluded, LICENSE.json excluded; the beastiary dir counted as bestiary); 15,763 of 15,763 readable values are the literal 0 (55 instances are [redacted PI])",
+  "units": "6353 of 49,438 docs/work-inventory.json units (48,608 join to a corpus record); non-DONE per scripts/completion_atlas.py::_bucket_of, denominator 23,315 (non-DONE: 4599)",
+  "maps_to": "Metadata(ignored-by-sheet)",
+  "rule": "DEFINE:<name>|<default> declares a PCGen variable and seeds it. In this corpus the seed is 0 on every readable instance, so DEFINE contributes Const(0) and the converter drops it after one use: building the variable index (name -> declaring records). PCGen (pinned 7f81800, PlayerCharacter.java:2090-2140 getVariable) only sums BONUS:VAR into a name that some HELD object DEFINEs; because every seed is 0 the converter needs DEFINE only as an existence marker, and rule 28 below decides not to gate on it. The seven-DEFINE block on racial SLAs (RacialSLA_X_{LVL,SpellLVL,Times,DCMod,DC,AtWill,Constant}|0) is exactly this shape: seven zero seeds whose values all come from same-record BONUS:VAR tokens.",
+  "expr_shape": "n/a (Const(0) seed, dropped)",
+  "expr_gaps": [],
+  "applies_shape": "none; a DEFINE never gates anything",
+  "prose_effect": "none",
+  "examples": [
+   {
+    "record": "monster_codex:race_trait_generic:Racial SLA ~ Ironskin",
+    "unit": "monster_codex:race_trait:racial_sla_ironskin",
+    "status": "ingested-magnitude",
+    "source": "pathfinder/paizo/roleplaying_game/monster_codex/mc_abilities_race.lst:95",
+    "raw": "DEFINE:RacialSLA_Ironskin_LVL|0",
+    "sheet_line": "(no line; the seed is 0 and prints nothing)"
+   },
+   {
+    "record": "monster_codex:race_trait_generic:Racial SLA ~ Ironskin",
+    "unit": "monster_codex:race_trait:racial_sla_ironskin",
+    "status": "ingested-magnitude",
+    "source": "pathfinder/paizo/roleplaying_game/monster_codex/mc_abilities_race.lst:95",
+    "raw": "DEFINE:RacialSLA_Ironskin_SpellLVL|0",
+    "sheet_line": "(no line)"
+   },
+   {
+    "record": "monster_codex:race_trait_generic:Racial SLA ~ Ironskin",
+    "unit": "monster_codex:race_trait:racial_sla_ironskin",
+    "status": "ingested-magnitude",
+    "source": "pathfinder/paizo/roleplaying_game/monster_codex/mc_abilities_race.lst:95",
+    "raw": "DEFINE:RacialSLA_Ironskin_Times|0",
+    "sheet_line": "(no line)"
+   }
+  ],
+  "oracle_check": "sheet-line only -- no PCGen total covers a DEFINE; the variable it declares is checked through the token that consumes it (rows 27-28)",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": [
+   "none"
+  ]
+ },
+ {
+  "token_type": "DEFINE (PI-redacted token)",
+  "family": "formula",
+  "instances": "55 corpus-wide, own count 2026-09-07 over 51,474 data/corpus/<book>/<kind>/*.json records (recursive walk, _parity excluded, LICENSE.json excluded; the beastiary dir counted as bestiary)",
+  "units": "40 of 49,438 docs/work-inventory.json units (48,608 join to a corpus record); non-DONE per scripts/completion_atlas.py::_bucket_of, denominator 23,315 (non-DONE: 40)",
+  "maps_to": "REFUSE",
+  "rule": "The corpus copy holds the whole token as [redacted PI]; the variable name is unreadable, so any same-record BONUS:VAR that adds to it cannot be tied to its declaration. Converter emits Refused{token_type:'DEFINE:pi-redacted'} for the record; the rest of the record's tokens still convert.",
+  "expr_shape": "n/a",
+  "expr_gaps": [],
+  "applies_shape": "n/a",
+  "prose_effect": "none",
+  "examples": [
+   {
+    "record": "inner_sea_world_guide:feat_generic:Codex-Named Unit (feat_inner_sea_world_guide_iswg_feats_lst_10)",
+    "unit": "inner_sea_world_guide:feat:andoren_falconry",
+    "status": "engine-does-not-hold",
+    "source": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_feats.lst:10",
+    "raw": "DEFINE:[redacted PI]",
+    "sheet_line": "(refused: unreadable)"
+   },
+   {
+    "record": "inner_sea_world_guide:class_generic:Codex-Named Unit (class_inner_sea_world_guide_iswg_classes_lst_57)",
+    "unit": "inner_sea_world_guide:class:red_mantis_assassin",
+    "status": "engine-does-not-hold",
+    "source": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_classes.lst:57",
+    "raw": "DEFINE:[redacted PI]",
+    "sheet_line": "(refused: unreadable)"
+   },
+   {
+    "record": "inner_sea_world_guide:class_generic:Codex-Named Unit (class_inner_sea_world_guide_iswg_classes_lst_23)",
+    "unit": "inner_sea_world_guide:class:hellknight",
+    "status": "engine-does-not-hold",
+    "source": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_classes.lst:23",
+    "raw": "DEFINE:[redacted PI]",
+    "sheet_line": "(refused: unreadable)"
+   }
+  ],
+  "oracle_check": "sheet-line only",
+  "refuse_reason": "unreadable variable name; 40 units (all non-DONE)",
+  "confidence": "high",
+  "open_questions": [
+   "Decision 28 (SD-32) PI ruling: is a redacted DEFINE name re-derivable from the BONUS:VAR targets on the same record? If yes the refusal count drops to 0."
+  ]
+ },
+ {
+  "token_type": "DEFINESTAT",
+  "family": "formula",
+  "instances": "79 corpus-wide, own count 2026-09-07 over 51,474 data/corpus/<book>/<kind>/*.json records (recursive walk, _parity excluded, LICENSE.json excluded; the beastiary dir counted as bestiary); shapes: MINVALUE|<stat>|<n> 55, STAT|<stat> 13, NONSTAT|<stat> 10, MINVALUE|<stat>|<formula> 1",
+  "units": "42 of 49,438 docs/work-inventory.json units (48,608 join to a corpus record); non-DONE per scripts/completion_atlas.py::_bucket_of, denominator 23,315 (non-DONE: 36)",
+  "maps_to": "Text",
+  "rule": "A template/companion stat floor or stat-presence flag. MINVALUE|STR|15 prints as words ('Strength is at least 15'); STAT|INT and NONSTAT|CON print as words ('has an Intelligence score' / 'has no Constitution score'). 10 instances carry a variable floor (MINVALUE|STR|AnimalSTRScore) and 1 a MASTERVAR formula; those print the words without a number (rule 1.3: a term the character does not settle prints as words).",
+  "expr_shape": "n/a",
+  "expr_gaps": [],
+  "applies_shape": "none",
+  "prose_effect": "the words above go into prose",
+  "examples": [
+   {
+    "record": "bestiary_3:template:Animal Lord",
+    "unit": "bestiary_3:template:animal_lord",
+    "status": "ingested-magnitude",
+    "source": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_templates.lst:8",
+    "raw": "DEFINESTAT:MINVALUE|STR|AnimalSTRScore",
+    "sheet_line": "Strength: at least the animal's Strength score (words)"
+   },
+   {
+    "record": "bestiary_3:template:Animal Lord",
+    "unit": "bestiary_3:template:animal_lord",
+    "status": "ingested-magnitude",
+    "source": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_templates.lst:8",
+    "raw": "DEFINESTAT:MINVALUE|DEX|AnimalDEXScore",
+    "sheet_line": "Dexterity: at least the animal's Dexterity score (words)"
+   },
+   {
+    "record": "bestiary_3:template:Animal Lord",
+    "unit": "bestiary_3:template:animal_lord",
+    "status": "ingested-magnitude",
+    "source": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_templates.lst:8",
+    "raw": "DEFINESTAT:MINVALUE|CON|AnimalCONScore",
+    "sheet_line": "Constitution: at least the animal's Constitution score (words)"
+   }
+  ],
+  "oracle_check": "sheet-line only -- STAT.<i>.SCORE in charbuild-remainder export would show the floored score only for a monster build, which the harness does not run",
+  "refuse_reason": "",
+  "confidence": "medium",
+  "open_questions": [
+   "Whether a MINVALUE floor should instead be a Max(AbilityScore(X), Const(n)) fed to the stat block; that is an Applies-on-stat question outside this family's scope."
+  ]
+ },
+ {
+  "token_type": "FORMULA:ability modifier (STR DEX CON INT WIS CHA as an identifier in any formula position)",
+  "family": "formula",
+  "instances": "4,676 identifier uses corpus-wide, own count 2026-09-07 over 51,474 data/corpus/<book>/<kind>/*.json records (recursive walk, _parity excluded, LICENSE.json excluded; the beastiary dir counted as bestiary) across BONUS formula fields, SPELLS DC/CASTERLEVEL/TIMES fields, TEMPBONUS, SR, DESC %N arguments, PREVAR operands",
+  "units": "3,625 units carry one of 49,438 docs/work-inventory.json units (48,608 join to a corpus record); non-DONE per scripts/completion_atlas.py::_bucket_of, denominator 23,315 (non-DONE: 1,649)",
+  "maps_to": "Number(Expr)",
+  "rule": "Bare STR..CHA is the ability MODIFIER in PCGen (TermEvaluatorBuilderPCStat.java: bare abbreviation -> PCStatModTermEvaluator). Maps 1:1 to AbilityMod(X).",
+  "expr_shape": "AbilityMod(Cha)",
+  "expr_gaps": [],
+  "applies_shape": "none",
+  "prose_effect": "none",
+  "examples": [
+   {
+    "record": "occult_adventures:class_feature:Elemental Ascetic ~ Elemental Wisdom",
+    "unit": "occult_adventures:class_feature:elemental_ascetic_elemental_wisdom",
+    "status": "engine-does-not-hold",
+    "source": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst:1374",
+    "raw": "BONUS:VAR|WildTalentDCStat|WIS",
+    "sheet_line": "Wild talent DC ability: Wis (+0) -- folds into the DC line of the consuming record"
+   },
+   {
+    "record": "occult_adventures:class_feature:Elemental Ascetic ~ AC Bonus",
+    "unit": "occult_adventures:class_feature:elemental_ascetic_ac_bonus",
+    "status": "engine-does-not-hold",
+    "source": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst:1375",
+    "raw": "BONUS:VAR|CMD|WIS|PREVAREQ:ENCUMBERANCE,0,var(\"COUNT[EQTYPE.ARMOR.EQUIPPED]\"),0,var(\"COUNT[EQTYPE.SHIELD.EQUIPPED]\"),0",
+    "sheet_line": "CMD +0 (Wis; only while unarmored)"
+   },
+   {
+    "record": "occult_adventures:class_feature:Toxitician ~ Injections",
+    "unit": "occult_adventures:class_feature:toxitician_injections",
+    "status": "engine-does-not-hold",
+    "source": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst:1488",
+    "raw": "BONUS:VAR|TInjectionsUses|MesmeristLVL+CHA",
+    "sheet_line": "Injections: 5 + 4 = 9 uses/day (if held; Mesmerist level 5 assumed)"
+   }
+  ],
+  "oracle_check": "STAT.<STR|DEX|CON>.MOD in computed-values.txt.ftl (three of six); SA.<n>.DESC in charbuild-remainder shows the folded number for every Special Ability",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": []
+ },
+ {
+  "token_type": "FORMULA:ability score (STRSCORE..CHASCORE)",
+  "family": "formula",
+  "instances": "133 identifier uses corpus-wide, own count 2026-09-07 over 51,474 data/corpus/<book>/<kind>/*.json records (recursive walk, _parity excluded, LICENSE.json excluded; the beastiary dir counted as bestiary)",
+  "units": "87 units of 49,438 docs/work-inventory.json units (48,608 join to a corpus record); non-DONE per scripts/completion_atlas.py::_bucket_of, denominator 23,315 (non-DONE: 72)",
+  "maps_to": "Number(Expr)",
+  "rule": "<STAT>SCORE is the total ability score (PCStatTotalTermEvaluator). Maps to AbilityScore(X).",
+  "expr_shape": "AbilityScore(Con)",
+  "expr_gaps": [],
+  "applies_shape": "none",
+  "prose_effect": "none",
+  "examples": [
+   {
+    "record": "pathfinder_unchained:class_feature:Wound Threshold",
+    "unit": "pathfinder_unchained:class_feature:wound_threshold",
+    "status": "engine-does-not-hold",
+    "source": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst:29",
+    "raw": "BONUS:VAR|WoundThreshold_Dead|-max(10,CONSCORE)",
+    "sheet_line": "Wound threshold (dead): -12"
+   },
+   {
+    "record": "advanced_class_guide:class_feature:Arcanist ~ Spells Castable",
+    "unit": "advanced_class_guide:class_feature:arcanist_spells_castable",
+    "status": "engine-does-not-hold",
+    "source": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:77",
+    "raw": "BONUS:VAR|ArcanistCastLVL_1|(INTSCORE>=11)*(ArcanistCastingLVL>=1)*(2+(ArcanistCastingLVL>=2)+(ArcanistCastingLVL>=3)+max(0,floor((INT+3)/4)))",
+    "sheet_line": "(second example: same record, next threshold)"
+   },
+   {
+    "record": "advanced_class_guide:class_feature:Arcanist ~ Spells Castable",
+    "unit": "advanced_class_guide:class_feature:arcanist_spells_castable",
+    "status": "engine-does-not-hold",
+    "source": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:77",
+    "raw": "BONUS:VAR|ArcanistCastLVL_2|(INTSCORE>=12)*(ArcanistCastingLVL>=4)*(2*(ArcanistCastingLVL>=4)+(ArcanistCastingLVL>=5)+(ArcanistCastingLVL>=6)+max(0,floor((INT+2)/4)))",
+    "sheet_line": "(third example: same record)"
+   }
+  ],
+  "oracle_check": "STAT.<STR|DEX|CON>.SCORE in computed-values.txt.ftl",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": []
+ },
+ {
+  "token_type": "FORMULA:TL",
+  "family": "formula",
+  "instances": "1385 identifier uses corpus-wide, own count 2026-09-07 over 51,474 data/corpus/<book>/<kind>/*.json records (recursive walk, _parity excluded, LICENSE.json excluded; the beastiary dir counted as bestiary)",
+  "units": "1041 units of 49,438 docs/work-inventory.json units (48,608 join to a corpus record); non-DONE per scripts/completion_atlas.py::_bucket_of, denominator 23,315 (non-DONE: 556)",
+  "maps_to": "Number(Expr)",
+  "rule": "TL is total character level (PCTLTermEvaluator). Maps to Level.",
+  "expr_shape": "Level",
+  "expr_gaps": [],
+  "applies_shape": "none",
+  "prose_effect": "none",
+  "examples": [
+   {
+    "record": "bestiary_3:race_trait_generic:Vishkanya ~ Poison Resistance",
+    "unit": "bestiary_3:race_trait:vishkanya_poison_resistance",
+    "status": "ingested-magnitude",
+    "source": "pathfinder/paizo/roleplaying_game/core_essentials/races/vishkanya/vishkanya_abilities_race.lst:21",
+    "raw": "BONUS:VAR|Vishkanya_PoisonResistance_Bonus|TL",
+    "sheet_line": "Poison resistance +5 (racial)"
+   },
+   {
+    "record": "bestiary_3:race_trait_generic:Suli ~ Elemental Assault",
+    "unit": "bestiary_3:race_trait:suli_elemental_assault",
+    "status": "ingested-magnitude",
+    "source": "pathfinder/paizo/roleplaying_game/core_essentials/races/suli/suli_abilities_race.lst:20",
+    "raw": "BONUS:VAR|Suli_ElementalAssault_Duration|TL",
+    "sheet_line": "Elemental assault: 5 rounds"
+   },
+   {
+    "record": "pathfinder_unchained:class_feature:Standard Unchained Rage",
+    "unit": "pathfinder_unchained:class_feature:standard_unchained_rage",
+    "status": "engine-does-not-hold",
+    "source": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst:306",
+    "raw": "BONUS:VAR|RageBonusHP|TL*2",
+    "sheet_line": "Rage bonus HP: 10 (if held)"
+   }
+  ],
+  "oracle_check": "CLASS.0.LEVEL in computed-values.txt.ftl for a single-class fixture",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": []
+ },
+ {
+  "token_type": "FORMULA:CL, bare classlevel(), classlevel(\"APPLIEDAS=NONEPIC\")",
+  "family": "formula",
+  "instances": "163 CL uses + 1,873 classlevel( calls (all forms) corpus-wide, own count 2026-09-07 over 51,474 data/corpus/<book>/<kind>/*.json records (recursive walk, _parity excluded, LICENSE.json excluded; the beastiary dir counted as bestiary)",
+  "units": "141 units use CL of 49,438 docs/work-inventory.json units (48,608 join to a corpus record); non-DONE per scripts/completion_atlas.py::_bucket_of, denominator 23,315 (non-DONE: 98); classlevel( in all forms: 666 units (non-DONE 621)",
+  "maps_to": "Number(Expr)",
+  "rule": "CL and the argument-less forms mean 'level in the class this record belongs to' (PCCLTermEvaluator with the token's own source class; ClassLevelCommand.java for the empty/APPLIEDAS form). Converter binds the owning class at convert time: for kind=class the record itself; for class_feature the class named by the record's CLASSES/parent; maps to ClassLevel(owning). A record with no resolvable owning class is a Refused{token_type:'FORMULA:CL-no-owner'} (count it in token_coverage; expected small: CL appears on 141 units, 136 of them class or class_feature).",
+  "expr_shape": "ClassLevel(homunculus_companion)",
+  "expr_gaps": [],
+  "applies_shape": "the owning class must be held; this is the record's own Applies, nothing extra",
+  "prose_effect": "none",
+  "examples": [
+   {
+    "record": "occult_adventures:class:Homunculus Companion",
+    "unit": "occult_adventures:class:homunculus_companion",
+    "status": "engine-does-not-hold",
+    "source": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_classes.lst:184",
+    "raw": "BONUS:VAR|HomunculusLVL|CL",
+    "sheet_line": "(binding only: HomunculusLVL = class level; no line of its own)"
+   },
+   {
+    "record": "occult_adventures:class:Phantom",
+    "unit": "occult_adventures:class:phantom",
+    "status": "engine-does-not-hold",
+    "source": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_classes.lst:176",
+    "raw": "BONUS:VAR|PhantomLVL|CL",
+    "sheet_line": "(binding only)"
+   },
+   {
+    "record": "inner_sea_world_guide:class:Low Templar",
+    "unit": "inner_sea_world_guide:class:low_templar",
+    "status": "engine-does-not-hold",
+    "source": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_classes.lst:40",
+    "raw": "BONUS:VAR|LowTemplarLVL|CL",
+    "sheet_line": "(binding only)"
+   }
+  ],
+  "oracle_check": "CLASS.0.LEVEL in computed-values.txt.ftl",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": [
+   "Converter must resolve the owning class for ability-kind records that carry CL (5 units): use the granting record's class or refuse."
+  ]
+ },
+ {
+  "token_type": "FORMULA:classlevel(\"X\"), cl(\"X\"), var(\"CL=X\")",
+  "family": "formula",
+  "instances": "1,873 classlevel( + 1 cl( + 11 var(\"CL=..\") corpus-wide, own count 2026-09-07 over 51,474 data/corpus/<book>/<kind>/*.json records (recursive walk, _parity excluded, LICENSE.json excluded; the beastiary dir counted as bestiary)",
+  "units": "666 units of 49,438 docs/work-inventory.json units (48,608 join to a corpus record); non-DONE per scripts/completion_atlas.py::_bucket_of, denominator 23,315 (non-DONE: 621)",
+  "maps_to": "Number(Expr)",
+  "rule": "Named-class level (ClassLevelCommand.java looks up the specific class). Maps to ClassLevel(X). The two-argument APPLIEDAS=NONEPIC form is identical for every class we ship (max_level <= 20). The live evaluator knows every class level the character has, so cross-class references resolve without the single-class restriction the current interpreter carries.",
+  "expr_shape": "Sum([ClassLevel(investigator), Const(-1)])",
+  "expr_gaps": [],
+  "applies_shape": "none",
+  "prose_effect": "none",
+  "examples": [
+   {
+    "record": "occult_adventures:template:Psychic Detective",
+    "unit": "occult_adventures:template:psychic_detective",
+    "status": "ingested-magnitude",
+    "source": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_templates.lst:10",
+    "raw": "BONUS:CASTERLEVEL|Psychic Detective|classlevel(\"Investigator\")-1",
+    "sheet_line": "Psychic Detective caster level: Investigator level - 1 (fixture has 0 Investigator levels: prints as words, or 0 if held via the template)"
+   },
+   {
+    "record": "occult_adventures:template:Psychic Detective",
+    "unit": "occult_adventures:template:psychic_detective",
+    "status": "ingested-magnitude",
+    "source": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_templates.lst:10",
+    "raw": "BONUS:PCLEVEL|Psychic Detective|classlevel(\"Investigator\")",
+    "sheet_line": "(binding: PCLEVEL grant, bonus lane)"
+   },
+   {
+    "record": "advanced_class_guide:class_feature:Speaker for the Past Ancestor Mystery ~ Phantom Touch",
+    "unit": "advanced_class_guide:class_feature:speaker_for_the_past_ancestor_mystery_phantom_touch",
+    "status": "engine-does-not-hold",
+    "source": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:3618",
+    "raw": "BONUS:VAR|PhantomTouchDuration|max(1,floor(classlevel(\"Shaman\")/2))",
+    "sheet_line": "Phantom touch: 2 rounds (Shaman 5, if held)"
+   }
+  ],
+  "oracle_check": "CLASS.0.LEVEL in computed-values.txt.ftl; multiclass fixture needs a second CLASS.n line the template does not emit",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": []
+ },
+ {
+  "token_type": "FORMULA:HD",
+  "family": "formula",
+  "instances": "491 uses corpus-wide, own count 2026-09-07 over 51,474 data/corpus/<book>/<kind>/*.json records (recursive walk, _parity excluded, LICENSE.json excluded; the beastiary dir counted as bestiary)",
+  "units": "406 units of 49,438 docs/work-inventory.json units (48,608 join to a corpus record); non-DONE per scripts/completion_atlas.py::_bucket_of, denominator 23,315 (non-DONE: 84)",
+  "maps_to": "Number(Expr)",
+  "rule": "HD is total hit dice (PCHDTermEvaluator). Maps to HitDice.",
+  "expr_shape": "Sum([Const(10), Div(HitDice, Const(2)), AbilityMod(Cha)])",
+  "expr_gaps": [],
+  "applies_shape": "none",
+  "prose_effect": "none",
+  "examples": [
+   {
+    "record": "bestiary_2:race_trait_generic:Fear ~ Aura",
+    "unit": "bestiary_2:race_trait:fear_aura",
+    "status": "ingested-magnitude",
+    "source": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst:1877",
+    "raw": "BONUS:VAR|FearAuraDC|10+(HD/2)+CHA",
+    "sheet_line": "Fear aura DC 16 (10 + 2 + 4) if held"
+   },
+   {
+    "record": "pathfinder_unchained:class_feature:Rule - Use Background Skills",
+    "unit": "pathfinder_unchained:class_feature:rule_use_background_skills",
+    "status": "engine-does-not-hold",
+    "source": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst:16",
+    "raw": "BONUS:VAR|Pool_BackgroundSkill|2*(TL-HD)",
+    "sheet_line": "Background skill pool: 0 (2 x (5 - 5))"
+   },
+   {
+    "record": "horror_adventures:template:Kyton (Apostle)",
+    "unit": "horror_adventures:template:kyton_apostle",
+    "status": "ingested-magnitude",
+    "source": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_templates.lst:14",
+    "raw": "BONUS:VAR|RegenerationRate|HD/2",
+    "sheet_line": "Regeneration 2 (HD 5 / 2) if held"
+   }
+  ],
+  "oracle_check": "SA.<n>.DESC in charbuild-remainder for the DC; HD itself is not exported (CLASS.0.LEVEL equals HD for a single-class fixture)",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": []
+ },
+ {
+  "token_type": "FORMULA:BAB",
+  "family": "formula",
+  "instances": "46 uses corpus-wide, own count 2026-09-07 over 51,474 data/corpus/<book>/<kind>/*.json records (recursive walk, _parity excluded, LICENSE.json excluded; the beastiary dir counted as bestiary)",
+  "units": "42 units of 49,438 docs/work-inventory.json units (48,608 join to a corpus record); non-DONE per scripts/completion_atlas.py::_bucket_of, denominator 23,315 (non-DONE: 30)",
+  "maps_to": "Number(Expr)",
+  "rule": "BAB is base attack bonus (PCBABTermEvaluator). Maps to BaseAttack.",
+  "expr_shape": "Sum([BaseAttack, AbilityMod(Str), Const(-2)])",
+  "expr_gaps": [],
+  "applies_shape": "none",
+  "prose_effect": "none",
+  "examples": [
+   {
+    "record": "bestiary_2:race_trait_generic:Allosaurus ~ Rake",
+    "unit": "bestiary_2:race_trait:allosaurus_rake",
+    "status": "ingested-magnitude",
+    "source": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst:2006",
+    "raw": "BONUS:VAR|RakeAttack|BAB+STR-2",
+    "sheet_line": "Rake attack +0 (2 + 0 - 2) if held"
+   },
+   {
+    "record": "advanced_players_guide:class_feature:Ranger Combat Style Feat ~ Deadly Aim",
+    "unit": "advanced_players_guide:class_feature:ranger_combat_style_feat_deadly_aim",
+    "status": "engine-does-not-hold",
+    "source": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst:2618",
+    "raw": "BONUS:VAR|BABTotal|BAB+(FlurryLVL-MonkBAB)",
+    "sheet_line": "BAB total: 2 + (FlurryLVL - MonkBAB) -- cross-record variables, row 28"
+   },
+   {
+    "record": "advanced_players_guide:class_feature:Maneuver Mastery ~ Sunder",
+    "unit": "advanced_players_guide:class_feature:maneuver_mastery_sunder",
+    "status": "engine-does-not-hold",
+    "source": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst:562",
+    "raw": "BONUS:VAR|CMB_Sunder|classlevel(\"Oracle\")-BAB",
+    "sheet_line": "CMB (sunder): Oracle level - 2 (if held)"
+   }
+  ],
+  "oracle_check": "BAB in computed-values.txt.ftl",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": []
+ },
+ {
+  "token_type": "FORMULA:SIZE, SIZEMOD",
+  "family": "formula",
+  "instances": "15 uses corpus-wide, own count 2026-09-07 over 51,474 data/corpus/<book>/<kind>/*.json records (recursive walk, _parity excluded, LICENSE.json excluded; the beastiary dir counted as bestiary)",
+  "units": "8 units of 49,438 docs/work-inventory.json units (48,608 join to a corpus record); non-DONE per scripts/completion_atlas.py::_bucket_of, denominator 23,315 (non-DONE: 6)",
+  "maps_to": "Number(Expr)",
+  "rule": "SIZE is the integer size index (PCSizeIntTermEvaluator: Fine=0 .. Colossal=8); SIZEMOD is the size modifier to attack/AC (PCSizeModEvaluatorTermEvaluator: +8 Fine .. -8 Colossal). technical-design \u00a71's Size must be defined as the INDEX; SIZEMOD needs the modifier table.",
+  "expr_shape": "Mul(Max(Sum([Size, Const(-2)]), Const(0)), Const(10))",
+  "expr_gaps": [
+   "SizeMod (attack/AC size modifier, a fixed 9-entry table over Size) -- 1 unit; or define Size's meaning and derive SizeMod as a converter-emitted Min/Max chain"
+  ],
+  "applies_shape": "none",
+  "prose_effect": "none",
+  "examples": [
+   {
+    "record": "advanced_players_guide:class_feature:Bomb",
+    "unit": "advanced_players_guide:class_feature:bomb",
+    "status": "engine-does-not-hold",
+    "source": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst:106",
+    "raw": "BONUS:VAR|BombAttackBonus|BAB+DEX+SIZEMOD",
+    "sheet_line": "Bomb attack +4 (2 + 2 + 0) if held"
+   },
+   {
+    "record": "beastiary:race_trait_generic:Construct Traits",
+    "unit": "bestiary:race_trait:construct_traits",
+    "status": "engine-does-not-hold",
+    "source": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst:1684",
+    "raw": "BONUS:HP|CURRENTMAX|max(SIZE-2,0)*10",
+    "sheet_line": "Bonus HP: 0 (Medium)"
+   },
+   {
+    "record": "bestiary_4:race_trait_generic:Wyrwood ~ Type",
+    "unit": "bestiary_4:race_trait:wyrwood_type",
+    "status": "ingested-magnitude",
+    "source": "pathfinder/paizo/roleplaying_game/core_essentials/races/wyrwood/wyrwood_abilities_race.lst:15",
+    "raw": "BONUS:HP|CURRENTMAX|(max(SIZE-2,0)+max(SIZE-6,0))*10",
+    "sheet_line": "Bonus HP: 0 (Medium)"
+   }
+  ],
+  "oracle_check": "AC.TOTAL in computed-values.txt.ftl carries SIZEMOD for a non-Medium fixture; none in the export set is non-Medium",
+  "refuse_reason": "",
+  "confidence": "medium",
+  "open_questions": [
+   "\u00a71 Size: index or modifier? Both are used; the index is used 14 of 15 times."
+  ]
+ },
+ {
+  "token_type": "FORMULA:CR",
+  "family": "formula",
+  "instances": "33 uses corpus-wide, own count 2026-09-07 over 51,474 data/corpus/<book>/<kind>/*.json records (recursive walk, _parity excluded, LICENSE.json excluded; the beastiary dir counted as bestiary) (30 in SR:, 4 in BONUS:VAR)",
+  "units": "32 units of 49,438 docs/work-inventory.json units (48,608 join to a corpus record); non-DONE per scripts/completion_atlas.py::_bucket_of, denominator 23,315 (non-DONE: 19)",
+  "maps_to": "Number(Expr)",
+  "rule": "CR is the creature's base challenge rating (PCBaseCRTermEvaluator). Expr has no variant for it. It appears only on monster/template abilities (SR:11+CR), where the value is a fact the monster record holds (its CR: token).",
+  "expr_shape": "Sum([Const(11), ChallengeRating])",
+  "expr_gaps": [
+   "ChallengeRating (integer CR of the monster record the rule is attached to) -- 32 units"
+  ],
+  "applies_shape": "monster-kind holder",
+  "prose_effect": "none",
+  "examples": [
+   {
+    "record": "bestiary_3:race_trait_generic:Variant Bandersnatch ~ Primal",
+    "unit": "bestiary_3:race_trait:variant_bandersnatch_primal",
+    "status": "ingested-magnitude",
+    "source": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst:466",
+    "raw": "SR:11+CR",
+    "sheet_line": "SR 11 + CR (on a CR 5 bandersnatch: SR 16)"
+   },
+   {
+    "record": "bestiary_3:race_trait_generic:Fey Creature ~ Spell Resistance",
+    "unit": "bestiary_3:race_trait:fey_creature_spell_resistance",
+    "status": "literal-verified",
+    "source": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst:857",
+    "raw": "SR:CR+11",
+    "sheet_line": "SR 11 + CR (fey creature template: base CR + 11)"
+   },
+   {
+    "record": "bestiary_2:template:Resolute Creature",
+    "unit": "bestiary_2:template:resolute_creature",
+    "status": "ingested-magnitude",
+    "source": "pathfinder/paizo/roleplaying_game/core_essentials/ce_templates.lst:1067",
+    "raw": "SR:CR+5",
+    "sheet_line": "Resolute creature: SR 5 + CR"
+   }
+  ],
+  "oracle_check": "sheet-line only -- no PCGen total in the export set carries SR",
+  "refuse_reason": "",
+  "confidence": "medium",
+  "open_questions": [
+   "Fractional CR (CR:1/4, 257 monsters) makes 11+CR non-integer; PCGen floors at consumption, so Const(11)+0 for those."
+  ]
+ },
+ {
+  "token_type": "FORMULA:CASTERLEVEL, SPELLLEVEL (bare identifiers)",
+  "family": "formula",
+  "instances": "89 uses corpus-wide, own count 2026-09-07 over 51,474 data/corpus/<book>/<kind>/*.json records (recursive walk, _parity excluded, LICENSE.json excluded; the beastiary dir counted as bestiary) (DESC %N args 43, COST 46)",
+  "units": "78 units of 49,438 docs/work-inventory.json units (48,608 join to a corpus record); non-DONE per scripts/completion_atlas.py::_bucket_of, denominator 23,315 (non-DONE: 62)",
+  "maps_to": "Number(Expr)",
+  "rule": "Bare CASTERLEVEL/SPELLLEVEL inside a DESC argument is the spell-like ability's own caster/spell level (PCCasterLevelTotalTermEvaluator / PCSpellLevelTermEvaluator in a spell context). Maps to CasterLevel(owning class) / SpellLevel. Inside COST they are the %-substitution forms of row 26 (pricing; Metadata).",
+  "expr_shape": "CasterLevel(owning)",
+  "expr_gaps": [
+   "CasterLevel(ClassId) needs a holder-relative form (the casting class is bound at pick time for a spell record, not at convert time) -- see row 37"
+  ],
+  "applies_shape": "none",
+  "prose_effect": "DESC %N hole (row 64)",
+  "examples": [
+   {
+    "record": "advanced_race_guide:spell:Vomit Twin",
+    "unit": "advanced_race_guide:spell:vomit_twin",
+    "status": "ingested-magnitude",
+    "source": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_spells.lst:96",
+    "raw": "DESC:Upon casting this spell, you vomit forth a disgusting ooze copy of yourself into a single adjacent square. As long as the twin exists, whenever you take a move action to move, the twin can move as well, although it does not need to follow you and cannot take any other actions. On subsequent rounds, at the start of your turn, you can instantaneously exchange places with your twin, as if using teleport. This is not an action and does not provoke an attack of opportunity. The twin has a speed of 30 feet and provokes attacks of opportunity from movement as normal. It has an AC equal to %1 and %2 hit points. If the twin is reduced to 0 hit points, it is destroyed, although you can create a new one on your turn as a standard action as long as the duration persists. You cannot have more than one vomit twin at a time.|CASTERLEVEL/2+10|CASTERLEVEL",
+    "sheet_line": "Vomit Twin: ... lasts for 5 rounds (CL 5 substituted into the words)"
+   },
+   {
+    "record": "advanced_race_guide:spell:Spawn Ward",
+    "unit": "advanced_race_guide:spell:spawn_ward",
+    "status": "ingested-magnitude",
+    "source": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_spells.lst:79",
+    "raw": "DESC:The target becomes resistant to the effects of energy drain and blood drain attacks made by undead creatures, and cannot be made into undead spawn if killed while the spell is in effect. If the attacking undead's Hit Dice is less than or equal to %1, the blood drain or energy drain has no effect. If the attacking undead's Hit Dice are greater than %1, the undead must make a Fortitude save (against the DC of the spell) with each attack for those special abilities to have any effect. The spell only prevents the Constitution damage from blood drain and negative levels from energy drain, but not any other effects of these attacks.|CASTERLEVEL",
+    "sheet_line": "Spawn Ward: ... (CL 5 in the words)"
+   },
+   {
+    "record": "advanced_race_guide:spell:Absorbing Inhalation",
+    "unit": "advanced_race_guide:spell:absorbing_inhalation",
+    "status": "ingested-magnitude",
+    "source": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_spells.lst:144",
+    "raw": "DESC:You grant your lungs inhuman strength and capacity, allowing you to harmlessly and completely inhale one gas, fog, smoke, mist, or similar cloud-like effect. If the targeted cloud is a magical effect, you must succeed at a caster level check (DC 11 + the effect's caster level) to inhale it. Inhaling the cloud removes it from the area, leaving normal air in its place. If the cloud is too large for you to affect with a single casting of this spell, you may instead inhale a portion of the cloud, but you must inhale the portion of the cloud closest to you. This spell has no effect on gaseous creatures. It can only affect an instantaneous-duration cloud (such as a breath weapon) if you ready an action to cast the spell in response. While inhaled, the cloud does not harm you. You may keep the cloud harmlessly contained within you for up to %1 rounds, but you must hold your breath to do so (even if you do not normally have to breathe). If the cloud has a duration, the time the cloud is contained within you counts toward that duration. As a standard action, you may release the stored cloud as a breath weapon, filling a 60-foot cone (or the cloud's original area, if smaller than a 60-foot cone). Any creature in the breath's area is subject to its normal effects, making saving throws and spell resistance checks as appropriate against the cloud's original DC. The exhaled cloud resumes its duration, if any. Exhaling the stored cloud ends this spell. If you do not exhale the cloud before this spell's duration expires, you suffer the cloud's effects|CASTERLEVEL",
+    "sheet_line": "Absorbing Inhalation: ... (CL 5 in the words)"
+   }
+  ],
+  "oracle_check": "CLASS.0.LEVEL for a single-class caster fixture",
+  "refuse_reason": "",
+  "confidence": "medium",
+  "open_questions": []
+ },
+ {
+  "token_type": "FORMULA:integer literal, + - * / and parentheses, unary minus",
+  "family": "formula",
+  "instances": "17,257 BONUS:VAR constants + 3,100 arithmetic + 8,687 BONUS:STAT constants (see grammar census in formula.md \u00a72) corpus-wide, own count 2026-09-07 over 51,474 data/corpus/<book>/<kind>/*.json records (recursive walk, _parity excluded, LICENSE.json excluded; the beastiary dir counted as bestiary)",
+  "units": "every formula-bearing unit",
+  "maps_to": "Number(Expr)",
+  "rule": "Integers -> Const; a+b -> Sum([a,b]); a-b -> Sum([a, Mul(Const(-1), b)]); a*b -> Mul; a/b -> Div (floors; PCGen carries doubles and its callers truncate at consumption, which agrees with Div for every non-negative operand; negative operands differ by one in 0 corpus cases found -- the interpreter's own doc point 2). Unary minus -> Mul(Const(-1), x).",
+  "expr_shape": "Sum([Const(10), SpellLevel, AbilityMod(Cha)])",
+  "expr_gaps": [],
+  "applies_shape": "none",
+  "prose_effect": "none",
+  "examples": [
+   {
+    "record": "monster_codex:race_trait_generic:Racial SLA ~ Ironskin",
+    "unit": "monster_codex:race_trait:racial_sla_ironskin",
+    "status": "ingested-magnitude",
+    "source": "pathfinder/paizo/roleplaying_game/monster_codex/mc_abilities_race.lst:95",
+    "raw": "BONUS:VAR|RacialSLA_Ironskin_DC|10+RacialSLA_Ironskin_SpellLVL+RacialSLA_Ironskin_DCMod",
+    "sheet_line": "Ironskin DC 15 (10 + 1 + 4)"
+   },
+   {
+    "record": "advanced_players_guide:race_trait_generic:Racial SLA ~ Weapon of Awe",
+    "unit": "advanced_players_guide:race_trait:racial_sla_weapon_of_awe",
+    "status": "ingested-magnitude",
+    "source": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_race.lst:334",
+    "raw": "BONUS:VAR|RacialSLA_WeaponOfAwe_DC|10+RacialSLA_WeaponOfAwe_SpellLVL+RacialSLA_WeaponOfAwe_DCMod",
+    "sheet_line": "Weapon of Awe DC 15"
+   },
+   {
+    "record": "advanced_players_guide:race_trait_generic:Racial SLA ~ Ill Omen",
+    "unit": "advanced_players_guide:race_trait:racial_sla_ill_omen",
+    "status": "ingested-magnitude",
+    "source": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_race.lst:324",
+    "raw": "BONUS:VAR|RacialSLA_IllOmen_DC|10+RacialSLA_IllOmen_SpellLVL+RacialSLA_IllOmen_DCMod",
+    "sheet_line": "Ill Omen DC 15"
+   }
+  ],
+  "oracle_check": "SA.<n>.DESC in charbuild-remainder",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": []
+ },
+ {
+  "token_type": "FORMULA:fractional literal (0.5, 1.5, 1/3, X*3/4)",
+  "family": "formula",
+  "instances": "203 BONUS + 3 TEMPBONUS + 1 MOVECLONE formula fields corpus-wide, own count 2026-09-07 over 51,474 data/corpus/<book>/<kind>/*.json records (recursive walk, _parity excluded, LICENSE.json excluded; the beastiary dir counted as bestiary); shapes: X*a/b 107, a.b*X or X*a.b 89, bare a/b or 0.a 7",
+  "units": "192 units of 49,438 docs/work-inventory.json units (48,608 join to a corpus record); non-DONE per scripts/completion_atlas.py::_bucket_of, denominator 23,315 (non-DONE: 95)",
+  "maps_to": "Number(Expr)",
+  "rule": "PCGen evaluates in doubles and truncates only at consumption (VariableProcessor.java: Float end to end). X*a/b converts as Div(Mul(X, Const(a)), Const(b)) -- exact, since floor(X*a/b) is what the caller sees. X*1.5 converts as Div(Mul(X, Const(3)), Const(2)) by writing the decimal as a reduced fraction -- exact for the same reason. A BARE fraction (BONUS:VAR|AnimalBaseCR|1/3, RangePenaltyValue|0.5) is a variable that is later multiplied; Div(Const(1), Const(3)) = 0 loses it. Those 7 instances (7 units, 6 non-DONE) refuse.",
+  "expr_shape": "Div(Mul(Var, Const(3)), Const(4))",
+  "expr_gaps": [
+   "Rational constant (or a non-flooring DivExact) for the 7 bare-fraction seeds; the other 196 need nothing"
+  ],
+  "applies_shape": "none",
+  "prose_effect": "none",
+  "examples": [
+   {
+    "record": "pathfinder_unchained:class_feature:Wound Threshold",
+    "unit": "pathfinder_unchained:class_feature:wound_threshold",
+    "status": "engine-does-not-hold",
+    "source": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst:29",
+    "raw": "BONUS:VAR|WoundThreshold_Grazed|WoundThreshold_Maximum*3/4",
+    "sheet_line": "Wound threshold (grazed): 3/4 of maximum, floored"
+   },
+   {
+    "record": "pathfinder_unchained:class_feature:Wound Threshold",
+    "unit": "pathfinder_unchained:class_feature:wound_threshold",
+    "status": "engine-does-not-hold",
+    "source": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst:29",
+    "raw": "BONUS:VAR|WoundThreshold_Wounded|WoundThreshold_Maximum*1/2",
+    "sheet_line": "Wound threshold (wounded): 1/2 of maximum"
+   },
+   {
+    "record": "pathfinder_unchained:class_feature:Wound Threshold",
+    "unit": "pathfinder_unchained:class_feature:wound_threshold",
+    "status": "engine-does-not-hold",
+    "source": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst:29",
+    "raw": "BONUS:VAR|WoundThreshold_Critical|WoundThreshold_Maximum*1/4",
+    "sheet_line": "Wound threshold (critical): 1/4 of maximum"
+   }
+  ],
+  "oracle_check": "HP in computed-values.txt.ftl exercises none of these; sheet-line only",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": []
+ },
+ {
+  "token_type": "FORMULA:max(...), min(...) (also MAX, MIN)",
+  "family": "formula",
+  "instances": "1250 max + 544 min calls corpus-wide, own count 2026-09-07 over 51,474 data/corpus/<book>/<kind>/*.json records (recursive walk, _parity excluded, LICENSE.json excluded; the beastiary dir counted as bestiary)",
+  "units": "1054 units use max, 479 use min of 49,438 docs/work-inventory.json units (48,608 join to a corpus record); non-DONE per scripts/completion_atlas.py::_bucket_of, denominator 23,315 (non-DONE 566 / 438)",
+  "maps_to": "Number(Expr)",
+  "rule": "N-ary in PCGen (MaxCommand/MinCommand fold, one argument allowed). Converts to nested Max(a, Max(b, c)); a one-argument call is the argument itself. Upper/lower spelling only (PJEP registers both).",
+  "expr_shape": "Max(Const(1), Div(Sum([ClassLevel(kineticist), Const(1)]), Const(2)))",
+  "expr_gaps": [],
+  "applies_shape": "none",
+  "prose_effect": "none",
+  "examples": [
+   {
+    "record": "occult_adventures:class_feature:KB Selector",
+    "unit": "occult_adventures:class_feature:kb_selector",
+    "status": "engine-does-not-hold",
+    "source": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst:607",
+    "raw": "BONUS:VAR|KB_Tier|max(1,floor((KineticistLVL+1)/2))",
+    "sheet_line": "Kinetic blast tier 3 (max(1, floor(6/2))) if held"
+   },
+   {
+    "record": "occult_adventures:class_feature:Psychic Bloodline ~ Mental Resistance",
+    "unit": "occult_adventures:class_feature:psychic_bloodline_mental_resistance",
+    "status": "engine-does-not-hold",
+    "source": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst:1882",
+    "raw": "BONUS:VAR|Sorcerer_PsychicMentalResistance_SaveBonus|min(floor((Sorcerer_Psychic_BloodlinePower3LVL+3)/6*2),4)",
+    "sheet_line": "Mental resistance save bonus (nested min/floor; cross-record var)"
+   },
+   {
+    "record": "occult_adventures:class_feature:Toxitician ~ Deft Fingers",
+    "unit": "occult_adventures:class_feature:toxitician_deft_fingers",
+    "status": "engine-does-not-hold",
+    "source": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst:1487",
+    "raw": "BONUS:VAR|TDeftFingersBonus|max(MesmeristLVL/2,1)",
+    "sheet_line": "Deft fingers +2 (max(5/2, 1)) if held"
+   }
+  ],
+  "oracle_check": "SA.<n>.DESC in charbuild-remainder",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": []
+ },
+ {
+  "token_type": "FORMULA:floor(x)",
+  "family": "formula",
+  "instances": "604 calls corpus-wide, own count 2026-09-07 over 51,474 data/corpus/<book>/<kind>/*.json records (recursive walk, _parity excluded, LICENSE.json excluded; the beastiary dir counted as bestiary)",
+  "units": "492 units of 49,438 docs/work-inventory.json units (48,608 join to a corpus record); non-DONE per scripts/completion_atlas.py::_bucket_of, denominator 23,315 (non-DONE 433)",
+  "maps_to": "Number(Expr)",
+  "rule": "floor() is Math.floor (FloorCommand.java). Div already floors, and every corpus floor() wraps a division or an integer expression, so floor(x) converts to x. For a negative dividend Div-floors and PCGen's floor agree (both toward negative infinity); it is bare truncation that differs, and no bare-truncation corpus case was found.",
+  "expr_shape": "Div(Sum([ClassLevel(psychic), Const(-5)]), Const(5))",
+  "expr_gaps": [],
+  "applies_shape": "none",
+  "prose_effect": "none",
+  "examples": [
+   {
+    "record": "occult_adventures:class_feature:KB Selector",
+    "unit": "occult_adventures:class_feature:kb_selector",
+    "status": "engine-does-not-hold",
+    "source": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst:607",
+    "raw": "BONUS:VAR|KB_Tier|max(1,floor((KineticistLVL+1)/2))",
+    "sheet_line": "Kinetic blast tier 3 (if held)"
+   },
+   {
+    "record": "occult_adventures:class_feature:Psychic Bloodline ~ Mental Resistance",
+    "unit": "occult_adventures:class_feature:psychic_bloodline_mental_resistance",
+    "status": "engine-does-not-hold",
+    "source": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst:1882",
+    "raw": "BONUS:VAR|Sorcerer_PsychicMentalResistance_SaveBonus|min(floor((Sorcerer_Psychic_BloodlinePower3LVL+3)/6*2),4)",
+    "sheet_line": "(cross-record var; row 28)"
+   },
+   {
+    "record": "occult_adventures:class_feature:Psychic Discipline Faith ~ Resilience of the Faithful",
+    "unit": "occult_adventures:class_feature:psychic_discipline_faith_resilience_of_the_faithful",
+    "status": "engine-does-not-hold",
+    "source": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst:1216",
+    "raw": "BONUS:SAVE|ALL|2+floor((PsychicLVL-5)/5)",
+    "sheet_line": "Save bonus +2 (2 + floor((5-5)/5)) if held"
+   }
+  ],
+  "oracle_check": "CHECK.<n>.TOTAL in computed-values.txt.ftl for the save case",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": []
+ },
+ {
+  "token_type": "FORMULA:ceil(x)",
+  "family": "formula",
+  "instances": "50 calls corpus-wide, own count 2026-09-07 over 51,474 data/corpus/<book>/<kind>/*.json records (recursive walk, _parity excluded, LICENSE.json excluded; the beastiary dir counted as bestiary)",
+  "units": "49 units of 49,438 docs/work-inventory.json units (48,608 join to a corpus record); non-DONE per scripts/completion_atlas.py::_bucket_of, denominator 23,315 (non-DONE 41)",
+  "maps_to": "Number(Expr)",
+  "rule": "ceil(X/n) with constant n converts exactly as Div(Sum([X, Const(n-1)]), Const(n)) for non-negative X; all 50 corpus calls are ceil(<var or stat>/2). Negative dividends (ceil(STR/2) with Str mod -1) round toward zero under the rewrite and toward +inf under Math.ceil: the two agree only when X >= 0. Add Ceil or accept the rewrite with the negative-operand caveat.",
+  "expr_shape": "Mul(Const(-1), Div(Sum([Level, Const(1)]), Const(2)))",
+  "expr_gaps": [
+   "Ceil -- 49 units; exact rewrite exists for X >= 0"
+  ],
+  "applies_shape": "none",
+  "prose_effect": "none",
+  "examples": [
+   {
+    "record": "adventurers_guide:ability:Devil ~ Unchained Eidolon LVL01",
+    "unit": "adventurers_guide:ability:devil_unchained_eidolon_lvl01",
+    "status": "ingested-magnitude",
+    "source": "pathfinder/paizo/roleplaying_game/adventurers_guide/support/ag_abilities_pu.lst:77",
+    "raw": "BONUS:COMBAT|BASEAB|-ceil(TL/2)|PREVARGTEQ:mastervar(\"MasterIsDevilBinder\"),1",
+    "sheet_line": "Base attack -3 (-(5+1)/2) if held (devil-bound eidolon)"
+   },
+   {
+    "record": "book_of_the_damned_volume_2:template:Teratoma Claw ~ Tiny",
+    "unit": "book_of_the_damned_volume_2:template:teratoma_claw_tiny",
+    "status": "ingested-magnitude",
+    "source": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_2/botd2_templates.lst:44",
+    "raw": "BONUS:WEAPONPROF=Teratoma Claw|DAMAGE|-ceil(STR/2)",
+    "sheet_line": "Claw damage - ceil(Str/2)"
+   },
+   {
+    "record": "book_of_the_damned_volume_2:template:Teratoma Tail ~ Colossal",
+    "unit": "book_of_the_damned_volume_2:template:teratoma_tail_colossal",
+    "status": "ingested-magnitude",
+    "source": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_2/botd2_templates.lst:39",
+    "raw": "BONUS:WEAPONPROF=Teratoma Tail|DAMAGE|-ceil(STR/2)",
+    "sheet_line": "Tail damage - ceil(Str/2)"
+   }
+  ],
+  "oracle_check": "BAB in computed-values.txt.ftl for the BASEAB case",
+  "refuse_reason": "",
+  "confidence": "medium",
+  "open_questions": []
+ },
+ {
+  "token_type": "FORMULA:if(cond, a, b) and comparison arithmetic ((X>=k)*2)",
+  "family": "formula",
+  "instances": "623 if( calls corpus-wide, own count 2026-09-07 over 51,474 data/corpus/<book>/<kind>/*.json records (recursive walk, _parity excluded, LICENSE.json excluded; the beastiary dir counted as bestiary) (563 with a comparison condition, 52 with a bare numeric condition the current parser refuses); comparison-in-arithmetic shapes are counted by the bonus lane (E1)",
+  "units": "98 units use if( of 49,438 docs/work-inventory.json units (48,608 join to a corpus record); non-DONE per scripts/completion_atlas.py::_bucket_of, denominator 23,315 (non-DONE 93)",
+  "maps_to": "Number(Expr)",
+  "rule": "IfCommand.java: nonzero condition -> a, else b; comparisons yield 1.0/0.0. Expr has no conditional. Exact fallback for integer X, k: (X>=k) = Min(Const(1), Max(Const(0), Sum([X, Const(1-k)]))); (X>k) = same with k+1; (X==k) = (X>=k)*(X<=k); if(c,a,b) = Sum([b, Mul(c, Sum([a, Mul(Const(-1), b)]))]). The bare-numeric condition if(V,a,b) = if(V!=0,...) = Min(1, Abs-free: Max(V, Mul(Const(-1), V))) -- needs the rewrite to know V >= 0, which every corpus case satisfies (flags DEFINEd 0/1).",
+  "expr_shape": "Sum([Const(30), Mul(Min(Const(1), Max(Const(0), Sum([MasterVar, Const(-11)]))), Const(20))])",
+  "expr_gaps": [
+   "If(Cond, then, else) with Cond = Cmp(op) | And -- a legibility variant; the Min/Max encoding is exact, so not blocking"
+  ],
+  "applies_shape": "none",
+  "prose_effect": "none",
+  "examples": [
+   {
+    "record": "occult_adventures:race_trait_generic:Phantom Companion ~ Deliver Touch Spells",
+    "unit": "occult_adventures:race_trait:phantom_companion_deliver_touch_spells",
+    "status": "literal-verified",
+    "source": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_race.lst:10",
+    "raw": "BONUS:VAR|DeliverTouchSpellsRange|30+if(PhantomMasterLevel>=12,20,0)",
+    "sheet_line": "Deliver touch spells: 30 ft (phantom's master below 12) -- MasterVar, row 24"
+   },
+   {
+    "record": "occult_adventures:race_trait_generic:Phantom Companion ~ Progression",
+    "unit": "occult_adventures:race_trait:phantom_companion_progression",
+    "status": "ingested-magnitude",
+    "source": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_race.lst:15",
+    "raw": "BONUS:VAR|PhantomArmorBonus|if(PhantomMasterLevel>=2,2,0)+if(PhantomMasterLevel>=2,2,0)+if(PhantomMasterLevel>=5,2,0)+if(PhantomMasterLevel>=7,2,0)+if(PhantomMasterLevel>=10,2,0)+if(PhantomMasterLevel>=12,2,0)+if(PhantomMasterLevel>=15,2,0)+if(PhantomMasterLevel>=17,2,0)+if(PhantomMasterLevel>=20,2,0)",
+    "sheet_line": "Phantom armor bonus: sum of gated +2s (MasterVar)"
+   },
+   {
+    "record": "occult_adventures:class_feature:Esoteric ~ AC Bonus",
+    "unit": "occult_adventures:class_feature:esoteric_ac_bonus",
+    "status": "engine-does-not-hold",
+    "source": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst:1780",
+    "raw": "BONUS:VAR|CMD|if(MagusLVL>=13,2,1)|TYPE=Dodge|PREVAREQ:ENCUMBERANCE,0,var(\"COUNT[EQTYPE.ARMOR.EQUIPPED.IS.HEAVY]\"),0,var(\"COUNT[EQTYPE.ARMOR.EQUIPPED.IS.MEDIUM]\"),0",
+    "sheet_line": "CMD +1 (Magus below 13; unarmored) if held"
+   }
+  ],
+  "oracle_check": "SA.<n>.DESC in charbuild-remainder",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": []
+ },
+ {
+  "token_type": "FORMULA:charbonusto(\"PCLEVEL\", \"X\")",
+  "family": "formula",
+  "instances": "251 calls corpus-wide, own count 2026-09-07 over 51,474 data/corpus/<book>/<kind>/*.json records (recursive walk, _parity excluded, LICENSE.json excluded; the beastiary dir counted as bestiary) (every call is the PCLEVEL form)",
+  "units": "227 units of 49,438 docs/work-inventory.json units (48,608 join to a corpus record); non-DONE per scripts/completion_atlas.py::_bucket_of, denominator 23,315 (non-DONE 209)",
+  "maps_to": "Number(Expr)",
+  "rule": "CharBonusToCommand sums the character's BONUS:PCLEVEL|X bonuses -- the levels a prestige class or template adds to class X for caster-level purposes. The corpus idiom is one of two: (a) on a class record, CasterLevelBL_x_X = charbonusto(\"PCLEVEL\",\"X\") then Caster_Level_X = CL + Caster_Level_Bonus + CasterLevelBL_X; (b) on a feature, classlevel(\"X\") + charbonusto(\"PCLEVEL\",\"X\") for an effective class level. Both are 'class level of X counting bonus levels'. If technical-design's CasterLevel(X) is defined as that quantity, (a) folds to CasterLevel(X) as a whole and (b) to CasterLevel(X); otherwise a variant is missing.",
+  "expr_shape": "CasterLevel(fighter)",
+  "expr_gaps": [
+   "PcLevelBonus(ClassId) (sum of held BONUS:PCLEVEL|X grants) unless CasterLevel(X) is defined to include it -- 227 units"
+  ],
+  "applies_shape": "none",
+  "prose_effect": "none",
+  "examples": [
+   {
+    "record": "advanced_class_guide:class_feature:Mutation Warrior Discovery ~ Wings",
+    "unit": "advanced_class_guide:class_feature:mutation_warrior_discovery_wings",
+    "status": "engine-does-not-hold",
+    "source": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:3092",
+    "raw": "BONUS:VAR|WingsDuration|classlevel(\"Fighter\")+charbonusto(\"PCLEVEL\",\"Fighter\")",
+    "sheet_line": "Wings duration: Fighter level + bonus levels (5 rounds if held as Fighter 5)"
+   },
+   {
+    "record": "advanced_players_guide:class:Antipaladin",
+    "unit": "advanced_players_guide:class:antipaladin",
+    "status": "engine-does-not-hold",
+    "source": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_classes.lst:216",
+    "raw": "BONUS:VAR|CasterLevelBL_x_Antipaladin|charbonusto(\"PCLEVEL\",\"Antipaladin\")",
+    "sheet_line": "(binding: Antipaladin caster level bonus levels)"
+   },
+   {
+    "record": "ultimate_magic:class:Magus",
+    "unit": "ultimate_magic:class:magus",
+    "status": "engine-does-not-hold",
+    "source": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_classes.lst:8",
+    "raw": "BONUS:VAR|CasterLevelBL_x_Magus|charbonusto(\"PCLEVEL\",\"Magus\")",
+    "sheet_line": "(binding: Magus caster level bonus levels)"
+   }
+  ],
+  "oracle_check": "CLASS.0.LEVEL is insufficient; sheet-line only unless the oracle template adds a CASTERLEVEL export",
+  "refuse_reason": "",
+  "confidence": "medium",
+  "open_questions": [
+   "Define CasterLevel(X) in \u00a71: with or without PCLEVEL grants? The bonus lane (C1) asks the same."
+  ]
+ },
+ {
+  "token_type": "FORMULA:var(\"<export token>\")",
+  "family": "formula",
+  "instances": "205 calls corpus-wide, own count 2026-09-07 over 51,474 data/corpus/<book>/<kind>/*.json records (recursive walk, _parity excluded, LICENSE.json excluded; the beastiary dir counted as bestiary); argument prefixes: SKILL.<x>.RANK 28, CL=X 11, AC 7, STAT 7, BL=X 40 (across classes), SPELLFAILURE 5, COUNT[EQTYPE...] and others",
+  "units": "134 units of 49,438 docs/work-inventory.json units (48,608 join to a corpus record); non-DONE per scripts/completion_atlas.py::_bucket_of, denominator 23,315 (non-DONE 117)",
+  "maps_to": "REFUSE",
+  "rule": "var(\"...\") evaluates an EXPORT token (VariableProcessor.getExportVariable -> ExportHandler), not a variable: it reaches arbitrary character state. Mechanical sub-table: CL=X -> ClassLevel(X) (row 8); BL=X -> the PCLEVEL bonus (row 20); STAT.<i>.SCORE -> AbilityScore; SKILL.<name>.RANK -> SkillRank (row 22). Everything else (AC.*, SPELLFAILURE, COUNT[EQTYPE.ARMOR.EQUIPPED...], RACESIZE) reads equipment/encumbrance state Expr has no fact for and refuses per argument prefix, reported as FORMULA:var(<prefix>).",
+  "expr_shape": "n/a",
+  "expr_gaps": [
+   "SkillRank(SkillId) for SKILL.<x>.RANK (28 calls); EquippedArmorClass / Encumbrance facts for the COUNT[EQTYPE...] gates (refuse)"
+  ],
+  "applies_shape": "the COUNT[EQTYPE.ARMOR.EQUIPPED] forms are really Applies gates (unarmored) -- the prereq lane's A3 NotWearing",
+  "prose_effect": "none",
+  "examples": [
+   {
+    "record": "occult_adventures:class_feature:Elemental Ascetic ~ AC Bonus",
+    "unit": "occult_adventures:class_feature:elemental_ascetic_ac_bonus",
+    "status": "engine-does-not-hold",
+    "source": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst:1375",
+    "raw": "BONUS:COMBAT|AC|WIS|PREVAREQ:ENCUMBERANCE,0,var(\"COUNT[EQTYPE.ARMOR.EQUIPPED]\"),0,var(\"COUNT[EQTYPE.SHIELD.EQUIPPED]\"),0",
+    "sheet_line": "AC +0 (Wis) while unarmored -- gate is Applies, the number converts"
+   },
+   {
+    "record": "occult_adventures:class_feature:Elemental Ascetic ~ AC Bonus",
+    "unit": "occult_adventures:class_feature:elemental_ascetic_ac_bonus",
+    "status": "engine-does-not-hold",
+    "source": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst:1375",
+    "raw": "BONUS:VAR|CMD|WIS|PREVAREQ:ENCUMBERANCE,0,var(\"COUNT[EQTYPE.ARMOR.EQUIPPED]\"),0,var(\"COUNT[EQTYPE.SHIELD.EQUIPPED]\"),0",
+    "sheet_line": "CMD +0 (Wis) while unarmored"
+   },
+   {
+    "record": "occult_adventures:class_feature:Esoteric ~ AC Bonus",
+    "unit": "occult_adventures:class_feature:esoteric_ac_bonus",
+    "status": "engine-does-not-hold",
+    "source": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst:1780",
+    "raw": "BONUS:VAR|CMD|if(MagusLVL>=13,2,1)|TYPE=Dodge|PREVAREQ:ENCUMBERANCE,0,var(\"COUNT[EQTYPE.ARMOR.EQUIPPED.IS.HEAVY]\"),0,var(\"COUNT[EQTYPE.ARMOR.EQUIPPED.IS.MEDIUM]\"),0",
+    "sheet_line": "CMD +1/+2 while unarmored (Magus level)"
+   }
+  ],
+  "oracle_check": "AC.TOTAL in computed-values.txt.ftl for the AC-while-unarmored case",
+  "refuse_reason": "export-token reads outside the Expr fact set: 134 units carry a var( call (117 non-DONE); the CL=/STAT./SKILL. sub-forms resolve, the rest refuse per prefix",
+  "confidence": "medium",
+  "open_questions": []
+ },
+ {
+  "token_type": "FORMULA:skillinfo(\"RANK\"|\"TOTALRANK\"|\"TOTAL\", \"<skill>\")",
+  "family": "formula",
+  "instances": "188 calls corpus-wide, own count 2026-09-07 over 51,474 data/corpus/<book>/<kind>/*.json records (recursive walk, _parity excluded, LICENSE.json excluded; the beastiary dir counted as bestiary) (RANK 98, TOTALRANK 83, TOTAL 1)",
+  "units": "65 units of 49,438 docs/work-inventory.json units (48,608 join to a corpus record); non-DONE per scripts/completion_atlas.py::_bucket_of, denominator 23,315 (non-DONE 53)",
+  "maps_to": "Number(Expr)",
+  "rule": "SkillInfoCommand: RANK = ranks bought, TOTALRANK = ranks incl. bonus ranks, TOTAL = the skill total. Expr has no skill fact. Add SkillRank(SkillId) (TOTALRANK) and SkillTotal(SkillId); RANK vs TOTALRANK differ only when BONUS:SKILLRANK grants exist (14 corpus instances) -- map both to SkillRank and flag the 14.",
+  "expr_shape": "Sum([Const(2), Mul(Min(1, Max(0, Sum([SkillRank(knowledge_religion), Const(-9)]))), Const(2))])",
+  "expr_gaps": [
+   "SkillRank(SkillId) -- 65 units; SkillTotal(SkillId) -- 1 unit"
+  ],
+  "applies_shape": "none",
+  "prose_effect": "none",
+  "examples": [
+   {
+    "record": "inner_sea_world_guide:class_feature:Scholar ~ Religion",
+    "unit": "inner_sea_world_guide:class_feature:scholar_religion",
+    "status": "engine-does-not-hold",
+    "source": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_abilities_class.lst:212",
+    "raw": "BONUS:VAR|ScholarReBonus|if(skillinfo(\"TOTALRANK\",\"Knowledge (Religion)\")>=10,4,2)",
+    "sheet_line": "Scholar (religion) +2 (below 10 ranks) / +4"
+   },
+   {
+    "record": "inner_sea_world_guide:class_feature:Scholar ~ Engineering",
+    "unit": "inner_sea_world_guide:class_feature:scholar_engineering",
+    "status": "engine-does-not-hold",
+    "source": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_abilities_class.lst:205",
+    "raw": "BONUS:VAR|ScholarEnBonus|if(skillinfo(\"TOTALRANK\",\"Knowledge (Engineering)\")>=10,4,2)",
+    "sheet_line": "Scholar (engineering) +2 / +4"
+   },
+   {
+    "record": "inner_sea_world_guide:class_feature:Scholar ~ Nobility",
+    "unit": "inner_sea_world_guide:class_feature:scholar_nobility",
+    "status": "engine-does-not-hold",
+    "source": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_abilities_class.lst:210",
+    "raw": "BONUS:VAR|ScholarNoBonus|if(skillinfo(\"TOTALRANK\",\"Knowledge (Nobility)\")>=10,4,2)",
+    "sheet_line": "Scholar (nobility) +2 / +4"
+   }
+  ],
+  "oracle_check": "sheet-line only -- the export set has no skill lines",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": []
+ },
+ {
+  "token_type": "FORMULA:count(\"ABILITIES\", \"CATEGORY=..\", \"KEY=..|TYPE=..\")",
+  "family": "formula",
+  "instances": "70 calls corpus-wide, own count 2026-09-07 over 51,474 data/corpus/<book>/<kind>/*.json records (recursive walk, _parity excluded, LICENSE.json excluded; the beastiary dir counted as bestiary)",
+  "units": "57 units of 49,438 docs/work-inventory.json units (48,608 join to a corpus record); non-DONE per scripts/completion_atlas.py::_bucket_of, denominator 23,315 (non-DONE 44)",
+  "maps_to": "REFUSE",
+  "rule": "CountCommand counts held abilities matching a filter. Expr has no held-set fact. A CountHeld(category, key-or-type) variant would close it mechanically (the filter is a literal string); until then refuse per call.",
+  "expr_shape": "n/a",
+  "expr_gaps": [
+   "CountHeld(category, filter) -- 57 units"
+  ],
+  "applies_shape": "none",
+  "prose_effect": "none",
+  "examples": [
+   {
+    "record": "adventurers_guide:ability:Equipment Bonus ~ Ioun Stone Save Bonus",
+    "unit": "adventurers_guide:ability:equipment_bonus_ioun_stone_save_bonus",
+    "status": "ingested-magnitude",
+    "source": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities.lst:126",
+    "raw": "BONUS:VAR|IounStoneFortitudeSaveBonus|min(3,count(\"ABILITIES\",\"CATEGORY=Special Ability\",\"KEY=Ioun Stone (Amber Spindle - Flawed)\"))",
+    "sheet_line": "Fortitude +N (N = amber spindle stones held, max 3)"
+   },
+   {
+    "record": "adventurers_guide:ability:Equipment Bonus ~ Ioun Stone Save Bonus",
+    "unit": "adventurers_guide:ability:equipment_bonus_ioun_stone_save_bonus",
+    "status": "ingested-magnitude",
+    "source": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities.lst:126",
+    "raw": "BONUS:VAR|IounStoneReflexSaveBonus|min(3,count(\"ABILITIES\",\"CATEGORY=Special Ability\",\"KEY=Ioun Stone (Amber Spindle - Flawed)\"))",
+    "sheet_line": "Reflex +N"
+   },
+   {
+    "record": "adventurers_guide:ability:Equipment Bonus ~ Ioun Stone Save Bonus",
+    "unit": "adventurers_guide:ability:equipment_bonus_ioun_stone_save_bonus",
+    "status": "ingested-magnitude",
+    "source": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities.lst:126",
+    "raw": "BONUS:VAR|IounStoneWillSaveBonus|min(3,count(\"ABILITIES\",\"CATEGORY=Special Ability\",\"KEY=Ioun Stone (Amber Spindle - Flawed)\"))",
+    "sheet_line": "Will +N"
+   }
+  ],
+  "oracle_check": "CHECK.<n>.TOTAL in computed-values.txt.ftl",
+  "refuse_reason": "held-set count: 57 units (44 non-DONE)",
+  "confidence": "medium",
+  "open_questions": []
+ },
+ {
+  "token_type": "FORMULA:mastervar(\"X\") / MASTERVAR / MasterLevel",
+  "family": "formula",
+  "instances": "19 calls + 252 MasterLevel identifier uses corpus-wide, own count 2026-09-07 over 51,474 data/corpus/<book>/<kind>/*.json records (recursive walk, _parity excluded, LICENSE.json excluded; the beastiary dir counted as bestiary)",
+  "units": "14 units call mastervar of 49,438 docs/work-inventory.json units (48,608 join to a corpus record); non-DONE per scripts/completion_atlas.py::_bucket_of, denominator 23,315 (non-DONE 7); MasterLevel is referenced by companion/eidolon rules (bonus lane E7 counts 240 gates)",
+  "maps_to": "REFUSE",
+  "rule": "MasterVarCommand reads a variable on the companion's MASTER character. Our character model has no master link. Refuse until a MasterVar(name)/MasterLevel fact exists; the sheet prints the words.",
+  "expr_shape": "n/a",
+  "expr_gaps": [
+   "MasterLevel / MasterVar(id) -- companion records only"
+  ],
+  "applies_shape": "companion-kind holder",
+  "prose_effect": "the words print",
+  "examples": [
+   {
+    "record": "adventurers_guide:ability:Devil ~ Unchained Eidolon LVL04",
+    "unit": "adventurers_guide:ability:devil_unchained_eidolon_lvl04",
+    "status": "ingested-magnitude",
+    "source": "pathfinder/paizo/roleplaying_game/adventurers_guide/support/ag_abilities_pu.lst:78",
+    "raw": "BONUS:STAT|CHA|2|PREVARGTEQ:mastervar(\"MasterIsDevilBinder\"),1",
+    "sheet_line": "Cha +2 (if master is a devil binder) -- words"
+   },
+   {
+    "record": "adventurers_guide:ability:Devil ~ Unchained Eidolon LVL01",
+    "unit": "adventurers_guide:ability:devil_unchained_eidolon_lvl01",
+    "status": "ingested-magnitude",
+    "source": "pathfinder/paizo/roleplaying_game/adventurers_guide/support/ag_abilities_pu.lst:77",
+    "raw": "BONUS:COMBAT|BASEAB|-ceil(TL/2)|PREVARGTEQ:mastervar(\"MasterIsDevilBinder\"),1",
+    "sheet_line": "Base attack -ceil(level/2) (if ...) -- words"
+   },
+   {
+    "record": "adventurers_guide:ability:Devil ~ Unchained Eidolon LVL01",
+    "unit": "adventurers_guide:ability:devil_unchained_eidolon_lvl01",
+    "status": "ingested-magnitude",
+    "source": "pathfinder/paizo/roleplaying_game/adventurers_guide/support/ag_abilities_pu.lst:77",
+    "raw": "BONUS:VAR|EidMaxAttacks|-((MasterLevel+1)/5)|PREVARGTEQ:mastervar(\"MasterIsDevilBinder\"),1",
+    "sheet_line": "Max attacks (if ...) -- words"
+   }
+  ],
+  "oracle_check": "sheet-line only -- no companion build in the export set",
+  "refuse_reason": "master-character fact: 14 units",
+  "confidence": "high",
+  "open_questions": []
+ },
+ {
+  "token_type": "FORMULA:%CHOICE, %LIST",
+  "family": "formula",
+  "instances": "273 %CHOICE + 129 %LIST uses in numeric positions corpus-wide, own count 2026-09-07 over 51,474 data/corpus/<book>/<kind>/*.json records (recursive walk, _parity excluded, LICENSE.json excluded; the beastiary dir counted as bestiary)",
+  "units": "207 units use %CHOICE, 101 use %LIST of 49,438 docs/work-inventory.json units (48,608 join to a corpus record); non-DONE per scripts/completion_atlas.py::_bucket_of, denominator 23,315 (non-DONE 182 / 27)",
+  "maps_to": "Number(Expr)",
+  "rule": "The chosen value of the record's CHOOSE: (or the TEMPVALUE range, row 62). Maps to Choice(ChoiceId); unresolved -> the rule prints as words (\u00a71). When %LIST names a TARGET (BONUS:STAT|%LIST|1, BONUS:SKILLRANK|%LIST|...) the choice picks the target, not the magnitude -- that is the bonus lane's target-choice shape, and the prose lane's ChoiceName gap.",
+  "expr_shape": "Choice(choice_id)",
+  "expr_gaps": [
+   "Choice needs a value domain (integer range vs. named pick): ChoiceId as written carries none"
+  ],
+  "applies_shape": "none",
+  "prose_effect": "%CHOICE inside prose is the prose lane's slot",
+  "examples": [
+   {
+    "record": "occult_adventures:race_trait_generic:Homunculus Companion ~ Ability Score Increase",
+    "unit": "occult_adventures:race_trait:homunculus_companion_ability_score_increase",
+    "status": "ingested-magnitude",
+    "source": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_race.lst:191",
+    "raw": "BONUS:STAT|%LIST|1",
+    "sheet_line": "+1 to the chosen ability score (words until chosen)"
+   },
+   {
+    "record": "occult_adventures:class_feature:Gifted Adept ~ Psychic",
+    "unit": "occult_adventures:class_feature:gifted_adept_psychic",
+    "status": "engine-does-not-hold",
+    "source": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst:2076",
+    "raw": "BONUS:CASTERLEVEL|SPELL.%LIST|1",
+    "sheet_line": "Caster level +1 for the chosen spell (words until chosen)"
+   },
+   {
+    "record": "occult_adventures:class_feature:Trickster Skill Choice",
+    "unit": "occult_adventures:class_feature:trickster_skill_choice",
+    "status": "engine-does-not-hold",
+    "source": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst:905",
+    "raw": "BONUS:SKILLRANK|%LIST|MediumLVL",
+    "sheet_line": "Ranks in the chosen skill: Medium level (words until chosen)"
+   }
+  ],
+  "oracle_check": "sheet-line only",
+  "refuse_reason": "",
+  "confidence": "medium",
+  "open_questions": []
+ },
+ {
+  "token_type": "FORMULA:%SPELLLEVEL %CASTERLEVEL %CHARGES %SPELLCOST %SPELLXPCOST BASECOST (equipment-modifier pricing)",
+  "family": "formula",
+  "instances": "25 + 21 + 19 + 14 + 14 + 37 uses, all inside COST: on equipment_modifier records corpus-wide, own count 2026-09-07 over 51,474 data/corpus/<book>/<kind>/*.json records (recursive walk, _parity excluded, LICENSE.json excluded; the beastiary dir counted as bestiary)",
+  "units": "23 + 21 + 19 + 14 + 14 + 23 units of 49,438 docs/work-inventory.json units (48,608 join to a corpus record); non-DONE per scripts/completion_atlas.py::_bucket_of, denominator 23,315 (all non-DONE except BASECOST 20)",
+  "maps_to": "Metadata(ignored-by-sheet)",
+  "rule": "These are EQMOD price formulas (COST:(1800*max(%SPELLLEVEL,1/2)*%CASTERLEVEL)+...). Item price is a purchase-time number, not a character-sheet rule; the finished magic items the corpus ships carry their literal COST. Ignored by the sheet; kept on the record for a later item builder.",
+  "expr_shape": "n/a",
+  "expr_gaps": [],
+  "applies_shape": "none",
+  "prose_effect": "none",
+  "examples": [
+   {
+    "record": "advanced_race_guide:equipment:Material ~ Darkleaf Cloth ~ Item",
+    "unit": "advanced_race_guide:equipment_modifier:material_darkleaf_cloth_item",
+    "status": "ingested-magnitude",
+    "source": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equipmods.lst:8",
+    "raw": "COST:WT*375",
+    "sheet_line": "(not printed)"
+   },
+   {
+    "record": "ultimate_combat:equipment:Material ~ Gold",
+    "unit": "ultimate_combat:equipment_modifier:material_gold",
+    "status": "ingested-magnitude",
+    "source": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_equipmods.lst:41",
+    "raw": "COST:(BASECOST)*9",
+    "sheet_line": "(not printed)"
+   },
+   {
+    "record": "ultimate_psionics:equipment:Special Ability ~ Power Choice / Mind Stone / Greater",
+    "unit": "ultimate_psionics:equipment_modifier:special_ability_power_choice_mind_stone_greater",
+    "status": "ingested-magnitude",
+    "source": "pathfinder/dreamscarred_press/ultimate_psionics/up_equipmods.lst:131",
+    "raw": "COST:(4000*(%SPELLLEVEL)*%SPELLLEVEL)",
+    "sheet_line": "(not printed)"
+   }
+  ],
+  "oracle_check": "sheet-line only",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": []
+ },
+ {
+  "token_type": "FORMULA:corpus variable, SAME-record contributors only",
+  "family": "formula",
+  "instances": "see units",
+  "units": "1,318 units reference only variables whose every DEFINE/BONUS:VAR contributor is the same record of 49,438 docs/work-inventory.json units (48,608 join to a corpus record); non-DONE per scripts/completion_atlas.py::_bucket_of, denominator 23,315 (non-DONE 793)",
+  "maps_to": "Number(Expr)",
+  "rule": "Fold at convert time: V = Sum of the record's own BONUS:VAR|V|f terms (each converted; each gated by its own trailing PRE via the fallback of row 19, or via Applies when the gate is record-level), plus the DEFINE seed (always 0). The racial-SLA block is the canonical case: Times = Const(1), LVL = Level, SpellLVL = Const(1), DCMod = AbilityMod(Cha), DC = Sum([Const(10), Const(1), AbilityMod(Cha)]). No variable name survives into the SheetRule.",
+  "expr_shape": "Sum([Const(10), Const(1), AbilityMod(Cha)])",
+  "expr_gaps": [],
+  "applies_shape": "none",
+  "prose_effect": "none",
+  "examples": [
+   {
+    "record": "monster_codex:race_trait_generic:Racial SLA ~ Ironskin",
+    "unit": "monster_codex:race_trait:racial_sla_ironskin",
+    "status": "ingested-magnitude",
+    "source": "pathfinder/paizo/roleplaying_game/monster_codex/mc_abilities_race.lst:95",
+    "raw": "BONUS:VAR|RacialSLA_Ironskin_DC|10+RacialSLA_Ironskin_SpellLVL+RacialSLA_Ironskin_DCMod",
+    "sheet_line": "Ironskin: 1/day, CL 5, DC 15"
+   },
+   {
+    "record": "advanced_players_guide:race_trait_generic:Racial SLA ~ Weapon of Awe",
+    "unit": "advanced_players_guide:race_trait:racial_sla_weapon_of_awe",
+    "status": "ingested-magnitude",
+    "source": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_race.lst:334",
+    "raw": "BONUS:VAR|RacialSLA_WeaponOfAwe_DC|10+RacialSLA_WeaponOfAwe_SpellLVL+RacialSLA_WeaponOfAwe_DCMod",
+    "sheet_line": "Weapon of Awe: 1/day, CL 5, DC 15"
+   },
+   {
+    "record": "advanced_players_guide:race_trait_generic:Racial SLA ~ Ill Omen",
+    "unit": "advanced_players_guide:race_trait:racial_sla_ill_omen",
+    "status": "ingested-magnitude",
+    "source": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_race.lst:324",
+    "raw": "BONUS:VAR|RacialSLA_IllOmen_DC|10+RacialSLA_IllOmen_SpellLVL+RacialSLA_IllOmen_DCMod",
+    "sheet_line": "Ill Omen: 1/day, CL 5, DC 15"
+   }
+  ],
+  "oracle_check": "SA.<n>.DESC in charbuild-remainder for a race fixture that holds the SLA",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": []
+ },
+ {
+  "token_type": "FORMULA:corpus variable, CROSS-record contributors (the resolution rule)",
+  "family": "formula",
+  "instances": "20,563 (unit, variable) reference pairs corpus-wide, own count 2026-09-07 over 51,474 data/corpus/<book>/<kind>/*.json records (recursive walk, _parity excluded, LICENSE.json excluded; the beastiary dir counted as bestiary); 9,658 of them (47%) name a variable with 2+ contributing records, 506 with 50+ (AC_Natural_Armor 1,545 contributors, PrimaryAttackDamageDice 538, Maneuverability 511, DarkvisionRange 342)",
+  "units": "8,518 units reference at least one variable with a contributor on ANOTHER record of 49,438 docs/work-inventory.json units (48,608 join to a corpus record); non-DONE per scripts/completion_atlas.py::_bucket_of, denominator 23,315 (non-DONE 6,646 = 28.5% of all non-DONE); 11,144 units reference any variable at all (non-DONE 8,309)",
+  "maps_to": "Number(Expr)",
+  "rule": "PCGen rule (pinned 7f81800, verified in source on this box): value(V) for character C = [largest DEFINE seed among objects C HOLDS -- always 0 here] + SUM over every object C holds of each BONUS:VAR|V|f whose own PRE passes (PlayerCharacter.getVariable -> variableFacet + getTotalBonusTo(\"VAR\") -> BonusManager.sumActiveBonusMap); if no held object DEFINEs V the name is not a variable: PCGen tries the builtin terms, then the export tokens, then the broken parser -> 0, and the BONUS:VAR contributions are DROPPED (includeBonus=false path). Converter rule: V is the sum of contributions from HELD rules. Expr has no 'held' term, so the converter has exactly two mechanical choices. (A) INLINE: replace V by Sum over every contributor record r of Held(r.id, f_r) -- needs an Expr::Held(RuleId, Box<Expr>) variant (contributes f_r only if the character holds rule r, else 0) or an equivalent Applies-gated sub-expression; correct, no variable names survive, but AC_Natural_Armor inlines 1,545 terms into every consumer. (B) VAR TABLE: Expr::Var(VarId) with VarId an opaque converter-minted id (no PCGen name), and a converter-emitted data/sheet_rules/_vars/<id>.json listing (rule_id -> Expr) contributions; the live evaluator sums the contributions of held rules. (B) is PCGen's own mechanism restated in our schema, is the only form that stays small, and is what the bonus lane's 'producer chain inlined' (their rule 2) needs in order to be CORRECT -- unconditional inlining sums contributions from records the character does not hold (BloodlineLVL has 6 contributors: Blood Arcanist, Eldritch Scion, Bloodline Development ...; only one is ever held). Either way the DEFINE-existence gate is dropped: every seed is 0, so gating on 'some held object DEFINEs V' changes nothing except to drop bonuses PCGen would drop -- see row 30 for the names PCGen drops.",
+  "expr_shape": "Var(v_domain_lvl)  [option B]  or  Sum([Held(r1, Level), Held(r2, ClassLevel(cleric))])  [option A]",
+  "expr_gaps": [
+   "Held(RuleId, Expr) [option A] OR Var(VarId) + converter-emitted contribution table [option B] -- 8,518 units (6,646 non-DONE) cannot convert without one of them; recommendation: B"
+  ],
+  "applies_shape": "the contributor's own record-level Applies gates its contribution; a token-level PRE (PREVARGTEQ tail) is folded into the contribution's Expr per row 19",
+  "prose_effect": "none",
+  "examples": [
+   {
+    "record": "inner_sea_world_guide:class_feature:Domain Base ~ Scalykind",
+    "unit": "inner_sea_world_guide:class_feature:domain_base_scalykind",
+    "status": "engine-does-not-hold",
+    "source": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_abilities_class.lst:13",
+    "raw": "BONUS:VAR|DomainScalykindLVL|DomainLVL",
+    "sheet_line": "Scalykind domain level = DomainLVL (Cleric level 5 if held as a Cleric domain)"
+   },
+   {
+    "record": "inner_sea_world_guide:class_feature:Domain Base ~ Void",
+    "unit": "inner_sea_world_guide:class_feature:domain_base_void",
+    "status": "engine-does-not-hold",
+    "source": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_abilities_class.lst:14",
+    "raw": "BONUS:VAR|DomainVoidLVL|DomainLVL",
+    "sheet_line": "Void domain level = DomainLVL"
+   },
+   {
+    "record": "inner_sea_world_guide:class_feature:Travel ~ HK",
+    "unit": "inner_sea_world_guide:class_feature:travel_hk",
+    "status": "engine-does-not-hold",
+    "source": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_abilities_class.lst:101",
+    "raw": "BONUS:VAR|DomainTravelLVL|DomainLVL",
+    "sheet_line": "Travel domain level (Hellknight) = DomainLVL"
+   }
+  ],
+  "oracle_check": "SA.<n>.DESC in charbuild-remainder for class_feature fixtures; VAR.CMB/VAR.CMD in computed-values.txt.ftl are two such variables PCGen itself exports",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": [
+   "Option A vs B is a technical-design \u00a71 decision; B adds one variant and one derived file, A adds one variant and a size hazard. Both keep PCGen names out of live data."
+  ]
+ },
+ {
+  "token_type": "FORMULA:variable with a contributor row the corpus does NOT hold (in an ingested file)",
+  "family": "formula",
+  "instances": "7,768 DEFINE/BONUS:VAR rows in the 677 .lst files the corpus cites are not corpus records (5,969 are .MOD rows -- the token closure reads those whose base record is ingested -- and 1,799 are base rows never ingested; top files: acg_abilities_globalvar.lst 703, isg_deities.lst 594, cr_abilities_class.lst 593, apg_abilities_globalvar.lst 492)",
+  "units": "upper bound 3,494 units reference such a variable of 49,438 docs/work-inventory.json units (48,608 join to a corpus record); non-DONE per scripts/completion_atlas.py::_bucket_of, denominator 23,315 (non-DONE 2,657); the bound counts .MOD rows the closure already reads, so the true figure is lower -- derive it with the closure, not the record",
+  "maps_to": "REFUSE",
+  "rule": "A variable whose contributor set is incomplete on our side converts to a wrong number that looks right (the \u00a724.1 hazard). Rule: the converter builds the contributor index from the CLOSURE (base + .MOD rows) of every corpus record, then cross-checks the pinned PCGen data files it ingested; a variable with a contributor row in an ingested file that no closure covers is Refused{token_type:'FORMULA:external-contributor:<file>'} for every consumer, reported per file. The fix is ingest (SD-35 Epic 5's beginner_box shows the shape), not per-record modelling. Top names: BloodlineCasterLVL 259 units, TempEvolutionsAllowed/EidolonTempEvolutionPool 120, SLA_DC_STAT/SLA_Base_Times/SLA_Base_LVL 102 (a core_essentials block the corpus ingests only as monster abilities).",
+  "expr_shape": "n/a",
+  "expr_gaps": [],
+  "applies_shape": "none",
+  "prose_effect": "none",
+  "examples": [
+   {
+    "record": "advanced_players_guide:ability:Blessing of Courage and Life",
+    "unit": "advanced_players_guide:ability:blessing_of_courage_and_life",
+    "status": "ingested-magnitude",
+    "source": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities.lst:396",
+    "raw": "BONUS:VAR|SLA_BlessingOfCourageAndLife_Times|SLA_Base_Times|TYPE=Base",
+    "sheet_line": "Blessing of Courage and Life: N/day (SLA_Base_Times is defined in a row we do not hold) -- refused"
+   },
+   {
+    "record": "advanced_players_guide:ability:Blessing of Courage and Life",
+    "unit": "advanced_players_guide:ability:blessing_of_courage_and_life",
+    "status": "ingested-magnitude",
+    "source": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities.lst:396",
+    "raw": "BONUS:VAR|SLA_BlessingOfCourageAndLife_DCMod|SLA_DC_STAT|TYPE=Base",
+    "sheet_line": "DC modifier: SLA_DC_STAT -- refused"
+   },
+   {
+    "record": "advanced_players_guide:ability:Ill Omen",
+    "unit": "advanced_players_guide:ability:ill_omen",
+    "status": "ingested-magnitude",
+    "source": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities.lst:392",
+    "raw": "BONUS:VAR|SLA_IllOmen_Times|SLA_Base_Times|TYPE=Base",
+    "sheet_line": "Ill Omen (blessing): N/day -- refused"
+   }
+  ],
+  "oracle_check": "SA.<n>.DESC in charbuild-remainder would show PCGen's number; that is exactly the disagreement this rule prevents shipping",
+  "refuse_reason": "incomplete contributor set: up to 3,494 units (2,657 non-DONE); per file, not per record",
+  "confidence": "medium",
+  "open_questions": [
+   "Which of the 1,799 unheld base rows are global-variable trackers (acg/apg/uc _globalvar.lst: 1,407 rows) that a small 'system record' ingest would cover in one pass?"
+  ]
+ },
+ {
+  "token_type": "FORMULA:identifier DEFINEd nowhere (corpus or pinned PCGen data)",
+  "family": "formula",
+  "instances": "184 names, 873 uses corpus-wide, own count 2026-09-07 over 51,474 data/corpus/<book>/<kind>/*.json records (recursive walk, _parity excluded, LICENSE.json excluded; the beastiary dir counted as bestiary) (BloodlinePower{1,3,9,15,20}LVLBonus, EldrtichHeritageBloodlinePower*, BloodlinePower1TimesBonus, HellknightLvl, MHMercyLVL ...); BONUS:VAR targets that are DEFINEd nowhere sit on 882 units",
+  "units": "756 units reference one of 49,438 docs/work-inventory.json units (48,608 join to a corpus record); non-DONE per scripts/completion_atlas.py::_bucket_of, denominator 23,315 (non-DONE 618)",
+  "maps_to": "Number(Expr)",
+  "rule": "PCGen resolves these to 0 and drops every BONUS:VAR into them (row 28's rule: no held DEFINE -> not a variable -> builtin/export lookup fails -> broken parser -> 0). They are upstream data defects (a DEFINE was never written). Converter: Const(0), and it emits a per-name defect list (data/sheet_rules/_defects/undefined-variables.json) so the count is visible. This matches the oracle; the bonus lane's 'refuse per name' (their V1) would refuse 618 non-DONE units that PCGen itself prints with a 0.",
+  "expr_shape": "Const(0)",
+  "expr_gaps": [],
+  "applies_shape": "none",
+  "prose_effect": "none",
+  "examples": [
+   {
+    "record": "inner_sea_world_guide:class_feature:Artifice ~ HK",
+    "unit": "inner_sea_world_guide:class_feature:artifice_hk",
+    "status": "engine-does-not-hold",
+    "source": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_abilities_class.lst:92",
+    "raw": "BONUS:VAR|DomainArtificeLVL|HellknightLvl",
+    "sheet_line": "Artifice domain level: 0 (HellknightLvl is defined nowhere; PCGen prints 0 too)"
+   },
+   {
+    "record": "inner_sea_world_guide:class_feature:War ~ HK",
+    "unit": "inner_sea_world_guide:class_feature:war_hk",
+    "status": "engine-does-not-hold",
+    "source": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_abilities_class.lst:102",
+    "raw": "BONUS:VAR|DomainWarLVL|HellknightLvl",
+    "sheet_line": "War domain level: 0"
+   },
+   {
+    "record": "inner_sea_world_guide:class_feature:Magic ~ HK",
+    "unit": "inner_sea_world_guide:class_feature:magic_hk",
+    "status": "engine-does-not-hold",
+    "source": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_abilities_class.lst:96",
+    "raw": "BONUS:VAR|DomainMagicLVL|HellknightLvl",
+    "sheet_line": "Magic domain level: 0"
+   }
+  ],
+  "oracle_check": "SA.<n>.DESC in charbuild-remainder for one BloodlinePower*Bonus consumer settles the 0 empirically",
+  "refuse_reason": "",
+  "confidence": "medium",
+  "open_questions": [
+   "Confirm on one export that PCGen prints 0 (not blank) for a BloodlinePower1TimesBonus consumer before adopting Const(0) over refuse."
+  ]
+ },
+ {
+  "token_type": "FORMULA:malformed (parser refusals)",
+  "family": "formula",
+  "instances": "240 distinct formula-field refusals reported by the lane brief for tests::corpus_shape_coverage (INHERITED figure -- not re-run here: this lane may not run cargo); the module doc's own categories: unrecognised functions var/count/mastervar/charbonusto/cl (57 before wave 26), skillinfo non-TOTALRANK (5), bare-numeric if() condition (52 by this lane's own regex), literal malformed text such as if(X>=7),1,0",
+  "units": "not re-derived; the refusal set is a subset of the rows above (rows 19-24 cover every named category)",
+  "maps_to": "REFUSE",
+  "rule": "Whatever the F1..F9 parser refuses, the converter refuses, keyed by the parser's own error category (unrecognised function <name>, bare '=' , unrecognised character, trailing tokens). Rows 19-24 give each category its own mechanical rule; what remains after them is genuinely malformed corpus text (the acg if(...),1,0 case) and stays refused.",
+  "expr_shape": "n/a",
+  "expr_gaps": [],
+  "applies_shape": "none",
+  "prose_effect": "none",
+  "examples": [
+   {
+    "record": "(no record quoted: the refused set is only re-derivable by cargo test corpus_shape_coverage, which this lane may not run; every named category has its records in rows 19-24)",
+    "unit": "",
+    "status": "",
+    "source": "",
+    "raw": "",
+    "sheet_line": ""
+   }
+  ],
+  "oracle_check": "n/a",
+  "refuse_reason": "parser-refused text; count re-derivable by cargo test corpus_shape_coverage (not run in this lane)",
+  "confidence": "medium",
+  "open_questions": [
+   "Re-run corpus_shape_coverage after the converter adopts rows 19-24 and report the residue by category."
+  ]
+ },
+ {
+  "token_type": "DAMAGE / ALTDAMAGE",
+  "family": "formula",
+  "instances": "535 corpus-wide, own count 2026-09-07 over 51,474 data/corpus/<book>/<kind>/*.json records (recursive walk, _parity excluded, LICENSE.json excluded; the beastiary dir counted as bestiary); ALTDAMAGE 42; value shapes: NdM 529, 0 (5), Special (1)",
+  "units": "535 of 49,438 docs/work-inventory.json units (48,608 join to a corpus record); non-DONE per scripts/completion_atlas.py::_bucket_of, denominator 23,315 (non-DONE: 7); ALTDAMAGE 42 units (0 non-DONE)",
+  "maps_to": "Dice",
+  "rule": "Weapon damage die. Dice{dice:'1d8', modifier:None} -- the equipment chassis adds Str/enhancement at the weapon line, not here. DAMAGE:0 (touch attacks, 5) and DAMAGE:Special (1) -> Text. ALTDAMAGE is the double weapon's second head: a second Dice on the same rule (one SheetRule per head, id suffix).",
+  "expr_shape": "Dice{dice:'1d4', modifier:None}",
+  "expr_gaps": [],
+  "applies_shape": "none",
+  "prose_effect": "none",
+  "examples": [
+   {
+    "record": "ultimate_equipment:equipment:Lash of the Howler",
+    "unit": "ultimate_equipment:equipment:lash_of_the_howler",
+    "status": "literal-verified",
+    "source": "pathfinder/paizo/roleplaying_game/ultimate_equipment/ue_equip_arms_armor.lst:504",
+    "raw": "DAMAGE:1d4",
+    "sheet_line": "Lash of the Howler: 1d4"
+   },
+   {
+    "record": "core_rulebook:equipment:Touch Attack (Ray)",
+    "unit": "core_rulebook:equipment:touch_attack_ray",
+    "status": "oracle-unverifiable",
+    "source": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_arms_armor.lst:295",
+    "raw": "DAMAGE:0",
+    "sheet_line": "Touch attack (ray): -- (words)"
+   },
+   {
+    "record": "ultimate_equipment:equipment:Poisoned Sand Tube",
+    "unit": "ultimate_equipment:equipment:poisoned_sand_tube",
+    "status": "oracle-unverifiable",
+    "source": "pathfinder/paizo/roleplaying_game/ultimate_equipment/ue_equip_arms_armor.lst:577",
+    "raw": "DAMAGE:Special",
+    "sheet_line": "Poisoned sand tube: special (words)"
+   }
+  ],
+  "oracle_check": "WEAPON.COUNT in weapon-family.txt.ftl (the family export emits count only; damage dice are sheet-line only)",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": []
+ },
+ {
+  "token_type": "CRITRANGE / ALTCRITRANGE",
+  "family": "formula",
+  "instances": "510 corpus-wide, own count 2026-09-07 over 51,474 data/corpus/<book>/<kind>/*.json records (recursive walk, _parity excluded, LICENSE.json excluded; the beastiary dir counted as bestiary); values 1..4 only; ALTCRITRANGE 36",
+  "units": "510 of 49,438 docs/work-inventory.json units (48,608 join to a corpus record); non-DONE per scripts/completion_atlas.py::_bucket_of, denominator 23,315 (non-DONE: 7)",
+  "maps_to": "Text",
+  "rule": "CRITRANGE:n is the threat range width: prints as '20' for 1, '19-20' for 2, '18-20' for 3, '17-20' for 4 (21-n .. 20). A fixed 4-entry table; the equipment record already holds n as a typed field.",
+  "expr_shape": "n/a (label text from a 4-entry table)",
+  "expr_gaps": [],
+  "applies_shape": "none",
+  "prose_effect": "the '19-20/x2' fragment on the weapon line",
+  "examples": [
+   {
+    "record": "ultimate_equipment:equipment:Lash of the Howler",
+    "unit": "ultimate_equipment:equipment:lash_of_the_howler",
+    "status": "literal-verified",
+    "source": "pathfinder/paizo/roleplaying_game/ultimate_equipment/ue_equip_arms_armor.lst:504",
+    "raw": "CRITRANGE:1",
+    "sheet_line": "Lash of the Howler: 20/x2"
+   },
+   {
+    "record": "inner_sea_world_guide:equipment:War Razor",
+    "unit": "inner_sea_world_guide:equipment:war_razor",
+    "status": "oracle-unverifiable",
+    "source": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_equip_arms_armor.lst:10",
+    "raw": "CRITRANGE:2",
+    "sheet_line": "War razor: 19-20/x2"
+   },
+   {
+    "record": "bestiary_3:equipment:Shears",
+    "unit": "bestiary_3:equipment:shears",
+    "status": "grounded",
+    "source": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_equip_arms_armor.lst:11",
+    "raw": "CRITRANGE:3",
+    "sheet_line": "Shears: 18-20/x2"
+   }
+  ],
+  "oracle_check": "sheet-line only",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": []
+ },
+ {
+  "token_type": "CRITMULT / ALTCRITMULT",
+  "family": "formula",
+  "instances": "524 corpus-wide, own count 2026-09-07 over 51,474 data/corpus/<book>/<kind>/*.json records (recursive walk, _parity excluded, LICENSE.json excluded; the beastiary dir counted as bestiary); x2 368, x3 95, x4 59, '-' 2; ALTCRITMULT 37",
+  "units": "524 of 49,438 docs/work-inventory.json units (48,608 join to a corpus record); non-DONE per scripts/completion_atlas.py::_bucket_of, denominator 23,315 (non-DONE: 7)",
+  "maps_to": "Text",
+  "rule": "Prints verbatim ('x2'); '-' prints as '--' (no critical). Already a typed equipment field.",
+  "expr_shape": "n/a",
+  "expr_gaps": [],
+  "applies_shape": "none",
+  "prose_effect": "the '/x2' fragment",
+  "examples": [
+   {
+    "record": "ultimate_equipment:equipment:Lash of the Howler",
+    "unit": "ultimate_equipment:equipment:lash_of_the_howler",
+    "status": "literal-verified",
+    "source": "pathfinder/paizo/roleplaying_game/ultimate_equipment/ue_equip_arms_armor.lst:504",
+    "raw": "CRITMULT:x2",
+    "sheet_line": "Lash of the Howler: 20/x2"
+   },
+   {
+    "record": "ultimate_equipment:equipment:Pistol of the Infinite Sky",
+    "unit": "ultimate_equipment:equipment:pistol_of_the_infinite_sky",
+    "status": "literal-verified",
+    "source": "pathfinder/paizo/roleplaying_game/ultimate_equipment/ue_equip_arms_armor.lst:309",
+    "raw": "CRITMULT:x4",
+    "sheet_line": "Pistol of the Infinite Sky: x4"
+   },
+   {
+    "record": "ultimate_equipment:equipment:Sword (Ten-Ring)",
+    "unit": "ultimate_equipment:equipment:sword_ten_ring",
+    "status": "literal-verified",
+    "source": "pathfinder/paizo/roleplaying_game/ultimate_equipment/ue_equip_arms_armor.lst:543",
+    "raw": "CRITMULT:x3",
+    "sheet_line": "Sword (ten-ring): x3"
+   }
+  ],
+  "oracle_check": "sheet-line only",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": []
+ },
+ {
+  "token_type": "UDAM",
+  "family": "formula",
+  "instances": "113 corpus-wide, own count 2026-09-07 over 51,474 data/corpus/<book>/<kind>/*.json records (recursive walk, _parity excluded, LICENSE.json excluded; the beastiary dir counted as bestiary); single die 108, nine-entry size list 5",
+  "units": "113 of 49,438 docs/work-inventory.json units (48,608 join to a corpus record); non-DONE per scripts/completion_atlas.py::_bucket_of, denominator 23,315 (non-DONE: 113)",
+  "maps_to": "Dice",
+  "rule": "Unarmed damage die for the monk/brawler-style progression. The 108 single-die tokens sit on per-level, per-size class_feature records (e.g. 'Brawler Unarmed Damage LVL 8 Diminutive'), so level AND size are Applies, and the value is Dice{dice:'1d4'}. The 5 nine-entry lists (Fine..Colossal) need the die chosen by Size at evaluate time: Dice has one string.",
+  "expr_shape": "Dice{dice:'1d4', modifier:None}",
+  "expr_gaps": [
+   "DiceBySize([String; 9]) indexed by Size, for the 5 list-form tokens (5 units); the bonus lane names the same gap as D1"
+  ],
+  "applies_shape": "level band and size are the record's Applies (SD-31's '48 Monk units' are this shape: Applies::Size, not a computation)",
+  "prose_effect": "none",
+  "examples": [
+   {
+    "record": "advanced_class_guide:class_feature:Brawler Unarmed Damage LVL 8 (Diminutive)",
+    "unit": "advanced_class_guide:class_feature:brawler_unarmed_damage_lvl_8_diminutive",
+    "status": "engine-does-not-hold",
+    "source": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:983",
+    "raw": "UDAM:1d4",
+    "sheet_line": "Unarmed strike 1d4 (Diminutive brawler 8) -- held only by a Diminutive character"
+   },
+   {
+    "record": "advanced_class_guide:class_feature:Brawler Unarmed Damage LVL 12 (Large)",
+    "unit": "advanced_class_guide:class_feature:brawler_unarmed_damage_lvl_12_large",
+    "status": "engine-does-not-hold",
+    "source": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:997",
+    "raw": "UDAM:3d6",
+    "sheet_line": "Unarmed strike 3d6 (Large brawler 12)"
+   },
+   {
+    "record": "advanced_class_guide:class_feature:Brawler Unarmed Damage LVL 16 (Diminutive)",
+    "unit": "advanced_class_guide:class_feature:brawler_unarmed_damage_lvl_16_diminutive",
+    "status": "engine-does-not-hold",
+    "source": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:1003",
+    "raw": "UDAM:1d8",
+    "sheet_line": "Unarmed strike 1d8 (Diminutive brawler 16)"
+   }
+  ],
+  "oracle_check": "SA.<n>.DESC in charbuild-remainder for a Monk/Brawler fixture",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": []
+ },
+ {
+  "token_type": "UMULT",
+  "family": "formula",
+  "instances": "113 corpus-wide, own count 2026-09-07 over 51,474 data/corpus/<book>/<kind>/*.json records (recursive walk, _parity excluded, LICENSE.json excluded; the beastiary dir counted as bestiary); every value is 2",
+  "units": "113 of 49,438 docs/work-inventory.json units (48,608 join to a corpus record); non-DONE per scripts/completion_atlas.py::_bucket_of, denominator 23,315 (non-DONE: 113)",
+  "maps_to": "Text",
+  "rule": "Unarmed critical multiplier: prints 'x2'.",
+  "expr_shape": "n/a",
+  "expr_gaps": [],
+  "applies_shape": "same record as UDAM",
+  "prose_effect": "'/x2'",
+  "examples": [
+   {
+    "record": "advanced_class_guide:class_feature:Brawler Unarmed Damage LVL 8 (Diminutive)",
+    "unit": "advanced_class_guide:class_feature:brawler_unarmed_damage_lvl_8_diminutive",
+    "status": "engine-does-not-hold",
+    "source": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:983",
+    "raw": "UMULT:2",
+    "sheet_line": "Unarmed strike 1d4, 20/x2"
+   },
+   {
+    "record": "advanced_class_guide:class_feature:Brawler Unarmed Damage LVL 12 (Large)",
+    "unit": "advanced_class_guide:class_feature:brawler_unarmed_damage_lvl_12_large",
+    "status": "engine-does-not-hold",
+    "source": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:997",
+    "raw": "UMULT:2",
+    "sheet_line": "Unarmed strike 3d6, 20/x2"
+   },
+   {
+    "record": "advanced_class_guide:class_feature:Brawler Unarmed Damage LVL 16 (Diminutive)",
+    "unit": "advanced_class_guide:class_feature:brawler_unarmed_damage_lvl_16_diminutive",
+    "status": "engine-does-not-hold",
+    "source": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:1003",
+    "raw": "UMULT:2",
+    "sheet_line": "Unarmed strike 1d8, 20/x2"
+   }
+  ],
+  "oracle_check": "sheet-line only",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": []
+ },
+ {
+  "token_type": "RANGE (spell / power keyword)",
+  "family": "formula",
+  "instances": "2581 corpus-wide, own count 2026-09-07 over 51,474 data/corpus/<book>/<kind>/*.json records (recursive walk, _parity excluded, LICENSE.json excluded; the beastiary dir counted as bestiary); spell 1,941 + power 421 + equipment 219; keyword values: Close 673, Touch 503, Personal 454, Medium 263, Long 90, 'N ft.' 218, free text ('See text', 'Personal; see text') 66",
+  "units": "2581 of 49,438 docs/work-inventory.json units (48,608 join to a corpus record); non-DONE per scripts/completion_atlas.py::_bucket_of, denominator 23,315 (non-DONE: 665)",
+  "maps_to": "Number(Expr)",
+  "rule": "PF1 fixes the three scaling keywords: Close = 25 + 5 x floor(CL/2); Medium = 100 + 10 x CL; Long = 400 + 40 x CL. A 3-row table, so mechanical. Touch/Personal/free text -> Text. 'N ft.' -> Number(Const(N)) (equipment RANGE:10 is a 10-ft range increment: Const(10)). The Expr needs the caster level of the class the spell is cast FROM, which a spell record does not fix (Sorcerer and Wizard both cast Magic Missile); CasterLevel(ClassId) therefore needs a holder-relative form.",
+  "expr_shape": "Sum([Const(25), Mul(Const(5), Div(CasterLevel(holder), Const(2)))])",
+  "expr_gaps": [
+   "CasterLevel(ClassRef::Holder) -- the class through which the character holds the rule, bound at pick time; needed by every scaling spell RANGE (1,026 keyword instances) and by bare CASTERLEVEL (row 13)"
+  ],
+  "applies_shape": "spell rules are held per (class, spell) pick; one SheetLine per holding class",
+  "prose_effect": "'Range: Close (35 ft)' style label",
+  "examples": [
+   {
+    "record": "inner_sea_gods:spell:Summon Monster I (Broken Chain Of The Beast)",
+    "unit": "inner_sea_gods:spell:summon_monster_i_broken_chain_of_the_beast",
+    "status": "ingested-magnitude",
+    "source": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_spells.lst:111",
+    "raw": "RANGE:Close",
+    "sheet_line": "Summon Monster I: range 35 ft (Close at CL 5)"
+   },
+   {
+    "record": "inner_sea_gods:spell:Magic Jar (Ataxian)",
+    "unit": "inner_sea_gods:spell:magic_jar_ataxian",
+    "status": "ingested-magnitude",
+    "source": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_spells.lst:91",
+    "raw": "RANGE:Medium",
+    "sheet_line": "Magic Jar: range 150 ft (Medium at CL 5)"
+   },
+   {
+    "record": "inner_sea_gods:spell:Tracking Mark",
+    "unit": "inner_sea_gods:spell:tracking_mark",
+    "status": "ingested-magnitude",
+    "source": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_spells.lst:66",
+    "raw": "RANGE:Long",
+    "sheet_line": "Tracking Mark: range 600 ft (Long at CL 5)"
+   },
+   {
+    "record": "occult_adventures:spell:Object Reading",
+    "unit": "occult_adventures:spell:object_reading",
+    "status": "ingested-magnitude",
+    "source": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_spells.lst:91",
+    "raw": "RANGE:Touch",
+    "sheet_line": "Object Reading: touch"
+   },
+   {
+    "record": "occult_adventures:spell:Retrocognition",
+    "unit": "occult_adventures:spell:retrocognition",
+    "status": "ingested-magnitude",
+    "source": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_spells.lst:113",
+    "raw": "RANGE:Personal",
+    "sheet_line": "Retrocognition: personal"
+   },
+   {
+    "record": "occult_adventures:spell:Detect Mindscape",
+    "unit": "occult_adventures:spell:detect_mindscape",
+    "status": "ingested-magnitude",
+    "source": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_spells.lst:29",
+    "raw": "RANGE:60 ft.",
+    "sheet_line": "Detect Mindscape: 60 ft"
+   }
+  ],
+  "oracle_check": "sheet-line only -- no spell range in the export set",
+  "refuse_reason": "",
+  "confidence": "medium",
+  "open_questions": [
+   "Powers (ultimate_psionics, 421) use the same keywords with manifester level; same table."
+  ]
+ },
+ {
+  "token_type": "WT",
+  "family": "formula",
+  "instances": "4951 corpus-wide, own count 2026-09-07 over 51,474 data/corpus/<book>/<kind>/*.json records (recursive walk, _parity excluded, LICENSE.json excluded; the beastiary dir counted as bestiary); fractional values 0.01 (644), 0.0625 (352), .5 (42) and 98 distinct weights",
+  "units": "4948 of 49,438 docs/work-inventory.json units (48,608 join to a corpus record); non-DONE per scripts/completion_atlas.py::_bucket_of, denominator 23,315 (non-DONE: 12)",
+  "maps_to": "Metadata(ignored-by-sheet)",
+  "rule": "Item weight is a typed field on the equipment record that the equipment chassis already sums into carried load; a SheetRule does not repeat it. Fractional pounds cannot be Const(i32), which is one more reason it stays a record field.",
+  "expr_shape": "n/a",
+  "expr_gaps": [],
+  "applies_shape": "none",
+  "prose_effect": "none",
+  "examples": [
+   {
+    "record": "ultimate_intrigue:equipment:Thieves' Tools (Concealable)",
+    "unit": "ultimate_intrigue:equipment:thieves_tools_concealable",
+    "status": "literal-verified",
+    "source": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_equip_general.lst:27",
+    "raw": "WT:.5",
+    "sheet_line": "(record field: 0.5 lb)"
+   },
+   {
+    "record": "occult_adventures:equipment:Occultist's Kit",
+    "unit": "occult_adventures:equipment:occultist_s_kit",
+    "status": "oracle-unverifiable",
+    "source": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_equip.lst:22",
+    "raw": "WT:32.5",
+    "sheet_line": "(record field: 32.5 lb)"
+   },
+   {
+    "record": "occult_adventures:equipment:Mesmerist's Kit",
+    "unit": "occult_adventures:equipment:mesmerist_s_kit",
+    "status": "oracle-unverifiable",
+    "source": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_equip.lst:19",
+    "raw": "WT:26.5",
+    "sheet_line": "(record field: 26.5 lb)"
+   }
+  ],
+  "oracle_check": "sheet-line only",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": []
+ },
+ {
+  "token_type": "COST (literal)",
+  "family": "formula",
+  "instances": "7753 corpus-wide, own count 2026-09-07 over 51,474 data/corpus/<book>/<kind>/*.json records (recursive walk, _parity excluded, LICENSE.json excluded; the beastiary dir counted as bestiary); 7,647 integer, 5 decimal, 101 formula (next row); on equipment 5,217, class_feature 1,050, ability 675, race_trait 352 -- on non-equipment records COST is the ability-pool cost (0/1/2), not money",
+  "units": "7716 of 49,438 docs/work-inventory.json units (48,608 join to a corpus record); non-DONE per scripts/completion_atlas.py::_bucket_of, denominator 23,315 (non-DONE: 2191)",
+  "maps_to": "Metadata(ignored-by-sheet)",
+  "rule": "Equipment price and ability-pool cost are record fields the kind tables already hold (equipment chassis; ability pool). Not a sheet rule.",
+  "expr_shape": "n/a",
+  "expr_gaps": [],
+  "applies_shape": "none",
+  "prose_effect": "none",
+  "examples": [
+   {
+    "record": "occult_adventures:equipment:Vril Staff",
+    "unit": "occult_adventures:equipment:vril_staff",
+    "status": "ingested-magnitude",
+    "source": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_equip.lst:72",
+    "raw": "COST:200000",
+    "sheet_line": "(record field: 200,000 gp)"
+   },
+   {
+    "record": "occult_adventures:class_feature:Investigator Archetype ~ Psychic Detective",
+    "unit": "occult_adventures:class_feature:investigator_archetype_psychic_detective",
+    "status": "engine-does-not-hold",
+    "source": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst:1755",
+    "raw": "COST:0",
+    "sheet_line": "(ability-pool cost 0; not printed)"
+   },
+   {
+    "record": "bestiary_3:race_trait_generic:Unfettered Eidolon Evolution ~ Resistance",
+    "unit": "bestiary_3:race_trait:unfettered_eidolon_evolution_resistance",
+    "status": "ingested-magnitude",
+    "source": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst:1749",
+    "raw": "COST:1",
+    "sheet_line": "(evolution-pool cost 1; not printed)"
+   }
+  ],
+  "oracle_check": "sheet-line only",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": []
+ },
+ {
+  "token_type": "COST (formula, equipment_modifier)",
+  "family": "formula",
+  "instances": "101 corpus-wide, own count 2026-09-07 over 51,474 data/corpus/<book>/<kind>/*.json records (recursive walk, _parity excluded, LICENSE.json excluded; the beastiary dir counted as bestiary) (all on equipment_modifier records; shapes: %CHOICE products 32, BASECOST arithmetic 14+, WT*n 13, %SPELLLEVEL/%CASTERLEVEL/%SPELLCOST 8+4)",
+  "units": "84 units of 49,438 docs/work-inventory.json units (48,608 join to a corpus record); non-DONE per scripts/completion_atlas.py::_bucket_of, denominator 23,315 (non-DONE 78)",
+  "maps_to": "Metadata(ignored-by-sheet)",
+  "rule": "EQMOD pricing (row 26). Ignored by the sheet; the shipped items carry literal COST.",
+  "expr_shape": "n/a",
+  "expr_gaps": [],
+  "applies_shape": "none",
+  "prose_effect": "none",
+  "examples": [
+   {
+    "record": "advanced_race_guide:equipment:Material ~ Darkleaf Cloth ~ Item",
+    "unit": "advanced_race_guide:equipment_modifier:material_darkleaf_cloth_item",
+    "status": "ingested-magnitude",
+    "source": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equipmods.lst:8",
+    "raw": "COST:WT*375",
+    "sheet_line": "(not printed)"
+   },
+   {
+    "record": "ultimate_combat:equipment:Material ~ Gold",
+    "unit": "ultimate_combat:equipment_modifier:material_gold",
+    "status": "ingested-magnitude",
+    "source": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_equipmods.lst:41",
+    "raw": "COST:(BASECOST)*9",
+    "sheet_line": "(not printed)"
+   },
+   {
+    "record": "ultimate_psionics:equipment:Special Ability ~ Power Choice / Mind Stone / Greater",
+    "unit": "ultimate_psionics:equipment_modifier:special_ability_power_choice_mind_stone_greater",
+    "status": "ingested-magnitude",
+    "source": "pathfinder/dreamscarred_press/ultimate_psionics/up_equipmods.lst:131",
+    "raw": "COST:(4000*(%SPELLLEVEL)*%SPELLLEVEL)",
+    "sheet_line": "(not printed)"
+   }
+  ],
+  "oracle_check": "sheet-line only",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": []
+ },
+ {
+  "token_type": "ACCHECK",
+  "family": "formula",
+  "instances": "178 corpus-wide, own count 2026-09-07 over 51,474 data/corpus/<book>/<kind>/*.json records (recursive walk, _parity excluded, LICENSE.json excluded; the beastiary dir counted as bestiary); -1..-10 (144) and 0 (34)",
+  "units": "178 of 49,438 docs/work-inventory.json units (48,608 join to a corpus record); non-DONE per scripts/completion_atlas.py::_bucket_of, denominator 23,315 (non-DONE: 1)",
+  "maps_to": "Number(Expr)",
+  "rule": "Armor check penalty: Const(n). The equipment chassis already applies it to skills; the SheetRule for the armor record prints it on the armor line.",
+  "expr_shape": "Const(-5)",
+  "expr_gaps": [],
+  "applies_shape": "held while worn (equipment Applies)",
+  "prose_effect": "'ACP -5'",
+  "examples": [
+   {
+    "record": "mythic_adventures:equipment:Stalwart Breastplate",
+    "unit": "mythic_adventures:equipment:stalwart_breastplate",
+    "status": "literal-verified",
+    "source": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_equip.lst:10",
+    "raw": "ACCHECK:-5",
+    "sheet_line": "Stalwart breastplate: ACP -5"
+   },
+   {
+    "record": "inner_sea_world_guide:equipment:Stoneplate",
+    "unit": "inner_sea_world_guide:equipment:stoneplate",
+    "status": "oracle-agree",
+    "source": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_equip_arms_armor.lst:23",
+    "raw": "ACCHECK:-6",
+    "sheet_line": "Stoneplate: ACP -6"
+   },
+   {
+    "record": "inner_sea_world_guide:equipment:Klar (as Shield)",
+    "unit": "inner_sea_world_guide:equipment:klar_as_shield",
+    "status": "oracle-agree",
+    "source": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_equip_arms_armor.lst:24",
+    "raw": "ACCHECK:-1",
+    "sheet_line": "Klar (as shield): ACP -1"
+   }
+  ],
+  "oracle_check": "sheet-line only (AC.TOTAL in computed-values.txt.ftl does not carry ACP)",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": []
+ },
+ {
+  "token_type": "SPELLFAILURE",
+  "family": "formula",
+  "instances": "182 corpus-wide, own count 2026-09-07 over 51,474 data/corpus/<book>/<kind>/*.json records (recursive walk, _parity excluded, LICENSE.json excluded; the beastiary dir counted as bestiary)",
+  "units": "182 of 49,438 docs/work-inventory.json units (48,608 join to a corpus record); non-DONE per scripts/completion_atlas.py::_bucket_of, denominator 23,315 (non-DONE: 0)",
+  "maps_to": "Number(Expr)",
+  "rule": "Arcane spell failure percent: Const(n), printed with '%'.",
+  "expr_shape": "Const(35)",
+  "expr_gaps": [],
+  "applies_shape": "held while worn",
+  "prose_effect": "'ASF 35%'",
+  "examples": [
+   {
+    "record": "inner_sea_world_guide:equipment:Field Plate",
+    "unit": "inner_sea_world_guide:equipment:field_plate",
+    "status": "oracle-agree",
+    "source": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_equip_arms_armor.lst:21",
+    "raw": "SPELLFAILURE:35",
+    "sheet_line": "Field plate: ASF 35%"
+   },
+   {
+    "record": "inner_sea_world_guide:equipment:Klar (as Shield)",
+    "unit": "inner_sea_world_guide:equipment:klar_as_shield",
+    "status": "oracle-agree",
+    "source": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_equip_arms_armor.lst:24",
+    "raw": "SPELLFAILURE:5",
+    "sheet_line": "Klar (as shield): ASF 5%"
+   },
+   {
+    "record": "inner_sea_world_guide:equipment:Leaf Armor",
+    "unit": "inner_sea_world_guide:equipment:leaf_armor",
+    "status": "oracle-agree",
+    "source": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_equip_arms_armor.lst:20",
+    "raw": "SPELLFAILURE:15",
+    "sheet_line": "Leaf armor: ASF 15%"
+   }
+  ],
+  "oracle_check": "sheet-line only",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": []
+ },
+ {
+  "token_type": "MAXDEX",
+  "family": "formula",
+  "instances": "142 corpus-wide, own count 2026-09-07 over 51,474 data/corpus/<book>/<kind>/*.json records (recursive walk, _parity excluded, LICENSE.json excluded; the beastiary dir counted as bestiary)",
+  "units": "142 of 49,438 docs/work-inventory.json units (48,608 join to a corpus record); non-DONE per scripts/completion_atlas.py::_bucket_of, denominator 23,315 (non-DONE: 0)",
+  "maps_to": "Number(Expr)",
+  "rule": "Maximum Dexterity bonus to AC: Const(n). The chassis already caps Dex at the AC line.",
+  "expr_shape": "Const(1)",
+  "expr_gaps": [],
+  "applies_shape": "held while worn",
+  "prose_effect": "'Max Dex +1'",
+  "examples": [
+   {
+    "record": "inner_sea_world_guide:equipment:Field Plate",
+    "unit": "inner_sea_world_guide:equipment:field_plate",
+    "status": "oracle-agree",
+    "source": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_equip_arms_armor.lst:21",
+    "raw": "MAXDEX:1",
+    "sheet_line": "Field plate: Max Dex +1"
+   },
+   {
+    "record": "inner_sea_world_guide:equipment:Leaf Armor",
+    "unit": "inner_sea_world_guide:equipment:leaf_armor",
+    "status": "oracle-agree",
+    "source": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_equip_arms_armor.lst:20",
+    "raw": "MAXDEX:5",
+    "sheet_line": "Leaf armor: Max Dex +5"
+   },
+   {
+    "record": "advanced_class_guide:equipment:Hero's Hauberk",
+    "unit": "advanced_class_guide:equipment:hero_s_hauberk",
+    "status": "oracle-agree",
+    "source": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equip.lst:244",
+    "raw": "MAXDEX:4",
+    "sheet_line": "Hero's hauberk: Max Dex +4"
+   }
+  ],
+  "oracle_check": "AC.TOTAL in computed-values.txt.ftl for a Dex-capped fixture",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": []
+ },
+ {
+  "token_type": "MOVE",
+  "family": "formula",
+  "instances": "1952 corpus-wide, own count 2026-09-07 over 51,474 data/corpus/<book>/<kind>/*.json records (recursive walk, _parity excluded, LICENSE.json excluded; the beastiary dir counted as bestiary); one mode 975, two 805, three 155, four 10; labels beyond Walk/Fly/Swim/Climb/Burrow: 'Air Walk', 'Hasted Walk' (4)",
+  "units": "1918 of 49,438 docs/work-inventory.json units (48,608 join to a corpus record); non-DONE per scripts/completion_atlas.py::_bucket_of, denominator 23,315 (non-DONE: 172)",
+  "maps_to": "Number(Expr)",
+  "rule": "MOVE:<mode>,<ft>[,<mode>,<ft>...] sets base speeds. One SheetRule per mode (id suffix), value Const(ft), label the mode ('Speed', 'Fly', 'Swim'). Fly maneuverability is a separate variable (Maneuverability, 511 DEFINEs) and prints as words.",
+  "expr_shape": "Const(30)",
+  "expr_gaps": [],
+  "applies_shape": "race/monster/companion holder",
+  "prose_effect": "'Speed 30 ft, fly 60 ft'",
+  "examples": [
+   {
+    "record": "occult_adventures:race_generic:Homunculus Companion",
+    "unit": "occult_adventures:race:homunculus_companion",
+    "status": "engine-does-not-hold",
+    "source": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_races.lst:9",
+    "raw": "MOVE:Walk,20,Fly,30",
+    "sheet_line": "Homunculus companion: speed 20 ft, fly 30 ft"
+   },
+   {
+    "record": "occult_adventures:race_generic:Ghost Mount (L)",
+    "unit": "occult_adventures:race:ghost_mount_l",
+    "status": "engine-does-not-hold",
+    "source": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_races.lst:14",
+    "raw": "MOVE:Walk,50",
+    "sheet_line": "Ghost mount: speed 50 ft"
+   },
+   {
+    "record": "inner_sea_world_guide:monster_generic:Codex-Named Unit (monster_inner_sea_world_guide_iswg_races_lst_13)",
+    "unit": "inner_sea_world_guide:monster:daughter_of_urgathoa",
+    "status": "engine-does-not-hold",
+    "source": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_races.lst:13",
+    "raw": "MOVE:Fly,40",
+    "sheet_line": "Daughter of Urgathoa: fly 40 ft"
+   }
+  ],
+  "oracle_check": "sheet-line only -- no MOVE line in the export set",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": []
+ },
+ {
+  "token_type": "MOVECLONE",
+  "family": "formula",
+  "instances": "39 corpus-wide, own count 2026-09-07 over 51,474 data/corpus/<book>/<kind>/*.json records (recursive walk, _parity excluded, LICENSE.json excluded; the beastiary dir counted as bestiary); Walk,<mode>,*k 30; /k 7; ,0 2",
+  "units": "39 of 49,438 docs/work-inventory.json units (48,608 join to a corpus record); non-DONE per scripts/completion_atlas.py::_bucket_of, denominator 23,315 (non-DONE: 24)",
+  "maps_to": "Number(Expr)",
+  "rule": "Derives a new mode from an existing one: Swim = Walk x 1 (*1), Fly = Walk x 1.5 (*1.5 -> Div(Mul(x,3),2)), Burrow = Walk / 2. Expr has no 'current speed of mode M' fact.",
+  "expr_shape": "Div(Mul(Speed(walk), Const(3)), Const(2))",
+  "expr_gaps": [
+   "Speed(mode) (the character's current base speed for a mode) -- 39 units (24 non-DONE)"
+  ],
+  "applies_shape": "none",
+  "prose_effect": "'Fly 45 ft'",
+  "examples": [
+   {
+    "record": "bestiary_3:template:Fey Creature",
+    "unit": "bestiary_3:template:fey_creature",
+    "status": "ingested-magnitude",
+    "source": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_templates.lst:10",
+    "raw": "MOVECLONE:Walk,Fly,*1.5",
+    "sheet_line": "Fey creature: fly 45 ft (30 x 1.5)"
+   },
+   {
+    "record": "inner_sea_bestiary:template:Vetala",
+    "unit": "inner_sea_bestiary:template:vetala",
+    "status": "ingested-magnitude",
+    "source": "pathfinder/paizo/campaign_setting/inner_sea_bestiary/isb_templates.lst:11",
+    "raw": "MOVECLONE:Walk,Climb,0",
+    "sheet_line": "Vetala: climb 0 ft"
+   },
+   {
+    "record": "adventurers_guide:class_feature:Storm Kindler ~ Wave Breaker",
+    "unit": "adventurers_guide:class_feature:storm_kindler_wave_breaker",
+    "status": "engine-does-not-hold",
+    "source": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst:509",
+    "raw": "MOVECLONE:Walk,Swim,*2",
+    "sheet_line": "Wave breaker: swim 60 ft (30 x 2)"
+   }
+  ],
+  "oracle_check": "sheet-line only",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": []
+ },
+ {
+  "token_type": "UNENCUMBEREDMOVE",
+  "family": "formula",
+  "instances": "21 corpus-wide, own count 2026-09-07 over 51,474 data/corpus/<book>/<kind>/*.json records (recursive walk, _parity excluded, LICENSE.json excluded; the beastiary dir counted as bestiary)",
+  "units": "21 of 49,438 docs/work-inventory.json units (48,608 join to a corpus record); non-DONE per scripts/completion_atlas.py::_bucket_of, denominator 23,315 (non-DONE: 13)",
+  "maps_to": "Text",
+  "rule": "'Speed is not reduced by heavy armor' / '... by a heavy load': words from a 4-entry table.",
+  "expr_shape": "n/a",
+  "expr_gaps": [],
+  "applies_shape": "none",
+  "prose_effect": "the words",
+  "examples": [
+   {
+    "record": "inner_sea_world_guide:class_feature:Hellknight Armor Benefits",
+    "unit": "inner_sea_world_guide:class_feature:hellknight_armor_benefits",
+    "status": "literal-verified",
+    "source": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_abilities_class.lst:59",
+    "raw": "UNENCUMBEREDMOVE:HeavyArmor",
+    "sheet_line": "Hellknight armor: speed not reduced by heavy armor"
+   },
+   {
+    "record": "advanced_players_guide:class_feature:Oracle ~ Lame",
+    "unit": "advanced_players_guide:class_feature:oracle_lame",
+    "status": "engine-does-not-hold",
+    "source": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst:495",
+    "raw": "UNENCUMBEREDMOVE:HeavyLoad",
+    "sheet_line": "Lame oracle: speed not reduced by a heavy load"
+   },
+   {
+    "record": "ultimate_magic:class_feature:Metal Mystery ~ Armor Mastery",
+    "unit": "ultimate_magic:class_feature:metal_mystery_armor_mastery",
+    "status": "engine-does-not-hold",
+    "source": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst:481",
+    "raw": "UNENCUMBEREDMOVE:MediumArmor",
+    "sheet_line": "Armor mastery: speed not reduced by medium armor"
+   }
+  ],
+  "oracle_check": "sheet-line only",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": []
+ },
+ {
+  "token_type": "REACH",
+  "family": "formula",
+  "instances": "1614 corpus-wide, own count 2026-09-07 over 51,474 data/corpus/<book>/<kind>/*.json records (recursive walk, _parity excluded, LICENSE.json excluded; the beastiary dir counted as bestiary); 0 (266), 5 (836), 10 (261), 15 (148), 20+ (103)",
+  "units": "1614 of 49,438 docs/work-inventory.json units (48,608 join to a corpus record); non-DONE per scripts/completion_atlas.py::_bucket_of, denominator 23,315 (non-DONE: 60)",
+  "maps_to": "Number(Expr)",
+  "rule": "Natural reach in feet: Const(n). Monster/companion/template holder.",
+  "expr_shape": "Const(5)",
+  "expr_gaps": [],
+  "applies_shape": "race/monster holder",
+  "prose_effect": "'Reach 5 ft'",
+  "examples": [
+   {
+    "record": "occult_adventures:race_generic:Homunculus Companion",
+    "unit": "occult_adventures:race:homunculus_companion",
+    "status": "engine-does-not-hold",
+    "source": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_races.lst:9",
+    "raw": "REACH:5",
+    "sheet_line": "Homunculus companion: reach 5 ft"
+   },
+   {
+    "record": "inner_sea_world_guide:monster_generic:Codex-Named Unit (monster_inner_sea_world_guide_iswg_races_lst_13)",
+    "unit": "inner_sea_world_guide:monster:daughter_of_urgathoa",
+    "status": "engine-does-not-hold",
+    "source": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_races.lst:13",
+    "raw": "REACH:10",
+    "sheet_line": "Daughter of Urgathoa: reach 10 ft"
+   },
+   {
+    "record": "inner_sea_world_guide:monster_generic:Codex-Named Unit (monster_inner_sea_world_guide_iswg_races_lst_16)",
+    "unit": "inner_sea_world_guide:monster:treerazer",
+    "status": "engine-does-not-hold",
+    "source": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_races.lst:16",
+    "raw": "REACH:20",
+    "sheet_line": "Treerazer: reach 20 ft"
+   }
+  ],
+  "oracle_check": "sheet-line only",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": []
+ },
+ {
+  "token_type": "HITDIE (n, with optional class filter)",
+  "family": "formula",
+  "instances": "59 corpus-wide, own count 2026-09-07 over 51,474 data/corpus/<book>/<kind>/*.json records (recursive walk, _parity excluded, LICENSE.json excluded; the beastiary dir counted as bestiary) (8, 10 bare 36; n|CLASS.TYPE=Monster 20; n|CLASS=Monk 3)",
+  "units": "59 of 67 HITDIE units of 49,438 docs/work-inventory.json units (48,608 join to a corpus record); non-DONE per scripts/completion_atlas.py::_bucket_of, denominator 23,315",
+  "maps_to": "Number(Expr)",
+  "rule": "Template hit die size override: Const(n), label 'Hit die d{n}'. The |CLASS=... suffix restricts which class levels it applies to (Applies).",
+  "expr_shape": "Const(10)",
+  "expr_gaps": [],
+  "applies_shape": "the |CLASS.TYPE=Monster / |CLASS=Monk filter is Applies on the class levels",
+  "prose_effect": "'Hit die d10 (monster levels)'",
+  "examples": [
+   {
+    "record": "bestiary_3:template:Foo Creature",
+    "unit": "bestiary_3:template:foo_creature",
+    "status": "ingested-magnitude",
+    "source": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_templates.lst:22",
+    "raw": "HITDIE:10|CLASS.TYPE=Monster",
+    "sheet_line": "Foo creature: hit die d10 (monster levels)"
+   },
+   {
+    "record": "bestiary_3:template:Penanggalen",
+    "unit": "bestiary_3:template:penanggalen",
+    "status": "ingested-magnitude",
+    "source": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_templates.lst:17",
+    "raw": "HITDIE:8",
+    "sheet_line": "Penanggalen: hit die d8"
+   },
+   {
+    "record": "pathfinder_unchained:template:Monk ~ Unchained HD",
+    "unit": "pathfinder_unchained:template:monk_unchained_hd",
+    "status": "oracle-unverifiable",
+    "source": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_templates.lst:5",
+    "raw": "HITDIE:10|CLASS=Monk",
+    "sheet_line": "Unchained monk HD: hit die d10 (Monk levels)"
+   }
+  ],
+  "oracle_check": "HP in computed-values.txt.ftl for a template fixture",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": []
+ },
+ {
+  "token_type": "HITDIE (%-step: %+1, %/4)",
+  "family": "formula",
+  "instances": "8 corpus-wide, own count 2026-09-07 over 51,474 data/corpus/<book>/<kind>/*.json records (recursive walk, _parity excluded, LICENSE.json excluded; the beastiary dir counted as bestiary)",
+  "units": "8 units of 49,438 docs/work-inventory.json units (48,608 join to a corpus record); non-DONE per scripts/completion_atlas.py::_bucket_of, denominator 23,315 (non-DONE 8 at most)",
+  "maps_to": "REFUSE",
+  "rule": "'%' is the current hit die; %+1 steps it up one die size (d6 -> d8), %/4 quarters it (the Quarter Hitdie template). Needs a HitDieSize fact and a die-step table, neither in Expr.",
+  "expr_shape": "n/a",
+  "expr_gaps": [
+   "HitDieSize + die-step table (d4 d6 d8 d10 d12) -- 8 units"
+  ],
+  "applies_shape": "none",
+  "prose_effect": "none",
+  "examples": [
+   {
+    "record": "core_rulebook:template:Quarter Hitdie",
+    "unit": "core_rulebook:template:quarter_hitdie",
+    "status": "ingested-magnitude",
+    "source": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_templates.lst:36",
+    "raw": "HITDIE:%/4|CLASS.TYPE=Monster",
+    "sheet_line": "Quarter hit die: (words) -- refused"
+   },
+   {
+    "record": "core_rulebook:template:Eighth Hitdie",
+    "unit": "core_rulebook:template:eighth_hitdie",
+    "status": "ingested-magnitude",
+    "source": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_templates.lst:37",
+    "raw": "HITDIE:%/8|CLASS.TYPE=Monster",
+    "sheet_line": "Eighth hit die: (words) -- refused"
+   },
+   {
+    "record": "core_rulebook:template:Half Hitdie",
+    "unit": "core_rulebook:template:half_hitdie",
+    "status": "ingested-magnitude",
+    "source": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_templates.lst:35",
+    "raw": "HITDIE:%/2|CLASS.TYPE=Monster",
+    "sheet_line": "Half hit die: (words) -- refused"
+   }
+  ],
+  "oracle_check": "HP in computed-values.txt.ftl",
+  "refuse_reason": "die-step arithmetic: 8 units",
+  "confidence": "high",
+  "open_questions": []
+ },
+ {
+  "token_type": "HD (class)",
+  "family": "formula",
+  "instances": "181 corpus-wide, own count 2026-09-07 over 51,474 data/corpus/<book>/<kind>/*.json records (recursive walk, _parity excluded, LICENSE.json excluded; the beastiary dir counted as bestiary) (156 class + 21 class_generic + 4 companion records)",
+  "units": "181 of 208 HD units of 49,438 docs/work-inventory.json units (48,608 join to a corpus record); non-DONE per scripts/completion_atlas.py::_bucket_of, denominator 23,315",
+  "maps_to": "Number(Expr)",
+  "rule": "Class hit die: Const(n), label 'Hit die d{n}'. Already a class-table field (HP total).",
+  "expr_shape": "Const(10)",
+  "expr_gaps": [],
+  "applies_shape": "class holder",
+  "prose_effect": "'Hit die d10'",
+  "examples": [
+   {
+    "record": "occult_adventures:class:Homunculus Companion",
+    "unit": "occult_adventures:class:homunculus_companion",
+    "status": "engine-does-not-hold",
+    "source": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_classes.lst:184",
+    "raw": "HD:10",
+    "sheet_line": "Homunculus companion: hit die d10"
+   },
+   {
+    "record": "inner_sea_world_guide:class_generic:Codex-Named Unit (class_inner_sea_world_guide_iswg_classes_lst_57)",
+    "unit": "inner_sea_world_guide:class:red_mantis_assassin",
+    "status": "engine-does-not-hold",
+    "source": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_classes.lst:57",
+    "raw": "HD:8",
+    "sheet_line": "Red Mantis assassin: hit die d8"
+   },
+   {
+    "record": "inner_sea_world_guide:class_generic:Codex-Named Unit (class_inner_sea_world_guide_iswg_classes_lst_5)",
+    "unit": "inner_sea_world_guide:class:harrower",
+    "status": "engine-does-not-hold",
+    "source": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_classes.lst:5",
+    "raw": "HD:6",
+    "sheet_line": "Harrower: hit die d6"
+   }
+  ],
+  "oracle_check": "HP in computed-values.txt.ftl",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": []
+ },
+ {
+  "token_type": "HD (template band: <lo>-<hi>:TEMPLATE:<name>)",
+  "family": "formula",
+  "instances": "204 corpus-wide, own count 2026-09-07 over 51,474 data/corpus/<book>/<kind>/*.json records (recursive walk, _parity excluded, LICENSE.json excluded; the beastiary dir counted as bestiary) (all on template records: dragon age/size ladders)",
+  "units": "27 units of 49,438 docs/work-inventory.json units (48,608 join to a corpus record); non-DONE per scripts/completion_atlas.py::_bucket_of, denominator 23,315 (non-DONE 27 at most)",
+  "maps_to": "Applies",
+  "rule": "Not a value: 'at hit dice lo..hi, apply template <name>'. Converts to Applies::HitDice(lo, hi) on the granted template rule (the prereq lane's A7).",
+  "expr_shape": "n/a",
+  "expr_gaps": [],
+  "applies_shape": "HitDice(lo, hi) band gating a template grant",
+  "prose_effect": "none",
+  "examples": [
+   {
+    "record": "bestiary_3:template:Imperial Dragon Attacks HD (6)",
+    "unit": "bestiary_3:template:imperial_dragon_attacks_hd_6",
+    "status": "engine-does-not-hold",
+    "source": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_templates.lst:36",
+    "raw": "HD:6-7:TEMPLATE:Imperial Dragon Attacks (Small)",
+    "sheet_line": "(grant: Imperial Dragon Attacks (Small) at HD 6-7)"
+   },
+   {
+    "record": "bestiary_3:template:Imperial Dragon Attacks HD (6)",
+    "unit": "bestiary_3:template:imperial_dragon_attacks_hd_6",
+    "status": "engine-does-not-hold",
+    "source": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_templates.lst:36",
+    "raw": "HD:8-9:TEMPLATE:Imperial Dragon Attacks (Medium)",
+    "sheet_line": "(grant: ... (Medium) at HD 8-9)"
+   },
+   {
+    "record": "bestiary_3:template:Imperial Dragon Attacks HD (6)",
+    "unit": "bestiary_3:template:imperial_dragon_attacks_hd_6",
+    "status": "engine-does-not-hold",
+    "source": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_templates.lst:36",
+    "raw": "HD:10-13:TEMPLATE:Imperial Dragon Attacks (Large)",
+    "sheet_line": "(grant: ... (Large) at HD 10-13)"
+   }
+  ],
+  "oracle_check": "sheet-line only",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": []
+ },
+ {
+  "token_type": "DR",
+  "family": "formula",
+  "instances": "721 corpus-wide, own count 2026-09-07 over 51,474 data/corpus/<book>/<kind>/*.json records (recursive walk, _parity excluded, LICENSE.json excluded; the beastiary dir counted as bestiary); n/<qualifier> 642 (qualifier: '-', 'cold iron', 'silver and slashing' ...), <var>/<qualifier> 39, %-suffixed PRE tail 1, var(COUNT[...]) gate 1",
+  "units": "699 of 49,438 docs/work-inventory.json units (48,608 join to a corpus record); non-DONE per scripts/completion_atlas.py::_bucket_of, denominator 23,315 (non-DONE: 108)",
+  "maps_to": "Number(Expr)",
+  "rule": "DR n/<qualifier>: Number(Const(n)) with label 'DR' and the qualifier as the prose suffix ('DR 5/cold iron'). A variable amount (AbsorbBlow/-, EidolonDR/evil: 39 instances) folds per rows 27-28. A trailing PRE (PREEQUIP) is Applies; the one var(\"COUNT[EQTYPE.ARMOR...]\") gate refuses (row 21).",
+  "expr_shape": "Const(5)",
+  "expr_gaps": [],
+  "applies_shape": "the |PRE tail when present",
+  "prose_effect": "'/cold iron' suffix",
+  "examples": [
+   {
+    "record": "occult_adventures:class_feature:Ectoplasm Bloodline ~ Ectoplasmic Body",
+    "unit": "occult_adventures:class_feature:ectoplasm_bloodline_ectoplasmic_body",
+    "status": "engine-does-not-hold",
+    "source": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst:1867",
+    "raw": "DR:5/slashing",
+    "sheet_line": "Ectoplasmic body: DR 5/slashing"
+   },
+   {
+    "record": "inner_sea_world_guide:monster_generic:Codex-Named Unit (monster_inner_sea_world_guide_iswg_races_lst_16)",
+    "unit": "inner_sea_world_guide:monster:treerazer",
+    "status": "engine-does-not-hold",
+    "source": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_races.lst:16",
+    "raw": "DR:15/Cold Iron and Good",
+    "sheet_line": "Treerazer: DR 15/cold iron and good"
+   },
+   {
+    "record": "inner_sea_world_guide:monster_generic:Codex-Named Unit (monster_inner_sea_world_guide_iswg_races_lst_14)",
+    "unit": "inner_sea_world_guide:monster:sandpoint_devil",
+    "status": "engine-does-not-hold",
+    "source": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_races.lst:14",
+    "raw": "DR:5/Cold Iron",
+    "sheet_line": "Sandpoint devil: DR 5/cold iron"
+   },
+   {
+    "record": "occult_adventures:class_feature:Medium ~ Absorb Blow",
+    "unit": "occult_adventures:class_feature:medium_absorb_blow",
+    "status": "engine-does-not-hold",
+    "source": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst:854",
+    "raw": "DR:AbsorbBlow/-",
+    "sheet_line": "Absorb blow: DR N/-- (N = AbsorbBlow, cross-record)"
+   },
+   {
+    "record": "adventurers_guide:class_feature:Sanguine Angel Discipline ~ Unyielding",
+    "unit": "adventurers_guide:class_feature:sanguine_angel_discipline_unyielding",
+    "status": "engine-does-not-hold",
+    "source": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst:471",
+    "raw": "DR:SanguineAngelUnyieldingDR/-|PREEQUIP:1,Gray Maiden Plate%",
+    "sheet_line": "Unyielding: DR N/-- while wearing Gray Maiden plate"
+   },
+   {
+    "record": "advanced_class_guide:class_feature:Bones Spirit ~ Shard Soul",
+    "unit": "advanced_class_guide:class_feature:bones_spirit_shard_soul",
+    "status": "engine-does-not-hold",
+    "source": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:1540",
+    "raw": "DR:ShamanShardSoulDR/magic",
+    "sheet_line": "Shard soul: DR N/magic"
+   }
+  ],
+  "oracle_check": "sheet-line only",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": []
+ },
+ {
+  "token_type": "SR",
+  "family": "formula",
+  "instances": "407 corpus-wide, own count 2026-09-07 over 51,474 data/corpus/<book>/<kind>/*.json records (recursive walk, _parity excluded, LICENSE.json excluded; the beastiary dir counted as bestiary); const 359; n+CR / CR+n 30; bare variable 12; %CHOICE 2; mastervar/MasterLevel 3; 5+(TL-HD) 2",
+  "units": "407 of 49,438 docs/work-inventory.json units (48,608 join to a corpus record); non-DONE per scripts/completion_atlas.py::_bucket_of, denominator 23,315 (non-DONE: 43)",
+  "maps_to": "Number(Expr)",
+  "rule": "Spell resistance: Const(n); n+CR -> Sum([Const(n), ChallengeRating]) (row 12 gap); a variable -> rows 27-28; %CHOICE -> Choice; MasterLevel/mastervar -> refuse (row 24); 5+(TL-HD) -> Sum([Const(5), Level, Mul(Const(-1), HitDice)]).",
+  "expr_shape": "Sum([Const(11), ChallengeRating])",
+  "expr_gaps": [
+   "ChallengeRating (row 12) for 30 instances; MasterLevel (row 24) for 3"
+  ],
+  "applies_shape": "monster/race-trait holder",
+  "prose_effect": "'SR 16'",
+  "examples": [
+   {
+    "record": "inner_sea_world_guide:monster_generic:Codex-Named Unit (monster_inner_sea_world_guide_iswg_races_lst_16)",
+    "unit": "inner_sea_world_guide:monster:treerazer",
+    "status": "engine-does-not-hold",
+    "source": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_races.lst:16",
+    "raw": "SR:36",
+    "sheet_line": "Treerazer: SR 36"
+   },
+   {
+    "record": "bestiary_3:race_trait_generic:Variant Bandersnatch ~ Primal",
+    "unit": "bestiary_3:race_trait:variant_bandersnatch_primal",
+    "status": "ingested-magnitude",
+    "source": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst:466",
+    "raw": "SR:11+CR",
+    "sheet_line": "Primal bandersnatch: SR 11 + CR"
+   },
+   {
+    "record": "bestiary_3:race_trait_generic:Fey Creature ~ Spell Resistance",
+    "unit": "bestiary_3:race_trait:fey_creature_spell_resistance",
+    "status": "literal-verified",
+    "source": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst:857",
+    "raw": "SR:CR+11",
+    "sheet_line": "Fey creature: SR CR + 11"
+   },
+   {
+    "record": "pathfinder_unchained:race_trait_generic:Unchained Evolution ~ Spell Resistance",
+    "unit": "pathfinder_unchained:race_trait:unchained_evolution_spell_resistance",
+    "status": "ingested-magnitude",
+    "source": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_race.lst:256",
+    "raw": "SR:11+MasterLevel",
+    "sheet_line": "Evolution (SR): SR 11 + master level -- refused"
+   }
+  ],
+  "oracle_check": "sheet-line only",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": []
+ },
+ {
+  "token_type": "CR",
+  "family": "formula",
+  "instances": "1611 corpus-wide, own count 2026-09-07 over 51,474 data/corpus/<book>/<kind>/*.json records (recursive walk, _parity excluded, LICENSE.json excluded; the beastiary dir counted as bestiary); integer 1,351; fraction (1/2 .. 1/8) 257; -1 (template) 3",
+  "units": "1611 of 49,438 docs/work-inventory.json units (48,608 join to a corpus record); non-DONE per scripts/completion_atlas.py::_bucket_of, denominator 23,315 (non-DONE: 78)",
+  "maps_to": "Text",
+  "rule": "Monster challenge rating is a stat-block header, never computed for a player character, and 257 values are fractions Const(i32) cannot hold. Prints verbatim ('CR 1/4'). Template CR:-1 prints 'CR -1 (adjustment)'.",
+  "expr_shape": "n/a",
+  "expr_gaps": [],
+  "applies_shape": "monster holder",
+  "prose_effect": "'CR 2'",
+  "examples": [
+   {
+    "record": "inner_sea_world_guide:monster_generic:Codex-Named Unit (monster_inner_sea_world_guide_iswg_races_bestiary_lst_14)",
+    "unit": "inner_sea_world_guide:monster:herd_animal_storval_aurochs",
+    "status": "engine-does-not-hold",
+    "source": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_races_bestiary.lst:14",
+    "raw": "CR:2",
+    "sheet_line": "Storval aurochs: CR 2"
+   },
+   {
+    "record": "beastiary:template:Young Creature",
+    "unit": "bestiary:template:young_creature",
+    "status": "engine-does-not-hold",
+    "source": "pathfinder/paizo/roleplaying_game/core_essentials/ce_templates.lst:1040",
+    "raw": "CR:-1",
+    "sheet_line": "Young creature: CR -1 (adjustment)"
+   },
+   {
+    "record": "inner_sea_world_guide:monster:inner_sea_world_guide:monster:spider_drain",
+    "unit": "inner_sea_world_guide:monster:spider_drain",
+    "status": "grounded",
+    "source": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_races_bestiary.lst:9",
+    "raw": "CR:1/4",
+    "sheet_line": "Spider drain: CR 1/4"
+   }
+  ],
+  "oracle_check": "sheet-line only",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": []
+ },
+ {
+  "token_type": "CRMOD",
+  "family": "formula",
+  "instances": "3 corpus-wide, own count 2026-09-07 over 51,474 data/corpus/<book>/<kind>/*.json records (recursive walk, _parity excluded, LICENSE.json excluded; the beastiary dir counted as bestiary)",
+  "units": "1 of 49,438 docs/work-inventory.json units (48,608 join to a corpus record); non-DONE per scripts/completion_atlas.py::_bucket_of, denominator 23,315 (non-DONE: 1)",
+  "maps_to": "Metadata(ignored-by-sheet)",
+  "rule": "PC/NPC CR adjustment for a race (drow noble). Not printed.",
+  "expr_shape": "n/a",
+  "expr_gaps": [],
+  "applies_shape": "none",
+  "prose_effect": "none",
+  "examples": [
+   {
+    "record": "beastiary:race_generic:Drow Noble",
+    "unit": "bestiary:race:drow_noble",
+    "status": "engine-does-not-hold",
+    "source": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst:140",
+    "raw": "CRMOD:NPC|0",
+    "sheet_line": "(not printed)"
+   },
+   {
+    "record": "beastiary:race_generic:Drow Noble",
+    "unit": "bestiary:race:drow_noble",
+    "status": "engine-does-not-hold",
+    "source": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst:140",
+    "raw": "CRMOD:PC|0",
+    "sheet_line": "(not printed)"
+   }
+  ],
+  "oracle_check": "sheet-line only",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": []
+ },
+ {
+  "token_type": "SPELLS",
+  "family": "formula",
+  "instances": "2843 corpus-wide, own count 2026-09-07 over 51,474 data/corpus/<book>/<kind>/*.json records (recursive walk, _parity excluded, LICENSE.json excluded; the beastiary dir counted as bestiary); 244 are [redacted PI] (next row); readable 2,599: TIMES= formula 2,516 (ATWILL 957, integer 1,143, variable 400, arithmetic 16); CASTERLEVEL= 2,569 (variable 1,575, integer 853, call 125, arithmetic 16); per-spell DC after the comma 2,115 (arithmetic 1,070, variable 852, integer 144, call 49)",
+  "units": "1423 of 49,438 docs/work-inventory.json units (48,608 join to a corpus record); non-DONE per scripts/completion_atlas.py::_bucket_of, denominator 23,315 (non-DONE: 671)",
+  "maps_to": "Number(Expr)",
+  "rule": "SPELLS:<book>|TIMES=t|TIMEUNIT=u|CASTERLEVEL=c|<spell>[,<dc>]|<spell>...|PRE... grants spell-like abilities. Each spell entry becomes one SheetRule (id suffix per spell) carrying THREE numbers: uses (t: Const, variable fold, or the words 'at will'/'constant' when t=ATWILL / TIMEUNIT=Constant), caster level (c), and DC (10 + level + stat folded, e.g. 13+CHA). SheetValue holds one value, so either the rule emits three sibling SheetRules (uses/CL/DC) or SheetValue gains a structured form. The trailing PREVAREQ:..._AtWill,0 / _Constant,1 tails select which of a record's 2-3 SPELLS variants applies: Applies. Every racial-SLA SPELLS token resolves same-record (row 27).",
+  "expr_shape": "uses: Const(1) | CL: Level | DC: Sum([Const(10), Const(1), AbilityMod(Cha)])",
+  "expr_gaps": [
+   "SheetValue needs a multi-field form (Fields(Vec<(label, SheetValue)>)) or the converter emits three sibling rules per spell entry -- 1,423 units; the prose lane names the same gap for ASPECT:CheckCount"
+  ],
+  "applies_shape": "the PREVAREQ tails choose the variant (1/day vs at-will vs constant); the spell-list (CLASS|...) is not involved",
+  "prose_effect": "'Ironskin 1/day (CL 5, DC 15)'",
+  "examples": [
+   {
+    "record": "monster_codex:race_trait_generic:Racial SLA ~ Ironskin",
+    "unit": "monster_codex:race_trait:racial_sla_ironskin",
+    "status": "ingested-magnitude",
+    "source": "pathfinder/paizo/roleplaying_game/monster_codex/mc_abilities_race.lst:95",
+    "raw": "SPELLS:Racial|TIMES=RacialSLA_Ironskin_Times|TIMEUNIT=Day|CASTERLEVEL=RacialSLA_Ironskin_LVL|Ironskin,RacialSLA_Ironskin_DC|PREVAREQ:RacialSLA_Ironskin_AtWill,0|PREVAREQ:RacialSLA_Ironskin_Constant,0",
+    "sheet_line": "Ironskin 1/day (CL 5, DC 15)"
+   },
+   {
+    "record": "advanced_players_guide:race_trait_generic:Racial SLA ~ Weapon of Awe",
+    "unit": "advanced_players_guide:race_trait:racial_sla_weapon_of_awe",
+    "status": "ingested-magnitude",
+    "source": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_race.lst:334",
+    "raw": "SPELLS:Racial|TIMES=RacialSLA_WeaponOfAwe_Times|TIMEUNIT=Day|CASTERLEVEL=RacialSLA_WeaponOfAwe_LVL|Weapon of Awe,RacialSLA_WeaponOfAwe_DC|PREVAREQ:RacialSLA_WeaponOfAwe_AtWill,0|PREVAREQ:RacialSLA_WeaponOfAwe_Constant,0",
+    "sheet_line": "Weapon of Awe 1/day (CL 5, DC 15)"
+   },
+   {
+    "record": "advanced_players_guide:race_trait_generic:Racial SLA ~ Ill Omen",
+    "unit": "advanced_players_guide:race_trait:racial_sla_ill_omen",
+    "status": "ingested-magnitude",
+    "source": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_race.lst:324",
+    "raw": "SPELLS:Racial|TIMES=RacialSLA_IllOmen_Times|TIMEUNIT=Day|CASTERLEVEL=RacialSLA_IllOmen_LVL|Ill Omen,RacialSLA_IllOmen_DC|PREVAREQ:RacialSLA_IllOmen_AtWill,0|PREVAREQ:RacialSLA_IllOmen_Constant,0",
+    "sheet_line": "Ill Omen 1/day (CL 5, DC 15)"
+   },
+   {
+    "record": "occult_adventures:class_feature:Medium ~ Legendary Hierophant",
+    "unit": "occult_adventures:class_feature:medium_legendary_hierophant",
+    "status": "engine-does-not-hold",
+    "source": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst:863",
+    "raw": "SPELLS:Hierophant|TIMES=1|CASTERLEVEL=MediumLVL|Miracle,19+CHA",
+    "sheet_line": "Miracle 1/day (CL = Medium level, DC 23)"
+   },
+   {
+    "record": "occult_adventures:class_feature:Kami Medium ~ Ask the Kami",
+    "unit": "occult_adventures:class_feature:kami_medium_ask_the_kami",
+    "status": "engine-does-not-hold",
+    "source": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst:1402",
+    "raw": "SPELLS:Medium|TIMES=ATWILL|CASTERLEVEL=MediumLVL|Commune With Nature,15+CHA",
+    "sheet_line": "Commune with Nature at will (CL = Medium level, DC 19)"
+   },
+   {
+    "record": "inner_sea_world_guide:monster_generic:Codex-Named Unit (monster_inner_sea_world_guide_iswg_races_lst_16)",
+    "unit": "inner_sea_world_guide:monster:treerazer",
+    "status": "engine-does-not-hold",
+    "source": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_races.lst:16",
+    "raw": "SPELLS:Innate|TIMES=ATWILL|CASTERLEVEL=20|Antiplant Shell|Contagion,14+CHA|Desecrate|Dispel Magic (Greater)|Telekinesis,15+CHA|Teleport (Greater/within Tanglebriar only)|Unholy Blight,14+CHA",
+    "sheet_line": "Treerazer: Contagion at will (CL 20, DC 18)"
+   }
+  ],
+  "oracle_check": "SA.<n>.DESC in charbuild-remainder for a race fixture holding the SLA (the DESC substitutes the DC); COUNT[SPELLTIMES] is a PCGen export token the template does not emit",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": [
+   "Three sibling rules vs one structured value is a \u00a71 decision; both are per token type."
+  ]
+ },
+ {
+  "token_type": "SPELLS (PI-redacted token)",
+  "family": "formula",
+  "instances": "244 corpus-wide, own count 2026-09-07 over 51,474 data/corpus/<book>/<kind>/*.json records (recursive walk, _parity excluded, LICENSE.json excluded; the beastiary dir counted as bestiary)",
+  "units": "78 units of 49,438 docs/work-inventory.json units (48,608 join to a corpus record); non-DONE per scripts/completion_atlas.py::_bucket_of, denominator 23,315 (non-DONE 66)",
+  "maps_to": "REFUSE",
+  "rule": "The whole token is [redacted PI] (a deity or named-NPC spell block). Nothing to read.",
+  "expr_shape": "n/a",
+  "expr_gaps": [],
+  "applies_shape": "n/a",
+  "prose_effect": "none",
+  "examples": [
+   {
+    "record": "inner_sea_faiths:ability:Codex-Named Unit (ability_inner_sea_faiths_isf_abilities_faith_lst_117)",
+    "unit": "inner_sea_faiths:ability:temp_bonus_exalted_of_brigh",
+    "status": "engine-does-not-hold",
+    "source": "pathfinder/paizo/campaign_setting/inner_sea_faiths/isf_abilities_faith.lst:117",
+    "raw": "SPELLS:[redacted PI]",
+    "sheet_line": "(refused: unreadable)"
+   },
+   {
+    "record": "inner_sea_faiths:ability:Codex-Named Unit (ability_inner_sea_faiths_isf_abilities_faith_lst_308)",
+    "unit": "inner_sea_faiths:ability:temp_bonus_sentinel_of_naderi",
+    "status": "engine-does-not-hold",
+    "source": "pathfinder/paizo/campaign_setting/inner_sea_faiths/isf_abilities_faith.lst:308",
+    "raw": "SPELLS:[redacted PI]",
+    "sheet_line": "(refused: unreadable)"
+   },
+   {
+    "record": "inner_sea_faiths:ability:Codex-Named Unit (ability_inner_sea_faiths_isf_abilities_faith_lst_100)",
+    "unit": "inner_sea_faiths:ability:temp_bonus_sentinel_of_besmara",
+    "status": "engine-does-not-hold",
+    "source": "pathfinder/paizo/campaign_setting/inner_sea_faiths/isf_abilities_faith.lst:100",
+    "raw": "SPELLS:[redacted PI]",
+    "sheet_line": "(refused: unreadable)"
+   }
+  ],
+  "oracle_check": "sheet-line only",
+  "refuse_reason": "unreadable token: 78 units (66 non-DONE)",
+  "confidence": "high",
+  "open_questions": []
+ },
+ {
+  "token_type": "SPELLKNOWN",
+  "family": "formula",
+  "instances": "2581 corpus-wide, own count 2026-09-07 over 51,474 data/corpus/<book>/<kind>/*.json records (recursive walk, _parity excluded, LICENSE.json excluded; the beastiary dir counted as bestiary); CLASS|<class>=<level>|<spell>[|PRE...]; 2 are [redacted PI]",
+  "units": "1491 of 49,438 docs/work-inventory.json units (48,608 join to a corpus record); non-DONE per scripts/completion_atlas.py::_bucket_of, denominator 23,315 (non-DONE: 1049)",
+  "maps_to": "Metadata(ignored-by-sheet)",
+  "rule": "Adds a spell to a class's known list at a level (bloodline/patron bonus spells). Consumed by the spell chassis (spell_resolver / spellbook), not printed as a rule; the PRE tail (PREVARGTEQ:BloodlineCasterLVL,n) is Applies on the grant. Carries no formula in the level field (always an integer).",
+  "expr_shape": "n/a",
+  "expr_gaps": [],
+  "applies_shape": "grant gated by the trailing PRE",
+  "prose_effect": "none",
+  "examples": [
+   {
+    "record": "occult_adventures:class_feature:Psychic Bloodline ~ Bonus Spells",
+    "unit": "occult_adventures:class_feature:psychic_bloodline_bonus_spells",
+    "status": "engine-does-not-hold",
+    "source": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst:1876",
+    "raw": "SPELLKNOWN:CLASS|Sorcerer=1|Mind Thrust I|PREVAREQ:Sorcerer_CF_BloodlineSpell1,0|PREVARGTEQ:BloodlineCasterLVL,3",
+    "sheet_line": "(grant: Mind Thrust I known at Sorcerer 1)"
+   },
+   {
+    "record": "occult_adventures:class_feature:Psychic Bloodline ~ Bonus Spells",
+    "unit": "occult_adventures:class_feature:psychic_bloodline_bonus_spells",
+    "status": "engine-does-not-hold",
+    "source": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst:1876",
+    "raw": "SPELLKNOWN:CLASS|Sorcerer=2|Id Insinuation I|PREVAREQ:Sorcerer_CF_BloodlineSpell2,0|PREVARGTEQ:BloodlineCasterLVL,5",
+    "sheet_line": "(grant: Id Insinuation I at Sorcerer 2)"
+   },
+   {
+    "record": "occult_adventures:class_feature:Psychic Bloodline ~ Bonus Spells",
+    "unit": "occult_adventures:class_feature:psychic_bloodline_bonus_spells",
+    "status": "engine-does-not-hold",
+    "source": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst:1876",
+    "raw": "SPELLKNOWN:CLASS|Sorcerer=3|Ego Whip I|PREVAREQ:Sorcerer_CF_BloodlineSpell3,0|PREVARGTEQ:BloodlineCasterLVL,7",
+    "sheet_line": "(grant: Ego Whip I at Sorcerer 3)"
+   }
+  ],
+  "oracle_check": "COUNT[SPELLSKNOWN...] is a PCGen export token; not in the template",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": []
+ },
+ {
+  "token_type": "SPELLLEVEL",
+  "family": "formula",
+  "instances": "959 corpus-wide, own count 2026-09-07 over 51,474 data/corpus/<book>/<kind>/*.json records (recursive walk, _parity excluded, LICENSE.json excluded; the beastiary dir counted as bestiary); DOMAIN|<domain>=<n>|<spell> 440 on domain records; CLASS|<class>=<n>|<spells> 512 on class_feature",
+  "units": "503 of 49,438 docs/work-inventory.json units (48,608 join to a corpus record); non-DONE per scripts/completion_atlas.py::_bucket_of, denominator 23,315 (non-DONE: 374)",
+  "maps_to": "Metadata(ignored-by-sheet)",
+  "rule": "Spell-list membership (domain spell lists, archetype list additions). Consumed by the spell chassis; integer levels only.",
+  "expr_shape": "n/a",
+  "expr_gaps": [],
+  "applies_shape": "PRE tail when present",
+  "prose_effect": "none",
+  "examples": [
+   {
+    "record": "inner_sea_world_guide:class_feature:RMA Bonus Spells",
+    "unit": "inner_sea_world_guide:class_feature:rma_bonus_spells",
+    "status": "engine-does-not-hold",
+    "source": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_abilities_class.lst:165",
+    "raw": "SPELLLEVEL:CLASS|Red Mantis Assassin=1|Obscuring Mist,True Strike|PREVARGTEQ:RedMantisLvl,2",
+    "sheet_line": "(list: Obscuring Mist, True Strike at RMA 1)"
+   },
+   {
+    "record": "inner_sea_world_guide:class_feature:RMA Bonus Spells",
+    "unit": "inner_sea_world_guide:class_feature:rma_bonus_spells",
+    "status": "engine-does-not-hold",
+    "source": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_abilities_class.lst:165",
+    "raw": "SPELLLEVEL:CLASS|Red Mantis Assassin=2|Darkness,Summon Swarm|PREVARGTEQ:RedMantisLvl,4",
+    "sheet_line": "(list: Darkness, Summon Swarm at RMA 2)"
+   },
+   {
+    "record": "inner_sea_world_guide:class_feature:RMA Bonus Spells",
+    "unit": "inner_sea_world_guide:class_feature:rma_bonus_spells",
+    "status": "engine-does-not-hold",
+    "source": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_abilities_class.lst:165",
+    "raw": "SPELLLEVEL:CLASS|Red Mantis Assassin=2|Fog Cloud,See Invisibility|PREVARGTEQ:RedMantisLvl,6",
+    "sheet_line": "(list: Fog Cloud, See Invisibility at RMA 2)"
+   }
+  ],
+  "oracle_check": "sheet-line only",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": []
+ },
+ {
+  "token_type": "TEMPBONUS",
+  "family": "formula",
+  "instances": "930 corpus-wide, own count 2026-09-07 over 51,474 data/corpus/<book>/<kind>/*.json records (recursive walk, _parity excluded, LICENSE.json excluded; the beastiary dir counted as bestiary); PC|<target>|<sub>|<formula>[|TYPE=..][|PRE..]; formula field: const 514, variable 162, %CHOICE 171, arithmetic 61, call 10, decimal 1; 11 are [redacted PI]",
+  "units": "575 of 49,438 docs/work-inventory.json units (48,608 join to a corpus record); non-DONE per scripts/completion_atlas.py::_bucket_of, denominator 23,315 (non-DONE: 418)",
+  "maps_to": "Number(Expr)",
+  "rule": "A BONUS that is only active when the player switches it on (rage, mutagen, a spell's effect). Same formula grammar as BONUS (this family) and same envelope/target semantics as BONUS (the bonus lane); the difference is Applies::Situational. Converts to Number(Expr) with the words from TEMPDESC and the magnitude folded ('Rage: +4 Str, +4 Con, +2 Will'). %CHOICE draws from the record's TEMPVALUE range (row 62).",
+  "expr_shape": "Const(2) typed Racial on STAT|DEX, situational",
+  "expr_gaps": [],
+  "applies_shape": "Applies::Situational (player-activated); the EQ|<item>|... form targets an equipped item",
+  "prose_effect": "TEMPDESC words prefix the line",
+  "examples": [
+   {
+    "record": "inner_sea_world_guide:class_feature:Red Shroud",
+    "unit": "inner_sea_world_guide:class_feature:red_shroud",
+    "status": "engine-does-not-hold",
+    "source": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_abilities_class.lst:157",
+    "raw": "TEMPBONUS:ANYPC|COMBAT|AC|1|TYPE=Dodge",
+    "sheet_line": "Red shroud: AC +1 (dodge) when active"
+   },
+   {
+    "record": "bestiary_2:race_trait_generic:Astradaemon ~ Soul Siphon",
+    "unit": "bestiary_2:race_trait:astradaemon_soul_siphon",
+    "status": "ingested-magnitude",
+    "source": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst:276",
+    "raw": "TEMPBONUS:PC|STAT|STR|2",
+    "sheet_line": "Soul siphon: Str +2 when active"
+   },
+   {
+    "record": "bestiary_5:race_trait_generic:Skinwalker ~ Change Shape (Dexterity)",
+    "unit": "bestiary_5:race_trait:skinwalker_change_shape_dexterity",
+    "status": "ingested-magnitude",
+    "source": "pathfinder/paizo/roleplaying_game/core_essentials/races/skinwalker/skinwalker_abilities_race.lst:61",
+    "raw": "TEMPBONUS:PC|STAT|DEX|2|TYPE=Racial",
+    "sheet_line": "Change shape: Dex +2 (racial) when active"
+   },
+   {
+    "record": "adventurers_guide:class_feature:Erinyes Fury Temp Bonus",
+    "unit": "adventurers_guide:class_feature:erinyes_fury_temp_bonus",
+    "status": "engine-does-not-hold",
+    "source": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst:473",
+    "raw": "TEMPBONUS:PC|SAVE|Will|ErinyesFurySaveBonus",
+    "sheet_line": "Erinyes fury: Will +N when active (N cross-record)"
+   },
+   {
+    "record": "adventurers_guide:class_feature:Erinyes Fury Temp Bonus",
+    "unit": "adventurers_guide:class_feature:erinyes_fury_temp_bonus",
+    "status": "engine-does-not-hold",
+    "source": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst:473",
+    "raw": "TEMPBONUS:PC|STAT|STR|ErinyesFuryStrBonus",
+    "sheet_line": "Erinyes fury: Str +N"
+   },
+   {
+    "record": "adventurers_guide:class_feature:Erinyes Fury Temp Bonus",
+    "unit": "adventurers_guide:class_feature:erinyes_fury_temp_bonus",
+    "status": "engine-does-not-hold",
+    "source": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst:473",
+    "raw": "TEMPBONUS:PC|STAT|CON|ErinyesFuryConBonus",
+    "sheet_line": "Erinyes fury: Con +N"
+   }
+  ],
+  "oracle_check": "sheet-line only -- the export runs a base character with no temp bonuses applied",
+  "refuse_reason": "",
+  "confidence": "medium",
+  "open_questions": [
+   "Does Applies have a Situational form? The prereq lane owns Applies; this row needs one word from it."
+  ]
+ },
+ {
+  "token_type": "TEMPVALUE",
+  "family": "formula",
+  "instances": "164 corpus-wide, own count 2026-09-07 over 51,474 data/corpus/<book>/<kind>/*.json records (recursive walk, _parity excluded, LICENSE.json excluded; the beastiary dir counted as bestiary); MIN=a|MAX=b|TITLE=<words>; b is an integer 150 times and a variable (ABP_WeaponBonusMax) 6 times; 11 are [redacted PI]",
+  "units": "164 of 49,438 docs/work-inventory.json units (48,608 join to a corpus record); non-DONE per scripts/completion_atlas.py::_bucket_of, denominator 23,315 (non-DONE: 143)",
+  "maps_to": "Number(Expr)",
+  "rule": "The integer the player picks for the record's %CHOICE TEMPBONUS, bounded a..b. Choice(ChoiceId) with an integer domain [Const(a), b-as-Expr]; unresolved prints the TITLE words.",
+  "expr_shape": "Choice(choice_id) in [Const(1), Var(abp_weapon_bonus_max)]",
+  "expr_gaps": [
+   "Choice(ChoiceId) has no domain; needs (min: Expr, max: Expr) for the integer form -- 164 units; the prose lane names the same"
+  ],
+  "applies_shape": "none",
+  "prose_effect": "the TITLE words",
+  "examples": [
+   {
+    "record": "pathfinder_unchained:class_feature:Attuned Weapon (Fist)",
+    "unit": "pathfinder_unchained:class_feature:attuned_weapon_fist",
+    "status": "engine-does-not-hold",
+    "source": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst:69",
+    "raw": "TEMPVALUE:MIN=1|MAX=ABP_WeaponBonusMax|TITLE=Weapon Enhancement Bonus",
+    "sheet_line": "Attuned weapon: enhancement +N (choose 1..max)"
+   },
+   {
+    "record": "pathfinder_unchained:class_feature:Attuned Armor",
+    "unit": "pathfinder_unchained:class_feature:attuned_armor",
+    "status": "engine-does-not-hold",
+    "source": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst:70",
+    "raw": "TEMPVALUE:MIN=1|MAX=ABP_ArmorBonusMax|TITLE=Armor Enhancement Bonus",
+    "sheet_line": "Attuned armor: +N"
+   },
+   {
+    "record": "pathfinder_unchained:class_feature:Attuned Shield",
+    "unit": "pathfinder_unchained:class_feature:attuned_shield",
+    "status": "engine-does-not-hold",
+    "source": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst:71",
+    "raw": "TEMPVALUE:MIN=1|MAX=ABP_ArmorBonusMax|TITLE=Shield Enhancement Bonus",
+    "sheet_line": "Attuned shield: +N"
+   }
+  ],
+  "oracle_check": "sheet-line only",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": []
+ },
+ {
+  "token_type": "TEMPDESC",
+  "family": "formula",
+  "instances": "184 corpus-wide, own count 2026-09-07 over 51,474 data/corpus/<book>/<kind>/*.json records (recursive walk, _parity excluded, LICENSE.json excluded; the beastiary dir counted as bestiary)",
+  "units": "184 of 49,438 docs/work-inventory.json units (48,608 join to a corpus record); non-DONE per scripts/completion_atlas.py::_bucket_of, denominator 23,315 (non-DONE: 102)",
+  "maps_to": "Text",
+  "rule": "The words shown when the temp bonus is offered; goes into the prose of the TEMPBONUS rule. No formula inside (0 %N arguments).",
+  "expr_shape": "n/a",
+  "expr_gaps": [],
+  "applies_shape": "none",
+  "prose_effect": "prose",
+  "examples": [
+   {
+    "record": "bestiary_2:skill:Craft (Rope)",
+    "unit": "bestiary_2:skill:craft_rope",
+    "status": "ingested-magnitude",
+    "source": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_skills.lst:8",
+    "raw": "TEMPDESC:Craft skill checks are made with a -2 circumstance penalty if improvised tools are used",
+    "sheet_line": "Craft (rope): -2 with improvised tools (words)"
+   },
+   {
+    "record": "book_of_the_damned_volume_2:class_feature:Demonic Obedience Base",
+    "unit": "book_of_the_damned_volume_2:class_feature:demonic_obedience_base",
+    "status": "engine-does-not-hold",
+    "source": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_2/botd2_abilities_classes.lst:36",
+    "raw": "TEMPDESC:Apply the bonuses associated with conducting the demonic obedience.",
+    "sheet_line": "Demonic obedience: apply its bonuses (words)"
+   },
+   {
+    "record": "advanced_class_guide:template:Inspired Rage",
+    "unit": "advanced_class_guide:template:inspired_rage",
+    "status": "ingested-magnitude",
+    "source": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_templates.lst:28",
+    "raw": "TEMPDESC:Inspired Rage&colon; Morale bonuses to Strength, Constitution and Will saving throws depending on the ally's Skald level, but also take a \u20131 penalty to AC.",
+    "sheet_line": "Inspired rage: morale bonuses ... (words)"
+   }
+  ],
+  "oracle_check": "sheet-line only",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": []
+ },
+ {
+  "token_type": "DESC / BENEFIT %N argument (a formula inside a prose token)",
+  "family": "formula",
+  "instances": "7,310 DESC arguments corpus-wide, own count 2026-09-07 over 51,474 data/corpus/<book>/<kind>/*.json records (recursive walk, _parity excluded, LICENSE.json excluded; the beastiary dir counted as bestiary) (variable 5,282, arithmetic 1,231, call 445, integer 266, %CHOICE/%LIST 86) + BENEFIT arguments",
+  "units": "5,013 units carry a DESC/BENEFIT argument that is not a bare integer of 49,438 docs/work-inventory.json units (48,608 join to a corpus record); non-DONE per scripts/completion_atlas.py::_bucket_of, denominator 23,315 (non-DONE 3,634 = 15.6% of all non-DONE)",
+  "maps_to": "Number(Expr)",
+  "rule": "DESC:<text with %1 %2>|<arg1>|<arg2> substitutes each argument's VALUE into the words. Each argument is a formula in this family's grammar (RogueLVL/2, max(MesmeristLVL/2,1), 10+INT) and converts by the rows above. The substituted text cannot be produced at convert time when the argument depends on the character, so prose: String cannot hold it. The prose lane owns the text; this row states the argument side: every %N argument converts to an Expr slot, integer arguments to Const.",
+  "expr_shape": "slots: [Div(ClassLevel(rogue), Const(2))]",
+  "expr_gaps": [
+   "prose needs value slots: Vec<ProseSegment{Text | Value(Expr)}> or prose + slots: Vec<Expr> -- 5,013 units; the prose lane names the identical gap"
+  ],
+  "applies_shape": "none",
+  "prose_effect": "the whole point: the number lands inside the words",
+  "examples": [
+   {
+    "record": "occult_adventures:class_feature:Relic Channeler ~ Object Reading",
+    "unit": "occult_adventures:class_feature:relic_channeler_object_reading",
+    "status": "engine-does-not-hold",
+    "source": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst:1423",
+    "raw": "DESC:An relic channeler learns how to read information from items she examines. Examining an item in this way requires her to spend 1 minute handling the item. If the item is a magic item, the relic channeler learns its properties and command word as if she had successfully examined the item using detect magic and succeeded at a Spellcraft check. This ability does not reveal whether the item is cursed unless the relic channeler's class level is equal to or greater than the caster level of the item. If the item has any historical significance, the relic channeler learns one piece of information about its past (as determined by the GM). Finally, if the item was last used no longer than %1 days ago, the relic channeler learns one piece of information about the last creature to use the item. This information might be a glimpse of the creature's appearance, a brief vision of what it saw while using the item, or perhaps its emotional state when it last used the item. The GM determines what information is gained in this way. This functions like the psychometry occult skill unlock (see page 196), but doesn't require a skill check and can be used at will.|MediumLVL",
+    "sheet_line": "Object reading: ... (Occultist level folded into the words)"
+   },
+   {
+    "record": "occult_adventures:class_feature:Medium ~ Surprise Strike",
+    "unit": "occult_adventures:class_feature:medium_surprise_strike",
+    "status": "engine-does-not-hold",
+    "source": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst:875",
+    "raw": "DESC:(Intermediate) When you attack an opponent that's denied its Dexterity bonus to AC, you deal %1d6 points of extra precision damage. Your target counts as flat-footed against the first attack you make against that target in a day, regardless of abilities like uncanny dodge. After your first attack, that target is immune to being made flat-footed by your surprise strike for 24 hours.|MediumLVL/3",
+    "sheet_line": "Surprise strike: you deal Nd6 extra (N = level-based)"
+   },
+   {
+    "record": "occult_adventures:class_feature:Base Focus Power ~ Minor Figment",
+    "unit": "occult_adventures:class_feature:base_focus_power_minor_figment",
+    "status": "engine-does-not-hold",
+    "source": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst:1091",
+    "raw": "DESC:In either case, the effect lasts for %1 rounds.|OccultistLVL|PREVARLT:OccultistLVL,7",
+    "sheet_line": "Minor figment: lasts 5 rounds (if held at Occultist 5)"
+   }
+  ],
+  "oracle_check": "SA.<n>.DESC in charbuild-remainder is PCGen's own substituted text -- the direct oracle for this row",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": []
+ },
+ {
+  "token_type": "SAB",
+  "family": "formula",
+  "instances": "2 corpus-wide, own count 2026-09-07 over 51,474 data/corpus/<book>/<kind>/*.json records (recursive walk, _parity excluded, LICENSE.json excluded; the beastiary dir counted as bestiary)",
+  "units": "2 of 49,438 docs/work-inventory.json units (48,608 join to a corpus record); non-DONE per scripts/completion_atlas.py::_bucket_of, denominator 23,315 (non-DONE: 0)",
+  "maps_to": "Text",
+  "rule": "Two companion records carry a literal special-ability line ('+4 on saves vs. disease.'); no formula. Prose.",
+  "expr_shape": "n/a",
+  "expr_gaps": [],
+  "applies_shape": "none",
+  "prose_effect": "prose",
+  "examples": [
+   {
+    "record": "bestiary_3:companion:bestiary_3:companion:companion_giant_vulture",
+    "unit": "bestiary_3:companion:companion_giant_vulture",
+    "status": "grounded",
+    "source": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_races_companion.lst:15",
+    "raw": "SAB:+4 on saves vs. disease.",
+    "sheet_line": "Giant vulture: +4 on saves vs. disease"
+   },
+   {
+    "record": "monster_codex:companion:monster_codex:companion:companion_giant_vulture",
+    "unit": "monster_codex:companion:companion_giant_vulture",
+    "status": "grounded",
+    "source": "pathfinder/paizo/roleplaying_game/monster_codex/mc_races_companion.lst:15",
+    "raw": "SAB:+4 on saves vs. disease.",
+    "sheet_line": "(second of the two SAB records)"
+   }
+  ],
+  "oracle_check": "SA.<n>.DESC",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": []
+ },
+ {
+  "token_type": "SPROP",
+  "family": "formula",
+  "instances": "3816 corpus-wide, own count 2026-09-07 over 51,474 data/corpus/<book>/<kind>/*.json records (recursive walk, _parity excluded, LICENSE.json excluded; the beastiary dir counted as bestiary); 48 carry a %LIST argument; the rest are plain words",
+  "units": "3614 of 49,438 docs/work-inventory.json units (48,608 join to a corpus record); non-DONE per scripts/completion_atlas.py::_bucket_of, denominator 23,315 (non-DONE: 259)",
+  "maps_to": "Text",
+  "rule": "Equipment special-property words; the prose lane owns it. The 48 %LIST arguments are Choice slots.",
+  "expr_shape": "n/a",
+  "expr_gaps": [],
+  "applies_shape": "none",
+  "prose_effect": "prose",
+  "examples": [
+   {
+    "record": "occult_adventures:equipment:Vril Staff",
+    "unit": "occult_adventures:equipment:vril_staff",
+    "status": "ingested-magnitude",
+    "source": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_equip.lst:72",
+    "raw": "SPROP:Mage hand (1 charge)  *  Cure light wounds (1 charge)  *  Cure moderate wounds (2 charges)  *  Telekinesis (2 charges)  *  Repulsion (3 charges) If the wielder of a vril staff is a spellcaster, as a standard action, she can expend 1 charge and sacrifice a prepared spell or unused spell slot of 1st level or higher to channel the power through the staff as a blast of raw magical energy known as vril. This ray resolves as a ranged touch attack with a range of 30 feet, and the wielder chooses whether it deals damage or heals. The amount of damage dealt or healed by the ray is equal to 1d6 points per level of the spell sacrificed + 1 point per caster level of the wielder. In the hands of a kineticist, the staff functions differently. By spending 1 charge from the staff as part of her kinetic blast, the kineticist can use a new basic energy blast called a vril blast. This blast deals untyped damage. A vril blast works only with form and substance infusions that specify that they work on any blast. If the kineticist instead spends 3 charges, her vril blast's intensity increases and it ignores spell resistance. A kineticist can use a vril staff without attempting a Use Magic Device check. A spellcaster can recharge a vril staff normally. A kineticist can restore a single charge to a vril staff by accepting 3 points of burn.",
+    "sheet_line": "Vril staff: (charges list, words)"
+   },
+   {
+    "record": "inner_sea_intrigue:equipment:Special Ability ~ Transformative / Greater ~ Melee",
+    "unit": "inner_sea_intrigue:equipment_modifier:special_ability_transformative_greater_melee",
+    "status": "ingested-magnitude",
+    "source": "pathfinder/paizo/campaign_setting/inner_sea_intrigue/isi_equipmods.lst:14",
+    "raw": "SPROP:SPROP:On command, alters its shape to become any other weapon (but not ammo)",
+    "sheet_line": "Transformative: (words)"
+   },
+   {
+    "record": "advanced_class_guide:equipment:Preyfinder",
+    "unit": "advanced_class_guide:equipment:preyfinder",
+    "status": "ingested-magnitude",
+    "source": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equip.lst:397",
+    "raw": "SPROP:can see and track creature that blood was taken from",
+    "sheet_line": "Preyfinder: (words)"
+   }
+  ],
+  "oracle_check": "sheet-line only",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": []
+ },
+ {
+  "token_type": "SIZE",
+  "family": "formula",
+  "instances": "2168 corpus-wide, own count 2026-09-07 over 51,474 data/corpus/<book>/<kind>/*.json records (recursive walk, _parity excluded, LICENSE.json excluded; the beastiary dir counted as bestiary); one letter F/D/T/S/M/L/H/G/C 2,167; formula 1",
+  "units": "2168 of 49,438 docs/work-inventory.json units (48,608 join to a corpus record); non-DONE per scripts/completion_atlas.py::_bucket_of, denominator 23,315 (non-DONE: 63)",
+  "maps_to": "Metadata(ignored-by-sheet)",
+  "rule": "Sets the size category the Size fact reads (technical-design \u00a72: size binds from the race table). Not a rule line of its own.",
+  "expr_shape": "n/a",
+  "expr_gaps": [],
+  "applies_shape": "binds Size for the holder",
+  "prose_effect": "none",
+  "examples": [
+   {
+    "record": "occult_adventures:race_generic:Ghost Mount (L)",
+    "unit": "occult_adventures:race:ghost_mount_l",
+    "status": "engine-does-not-hold",
+    "source": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_races.lst:14",
+    "raw": "SIZE:L",
+    "sheet_line": "(binds: Large)"
+   },
+   {
+    "record": "occult_adventures:race_generic:Ghost Mount (M)",
+    "unit": "occult_adventures:race:ghost_mount_m",
+    "status": "engine-does-not-hold",
+    "source": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_races.lst:13",
+    "raw": "SIZE:M",
+    "sheet_line": "(binds: Medium)"
+   },
+   {
+    "record": "occult_adventures:template:SMALL",
+    "unit": "occult_adventures:template:small",
+    "status": "engine-does-not-hold",
+    "source": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_templates.lst:5",
+    "raw": "SIZE:S",
+    "sheet_line": "(binds: Small)"
+   }
+  ],
+  "oracle_check": "AC.TOTAL in computed-values.txt.ftl carries the size modifier",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": []
+ },
+ {
+  "token_type": "SIZE (formula)",
+  "family": "formula",
+  "instances": "1 corpus-wide, own count 2026-09-07 over 51,474 data/corpus/<book>/<kind>/*.json records (recursive walk, _parity excluded, LICENSE.json excluded; the beastiary dir counted as bestiary)",
+  "units": "1 unit of 49,438 docs/work-inventory.json units (48,608 join to a corpus record); non-DONE per scripts/completion_atlas.py::_bucket_of, denominator 23,315",
+  "maps_to": "REFUSE",
+  "rule": "SIZE:max(AnimalSize,var(\"RACESIZE\")) on the lycanthrope hybrid template: a size computed from an animal form. One record; refuse.",
+  "expr_shape": "n/a",
+  "expr_gaps": [],
+  "applies_shape": "n/a",
+  "prose_effect": "none",
+  "examples": [
+   {
+    "record": "beastiary:template:Lycanthrope (Hybrid Form)",
+    "unit": "bestiary:template:lycanthrope_hybrid_form",
+    "status": "engine-does-not-hold",
+    "source": "pathfinder/paizo/roleplaying_game/bestiary/b1_templates.lst:73",
+    "raw": "SIZE:max(AnimalSize,var(\"RACESIZE\"))",
+    "sheet_line": "(refused)"
+   }
+  ],
+  "oracle_check": "sheet-line only",
+  "refuse_reason": "computed size from an animal form: 1 unit",
+  "confidence": "high",
+  "open_questions": []
+ },
+ {
+  "token_type": "LEGS / HANDS",
+  "family": "formula",
+  "instances": "1358 corpus-wide, own count 2026-09-07 over 51,474 data/corpus/<book>/<kind>/*.json records (recursive walk, _parity excluded, LICENSE.json excluded; the beastiary dir counted as bestiary); HANDS 1,059",
+  "units": "1337 of 49,438 docs/work-inventory.json units (48,608 join to a corpus record); non-DONE per scripts/completion_atlas.py::_bucket_of, denominator 23,315 (non-DONE: 119); HANDS 1038 of 49,438 docs/work-inventory.json units (48,608 join to a corpus record); non-DONE per scripts/completion_atlas.py::_bucket_of, denominator 23,315 (non-DONE: 83)",
+  "maps_to": "Metadata(ignored-by-sheet)",
+  "rule": "Body-slot counts for equipment rules; not printed.",
+  "expr_shape": "n/a",
+  "expr_gaps": [],
+  "applies_shape": "none",
+  "prose_effect": "none",
+  "examples": [
+   {
+    "record": "occult_adventures:race_generic:Homunculus Companion",
+    "unit": "occult_adventures:race:homunculus_companion",
+    "status": "engine-does-not-hold",
+    "source": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_races.lst:9",
+    "raw": "LEGS:2",
+    "sheet_line": "(not printed)"
+   },
+   {
+    "record": "occult_adventures:race_generic:Ghost Mount (L)",
+    "unit": "occult_adventures:race:ghost_mount_l",
+    "status": "engine-does-not-hold",
+    "source": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_races.lst:14",
+    "raw": "LEGS:4",
+    "sheet_line": "(not printed)"
+   },
+   {
+    "record": "occult_adventures:race_generic:Homunculus Companion",
+    "unit": "occult_adventures:race:homunculus_companion",
+    "status": "engine-does-not-hold",
+    "source": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_races.lst:9",
+    "raw": "HANDS:2",
+    "sheet_line": "(not printed)"
+   }
+  ],
+  "oracle_check": "sheet-line only",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": []
+ },
+ {
+  "token_type": "VISION",
+  "family": "formula",
+  "instances": "529 corpus-wide, own count 2026-09-07 over 51,474 data/corpus/<book>/<kind>/*.json records (recursive walk, _parity excluded, LICENSE.json excluded; the beastiary dir counted as bestiary); Name (N') 154+36, bare name 125+9, |-joined lists 130, PRE tail 1",
+  "units": "510 of 49,438 docs/work-inventory.json units (48,608 join to a corpus record); non-DONE per scripts/completion_atlas.py::_bucket_of, denominator 23,315 (non-DONE: 102)",
+  "maps_to": "Number(Expr)",
+  "rule": "One SheetRule per |-entry: 'Darkvision (60')' -> label Darkvision, Number(Const(60)) printed '60 ft'; a bare name ('Low-Light Vision', 'See Invisibility') -> Text. A PRE tail is Applies.",
+  "expr_shape": "Const(60)",
+  "expr_gaps": [],
+  "applies_shape": "PRE tail when present",
+  "prose_effect": "'Darkvision 60 ft'",
+  "examples": [
+   {
+    "record": "occult_adventures:class_feature:Resonant Power ~ Third Eye",
+    "unit": "occult_adventures:class_feature:resonant_power_third_eye",
+    "status": "engine-does-not-hold",
+    "source": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst:1043",
+    "raw": "VISION:See Invisibility|PREMULT:2,[PREVARGTEQ:OccultistLVL,7],[PREVARGTEQ:OccultistDivinationFocus,9]",
+    "sheet_line": "Third eye: see invisibility (at Occultist 7 / focus 9)"
+   },
+   {
+    "record": "inner_sea_world_guide:monster_generic:Codex-Named Unit (monster_inner_sea_world_guide_iswg_races_lst_13)",
+    "unit": "inner_sea_world_guide:monster:daughter_of_urgathoa",
+    "status": "engine-does-not-hold",
+    "source": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_races.lst:13",
+    "raw": "VISION:Darkvision (60')",
+    "sheet_line": "Daughter of Urgathoa: darkvision 60 ft"
+   },
+   {
+    "record": "inner_sea_world_guide:monster_generic:Codex-Named Unit (monster_inner_sea_world_guide_iswg_races_lst_16)",
+    "unit": "inner_sea_world_guide:monster:treerazer",
+    "status": "engine-does-not-hold",
+    "source": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_races.lst:16",
+    "raw": "VISION:Darkvision (60')|Detect good/law|True Seeing",
+    "sheet_line": "Treerazer: darkvision 60 ft; detect good/law; true seeing"
+   }
+  ],
+  "oracle_check": "sheet-line only",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": []
+ },
+ {
+  "token_type": "PLUS",
+  "family": "formula",
+  "instances": "571 corpus-wide, own count 2026-09-07 over 51,474 data/corpus/<book>/<kind>/*.json records (recursive walk, _parity excluded, LICENSE.json excluded; the beastiary dir counted as bestiary)",
+  "units": "534 of 49,438 docs/work-inventory.json units (48,608 join to a corpus record); non-DONE per scripts/completion_atlas.py::_bucket_of, denominator 23,315 (non-DONE: 35)",
+  "maps_to": "Metadata(ignored-by-sheet)",
+  "rule": "Enhancement plus of an equipment modifier; the equipment chassis applies it to the weapon/armor line.",
+  "expr_shape": "n/a",
+  "expr_gaps": [],
+  "applies_shape": "none",
+  "prose_effect": "none",
+  "examples": [
+   {
+    "record": "advanced_class_guide:equipment:BloodHunting_AMF",
+    "unit": "advanced_class_guide:equipment_modifier:bloodhunting_amf",
+    "status": "unmeasurable",
+    "source": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equipmods.lst:116",
+    "raw": "PLUS:1",
+    "sheet_line": "(equipment chassis: +1)"
+   },
+   {
+    "record": "ultimate_psionics:equipment:Special Ability ~ Psychokinetic Burst ~ Melee",
+    "unit": "ultimate_psionics:equipment_modifier:special_ability_psychokinetic_burst_melee",
+    "status": "unmeasurable",
+    "source": "pathfinder/dreamscarred_press/ultimate_psionics/up_equipmods.lst:105",
+    "raw": "PLUS:2",
+    "sheet_line": "(equipment chassis: +2)"
+   },
+   {
+    "record": "core_rulebook:equipment:Special Ability ~ Invulnerability ~ Armor",
+    "unit": "core_rulebook:equipment_modifier:special_ability_invulnerability_armor",
+    "status": "ingested-magnitude",
+    "source": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equipmods.lst:335",
+    "raw": "PLUS:3",
+    "sheet_line": "(equipment chassis: +3)"
+   }
+  ],
+  "oracle_check": "AC.TOTAL for armor enhancement",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": []
+ },
+ {
+  "token_type": "ADDLEVEL",
+  "family": "formula",
+  "instances": "22 corpus-wide, own count 2026-09-07 over 51,474 data/corpus/<book>/<kind>/*.json records (recursive walk, _parity excluded, LICENSE.json excluded; the beastiary dir counted as bestiary)",
+  "units": "22 of 49,438 docs/work-inventory.json units (48,608 join to a corpus record); non-DONE per scripts/completion_atlas.py::_bucket_of, denominator 23,315 (non-DONE: 22)",
+  "maps_to": "Metadata(ignored-by-sheet)",
+  "rule": "Template adds N levels of a monster class (Undead|2). A grant to the class ladder, not a line.",
+  "expr_shape": "n/a",
+  "expr_gaps": [],
+  "applies_shape": "grant",
+  "prose_effect": "none",
+  "examples": [
+   {
+    "record": "bestiary_2:template:Awakened Vermin",
+    "unit": "bestiary_2:template:awakened_vermin",
+    "status": "ingested-magnitude",
+    "source": "pathfinder/paizo/roleplaying_game/core_essentials/ce_templates.lst:1271",
+    "raw": "ADDLEVEL:Vermin|2",
+    "sheet_line": "(grant: 2 Vermin levels)"
+   },
+   {
+    "record": "bestiary_2:template:Awakened Animal",
+    "unit": "bestiary_2:template:awakened_animal",
+    "status": "engine-does-not-hold",
+    "source": "pathfinder/paizo/roleplaying_game/core_essentials/ce_templates.lst:1270",
+    "raw": "ADDLEVEL:Animal|2",
+    "sheet_line": "(grant: 2 Animal levels)"
+   },
+   {
+    "record": "beastiary:template:Skeleton HitDice",
+    "unit": "bestiary:template:skeleton_hitdice",
+    "status": "engine-does-not-hold",
+    "source": "pathfinder/paizo/roleplaying_game/bestiary/b1_templates.lst:99",
+    "raw": "ADDLEVEL:Undead (Mindless)|1",
+    "sheet_line": "(grant: 1 Undead (Mindless) level)"
+   }
+  ],
+  "oracle_check": "CLASS.0.LEVEL",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": []
+ },
+ {
+  "token_type": "LEVELSPERFEAT",
+  "family": "formula",
+  "instances": "9 corpus-wide, own count 2026-09-07 over 51,474 data/corpus/<book>/<kind>/*.json records (recursive walk, _parity excluded, LICENSE.json excluded; the beastiary dir counted as bestiary); every value is 0",
+  "units": "9 of 49,438 docs/work-inventory.json units (48,608 join to a corpus record); non-DONE per scripts/completion_atlas.py::_bucket_of, denominator 23,315 (non-DONE: 9)",
+  "maps_to": "Metadata(ignored-by-sheet)",
+  "rule": "Class feat cadence override (0 = no feats from this class). Feat-pool machinery, not a line.",
+  "expr_shape": "n/a",
+  "expr_gaps": [],
+  "applies_shape": "none",
+  "prose_effect": "none",
+  "examples": [
+   {
+    "record": "ultimate_psionics:class:Horror",
+    "unit": "ultimate_psionics:class:horror",
+    "status": "engine-does-not-hold",
+    "source": "pathfinder/dreamscarred_press/ultimate_psionics/up_classes_apg.lst:10",
+    "raw": "LEVELSPERFEAT:0",
+    "sheet_line": "(not printed)"
+   },
+   {
+    "record": "ultimate_psionics:class:Horror (Ref/Will)",
+    "unit": "ultimate_psionics:class:horror_ref_will",
+    "status": "engine-does-not-hold",
+    "source": "pathfinder/dreamscarred_press/ultimate_psionics/up_classes_apg.lst:33",
+    "raw": "LEVELSPERFEAT:0",
+    "sheet_line": "(not printed)"
+   },
+   {
+    "record": "ultimate_psionics:class:Horror (Fort/Ref)",
+    "unit": "ultimate_psionics:class:horror_fort_ref",
+    "status": "engine-does-not-hold",
+    "source": "pathfinder/dreamscarred_press/ultimate_psionics/up_classes_apg.lst:19",
+    "raw": "LEVELSPERFEAT:0",
+    "sheet_line": "(not printed)"
+   }
+  ],
+  "oracle_check": "sheet-line only",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": []
+ },
+ {
+  "token_type": "KEYSTAT",
+  "family": "formula",
+  "instances": "148 corpus-wide, own count 2026-09-07 over 51,474 data/corpus/<book>/<kind>/*.json records (recursive walk, _parity excluded, LICENSE.json excluded; the beastiary dir counted as bestiary)",
+  "units": "148 of 49,438 docs/work-inventory.json units (48,608 join to a corpus record); non-DONE per scripts/completion_atlas.py::_bucket_of, denominator 23,315 (non-DONE: 50)",
+  "maps_to": "Metadata(ignored-by-sheet)",
+  "rule": "A skill's key ability; the skill table already holds it and the skill total reads AbilityMod(KEYSTAT).",
+  "expr_shape": "n/a",
+  "expr_gaps": [],
+  "applies_shape": "none",
+  "prose_effect": "none",
+  "examples": [
+   {
+    "record": "inner_sea_bestiary:skill:Perception (Dim Light)",
+    "unit": "inner_sea_bestiary:skill:perception_dim_light",
+    "status": "engine-does-not-hold",
+    "source": "pathfinder/paizo/campaign_setting/inner_sea_bestiary/isb_skills.lst:6",
+    "raw": "KEYSTAT:WIS",
+    "sheet_line": "(skill table: Wis)"
+   },
+   {
+    "record": "inner_sea_bestiary:skill:Stealth (Cane Fields)",
+    "unit": "inner_sea_bestiary:skill:stealth_cane_fields",
+    "status": "engine-does-not-hold",
+    "source": "pathfinder/paizo/campaign_setting/inner_sea_bestiary/isb_skills.lst:9",
+    "raw": "KEYSTAT:DEX",
+    "sheet_line": "(skill table: Dex)"
+   },
+   {
+    "record": "bestiary_2:skill:Craft (Rope)",
+    "unit": "bestiary_2:skill:craft_rope",
+    "status": "ingested-magnitude",
+    "source": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_skills.lst:8",
+    "raw": "KEYSTAT:INT",
+    "sheet_line": "(skill table: Int)"
+   }
+  ],
+  "oracle_check": "sheet-line only (no skill export)",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": []
+ },
+ {
+  "token_type": "ITEM",
+  "family": "formula",
+  "instances": "685 corpus-wide, own count 2026-09-07 over 51,474 data/corpus/<book>/<kind>/*.json records (recursive walk, _parity excluded, LICENSE.json excluded; the beastiary dir counted as bestiary)",
+  "units": "685 of 49,438 docs/work-inventory.json units (48,608 join to a corpus record); non-DONE per scripts/completion_atlas.py::_bucket_of, denominator 23,315 (non-DONE: 193)",
+  "maps_to": "Metadata(ignored-by-sheet)",
+  "rule": "ITEM:Potion marks a spell as potion-eligible. Item-creation metadata.",
+  "expr_shape": "n/a",
+  "expr_gaps": [],
+  "applies_shape": "none",
+  "prose_effect": "none",
+  "examples": [
+   {
+    "record": "inner_sea_gods:spell:Aspect of the Nightingale",
+    "unit": "inner_sea_gods:spell:aspect_of_the_nightingale",
+    "status": "ingested-magnitude",
+    "source": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_spells.lst:9",
+    "raw": "ITEM:POTION",
+    "sheet_line": "(not printed)"
+   },
+   {
+    "record": "advanced_players_guide:spell:Burst Bonds",
+    "unit": "advanced_players_guide:spell:burst_bonds",
+    "status": "ingested-magnitude",
+    "source": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_spells.lst:53",
+    "raw": "ITEM:Potion",
+    "sheet_line": "(not printed)"
+   },
+   {
+    "record": "advanced_players_guide:spell:Cast Out",
+    "unit": "advanced_players_guide:spell:cast_out",
+    "status": "ingested-magnitude",
+    "source": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_spells.lst:59",
+    "raw": "ITEM:Potion",
+    "sheet_line": "(not printed)"
+   }
+  ],
+  "oracle_check": "sheet-line only",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": []
+ },
+ {
+  "token_type": "SITUATION",
+  "family": "formula",
+  "instances": "213 corpus-wide, own count 2026-09-07 over 51,474 data/corpus/<book>/<kind>/*.json records (recursive walk, _parity excluded, LICENSE.json excluded; the beastiary dir counted as bestiary)",
+  "units": "182 of 49,438 docs/work-inventory.json units (48,608 join to a corpus record); non-DONE per scripts/completion_atlas.py::_bucket_of, denominator 23,315 (non-DONE: 182)",
+  "maps_to": "Text",
+  "rule": "The condition words for a BONUS:SITUATION on the same record ('On the ground', 'In Social Identity'); the number is the bonus lane's. Prose suffix.",
+  "expr_shape": "n/a",
+  "expr_gaps": [],
+  "applies_shape": "none",
+  "prose_effect": "'(+2 on the ground)'",
+  "examples": [
+   {
+    "record": "ultimate_psionics:class_feature:Path Skill ~ Perception",
+    "unit": "ultimate_psionics:class_feature:path_skill_perception__39fc45b4ae9cc3ec",
+    "status": "engine-does-not-hold",
+    "source": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst:611",
+    "raw": "SITUATION:Vision",
+    "sheet_line": "Path skill (Perception): +N (vision)"
+   },
+   {
+    "record": "ultimate_psionics:class_feature:Path Skill ~ Acrobatics",
+    "unit": "ultimate_psionics:class_feature:path_skill_acrobatics__d22ee5e55ac60880",
+    "status": "engine-does-not-hold",
+    "source": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst:600",
+    "raw": "SITUATION:On ship",
+    "sheet_line": "Path skill (Acrobatics): +N on ship"
+   },
+   {
+    "record": "ultimate_psionics:class_feature:Path Skill ~ Acrobatics",
+    "unit": "ultimate_psionics:class_feature:path_skill_acrobatics__d22ee5e55ac60880",
+    "status": "engine-does-not-hold",
+    "source": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst:600",
+    "raw": "SITUATION:On the ground",
+    "sheet_line": "Path skill (Acrobatics): +N on the ground"
+   }
+  ],
+  "oracle_check": "sheet-line only",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": []
+ },
+ {
+  "token_type": "EQMOD / ALTEQMOD",
+  "family": "formula",
+  "instances": "2291 corpus-wide, own count 2026-09-07 over 51,474 data/corpus/<book>/<kind>/*.json records (recursive walk, _parity excluded, LICENSE.json excluded; the beastiary dir counted as bestiary); ALTEQMOD 37; Material ~ X 420, Special Ability ~ ... with CHARGES[n]/SPELLNAME[..] brackets",
+  "units": "2210 of 49,438 docs/work-inventory.json units (48,608 join to a corpus record); non-DONE per scripts/completion_atlas.py::_bucket_of, denominator 23,315 (non-DONE: 140); ALTEQMOD 35 of 49,438 docs/work-inventory.json units (48,608 join to a corpus record); non-DONE per scripts/completion_atlas.py::_bucket_of, denominator 23,315 (non-DONE: 5)",
+  "maps_to": "Metadata(ignored-by-sheet)",
+  "rule": "Applied equipment modifiers on a shipped item; equipment_effects already folds them into the item's typed fields. The bracket arguments (CHARGES[10], CASTERLEVEL[1]) are integers, never formulas.",
+  "expr_shape": "n/a",
+  "expr_gaps": [],
+  "applies_shape": "none",
+  "prose_effect": "none",
+  "examples": [
+   {
+    "record": "occult_adventures:equipment:Vril Staff",
+    "unit": "occult_adventures:equipment:vril_staff",
+    "status": "ingested-magnitude",
+    "source": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_equip.lst:72",
+    "raw": "EQMOD:Special Ability ~ Staff Charges|CHARGES[10]",
+    "sheet_line": "(item: 10 charges)"
+   },
+   {
+    "record": "inner_sea_gods:equipment:Armor Of The Unqenchable Fire",
+    "unit": "inner_sea_gods:equipment:armor_of_the_unqenchable_fire",
+    "status": "unmeasurable",
+    "source": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_equip.lst:40",
+    "raw": "EQMOD:Material ~ Steel.Special Ability ~ +1 ~ Armor.Special Ability ~ Defiant ~ Armor.Special Ability ~ Enhancement Cost|540",
+    "sheet_line": "(item: +1 defiant steel armor)"
+   },
+   {
+    "record": "inner_sea_gods:equipment:Pelt Of The Demon Mother",
+    "unit": "inner_sea_gods:equipment:pelt_of_the_demon_mother",
+    "status": "unmeasurable",
+    "source": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_equip.lst:61",
+    "raw": "EQMOD:Material ~ Leather.Special Ability ~ +1 ~ Armor.Special Ability ~ Enhancement Cost|2160",
+    "sheet_line": "(item: +1 leather armor)"
+   }
+  ],
+  "oracle_check": "sheet-line only",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": []
+ },
+ {
+  "token_type": "PROFICIENCY / WIELD",
+  "family": "formula",
+  "instances": "731 corpus-wide, own count 2026-09-07 over 51,474 data/corpus/<book>/<kind>/*.json records (recursive walk, _parity excluded, LICENSE.json excluded; the beastiary dir counted as bestiary); WIELD 445",
+  "units": "730 of 49,438 docs/work-inventory.json units (48,608 join to a corpus record); non-DONE per scripts/completion_atlas.py::_bucket_of, denominator 23,315 (non-DONE: 7); WIELD 445 of 49,438 docs/work-inventory.json units (48,608 join to a corpus record); non-DONE per scripts/completion_atlas.py::_bucket_of, denominator 23,315 (non-DONE: 6)",
+  "maps_to": "Metadata(ignored-by-sheet)",
+  "rule": "Which proficiency covers the item; one-/two-handed wield class. Equipment chassis facts (they gate the -4 non-proficient penalty).",
+  "expr_shape": "n/a",
+  "expr_gaps": [],
+  "applies_shape": "none",
+  "prose_effect": "none",
+  "examples": [
+   {
+    "record": "ultimate_equipment:equipment:Lash of the Howler",
+    "unit": "ultimate_equipment:equipment:lash_of_the_howler",
+    "status": "literal-verified",
+    "source": "pathfinder/paizo/roleplaying_game/ultimate_equipment/ue_equip_arms_armor.lst:504",
+    "raw": "PROFICIENCY:WEAPON|Scorpion Whip",
+    "sheet_line": "(chassis)"
+   },
+   {
+    "record": "ultimate_equipment:equipment:Spirit Caller",
+    "unit": "ultimate_equipment:equipment:spirit_caller",
+    "status": "literal-verified",
+    "source": "pathfinder/paizo/roleplaying_game/ultimate_equipment/ue_equip_arms_armor.lst:532",
+    "raw": "PROFICIENCY:WEAPON|Mere Club",
+    "sheet_line": "(chassis)"
+   },
+   {
+    "record": "ultimate_equipment:equipment:Pistol of the Infinite Sky",
+    "unit": "ultimate_equipment:equipment:pistol_of_the_infinite_sky",
+    "status": "literal-verified",
+    "source": "pathfinder/paizo/roleplaying_game/ultimate_equipment/ue_equip_arms_armor.lst:309",
+    "raw": "PROFICIENCY:WEAPON|Pistol",
+    "sheet_line": "(chassis)"
+   }
+  ],
+  "oracle_check": "sheet-line only",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": []
+ },
+ {
+  "token_type": "CONTAINS / CHARGES / BASEITEM / BASEQTY / MODS / FUMBLERANGE",
+  "family": "formula",
+  "instances": "CONTAINS 210, CHARGES 25, BASEITEM 176, BASEQTY 30, MODS 128, FUMBLERANGE 4 corpus-wide, own count 2026-09-07 over 51,474 data/corpus/<book>/<kind>/*.json records (recursive walk, _parity excluded, LICENSE.json excluded; the beastiary dir counted as bestiary)",
+  "units": "CONTAINS 210, CHARGES 25, BASEITEM 176, BASEQTY 30, MODS 128, FUMBLERANGE 4 units of 49,438 docs/work-inventory.json units (48,608 join to a corpus record); non-DONE per scripts/completion_atlas.py::_bucket_of, denominator 23,315 (non-DONE 3 / 21 / 34 / 0 / 0 / 0)",
+  "maps_to": "Metadata(ignored-by-sheet)",
+  "rule": "Container capacity, staff charge range (CHARGES:1|50 = min|max), base-item link, default stack size, modifier policy, firearm misfire range. All typed equipment-record fields; none is a sheet rule.",
+  "expr_shape": "n/a",
+  "expr_gaps": [],
+  "applies_shape": "none",
+  "prose_effect": "none",
+  "examples": [
+   {
+    "record": "ultimate_equipment:equipment:Raft",
+    "unit": "ultimate_equipment:equipment:raft",
+    "status": "unmeasurable",
+    "source": "pathfinder/paizo/roleplaying_game/ultimate_equipment/ue_equip_general.lst:22",
+    "raw": "CONTAINS:UNLIM|Any",
+    "sheet_line": "(chassis)"
+   },
+   {
+    "record": "ultimate_equipment:equipment:Pistol of the Infinite Sky",
+    "unit": "ultimate_equipment:equipment:pistol_of_the_infinite_sky",
+    "status": "literal-verified",
+    "source": "pathfinder/paizo/roleplaying_game/ultimate_equipment/ue_equip_arms_armor.lst:309",
+    "raw": "CONTAINS:1|FirearmBullet=1",
+    "sheet_line": "(chassis)"
+   },
+   {
+    "record": "inner_sea_world_guide:equipment:Pistol",
+    "unit": "inner_sea_world_guide:equipment:pistol",
+    "status": "oracle-unverifiable",
+    "source": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_equip_arms_armor.lst:26",
+    "raw": "CONTAINS:1|Firearm Bullet=1",
+    "sheet_line": "(chassis)"
+   }
+  ],
+  "oracle_check": "sheet-line only",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": []
+ },
+ {
+  "token_type": "STAT: / AC: / LEVELADJUSTMENT: (listed in v06_work_inventory's magnitude_tokens)",
+  "family": "formula",
+  "instances": "0 corpus-wide, own count 2026-09-07 over 51,474 data/corpus/<book>/<kind>/*.json records (recursive walk, _parity excluded, LICENSE.json excluded; the beastiary dir counted as bestiary)",
+  "units": "0 units",
+  "maps_to": "Metadata(ignored-by-sheet)",
+  "rule": "The inventory's magnitude_tokens list names STAT:, AC: and LEVELADJUSTMENT: as top-level tokens; no corpus record carries any of them (STAT appears only inside BONUS:STAT and DEFINESTAT). No row needed; recorded so token_coverage does not look for them.",
+  "expr_shape": "n/a",
+  "expr_gaps": [],
+  "applies_shape": "none",
+  "prose_effect": "none",
+  "examples": [
+   {
+    "record": "(no record exists: zero corpus instances of STAT:, AC:, LEVELADJUSTMENT: as top-level tokens)",
+    "unit": "",
+    "status": "",
+    "source": "",
+    "raw": "",
+    "sheet_line": ""
+   }
+  ],
+  "oracle_check": "n/a",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": []
+ }
+]

@@ -1,0 +1,12 @@
+diff --git a/apps/desktop/src-tauri/tauri.conf.json b/apps/desktop/src-tauri/tauri.conf.json
+index 78a6fad1d3..e93898f1c4 100644
+--- a/apps/desktop/src-tauri/tauri.conf.json
++++ b/apps/desktop/src-tauri/tauri.conf.json
+@@ -40,7 +40,6 @@
+       "resources/corpus_bundle/": "data/corpus/",
+       "../../../data/sheet_rules/": "data/sheet_rules/",
+       "../../../data/starfinder-1e/sheet_rules/": "data/starfinder-1e/sheet_rules/",
+-      "../../../data/cyberpunk-red/corpus/": "data/cyberpunk-red/corpus/",
+       "../../../data/rules_tables/": "data/rules_tables/",
+       "../../../data/class_feature_grants/": "data/class_feature_grants/",
+       "../../../data/converted/record_vars.json": "data/converted/record_vars.json",

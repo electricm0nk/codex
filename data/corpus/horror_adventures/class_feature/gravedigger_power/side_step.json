@@ -1,0 +1,53 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Gravedigger Power ~ Side Step",
+    "name": "Side Step",
+    "class": "Gravedigger Power",
+    "description": "You can create a temporary fissure in space by expending 1 point of inspiration. You can use this ability as part of a move action taken to move. The fissure begins in any square you designate and allows you to teleport to any other square you can see within %1 feet. Stepping between these locations requires you to expend 5 feet of movement, and the movement through the rift does not provoke attacks of opportunity. This otherwise functions as teleport.|10*InvestigatorLVL",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Gravedigger Power ~ Side Step"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "InvestigatorTalent.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Gravedigger ~ Grave Lamp"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "InvestigatorTalentLVL,7"
+      },
+      {
+        "key": "DESC",
+        "value": "You can create a temporary fissure in space by expending 1 point of inspiration. You can use this ability as part of a move action taken to move. The fissure begins in any square you designate and allows you to teleport to any other square you can see within %1 feet. Stepping between these locations requires you to expend 5 feet of movement, and the movement through the rift does not provoke attacks of opportunity. This otherwise functions as teleport.|10*InvestigatorLVL"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/support/ha_abilities_class_oa.lst",
+    "sha256": "9c111f652f8442433ea215fa11e67258c7e6c15c75d1c1753fa6fef34827f46c",
+    "line": 59,
+    "record_key": "Gravedigger Power ~ Side Step"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

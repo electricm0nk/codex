@@ -1,0 +1,31 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Disrupting Fist",
+    "category": "Combat",
+    "name": "Disrupting Fist",
+    "description": "Your powerful fists can reduce undead foes to dust. On a confirmed critical hit using an unarmed strike against an undead creature, you can expend two uses of your channel energy ability as a swift action to destroy that undead creature. The undead creature can negate this effect with a successful Will saving throw (DC ).",
+    "prerequisites": [
+      "PREABILITY:2,CATEGORY=FEAT,Channel Smite,Improved Unarmed Strike",
+      "PRETOTALAB:9",
+      "PRETEXT:Channel positive energy 4d6."
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_feats.lst",
+    "sha256": "b8183ddca5eece895bf40f7765744bb470970418a8baca58aee907487f0140e6",
+    "line": 20,
+    "record_key": "Disrupting Fist"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

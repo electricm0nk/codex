@@ -1,0 +1,21 @@
+   Compiling codex v0.1.0 (/home/ubuntu/workspace/worktrees/codex-sd37)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 30.83s
+     Running unittests src/lib.rs (/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/codex-ce0bccb9212d3fe1)
+
+running 13 tests
+test rules_core::rules_catalog::control_tests::every_package_table_and_view_has_a_catalog_replacement ... ok
+test rules_core::rules_catalog::override_tests::bestiary_1_resolves_the_same_stat_block_for_every_monster_rule_set_and_key ... ok
+test rules_core::rules_catalog::control_tests::the_catalog_reaches_the_compiled_module_only_through_re_exports ... ok
+test rules_core::rules_catalog::control_tests::no_compiled_table_view_or_reader_is_re_exported_from_the_compiled_module ... ok
+test rules_core::rules_catalog::override_tests::the_root_re_exports_the_rule_set_ids ... ok
+test rules_core::rules_catalog::override_tests::the_unchained_chassis_equals_the_compiled_resolver_for_every_class_level_and_rule_set ... ok
+test rules_core::rules_catalog::override_tests::the_power_point_ladders_equal_the_compiled_functions_over_every_level_and_modifier ... ok
+test rules_core::rules_catalog::override_tests::the_equipment_gap_rows_equal_the_compiled_iterator ... ok
+test rules_core::rules_catalog::override_tests::per_class_spell_levels_equal_the_compiled_answers_for_every_class_and_spell ... ok
+test rules_core::rules_catalog::control_tests::no_importer_names_the_compiled_tables ... ok
+test rules_core::rules_catalog::override_tests::the_book_registries_name_the_same_tables_as_the_compiled_registries ... ok
+test rules_core::rules_catalog::equivalence_tests::every_package_table_equals_its_compiled_table ... ok
+test rules_core::rules_catalog::equivalence_tests::every_package_view_equals_its_compiled_function ... ok
+
+test result: ok. 13 passed; 0 failed; 0 ignored; 0 measured; 2840 filtered out; finished in 2.41s
+

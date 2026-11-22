@@ -1,0 +1,20 @@
+[
+  {
+    "id": "sheet-action-add-feat",
+    "status": "green",
+    "screenshot": "/home/ubuntu/workspace/repos/codex/.worktrees/sd39-main/docs/release/SD-39-ui-print-corrections/artifacts/epic_1/E1.3/smoke/sheet-action-add-feat.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nSmoke Test PC — Wizard 1\nPROGRESSION\n«\n\nLevel\n1\n+\nCaster Level\n1\nNo longer eligible: Improved Awesome Blow, Reckless Rage, Hurtful.\n\nRACE\nElf\nCLASS\nWizard 1\nLevel 1 Wizard\nSkill points: 3\nFeat\nNEXT\nLevel 2 Wizard\nSkill points: 3\nCharacter Name\nSmoke Test PC\nCampaign\n—\nHIT POINTS\n7 / 7\nINITIATIVE\n+3\nInitiative +3: Dexterity modifier +3. Bonuses that hold only while a grit or panache poin",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd39-e1_3-hFSBLu/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [
+        "a4b7bb4d-757a-4472-bd4e-98f0dbc904c4"
+      ],
+      "deleted": [
+        "a4b7bb4d-757a-4472-bd4e-98f0dbc904c4"
+      ],
+      "leftover": [],
+      "errors": {}
+    }
+  }
+]

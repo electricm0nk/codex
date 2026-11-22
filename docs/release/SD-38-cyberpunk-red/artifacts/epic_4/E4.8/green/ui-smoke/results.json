@@ -1,0 +1,74 @@
+[
+  {
+    "id": "sheet-cyberpunk-streetrat-solo",
+    "status": "green",
+    "screenshot": "/home/ubuntu/workspace/repos/codex/.worktrees/sd38-e4/docs/release/SD-38-cyberpunk-red/artifacts/epic_4/E4.8/green/ui-smoke/sheet-cyberpunk-streetrat-solo.png",
+    "rendered_excerpt": "⚙\nCPR Sheet Streetrat Solo\nCyberpunk RED\nImprove\nOpen\nClose\nSTATS\n\nSTAT\tCurrent\nINT\t6\t—\nREF\t7\t7\nDEX\t7\t7\nTECH\t3\t—\nCOOL\t8\t—\nWILL\t6\t—\nLUCK\t5\t—\nMOVE\t5\t5\nBODY\t6\t6\nEMP\t5\t3\nSKILLS\n\nLevel\tBase\nAwareness\nConcentration (WILL)\t2\t8\nConceal/Reveal Object (INT)\t0\t6\nLip Reading (INT)\t0\t6\nPerception (INT)\t6\t12\nTracking (INT)\t0\t6\nBody\nAthletics (DEX)\t2\t9\nContortionist (DEX)\t0\t7\nDance (DEX)\t0\t7\nEndurance (WILL)\t0\t6",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd38-e4_8-3Rgzka/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [
+        "49aeb1ac-09a5-4c53-9310-99af55b27669"
+      ],
+      "deleted": [
+        "49aeb1ac-09a5-4c53-9310-99af55b27669"
+      ],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "sheet-cyberpunk-edgerunner-netrunner",
+    "status": "green",
+    "screenshot": "/home/ubuntu/workspace/repos/codex/.worktrees/sd38-e4/docs/release/SD-38-cyberpunk-red/artifacts/epic_4/E4.8/green/ui-smoke/sheet-cyberpunk-edgerunner-netrunner.png",
+    "rendered_excerpt": "⚙\nCPR Sheet Edgerunner Netrunner\nCyberpunk RED\nImprove\nOpen\nClose\nSTATS\n\nSTAT\tCurrent\nINT\t6\t—\nREF\t7\t7\nDEX\t8\t8\nTECH\t6\t—\nCOOL\t7\t—\nWILL\t3\t—\nLUCK\t8\t—\nMOVE\t7\t7\nBODY\t7\t7\nEMP\t4\t2\nSKILLS\n\nLevel\tBase\nAwareness\nConcentration (WILL)\t2\t5\nConceal/Reveal Object (INT)\t6\t12\nLip Reading (INT)\t0\t6\nPerception (INT)\t2\t8\nTracking (INT)\t0\t6\nBody\nAthletics (DEX)\t2\t10\nContortionist (DEX)\t0\t8\nDance (DEX)\t0\t8\nEndurance (WI",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd38-e4_8-3Rgzka/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [
+        "01411695-5185-4256-acdf-55802d6d9cd9"
+      ],
+      "deleted": [
+        "01411695-5185-4256-acdf-55802d6d9cd9"
+      ],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "sheet-cyberpunk-complete-package-fixer",
+    "status": "green",
+    "screenshot": "/home/ubuntu/workspace/repos/codex/.worktrees/sd38-e4/docs/release/SD-38-cyberpunk-red/artifacts/epic_4/E4.8/green/ui-smoke/sheet-cyberpunk-complete-package-fixer.png",
+    "rendered_excerpt": "⚙\nCPR Sheet Complete Package Fixer\nCyberpunk RED\nImprove\nOpen\nClose\nSTATS\n\nSTAT\tCurrent\nINT\t8\t—\nREF\t5\t5\nDEX\t7\t7\nTECH\t4\t—\nCOOL\t6\t—\nWILL\t5\t—\nLUCK\t8\t—\nMOVE\t5\t5\nBODY\t6\t6\nEMP\t8\t7\nSKILLS\n\nLevel\tBase\nAwareness\nConcentration (WILL)\t2\t7\nConceal/Reveal Object (INT)\t0\t8\nLip Reading (INT)\t0\t8\nPerception (INT)\t2\t10\nTracking (INT)\t0\t8\nBody\nAthletics (DEX)\t2\t9\nContortionist (DEX)\t0\t7\nDance (DEX)\t0\t7\nEndurance (W",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd38-e4_8-3Rgzka/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [
+        "e8221206-c842-442a-ae62-d0e9b96a8f5f"
+      ],
+      "deleted": [
+        "e8221206-c842-442a-ae62-d0e9b96a8f5f"
+      ],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "sheet-cyberpunk-critical-tick",
+    "status": "green",
+    "screenshot": "/home/ubuntu/workspace/repos/codex/.worktrees/sd38-e4/docs/release/SD-38-cyberpunk-red/artifacts/epic_4/E4.8/green/ui-smoke/sheet-cyberpunk-critical-tick.png",
+    "rendered_excerpt": "⚙\nCPR Sheet Critical Tick\nCyberpunk RED\nImprove\nOpen\nClose\nSTATS\n\nSTAT\tCurrent\nINT\t6\t—\nREF\t7\t7\nDEX\t7\t7\nTECH\t3\t—\nCOOL\t8\t—\nWILL\t6\t—\nLUCK\t5\t—\nMOVE\t5\t5\nBODY\t6\t6\nEMP\t5\t3\nSKILLS\n\nLevel\tBase\nAwareness\nConcentration (WILL)\t2\t8\nConceal/Reveal Object (INT)\t0\t6\nLip Reading (INT)\t0\t6\nPerception (INT)\t6\t12\nTracking (INT)\t0\t6\nBody\nAthletics (DEX)\t2\t9\nContortionist (DEX)\t0\t7\nDance (DEX)\t0\t7\nEndurance (WILL)\t0\t6\n",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd38-e4_8-3Rgzka/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [
+        "b27fecd0-4edc-4c9f-ac2b-813123f323b1"
+      ],
+      "deleted": [
+        "b27fecd0-4edc-4c9f-ac2b-813123f323b1"
+      ],
+      "leftover": [],
+      "errors": {}
+    }
+  }
+]

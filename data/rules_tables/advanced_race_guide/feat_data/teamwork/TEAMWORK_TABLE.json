@@ -1,0 +1,45 @@
+{
+  "format": "codex.rules_tables/1",
+  "table": "advanced_race_guide/feat_data/teamwork/TEAMWORK_TABLE",
+  "licence": {
+    "license": "OGL",
+    "book": "advanced_race_guide",
+    "screen": "pi_screening::classify_field",
+    "pi_hits": [],
+    "redacted": []
+  },
+  "rows": [
+    {
+      "key": "Focusing Blow",
+      "category": "Teamwork",
+      "name": "Focusing Blow",
+      "description": "You and your allies work together to shake off mental effects.",
+      "effect": null
+    },
+    {
+      "key": "Greater Brand",
+      "category": "Teamwork",
+      "name": "Greater Brand",
+      "description": "A kinslayer learns to modify her slayer's brand judgment as she gains levels.",
+      "effect": [
+        {
+          "qualifiers": [
+            "ABILITYPOOL",
+            "Greater Brand",
+            "1"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Horde Charge",
+      "category": "Teamwork",
+      "name": "Horde Charge",
+      "description": "When you charge with an ally, you are more deadly.",
+      "effect": null
+    }
+  ]
+}

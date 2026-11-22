@@ -1,0 +1,69 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Sorcerer Bloodline Feat ~ Fast Healer",
+    "name": "Fast Healer",
+    "class": "Sorcerer",
+    "description": "You benefit greatly from your healing, be it from spells or natural healing.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sorcerer Bloodline Feat ~ Fast Healer"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "TYPE",
+        "value": "Sorcerer Bloodline Feat"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "2,CATEGORY=FEAT,Diehard,Endurance"
+      },
+      {
+        "key": "PRESTAT",
+        "value": "1,CON=13"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Sorcerer_BloodlineFeat_FastHealer,1"
+      },
+      {
+        "key": "DESC",
+        "value": "You benefit greatly from your healing, be it from spells or natural healing."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Fast Healer"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.160"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "When you regain hit points by resting or through magical healing, you recover additional hit points equal to half your Constitution modifier (minimum +1)."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 3050,
+    "record_key": "Sorcerer Bloodline Feat ~ Fast Healer"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_ability_scaling",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

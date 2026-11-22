@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Combat Trick ~ Lookout",
+    "name": "Lookout",
+    "description": "As long as you have at least 1 stamina point in your stamina pool, you gain the benefit of this feat as long as you are within 10 feet of an ally who has this feat.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Combat Trick ~ Lookout"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Combat Trick"
+      },
+      {
+        "key": "DESC",
+        "value": "As long as you have at least 1 stamina point in your stamina pool, you gain the benefit of this feat as long as you are within 10 feet of an ally who has this feat."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "125"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SourceBook|APG"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/support/ability_apg.lst",
+    "sha256": "485862d2019840c9c67d4cb4145bd6c2f5e0ec192d95ce0ef78779f0bb057a9c",
+    "line": 47,
+    "record_key": "Combat Trick ~ Lookout"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

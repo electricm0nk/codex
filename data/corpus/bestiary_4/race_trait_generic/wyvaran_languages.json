@@ -1,0 +1,62 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Wyvaran ~ Languages",
+    "name": "Languages",
+    "description": "Wyvarans speak Common and Draconic. A wyvaran with a high Intelligence score can choose from the following: Dwarven, Elven, Gnome, Goblin, and Orc.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wyvaran ~ Languages"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Wyvaran Racial Trait.Wyvaran Racial Default.SpecialQuality.Racial Language"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      },
+      {
+        "key": "!PREFACT",
+        "value": "1,ABILITIES,Wyvaran_ReplaceLanguages=True"
+      },
+      {
+        "key": "DESC",
+        "value": "Wyvarans speak Common and Draconic. A wyvaran with a high Intelligence score can choose from the following: Dwarven, Elven, Gnome, Goblin, and Orc."
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "Bonus Language ~ Dwarven|Bonus Language ~ Elven|Bonus Language ~ Gnome|Bonus Language ~ Goblin|Bonus Language ~ Orc"
+      },
+      {
+        "key": "AUTO",
+        "value": "LANG|Common|Draconic"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.xx"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/wyvaran/wyvaran_abilities_race.lst",
+    "sha256": "f9263c1e5ec38c272aea979b35614055b3d7ae8ce582325efc216270053d6fed",
+    "line": 22,
+    "record_key": "Wyvaran ~ Languages"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

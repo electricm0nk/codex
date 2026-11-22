@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Wayfinder Ioun Stone Resonant Power ~ Lavender And Green Ellipsoid",
+    "name": "Lavender And Green Ellipsoid",
+    "description": "If the bearer is holding the wayfinder, he may use the stone's absorption ability as an immediate action instead of a readied action.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wayfinder Ioun Stone Resonant Power ~ Lavender And Green Ellipsoid"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Slotted Ioun Stone Resonant Power"
+      },
+      {
+        "key": "DESC",
+        "value": "If the bearer is holding the wayfinder, he may use the stone's absorption ability as an immediate action instead of a readied action."
+      },
+      {
+        "key": "STACK",
+        "value": "YES"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "NOCHOICE"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities.lst",
+    "sha256": "98f14777441cb86902ffe2b2cad2bba6be68cd2f3b0ff2fd0eef906fe2b9765b",
+    "line": 109,
+    "record_key": "Wayfinder Ioun Stone Resonant Power ~ Lavender And Green Ellipsoid"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

@@ -1,0 +1,46 @@
+name=sf_biohacker_1
+race=Human
+class=Biohacker
+level=1
+stat.STR=10
+stat.DEX=14
+stat.CON=11
+stat.INT=18
+stat.WIS=10
+stat.CHA=10
+hp=10
+stamina=6
+resolve=5
+eac=13
+kac=14
+initiative=+2
+bab=+0
+save.Fortitude=+2
+save.Reflex=+2
+save.Will=+0
+attack.melee=+0
+attack.ranged=+2
+skill.Acrobatics=2|ranks=0.0|untrained=Y
+skill.Athletics=0|ranks=0.0|untrained=Y
+skill.Bluff=0|ranks=0.0|untrained=Y
+skill.Computers=8|ranks=1.0|untrained=NO
+skill.Diplomacy=0|ranks=0.0|untrained=Y
+skill.Disguise=0|ranks=0.0|untrained=Y
+skill.Intimidate=0|ranks=0.0|untrained=Y
+skill.Life Science=8|ranks=1.0|untrained=NO
+skill.Medicine=8|ranks=1.0|untrained=NO
+skill.Perception=0|ranks=0.0|untrained=Y
+skill.Piloting=2|ranks=0.0|untrained=Y
+skill.Sense Motive=0|ranks=0.0|untrained=Y
+skill.Stealth=2|ranks=0.0|untrained=Y
+skill.Survival=0|ranks=0.0|untrained=Y
+weapon.*Laser pistol, azimuth=+2|damage=1d4|category=Non-Standard-Ranged
+weapon.Baton, tactical=+2|damage=1d4|category=OPERATIVE-Melee
+bulk=0.3 lbs.
+credits=0
+credits.spent=690 cr
+acp=+0
+abilities.feat=
+abilities.theme=Ace Pilot, THEME KNOWLEDGE
+abilities.class_feature=Custom Microlab, Biohacks, Basic Booster, Basic Inhibitor, Minor Booster, Minor Inhibitor, Injection Expert, Primary Field of Study, Scientific Method
+abilities.racial_trait=SIZE AND TYPE, BONUS FEAT, SKILLED

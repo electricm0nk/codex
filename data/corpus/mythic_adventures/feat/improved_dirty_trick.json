@@ -1,0 +1,29 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Improved Dirty Trick",
+    "category": "Mythic",
+    "name": "Improved Dirty Trick (Mythic)",
+    "description": "You're a paragon of down-and-dirty fighting. You gain a bonus equal to half your tier on checks to attempt a dirty trick, and to your CMD when an opponent attempts to perform a dirty trick on you. These bonuses stack with those granted by Improved Dirty Trick.\nFurthermore, you can make an attack of opportunity against any creature that attempts a dirty trick maneuver against you, unless it also has this feat.",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=FEAT,Improved Dirty Trick",
+      "PREVARGTEQ:MythicTierLevel,1"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_feats.lst",
+    "sha256": "50bdb91b88676e1559dbeab699dad66fa13d45b53ee2233b7370daf019eece1b",
+    "line": 104,
+    "record_key": "Improved Dirty Trick"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

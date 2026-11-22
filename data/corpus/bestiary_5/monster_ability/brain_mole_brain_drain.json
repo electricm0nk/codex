@@ -1,0 +1,55 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Brain Mole ~ Brain Drain",
+    "delivery": "Supernatural",
+    "description": "When a brain mole maintains a grapple against a creature to which it is attached, it automatically deals an amount of damage equal to its bite damage. Whenever a brain mole successfully deals damage to a creature to which it is attached, it drains some of that creature's mental energy. If the creature is a spellcaster, the spellcaster loses a single spell he has prepared, or a single unused spell slot if he is a spontaneous spellcaster. The creature chooses which spell or spell slot is lost, but can't lose a 0-level spell in this way. If the creature is not a spellcaster or has no prepared spells or unused spell slots of 1st-level or higher, this ability instead deals 1 point of Intelligence, Wisdom, and Charisma damage. Either way, the brain mole gains 1 point each of psychic energy (PE) each time it uses this ability as long as it drains at least one spell or deals at least 1 point of ability damage.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "bestiary_5:monster_ability:brain_mole_brain_drain",
+    "name": "Brain Drain",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "When a brain mole maintains a grapple against a creature to which it is attached, it automatically deals an amount of damage equal to its bite damage. Whenever a brain mole successfully deals damage to a creature to which it is attached, it drains some of that creature's mental energy. If the creature is a spellcaster, the spellcaster loses a single spell he has prepared, or a single unused spell slot if he is a spontaneous spellcaster. The creature chooses which spell or spell slot is lost, but can't lose a 0-level spell in this way. If the creature is not a spellcaster or has no prepared spells or unused spell slots of 1st-level or higher, this ability instead deals 1 point of Intelligence, Wisdom, and Charisma damage. Either way, the brain mole gains 1 point each of psychic energy (PE) each time it uses this ability as long as it drains at least one spell or deals at least 1 point of ability damage."
+      },
+      {
+        "key": "KEY",
+        "value": "Brain Mole ~ Brain Drain"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.46"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural.BrainMoleRacialTrait"
+      }
+    ],
+    "source_page": "p.46",
+    "traits": [
+      "BrainMoleRacialTrait"
+    ]
+  },
+  "ingested_at": "2026-08-23T15:23:07Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 9,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_5/support/b5_abilities_race_oa.lst",
+    "record_key": "Brain Mole ~ Brain Drain",
+    "sha256": "15f9a4abfa03080f40ce11e5d4b72bb8cc91dbc3842745dcb37a90f996336142"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

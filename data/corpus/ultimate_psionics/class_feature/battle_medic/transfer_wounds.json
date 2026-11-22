@@ -1,0 +1,80 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Battle Medic ~ Transfer Wounds",
+    "name": "Transfer Wounds",
+    "class": "Battle Medic",
+    "description": "You learned how to transfer wounds with but a touch.  As a standard action that does not provoke attacks of opportunity, you may touch a target and heal it for %1d%2 points of damage.  You suffer the same number of points of non-lethal damage (up to the amount the target is actually healed).  You may use this ability %3/day. You may not use this ability upon yourself.|BattleMedicTransferWoundsDice|BattleMedicTransferWoundsDieSize|BattleMedicTransferWoundsTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Battle Medic ~ Transfer Wounds"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "TacticianClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BattleMedicTransferWoundsDieSize|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BattleMedicTransferWoundsDice|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BattleMedicTransferWoundsTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You learned how to transfer wounds with but a touch.  As a standard action that does not provoke attacks of opportunity, you may touch a target and heal it for %1d%2 points of damage.  You suffer the same number of points of non-lethal damage (up to the amount the target is actually healed).  You may use this ability %3/day. You may not use this ability upon yourself.|BattleMedicTransferWoundsDice|BattleMedicTransferWoundsDieSize|BattleMedicTransferWoundsTimes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BattleMedicTransferWoundsDieSize|6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BattleMedicTransferWoundsDice|floor((TacticianLVL+2)/3)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BattleMedicTransferWoundsTimes|3+TacticianPrimeStat"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.286"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|BattleMedicTransferWoundsTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2250,
+    "record_key": "Battle Medic ~ Transfer Wounds"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

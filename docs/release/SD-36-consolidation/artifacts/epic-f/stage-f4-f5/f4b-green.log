@@ -1,0 +1,31 @@
+== GREEN: cargo test --locked -j 8 --manifest-path apps/desktop/src-tauri/Cargo.toml list_ -- --test-threads=8 --nocapture
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 25.83s
+
+running 15 tests
+test character_hub::tests::list_class_creation_roster_offers_exactly_the_census_roster has been running for over 60 seconds
+test character_hub::tests::list_level_up_class_options_advances_a_held_prestige_class_to_its_own_max_and_keeps_the_cap has been running for over 60 seconds
+test character_hub::tests::list_level_up_class_options_offers_prestige_with_printed_requirements has been running for over 60 seconds
+build_class_creation_roster: 83.080342268s (first call, this process)
+class creation roster: 59 offered, 78 withheld, 0 diagnostics; census in_desktop_roster 59
+fighter 6 level-up options: advance 1, add_base 58, add_prestige 74 (of 74 census prestige); arcane archer entry lines: [
+    (
+        "at least 2 of: requires Point-Blank Shot (attack), requires Precise Shot",
+        "unmet",
+    ),
+    (
+        "at least 1 of: requires Weapon Focus and requires longbow chosen for core rulebook:feat:weapon focus, requires Weapon Focus and requires shortbow chosen for core rulebook:feat:weapon focus",
+        "unmet",
+    ),
+    (
+        "highest arcane spell level at least 1",
+        "unmet",
+    ),
+    (
+        "base attack bonus at least 6",
+        "met",
+    ),
+]
+
+test result: ok. 15 passed; 0 failed; 0 ignored; 0 measured; 605 filtered out; finished in 98.76s
+
+EXIT=0

@@ -1,0 +1,261 @@
+{
+  "corrections": {
+    "by_corrector": {
+      "sd41-e2.1": 3,
+      "sd41-e2.11": 2,
+      "sd41-e2.12": 2,
+      "sd41-e2.13": 1,
+      "sd41-e2.2": 2,
+      "sd41-e2.3": 2,
+      "sd41-e2.4": 5,
+      "sd41-e2.5": 6,
+      "sd41-e2.6": 7,
+      "sd41-e2.7": 1,
+      "sd41-e2.mc": 7
+    },
+    "by_subject": {
+      "E1.11 receipt / E2.11 row": 1,
+      "E2.4 Weapons tab Drop": 1,
+      "SD-41 decisions.md \u00a720 E1.MC row": 1,
+      "SD-41 epic-breakdown.md E2.1 acceptance": 2,
+      "SD-41 epic-breakdown.md E2.2 row": 2,
+      "SD-41 package (E2.4 FILES YOU OWN)": 1,
+      "SD-41 package (E2.4 acceptance filter)": 1,
+      "SD-41 package (E2.4 acceptance grep)": 1,
+      "SD-41 package (E2.4 row)": 1,
+      "SD-41 package (G-1 script)": 1,
+      "corpus_fixtures.rs sheet corpus": 1,
+      "epic-breakdown.md E1.3/E1.MC acceptance": 1,
+      "epic-breakdown.md E1.4 acceptance": 1,
+      "epic-breakdown.md E2.11 row": 1,
+      "epic-breakdown.md E2.12 row": 1,
+      "epic-breakdown.md E2.13 row": 1,
+      "epic-breakdown.md E2.5 acceptance": 1,
+      "epic-breakdown.md E2.6 R21": 1,
+      "epic-breakdown.md E2.6 acceptance": 1,
+      "epic-breakdown.md E2.6 price source": 1,
+      "epic-breakdown.md E2.6 size": 1,
+      "epic-breakdown.md E2.6 test": 1,
+      "epic-breakdown.md E2.6 weight": 1,
+      "epic-breakdown.md E2.7 acceptance": 1,
+      "epic-breakdown.md E2.7 row": 1,
+      "epic-breakdown.md E2.8 acceptance": 1,
+      "epic-breakdown.md:E2.5": 5,
+      "lead": 2,
+      "lead R21 for E2.12": 1,
+      "sd41-e2.5": 1,
+      "settled Material ~ Mithril ~ Weapon / Item": 1
+    },
+    "by_verification_method": {
+      "cargo test --locked -j 8 --bins move_ -- --test-threads=8 (log e2.2-green1.log lists each test)": 1,
+      "cargo test --locked -j 8 buy_custom -- --test-threads=8 on 925db596c8 (log e26-red.log)": 1,
+      "cargo test --locked -j 8 buy_custom_prices_from_the_rules (apps/desktop/src-tauri) -> ok; data/corpus/core_rulebook/equipment/equipmods/mithral_item.json raw_tokens COST WT*500, TYPE MasterworkQuality": 1,
+      "cargo test --locked -j 8 create_custom_item -- --test-threads=8 on the base (log e2.3-red-base.log); cargo test --bins create_custom_item after the tests (log e2.3-red-tests.log)": 1,
+      "cargo test --locked -j 8 market_backend -- --test-threads=8 (apps/desktop/src-tauri)": 1,
+      "cd apps/desktop/src-tauri && cargo test --locked -j 8 --bin codex-desktop tests::weapons_ -- --test-threads=8": 1,
+      "cd apps/desktop/src-tauri && cargo test --locked -j 8 --bins held_list_ -- --test-threads=8": 1,
+      "cd apps/desktop/src-tauri && cargo test --locked -j 8 --test old_save_loads_unchanged old_save_loads_unchanged -- --test-threads=8": 1,
+      "cd apps/desktop/src-tauri && cargo test --locked -j 8 buy_custom_size -- --test-threads=8 (log e2.12-red.log)": 1,
+      "cd apps/desktop/src-tauri && cargo test --locked -j 8 weapons_in_hand_first -- --test-threads=8": 1,
+      "census test enhancement_price_table_census_of_rows_with_offers before/after: 333 -> 310 OFFERS rows, set diff 23 removed 0 added (awk NR and python set diff)": 1,
+      "corpus_fixtures::what_a_character_can_hold_leaves_the_fixture_answering_its_own_names asserted identity(Anarchic) == None on base 925db596c8": 1,
+      "git grep -n 'fn sell_equipment\\b\\|remove_equipment_selection' -- apps": 1,
+      "git grep -n 'save_lifepath(' -- apps/desktop/src-tauri/src (1 live of 6); RED of campaign_write_through_cpr_saves_reach_the_copy: authoritative_character_input.txt missing or unreadable": 1,
+      "git show 22583e1426:apps/desktop/src-tauri/src/character_hub.rs | awk 'NR<8450 && /equipment_sets::save\\(/' | awk 'END{print NR}' -> 10": 1,
+      "grep -c 'EquipmentCatalogEntryDto {' apps/desktop/src-tauri/src/equipment_catalog.rs -> 13 (1 struct + 12 literals)": 1,
+      "grep -c 'slot: body_slot_or_none' apps/desktop/src-tauri/src/equipment_catalog.rs -> 12; awk literal-line count excluding '->' and struct -> 12": 1,
+      "grep -c on both files in apps/desktop/src-tauri/src": 1,
+      "grep -n \"activeState: 'EquippedActive'\" apps/desktop/src/characterHub/CharacterSheet.tsx on 0644eae822 -> 3200": 1,
+      "grep -n 'Flight/20' data/rules_tables/apg/equipment_tables/EQUIPMENT_TABLE.json": 1,
+      "grep -n 'export interface WeaponDamageDto' apps/desktop/src/boundary/*.ts; grep -n 'loaded.weapon_damage' apps/desktop/src-tauri/src/print/blocks/gear.rs": 1,
+      "grep -n 'pub struct CopyFacts' -A6 src/saved_character/equipment_sets.rs": 1,
+      "grep -n 'weight\\|capacity' apps/desktop/src-tauri/src/character_custom.rs | awk 'END{print NR}' -> 0": 1,
+      "grep -rl ITEMWEIGHT data/corpus | awk 'END{print NR}' -> 0; sed -n 2360,2363p src/rules_core/sheet_rule.rs": 1,
+      "ls apps/desktop/src/boundary/loadCharacterCustom.ts -> No such file; grep -n 'export interface CustomRecord' apps/desktop/src/characterHub/customModel.ts": 1,
+      "mutation: encumbrance without modifier_weight_divisor -> buy_custom_prices_from_the_rules left 33.0 right 31.0": 1,
+      "npx tsx src/characterHub/weaponsTabModel.test.ts RED: got undefined; character_hub.rs sell_held_pieces_at_root first_copy_in_hand": 1,
+      "python3 -I docs/release/SD-41-gear-and-equipment-sets/artifacts/epic_1/E1.MC/acceptance_filter_counts.py <root --lib log>": 2,
+      "python3 -I docs/release/SD-41-gear-and-equipment-sets/artifacts/epic_2/E2.MC/desktop_filter_counts.py <desktop full log>": 4,
+      "python3 G-1 script over scratch base/head renders + a recursive diff": 1,
+      "python3 field diff of the regenerated settled bundles: weapon_enhancement changed on 3 mithral records only, 2 -> 1": 1,
+      "python3 over data/corpus/core_rulebook/_settled/equipment.json (identity Holy Avenger: eqmod_references []); data/sheet_rules/core_rulebook/equipment/holy_avenger.json prose 'Aura: strong abjuration'; cargo test --bin codex-desktop enhancement_price_table_census -- --nocapture (Darkwood Shield absent from 333 OFFERS rows)": 1,
+      "python3 walk of data/corpus/*/_settled/equipment.json counting record.modifier_price (981) and .unpriced (91)": 1,
+      "python3 walk of data/corpus/*/equipment/equipmods/*.json for KEY/TYPE/COST containing size -> 7 rows (6 Wield Size + Nonhumanoid ~ Armor)": 1
+    },
+    "caught_before": {
+      "implementation": 2
+    },
+    "recent": [
+      {
+        "actor": "sd41-e2.12",
+        "id": "1794755610148-sd41-e2.12-9e6983",
+        "summary": "epic-breakdown.md E2.12 row claimed the size rule's data source is in the corpus or the converted rules; actual no ingested record states it: 0 files under data/corpus hold ITEMWEIGHT; the rule is PF CRB Armor for Unusual Creatures / Weapon Size and Table 6-5 (the oracle's per-size BONUS:ITEMCOST/ITEMWEIGHT and game-mode BASEDICE, not ingested); the sheet-rule DIE_LADDER is the natural-attack ladder (1d8 -> 1d10), not weapon size (1d8 -> 2d6)",
+        "ts": "2026-11-15T15:13:30Z"
+      },
+      {
+        "actor": "sd41-e2.12",
+        "id": "1794755610279-sd41-e2.12-7be0cb",
+        "summary": "lead R21 for E2.12 claimed R21 RED on the base: the filter matches 0 tests (a fail); actual confirmed on e8e418f2a0: bin 0 passed; 1348 filtered out; every other suite 0 passed",
+        "ts": "2026-11-15T15:13:30Z"
+      },
+      {
+        "actor": "sd41-e2.13",
+        "id": "1794765137218-sd41-e2.13-e7d415",
+        "summary": "epic-breakdown.md E2.13 row claimed test: a Lifepath save changes cpr_lifepath.txt in the campaign copy; four writers save/save_choices/save_lifepath/save_role_choices; actual no live command saves the Lifepath after creation (only create_at_root, cpr_creation.rs:1352); a fifth writer save_kit (market_save) also writes under the root; and set_character_campaigns_at_root/after_write refused a CPR root (SavedCharacterStore::load needs authoritative_character_input.txt)",
+        "ts": "2026-11-15T17:52:17Z"
+      },
+      {
+        "actor": "sd41-e2.mc",
+        "id": "1794767539611-sd41-e2.mc-1ccb77",
+        "summary": "epic-breakdown.md E2.6 acceptance claimed buy_custom -> 4 passed; actual 7 passed (E2.12 added 3 buy_custom_size_*)",
+        "ts": "2026-11-15T18:32:19Z"
+      },
+      {
+        "actor": "sd41-e2.mc",
+        "id": "1794767539758-sd41-e2.mc-3eb7ce",
+        "summary": "epic-breakdown.md E2.7 acceptance claimed campaign_write_through -> 3 passed; actual 4 passed (E2.13 added campaign_write_through_cpr_saves_reach_the_copy)",
+        "ts": "2026-11-15T18:32:19Z"
+      },
+      {
+        "actor": "sd41-e2.mc",
+        "id": "1794767539893-sd41-e2.mc-1039e7",
+        "summary": "epic-breakdown.md E2.5 acceptance claimed catalog_slot -> 1 passed; actual 2 (1 in the bin, 1 in market_price_census, which compiles equipment_catalog.rs by path); row now --bins",
+        "ts": "2026-11-15T18:32:19Z"
+      },
+      {
+        "actor": "sd41-e2.mc",
+        "id": "1794767540043-sd41-e2.mc-a39c68",
+        "summary": "epic-breakdown.md E2.8 acceptance claimed market_hides_retirement_rows -> 1 passed; actual 2 (bin + market_price_census); row now --bins",
+        "ts": "2026-11-15T18:32:20Z"
+      },
+      {
+        "actor": "sd41-e2.mc",
+        "id": "1794767550289-sd41-e2.mc-21eada",
+        "summary": "E2.4 Weapons tab Drop claimed carried weapon rows get the existing Drop (sell) button; decisions.md \u00a727 Drop = Not Carried; actual Drop sold the copy (operator's 'item disappears' defect) and, named by item id only, sold the first in-hand copy even from a (carried) row (first_copy_in_hand); now set_equipment_active_state Absent with the row's +N and state",
+        "ts": "2026-11-15T18:32:30Z"
+      },
+      {
+        "actor": "sd41-e2.mc",
+        "id": "1794768562453-sd41-e2.mc-ae3b64",
+        "summary": "epic-breakdown.md E1.3/E1.MC acceptance claimed containers_ -> 5 passed; actual 7 (E2.6 lightened-copy test, E2.12 sized-copy test)",
+        "ts": "2026-11-15T18:49:22Z"
+      },
+      {
+        "actor": "sd41-e2.mc",
+        "id": "1794768562595-sd41-e2.mc-5c8239",
+        "summary": "epic-breakdown.md E1.4 acceptance claimed carried_weapon -> 4 passed; actual 5 (E2.12 carried_weapon_sized_copy_rolls_its_size_die)",
+        "ts": "2026-11-15T18:49:22Z"
+      }
+    ],
+    "repeat_subjects": [
+      {
+        "count": 5,
+        "subject": "epic-breakdown.md:E2.5"
+      },
+      {
+        "count": 2,
+        "subject": "SD-41 epic-breakdown.md E2.1 acceptance"
+      },
+      {
+        "count": 2,
+        "subject": "SD-41 epic-breakdown.md E2.2 row"
+      },
+      {
+        "count": 2,
+        "subject": "lead"
+      }
+    ],
+    "total": 38,
+    "with_blast_radius": 0
+  },
+  "deferrals": {
+    "open": 0,
+    "open_items": [],
+    "recent": [],
+    "resolved": 0,
+    "total": 0
+  },
+  "events": {
+    "by_actor": {
+      "sd41-e2.1": 3,
+      "sd41-e2.11": 2,
+      "sd41-e2.12": 2,
+      "sd41-e2.13": 1,
+      "sd41-e2.2": 2,
+      "sd41-e2.3": 2,
+      "sd41-e2.4": 5,
+      "sd41-e2.5": 7,
+      "sd41-e2.6": 7,
+      "sd41-e2.7": 1,
+      "sd41-e2.mc": 7
+    },
+    "by_origin": {
+      "agent": 39
+    },
+    "by_type": {
+      "correction": 38,
+      "rework": 1
+    },
+    "total": 39
+  },
+  "generated_at": "2026-11-15T18:49:52Z",
+  "generated_by": "scripts/retro.py summary",
+  "git_join": {
+    "authors": 1,
+    "available": true,
+    "commits": 63,
+    "events_per_commit": 0.619,
+    "top_authors": [
+      [
+        "Todd Hintzmann",
+        63
+      ]
+    ]
+  },
+  "incidents": {
+    "by_recurrence_key": {},
+    "recent": [],
+    "recurring": [],
+    "silent": 0,
+    "time_lost_minutes": 0,
+    "total": 0
+  },
+  "log": {
+    "invalid_lines": 0,
+    "path": "/home/ubuntu/workspace/repos/codex/.worktrees/sd41-main/docs/retro/events",
+    "problems": [],
+    "shards": 11
+  },
+  "near_misses": {
+    "by_caught_by": {},
+    "escaped": 0,
+    "recent": [],
+    "total": 0
+  },
+  "rework": {
+    "by_cause": {
+      "the spec's 'adds pieces to the Carried stack' applied to single items too; 2 left_behind_ tests (attach takes the copy in hand; sale takes the copy named) failed in the desktop sweep: a joined line moves/enchants every copy at once": 1
+    },
+    "recent": [
+      {
+        "actor": "sd41-e2.5",
+        "id": "1794736437920-sd41-e2.5-c5219a",
+        "summary": "redid purchase join: buying a single item joined the existing Carried line (one line, quantity 2) instead of adding a line per copy: the spec's 'adds pieces to the Carried stack' applied to single items too; 2 left_behind_ tests (attach takes the copy in hand; sale takes the copy named) failed in the desktop sweep: a joined line moves/enchants every copy at once",
+        "ts": "2026-11-15T09:53:57Z"
+      }
+    ],
+    "total": 1
+  },
+  "schema_version": 1,
+  "verification": {
+    "by_failing_stage": {},
+    "fail_rate": null,
+    "failed_runs": 0,
+    "runs": 0
+  },
+  "window": {
+    "since": "2026-11-14T00:00:00+00:00",
+    "spec": "2026-11-14",
+    "until": null
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "codex_generated_name": false,
+  "completeness": "chassis_only",
+  "data": {
+    "key": "Waves (Spirit)",
+    "name": "Waves (Spirit)",
+    "raw_tokens": [
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Waves (Spirit)=1|hydraulic push|Waves (Spirit)=2|slipstream|Waves (Spirit)=3|water breathing|Waves (Spirit)=4|wall of ice|Waves (Spirit)=5|geyser|Waves (Spirit)=6|fluid form|Waves (Spirit)=7|vortex|Waves (Spirit)=8|seamantle|Waves (Spirit)=9|tsunami"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T15:18:04Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 13,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_domains.lst",
+    "record_key": "Waves (Spirit)",
+    "sha256": "80e1bd9e91ad02c2653b6faf0a94bc92b528c0e89b6bfeb60c379ec40d4e64fd"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

@@ -1,0 +1,252 @@
+⚙
+CPR MC Reputation Solo
+Cyberpunk RED
+Improve
+Open
+Close
+STATS
+
+STAT	Current
+INT	6	—
+REF	7	7
+DEX	7	7
+TECH	3	—
+COOL	8	—
+WILL	6	—
+LUCK	5	—
+MOVE	5	5
+BODY	6	6
+EMP	5	3
+SKILLS
+
+Level	Base
+Awareness
+Concentration (WILL)	2	8
+Conceal/Reveal Object (INT)	0	6
+Lip Reading (INT)	0	6
+Perception (INT)	6	12
+Tracking (INT)	0	6
+Body
+Athletics (DEX)	2	9
+Contortionist (DEX)	0	7
+Dance (DEX)	0	7
+Endurance (WILL)	0	6
+Resist Torture/Drugs (WILL)	6	12
+Stealth (DEX)	2	9
+Control
+Drive Land Vehicle (REF)	0	7
+Pilot Air Vehicle (REF)	0	7
+Pilot Sea Vehicle (REF)	0	7
+Riding (REF)	0	7
+Education
+Accounting (INT)	0	6
+Animal Handling (INT)	0	6
+Bureaucracy (INT)	0	6
+Business (INT)	0	6
+Composition (INT)	0	6
+Criminology (INT)	0	6
+Cryptography (INT)	0	6
+Deduction (INT)	0	6
+Education (INT)	2	8
+Gamble (INT)	0	6
+Language (Streetslang) (INT)	2	8
+Language (Mandarin Chinese) (INT)	4	10
+Library Search (INT)	0	6
+Local Expert (Your Home) (INT)	2	8
+Science (INT)	0	6
+Tactics (INT)	6	12
+Wilderness Survival (INT)	0	6
+Fighting
+Brawling (DEX)	2	9
+Evasion (DEX)	6	13
+Martial Arts (DEX)	0	7
+Melee Weapon (DEX)	6	13
+Performance
+Acting (COOL)	0	8
+Play Instrument (TECH)	0	3
+Ranged Weapon
+Archery (REF)	0	7
+Autofire (REF)	6	13
+Handgun (REF)	6	13
+Heavy Weapons (REF)	0	7
+Shoulder Arms (REF)	6	13
+Social
+Bribery (COOL)	0	8
+Conversation (EMP)	2	5
+Human Perception (EMP)	2	5
+Interrogation (COOL)	6	14
+Persuasion (COOL)	2	10
+Personal Grooming (COOL)	0	8
+Streetwise (COOL)	0	8
+Trading (COOL)	0	8
+Wardrobe & Style (COOL)	0	8
+Technique
+Air Vehicle Tech (TECH)	0	3
+Basic Tech (TECH)	0	3
+Cybertech (TECH)	0	3
+Demolitions (TECH)	0	3
+Electronics/Security Tech (TECH)	0	3
+First Aid (TECH)	6	9
+Forgery (TECH)	0	3
+Land Vehicle Tech (TECH)	0	3
+Paint/Draw/Sculpt (TECH)	0	3
+Paramedic (TECH)	0	3
+Photography/Film (TECH)	0	3
+Pick Lock (TECH)	0	3
+Pick Pocket (TECH)	0	3
+Sea Vehicle Tech (TECH)	0	3
+Weaponstech (TECH)	0	3
+ROLE ABILITY
+
+Solo
+Rank	4
+Combat Awareness Points	4
+REPUTATION
+
+Reputation Level	6
+Facedown (COOL + Reputation)	2
+Facedown roll	2 + 1d10
+Reputation event	Level 4 deed: Took down a cyberpsycho
+Reputation event	Level 3 deed: Paid a debt on time
+Reputation event	Level 6 cowardice: Ran out on the crew (defining)
+IMPROVEMENT POINTS
+
+Improvement Points (current / total)	0 / 0
+LIFEPATH
+
+Cultural Origins: Your (General) Cultural Region	East Asian
+Your Personality: What Are You Like?	Moody, rash, and headstrong
+Dress and Personal Style: Clothing Style and Hairstyle: Clothing Style	Bag Lady Chic (Homeless, Ragged, Vagrant)
+Dress and Personal Style: Clothing Style and Hairstyle: Hairstyle	Bald
+Affectation You Are Never Without	Mirrorshades
+Your Motivations and Relationships: What Do You Value Most? and How Do You Feel About Most People?: What Do You Value Most?	Knowledge
+Your Motivations and Relationships: What Do You Value Most? and How Do You Feel About Most People?: How Do You Feel About Most People?	People are obstacles to be destroyed if they cross me.
+Things You Value the Most: Most Valued Person in Your Life?: Most Valued Person in Your Life?	A public figure
+Things You Value the Most: Most Valued Possession You Own?: Most Valued Possession You Own?	A weapon
+Your Original Family Background: Original Background	Urban Homeless
+Your Environment: Childhood Environment	In a decaying, once upscale neighborhood, now holding off the boosters to survive.
+Your Family Crisis: Background	Your family is imprisoned, and you alone escaped.
+Your Enemies: Enemy	Partner or coworker
+Your Enemies: What Caused it? Who's been Wronged? (choose)	One of you set the other up for a crime they didn't commit.
+Your Enemies: What Can They Throw at You?	Themselves and a few (1d6/2) friends.
+Your Enemies: Enemy	Person you work for
+Your Enemies: What Caused it? Who's been Wronged? (choose)	Accused the other of cowardice or some other major personal flaw.
+Your Enemies: What Can They Throw at You?	Just themselves and even they won't go out of their way.
+Your Enemies: Enemy	Partner or coworker
+Your Enemies: What Caused it? Who's been Wronged? (choose)	Caused the loss of lover, friend, or relative.
+Your Enemies: What Can They Throw at You?	An entire city or government or agency.
+Sweet Revenge!: What are You/They Gonna do About it?	Go into a murderous rage and try to physically rip their face off.
+Your Tragic Love Affair(s): What Happened?	It just didn't work out.
+Your Life Goals: Life Goals	Gain power and control.
+Solo: What Kind of Solo are You?: Type	Street Muscle for Hire
+Solo: What's Your Moral Compass Like?: Moral Compass	Will occasionally slip and do unethical or bad things, but it's rare.
+Solo: Who's Gunning for You?: Who?	Corrupt Lawmen or Lawmen who mistakenly think you're guilty of something.
+Solo: What's Your Operational Territory?: Territory	The territory of a particular Fixer or contact
+HIT POINTS, HUMANITY, MOVE AND LUCK
+
+Hit Points	40
+Seriously Wounded	20
+Death Save	6
+Humanity	36 / 50
+MOVE	5
+LUCK	5
+WOUND TRACK
+
+Below HP	Stabilize DV
+Lightly Wounded	40	10
+Seriously Wounded	20	13
+Mortally Wounded	1	15
+Death Save	6	—
+Base Death Save Penalty	0	—
+CRITICAL INJURIES
+
+Critical Injuries to the Body
+Dismembered Arm
+Dismembered Hand
+Collapsed Lung
+Broken Ribs
+Broken Arm
+Foreign Object
+Broken Leg
+Torn Muscle
+Spinal Injury
+Crushed Fingers
+Dismembered Leg
+Critical Injuries to the Head
+Lost Eye
+Brain Injury
+Damaged Eye
+Concussion
+Broken Jaw
+Foreign Object
+Whiplash
+Cracked Skull
+Damaged Ear
+Crushed Windpipe
+Lost Ear
+ARMOR
+
+SP	Penalty
+Head	11	0
+Body	11	0
+Armor Penalty (REF, DEX, MOVE)	—	0
+WEAPONS
+
+DMG	ROF	Hands	Concealable	Magazine	Skill Base
+Assault Rifle	5d6	1	2	No	25	13
+Very Heavy Pistol	4d6	1	1	No	8	13
+Heavy Melee Weapon	3d6	2	Varies by type	No	—	13
+RANGE DV (M/YDS UP TO)
+
+6	12	25	50	100	200	400	800
+Assault Rifle	17	16	15	13	15	20	25	30
+Assault Rifle (Autofire)	22	20	17	20	25	—	—	—
+Very Heavy Pistol	13	15	20	25	30	30	N/A	N/A
+CYBERWARE
+
+Biomonitor	0
+Neural Link	7
+Sandevistan	7
+Humanity Loss	14
+Maximum Humanity	46
+Head SP (cyberware)	0
+Body SP (cyberware)	0
+Initiative bonus	0
+Fashionware slots	1 / 7
+Internal Body slots	0 / 7
+External Body slots	0 / 7
+Neural Link slots	1 / 5
+OTHER TOTALS
+
+cpr.cash	500
+cpr.ammo.0	30
+cpr.ammo.1	70
+RULES AND FEATURES
+
+Role ability
+Combat Awareness
+Combat Awareness Rank 4
+Combat Awareness points 4
+When combat begins (before Initiative is rolled), anytime outside of combat, or in combat with an Action, a Solo may divide the total number of points they have in their Combat Awareness Role Ability among the following abilities. If a Solo chooses to not change their point assignments, their previous ones persist. Activating some of these abilities will cost the Solo more points than others: (Cyberpunk RED core rulebook p147)
+Cyberware
+Biomonitor
+Humanity Loss 0
+Subdermal implant which generates a constant LED readout of pulse, temperature, respiration, blood sugar, etc. You can link your Biomonitor to your Agent to allow it to track your wellness. (Cyberpunk RED core rulebook p359)
+Neural Link
+Humanity Loss 7
+Wired artificial nervous system, required to use Neuralware, and Subdermal Grips. System has 5 Option Slots for Neuralware options. (Cyberpunk RED core rulebook p360)
+Sandevistan
+Humanity Loss 7
+Neuralware Option. Speedware that provides short boosts of highly improved reaction time. When activated as an Action, the user adds +3 to any Initiative Roll they make in the next minute, after which Sandevistan cannot be activated again for an hour. Only a single piece of Speedware can be installed into a user at a time. Requires Neural Link. (Cyberpunk RED core rulebook p360)
+Humanity
+Humanity Loss
+Humanity Loss 14
+Humanity 36
+EMP 3
+Humanity Loss 14 from installed cyberware: Humanity 36 = EMP 5 x 10 - 14. EMP 3: EMP is lowered by 1 every time the tens place of Humanity is lowered (Cyberpunk RED core rulebook p. 80-81).
+Weapon special
+Assault Rifle
+Skill Base 13
+ROF 1
+Autofire Skill Base 13
+Assault Rifle: alternate fire Autofire (4) • Suppressive Fire (Cyberpunk RED core rulebook p342)

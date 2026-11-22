@@ -1,0 +1,48 @@
+{
+  "codex_generated_name": false,
+  "completeness": "full",
+  "data": {
+    "description": "Curse, injury; Fort DC 15 negates, Will DC 15 to avoid effects; Onset the next full moon; Frequency on the night of every full moon or whenever the target is injured; Effect target transforms into a wolf under the GM's control until the next morning",
+    "key": "Werewolf Lycanthropy",
+    "name": "Werewolf Lycanthropy",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Afflictions"
+      },
+      {
+        "key": "TYPE",
+        "value": "Curse.Affliction"
+      },
+      {
+        "key": "DESC",
+        "value": "Curse, injury; Fort DC 15 negates, Will DC 15 to avoid effects; Onset the next full moon; Frequency on the night of every full moon or whenever the target is injured; Effect target transforms into a wolf under the GM's control until the next morning"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.557"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 34,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities.lst",
+    "record_key": "Werewolf Lycanthropy",
+    "sha256": "ab77788e05536453a16a22bef8a5e74c209e536cb5b8cdcdb1130f712cc2402f"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Variant Multiclass ~ Ranger",
+    "name": "Ranger",
+    "class": "Variant Multiclass",
+    "description": "[Not Implemented]A character who chooses ranger as his secondary class gains the following secondary class features.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Variant Multiclass ~ Ranger"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Variant Multiclass.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "[Not Implemented]A character who chooses ranger as his secondary class gains the following secondary class features."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;Track: At 3rd level, he gains the track class feature, treating his character level as his effective ranger level."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;Favored Enemy: At 7th level, he gains the 1st favored enemy class feature."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;Favored Terrain: At 11th level, he gains the 1st favored terrain class feature."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;Expert Tracker: At 15th level, he gains the woodland stride and swift tracker class features."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;Quarry: At 19th level, he gains the quarry class feature."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst",
+    "sha256": "2becbb0524bd4c367cc1273434c20bcd8e42e3e08abd372f99b005e69e8c4725",
+    "line": 857,
+    "record_key": "Variant Multiclass ~ Ranger"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

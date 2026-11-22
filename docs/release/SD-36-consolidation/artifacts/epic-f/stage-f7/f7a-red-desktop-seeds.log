@@ -1,0 +1,36 @@
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 3m 20s
+     Running unittests src/main.rs (/home/ubuntu/workspace/worktrees/codex-epic-f7-target/debug/deps/codex_desktop-fc7f6e9a7b01df0f)
+
+running 4 tests
+test character_hub::starter_seed_tests::aldric_loads_with_zero_unallocated_skill_points ... FAILED
+test character_hub::starter_seed_tests::elowen_loads_with_zero_unallocated_skill_points ... FAILED
+test character_hub::starter_seed_tests::seeded_and_created_characters_load_the_engines_effective_scores ... ok
+test character_hub::starter_seed_tests::the_create_paths_fixed_ranks_measured_over_the_roster has been running for over 60 seconds
+test character_hub::starter_seed_tests::the_create_paths_fixed_ranks_measured_over_the_roster ... ok
+
+failures:
+
+---- character_hub::starter_seed_tests::aldric_loads_with_zero_unallocated_skill_points stdout ----
+
+thread 'character_hub::starter_seed_tests::aldric_loads_with_zero_unallocated_skill_points' (2113384) panicked at src/character_hub.rs:12048:9:
+assertion `left == right` failed: [SkillAllocationDto { skill_id: "skill:climb", ranks: 1 }, SkillAllocationDto { skill_id: "skill:intimidate", ranks: 1 }, SkillAllocationDto { skill_id: "skill:swim", ranks: 1 }]
+  left: 3
+ right: 15
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- character_hub::starter_seed_tests::elowen_loads_with_zero_unallocated_skill_points stdout ----
+
+thread 'character_hub::starter_seed_tests::elowen_loads_with_zero_unallocated_skill_points' (2113385) panicked at src/character_hub.rs:12022:9:
+assertion `left == right` failed: [SkillAllocationDto { skill_id: "skill:climb", ranks: 1 }, SkillAllocationDto { skill_id: "skill:intimidate", ranks: 1 }, SkillAllocationDto { skill_id: "skill:swim", ranks: 1 }]
+  left: 3
+ right: 35
+
+
+failures:
+    character_hub::starter_seed_tests::aldric_loads_with_zero_unallocated_skill_points
+    character_hub::starter_seed_tests::elowen_loads_with_zero_unallocated_skill_points
+
+test result: FAILED. 2 passed; 2 failed; 0 ignored; 0 measured; 633 filtered out; finished in 90.66s
+
+error: test failed, to rerun pass `--bin codex-desktop`
+EXIT=101

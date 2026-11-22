@@ -1,0 +1,54 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Cold Rider ~ Spell-Like Abilities",
+    "delivery": "SpellLike",
+    "description": "(CL 10th; concentration +13) Constant-pass without trace At will-chill metal (DC 15), deep slumber (DC 16), ghost sound (DC 13), obscuring mist, phantom steed, ray of frost 1/day-freedom of movement, ice storm",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:cold_rider_spell_like_abilities",
+    "name": "Spell-Like Abilities",
+    "owners": [
+      "bestiary_3:monster:cold_rider"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "(CL 10th; concentration +13) Constant-pass without trace At will-chill metal (DC 15), deep slumber (DC 16), ghost sound (DC 13), obscuring mist, phantom steed, ray of frost 1/day-freedom of movement, ice storm"
+      },
+      {
+        "key": "KEY",
+        "value": "Cold Rider ~ Spell-Like Abilities"
+      },
+      {
+        "key": "TYPE",
+        "value": "ColdRiderRacialAbility.SpecialQuality.SpellLike"
+      }
+    ],
+    "source_page": null,
+    "traits": [
+      "ColdRiderRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T10:26:03Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 593,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Cold Rider ~ Spell-Like Abilities",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "display:no_magnitude_token"
+  ]
+}

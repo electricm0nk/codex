@@ -1,0 +1,59 @@
+{
+  "completeness": "full",
+  "data": {
+    "codex_generated_name": false,
+    "corpus_key": "Morlock ~ Sneak Attack",
+    "delivery": null,
+    "description": null,
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "beastiary:monster_ability:morlock_sneak_attack",
+    "name": "Sneak Attack",
+    "owners": [
+      "beastiary:monster:morlock"
+    ],
+    "raw_tokens": [
+      {
+        "key": "BONUS",
+        "value": "VAR|SneakAttackDice|1"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "KEY",
+        "value": "Morlock ~ Sneak Attack"
+      },
+      {
+        "key": "TYPE",
+        "value": "Internal"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      }
+    ],
+    "rename": null,
+    "source_page": null,
+    "traits": [
+      "Internal"
+    ]
+  },
+  "ingested_at": "2026-08-23T22:07:24Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 945,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "record_key": "Morlock ~ Sneak Attack",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

@@ -1,0 +1,467 @@
+   Compiling codex-desktop v0.18.0 (/home/ubuntu/workspace/repos/codex/.worktrees/sd38-e3/apps/desktop/src-tauri)
+error[E0422]: cannot find struct, variant or union type `CprSkillsRequest` in this scope
+   --> src/cpr_creation.rs:854:21
+    |
+854 |             skills: CprSkillsRequest {
+    |                     ^^^^^^^^^^^^^^^^ not found in this scope
+
+error[E0425]: cannot find value `REFUSED_SKILLS` in this scope
+    --> src/cpr_creation.rs:1428:35
+     |
+  64 | pub(crate) const REFUSED_EXISTS: &str = "cpr_creation.character_exists";
+     | ------------------------------------------------------------------------ similarly named constant `REFUSED_EXISTS` defined here
+...
+1428 |         assert!(skill_problem(&p, REFUSED_SKILLS, &["Tactics", "Streetrat"]), "{:?}", p.problems);
+     |                                   ^^^^^^^^^^^^^^
+     |
+help: a constant with a similar name exists
+     |
+1428 -         assert!(skill_problem(&p, REFUSED_SKILLS, &["Tactics", "Streetrat"]), "{:?}", p.problems);
+1428 +         assert!(skill_problem(&p, REFUSED_EXISTS, &["Tactics", "Streetrat"]), "{:?}", p.problems);
+     |
+
+error[E0425]: cannot find value `REFUSED_SKILL_SPECIALTY` in this scope
+    --> src/cpr_creation.rs:1436:35
+     |
+1436 |         assert!(skill_problem(&p, REFUSED_SKILL_SPECIALTY, &["Play Instrument"]), "{:?}", p.problems);
+     |                                   ^^^^^^^^^^^^^^^^^^^^^^^ not found in this scope
+
+error[E0425]: cannot find value `REFUSED_SKILL_SPECIALTY` in this scope
+    --> src/cpr_creation.rs:1439:35
+     |
+1439 |         assert!(skill_problem(&p, REFUSED_SKILL_SPECIALTY, &["Gui|tar"]), "{:?}", p.problems);
+     |                                   ^^^^^^^^^^^^^^^^^^^^^^^ not found in this scope
+
+error[E0425]: cannot find value `REFUSED_SKILLS` in this scope
+    --> src/cpr_creation.rs:1482:39
+     |
+  64 | pub(crate) const REFUSED_EXISTS: &str = "cpr_creation.character_exists";
+     | ------------------------------------------------------------------------ similarly named constant `REFUSED_EXISTS` defined here
+...
+1482 |             assert!(skill_problem(&p, REFUSED_SKILLS, words), "{skill} {level}: {:?}", p.problems);
+     |                                       ^^^^^^^^^^^^^^
+     |
+help: a constant with a similar name exists
+     |
+1482 -             assert!(skill_problem(&p, REFUSED_SKILLS, words), "{skill} {level}: {:?}", p.problems);
+1482 +             assert!(skill_problem(&p, REFUSED_EXISTS, words), "{skill} {level}: {:?}", p.problems);
+     |
+
+error[E0425]: cannot find value `REFUSED_SKILLS` in this scope
+    --> src/cpr_creation.rs:1486:118
+     |
+  64 | pub(crate) const REFUSED_EXISTS: &str = "cpr_creation.character_exists";
+     | ------------------------------------------------------------------------ similarly named constant `REFUSED_EXISTS` defined here
+...
+1486 |                 matches!(&response, CprCreateResponse::Blocked { diagnostics } if diagnostics.iter().any(|d| d.id == REFUSED_SKILLS)),
+     |                                                                                                                      ^^^^^^^^^^^^^^
+     |
+help: a constant with a similar name exists
+     |
+1486 -                 matches!(&response, CprCreateResponse::Blocked { diagnostics } if diagnostics.iter().any(|d| d.id == REFUSED_SKILLS)),
+1486 +                 matches!(&response, CprCreateResponse::Blocked { diagnostics } if diagnostics.iter().any(|d| d.id == REFUSED_EXISTS)),
+     |
+
+error[E0425]: cannot find value `REFUSED_SKILLS` in this scope
+    --> src/cpr_creation.rs:1547:28
+     |
+  64 | pub(crate) const REFUSED_EXISTS: &str = "cpr_creation.character_exists";
+     | ------------------------------------------------------------------------ similarly named constant `REFUSED_EXISTS` defined here
+...
+1547 |             ("Tactics", 4, REFUSED_SKILLS, &["87 of 86"]),
+     |                            ^^^^^^^^^^^^^^
+     |
+help: a constant with a similar name exists
+     |
+1547 -             ("Tactics", 4, REFUSED_SKILLS, &["87 of 86"]),
+1547 +             ("Tactics", 4, REFUSED_EXISTS, &["87 of 86"]),
+     |
+
+error[E0425]: cannot find value `REFUSED_SKILLS` in this scope
+    --> src/cpr_creation.rs:1548:33
+     |
+  64 | pub(crate) const REFUSED_EXISTS: &str = "cpr_creation.character_exists";
+     | ------------------------------------------------------------------------ similarly named constant `REFUSED_EXISTS` defined here
+...
+1548 |             ("Melee Weapon", 7, REFUSED_SKILLS, &["Melee Weapon", "above 6"]),
+     |                                 ^^^^^^^^^^^^^^
+     |
+help: a constant with a similar name exists
+     |
+1548 -             ("Melee Weapon", 7, REFUSED_SKILLS, &["Melee Weapon", "above 6"]),
+1548 +             ("Melee Weapon", 7, REFUSED_EXISTS, &["Melee Weapon", "above 6"]),
+     |
+
+error[E0425]: cannot find value `REFUSED_SKILLS` in this scope
+    --> src/cpr_creation.rs:1549:28
+     |
+  64 | pub(crate) const REFUSED_EXISTS: &str = "cpr_creation.character_exists";
+     | ------------------------------------------------------------------------ similarly named constant `REFUSED_EXISTS` defined here
+...
+1549 |             ("Stealth", 1, REFUSED_SKILLS, &["Stealth", "at least 2"]),
+     |                            ^^^^^^^^^^^^^^
+     |
+help: a constant with a similar name exists
+     |
+1549 -             ("Stealth", 1, REFUSED_SKILLS, &["Stealth", "at least 2"]),
+1549 +             ("Stealth", 1, REFUSED_EXISTS, &["Stealth", "at least 2"]),
+     |
+
+error[E0425]: cannot find value `REFUSED_SKILLS` in this scope
+    --> src/cpr_creation.rs:1550:31
+     |
+  64 | pub(crate) const REFUSED_EXISTS: &str = "cpr_creation.character_exists";
+     | ------------------------------------------------------------------------ similarly named constant `REFUSED_EXISTS` defined here
+...
+1550 |             ("Persuasion", 0, REFUSED_SKILLS, &["Persuasion", "missing"]),
+     |                               ^^^^^^^^^^^^^^
+     |
+help: a constant with a similar name exists
+     |
+1550 -             ("Persuasion", 0, REFUSED_SKILLS, &["Persuasion", "missing"]),
+1550 +             ("Persuasion", 0, REFUSED_EXISTS, &["Persuasion", "missing"]),
+     |
+
+error[E0425]: cannot find value `REFUSED_SKILLS` in this scope
+    --> src/cpr_creation.rs:1551:28
+     |
+  64 | pub(crate) const REFUSED_EXISTS: &str = "cpr_creation.character_exists";
+     | ------------------------------------------------------------------------ similarly named constant `REFUSED_EXISTS` defined here
+...
+1551 |             ("Hacking", 1, REFUSED_SKILLS, &["Hacking"]),
+     |                            ^^^^^^^^^^^^^^
+     |
+help: a constant with a similar name exists
+     |
+1551 -             ("Hacking", 1, REFUSED_SKILLS, &["Hacking"]),
+1551 +             ("Hacking", 1, REFUSED_EXISTS, &["Hacking"]),
+     |
+
+error[E0425]: cannot find value `REFUSED_SKILLS` in this scope
+    --> src/cpr_creation.rs:1552:33
+     |
+  64 | pub(crate) const REFUSED_EXISTS: &str = "cpr_creation.character_exists";
+     | ------------------------------------------------------------------------ similarly named constant `REFUSED_EXISTS` defined here
+...
+1552 |             ("Martial Arts", 1, REFUSED_SKILLS, &["Martial Arts", "specialty"]),
+     |                                 ^^^^^^^^^^^^^^
+     |
+help: a constant with a similar name exists
+     |
+1552 -             ("Martial Arts", 1, REFUSED_SKILLS, &["Martial Arts", "specialty"]),
+1552 +             ("Martial Arts", 1, REFUSED_EXISTS, &["Martial Arts", "specialty"]),
+     |
+
+error[E0425]: cannot find value `REFUSED_SKILL_SPECIALTY` in this scope
+    --> src/cpr_creation.rs:1563:72
+     |
+1563 |         assert!(skill_problem(&preview_at(&root(), &grammar).unwrap(), REFUSED_SKILL_SPECIALTY, &["Bio=logy"]));
+     |                                                                        ^^^^^^^^^^^^^^^^^^^^^^^ not found in this scope
+
+error[E0560]: struct `cpr_creation::CprCreationRequest` has no field named `skills`
+   --> src/cpr_creation.rs:854:13
+    |
+854 |             skills: CprSkillsRequest {
+    |             ^^^^^^ `cpr_creation::CprCreationRequest` does not have this field
+    |
+    = note: all struct fields are already assigned
+
+error[E0609]: no field `skills` on type `cpr_creation::CprCreationPreview`
+    --> src/cpr_creation.rs:1410:39
+     |
+1410 |             assert_eq!(spent(&preview.skills.rows), (86, 0), "{role}: CUI F-25");
+     |                                       ^^^^^^ unknown field
+     |
+     = note: available fields are: `role`, `method`, `seed`, `rolls`, `template_roll` ... and 7 others
+
+error[E0609]: no field `skills` on type `cpr_creation::CprCreationPreview`
+    --> src/cpr_creation.rs:1412:25
+     |
+1412 |                 preview.skills.lines.iter().filter(|l| !l.cultural).map(|l| (l.line.clone(), l.level)).collect();
+     |                         ^^^^^^ unknown field
+     |
+     = note: available fields are: `role`, `method`, `seed`, `rolls`, `template_roll` ... and 7 others
+
+error[E0609]: no field `skills` on type `cpr_creation::CprCreationPreview`
+    --> src/cpr_creation.rs:1414:36
+     |
+1414 |             let language = preview.skills.lines.iter().find(|l| l.cultural).expect("the Cultural Origin language line");
+     |                                    ^^^^^^ unknown field
+     |
+     = note: available fields are: `role`, `method`, `seed`, `rolls`, `template_roll` ... and 7 others
+
+error[E0609]: no field `skills` on type `cpr_creation::CprCreationPreview`
+    --> src/cpr_creation.rs:1416:29
+     |
+1416 |             assert!(preview.skills.lines.iter().all(|l| !l.adjustable), "{role}: Streetrat levels are fixed");
+     |                             ^^^^^^ unknown field
+     |
+     = note: available fields are: `role`, `method`, `seed`, `rolls`, `template_roll` ... and 7 others
+
+error[E0609]: no field `skills` on type `cpr_creation::CprCreationPreview`
+    --> src/cpr_creation.rs:1417:33
+     |
+1417 |             for line in preview.skills.lines.iter().filter(|l| l.line.ends_with("(choose 1)")) {
+     |                                 ^^^^^^ unknown field
+     |
+     = note: available fields are: `role`, `method`, `seed`, `rolls`, `template_roll` ... and 7 others
+
+error[E0609]: no field `skills` on type `cpr_creation::CprCreationRequest`
+    --> src/cpr_creation.rs:1426:17
+     |
+1426 |         changed.skills.levels.insert("Tactics".to_owned(), 5);
+     |                 ^^^^^^ unknown field
+     |
+     = note: available fields are: `role`, `method`, `seed`, `template_roll`, `stats`, `lifepath`
+
+error[E0609]: no field `skills` on type `cpr_creation::CprCreationPreview`
+    --> src/cpr_creation.rs:1429:19
+     |
+1429 |         assert!(p.skills.rows.is_empty() && p.explanations.is_empty());
+     |                   ^^^^^^ unknown field
+     |
+     = note: available fields are: `role`, `method`, `seed`, `rolls`, `template_roll` ... and 7 others
+
+error[E0609]: no field `skills` on type `cpr_creation::CprCreationRequest`
+    --> src/cpr_creation.rs:1434:17
+     |
+1434 |         unnamed.skills.specialties.clear();
+     |                 ^^^^^^ unknown field
+     |
+     = note: available fields are: `role`, `method`, `seed`, `template_roll`, `stats`, `lifepath`
+
+error[E0609]: no field `skills` on type `cpr_creation::CprCreationRequest`
+    --> src/cpr_creation.rs:1437:17
+     |
+1437 |         unnamed.skills.specialties.insert("Play Instrument (choose 1)".to_owned(), "Gui|tar".to_owned());
+     |                 ^^^^^^ unknown field
+     |
+     = note: available fields are: `role`, `method`, `seed`, `template_roll`, `stats`, `lifepath`
+
+error[E0609]: no field `skills` on type `cpr_creation::CprCreationPreview`
+    --> src/cpr_creation.rs:1450:29
+     |
+1450 |         assert_eq!(spent(&p.skills.rows), (86, 0), "the start: the printed levels");
+     |                             ^^^^^^ unknown field
+     |
+     = note: available fields are: `role`, `method`, `seed`, `rolls`, `template_roll` ... and 7 others
+
+error[E0609]: no field `skills` on type `cpr_creation::CprCreationPreview`
+    --> src/cpr_creation.rs:1451:22
+     |
+1451 |         assert_eq!(p.skills.lines.iter().filter(|l| !l.cultural).count(), 20);
+     |                      ^^^^^^ unknown field
+     |
+     = note: available fields are: `role`, `method`, `seed`, `rolls`, `template_roll` ... and 7 others
+
+error[E0609]: no field `skills` on type `cpr_creation::CprCreationPreview`
+    --> src/cpr_creation.rs:1452:19
+     |
+1452 |         assert!(p.skills.lines.iter().filter(|l| !l.cultural).all(|l| l.adjustable));
+     |                   ^^^^^^ unknown field
+     |
+     = note: available fields are: `role`, `method`, `seed`, `rolls`, `template_roll` ... and 7 others
+
+error[E0609]: no field `skills` on type `cpr_creation::CprCreationRequest`
+    --> src/cpr_creation.rs:1458:21
+     |
+1458 |             example.skills.levels.insert(skill["name"].as_str().unwrap().to_owned(), skill["level"].as_u64().unwrap() as u8);
+     |                     ^^^^^^ unknown field
+     |
+     = note: available fields are: `role`, `method`, `seed`, `template_roll`, `stats`, `lifepath`
+
+error[E0609]: no field `skills` on type `cpr_creation::CprCreationPreview`
+    --> src/cpr_creation.rs:1462:29
+     |
+1462 |         assert_eq!(spent(&p.skills.rows), (86, 0), "p090 Total Cost 86");
+     |                             ^^^^^^ unknown field
+     |
+     = note: available fields are: `role`, `method`, `seed`, `rolls`, `template_roll` ... and 7 others
+
+error[E0609]: no field `skills` on type `cpr_creation::CprCreationRequest`
+    --> src/cpr_creation.rs:1466:15
+     |
+1466 |         lower.skills.levels.insert("Tactics".to_owned(), 2);
+     |               ^^^^^^ unknown field
+     |
+     = note: available fields are: `role`, `method`, `seed`, `template_roll`, `stats`, `lifepath`
+
+error[E0609]: no field `skills` on type `cpr_creation::CprCreationPreview`
+    --> src/cpr_creation.rs:1467:64
+     |
+1467 |         assert_eq!(spent(&preview_at(&root(), &lower).unwrap().skills.rows), (82, 4));
+     |                                                                ^^^^^^ unknown field
+     |
+     = note: available fields are: `role`, `method`, `seed`, `rolls`, `template_roll` ... and 7 others
+
+error[E0609]: no field `skills` on type `cpr_creation::CprCreationRequest`
+    --> src/cpr_creation.rs:1468:15
+     |
+1468 |         lower.skills.levels.insert("Autofire".to_owned(), 5);
+     |               ^^^^^^ unknown field
+     |
+     = note: available fields are: `role`, `method`, `seed`, `template_roll`, `stats`, `lifepath`
+
+error[E0609]: no field `skills` on type `cpr_creation::CprCreationPreview`
+    --> src/cpr_creation.rs:1469:64
+     |
+1469 |         assert_eq!(spent(&preview_at(&root(), &lower).unwrap().skills.rows), (80, 6), "(x2): two points a level");
+     |                                                                ^^^^^^ unknown field
+     |
+     = note: available fields are: `role`, `method`, `seed`, `rolls`, `template_roll` ... and 7 others
+
+error[E0609]: no field `skills` on type `cpr_creation::CprCreationRequest`
+    --> src/cpr_creation.rs:1480:17
+     |
+1480 |             bad.skills.levels.insert(skill.to_owned(), level);
+     |                 ^^^^^^ unknown field
+     |
+     = note: available fields are: `role`, `method`, `seed`, `template_roll`, `stats`, `lifepath`
+
+error[E0609]: no field `skills` on type `cpr_creation::CprCreationPreview`
+    --> src/cpr_creation.rs:1504:29
+     |
+1504 |         assert_eq!(spent(&p.skills.rows), (26, 60), "13 Basic skills at 2; p. 90: 'the remaining 60'");
+     |                             ^^^^^^ unknown field
+     |
+     = note: available fields are: `role`, `method`, `seed`, `rolls`, `template_roll` ... and 7 others
+
+error[E0609]: no field `skills` on type `cpr_creation::CprCreationPreview`
+    --> src/cpr_creation.rs:1506:35
+     |
+1506 |         let held: Vec<String> = p.skills.lines.iter().filter(|l| !l.cultural).map(|l| l.key.clone()).collect();
+     |                                   ^^^^^^ unknown field
+     |
+     = note: available fields are: `role`, `method`, `seed`, `rolls`, `template_roll` ... and 7 others
+
+error[E0609]: no field `skills` on type `cpr_creation::CprCreationPreview`
+    --> src/cpr_creation.rs:1508:19
+     |
+1508 |         assert!(p.skills.lines.iter().filter(|l| !l.cultural).all(|l| l.basic && l.adjustable));
+     |                   ^^^^^^ unknown field
+     |
+     = note: available fields are: `role`, `method`, `seed`, `rolls`, `template_roll` ... and 7 others
+
+error[E0609]: no field `skills` on type `cpr_creation::CprCreationRequest`
+    --> src/cpr_creation.rs:1513:21
+     |
+1513 |             example.skills.levels.insert(skill["name"].as_str().unwrap().to_owned(), skill["level"].as_u64().unwrap() as u8);
+     |                     ^^^^^^ unknown field
+     |
+     = note: available fields are: `role`, `method`, `seed`, `template_roll`, `stats`, `lifepath`
+
+error[E0609]: no field `skills` on type `cpr_creation::CprCreationPreview`
+    --> src/cpr_creation.rs:1517:29
+     |
+1517 |         assert_eq!(spent(&p.skills.rows), (86, 0), "p091 Total Cost 86");
+     |                             ^^^^^^ unknown field
+     |
+     = note: available fields are: `role`, `method`, `seed`, `rolls`, `template_roll` ... and 7 others
+
+error[E0609]: no field `skills` on type `cpr_creation::CprCreationPreview`
+    --> src/cpr_creation.rs:1518:24
+     |
+1518 |         let karate = p.skills.lines.iter().find(|l| l.key == "Martial Arts (Karate)").unwrap();
+     |                        ^^^^^^ unknown field
+     |
+     = note: available fields are: `role`, `method`, `seed`, `rolls`, `template_roll` ... and 7 others
+
+error[E0609]: no field `skills` on type `cpr_creation::CprCreationRequest`
+    --> src/cpr_creation.rs:1525:15
+     |
+1525 |         lower.skills.levels.insert("Autofire".to_owned(), 5);
+     |               ^^^^^^ unknown field
+     |
+     = note: available fields are: `role`, `method`, `seed`, `template_roll`, `stats`, `lifepath`
+
+error[E0609]: no field `skills` on type `cpr_creation::CprCreationRequest`
+    --> src/cpr_creation.rs:1526:15
+     |
+1526 |         lower.skills.levels.insert("Handgun".to_owned(), 3);
+     |               ^^^^^^ unknown field
+     |
+     = note: available fields are: `role`, `method`, `seed`, `template_roll`, `stats`, `lifepath`
+
+error[E0609]: no field `skills` on type `cpr_creation::CprCreationPreview`
+    --> src/cpr_creation.rs:1527:64
+     |
+1527 |         assert_eq!(spent(&preview_at(&root(), &lower).unwrap().skills.rows), (83, 3));
+     |                                                                ^^^^^^ unknown field
+     |
+     = note: available fields are: `role`, `method`, `seed`, `rolls`, `template_roll` ... and 7 others
+
+error[E0609]: no field `skills` on type `cpr_creation::CprCreationRequest`
+    --> src/cpr_creation.rs:1532:16
+     |
+1532 |         fluent.skills.levels.insert(language.clone(), 6);
+     |                ^^^^^^ unknown field
+     |
+     = note: available fields are: `role`, `method`, `seed`, `template_roll`, `stats`, `lifepath`
+
+error[E0609]: no field `skills` on type `cpr_creation::CprCreationPreview`
+    --> src/cpr_creation.rs:1535:29
+     |
+1535 |         assert_eq!(spent(&f.skills.rows), (85, 1));
+     |                             ^^^^^^ unknown field
+     |
+     = note: available fields are: `role`, `method`, `seed`, `rolls`, `template_roll` ... and 7 others
+
+error[E0609]: no field `skills` on type `cpr_creation::CprCreationPreview`
+    --> src/cpr_creation.rs:1536:22
+     |
+1536 |         assert_eq!(f.skills.lines.iter().find(|l| l.key == language).unwrap().level, 6);
+     |                      ^^^^^^ unknown field
+     |
+     = note: available fields are: `role`, `method`, `seed`, `rolls`, `template_roll` ... and 7 others
+
+error[E0609]: no field `skills` on type `cpr_creation::CprCreationRequest`
+    --> src/cpr_creation.rs:1540:17
+     |
+1540 |         dropped.skills.levels.insert("Tracking".to_owned(), 0);
+     |                 ^^^^^^ unknown field
+     |
+     = note: available fields are: `role`, `method`, `seed`, `template_roll`, `stats`, `lifepath`
+
+error[E0609]: no field `skills` on type `cpr_creation::CprCreationPreview`
+    --> src/cpr_creation.rs:1543:20
+     |
+1543 |         assert!(!d.skills.lines.iter().any(|l| l.key == "Tracking"));
+     |                    ^^^^^^ unknown field
+     |
+     = note: available fields are: `role`, `method`, `seed`, `rolls`, `template_roll` ... and 7 others
+
+error[E0609]: no field `skills` on type `cpr_creation::CprCreationPreview`
+    --> src/cpr_creation.rs:1544:29
+     |
+1544 |         assert_eq!(spent(&d.skills.rows), (82, 4));
+     |                             ^^^^^^ unknown field
+     |
+     = note: available fields are: `role`, `method`, `seed`, `rolls`, `template_roll` ... and 7 others
+
+error[E0609]: no field `skills` on type `cpr_creation::CprCreationRequest`
+    --> src/cpr_creation.rs:1556:17
+     |
+1556 |             bad.skills.levels.insert(skill.to_owned(), level);
+     |                 ^^^^^^ unknown field
+     |
+     = note: available fields are: `role`, `method`, `seed`, `template_roll`, `stats`, `lifepath`
+
+error[E0609]: no field `skills` on type `cpr_creation::CprCreationPreview`
+    --> src/cpr_creation.rs:1559:23
+     |
+1559 |             assert!(p.skills.rows.is_empty(), "{skill} {level}: no spent row for a refused allocation");
+     |                       ^^^^^^ unknown field
+     |
+     = note: available fields are: `role`, `method`, `seed`, `rolls`, `template_roll` ... and 7 others
+
+error[E0609]: no field `skills` on type `cpr_creation::CprCreationRequest`
+    --> src/cpr_creation.rs:1562:17
+     |
+1562 |         grammar.skills.levels.insert("Science (Bio=logy)".to_owned(), 1);
+     |                 ^^^^^^ unknown field
+     |
+     = note: available fields are: `role`, `method`, `seed`, `template_roll`, `stats`, `lifepath`
+
+Some errors have detailed explanations: E0422, E0425, E0560, E0609.
+For more information about an error, try `rustc --explain E0422`.
+error: could not compile `codex-desktop` (bin "codex-desktop" test) due to 51 previous errors

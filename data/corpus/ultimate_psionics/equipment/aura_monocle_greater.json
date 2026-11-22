@@ -1,0 +1,54 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "MagicItems",
+    "cost_gp": 47040.0,
+    "description": "Discern good/evil and lawful/chaotic alignment 3/day",
+    "key": "Aura Monocle (Greater)",
+    "name": "Aura Monocle, Greater",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "OUTPUTNAME",
+        "value": "Aura Monocle, Greater"
+      },
+      {
+        "key": "TYPE",
+        "value": "Psionic.Wondrous.Eyes"
+      },
+      {
+        "key": "COST",
+        "value": "47040"
+      },
+      {
+        "key": "WT",
+        "value": "0.5"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.405"
+      },
+      {
+        "key": "SPROP",
+        "value": "Discern good/evil and lawful/chaotic alignment 3/day"
+      }
+    ],
+    "weight_lbs": 0.5
+  },
+  "ingested_at": "2026-08-16T05:06:54Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 179,
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_equipment.lst",
+    "record_key": "Aura Monocle (Greater)",
+    "sha256": "ffdbcf81cb0f2d832299a9c6e4c6b124f35fd447a720b0fdda11cf88fe1ca371"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

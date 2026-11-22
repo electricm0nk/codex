@@ -1,0 +1,89 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Life Leech ~ Transfer Ailment",
+    "name": "Transfer Ailment",
+    "class": "Life Leech",
+    "description": "You can transfer a condition (listed below) from one member of your collective to another as a standard action.  If this ability is used on an unwilling target and the recipient of the effect makes a successful save (see the Unwilling Participant feat), the creature with the condition being transferred still suffers from the condition.  You may use this ability %1/day.  This ability may only be used on creatures with a Constitution score and may not be used against creatures with less than %2 hit dice.  This ability can only be used to transfer temporary conditions.  For example, a life leech could not transfer blindness from a creature that has somehow lost its eyes permanently.|TransferAilmentTimes|TransferAilmentHD",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Life Leech ~ Transfer Ailment"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "VitalistClassFeatures.SpecialAttack"
+      },
+      {
+        "key": "DEFINE",
+        "value": "TransferAilmentTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "TransferAilmentHD|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can transfer a condition (listed below) from one member of your collective to another as a standard action.  If this ability is used on an unwilling target and the recipient of the effect makes a successful save (see the Unwilling Participant feat), the creature with the condition being transferred still suffers from the condition.  You may use this ability %1/day.  This ability may only be used on creatures with a Constitution score and may not be used against creatures with less than %2 hit dice.  This ability can only be used to transfer temporary conditions.  For example, a life leech could not transfer blindness from a creature that has somehow lost its eyes permanently.|TransferAilmentTimes|TransferAilmentHD"
+      },
+      {
+        "key": "DESC",
+        "value": "List of conditions: dazed, dazzled, shaken, staggered"
+      },
+      {
+        "key": "DESC",
+        "value": ", blind, deafened, fatigued, frightened, sickened|PRECLASS:1,Vitalist=4"
+      },
+      {
+        "key": "DESC",
+        "value": ", exhausted, panicked, nauseated, paralyzed|PRECLASS:1,Vitalist=7"
+      },
+      {
+        "key": "DESC",
+        "value": ", stunned, unconscious (doesn't reduce target creature to negative hit points or bring original creature to positive hit points)|PRECLASS:1,Vitalist=10"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TransferAilmentTimes|3+WIS"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TransferAilmentHD|VitalistLVL/2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.288"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|TransferAilmentTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2315,
+    "record_key": "Life Leech ~ Transfer Ailment"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

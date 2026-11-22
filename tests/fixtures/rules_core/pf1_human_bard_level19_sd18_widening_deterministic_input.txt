@@ -1,0 +1,72 @@
+# SD18 deterministic Human Bard level 19 widening fixture.
+# Widens the accepted SD18 deterministic PF1 Core Rulebook Human Bard
+# level-1..level-18 spontaneous arcane spell-bearing baseline
+# (tests/sd18_bard_level18_widening.rs) to level 19 as chosen
+# input only. It names selections; it does not contain derived, computed, or
+# parity values. It preserves the accepted Human race-choice seam
+# (ability-bonus and bonus-feat) and the deterministic
+# ability/feat/performance posture from the level-1 through level-18
+# fixtures, adding only the level bump this bounded tranche needs. The PF1
+# Core Rulebook Bard class table's level-19 "Special" column reads "Inspire
+# competence +6" — verified independently against two primary sources (a
+# raw HTML parse of d20pfsrd.com's own class table, bypassing
+# AI-summarization, and the Archives of Nethys aonprd.com mirror via
+# ClassDisplay.aspx, both byte-for-byte identical: "+14/+9/+4 | +6 | +11 |
+# +11 | Inspire competence +6"), with neighboring levels 17 ("Inspire
+# courage +4, lore master 3/day"), 18 ("Mass suggestion, versatile
+# performance"), and 20 ("Deadly performance") fetched in the same pass to
+# rule out misattribution. Base attack bonus genuinely rises to 14
+# (19*3/4), while poor Fortitude stays 6 (19/3, an integer-division
+# coincidence with level 18) and both good saves (Reflex, Will) stay 11
+# (19/2+2, also integer-division coincidences with level 18). Bardic
+# Knowledge stays 9 (max(19/2,1), an integer-division coincidence with
+# level 18). The Bardic Performance rounds-per-day pool genuinely rises to
+# 42 (4+CHA+2*(19-1), up from 40). The Fascinate DC stays 21 (10+19/2+CHA,
+# an integer-division coincidence with level 18), while the Fascinate
+# affected-creature count genuinely rises to 7 (1+(19-1)/3, up from 6).
+# Frightening Tune's DC (the same formula shape as the Fascinate DC)
+# likewise stays 21. Inspire Courage stays +4 (next tier at level 23, out
+# of scope) and Lore Master stays 3/day (no further tier defined). Inspire
+# Heroics' flat save-bonus (+4), AC-bonus (+4), and target count (2) all
+# carry over unchanged (the next target-count rise, "+1 creature per three
+# bard levels beyond 15th", lands at level 21, out of scope). Soothing
+# Performance carries over unchanged as a bounded grant-only identity
+# record.
+#
+# The level-19 "Special" column's sole entry, Inspire Competence, genuinely
+# rises from +5 to +6 — a fifth tier on the already-generalized tiered
+# if/else chain, the same arithmetic-widening idiom as Inspire Courage's
+# own second/third/fourth tier additions and Lore Master's own
+# second/third tier additions, and exactly the tier the level-15 and
+# level-17 cycles' own doc comments already predicted ("the next increase
+# (to +6) lands at bard level 19"). Only one new tier constant pair is
+# added, on an already-generalized tiered if/else chain: no new record
+# type, no new choice slot, and no new execution engine is invented.
+#
+# It deliberately avoids every later Bard burden surface: no
+# performance-state engine (start/maintain action economy, round
+# tracking/consumption), no Countersong or Distraction, no Versatile
+# Performance execution, no Suggestion or Mass Suggestion execution, no
+# Dirge of Doom execution, no Inspire Greatness execution, no
+# untrained-skill-use execution for Jack-of-All-Trades, no Lore Master
+# take-10/take-20 execution against any actual Knowledge check, no
+# Soothing Performance healing/condition-removal execution, no Frightening
+# Tune fear-resolution execution, no Inspire Heroics
+# targeting/save/AC-application execution, and no spontaneous known-spell /
+# slot posture burden.
+case_id=pf1-crb-human-bard-level19
+source_package_id=pf1.core_rulebook
+race_id=race:human
+class_level=class:bard:19
+ability=strength:10
+ability=dexterity:14
+ability=constitution:12
+ability=intelligence:13
+ability=wisdom:8
+ability=charisma:15
+feat=feat:dodge
+choice=choice:bard_bardic_knowledge:flag:enabled
+choice=choice:bard_bardic_music:performance:inspire_courage
+choice=choice:human_bonus_feat:feat:dodge
+choice=choice:human_ability_bonus:ability:charisma
+provenance=programs/codex/requirements/SD-18-core-rules-breadth/artifacts/core-roster-and-support-state-matrix.md

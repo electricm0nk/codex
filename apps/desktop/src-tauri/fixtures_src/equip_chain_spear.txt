@@ -1,0 +1,2 @@
+# Fixture for desktop Market +N (AC and attack rows), source: ue_equip_arms_armor.lst, KEY: Chain Spear
+Chain Spear																				PROFICIENCY:WEAPON|Chain Spear							TYPE:Weapon.Resizable.Melee.TwoHanded.Exotic.Piercing.Slashing.Double.Spear								ALTTYPE:Weapon.Resizable.Melee.Exotic.Slashing																		COST:15	WT:13										CRITMULT:x2	CRITRANGE:1	ALTCRITMULT:x2	ALTCRITRANGE:1	DAMAGE:1d6		ALTDAMAGE:1d6	EQMOD:Material ~ Steel																																									WIELD:TwoHanded							SIZE:M	SOURCEPAGE:p.25

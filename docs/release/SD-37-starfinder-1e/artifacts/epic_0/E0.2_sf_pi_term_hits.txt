@@ -1,0 +1,42 @@
+files 123 rows 12718 rows_with_any_hit 259
+    19  Gap
+     0  kishalee
+     0  Kishalee
+     0  sivv
+     0  Sivv
+     0  skyfire
+    25  Skyfire
+    15  Drift
+     4  Aballon
+     7  Akiton
+     7  Apostae
+     6  Bretheda
+    10  Castrovel
+     9  Eox
+     4  Idari
+     4  Liavara
+    16  Triaxus
+    12  Verces
+    19  Diaspora
+    59  Pact Worlds
+    10  Near Space
+    16  Veskarium
+    15  Damoritosh
+     4  Eloritu
+     4  Hylax
+     4  Ibra
+     3  Lao Shu Po
+     4  Oras
+     5  Talavet
+     6  Triune
+     2  Casandalee
+     5  Weydan
+     5  Yaraesa
+     4  Devourer
+     9  Stewards
+     2  Xenowarden
+    17  Hellknight
+     1  Corpse Fleet
+     2  Free Captain
+     2  Azlanti
+     8  Starfinder Society

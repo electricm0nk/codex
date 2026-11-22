@@ -1,0 +1,56 @@
+{
+  "kind": "race_trait",
+  "population": 6,
+  "written": 6,
+  "name_pi_renamed": 5,
+  "unresolved": [],
+  "written_by_book": {
+    "advanced_class_guide": 1,
+    "inner_sea_gods": 1,
+    "inner_sea_races": 1,
+    "inner_sea_world_guide": 3
+  },
+  "renamed_records": [
+    {
+      "kind": "race_trait",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_races.lst",
+      "source_line": 12,
+      "codex_name": "Codex-Named Unit (race_trait_inner_sea_gods_isg_abilities_races_lst_12)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "race_trait",
+      "book": "inner_sea_races",
+      "source_file": "isr_abilities_race.lst",
+      "source_line": 67,
+      "codex_name": "Codex-Named Unit (race_trait_inner_sea_races_isr_abilities_race_lst_67)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "race_trait",
+      "book": "inner_sea_world_guide",
+      "source_file": "pfs_iswg_abilities_race.lst",
+      "source_line": 34,
+      "codex_name": "Codex-Named Unit (race_trait_inner_sea_world_guide_pfs_iswg_abilities_race_lst_34)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "race_trait",
+      "book": "inner_sea_world_guide",
+      "source_file": "pfs_iswg_abilities_race.lst",
+      "source_line": 35,
+      "codex_name": "Codex-Named Unit (race_trait_inner_sea_world_guide_pfs_iswg_abilities_race_lst_35)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "race_trait",
+      "book": "inner_sea_world_guide",
+      "source_file": "pfs_iswg_abilities_race.lst",
+      "source_line": 36,
+      "codex_name": "Codex-Named Unit (race_trait_inner_sea_world_guide_pfs_iswg_abilities_race_lst_36)",
+      "reason": "name_pi_blocked"
+    }
+  ],
+  "term_list_size": 60
+}

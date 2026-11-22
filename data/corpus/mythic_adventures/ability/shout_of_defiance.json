@@ -1,0 +1,69 @@
+{
+  "codex_generated_name": false,
+  "completeness": "full",
+  "data": {
+    "description": "You can channel holy energy into a righteous shout of defiance. As a standard action, you can expend one use of mythic power and one use of either channel energy or lay on hands to create a 100-foot spread of healing energy. All allies within this spread heal a number of hit points equal to 1d6+%1. If this brings an ally from negative hit points to 0 hit points or more, the ally can immediately stand up from prone without provoking an attack of opportunity.|Ability_ShoutofDefiance_Heal",
+    "key": "Mythic Path Ability ~ Shout of Defiance",
+    "name": "Shout of Defiance",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Path Ability ~ Shout of Defiance"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Path Ability.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Mythic Path ~ Marshal"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "MythicTierLevel,1"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ability_ShoutofDefiance_Heal|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can channel holy energy into a righteous shout of defiance. As a standard action, you can expend one use of mythic power and one use of either channel energy or lay on hands to create a 100-foot spread of healing energy. All allies within this spread heal a number of hit points equal to 1d6+%1. If this brings an ally from negative hit points to 0 hit points or more, the ally can immediately stand up from prone without provoking an attack of opportunity.|Ability_ShoutofDefiance_Heal"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Ability_ShoutofDefiance_Heal|MythicLevel*2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.41"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Mythic Power"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 255,
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "record_key": "Mythic Path Ability ~ Shout of Defiance",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

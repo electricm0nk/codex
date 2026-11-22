@@ -1,0 +1,32 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "description": null,
+    "key": "Swashbuckler ~ Swashbuckler Weapon Training",
+    "name": "Swashbuckler ~ Swashbuckler Weapon Training",
+    "raw_tokens": [
+      {
+        "key": "BONUS",
+        "value": "VAR|SwashbucklerWeaponTrainingBonus|(DwarfSwashbucklerFavClassBonus/4)"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 39,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_race.lst",
+    "record_key": "Swashbuckler ~ Swashbuckler Weapon Training",
+    "sha256": "f57e4d6123c356c9af9b493e691f7224a98998d8cb76dddf894009af4c84820d"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus",
+    "static:literal_magnitudes_only"
+  ]
+}

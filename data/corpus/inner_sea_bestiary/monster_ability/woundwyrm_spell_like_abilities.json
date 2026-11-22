@@ -1,0 +1,59 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Woundwyrm ~ Spell-Like Abilities",
+    "delivery": "SpellLike",
+    "description": "The Woundwyrm possesses spell-like abilities. Constant: Entropic Shield, Freedom of Movement",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "inner_sea_bestiary:monster_ability:woundwyrm_spell_like_abilities",
+    "name": "Spell-Like Abilities",
+    "owners": [
+      "inner_sea_bestiary:monster:woundwyrm"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "The Woundwyrm possesses spell-like abilities. Constant: Entropic Shield, Freedom of Movement"
+      },
+      {
+        "key": "KEY",
+        "value": "Woundwyrm ~ Spell-Like Abilities"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.61"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=1|CASTERLEVEL=18|Entropic Shield|Freedom of Movement|Polymorph Any Object,23"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.SpellLike"
+      }
+    ],
+    "source_page": "p.61",
+    "traits": []
+  },
+  "ingested_at": "2026-08-15T01:24:21Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 419,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_bestiary/isb_abilities_race.lst",
+    "record_key": "Woundwyrm ~ Spell-Like Abilities",
+    "sha256": "d7e5ffd6c7f0421a33b7e7c67872d9364a3f1e5ad82daa9b7f727b64ab71c595"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Dervish ~ Maneuver",
+    "name": "Dervish ~ Maneuver",
+    "class": "Dervish",
+    "description": "You can expend your psionic focus as part of a full attack when you fight with two weapons to take a 5-foot step between your attacks, even if you have already taken a 5-foot step, but not if you have moved normally (such as by using hustle).  You may gain up to %1 additional 5-foot steps, but each must be made after an attack in your full attack.|DervishManeuverSteps",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "PsychicWarriorClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DervishManeuverSteps|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can expend your psionic focus as part of a full attack when you fight with two weapons to take a 5-foot step between your attacks, even if you have already taken a 5-foot step, but not if you have moved normally (such as by using hustle).  You may gain up to %1 additional 5-foot steps, but each must be made after an attack in your full attack.|DervishManeuverSteps"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DervishManeuverSteps|floor((DervishPathLVL+2)/5)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.56"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 671,
+    "record_key": "Dervish ~ Maneuver"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

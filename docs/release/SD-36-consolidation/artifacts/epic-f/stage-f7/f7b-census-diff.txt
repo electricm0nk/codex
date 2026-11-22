@@ -1,0 +1,11 @@
+# F7b census, before and after (one cargo process at a time, CARGO_TARGET_DIR=/home/ubuntu/workspace/worktrees/codex-epic-f7-target)
+# before: detached worktree at c724805053 (F7a head: F7a code + the tranche/16 package), removed after the run
+#   cargo run --locked -j 8 --quiet --bin class_census -- --json <scratch>/census-before.json
+# after: this branch with the F7b code + regenerated package, run inside verification pass 2 (f7b-verify.log) after every
+#   source file was touched: a first "after" run shared the target dir right after the before-worktree build, and cargo
+#   reused that worktree's codex artifacts (equal relative paths, newer mtimes). That run was discarded, not cited.
+#   cargo run --locked -j 8 --quiet --bin class_census -- --json <scratch>/census-after.json  (committed as ../census-f7b.json)
+
+before: ids=137 computed=63 blocked=0; prestige_swept=74 prestige_alone_blocked=74 prestige_mix_computed=68 prestige_mix_unknown=0; mix_panel_swept=185 mix_panel_computed=185 mix_panel_blocked=0
+after:  ids=137 computed=63 blocked=0; prestige_swept=74 prestige_alone_blocked=74 prestige_mix_computed=68 prestige_mix_unknown=0; mix_panel_swept=185 mix_panel_computed=185 mix_panel_blocked=0
+per-row diff (every leaf of every row; generated_at excluded): classes 63 rows, prestige 74 rows, mix_panel 185 rows -> differing leaves 0

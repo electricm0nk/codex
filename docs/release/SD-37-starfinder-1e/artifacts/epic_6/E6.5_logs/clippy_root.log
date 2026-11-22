@@ -1,0 +1,12 @@
+codex verify — mode: --only, jobs: 2
+repo:  /home/ubuntu/workspace/worktrees/codex-sd37
+logs:  /tmp/codex-verify-u4ReFn
+---------------------------------------------------------------
+==> clippy — cargo clippy --locked --tests -j 2  (THREE crates)
+    PASS  clippy  (root:0 desktop:0 ingest:0 warnings, 0 errors)
+---------------------------------------------------------------
+SUMMARY
+  passed:  1  clippy
+
+RESULT: PASS
+logs in /tmp/codex-verify-u4ReFn

@@ -1,0 +1,71 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "category": "General",
+    "cost_gp": 5248.0,
+    "description": null,
+    "key": "Blade Of Three Fancies",
+    "name": "Blade Of Three Fancies",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "SKILL",
+          "TYPE.Perform",
+          "4",
+          "TYPE=Sacred"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "EQMOD",
+        "value": "Material ~ Steel.Special Ability ~ +1 ~ Weapon.Special Ability ~ Enhancement Cost|2940"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "YES"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic"
+      },
+      {
+        "key": "SOURCELONG",
+        "value": "Inner Sea Gods"
+      },
+      {
+        "key": "SOURCESHORT",
+        "value": "isg"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.254"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Blade Of Three Fancies|TIMES=1|CASTERLEVEL=3|Color Spray,11"
+      },
+      {
+        "key": "DESC",
+        "value": "Three colorful silk ribbons tied at the base of this elegant, ornately chased +1 glaive flutter gracefully with every movement and never seem to get dirty. The glaive grants a +4 sacred bonus on one perform skill (chosen when the weapon is created). The wielder retains this bonus so long as the weapon remains within 10 feet, which allows two-handed instruments to be played. Additionally, once per day the wielder may use Color Spray."
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-17T12:09:37Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 71,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_equip.lst",
+    "record_key": "Blade Of Three Fancies",
+    "sha256": "cde6e3e0acd33edb906c404430e39a375d0721c6e136c5faf0cde575c7c27c74"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

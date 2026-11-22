@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Blizzard ~ Spontaneous",
+    "name": "Blizzard",
+    "description": "Create concealment and slippery ground.  Boost(1): 2d6 cold damage.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Blizzard ~ Spontaneous"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Words of Power"
+      },
+      {
+        "key": "TYPE",
+        "value": "WordsOfPowerOutput.Effect.Weather.Sorcerer3"
+      },
+      {
+        "key": "DESC",
+        "value": "Create concealment and slippery ground.  Boost(1): 2d6 cold damage."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.187"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_wordsofpower.lst",
+    "sha256": "93797e9bf9f74a955946ee9b82a1981b69e73a19950f3c30210d3f85dc34cc04",
+    "line": 413,
+    "record_key": "Blizzard ~ Spontaneous"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

@@ -1,0 +1,92 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "You communicate through the shadows of one or more targets within range. The shadows have no physical presence and don't move or animate. Instead, your words emerge from the shadow as a clear whisper, absent any accent or other identifying features. The targets can make conversation with the shadow, but must speak aloud to do so. The targets' voices emerge from your own shadow only when they intend to speak to the shadow, but you hear no other sounds from the target's immediate area. Their responses also emerge as clear whispers, absent identifying features, but you can instinctively identify which target is speaking to you through the shadow. Once the spell has been cast, you don't need to have line of effect to the targets or their shadows to communicate back and forth. The shadow communication is audible, so it can be intercepted by adversaries who succeed at a DC 25 Perception check. The spell can be silenced. You can't cast spells on subjects or otherwise establish line of effect through the shadows, but spells that allow you to speak or understand languages work normally across dark whispers.|PRERULE:1,DisplayFullSpell",
+    "key": "Dark Whispers",
+    "level": 1,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Antipaladin=1|Bard,Cleric,Sorcerer,Summoner,Witch,Wizard=2"
+      },
+      {
+        "key": "COMPS",
+        "value": "V,S,F/DF"
+      },
+      {
+        "key": "DESC",
+        "value": "Whisper through the shadows.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "You communicate through the shadows of one or more targets within range. The shadows have no physical presence and don't move or animate. Instead, your words emerge from the shadow as a clear whisper, absent any accent or other identifying features. The targets can make conversation with the shadow, but must speak aloud to do so. The targets' voices emerge from your own shadow only when they intend to speak to the shadow, but you hear no other sounds from the target's immediate area. Their responses also emerge as clear whispers, absent identifying features, but you can instinctively identify which target is speaking to you through the shadow. Once the spell has been cast, you don't need to have line of effect to the targets or their shadows to communicate back and forth. The shadow communication is audible, so it can be intercepted by adversaries who succeed at a DC 25 Perception check. The spell can be silenced. You can't cast spells on subjects or otherwise establish line of effect through the shadows, but spells that allow you to speak or understand languages work normally across dark whispers.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESCRIPTOR",
+        "value": "Language-Dependent|Shadow"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL*10) minutes"
+      },
+      {
+        "key": "RANGE",
+        "value": "Long"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "None"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Illusion"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://aonprd.com/SpellDisplay.aspx?ItemName=Dark Whispers"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.209"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes"
+      },
+      {
+        "key": "SUBSCHOOL",
+        "value": "Shadow"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "(CASTERLEVEL) creatures"
+      },
+      {
+        "key": "TYPE",
+        "value": "Arcane.Divine"
+      }
+    ],
+    "school": "Illusion"
+  },
+  "ingested_at": "2026-08-16T12:10:17Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 36,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_spells.lst",
+    "record_key": "Dark Whispers",
+    "sha256": "5f4a23b7b02b3d3b2cd4a20d8f06ec24f49e39592d0822d32cdb80d13f3e6324"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "derived:range_keyword"
+  ]
+}

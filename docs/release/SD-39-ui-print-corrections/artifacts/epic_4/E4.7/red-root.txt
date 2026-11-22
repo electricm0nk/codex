@@ -1,0 +1,11 @@
+test worn_item_applies_every_skill_each_set_is_the_books_own_type ... FAILED
+test worn_item_applies_every_skill_settles_each_chain_shape ... FAILED
+test worn_item_applies_every_skill_a_set_stacks_on_each_row ... FAILED
+thread 'worn_item_applies_every_skill_each_set_is_the_books_own_type' (675271) panicked at tests/worn_vs_carried.rs:296:5:
+thread 'worn_item_applies_every_skill_settles_each_chain_shape' (675272) panicked at tests/worn_vs_carried.rs:319:9:
+thread 'worn_item_applies_every_skill_a_set_stacks_on_each_row' (675270) panicked at tests/worn_vs_carried.rs:352:5:
+assertion `left == right` failed: `COMBAT|ATTACK,AC`: the Armor Class half
+  left: 0
+ right: -2
+test result: FAILED. 0 passed; 3 failed; 0 ignored; 0 measured; 10 filtered out; finished in 0.40s
+error: test failed, to rerun pass `--test worn_vs_carried`

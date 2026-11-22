@@ -1,0 +1,19 @@
+{
+  "data": {
+    "key": "Diminisher grenade Mk 2",
+    "name": "Diminisher grenade Mk 2",
+    "type": "RESIZABLE.Weapon.Ranged.Thrown.ToHit_UseStr.Prof Group Grenade.Weapon Atk Modifier Dex.Splash.Grenade"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 135,
+    "path": "starfinder/paizo/armory/sa_equip_magic.lst",
+    "record_key": "Diminisher grenade Mk 2",
+    "sha256": "57b21ce2b1389190406761c6638b224968f0e1ffb0c1f63a3278dedcd1f35694"
+  },
+  "unit_id": "armory:equipment:diminisher_grenade_mk_2"
+}

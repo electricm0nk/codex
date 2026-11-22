@@ -1,0 +1,86 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "Equipmods",
+    "cost_gp": 10000.0,
+    "description": "This item gains 10 ranks in one skill. This must be an Intelligence-, Wisdom-, or Charisma-based skill, unless the item has the animate ability (allowing it to choose Acrobatics) or the fly ability (allowing it to choose Fly).",
+    "key": "Legendary Item ~ Intelligent Item ~ Skill Ranks / 10",
+    "name": "Legendary Intelligent Item / Skill Ranks",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "VAR",
+          "IntItemCost",
+          "10000"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "IntelligentItemEgo",
+          "2"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Legendary Item ~ Intelligent Item ~ Skill Ranks / 10"
+      },
+      {
+        "key": "NAMEOPT",
+        "value": "NOTHING"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic.Intelligent.Skills"
+      },
+      {
+        "key": "COST",
+        "value": "10000"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "QUALIFY"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.172"
+      },
+      {
+        "key": "PRETYPE",
+        "value": "1,Item Has Alignment"
+      },
+      {
+        "key": "PRETYPE",
+        "value": "2,Mythic,Intelligent"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "SKILL|TYPE=Intelligence|TYPE=Wisdom|TYPE=Charisma|Acrobatics|Fly|TITLE=Skill Choice"
+      },
+      {
+        "key": "DESC",
+        "value": "This item gains 10 ranks in one skill. This must be an Intelligence-, Wisdom-, or Charisma-based skill, unless the item has the animate ability (allowing it to choose Acrobatics) or the fly ability (allowing it to choose Fly)."
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-17T12:09:37Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 116,
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_equipmods.lst",
+    "record_key": "Legendary Item ~ Intelligent Item ~ Skill Ranks / 10",
+    "sha256": "abb04fbe2a924fe90ce1d2a6517e423141d9b79b24642f5ac76878f2e7e43876"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice",
+    "computed:pre_guard"
+  ]
+}

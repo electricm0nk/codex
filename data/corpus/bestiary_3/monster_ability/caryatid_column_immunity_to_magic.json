@@ -1,0 +1,58 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Caryatid Column ~ Immunity to Magic",
+    "delivery": "Extraordinary",
+    "description": "A caryatid column is immune to any spell or spell-like ability that allows spell resistance. In addition, certain spells and effects function differently against the creature, as noted below. . A transmute rock to mud spell deals 1d6 points of damage per caster level to a caryatid column, with no saving throw. . Transmute mud to rock immediately heals any and all damage currently suffered by a caryatid column. . A stone to flesh spell does not actually change the column's structure but negates its damage reduction and immunity to magic for 1 round.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:caryatid_column_immunity_to_magic",
+    "name": "Immunity to Magic",
+    "owners": [
+      "bestiary_3:monster:caryatid_column"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A caryatid column is immune to any spell or spell-like ability that allows spell resistance. In addition, certain spells and effects function differently against the creature, as noted below. . A transmute rock to mud spell deals 1d6 points of damage per caster level to a caryatid column, with no saving throw. . Transmute mud to rock immediately heals any and all damage currently suffered by a caryatid column. . A stone to flesh spell does not actually change the column's structure but negates its damage reduction and immunity to magic for 1 round."
+      },
+      {
+        "key": "KEY",
+        "value": "Caryatid Column ~ Immunity to Magic"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.46"
+      },
+      {
+        "key": "TYPE",
+        "value": "CaryatidColumnRacialAbility.SpecialQuality.Extraordinary"
+      }
+    ],
+    "source_page": "p.46",
+    "traits": [
+      "CaryatidColumnRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T10:26:03Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 533,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Caryatid Column ~ Immunity to Magic",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "display:no_magnitude_token"
+  ]
+}

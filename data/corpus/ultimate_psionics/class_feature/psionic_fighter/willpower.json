@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Psionic Fighter ~ Willpower",
+    "name": "Willpower",
+    "class": "Fighter",
+    "description": "You gain a +%1 on Will saves against Charm and Compulsion effects as long as you maintain psionic focus.|PsionicFighterWillpowerBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Psionic Fighter ~ Willpower"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "FighterClassFeatures.SpecialQuality.Supernatural.SaveBonus"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PsionicFighterWillpowerBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a +%1 on Will saves against Charm and Compulsion effects as long as you maintain psionic focus.|PsionicFighterWillpowerBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PsionicFighterWillpowerBonus|floor((FighterLVL+2)/4)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.294"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SaveBonus|+%1 save vs. Charm and Compusion|PsionicFighterWillpowerBonus*PsionicFocusActive"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2490,
+    "record_key": "Psionic Fighter ~ Willpower"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

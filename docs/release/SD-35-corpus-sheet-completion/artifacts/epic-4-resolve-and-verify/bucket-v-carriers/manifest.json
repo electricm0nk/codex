@@ -1,0 +1,678 @@
+{
+ "carriers": {
+  "bucket_v_advanced_class_guide": {
+   "book": "advanced_class_guide",
+   "campaigns": [
+    "Core Rulebook",
+    "Advanced Player's Guide",
+    "Ultimate Combat",
+    "Ultimate Equipment",
+    "Ultimate Magic",
+    "Advanced Class Guide"
+   ],
+   "categories": [
+    "Special Ability"
+   ],
+   "units": [
+    "advanced_class_guide:class_feature:brawler_martial_training",
+    "advanced_class_guide:class_feature:hunter_animal_companion",
+    "advanced_class_guide:class_feature:slayer_talent_combat_style_i",
+    "advanced_class_guide:class_feature:slayer_talent_deadly_range_output",
+    "advanced_class_guide:class_feature:slayer_talent_trap_spotter",
+    "advanced_class_guide:class_feature:warpriest_focus_weapon"
+   ]
+  },
+  "bucket_v_advanced_players_guide": {
+   "book": "advanced_players_guide",
+   "campaigns": [
+    "Core Rulebook",
+    "Advanced Player's Guide"
+   ],
+   "categories": [
+    "Special Ability"
+   ],
+   "units": [
+    "advanced_players_guide:class_feature:antipaladin_aura_of_depravity",
+    "advanced_players_guide:class_feature:antipaladin_unholy_champion",
+    "advanced_players_guide:class_feature:battle_herald_teamwork_feat",
+    "advanced_players_guide:class_feature:master_chymist_bomb_thrower",
+    "advanced_players_guide:class_feature:master_chymist_extracts_per_day",
+    "advanced_players_guide:class_feature:master_spy_art_of_deception",
+    "advanced_players_guide:class_feature:master_spy_slippery_mind",
+    "advanced_players_guide:class_feature:nature_warden_companion_bond",
+    "advanced_players_guide:class_feature:nature_warden_survivalist",
+    "advanced_players_guide:class_feature:rage_prophet_rage_prophet_mystery",
+    "advanced_players_guide:class_feature:rage_prophet_ragecaster"
+   ]
+  },
+  "bucket_v_adventurers_guide": {
+   "book": "adventurers_guide",
+   "campaigns": [
+    "Core Rulebook",
+    "Advanced Player's Guide",
+    "Ultimate Magic",
+    "Ultimate Combat",
+    "Ultimate Equipment",
+    "Advanced Class Guide",
+    "Occult Adventures",
+    "Ultimate Intrigue",
+    "Adventurer's Guide"
+   ],
+   "categories": [
+    "Special Ability"
+   ],
+   "units": [
+    "adventurers_guide:class_feature:asavir_djinni_s_blessing_mount",
+    "adventurers_guide:class_feature:asavir_efreeti_s_blessing_mount",
+    "adventurers_guide:class_feature:asavir_equine_bond",
+    "adventurers_guide:class_feature:asavir_janni_s_blessing",
+    "adventurers_guide:class_feature:asavir_janni_s_blessing_mount",
+    "adventurers_guide:class_feature:asavir_marid_s_blessing_mount",
+    "adventurers_guide:class_feature:bellflower_tiller_crop_guardian",
+    "adventurers_guide:class_feature:hellknight_armor_benefits",
+    "adventurers_guide:class_feature:hellknight_signifer_infernal_resilience",
+    "adventurers_guide:class_feature:lantern_bearer_proven_weapon_familiarity",
+    "adventurers_guide:class_feature:lantern_bearer_superior_discernment",
+    "adventurers_guide:class_feature:mammoth_rider_gigantic_steed",
+    "adventurers_guide:class_feature:mammoth_rider_steed",
+    "adventurers_guide:class_feature:mammoth_rider_steed_s_reach",
+    "adventurers_guide:class_feature:mammoth_rider_wild_coercion",
+    "adventurers_guide:class_feature:padfe_construct",
+    "adventurers_guide:class_feature:padfe_ooze",
+    "adventurers_guide:class_feature:padfe_undead",
+    "adventurers_guide:class_feature:pathfinder_delver_fortunate_soul",
+    "adventurers_guide:class_feature:pathfinder_delver_master_explorer",
+    "adventurers_guide:class_feature:pathfinder_delver_thrilling_escape",
+    "adventurers_guide:class_feature:pathfinder_delver_vigilant_combatant",
+    "adventurers_guide:class_feature:pathfinder_savant_esoteric_magic",
+    "adventurers_guide:class_feature:pathfinder_savant_master_scholar",
+    "adventurers_guide:class_feature:pathfinder_savant_sigil_master",
+    "adventurers_guide:class_feature:rivethun_emissary_spirit_animal",
+    "adventurers_guide:class_feature:steel_falcon_chainbreaker",
+    "adventurers_guide:class_feature:steel_falcon_sailor_and_survivalist",
+    "adventurers_guide:class_feature:steel_falcon_talmandor_s_blessing"
+   ]
+  },
+  "bucket_v_bestiary_2": {
+   "book": "bestiary_2",
+   "campaigns": [
+    "Core Rulebook",
+    "Advanced Player's Guide",
+    "Bestiary 2 ~ Player Options Only"
+   ],
+   "categories": [
+    "Special Ability"
+   ],
+   "units": [
+    "bestiary_2:race_trait:aeon_traits",
+    "bestiary_2:race_trait:angel_cassisian_traits",
+    "bestiary_2:race_trait:daemon_traits",
+    "bestiary_2:race_trait:favored_enemy_humanoid_dhampir",
+    "bestiary_2:race_trait:favored_enemy_humanoid_grippli",
+    "bestiary_2:race_trait:giant_creature_proper_rules",
+    "bestiary_2:race_trait:giant_creature_rebuild_option",
+    "bestiary_2:race_trait:jet",
+    "bestiary_2:race_trait:no_combat_maneuvers",
+    "bestiary_2:race_trait:protean_traits",
+    "bestiary_2:race_trait:protean_voidworm_traits",
+    "bestiary_2:race_trait:qlippoth_cythnigot_traits",
+    "bestiary_2:race_trait:qlippoth_traits"
+   ]
+  },
+  "bucket_v_bestiary_3": {
+   "book": "bestiary_3",
+   "campaigns": [
+    "Core Rulebook",
+    "Advanced Player's Guide",
+    "Bestiary 3 ~ Player Options Only"
+   ],
+   "categories": [
+    "Special Ability"
+   ],
+   "units": [
+    "bestiary_3:race_trait:aquatic",
+    "bestiary_3:race_trait:biped",
+    "bestiary_3:race_trait:clockwork_traits",
+    "bestiary_3:race_trait:eremite_overlord",
+    "bestiary_3:race_trait:favored_enemy_humanoid_catfolk",
+    "bestiary_3:race_trait:favored_enemy_humanoid_ratfolk",
+    "bestiary_3:race_trait:favored_enemy_humanoid_vanara",
+    "bestiary_3:race_trait:favored_enemy_humanoid_vishkanya",
+    "bestiary_3:race_trait:fey_creature_spell_resistance",
+    "bestiary_3:race_trait:polar_kamadan",
+    "bestiary_3:race_trait:quadruped",
+    "bestiary_3:race_trait:race_subtype_asura",
+    "bestiary_3:race_trait:race_subtype_demodand",
+    "bestiary_3:race_trait:race_subtype_div",
+    "bestiary_3:race_trait:race_subtype_kami",
+    "bestiary_3:race_trait:serpentine",
+    "bestiary_3:race_trait:unfettered_eidolon_evolution_bite",
+    "bestiary_3:race_trait:unfettered_eidolon_evolution_gills",
+    "bestiary_3:race_trait:unfettered_eidolon_evolution_gore",
+    "bestiary_3:race_trait:unfettered_eidolon_evolution_improved_evasion",
+    "bestiary_3:race_trait:unfettered_eidolon_evolution_tail",
+    "bestiary_3:race_trait:variant_bandersnatch_confounding",
+    "bestiary_3:race_trait:variant_bandersnatch_frumious",
+    "bestiary_3:race_trait:variant_bandersnatch_lesser",
+    "bestiary_3:race_trait:variant_bandersnatch_magicbane",
+    "bestiary_3:race_trait:variant_bandersnatch_none",
+    "bestiary_3:race_trait:voidlord"
+   ]
+  },
+  "bucket_v_bestiary_4": {
+   "book": "bestiary_4",
+   "campaigns": [
+    "Core Rulebook",
+    "Bestiary",
+    "Advanced Player's Guide",
+    "Ultimate Magic",
+    "Ultimate Combat",
+    "Bestiary 4"
+   ],
+   "categories": [
+    "Special Ability"
+   ],
+   "units": [
+    "bestiary_4:race_trait:changeling_annis_hag_hulking_changeling",
+    "bestiary_4:race_trait:changeling_green_hag_green_widow",
+    "bestiary_4:race_trait:demon_lord_traits",
+    "bestiary_4:race_trait:empyreal_lord_traits",
+    "bestiary_4:race_trait:favored_enemy_humanoid_changeling",
+    "bestiary_4:race_trait:favored_enemy_humanoid_kasatha",
+    "bestiary_4:race_trait:favored_enemy_humanoid_kitsune",
+    "bestiary_4:race_trait:favored_enemy_humanoid_samsaran",
+    "bestiary_4:race_trait:favored_enemy_humanoid_shapechanger",
+    "bestiary_4:race_trait:favored_enemy_humanoid_wayang",
+    "bestiary_4:race_trait:race_subtype_formian",
+    "bestiary_4:race_trait:race_subtype_kaiju",
+    "bestiary_4:race_trait:race_subtype_psychopomp"
+   ]
+  },
+  "bucket_v_bestiary_5": {
+   "book": "bestiary_5",
+   "campaigns": [
+    "Core Rulebook",
+    "Bestiary",
+    "Advanced Player's Guide",
+    "Bestiary 2",
+    "Bestiary 3",
+    "Ultimate Magic",
+    "Ultimate Combat",
+    "Bestiary 5"
+   ],
+   "categories": [
+    "Special Ability"
+   ],
+   "units": [
+    "bestiary_5:race_trait:astomoi_ability_scores",
+    "bestiary_5:race_trait:astomoi_telepathic_senses",
+    "bestiary_5:race_trait:caligni_ability_scores",
+    "bestiary_5:race_trait:clockwork_familiar_item_installation",
+    "bestiary_5:race_trait:deep_one_hybrid_ability_scores",
+    "bestiary_5:race_trait:deep_one_hybrid_low_light_vision",
+    "bestiary_5:race_trait:deep_one_hybrid_natural_armor",
+    "bestiary_5:race_trait:favored_enemy_humanoid_skinwalker",
+    "bestiary_5:race_trait:orang_pendak_ability_scores",
+    "bestiary_5:race_trait:orang_pendak_forest_walker",
+    "bestiary_5:race_trait:orang_pendak_low_light_vision",
+    "bestiary_5:race_trait:orang_pendak_simian_empathy",
+    "bestiary_5:race_trait:psychic_magic",
+    "bestiary_5:race_trait:reptoid_ability_scores",
+    "bestiary_5:race_trait:reptoid_low_light_vision",
+    "bestiary_5:race_trait:reptoid_natural_weapons",
+    "bestiary_5:race_trait:reptoid_scales",
+    "bestiary_5:race_trait:shabti_ability_scores",
+    "bestiary_5:race_trait:shabti_darkvision"
+   ]
+  },
+  "bucket_v_book_of_the_damned_volume_1": {
+   "book": "book_of_the_damned_volume_1",
+   "campaigns": [
+    "Core Rulebook",
+    "Princes of Darkness - Book of the Damned - Volume 1"
+   ],
+   "categories": [
+    "Special Ability"
+   ],
+   "units": [
+    "book_of_the_damned_volume_1:class_feature:diabolist_infernal_transport",
+    "book_of_the_damned_volume_1:race_trait:warmonger_devil_trample"
+   ]
+  },
+  "bucket_v_core_rulebook": {
+   "book": "core_rulebook",
+   "campaigns": [
+    "Core Rulebook"
+   ],
+   "categories": [
+    "Internal",
+    "Special Ability"
+   ],
+   "units": [
+    "core_rulebook:class_feature:aberrant_bloodline_feat_tracker",
+    "core_rulebook:class_feature:animal_domain_animal_companion",
+    "core_rulebook:class_feature:arcane_bloodline_feat_tracker",
+    "core_rulebook:class_feature:assassin_save_against_poisons",
+    "core_rulebook:class_feature:bardic_performance_soothing_performance",
+    "core_rulebook:class_feature:celestial_bloodline_feat_tracker",
+    "core_rulebook:class_feature:chaos_domain_touch_of_chaos",
+    "core_rulebook:class_feature:charm_domain_charming_smile",
+    "core_rulebook:class_feature:charm_domain_dazing_touch",
+    "core_rulebook:class_feature:community_domain_calming_touch",
+    "core_rulebook:class_feature:destined_bloodline_feat_tracker",
+    "core_rulebook:class_feature:domain_power_touch_of_glory",
+    "core_rulebook:class_feature:draconic_bloodline_feat_tracker",
+    "core_rulebook:class_feature:duelist_elaborate_defense",
+    "core_rulebook:class_feature:duelist_improved_reaction",
+    "core_rulebook:class_feature:duelist_precise_strike",
+    "core_rulebook:class_feature:elemental_bloodline_elemental_movement_air",
+    "core_rulebook:class_feature:elemental_bloodline_feat_tracker",
+    "core_rulebook:class_feature:evocation_school_force_missile",
+    "core_rulebook:class_feature:favored_enemy_aberration",
+    "core_rulebook:class_feature:favored_enemy_animal",
+    "core_rulebook:class_feature:favored_enemy_construct",
+    "core_rulebook:class_feature:favored_enemy_dragon",
+    "core_rulebook:class_feature:favored_enemy_fey",
+    "core_rulebook:class_feature:favored_enemy_humanoid_aquatic",
+    "core_rulebook:class_feature:favored_enemy_humanoid_dwarf",
+    "core_rulebook:class_feature:favored_enemy_humanoid_elf",
+    "core_rulebook:class_feature:favored_enemy_humanoid_giant",
+    "core_rulebook:class_feature:favored_enemy_humanoid_gnoll",
+    "core_rulebook:class_feature:favored_enemy_humanoid_gnome",
+    "core_rulebook:class_feature:favored_enemy_humanoid_goblinoid",
+    "core_rulebook:class_feature:favored_enemy_humanoid_halfling",
+    "core_rulebook:class_feature:favored_enemy_humanoid_human",
+    "core_rulebook:class_feature:favored_enemy_humanoid_orc",
+    "core_rulebook:class_feature:favored_enemy_humanoid_reptilian",
+    "core_rulebook:class_feature:favored_enemy_magical_beast",
+    "core_rulebook:class_feature:favored_enemy_monstrous_humanoid",
+    "core_rulebook:class_feature:favored_enemy_ooze",
+    "core_rulebook:class_feature:favored_enemy_outsider_air",
+    "core_rulebook:class_feature:favored_enemy_outsider_chaotic",
+    "core_rulebook:class_feature:favored_enemy_outsider_earth",
+    "core_rulebook:class_feature:favored_enemy_outsider_evil",
+    "core_rulebook:class_feature:favored_enemy_outsider_fire",
+    "core_rulebook:class_feature:favored_enemy_outsider_good",
+    "core_rulebook:class_feature:favored_enemy_outsider_lawful",
+    "core_rulebook:class_feature:favored_enemy_outsider_native",
+    "core_rulebook:class_feature:favored_enemy_outsider_water",
+    "core_rulebook:class_feature:favored_enemy_plant",
+    "core_rulebook:class_feature:favored_enemy_undead",
+    "core_rulebook:class_feature:favored_enemy_vermin",
+    "core_rulebook:class_feature:favored_terrain_cold",
+    "core_rulebook:class_feature:favored_terrain_desert",
+    "core_rulebook:class_feature:favored_terrain_forest",
+    "core_rulebook:class_feature:favored_terrain_jungle",
+    "core_rulebook:class_feature:favored_terrain_mountain",
+    "core_rulebook:class_feature:favored_terrain_plains",
+    "core_rulebook:class_feature:favored_terrain_plane",
+    "core_rulebook:class_feature:favored_terrain_swamp",
+    "core_rulebook:class_feature:favored_terrain_underground",
+    "core_rulebook:class_feature:favored_terrain_urban",
+    "core_rulebook:class_feature:favored_terrain_water",
+    "core_rulebook:class_feature:fey_bloodline_feat_tracker",
+    "core_rulebook:class_feature:glory_domain_divine_presence",
+    "core_rulebook:class_feature:glory_domain_touch_of_glory",
+    "core_rulebook:class_feature:infernal_bloodline_feat_tracker",
+    "core_rulebook:class_feature:law_domain_touch_of_law",
+    "core_rulebook:class_feature:liberation_domain_freedom_s_call",
+    "core_rulebook:class_feature:liberation_domain_liberation",
+    "core_rulebook:class_feature:luck_domain_bit_of_luck",
+    "core_rulebook:class_feature:madness_domain_aura_of_madness",
+    "core_rulebook:class_feature:monk_abundant_step",
+    "core_rulebook:class_feature:monk_perfect_self",
+    "core_rulebook:class_feature:monk_stunning_fist",
+    "core_rulebook:class_feature:monk_unarmed_damage_lvl_12_medium",
+    "core_rulebook:class_feature:monk_unarmed_damage_lvl_16_medium",
+    "core_rulebook:class_feature:monk_unarmed_damage_lvl_1_medium",
+    "core_rulebook:class_feature:monk_unarmed_damage_lvl_20_medium",
+    "core_rulebook:class_feature:monk_unarmed_damage_lvl_4_medium",
+    "core_rulebook:class_feature:monk_unarmed_damage_lvl_8_medium",
+    "core_rulebook:class_feature:protection_domain_resistant_touch",
+    "core_rulebook:class_feature:repose_domain_ward_against_death",
+    "core_rulebook:class_feature:shadowdancer_summon_shadow",
+    "core_rulebook:class_feature:sun_domain_nimbus_of_light",
+    "core_rulebook:class_feature:travel_domain_agile_feet",
+    "core_rulebook:class_feature:trickery_domain_copycat",
+    "core_rulebook:class_feature:undead_bloodline_feat_tracker",
+    "core_rulebook:class_feature:weather_domain_lightning_lord",
+    "core_rulebook:race_trait:2_charisma",
+    "core_rulebook:race_trait:2_constitution",
+    "core_rulebook:race_trait:2_dexterity",
+    "core_rulebook:race_trait:2_intelligence",
+    "core_rulebook:race_trait:2_strength",
+    "core_rulebook:race_trait:2_wisdom",
+    "core_rulebook:race_trait:favored_enemy_humanoid_gnome",
+    "core_rulebook:race_trait:favored_enemy_humanoid_halfling",
+    "core_rulebook:race_trait:favored_enemy_humanoid_human",
+    "core_rulebook:race_trait:favored_enemy_humanoid_orc"
+   ]
+  },
+  "bucket_v_horror_adventures": {
+   "book": "horror_adventures",
+   "campaigns": [
+    "Core Rulebook",
+    "Advanced Player's Guide",
+    "Ultimate Combat",
+    "Ultimate Equipment",
+    "Ultimate Magic",
+    "Advanced Class Guide",
+    "Bestiary",
+    "Occult Adventures",
+    "Advanced Race Guide",
+    "Bestiary 2",
+    "Bestiary 3",
+    "Ultimate Wilderness",
+    "Horror Adventures"
+   ],
+   "categories": [
+    "Special Ability"
+   ],
+   "units": [
+    "horror_adventures:race_trait:race_subtype_deep_one",
+    "horror_adventures:race_trait:race_subtype_hive"
+   ]
+  },
+  "bucket_v_inner_sea_intrigue": {
+   "book": "inner_sea_intrigue",
+   "campaigns": [
+    "Core Rulebook",
+    "Bestiary",
+    "Advanced Player's Guide",
+    "Ultimate Magic",
+    "Ultimate Combat",
+    "Ultimate Equipment",
+    "Advanced Class Guide",
+    "Advanced Race Guide",
+    "Ultimate Intrigue",
+    "Inner Sea Intrigue"
+   ],
+   "categories": [
+    "Special Ability"
+   ],
+   "units": [
+    "inner_sea_intrigue:class_feature:lion_blade_silent_soul"
+   ]
+  },
+  "bucket_v_inner_sea_magic": {
+   "book": "inner_sea_magic",
+   "campaigns": [
+    "Core Rulebook",
+    "Advanced Player's Guide",
+    "Ultimate Magic",
+    "Inner Sea World Guide",
+    "Inner Sea Magic"
+   ],
+   "categories": [
+    "Special Ability"
+   ],
+   "units": [
+    "inner_sea_magic:class_feature:cyphermage_analyze_scroll",
+    "inner_sea_magic:class_feature:cyphermage_cypher_lore",
+    "inner_sea_magic:class_feature:divine_scion_deific_defense",
+    "inner_sea_magic:class_feature:divine_scion_divine_wrath",
+    "inner_sea_magic:class_feature:divine_scion_domain_specialization",
+    "inner_sea_magic:class_feature:divine_scion_weapon_and_armor_proficiency"
+   ]
+  },
+  "bucket_v_inner_sea_races": {
+   "book": "inner_sea_races",
+   "campaigns": [
+    "Core Rulebook",
+    "Advanced Player's Guide",
+    "Ultimate Combat",
+    "Ultimate Magic",
+    "Advanced Race Guide",
+    "Inner Sea World Guide",
+    "Ultimate Equipment",
+    "Inner Sea Races"
+   ],
+   "categories": [
+    "Special Ability"
+   ],
+   "units": [
+    "inner_sea_races:race_trait:changeling_blood_hag_crawling_skin",
+    "inner_sea_races:race_trait:changeling_mute_hag_dead_eyes",
+    "inner_sea_races:race_trait:changeling_storm_hag_into_the_wind",
+    "inner_sea_races:race_trait:changeling_winter_hag_frostlaced_flesh"
+   ]
+  },
+  "bucket_v_inner_sea_world_guide": {
+   "book": "inner_sea_world_guide",
+   "campaigns": [
+    "Core Rulebook",
+    "Advanced Player's Guide",
+    "Inner Sea World Guide"
+   ],
+   "categories": [
+    "Special Ability"
+   ],
+   "units": [
+    "inner_sea_world_guide:class_feature:hellknight_armor_benefits",
+    "inner_sea_world_guide:race_trait:favored_enemy_humanoid_aquatic",
+    "inner_sea_world_guide:race_trait:favored_enemy_humanoid_strix"
+   ]
+  },
+  "bucket_v_mythic_adventures": {
+   "book": "mythic_adventures",
+   "campaigns": [
+    "Core Rulebook",
+    "Advanced Player's Guide",
+    "Ultimate Combat",
+    "Ultimate Magic",
+    "Advanced Race Guide",
+    "Bestiary",
+    "Bestiary 3",
+    "Mythic Adventures"
+   ],
+   "categories": [
+    "Special Ability"
+   ],
+   "units": [
+    "mythic_adventures:race_trait:mythic_mythic_rank",
+    "mythic_adventures:race_trait:mythic_natural_armor_bonus",
+    "mythic_adventures:race_trait:mythic_spell_resistance"
+   ]
+  },
+  "bucket_v_occult_adventures": {
+   "book": "occult_adventures",
+   "campaigns": [
+    "Core Rulebook",
+    "Advanced Player's Guide",
+    "Ultimate Magic",
+    "Ultimate Combat",
+    "Ultimate Equipment",
+    "Advanced Class Guide",
+    "Occult Adventures"
+   ],
+   "categories": [
+    "Special Ability"
+   ],
+   "units": [
+    "occult_adventures:class_feature:kineticist_kinetic_blast",
+    "occult_adventures:class_feature:medium_trance_of_three",
+    "occult_adventures:class_feature:phantom_emotional_focus_anger",
+    "occult_adventures:class_feature:phantom_emotional_focus_dedication",
+    "occult_adventures:class_feature:phantom_emotional_focus_despair",
+    "occult_adventures:class_feature:phantom_emotional_focus_fear",
+    "occult_adventures:class_feature:phantom_emotional_focus_hatred",
+    "occult_adventures:class_feature:phantom_emotional_focus_jealousy",
+    "occult_adventures:class_feature:phantom_emotional_focus_zeal",
+    "occult_adventures:class_feature:spiritualist_phantom",
+    "occult_adventures:class_feature:spiritualist_shared_consciousness",
+    "occult_adventures:race_trait:emotional_focus_anger_good_saves",
+    "occult_adventures:race_trait:emotional_focus_anger_powerful_strike",
+    "occult_adventures:race_trait:emotional_focus_anger_skills",
+    "occult_adventures:race_trait:emotional_focus_dedication_good_saves",
+    "occult_adventures:race_trait:emotional_focus_dedication_skill",
+    "occult_adventures:race_trait:emotional_focus_despair_good_saves",
+    "occult_adventures:race_trait:emotional_focus_despair_skills",
+    "occult_adventures:race_trait:emotional_focus_fear_good_saves",
+    "occult_adventures:race_trait:emotional_focus_fear_skills",
+    "occult_adventures:race_trait:emotional_focus_hatred_good_saves",
+    "occult_adventures:race_trait:emotional_focus_hatred_skills",
+    "occult_adventures:race_trait:emotional_focus_jealousy_good_saves",
+    "occult_adventures:race_trait:emotional_focus_jealousy_skills",
+    "occult_adventures:race_trait:emotional_focus_zeal_good_saves",
+    "occult_adventures:race_trait:emotional_focus_zeal_skills",
+    "occult_adventures:race_trait:emotional_focus_zeal_tracking",
+    "occult_adventures:race_trait:phantom_companion_darkvision",
+    "occult_adventures:race_trait:phantom_companion_deliver_touch_spells",
+    "occult_adventures:race_trait:phantom_manifestation_ectoplasmic",
+    "occult_adventures:race_trait:phantom_manifestation_incorporeal"
+   ]
+  },
+  "bucket_v_pathfinder_unchained": {
+   "book": "pathfinder_unchained",
+   "campaigns": [
+    "Core Rulebook",
+    "Advanced Player's Guide",
+    "Pathfinder Unchained"
+   ],
+   "categories": [
+    "Special Ability"
+   ],
+   "units": [
+    "pathfinder_unchained:class_feature:unchained_barbarian_rage",
+    "pathfinder_unchained:class_feature:unchained_monk_ac_bonus",
+    "pathfinder_unchained:class_feature:unchained_monk_ki_pool",
+    "pathfinder_unchained:class_feature:unchained_summoner_spells",
+    "pathfinder_unchained:race_trait:reach_5_bite",
+    "pathfinder_unchained:race_trait:reach_5_claws",
+    "pathfinder_unchained:race_trait:reach_5_pincers",
+    "pathfinder_unchained:race_trait:reach_5_slam",
+    "pathfinder_unchained:race_trait:reach_5_sting",
+    "pathfinder_unchained:race_trait:reach_5_tail_slap",
+    "pathfinder_unchained:race_trait:reach_5_tentacle",
+    "pathfinder_unchained:race_trait:unchained_evolution_climb",
+    "pathfinder_unchained:race_trait:unchained_evolution_gills",
+    "pathfinder_unchained:race_trait:unchained_evolution_magic_attacks",
+    "pathfinder_unchained:race_trait:unchained_evolution_remove_claws",
+    "pathfinder_unchained:race_trait:unchained_evolution_scent",
+    "pathfinder_unchained:race_trait:unchained_evolution_small",
+    "pathfinder_unchained:race_trait:unchained_evolution_swim",
+    "pathfinder_unchained:race_trait:unchained_evolution_weapon_training_simple"
+   ]
+  },
+  "bucket_v_ultimate_combat": {
+   "book": "ultimate_combat",
+   "campaigns": [
+    "Core Rulebook",
+    "Advanced Player's Guide",
+    "Ultimate Combat"
+   ],
+   "categories": [
+    "Special Ability"
+   ],
+   "units": [
+    "ultimate_combat:class_feature:evangelist_single_minded"
+   ]
+  },
+  "bucket_v_ultimate_intrigue": {
+   "book": "ultimate_intrigue",
+   "campaigns": [
+    "Core Rulebook",
+    "Advanced Player's Guide",
+    "Ultimate Magic",
+    "Ultimate Combat",
+    "Ultimate Equipment",
+    "Advanced Class Guide",
+    "Ultimate Intrigue"
+   ],
+   "categories": [
+    "Special Ability"
+   ],
+   "units": [
+    "ultimate_intrigue:class_feature:vigilante_seamless_guise",
+    "ultimate_intrigue:class_feature:vigilante_unshakable",
+    "ultimate_intrigue:class_feature:vigilante_vigilante_specialization",
+    "ultimate_intrigue:race_trait:unchained_evolution_low_light"
+   ]
+  },
+  "bucket_v_ultimate_psionics": {
+   "book": "ultimate_psionics",
+   "campaigns": [
+    "Core Rulebook",
+    "DSP - Ultimate Psionics"
+   ],
+   "categories": [
+    "Internal",
+    "Special Ability"
+   ],
+   "units": [
+    "ultimate_psionics:class_feature:adaptive_warrior_extended_examination",
+    "ultimate_psionics:class_feature:adaptive_warrior_mimic_skill",
+    "ultimate_psionics:class_feature:aegis_astral_repair",
+    "ultimate_psionics:class_feature:cryptic_disrupt_pattern",
+    "ultimate_psionics:class_feature:cryptic_trapmaker",
+    "ultimate_psionics:class_feature:dark_tempest_diverse_training",
+    "ultimate_psionics:class_feature:dark_tempest_expanded_power_list",
+    "ultimate_psionics:class_feature:dread_aura_of_fear",
+    "ultimate_psionics:class_feature:dread_devastating_touch",
+    "ultimate_psionics:class_feature:dread_fear_incarnate",
+    "ultimate_psionics:class_feature:dread_shadow_twin",
+    "ultimate_psionics:class_feature:marksman_ranged_specialist",
+    "ultimate_psionics:class_feature:mystic_archer_blindsense",
+    "ultimate_psionics:class_feature:mystic_archer_blindsight",
+    "ultimate_psionics:class_feature:mystic_archer_tremorsense",
+    "ultimate_psionics:class_feature:mystic_archer_unhindered_vision",
+    "ultimate_psionics:class_feature:pyrokineticist_bolt_of_fire",
+    "ultimate_psionics:class_feature:pyrokineticist_penetrating_fire",
+    "ultimate_psionics:class_feature:soulknife_quick_draw",
+    "ultimate_psionics:class_feature:tactician_master_strategist",
+    "ultimate_psionics:class_feature:vitalist_request_aid",
+    "ultimate_psionics:class_feature:wilder_psychic_enervation",
+    "ultimate_psionics:class_feature:wilder_surge_blast",
+    "ultimate_psionics:race_trait:psicrystal_personality_artiste",
+    "ultimate_psionics:race_trait:psicrystal_personality_bully",
+    "ultimate_psionics:race_trait:psicrystal_personality_focused",
+    "ultimate_psionics:race_trait:psicrystal_personality_friendly",
+    "ultimate_psionics:race_trait:psicrystal_personality_hero",
+    "ultimate_psionics:race_trait:psicrystal_personality_liar",
+    "ultimate_psionics:race_trait:psicrystal_personality_meticulous",
+    "ultimate_psionics:race_trait:psicrystal_personality_nimble",
+    "ultimate_psionics:race_trait:psicrystal_personality_poised",
+    "ultimate_psionics:race_trait:psicrystal_personality_resolved",
+    "ultimate_psionics:race_trait:psicrystal_personality_single_minded",
+    "ultimate_psionics:race_trait:psicrystal_personality_sneaky",
+    "ultimate_psionics:race_trait:psicrystal_personality_sympathetic"
+   ]
+  },
+  "bucket_v_ultimate_wilderness": {
+   "book": "ultimate_wilderness",
+   "campaigns": [
+    "Core Rulebook",
+    "Advanced Player's Guide",
+    "Ultimate Combat",
+    "Ultimate Equipment",
+    "Ultimate Magic",
+    "Advanced Class Guide",
+    "Advanced Race Guide",
+    "Bestiary",
+    "Bestiary 2",
+    "Bestiary 3",
+    "Ultimate Wilderness"
+   ],
+   "categories": [
+    "Special Ability"
+   ],
+   "units": [
+    "ultimate_wilderness:class_feature:shifter_track",
+    "ultimate_wilderness:race_trait:vine_leshy_ability_scores",
+    "ultimate_wilderness:race_trait:vine_leshy_agile_ability_scores",
+    "ultimate_wilderness:race_trait:vine_leshy_climber",
+    "ultimate_wilderness:race_trait:vine_leshy_pass_without_trace",
+    "ultimate_wilderness:race_trait:vine_leshy_unassuming_foliage",
+    "ultimate_wilderness:race_trait:vine_leshy_vision_darkvision",
+    "ultimate_wilderness:race_trait:vine_leshy_vision_low_light"
+   ]
+  }
+ },
+ "not_carried": {
+  "no-ability-carrier-for-kind-equipment": 42,
+  "no-ability-carrier-for-kind-equipment_modifier": 9,
+  "no-ability-carrier-for-kind-feat": 1,
+  "no-ability-carrier-for-kind-spell": 3,
+  "pinned-row-declares-no-CATEGORY": 2
+ }
+}

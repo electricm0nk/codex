@@ -1,0 +1,50 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "MagicItems",
+    "cost_gp": 650.0,
+    "description": "Gain spines as natural weapons that deal 1d6 points of piercing damage (1d4 points if Small), +2 bonus on grapple combat maneuver checks [Penalty]  Attacks with manufactured weapons and skill checks and ability checks involving hands take a -2 penalty; DURATION 1 hour; SAVE DC 15",
+    "key": "Fleshcraft Elixir (Retractable Spines)",
+    "name": "Fleshcraft Elixir (Retractable Spines)",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "OUTPUTNAME",
+        "value": "[NAME] Fleshcraft Elixir"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Fleshcraft.Elixir.Consumable.Bracer"
+      },
+      {
+        "key": "COST",
+        "value": "650"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.168"
+      },
+      {
+        "key": "SPROP",
+        "value": "Gain spines as natural weapons that deal 1d6 points of piercing damage (1d4 points if Small), +2 bonus on grapple combat maneuver checks [Penalty]  Attacks with manufactured weapons and skill checks and ability checks involving hands take a -2 penalty; DURATION 1 hour; SAVE DC 15"
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-17T08:18:39Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 86,
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_equip_magic_items.lst",
+    "record_key": "Fleshcraft Elixir (Retractable Spines)",
+    "sha256": "500c71ebdeab1408dd9550ead46f2fe0298a9874b4bf47743641ab05a6e932b8"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

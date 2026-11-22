@@ -1,0 +1,46 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Movanic Deva ~ Nature's Pacifism",
+    "name": "Nature's Pacifism",
+    "description": "Animals and plant creatures do not willingly attack a movanic deva, though they can be forced to do so by magic.  If the deva attacks a plant or animal, its protection against that creature ends.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Movanic Deva ~ Nature's Pacifism"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Defensive.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "Animals and plant creatures do not willingly attack a movanic deva, though they can be forced to do so by magic.  If the deva attacks a plant or animal, its protection against that creature ends."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.28"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 101,
+    "record_key": "Movanic Deva ~ Nature's Pacifism"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

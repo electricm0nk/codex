@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Medium ~ Warmonger ~ Warmonger's Way",
+    "name": "Warmonger's Way",
+    "class": "Medium",
+    "description": "(Intermediate) Add the following spells of spell levels you can currently cast to your list of spells known of those levels: 1st-command,murderous command; 2nd-rage, tactical acumen; 3rd-confusion, fear; 4th-battlemind link, song of discord. You can also use your spirit surge on concentration and caster level checks when you cast these spells.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Medium ~ Warmonger ~ Warmonger's Way"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MediumClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.59"
+      },
+      {
+        "key": "DESC",
+        "value": "(Intermediate) Add the following spells of spell levels you can currently cast to your list of spells known of those levels: 1st-command,murderous command; 2nd-rage, tactical acumen; 3rd-confusion, fear; 4th-battlemind link, song of discord. You can also use your spirit surge on concentration and caster level checks when you cast these spells."
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Medium=1|Command,Murderous Command|Medium=2|Rage,Tactical Acumen|Medium=3|Confusion,Fear|Medium=4|Battlemind Link,Song of Discord"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/support/ha_abilities_class_oa.lst",
+    "sha256": "9c111f652f8442433ea215fa11e67258c7e6c15c75d1c1753fa6fef34827f46c",
+    "line": 128,
+    "record_key": "Medium ~ Warmonger ~ Warmonger's Way"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

@@ -1,0 +1,42 @@
+# SD13-E5 Ranger level 2 hybrid chassis baseline fixture.
+# Represents a deterministic PF1 Core Rulebook Human Ranger level 2 identity as chosen
+# input only. It names selections; it does not contain derived, computed, or parity
+# values. It preserves the accepted Human race-choice seam (ability-bonus and
+# bonus-feat) and stays a single-class, level-2 hybrid baseline, mirroring the
+# level-1 fixture's shape with the class level swapped.
+#
+# The SD13-E5 level-2 widening adds two new deterministic choice selections that only
+# apply at the 2nd-level Combat Style Feat gate: `choice:ranger_combat_style` (the
+# archery-vs-two-weapon-combat style choice PF1 grants at 2nd level) and
+# `choice:ranger_combat_style_bonus_feat` (the first bonus feat drawn from that
+# style's own restricted list, granted together with the style choice at the same
+# level). This fixture selects Archery and Point-Blank Shot, the archery style's
+# 2nd-level restricted list's first alphabetical-by-table entry after Far Shot
+# (verified against legacy.aonprd.com's Core Rulebook Ranger Combat Style Feat
+# entry). It deliberately avoids every later hybrid burden surface still out of
+# scope: no spell selections, no spells known/prepared posture, no favored-terrain
+# breadth, no animal companion, no tracking-engine accounting, and no bonus-feat
+# mechanical execution (Point-Blank Shot's own attack/damage bonus is not computed
+# anywhere in this codebase).
+case_id=pf1-crb-human-ranger-level2
+source_package_id=pf1.core_rulebook
+race_id=race:human
+class_level=class:ranger:2
+ability=strength:16
+ability=dexterity:14
+ability=constitution:14
+ability=intelligence:10
+ability=wisdom:12
+ability=charisma:8
+feat=feat:power_attack
+skill=skill:survival:1
+equipment=item:chain_shirt:equipped_worn_active
+equipment=item:longsword:equipped_primary_active
+equipment=item:shield:absent
+choice=choice:level_1_character_feat:feat:power_attack
+choice=choice:human_bonus_feat:feat:dodge
+choice=choice:human_ability_bonus:ability:strength
+choice=choice:ranger_favored_enemy:enemy:humanoid_orc
+choice=choice:ranger_combat_style:style:archery
+choice=choice:ranger_combat_style_bonus_feat:feat:point_blank_shot
+provenance=programs/codex/requirements/SD-13-core-class-race-roster-and-level-10-progression-matrix/artifacts/sd13-e3-r5-paladin-and-ranger-hybrid-chassis-baseline-execution-handoff-2026-07-01.md

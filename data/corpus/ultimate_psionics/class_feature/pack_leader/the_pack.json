@@ -1,0 +1,73 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Pack Leader ~ The Pack",
+    "name": "The Pack",
+    "class": "Pack Leader",
+    "description": "You can add up to %1 other creatures into your pack (collective).  When members of the pack are attacking the same creature, they gain a +1 bonus on weapon attack and damage rolls against that creature.|ThePackSize",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Pack Leader ~ The Pack"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RangerClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ThePackSize|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "TacticianPrimeStat|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can add up to %1 other creatures into your pack (collective).  When members of the pack are attacking the same creature, they gain a +1 bonus on weapon attack and damage rolls against that creature.|ThePackSize"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Tactician ~ Collective"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TacticianPrimeStat|WIS"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ThePackSize|WIS"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TacticianCollectiveLVL|floor(RangerLVL/2)|!PREABILITY:1,CATEGORY=FEAT,Expansive Collective"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.293"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2573,
+    "record_key": "Pack Leader ~ The Pack"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

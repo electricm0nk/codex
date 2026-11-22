@@ -1,0 +1,2 @@
+supersession_register_gate: 116 objects checked
+  OK: every entry proves same-object field equality and clears both guards

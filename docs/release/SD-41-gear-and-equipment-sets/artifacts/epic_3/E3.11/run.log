@@ -1,0 +1,39 @@
+App data root: /tmp/codex-ui-smoke-sd41-e3_11-Yaw2Cr/data/io.electricm0nk.codex (isolated; the real store /home/ubuntu/.local/share/io.electricm0nk.codex is never opened)
+Real store before: 15379 entries, sha256 ddfc4461e3f278447373d61e1eff268905da65d3894566b68ab1bc2cbdf9b8bf
+Launching app for agent 'sd41-e3.11'...
+PASS  sheet-gear-filter-equipped
+PASS  sheet-gear-move-to-slot-ac
+PASS  sheet-gear-move-to-carried
+PASS  sheet-gear-not-carried-weight
+PASS  sheet-gear-set-create-activate
+PASS  sheet-gear-container-nest
+PASS  sheet-gear-container-tables
+PASS  sheet-gear-container-table-discard
+PASS  sheet-gear-container-over-capacity
+PASS  sheet-gear-drop-not-carried
+PASS  sheet-gear-discard-confirm
+PASS  sheet-market-sort-by-price
+PASS  sheet-market-only-affordable
+PASS  sheet-market-description-box
+PASS  sheet-market-buy-quantity-stack
+PASS  sheet-market-negotiate-buy
+PASS  sheet-market-create-item-carried
+PASS  sheet-campaign-add-from-identity
+PASS  sheet-campaign-button-under-skills
+PASS  sheet-campaign-remove-keeps-folder
+PASS  sheet-gear-capacity-override
+PASS  sheet-equipment-lists
+PASS  sheet-equipment-conflict
+PASS  sheet-equipment-unequip
+PASS  sheet-equipment-equip
+PASS  sheet-equipment-left-behind
+PASS  sheet-market-buy-carried
+PASS  sheet-custom-item-worn
+PASS  sheet-custom-item-stowed
+PASS  sheet-override-tag-slot
+Real store after:  15379 entries, sha256 ddfc4461e3f278447373d61e1eff268905da65d3894566b68ab1bc2cbdf9b8bf -- UNTOUCHED (count and sha256 equal)
+
+30/30 green, 0 red, 0 blocked, 0 manual, 0 not-run (M = 30 rows)
+Cleanup: 0 character(s) created across 30 row(s) with a cleanup record, 0 deleted, 0 leftover; store /tmp/codex-ui-smoke-sd41-e3_11-Yaw2Cr/data/io.electricm0nk.codex now holds: 00000000-0000-0000-0000-000000000001, 00000000-0000-0000-0000-000000000002, 00000000-0000-0000-0000-000000000003, 00000000-0000-0000-0000-000000000004, 00000000-0000-0000-0000-000000000005, 00000000-0000-0000-0000-000000000006
+Evidence: /home/ubuntu/workspace/repos/codex/.worktrees/sd41-main/docs/release/SD-41-gear-and-equipment-sets/artifacts/epic_3/E3.11
+Removed isolated app-data root /tmp/codex-ui-smoke-sd41-e3_11-Yaw2Cr (it held 6 character(s) at the end: 00000000-0000-0000-0000-000000000001, 00000000-0000-0000-0000-000000000002, 00000000-0000-0000-0000-000000000003, 00000000-0000-0000-0000-000000000004, 00000000-0000-0000-0000-000000000005, 00000000-0000-0000-0000-000000000006).

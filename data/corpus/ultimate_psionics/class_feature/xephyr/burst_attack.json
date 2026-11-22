@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Xephyr ~ Burst Attack",
+    "name": "Burst Attack",
+    "class": "Xephyr",
+    "description": "Any time you make a successful melee attack with both weapons against a single target, you can activate a daily use of your burst ability to make an additional attack as a free action against the target struck.  Alternatively, if you are already under the effects of your burst ability, when making a full attack, you can make an additional attack with your mind blade as part of the full attack action.  In either scenario, this extra attack is made using your full base attack bonus, plus any modifiers appropriate to the situation.  This extra attack does not stack with other effects that grant extra attacks, such as haste.  This ability can only be used once per round.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Xephyr ~ Burst Attack"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SoulknifeClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "Any time you make a successful melee attack with both weapons against a single target, you can activate a daily use of your burst ability to make an additional attack as a free action against the target struck.  Alternatively, if you are already under the effects of your burst ability, when making a full attack, you can make an additional attack with your mind blade as part of the full attack action.  In either scenario, this extra attack is made using your full base attack bonus, plus any modifiers appropriate to the situation.  This extra attack does not stack with other effects that grant extra attacks, such as haste.  This ability can only be used once per round."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Blade Skill|-1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|XephBurstTimes|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.342"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2220,
+    "record_key": "Xephyr ~ Burst Attack"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

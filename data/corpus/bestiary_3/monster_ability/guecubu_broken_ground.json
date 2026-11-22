@@ -1,0 +1,57 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Guecubu ~ Broken Ground",
+    "delivery": "Supernatural",
+    "description": "The ground in a 30-foot radius around a guecubu ripples and shudders unnaturally. This transforms the area surrounding a guecubu into difficult terrain. A guecubu can move through this area with no penalty. Consecrated ground cannot be affected by this ability, nor can any area warded by a magic circle against chaos or a magic circle against evil.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:guecubu_broken_ground",
+    "name": "Broken Ground",
+    "owners": [
+      "bestiary_3:monster:guecubu"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "The ground in a 30-foot radius around a guecubu ripples and shudders unnaturally. This transforms the area surrounding a guecubu into difficult terrain. A guecubu can move through this area with no penalty. Consecrated ground cannot be affected by this ability, nor can any area warded by a magic circle against chaos or a magic circle against evil."
+      },
+      {
+        "key": "KEY",
+        "value": "Guecubu ~ Broken Ground"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.145"
+      },
+      {
+        "key": "TYPE",
+        "value": "GuecubuRacialAbility.SpecialQuality.Supernatural"
+      }
+    ],
+    "source_page": "p.145",
+    "traits": [
+      "GuecubuRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T10:26:03Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1032,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Guecubu ~ Broken Ground",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

@@ -1,0 +1,37 @@
+# Cycle C1 — Epic C / package and cut (version commit 0.21.0)
+
+- **Card ID:** C1   **Model:** haiku   **RETRO_ACTOR:** sd41-c1
+- **Commit SHA:** this commit (`git log -1 --format=%H` on tranche-21)   **Base SHA:** 930fb721c6
+- **Files touched:** the 14 F-1 surfaces (`.github/workflows/publish-tester-release.yml`, `apps/desktop/package.json`, `apps/desktop/src-tauri/Cargo.lock` (codex-desktop block only), `apps/desktop/src-tauri/Cargo.toml`, `apps/desktop/src-tauri/tauri.conf.json`, `apps/desktop/src/operatorTriage/buildOperatorTriageDraft.test.ts`, `apps/desktop/src/release/buildVersionTriple.test.ts`, `apps/desktop/src/releaseChecks/buildVersionTriple.test.ts`, `apps/desktop/src/testSupport/makeSurface.ts`, `apps/desktop/src/testerWorkbench/feedback/bug/composeBugReport.test.ts`, `.../feedback/enhancement/composeEnhancementRequest.test.ts`, `.../feedback/evidence/captureFeedbackEvidence.test.ts`, `apps/desktop/src/testerWorkbench/loadTesterWorkbenchSurface.test.ts`, `apps/desktop/src/testerWorkbench/status/createWorkbenchStatus.test.ts`) + `docs/release/current-release.json` + kanban/progress/receipt in this package + `workflow-instruction.md` §2.1 line 76 wording fix (see Rulings).
+- **FILES YOU OWN closure check:** `git show --name-only --format= 3ceeb63b66 | awk 'NF' | grep -v current-release.json | awk 'END{print NR}'` → 14 (matches the owned list). Second call sites: `grep -rln '0\.20\.' --include=*.json --include=*.toml --include=*.ts --include=*.yml --include=*.py apps .github tools docs/release/current-release.json` (pre-change) → 13 files, all in the list; Cargo.lock is not in the grep's include set and was changed by line (line 703, the codex-desktop `version`).
+- **Acceptance criterion (verbatim from epic-breakdown.md):** `tranche-21` on origin ⊇ `f7f85f3d24`; one commit sets `0.21.0` on the 14 surfaces SD-40's C1 bumped (F-1) and points `current-release.json` at this package's interim notes, which resolve.
+- **RED (pre-change, run on base 930fb721c6 before any write):**
+  - `grep -rln '0\.20\.' --include=*.json --include=*.toml --include=*.ts --include=*.yml --include=*.py apps .github tools docs/release/current-release.json | grep -v node_modules | grep -v target | grep -v package-lock.json | awk 'END{print NR}'` → `13` (expected 0): FAIL.
+  - `awk '/^name = "codex-desktop"/{f=1} f&&/^version/{print;exit}' apps/desktop/src-tauri/Cargo.lock` → `version = "0.20.0"` (expected 0.21.0): FAIL.
+  - `python3 -c "import json;d=json.load(open('docs/release/current-release.json'));assert d=={'tranche':21,'notes_path':'docs/release/SD-41-gear-and-equipment-sets/release-notes.md'}"` → `AssertionError` (pointer still names SD-40 notes, tranche 20): FAIL.
+  - `python3 tools/release/resolve_release_notes.py --repo-root .` → prints `docs/release/SD-40-pf-sheet-design/release-notes.md`, exit 0 (resolves, but names the wrong tranche's notes). The resolver's tranche check passes only because package.json is still 0.20.
+- **GREEN (same commands after the change):**
+  - grep count → `0`.
+  - Cargo.lock → `version = "0.21.0"`.
+  - pointer assertion → passes (`POINTER_OK`).
+  - `python3 tools/release/resolve_release_notes.py --repo-root .` → `docs/release/SD-41-gear-and-equipment-sets/release-notes.md`, exit 0.
+  - `cd apps/desktop && npx tsx src/release/buildVersionTriple.test.ts` → exit 0.
+  - `cd apps/desktop && npx tsx src/releaseChecks/buildVersionTriple.test.ts` → exit 0.
+  - Extra (the six label-bearing test files, same `npx tsx <file>`): buildOperatorTriageDraft, captureFeedbackEvidence, composeBugReport, createWorkbenchStatus, composeEnhancementRequest, loadTesterWorkbenchSurface → all exit 0.
+- **Figures:** 14 files changed, 20 insertions, 20 deletions — `git diff --stat` (pre-commit) → `14 files changed, 20 insertions(+), 20 deletions(-)`. Post-commit: `git show --name-only --format= HEAD | awk 'NF' | grep -v '^docs/' | awk 'END{print NR}'` → 14 (13 text surfaces + Cargo.lock); the whole commit lists 20 paths (`git show --name-only --format= HEAD | awk 'NF' | awk 'END{print NR}'`).
+- **Build scope verified:** frontend/tsx tests only. No `.rs` source changed; Cargo.lock edited by hand (version line only) and not re-resolved with cargo, so no cargo lane was used.
+- **Clippy before first commit:** not required (no `.rs` source file changed; Cargo.lock is not Rust source).
+- **Clippy stage + sd24 audit test:** not run (no `.rs` change); see Does not cover.
+- **Identifier audit:** `OK_NO_BUNDLE_TAGS` (added lines, `git diff --unified=0 930fb721c6...HEAD -- src crates apps scripts tests` through the sd-tag regex).
+- **Wired-integration audit:** `OK_NO_TOKENS`, `OK_NO_NOOP_HANDLERS`, `OK_NO_MOCK_LEAKS`, `OK_NO_WOULD_STRINGS` (added lines of the commit, `930fb721c6...HEAD`).
+- **Partition:** `git diff --name-only 930fb721c6..HEAD -- apps | grep -v 'tests/market_price' | awk 'END{print NR}'` → 13 (the C1 exception; the 14 apps paths minus Cargo.lock's count is the F-1 list; this partition is measured from base 930fb721c6, and E1.MC measures from this commit's SHA).
+- **Partition (Phase 1):** C1 is the named apps/ exception (its FILES YOU OWN are the F-1 surfaces); the E1.MC partition base is this commit's SHA, so the partition check starts after it.
+- **Seed deltas (G-1):** not applicable (no load response or damage_total.rs touched).
+- **Golden deltas (G-2):** not applicable (no print/** touched).
+- **Looked at:** not applicable (no screen or print change).
+- **Rulings applied:** §2 (version 0.21.0 on the 14 F-1 surfaces, plus the pointer); the C1 row (apps files named). Alternative not taken: running cargo to regenerate Cargo.lock (not needed; the lock's codex-desktop block is hand-set to match the Cargo.toml, as SD-40's C1 did).
+- **Package doc correction:** `workflow-instruction.md` §2.1 said "PHASE 1 CARDS (C1, E1.x) NEVER WRITE UNDER apps/", which contradicts C1's own FILES YOU OWN. Reworded to name C1 as the explicit exception. Retro correction logged: `scripts/retro.py correction --subject "SD-41 workflow-instruction.md §2.1 prefix" ... --verified-by "grep -n 'C1' docs/release/SD-41-gear-and-equipment-sets/epic-breakdown.md | grep '^111:'"` (event 1794531047496-sd41-c1-88a17b in `docs/retro/events/sd41-c1.jsonl`).
+- **Does not cover:** the published `0.21.<run>` (the workflow's VERSION is set from the run number on publish, so the published number is not derivable here); `docs/architecture/release-pipeline.md`'s example line (E5.3 restamps it); whether a cargo build of `apps/desktop/src-tauri` with the bumped Cargo.toml/Cargo.lock succeeds (not run: no cargo lane was needed for a version string, and the card's acceptance command does not build); the root `src/` and `crates/` workspaces (untouched).
+- **Status:** complete
+- **Retro events emitted:** correction ×1
+- **Next-cycle plan:** E1.1–E1.9 (Phase 1 engine and convert lane), then E1.MC. The E1.MC partition base is this commit.

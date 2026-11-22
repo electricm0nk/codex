@@ -1,0 +1,67 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Drakainia Spawn ~ Impenetrable Skin",
+    "delivery": "Extraordinary",
+    "description": "The drakainia spawn's skin is tough and scaly. It gains DR/- equal to half its HD (maximum %1).",
+    "description_variables": [
+      "DrakainiaDR"
+    ],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:drakainia_spawn_impenetrable_skin",
+    "name": "Impenetrable Skin",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "BONUS",
+        "value": "DR|-|DrakainiaDR-1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DrakainiaDR|min(10,HD/2)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DrakainiaDR|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The drakainia spawn's skin is tough and scaly. It gains DR/- equal to half its HD (maximum %1).|DrakainiaDR"
+      },
+      {
+        "key": "DR",
+        "value": "1/-"
+      },
+      {
+        "key": "KEY",
+        "value": "Drakainia Spawn ~ Impenetrable Skin"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary"
+      }
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T14:10:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 568,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "record_key": "Drakainia Spawn ~ Impenetrable Skin",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

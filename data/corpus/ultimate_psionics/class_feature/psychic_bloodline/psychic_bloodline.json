@@ -1,0 +1,76 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Psychic Bloodline",
+    "name": "Psychic Bloodline",
+    "class": "Sorcerer",
+    "description": "You are a wielder of magic, but it is a different kind than that of others.  Your power stems from a long line of psychics, people born with the power to bend the world around them according to their will.  In you, this manifested early and you are learning how to control it.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Sorcerer Class Feature.SpecialQuality.ClassSpecialization.Sorcerer Bloodline"
+      },
+      {
+        "key": "DESC",
+        "value": "You are a wielder of magic, but it is a different kind than that of others.  Your power stems from a long line of psychics, people born with the power to bend the world around them according to their will.  In you, this manifested early and you are learning how to control it."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Sorcerer Class Feature|AUTOMATIC|Bloodline Arcana (Psychic)|Psychic Bloodline Bonus Spells"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Sorcerer Class Feature|AUTOMATIC|Psychic ~ Might of the Mind|PREVAREQ:Sorcerer_CF_BloodlinePower1,0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Sorcerer Class Feature|AUTOMATIC|Psychic ~ Deflecting Mind|PREVAREQ:Sorcerer_CF_BloodlinePower3,0|PREVARGTEQ:BloodlineProgressionLVL,3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Sorcerer Class Feature|AUTOMATIC|Psychic ~ Flight|PREVAREQ:Sorcerer_CF_BloodlinePower9,0|PREVARGTEQ:BloodlineProgressionLVL,9"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Sorcerer Class Feature|AUTOMATIC|Psychic ~ Psychic Resistance|PREVAREQ:Sorcerer_CF_BloodlinePower15,0|PREVARGTEQ:BloodlineProgressionLVL,15"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Sorcerer Class Feature|AUTOMATIC|Psychic ~ Mind over Matter|PREVAREQ:Sorcerer_CF_BloodlinePower20,0|PREVARGTEQ:BloodlineProgressionLVL,20"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Psychic Bloodline Feat|BloodlineFeatCount"
+      },
+      {
+        "key": "CSKILL",
+        "value": "Perception"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.295"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1101,
+    "record_key": "Psychic Bloodline"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

@@ -1,0 +1,57 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Brass Dragon ~ Sleep Breath",
+    "delivery": "Supernatural",
+    "description": "Instead of a line of fire, a brass dragon can breathe a cone of sleep gas. Creatures within the cone must succeed on a Will save or fall asleep for 1d6+%1 rounds.",
+    "description_variables": [
+      "DragonAgeCategory"
+    ],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:brass_dragon_sleep_breath",
+    "name": "Sleep Breath",
+    "owners": [
+      "beastiary:monster:dragon_brass"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Instead of a line of fire, a brass dragon can breathe a cone of sleep gas. Creatures within the cone must succeed on a Will save or fall asleep for 1d6+%1 rounds.|DragonAgeCategory"
+      },
+      {
+        "key": "KEY",
+        "value": "Brass Dragon ~ Sleep Breath"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.102"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
+    "source_page": "p.102",
+    "traits": []
+  },
+  "ingested_at": "2026-08-20T15:15:41Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 460,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "record_key": "Brass Dragon ~ Sleep Breath",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

@@ -1,0 +1,8 @@
+P1 hop pool count +1: FAIL ['test a_selection_hop_carries_its_ability_pool_onto_the_race_ability ... FAILED'] restored=True
+P2 hop pool lines dropped: FAIL ['test a_selection_hop_carries_its_ability_pool_onto_the_race_ability ... FAILED'] restored=True
+P3 pool record not held: FAIL ['test sf_creation::tests::a_human_asks_for_its_racial_stat_bonus_and_the_score_moves ... FAILED', 'test sf_creation::tests::a_lashunta_asks_for_its_subrace_and_student_skills ... FAILED', 'test sf_creation::tests::the_seed_builds_created_through_the_flow_have_their_creation_scores ... FAILED', 'test sf_creation::tests::a_refused_build_is_blocked_and_nothing_is_saved ... FAILED'] restored=True
+P4 picks not saved: FAIL ['test sf_creation::tests::a_human_asks_for_its_racial_stat_bonus_and_the_score_moves ... FAILED', 'test sf_creation::tests::the_seed_builds_created_through_the_flow_have_their_creation_scores ... FAILED', 'test sf_creation::tests::a_lashunta_asks_for_its_subrace_and_student_skills ... FAILED'] restored=True
+P5 point buy ignored: FAIL ['test sf_creation::tests::the_seed_builds_created_through_the_flow_have_their_creation_scores ... FAILED', 'test sf_creation::tests::a_refused_build_is_blocked_and_nothing_is_saved ... FAILED'] restored=True
+P6 key-ability pick asked twice: FAIL ['test sf_creation::tests::the_key_ability_is_asked_once_and_answers_the_packages_own_pick ... FAILED'] restored=True
+verdict=PASS
+exit=0

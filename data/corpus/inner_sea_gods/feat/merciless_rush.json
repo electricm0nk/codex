@@ -1,0 +1,31 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Merciless Rush",
+    "category": "Combat",
+    "name": "Merciless Rush",
+    "description": "Though hordes stand against you, they rarely stand long. When you bull rush a creature and your check exceeds the target's CMD by 5 or more, you deal damage equal to your Strength modifier to that target.",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=FEAT,Improved Bull Rush",
+      "PREDEITY:[redacted PI]",
+      "PRETEXT:[redacted PI]"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities_feat.lst",
+    "sha256": "91f53f0051455ec8e7daca4e0286799e397009fe7fdae555ebe342f40085256e",
+    "line": 62,
+    "record_key": "Merciless Rush"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_ability_scaling",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

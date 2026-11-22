@@ -1,0 +1,4 @@
+roster: census() classes 137, levels 1 5 10 20, input_for + 30 unknown feats, rows_of_a_character_with_no_ledger vs the budget's over_by
+run A (first 91 classes, stopped by its timeout): FEATS mismatch lines 0, PANIC 0, ERR 0
+run B (MC_SKIP=75, the last 62 classes): feats checked 248, bad 0, PANIC 0, ERR 0
+debug build, level 20 alone, 30 extra feats, other work running: runs 153 mean s 8.3534 max s 15.3284

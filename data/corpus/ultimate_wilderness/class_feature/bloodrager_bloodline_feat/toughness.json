@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Bloodrager Bloodline Feat ~ Toughness",
+    "name": "Toughness",
+    "class": "Bloodrager",
+    "description": "xxx",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bloodrager Bloodline Feat ~ Toughness"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "TYPE",
+        "value": "Bloodrager Bloodline Feat"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Bloodrager_BloodlineFeat_Toughness,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Toughness"
+      },
+      {
+        "key": "DESC",
+        "value": "xxx"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.xxx"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "xxx"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 333,
+    "record_key": "Bloodrager Bloodline Feat ~ Toughness"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

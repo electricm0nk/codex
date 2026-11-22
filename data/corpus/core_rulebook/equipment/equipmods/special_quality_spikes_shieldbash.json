@@ -1,0 +1,66 @@
+{
+  "completeness": "chassis_plus_extract",
+  "data": {
+    "category": "equipmods",
+    "cost_gp": 0.0,
+    "description": null,
+    "key": "Special Quality ~ Spikes ~ Shieldbash",
+    "name": "Shield Spikes",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "EQMWEAPON",
+          "DAMAGESIZE",
+          "1"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Special Quality ~ Spikes ~ Shieldbash"
+      },
+      {
+        "key": "TYPE",
+        "value": "Shieldbash"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "QUALIFY"
+      },
+      {
+        "key": "ITYPE",
+        "value": "Spiked.Piercing"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.153"
+      },
+      {
+        "key": "SPROP",
+        "value": "Spiked"
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 52,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equipmods.lst",
+    "record_key": "Special Quality ~ Spikes ~ Shieldbash",
+    "sha256": "a777d51860c355f8cda2e042e3e6353d275db5bb705590850c1db7358aa565df"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

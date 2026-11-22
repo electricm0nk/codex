@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T19:41:16Z",
+  "data": {
+    "codex_generated_name": true,
+    "corpus_key": "Codex-Named Unit (monster_ability_inner_sea_world_guide_iswg_abilities_race_lst_25)",
+    "delivery": "Extraordinary",
+    "description": "One of the daughter's hands is a tremendous scythe-shaped claw. This attack inflicts x4 damage on a critical hit, and is treated as an evil weapon for the purposes of penetrating damage reduction.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "inner_sea_world_guide:monster_ability:codex_named_unit_monster_ability_inner_sea_world_guide_iswg_abilities_race_lst_25",
+    "name": "Codex-Named Unit (monster_ability_inner_sea_world_guide_iswg_abilities_race_lst_25)",
+    "owners": [],
+    "rename": {
+      "coordinate": "inner_sea_world_guide:iswg_abilities_race.lst:25",
+      "reason": "name_pi_blocked"
+    },
+    "source_page": "p.310",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_abilities_race.lst",
+    "sha256": "776debf1cea780aac4b3518c47baf43523d6b06deb0aea80de08b640ffc03c15",
+    "line": 25,
+    "record_key": "Codex-Named Unit (monster_ability_inner_sea_world_guide_iswg_abilities_race_lst_25)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

@@ -1,0 +1,154 @@
+{
+  "corrections": {
+    "by_corrector": {
+      "sd38-e5.4": 1
+    },
+    "by_subject": {
+      "src/rules_core/cpr/cyberware.rs (E2.5) and corpus therapy.json source_page": 1
+    },
+    "by_verification_method": {
+      "tail -1 of /home/ubuntu/workspace/inbox/cyberpunk-red/pages/p231.txt prints '230'": 1
+    },
+    "caught_before": {},
+    "recent": [
+      {
+        "actor": "sd38-e5.4",
+        "id": "1792057430832-sd38-e5.4-d88d01",
+        "summary": "src/rules_core/cpr/cyberware.rs (E2.5) and corpus therapy.json source_page claimed therapy table and D-5 cap cited as p. 231; actual printed page 230 (file pages/p231.txt; pNNN = printed page + 1)",
+        "ts": "2026-10-15T09:43:50Z"
+      }
+    ],
+    "repeat_subjects": [],
+    "total": 1,
+    "with_blast_radius": 1
+  },
+  "deferrals": {
+    "open": 0,
+    "open_items": [],
+    "recent": [],
+    "resolved": 0,
+    "total": 0
+  },
+  "events": {
+    "by_actor": {
+      "sd38-e5.1": 2,
+      "sd38-e5.2": 1,
+      "sd38-e5.3": 2,
+      "sd38-e5.4": 1,
+      "sd38-e5.mc": 2
+    },
+    "by_origin": {
+      "agent": 8
+    },
+    "by_type": {
+      "correction": 1,
+      "incident": 1,
+      "rework": 6
+    },
+    "total": 8
+  },
+  "generated_at": "2026-10-15T12:26:07Z",
+  "generated_by": "scripts/retro.py summary",
+  "git_join": {
+    "authors": 1,
+    "available": true,
+    "commits": 143,
+    "events_per_commit": 0.0559,
+    "top_authors": [
+      [
+        "Todd Hintzmann",
+        143
+      ]
+    ]
+  },
+  "incidents": {
+    "by_recurrence_key": {
+      "tdd-red-not-observed": 1
+    },
+    "recent": [
+      {
+        "actor": "sd38-e5.3",
+        "id": "1792049396150-sd38-e5.3-293e85",
+        "summary": "E5.3 desktop cpr_improve tests were written before the implementation but first run after it, so their RED was not observed directly",
+        "ts": "2026-10-15T07:29:56Z"
+      }
+    ],
+    "recurring": [],
+    "silent": 0,
+    "time_lost_minutes": 0,
+    "total": 1
+  },
+  "log": {
+    "invalid_lines": 0,
+    "path": "/home/ubuntu/workspace/repos/codex/.worktrees/sd38-main/docs/retro/events",
+    "problems": [],
+    "shards": 5
+  },
+  "near_misses": {
+    "by_caught_by": {},
+    "escaped": 0,
+    "recent": [],
+    "total": 0
+  },
+  "rework": {
+    "by_cause": {
+      "3b0592252d reworded the cpr.derived.humanity_current and cpr.cyberware.humanity_loss detail text (p. 111 rolled loss) and was pushed before the desktop full sweep ran; the targeted --bins cpr_improve run does not hold the fixture test": 1,
+      "a 3-tuple return type added without running clippy before commit (same lint E5.1 hit on PricedPlan)": 1,
+      "expected refusal text written from improvement.rs Display alone; cpr_improve.rs prefixes the skill name and the table reads 'Typical Skill Improvement'": 1,
+      "nested Result tuple return type; targeted cargo test does not run clippy": 1,
+      "the row's final screen is the reloaded sheet, not the dialog; the plant is red on the unsaved Handgun/IP rows": 1,
+      "the token audit matches the HTML attribute name, not only stub text": 1
+    },
+    "recent": [
+      {
+        "actor": "sd38-e5.1",
+        "id": "1792040639119-sd38-e5.1-1bfc79",
+        "summary": "redid CyberpunkImproveDialog inputs carried HTML placeholder attributes; the four-check token audit (check 1, word 'placeholder') printed 4 lines: the token audit matches the HTML attribute name, not only stub text",
+        "ts": "2026-10-15T05:03:59Z"
+      },
+      {
+        "actor": "sd38-e5.1",
+        "id": "1792041054581-sd38-e5.1-e928dd",
+        "summary": "redid cpr_improve.rs priced_at_root return type failed clippy type_complexity under verify.sh --only clippy: nested Result tuple return type; targeted cargo test does not run clippy",
+        "ts": "2026-10-15T05:10:54Z"
+      },
+      {
+        "actor": "sd38-e5.2",
+        "id": "1792043311394-sd38-e5.2-ec2372",
+        "summary": "redid cpr_improve.rs options() return type failed clippy type_complexity; factored into type ImproveOptions: a 3-tuple return type added without running clippy before commit (same lint E5.1 hit on PricedPlan)",
+        "ts": "2026-10-15T05:48:31Z"
+      },
+      {
+        "actor": "sd38-e5.3",
+        "id": "1792055644068-sd38-e5.3-b22e09",
+        "summary": "E5.3 pushed a detail-text change without regenerating the CPR sheet fixtures",
+        "ts": "2026-10-15T09:14:04Z"
+      },
+      {
+        "actor": "sd38-e5.mc",
+        "id": "1792067143012-sd38-e5.mc-7be01c",
+        "summary": "redid ui-smoke row improve-cyberpunk-skip-refused expect string: expected refusal text written from improvement.rs Display alone; cpr_improve.rs prefixes the skill name and the table reads 'Typical Skill Improvement'",
+        "ts": "2026-10-15T12:25:43Z"
+      },
+      {
+        "actor": "sd38-e5.mc",
+        "id": "1792067143147-sd38-e5.mc-2b86af",
+        "summary": "redid skip-refused row note claimed the cost plant turns improve-cyberpunk-skill red on 'Overspend': the row's final screen is the reloaded sheet, not the dialog; the plant is red on the unsaved Handgun/IP rows",
+        "ts": "2026-10-15T12:25:43Z"
+      }
+    ],
+    "total": 6
+  },
+  "schema_version": 1,
+  "verification": {
+    "by_failing_stage": {},
+    "fail_rate": null,
+    "failed_runs": 0,
+    "runs": 0
+  },
+  "window": {
+    "since": "2026-10-13T00:00:00+00:00",
+    "spec": "2026-10-13",
+    "until": null
+  }
+}

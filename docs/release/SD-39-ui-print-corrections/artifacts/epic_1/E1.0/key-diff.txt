@@ -1,0 +1,60 @@
+# E1.0 key diff: what the card changed in the rules data
+
+$ git diff --name-only b94381d7f6..5014fb84a9 -- data/sheet_rules | awk "END{print NR}"
+0
+
+$ git diff --numstat b94381d7f6..5014fb84a9 -- data/equipment_types.json   (added, removed: the `types` map is byte-for-byte the same)
+247	0	data/equipment_types.json
+
+$ cargo test --locked -j 8 --lib body_slots -- --test-threads=8 --nocapture   (the printed lines)
+enhanceable 554 of 834 Armor/Shield/Weapon principals: {"Armor": 79, "Shield": 22, "Weapon": 453}
+enhanceable but carrying an Aura: line: []
+tag/book disagreements: spelling=12 no_slot_taken=7 none_on_weapon=8 total=27
+spelling (wrists -> wrist): [
+    "core_rulebook:equipment:bracelet_of_friends",
+    "core_rulebook:equipment:bracers_of_archery_greater",
+    "core_rulebook:equipment:bracers_of_archery_lesser",
+    "core_rulebook:equipment:bracers_of_armor_1",
+    "core_rulebook:equipment:bracers_of_armor_2",
+    "core_rulebook:equipment:bracers_of_armor_3",
+    "core_rulebook:equipment:bracers_of_armor_4",
+    "core_rulebook:equipment:bracers_of_armor_5",
+    "core_rulebook:equipment:bracers_of_armor_6",
+    "core_rulebook:equipment:bracers_of_armor_7",
+    "core_rulebook:equipment:bracers_of_armor_8",
+    "core_rulebook:equipment:dimensional_shackles",
+]
+no slot taken: [
+    "core_rulebook:equipment:necklace_of_fireballs_i",
+    "core_rulebook:equipment:necklace_of_fireballs_ii",
+    "core_rulebook:equipment:necklace_of_fireballs_iii",
+    "core_rulebook:equipment:necklace_of_fireballs_iv",
+    "core_rulebook:equipment:necklace_of_fireballs_v",
+    "core_rulebook:equipment:necklace_of_fireballs_vi",
+    "core_rulebook:equipment:necklace_of_fireballs_vii",
+]
+Slot: none on a weapon-tagged record: [
+    "core_rulebook:equipment:rod_alertness",
+    "core_rulebook:equipment:rod_flailing",
+    "core_rulebook:equipment:rod_python",
+    "core_rulebook:equipment:rod_thunder_and_lightning",
+    "core_rulebook:equipment:rod_viper",
+    "core_rulebook:equipment:rod_withering",
+    "core_rulebook:equipment:staff_of_power",
+    "core_rulebook:equipment:staff_of_the_woodlands",
+]
+F-12 records=7386 with_table_tag=2906 with_slot_line=1617
+F-13 slot_of resolves a body slot: rows 2838 of 7386; principals 2130 of 6223
+principals by slot: {Armor: 151, Shield: 54, Belt: 90, Body: 80, Chest: 49, Eyes: 86, Feet: 107, Hands: 88, Head: 150, Headband: 83, Neck: 181, Ring: 186, Shoulders: 137, Wrist: 79, WieldMain: 530, WieldTwoHanded: 79, None: 4093}
+slot from the book's line alone, no table tag: 13
+SD-g table rows with no Codex slot: ["Torso", "Tattoo Head", "Tattoo Shoulders", "Tattoo Neck", "Tattoo Chest", "Tattoo Body", "Tattoo Belt", "Tattoo Wrist", "Tattoo Hands", "Tattoo Ring", "Tattoo Feet"]
+SD-g records: Clothing with no other slot=36, Tattoo <slot> tag=16
+barding or ammunition whose tags alone would seat them: 25
+WieldMain with no hand tag (handedness unknown from tags): 302
+#bonus rows whose slot_of differs from their principal: 32
+repeatable vs MULT: agree 2927 / disagree 0 of 2927; repeatable=207
+MULT:YES feat rows in shipped books: 174; on a repeatable record 172; on a non-repeatable record 0; on no feat record 2
+rows on no feat record: [
+    "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:479 Special Bloodline Feat",
+    "pathfinder/paizo/roleplaying_game/ultimate_magic/um_feats.lst:226 Transfer Feat to Familiar",
+]

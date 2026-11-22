@@ -1,0 +1,2 @@
+# Fixture for desktop Market +N (AC and attack rows), source: apg_equip_arms_armor.lst, KEY: Spear (Chain)
+Spear (Chain)									OUTPUTNAME:Chain Spear			PROFICIENCY:WEAPON|Spear (Chain)		TYPE:Weapon.Resizable.Melee.TwoHanded.Exotic.Standard.Piercing.Slashing												COST:15	WT:13		CRITMULT:x2	CRITRANGE:1	DAMAGE:1d6	ALTDAMAGE:1d6	EQMOD:Material ~ Steel.Special Quality ~ Trip									WIELD:TwoHanded						SIZE:M	SOURCEPAGE:p.177

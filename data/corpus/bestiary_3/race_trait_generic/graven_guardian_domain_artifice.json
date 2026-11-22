@@ -1,0 +1,46 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Graven Guardian Domain ~ Artifice",
+    "name": "Artifice: Repair",
+    "description": "The graven guardian's fast healing increases to 5.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Graven Guardian Domain ~ Artifice"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "GravenGuardianDomain.Extraordinary.RaceAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "The graven guardian's fast healing increases to 5."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.140"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f",
+    "line": 983,
+    "record_key": "Graven Guardian Domain ~ Artifice"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

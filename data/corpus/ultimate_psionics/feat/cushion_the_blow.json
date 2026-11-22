@@ -1,0 +1,31 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:38:17Z",
+  "data": {
+    "key": "Cushion the Blow",
+    "category": "Psionic",
+    "name": "Cushion the Blow",
+    "description": "As long as you are maintaining psoinic focus, as an immediate action, you can minimize the damage of a single attack with a ranged, melee, or natural weapon or unarmed strike (treat all dice rolled as 1s) on any member of the collective.  This ability must be used in response to an attack on a member of the collective.  In addition, if you expend your psionic focus, you can reduce any additional damage on the attack (such as bonus damage from a high Strength or sneak attack damage) by your key ability modifier.",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=Special Ability,TYPE.Collective",
+      "PRESTAT:1,WIS=15",
+      "PREVARGTEQ:MaxManifesterLVL,6",
+      "PREVARGTEQ:IsPsionic,1"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_feats.lst",
+    "sha256": "528096cb97ebe8255b9f9fe67682dd7e045f53b65e32295cd57967002eccb137",
+    "line": 61,
+    "record_key": "Cushion the Blow"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

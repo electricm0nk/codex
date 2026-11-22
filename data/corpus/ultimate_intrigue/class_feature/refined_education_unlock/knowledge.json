@@ -1,0 +1,85 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-24T03:53:24Z",
+  "data": {
+    "key": "Refined Education Unlock ~ Knowledge",
+    "name": "Knowledge",
+    "class": "Refined Education Unlock",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Refined Education Unlock ~ Knowledge"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RefinedEducationUnlock"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=CLASS,Rogue ~ Unchained Class"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "KnowledgeRefinedEducationUnlock,1"
+      },
+      {
+        "key": "DEFINE",
+        "value": "KnowledgeRefinedEducationUnlockLVL|0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Skill unlock ~ knowledge 05 Ranks|PREVARGTEQ:KnowledgeRefinedEducationUnlockLVL,5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Skill unlock ~ knowledge 10 Ranks|PREVARGTEQ:KnowledgeRefinedEducationUnlockLVL,10"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Skill unlock ~ knowledge 15 Ranks|PREVARGTEQ:KnowledgeRefinedEducationUnlockLVL,15"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Skill unlock ~ knowledge 20 Ranks|PREVARGTEQ:KnowledgeRefinedEducationUnlockLVL,20"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|KnowledgeRefinedEducationUnlockLVL|RogueLVL/2+HighestKnowledgeRank"
+      },
+      {
+        "key": "DEFINE",
+        "value": "HighestKnowledgeRank|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HighestKnowledgeRank|max(skillinfo(\"RANK\", \"Knowledge (Arcana)\"),skillinfo(\"RANK\", \"Knowledge (Dungeoneering)\"),skillinfo(\"RANK\", \"Knowledge (Engineering)\"),skillinfo(\"RANK\", \"Knowledge (Geography)\"),skillinfo(\"RANK\", \"Knowledge (History)\"),skillinfo(\"RANK\", \"Knowledge (Local)\"),skillinfo(\"RANK\", \"Knowledge (Nature)\"),skillinfo(\"RANK\", \"Knowledge (Nobility)\"),skillinfo(\"RANK\", \"Knowledge (Planes)\"),skillinfo(\"RANK\", \"Knowledge (Religion)\"))"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/support/ui_abilities_class_pu.lst",
+    "sha256": "31facfcea3534d72c26bfbfeebc7af50e80e79157eda459e9afb16f184a93aaf",
+    "line": 49,
+    "record_key": "Refined Education Unlock ~ Knowledge"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

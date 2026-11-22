@@ -1,0 +1,85 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-24T03:53:24Z",
+  "data": {
+    "key": "Refined Education Unlock ~ Profession",
+    "name": "Profession",
+    "class": "Refined Education Unlock",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Refined Education Unlock ~ Profession"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RefinedEducationUnlock"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=CLASS,Rogue ~ Unchained Class"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "ProfessionRefinedEducationUnlock,1"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ProfessionRefinedEducationUnlockLVL|0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Skill unlock ~ profession 05 Ranks|PREVARGTEQ:ProfessionRefinedEducationUnlockLVL,5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Skill unlock ~ profession 10 Ranks|PREVARGTEQ:ProfessionRefinedEducationUnlockLVL,10"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Skill unlock ~ profession 15 Ranks|PREVARGTEQ:ProfessionRefinedEducationUnlockLVL,15"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Skill unlock ~ profession 20 Ranks|PREVARGTEQ:ProfessionRefinedEducationUnlockLVL,20"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ProfessionRefinedEducationUnlockLVL|RogueLVL/2+HighestProfessionRank"
+      },
+      {
+        "key": "DEFINE",
+        "value": "HighestProfessionRank|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HighestProfessionRank|max(skillinfo(\"RANK\", \"Profession (Architect)\"),skillinfo(\"RANK\", \"Profession (Baker)\"),skillinfo(\"RANK\", \"Profession (Barrister)\"),skillinfo(\"RANK\", \"Profession (Brewer)\"),skillinfo(\"RANK\", \"Profession (Butcher)\"),skillinfo(\"RANK\", \"Profession (Clerk)\"),skillinfo(\"RANK\", \"Profession (Cook)\"),skillinfo(\"RANK\", \"Profession (Courtesan)\"),skillinfo(\"RANK\", \"Profession (Driver)\"),skillinfo(\"RANK\", \"Profession (Engineer)\"),skillinfo(\"RANK\", \"Profession (Farmer)\"),skillinfo(\"RANK\", \"Profession (Fisherman)\"),skillinfo(\"RANK\", \"Profession (Gambler)\"),skillinfo(\"RANK\", \"Profession (Gardener)\"),skillinfo(\"RANK\", \"Profession (Herbalist)\"),skillinfo(\"RANK\", \"Profession (Innkeeper)\"),skillinfo(\"RANK\", \"Profession (Librarian)\"),skillinfo(\"RANK\", \"Profession (Merchant)\"),skillinfo(\"RANK\", \"Profession (Midwife)\"),skillinfo(\"RANK\", \"Profession (Miller)\"),skillinfo(\"RANK\", \"Profession (Miner)\"),skillinfo(\"RANK\", \"Profession (Porter)\"),skillinfo(\"RANK\", \"Profession (Sailor)\"),skillinfo(\"RANK\", \"Profession (Scribe)\"),skillinfo(\"RANK\", \"Profession (Shepherd)\"),skillinfo(\"RANK\", \"Profession (Soldier)\"),skillinfo(\"RANK\", \"Profession (Soothsayer)\"),skillinfo(\"RANK\", \"Profession (Stable Master)\"),skillinfo(\"RANK\", \"Profession (Tanner)\"),skillinfo(\"RANK\", \"Profession (Trapper)\"),skillinfo(\"RANK\", \"Profession (Woodcutter)\"))"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/support/ui_abilities_class_pu.lst",
+    "sha256": "31facfcea3534d72c26bfbfeebc7af50e80e79157eda459e9afb16f184a93aaf",
+    "line": 53,
+    "record_key": "Refined Education Unlock ~ Profession"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

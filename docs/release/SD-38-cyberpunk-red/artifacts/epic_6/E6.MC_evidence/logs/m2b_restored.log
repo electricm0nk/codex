@@ -1,0 +1,18 @@
+   Compiling codex v0.1.0 (/home/ubuntu/workspace/repos/codex/.worktrees/sd38-e6)
+   Compiling codex-desktop v0.18.0 (/home/ubuntu/workspace/repos/codex/.worktrees/sd38-e6/apps/desktop/src-tauri)
+   Compiling codex-ingest v0.1.0 (/home/ubuntu/workspace/repos/codex/.worktrees/sd38-e6/crates/codex-ingest)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 31.62s
+     Running unittests src/main.rs (/home/ubuntu/cargo-target/sd38-e6/debug/deps/codex_desktop-b8295afeae6a47bf)
+
+running 8 tests
+test cpr_catalog::tests::each_deck_quality_name_is_a_corpus_cyberdeck_record ... ok
+test cpr_catalog::tests::an_eighth_slot_is_refused ... ok
+test cpr_catalog::tests::an_unknown_kind_is_refused ... ok
+test cpr_catalog::tests::the_command_reads_the_same_corpus_root ... ok
+test cpr_catalog::tests::the_p157_sample_deck_is_seven_of_seven ... ok
+test cpr_catalog::tests::extras_add_slots_and_hardware_slots_come_from_the_corpus ... ok
+test cpr_catalog::tests::unknown_deck_program_hardware_and_rank_are_refused ... ok
+test cpr_catalog::tests::every_manifest_kind_lists_its_expected_count ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 811 filtered out; finished in 0.17s
+

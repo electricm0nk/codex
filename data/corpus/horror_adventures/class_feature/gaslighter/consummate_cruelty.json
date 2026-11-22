@@ -1,0 +1,61 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Gaslighter ~ Consummate Cruelty",
+    "name": "Consummate Cruelty",
+    "class": "Mesmerist",
+    "description": "A gaslighter gains a bonus equal to 1/2 his mesmerist level (minimum 1) on Intimidate checks. A gaslighter can take Improved Dirty Trick and Greater Dirty Trick without having Combat Expertise or an Intelligence score of 13. He can also ignore those two prerequisites for other feats that have Improved Dirty Trick or Greater Dirty Trick as a prerequisite.|max(1,MesmeristLVL/2)",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Gaslighter ~ Consummate Cruelty"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mesmerist Class Feature.GaslighterClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.60"
+      },
+      {
+        "key": "DESC",
+        "value": "A gaslighter gains a bonus equal to 1/2 his mesmerist level (minimum 1) on Intimidate checks. A gaslighter can take Improved Dirty Trick and Greater Dirty Trick without having Combat Expertise or an Intelligence score of 13. He can also ignore those two prerequisites for other feats that have Improved Dirty Trick or Greater Dirty Trick as a prerequisite.|max(1,MesmeristLVL/2)"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Intimidate|max(1,MesmeristLVL/2)"
+      },
+      {
+        "key": "QUALIFY",
+        "value": "ABILITY=FEAT|Improved Dirty Trick"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Gaslighter IDT Qualifier|PREABILITY:1,CATEGORY=FEAT,Improved Dirty Trick"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/support/ha_abilities_class_oa.lst",
+    "sha256": "9c111f652f8442433ea215fa11e67258c7e6c15c75d1c1753fa6fef34827f46c",
+    "line": 173,
+    "record_key": "Gaslighter ~ Consummate Cruelty"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

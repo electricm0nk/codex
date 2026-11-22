@@ -1,0 +1,24 @@
+STAT.0.NAME=STR
+STAT.0.SCORE=16
+STAT.1.NAME=DEX
+STAT.1.SCORE=14
+STAT.2.NAME=CON
+STAT.2.SCORE=14
+STAT.3.NAME=INT
+STAT.3.SCORE=12
+STAT.4.NAME=WIS
+STAT.4.SCORE=16
+STAT.5.NAME=CHA
+STAT.5.SCORE=14
+SA.COUNT=4
+SA.0.NAME=Bonus Feats
+SA.0.DESC=At 1st level, and at every even level thereafter, a fighter gains a bonus feat in addition to those gained from normal advancement (meaning that the fighter gains a feat at every level). These bonus feats must be selected from those listed as combat feats, sometimes also called "fighter bonus feats." Upon reaching 4th level, and every four levels thereafter (8th, 12th, and so on), a fighter can choose to learn a new bonus feat in place of a bonus feat he has already learned. In effect, the fighter loses the bonus feat in exchange for the new one. The old feat cannot be one that was used as a prerequisite for another feat, prestige class, or other ability. A fighter can only change one feat at any given level and must choose whether or not to swap the feat at the time he gains a new bonus feat for the level.
+SA.1.NAME=Change Shape
+SA.1.DESC=A rougarou can change shape once per day into a wolf as a standard action, as beast shape I. A rougarou can revert to its true form as a swift action.
+SA.2.NAME=Natural Weapon
+SA.2.DESC=Rougarous have a bite attack that deals 1d4 points of damage. This is a secondary attack if a rougarou wields a manufactured weapon.
+SA.3.NAME=Scent
+SA.3.DESC=This special sense allows a creature to detect approaching enemies, sniff out hidden foes, and track by sense of smell. Creatures with the scent ability can identify familiar odors just as humans do familiar sights.
+The creature can detect opponents within 30 feet by sense of smell. If the opponent is upwind, the range increases to 60 feet; if downwind, it drops to 15 feet. Strong scents, such as smoke or rotting garbage, can be detected at twice the ranges noted above. Overpowering scents, such as skunk musk or troglodyte stench, can be detected at triple the normal range.
+When a creature detects a scent, the exact location of the source is not revealed--only its presence somewhere within range. The creature can take a move action to note the direction of the scent. When the creature is within 5 feet of the source, it pinpoints the source's location.
+A creature with the scent ability can follow tracks by smell, attempting a Wisdom or Survival check to find or follow a track. The typical DC for a fresh trail is 10 (no matter what kind of surface holds the scent). This DC increases or decreases depending on how strong the quarry's odor is, the number of creatures, and the age of the trail. For each hour that the trail is cold, the DC increases by 2. Creatures tracking by scent ignore the effects of surface conditions and poor visibility. The ability otherwise follows the rules for the Survival skill.

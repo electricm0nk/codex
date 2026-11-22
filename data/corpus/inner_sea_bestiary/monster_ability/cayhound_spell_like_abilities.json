@@ -1,0 +1,63 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Cayhound ~ Spell-Like Abilities",
+    "delivery": "SpellLike",
+    "description": "The cayhound has spell-like abilities.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "inner_sea_bestiary:monster_ability:cayhound_spell_like_abilities",
+    "name": "Spell-Like Abilities",
+    "owners": [
+      "inner_sea_bestiary:monster:cayhound"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "The cayhound has spell-like abilities."
+      },
+      {
+        "key": "KEY",
+        "value": "Cayhound ~ Spell-Like Abilities"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.8"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=3|Dimension Door|Knock"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=ATWILL|Freedom of Movement|Open/Close"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.SpellLike"
+      }
+    ],
+    "source_page": "p.8",
+    "traits": []
+  },
+  "ingested_at": "2026-08-15T01:24:21Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 54,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_bestiary/isb_abilities_race.lst",
+    "record_key": "Cayhound ~ Spell-Like Abilities",
+    "sha256": "d7e5ffd6c7f0421a33b7e7c67872d9364a3f1e5ad82daa9b7f727b64ab71c595"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

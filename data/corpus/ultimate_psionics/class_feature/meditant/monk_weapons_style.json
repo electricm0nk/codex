@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Meditant ~ Monk Weapons Style",
+    "name": "Monk Weapons Style",
+    "class": "Meditant",
+    "description": "You are proficient with all monk weapons and can use flurry of strikes with monk weapons, making any or all of the attacks with the monk weapon in place of an unarmed strike.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Meditant ~ Monk Weapons Style"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "PsychicWarriorClassFeatures.SpecialQuality.MeditantFightingStyle"
+      },
+      {
+        "key": "DESC",
+        "value": "You are proficient with all monk weapons and can use flurry of strikes with monk weapons, making any or all of the attacks with the monk weapon in place of an unarmed strike."
+      },
+      {
+        "key": "AUTO",
+        "value": "WEAPONPROF|Club|Crossbow (Light)|Crossbow (Heavy)|Dagger|Handaxe|Javelin|Kama|Nunchaku|Quarterstaff|Sai|Shortspear|Sword (Short)|Shuriken|Siangham|Sling|Spear"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.277"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2073,
+    "record_key": "Meditant ~ Monk Weapons Style"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

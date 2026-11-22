@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Blade Skill ~ Improved Mind Shield",
+    "name": "Improved Mind Shield",
+    "class": "Blade Skill",
+    "description": "The shield bonus to AC granted by your mind shield increases by 1.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Blade Skill ~ Improved Mind Shield"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "BladeSkill.SpecialQuality.ImprovedShieldBladeSkill"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Blade Skill ~ Mind Shield"
+      },
+      {
+        "key": "DESC",
+        "value": "The shield bonus to AC granted by your mind shield increases by 1."
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|1|TYPE=Shield.STACK|PREEQUIP:1,Mind Shield%"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.62"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 783,
+    "record_key": "Blade Skill ~ Improved Mind Shield"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

@@ -1,0 +1,19 @@
+{
+  "data": {
+    "key": "Mi-Go brain cylinder",
+    "name": "Mi-Go brain cylinder",
+    "type": "Magic.Hybrid"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 9,
+    "path": "starfinder/paizo/alien_archive_2/saa2_equip_magic.lst",
+    "record_key": "Mi-Go brain cylinder",
+    "sha256": "0382736ce67ed3d7a3a00f572fd7a6e09d7e007e648c341bc3fd8ca39b4795d2"
+  },
+  "unit_id": "alien_archive_2:equipment:mi_go_brain_cylinder"
+}

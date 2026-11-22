@@ -1,0 +1,57 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Oversized Weapon",
+    "delivery": "Extraordinary",
+    "description": "You can wield weapons of one size larger than you without penalty.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "beastiary:monster_ability:oversized_weapon",
+    "name": "Oversized Weapon",
+    "owners": [
+      "beastiary:monster:giant_cloud"
+    ],
+    "raw_tokens": [
+      {
+        "key": "BONUS",
+        "value": "WIELDCATEGORY|ALL|-1"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "You can wield weapons of one size larger than you without penalty."
+      },
+      {
+        "key": "KEY",
+        "value": "Oversized Weapon"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary.OversizedWeapon"
+      }
+    ],
+    "source_page": null,
+    "traits": [
+      "OversizedWeapon"
+    ]
+  },
+  "ingested_at": "2026-08-17T12:26:26Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1450,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "record_key": "Oversized Weapon",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

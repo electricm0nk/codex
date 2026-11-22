@@ -1,0 +1,23 @@
+line	name	base	custom_name	outcome	codex_key	sheet_record	worn	carried	copies_emitted	file_quantity	pcgen_location	codex_slot	slot_collision	eqmods_not_applied	data_fields_not_read
+1	AbadarCorp travel suit, silver (Small)	AbadarCorp travel suit (silver)	yes	custom			1	0	0	1.0	Armor x1.0				NAME,SIZE
+2	Adaptive Serum Mk 2		no	custom			2	0	0	2.0	Equipped x2.0				
+3	Aeon Stone (Dark Blue Rhomboid)		no	custom			1	0	0	1.0	WornMagic x1.0				
+4	Amulet of Camouflage		no	custom			1	0	0	1.0	WornMagic x1.0				
+5	Cavitation pistol, thermodynamic (Small)	Cavitation pistol (thermodynamic)	yes	custom			1	0	0	1.0	Primary Hand x1.0				NAME,SIZE
+6	Computer (Alarm/Fake shell/Firewall/Lockout/Control, complex/Secure data, specific/Tier 10/Artificial personality/Hardened/Miniaturization/Security IV/Self-charging)	Computer	yes	custom			1	0	0	1.0	Equipped x1.0			Computer Tier 10.Computer Upgrade ~ Artificial personality.Computer Upgrade ~ Hardened.Computer Countermeasures ~ Lockout.Computer Countermeasures ~ Firewall.Computer Countermeasures ~ Fake shell.Computer Upgrade ~ Security 4.Computer Upgrade ~ Self-charging.Computer Countermeasures ~ Alarm.Computer Module ~ Secure data (specific).Computer Upgrade ~ Miniaturization.Computer Module ~ Control (complex)	NAME
+7	Cred Stick		no	custom			1	0	0	1.0	Equipped x1.0				
+8	Credit		no	custom			100050	0	0	100050.0	Equipped x100050.0				
+9	Dermal plating, mk 7	Cybernetic ~ Dermal plating (mk 7)	yes	custom			1	0	0	1.0	Equipped x1.0				NAME
+10	Diffraction cloak Mk 3		no	custom			1	0	0	1.0	WornMagic x1.0				
+11	Efficient Bandolier		no	custom			0	1	0	1.0	Carried x1.0				
+12	Holographic eyes, mk 1	Magitech ~ Holographic eyes (mk 1)	yes	custom			1	0	0	1.0	Equipped x1.0				NAME
+13	Mind Guardian		no	custom			0	1	0	1.0	Carried x1.0				
+14	Optical laser, zenith	Cybernetic ~ Optical laser (zenith)	yes	custom			1	0	0	1.0	Equipped x1.0				NAME
+15	Personal Upgrade Mk 3		no	custom			1	0	0	1.0	Equipped x1.0				
+16	Prescient Lenses Mk 2		no	custom			0	1	0	1.0	Carried x1.0				
+17	Ratfolk belt		no	custom			1	0	0	1.0	WornMagic x1.0				
+18	Ring of Resistance Mk 4		no	custom			0	1	0	1.0	Carried x1.0				
+19	Spell Gem (Erase)		no	custom			1	0	0	1.0	Equipped x1.0				
+20	Spell Gem (Flight (Level 4))		no	custom			1	0	0	1.0	Equipped x1.0				
+21	Telekinetic gloves		no	custom			0	1	0	1.0	Carried x1.0				
+22	Travel treads Mk 2		no	custom			0	1	0	1.0	Carried x1.0				

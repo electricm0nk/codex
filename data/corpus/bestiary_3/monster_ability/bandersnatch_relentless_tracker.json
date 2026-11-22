@@ -1,0 +1,57 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Bandersnatch ~ Relentless Tracker",
+    "delivery": "Extraordinary",
+    "description": "A bandersnatch can move at up to double its speed and still track without penalty. It gains a +10 competence bonus on Survival checks made to track creatures it has wounded.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:bandersnatch_relentless_tracker",
+    "name": "Relentless Tracker",
+    "owners": [
+      "bestiary_3:monster:bandersnatch"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A bandersnatch can move at up to double its speed and still track without penalty. It gains a +10 competence bonus on Survival checks made to track creatures it has wounded."
+      },
+      {
+        "key": "KEY",
+        "value": "Bandersnatch ~ Relentless Tracker"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.32"
+      },
+      {
+        "key": "TYPE",
+        "value": "BandersnatchRacialAbility.SpecialQuality.Extraordinary"
+      }
+    ],
+    "source_page": "p.32",
+    "traits": [
+      "BandersnatchRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T10:26:03Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 453,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Bandersnatch ~ Relentless Tracker",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

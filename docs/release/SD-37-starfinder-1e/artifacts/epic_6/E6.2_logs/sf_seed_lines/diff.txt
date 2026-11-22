@@ -1,0 +1,4 @@
+diff -r base/SF-Soldier-3.txt new/SF-Soldier-3.txt
+7a8
+> ability | core:ability:human#pool_2_racial_stat_bonus | Human (+2 racial stat bonus picks) | +1 |  | 
+diff_exit=1

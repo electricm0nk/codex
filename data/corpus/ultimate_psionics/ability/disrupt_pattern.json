@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Grammaton ~ Disrupt Pattern",
+    "name": "Disrupt Pattern",
+    "description": "You are only able to use the disrupt pattern ability when making ranged attacks with a handgun.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Grammaton ~ Disrupt Pattern"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "CrypticClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "You are only able to use the disrupt pattern ability when making ranged attacks with a handgun."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.265"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_uc.lst",
+    "sha256": "2c97bc0e551c9846872c03df149c4ecd081e231a9e6753a35271d5f9708f5f80",
+    "line": 12,
+    "record_key": "Grammaton ~ Disrupt Pattern"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

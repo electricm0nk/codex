@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Ioun Stone / Pearly white Spindle",
+    "name": "Pearly white Spindle",
+    "description": "Regenerate 1 point of damage per 10 minutes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ioun Stone / Pearly white Spindle"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Ioun Stone.Equipment.Pearly white Spindle.Ioun"
+      },
+      {
+        "key": "DESC",
+        "value": "Regenerate 1 point of damage per 10 minutes"
+      },
+      {
+        "key": "STACK",
+        "value": "YES"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "NOCHOICE"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.520"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities.lst",
+    "sha256": "ab77788e05536453a16a22bef8a5e74c209e536cb5b8cdcdb1130f712cc2402f",
+    "line": 559,
+    "record_key": "Ioun Stone / Pearly white Spindle"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

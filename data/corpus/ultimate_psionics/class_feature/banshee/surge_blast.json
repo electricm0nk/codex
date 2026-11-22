@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Banshee ~ Surge Blast",
+    "name": "Surge Blast",
+    "class": "Banshee",
+    "description": "Your surge blast is an empowered scream that deals sonic damage instead of force damage.  When you make a successful attack with your surge blast, the target must make a save (Fort DC %1) or be dazed for 1 round and deafened for one minute.  Once affected by this effect, a target cannot be affected by the daze effect again for one minute.  You cannot use this ability if you cannot speak.|BansheeSurgeBlastDazeDC",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Banshee ~ Surge Blast"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "WilderClassFeatures.SpecialAttack"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BansheeSurgeBlastDazeDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Your surge blast is an empowered scream that deals sonic damage instead of force damage.  When you make a successful attack with your surge blast, the target must make a save (Fort DC %1) or be dazed for 1 round and deafened for one minute.  Once affected by this effect, a target cannot be affected by the daze effect again for one minute.  You cannot use this ability if you cannot speak.|BansheeSurgeBlastDazeDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BansheeSurgeBlastDazeDC|10+WilderLVL/2+WilderPrimeStat"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.331"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2394,
+    "record_key": "Banshee ~ Surge Blast"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

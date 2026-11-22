@@ -1,0 +1,57 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Nephilim ~ Soul of Sorrow",
+    "delivery": "Extraordinary",
+    "description": "A nephilim gains a +2 bonus on Will saves against fear effects and any effect that causes sorrow.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:nephilim_soul_of_sorrow",
+    "name": "Soul of Sorrow",
+    "owners": [
+      "bestiary_3:monster:nephilim"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A nephilim gains a +2 bonus on Will saves against fear effects and any effect that causes sorrow."
+      },
+      {
+        "key": "KEY",
+        "value": "Nephilim ~ Soul of Sorrow"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.200"
+      },
+      {
+        "key": "TYPE",
+        "value": "NephilimRacialAbility.SpecialQuality.Extraordinary"
+      }
+    ],
+    "source_page": "p.200",
+    "traits": [
+      "NephilimRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T10:26:03Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1304,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Nephilim ~ Soul of Sorrow",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

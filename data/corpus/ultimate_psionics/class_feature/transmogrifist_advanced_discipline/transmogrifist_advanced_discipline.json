@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Transmogrifist Advanced Discipline",
+    "name": "Transmogrifist Advanced Discipline",
+    "class": null,
+    "description": "You have chosen to specialize in transmogrifying powers.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "PsionClassFeatures.SpecialQuality.ClassSpecialization.PsionicDiscipline"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PsychometabolismDisciplineLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You have chosen to specialize in transmogrifying powers."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Psion Class Feature|AUTOMATIC|Psychometabolism ~ Metabolic Healing|PREVARGTEQ:PsychometabolismDisciplineLVL,2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Psion Class Feature|AUTOMATIC|Transmogrifist ~ Empowered Alteration|PREVARGTEQ:PsychometabolismDisciplineLVL,8"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Psion Class Feature|AUTOMATIC|Psychometabolism ~ Resilient Body|PREVARGTEQ:PsychometabolismDisciplineLVL,14"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Psion Class Feature|AUTOMATIC|Transmogrifist ~ Infused Body|PREVARGTEQ:PsychometabolismDisciplineLVL,20"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.273"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 485,
+    "record_key": "Transmogrifist Advanced Discipline"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

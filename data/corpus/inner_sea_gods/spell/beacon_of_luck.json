@@ -1,0 +1,71 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "You send out a burst of luck with a 30-foot radius centered  around you. While the beacon of luck is in effect, you gain  a +2 sacred bonus on all saving throws. As an immediate  action before a saving throw is made, allies within the area  can choose to benefit from this luck, rolling twice for a saving  throw and taking the better result. Once a creature benefits  from the beacon of luck in this way, it cannot gain the benefit  of this spell for 24 hours.",
+    "key": "Beacon of Luck",
+    "level": 3,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Bard,Cleric=3|Inquisitor,Paladin=4"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, M/DF"
+      },
+      {
+        "key": "DESC",
+        "value": "You send out a burst of luck with a 30-foot radius centered  around you. While the beacon of luck is in effect, you gain  a +2 sacred bonus on all saving throws. As an immediate  action before a saving throw is made, allies within the area  can choose to benefit from this luck, rolling twice for a saving  throw and taking the better result. Once a creature benefits  from the beacon of luck in this way, it cannot gain the benefit  of this spell for 24 hours."
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) minutes [D]"
+      },
+      {
+        "key": "FACT",
+        "value": "CompMaterial|(a tuft of rabbit fur)"
+      },
+      {
+        "key": "KEY",
+        "value": "Beacon of Luck"
+      },
+      {
+        "key": "RANGE",
+        "value": "Personal; see text"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Divination"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.229"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "You"
+      }
+    ],
+    "school": "Divination"
+  },
+  "ingested_at": "2026-08-17T01:45:11Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 11,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_spells.lst",
+    "record_key": "Beacon of Luck",
+    "sha256": "48bcb314dbdf8369982b3bc68d10dbe11baa5fe748d4121d6e197ab414406e68"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr"
+  ]
+}

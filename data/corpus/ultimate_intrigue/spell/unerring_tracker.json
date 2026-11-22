@@ -1,0 +1,83 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "During this spell's duration, you can touch the sign of a creature's passage that you have identified using the Survival skill to make the other steps in the creature's path perfectly clear to you, no matter how minute. This trail can't be more than 24 hours old. You can follow the trail at any speed, provided you have line of sight to the trail. You can distinguish the trail of the particular creature followed even if it joins and splits with other trails. Once you have selected a trail to follow using this spell, it can't be changed. The spell is unable to follow teleportation or interplanar travel for any distance. The trail appears to end where the creature teleported (though a successful Spellcraft check allows you to determine the method of teleportation, if a spell was used). Unerring tracker can't track creatures under the effect of a pass without trace spell, as those creatures leave no trail at all, but can track creatures using nondetection (though not mind blank). This spell can be used to track flying creatures, but the trail must at least begin on a solid surface. This spell doesn't reveal the creature's current position or any shorter path than the one it followed (for instance, it will not reveal that the creature doubled back upon the trail until you reach the point where the creature turned around.) It doesn't reveal traps or other hazards along the trail.|PRERULE:1,DisplayFullSpell",
+    "key": "Unerring Tracker",
+    "level": 4,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "10 minutes"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Occultist,Ranger=4|Alchemist=5|Druid=6"
+      },
+      {
+        "key": "COMPS",
+        "value": "V,S,DF"
+      },
+      {
+        "key": "DESC",
+        "value": "During this spell's duration, you can touch the sign of a creature's passage that you have identified using the Survival skill to make the other steps in the creature's path perfectly clear to you, no matter how minute. This trail can't be more than 24 hours old. You can follow the trail at any speed, provided you have line of sight to the trail. You can distinguish the trail of the particular creature followed even if it joins and splits with other trails. Once you have selected a trail to follow using this spell, it can't be changed. The spell is unable to follow teleportation or interplanar travel for any distance. The trail appears to end where the creature teleported (though a successful Spellcraft check allows you to determine the method of teleportation, if a spell was used). Unerring tracker can't track creatures under the effect of a pass without trace spell, as those creatures leave no trail at all, but can track creatures using nondetection (though not mind blank). This spell can be used to track flying creatures, but the trail must at least begin on a solid surface. This spell doesn't reveal the creature's current position or any shorter path than the one it followed (for instance, it will not reveal that the creature doubled back upon the trail until you reach the point where the creature turned around.) It doesn't reveal traps or other hazards along the trail.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "Follow an entire trail unerringly.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL*10) minutes"
+      },
+      {
+        "key": "RANGE",
+        "value": "Personal"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "None"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Divination"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://aonprd.com/SpellDisplay.aspx?ItemName=Unerring Tracker"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.228"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "No"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "You"
+      },
+      {
+        "key": "TYPE",
+        "value": "Arcane.Divine.Psychic"
+      }
+    ],
+    "school": "Divination"
+  },
+  "ingested_at": "2026-08-16T12:10:17Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 109,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_spells.lst",
+    "record_key": "Unerring Tracker",
+    "sha256": "5f4a23b7b02b3d3b2cd4a20d8f06ec24f49e39592d0822d32cdb80d13f3e6324"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr"
+  ]
+}

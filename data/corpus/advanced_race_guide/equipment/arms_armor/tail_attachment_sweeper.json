@@ -1,0 +1,74 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "arms_armor",
+    "cost_gp": 7.0,
+    "description": "When properly used, this sharply curved piece of metal can knock opponents off their feet. Unlike most trip weapons, you cannot drop it if you are tripped during your own trip attempt.",
+    "key": "Tail Attachment (Sweeper)",
+    "name": "Tail Attachment (Sweeper)",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "OUTPUTNAME",
+        "value": "Tail Attachment, Sweeper"
+      },
+      {
+        "key": "PROFICIENCY",
+        "value": "WEAPON|Kobold Tail Attachment"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weapon.Resizable.Melee.Light.KoboldTailAttachment.Bludgeoning.Trip.Finesseable"
+      },
+      {
+        "key": "COST",
+        "value": "7"
+      },
+      {
+        "key": "WT",
+        "value": "3"
+      },
+      {
+        "key": "CRITMULT",
+        "value": "x2"
+      },
+      {
+        "key": "CRITRANGE",
+        "value": "1"
+      },
+      {
+        "key": "DAMAGE",
+        "value": "1d6"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Material ~ Steel"
+      },
+      {
+        "key": "WIELD",
+        "value": "Light"
+      },
+      {
+        "key": "SPROP",
+        "value": "When properly used, this sharply curved piece of metal can knock opponents off their feet. Unlike most trip weapons, you cannot drop it if you are tripped during your own trip attempt.|PRERULE:1,DisplayWeaponDetails"
+      }
+    ],
+    "weight_lbs": 3.0
+  },
+  "ingested_at": "2026-08-03T19:41:45Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 42,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equip_arms_armor.lst",
+    "record_key": "Tail Attachment (Sweeper)",
+    "sha256": "34bf37d241bf277200170432a33c322930b10cd1c8a96b6b2a41cc08667ed566"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

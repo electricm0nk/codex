@@ -1,0 +1,74 @@
+{
+  "codex_generated_name": true,
+  "completeness": "full",
+  "data": {
+    "key": "Codex-Named Unit (deity_inner_sea_gods_isg_deities_lst_335)",
+    "name": "Codex-Named Unit (deity_inner_sea_gods_isg_deities_lst_335)",
+    "raw_tokens": [
+      {
+        "key": "NAMEISPI",
+        "value": "YES"
+      },
+      {
+        "key": "DOMAINS",
+        "value": "Charm,Evil,Law,Water|PREALIGN:LN,LE,NE"
+      },
+      {
+        "key": "DESC",
+        "value": "Malebranche of deceit, poison, temptation"
+      },
+      {
+        "key": "FACT",
+        "value": "Title|The Pale Promise"
+      },
+      {
+        "key": "FACT",
+        "value": "Symbol|Poisoned hand Crossbow"
+      },
+      {
+        "key": "FACTSET",
+        "value": "Animal|Cobra"
+      },
+      {
+        "key": "FACTSET",
+        "value": "Colors|White|Yellow"
+      },
+      {
+        "key": "FACTSET",
+        "value": "Pantheon|Malebranche"
+      },
+      {
+        "key": "DEITYWEAP",
+        "value": "Crossbow (Hand)"
+      },
+      {
+        "key": "ALIGN",
+        "value": "LE"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.328"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T14:24:41Z",
+  "license": "PI-REDACTED",
+  "pi_field": "name",
+  "pi_marker": "redacted",
+  "population": "in_scope",
+  "rename": {
+    "coordinate": "inner_sea_gods:isg_deities.lst:335",
+    "reason": "name_pi_blocked"
+  },
+  "source": {
+    "kind": "lst_token",
+    "line": 335,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_deities.lst",
+    "record_key": "Codex-Named Unit (deity_inner_sea_gods_isg_deities_lst_335)",
+    "sha256": "dd9f008ef3f68cb4859b655e89ee526302624f53bfe113dee7d1d50b36330d7d"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

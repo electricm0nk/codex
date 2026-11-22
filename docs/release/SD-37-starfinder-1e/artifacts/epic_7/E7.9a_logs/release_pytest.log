@@ -1,0 +1,4 @@
+# python3 -m pytest -q tools/release, run with a uv venv carrying CI's deps (release-tooling-tests.yml: jsonschema==4.21.1 pytest); system python3 has no pytest module
+......................................................                 [100%]
+54 passed, 2 subtests passed in 13.38s
+exit=0

@@ -1,0 +1,8 @@
+before-render: exit=0
+dump: exit=0
+structural-diff: exit=0
+mut1: exit=1
+mut2: exit=1
+residue: exit=0
+desktop-sweep: exit=0
+DONE

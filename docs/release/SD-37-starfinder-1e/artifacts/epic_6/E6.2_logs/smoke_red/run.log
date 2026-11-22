@@ -1,0 +1,8 @@
+App data root: /tmp/codex-ui-smoke-sd37-e6-2-red-LaVWo1/data/io.electricm0nk.codex (isolated; the real store /home/ubuntu/.local/share/io.electricm0nk.codex is never opened)
+Launching app for agent 'sd37-e6-2-red'...
+FAIL  create-starfinder-soldier  -- target not found: 'sf-character-name (no element named 'sf-character-name')'
+
+0/1 green, 1 red, 0 blocked, 0 manual, 0 not-run (M = 1 rows)
+Cleanup: 0 character(s) created across 1 row(s) with a cleanup record, 0 deleted, 0 leftover; store /tmp/codex-ui-smoke-sd37-e6-2-red-LaVWo1/data/io.electricm0nk.codex now holds: 00000000-0000-0000-0000-000000000001, 00000000-0000-0000-0000-000000000002
+Evidence: /tmp/claude-1000/-home-ubuntu-workspace-repos-codex/33627023-04e6-4757-9afa-d5c1463408f3/scratchpad/e62/smoke_red
+Removed isolated app-data root /tmp/codex-ui-smoke-sd37-e6-2-red-LaVWo1 (it held 2 character(s) at the end: 00000000-0000-0000-0000-000000000001, 00000000-0000-0000-0000-000000000002).

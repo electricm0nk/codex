@@ -1,0 +1,53 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Juggernaut ~ Rune-Carved",
+    "delivery": "Supernatural",
+    "description": "Runes cover the juggernaut. Whenever the juggernaut takes energy damage or energy damage fails to overcome its SR, for the next round, its attacks deal 2d6 points of damage of that energy type. If more than one type of energy attack occurs in a round, roll randomly to determine what kind of extra energy damage it deals.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:juggernaut_rune_carved",
+    "name": "Rune Domain - Rune-Carved",
+    "owners": [
+      "bestiary_4:monster:juggernaut"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Runes cover the juggernaut. Whenever the juggernaut takes energy damage or energy damage fails to overcome its SR, for the next round, its attacks deal 2d6 points of damage of that energy type. If more than one type of energy attack occurs in a round, roll randomly to determine what kind of extra energy damage it deals."
+      },
+      {
+        "key": "KEY",
+        "value": "Juggernaut ~ Rune-Carved"
+      },
+      {
+        "key": "TYPE",
+        "value": "JuggernautDomain.SpecialQuality.Supernatural"
+      }
+    ],
+    "source_page": null,
+    "traits": [
+      "JuggernautDomain"
+    ]
+  },
+  "ingested_at": "2026-08-23T09:31:46Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 943,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "record_key": "Juggernaut ~ Rune-Carved",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

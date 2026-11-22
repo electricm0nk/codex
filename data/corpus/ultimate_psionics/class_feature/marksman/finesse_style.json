@@ -1,0 +1,93 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Marksman ~ Finesse Style",
+    "name": "Finesse Style",
+    "class": "Marksman",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Marksman ~ Finesse Style"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MarksmanClassFeatures.SpecialQuality.MarksmanStyle"
+      },
+      {
+        "key": "MULT",
+        "value": "NO"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Marksman Class Feature|AUTOMATIC|Finesse Style ~ Finesse Technique|PREVARGT:MarksmanStyleLVL,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Marksman Class Feature|AUTOMATIC|Finesse Style ~ Finesse Mantra|PREVARGT:MarksmanStyleLVL,2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Marksman Class Feature|AUTOMATIC|Finesse Style ~ Dazzling Assault|PREVARGT:MarksmanStyleLVL,3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Marksman Class Feature|AUTOMATIC|Finesse Style ~ Instill Awe|PREMULT:2,[PREVARGT:MarksmanStyleLVL,7],[!PREABILITY:1,CATEGORY=Archetype,TYPE.MarksmanStyleAbility8]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Marksman Class Feature|AUTOMATIC|Finesse Style ~ Teleporting Attack|PREVARGT:MarksmanStyleLVL,11"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Marksman Class Feature|AUTOMATIC|Finesse Style ~ Stunning Display|PREVARGT:MarksmanStyleLVL,15"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Marksman Class Feature|AUTOMATIC|Finesse Style ~ Oubliette of Knives|PREVARGT:MarksmanStyleLVL,19"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Finesse Marksman Bonus Feat|(MarksmanStyleLVL-2)/3"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Finesse Marksman Bonus Feat|-1|PREMULT:2,[PREABILITY:1,CATEGORY=Archetype,TYPE.MarksmanBonusFeat5],[PRECLASS:1,Marksman=5]"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Finesse Marksman Bonus Feat|-1|PREMULT:2,[PREABILITY:1,CATEGORY=Archetype,TYPE.MarksmanBonusFeat8],[PRECLASS:1,Marksman=8]"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Intimidate|StyleSkill|PREVARGT:MarksmanStyleLVL,2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.46"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 349,
+    "record_key": "Marksman ~ Finesse Style"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

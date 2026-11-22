@@ -1,0 +1,372 @@
+{
+  "groups": [
+    {
+      "id": "W30-CF-UNMODELLED",
+      "label": "class_feature belongs to a class not modelled in the 34-dispatch universe (Vigilante/Medium/Magus/Occultist/Psychic/Mesmerist/Shifter/Kineticist/Spiritualist/Aegis and ~90 more 3pp/occult/psionic/NPC classes)",
+      "todo_entry": "todo/levers.md L0/L1",
+      "match": {
+        "evidence_regex": "^class_feature_of_unmodelled_corpus_class:"
+      }
+    },
+    {
+      "id": "W30-CF-DIAG",
+      "label": "class_feature deferred-with-reason, named standing capability gap or join gap (companion advancement, bardic performance, arcane bloodline, PU Unchained sibling-explanation join, 11 other singletons)",
+      "todo_entry": "todo/levers.md L13 (38, capability gap) + L14 (5, join gap)",
+      "match": {
+        "evidence_regex": "^engine_diagnostic:class_feature\\."
+      }
+    },
+    {
+      "id": "W30-FEAT-DIAG",
+      "label": "2 Ultimate Campaign feats whose own corpus .MOD BENEFIT row is a confirmed upstream splice",
+      "todo_entry": "todo/levers.md L21 (new)",
+      "match": {
+        "evidence_regex": "^engine_diagnostic:ultimate_campaign::feat_tables::"
+      }
+    },
+    {
+      "id": "W30-CF-OWNERMATCH",
+      "label": "class_feature whose owner class IS matched by name but the record is not registered in class_feature_pool_catalog::REGISTERED_POOL_GROUPS -- sibling branch to G1, same catalog, same lever",
+      "todo_entry": "todo/levers.md L5",
+      "match": {
+        "evidence_regex": "^class_feature_owner_matched_by_name_but_record_not_held_by_engine$"
+      }
+    },
+    {
+      "id": "W30-CF-G3",
+      "label": "magnitude-bearing class_feature record with no explanation id and no diagnostic naming it (wave-30 lane-3 G3, corrected population)",
+      "todo_entry": "todo/levers.md L6",
+      "match": {
+        "evidence_regex": "^no_explanation_id_and_no_diagnostic_names_this_feature$"
+      }
+    },
+    {
+      "id": "W30-CF-G1",
+      "label": "class_feature option-pool record, no owner match, not held by engine (wave-30 lane-3 G1, corrected population)",
+      "todo_entry": "todo/levers.md L5",
+      "match": {
+        "evidence_regex": "^class_feature_option_pool_record_not_held_by_engine$"
+      }
+    },
+    {
+      "id": "W30-CF-NOCLASS",
+      "label": "class_feature group name does not name any dispatched class at all -- TYPE-token cross-check (lane 6 Part C) shows 471 of the matched 1,971 units are misfiled by evidence-string (real owner IS a dispatched class); the remainder's disposition (book/kind onboarding vs genuinely unowned) is not yet examined",
+      "todo_entry": "todo/sweeps.md S12",
+      "match": {
+        "evidence_regex": "^class_feature_group_names_no_class_at_all$"
+      }
+    },
+    {
+      "id": "W30-RT-NOTMODELLED",
+      "label": "race_trait key matcher requires an exact bare-race-name prefix before the first '~'; compound keys (e.g. 'Elf Shaman Hex Range Choice ~ Chant') report not-modelled though the race is named -- this wave derives the real corpus-wide count for the first time",
+      "todo_entry": "todo/sweeps.md S3",
+      "match": {
+        "evidence_regex": "^race_trait_race_not_modelled$"
+      }
+    },
+    {
+      "id": "W30-EQ-TABLEMAG",
+      "label": "equipment in engine tables carrying a real corpus magnitude token, not-done for a reason not yet individually examined this wave",
+      "todo_entry": "todo/levers.md L20",
+      "match": {
+        "evidence_regex": "^equipment_table_entry_with_corpus_magnitude$"
+      }
+    },
+    {
+      "id": "W30-SPELL-KEYABS",
+      "label": "spell key absent from the engine's per-book spell list -- ingestion/onboarding gap, not yet individually examined this wave",
+      "todo_entry": "todo/levers.md L20",
+      "match": {
+        "evidence_regex": "^spell_key_absent_from_spell_list$"
+      }
+    },
+    {
+      "id": "W30-TEXTONLY-NODESC",
+      "label": "text-only record whose corpus row carries no description a player screen could show -- not yet individually examined this wave",
+      "todo_entry": "todo/levers.md L20",
+      "match": {
+        "evidence_regex": "^text_only_but_corpus_record_carries_no_description_to_show_a_player$"
+      }
+    },
+    {
+      "id": "W30-CATALOG-NOCONSUMER",
+      "label": "feat in catalog with a real corpus magnitude but no observed engine consumer wiring it -- not yet individually examined this wave",
+      "todo_entry": "todo/levers.md L20",
+      "match": {
+        "evidence_regex": "^in_catalog_with_corpus_magnitude_but_no_observed_consumer$"
+      }
+    },
+    {
+      "id": "W30-FEAT-KEYABS",
+      "label": "feat key absent from the engine's per-book feat catalog -- ingestion/onboarding gap, not yet individually examined this wave",
+      "todo_entry": "todo/levers.md L20",
+      "match": {
+        "evidence_regex": "^feat_key_absent_from_catalog$"
+      }
+    },
+    {
+      "id": "W30-BOOK-GATE",
+      "label": "no compiled RuleSetId for this unit's book at all -- book-onboarding gate (lane 6 B.1, corrected: 422 not-done across inner_sea_magic/temples/taverns/faiths; adventurers_guide's own RuleSetId already registered wave 29)",
+      "todo_entry": "todo/levers.md L10",
+      "match": {
+        "evidence_regex": "^no_compiled_rule_set_for_book$"
+      }
+    },
+    {
+      "id": "W30-EQ-KEYABS",
+      "label": "equipment key absent from the engine's per-book equipment tables -- ingestion/onboarding gap, not yet individually examined this wave",
+      "todo_entry": "todo/levers.md L20",
+      "match": {
+        "evidence_regex": "^equipment_key_absent_from_equipment_tables$"
+      }
+    },
+    {
+      "id": "W30-MA-NOTABLE",
+      "label": "monster_ability kind has no engine table for this book at all -- not yet individually examined this wave",
+      "todo_entry": "todo/levers.md L20",
+      "match": {
+        "evidence_regex": "^monster_ability_has_no_engine_table$"
+      }
+    },
+    {
+      "id": "W30-SPELL-RESOLVEDLVL",
+      "label": "spell list entry with a resolved level but not-done for another reason -- not yet individually examined this wave",
+      "todo_entry": "todo/levers.md L20",
+      "match": {
+        "evidence_regex": "^spell_list_entry_with_resolved_level$"
+      }
+    },
+    {
+      "id": "W30-EQ-TABLES-NOMAG",
+      "label": "equipment in engine tables whose corpus record carries no magnitude token at all -- not yet individually examined this wave",
+      "todo_entry": "todo/levers.md L20",
+      "match": {
+        "evidence_regex": "^in_equipment_tables_and_corpus_record_carries_no_magnitude_token$"
+      }
+    },
+    {
+      "id": "W30-COMPANION-ABSENT",
+      "label": "companion absent from a specific book's companion tables (ultimate_wilderness/advanced_players_guide/ultimate_magic/core_rulebook/advanced_race_guide/bestiary_4/bestiary_5/book_of_the_damned_volume_1) -- book-by-book onboarding backlog, not yet individually examined this wave",
+      "todo_entry": "todo/levers.md L20",
+      "match": {
+        "evidence_regex": "^companion_absent_from_"
+      }
+    },
+    {
+      "id": "W30-RT-ABSENT",
+      "label": "race_trait key absent from the engine's race_traits table -- ingestion/onboarding gap, not yet individually examined this wave",
+      "todo_entry": "todo/levers.md L20",
+      "match": {
+        "evidence_regex": "^race_trait_absent_from_race_traits$"
+      }
+    },
+    {
+      "id": "W30-RT-NOCONSUMER",
+      "label": "race_trait applied by the race corpus but no verified engine consumer -- not yet individually examined this wave",
+      "todo_entry": "todo/levers.md L20",
+      "match": {
+        "evidence_regex": "^race_trait_applied_by_the_race_corpus_but_no_verified_consumer$"
+      }
+    },
+    {
+      "id": "W30-MA-ABSENT",
+      "label": "monster_ability absent from a specific bestiary/book's monster-ability table -- book-by-book onboarding backlog, not yet individually examined this wave",
+      "todo_entry": "todo/levers.md L20",
+      "match": {
+        "evidence_regex": "^monster_ability_absent_from_"
+      }
+    },
+    {
+      "id": "W30-CLASS-ABSENT",
+      "label": "class absent from every ClassId/book-class-id enum -- this is the wave-27 157-class census family (prestige/structurally-non-PC/untabled-base/book-gated/CRB-NPC/Ninja-Samurai), already thoroughly examined and tracked in sweeps.md's wave-27 table, L0, and L1",
+      "todo_entry": "sweeps.md wave-27 table + levers.md L0/L1",
+      "match": {
+        "evidence_regex": "^class_absent_from_ClassId_ALL_and_book_class_id_enums$"
+      }
+    },
+    {
+      "id": "W30-MONSTER-STATBLOCK",
+      "label": "monster resolves to a real stat block via a specific book's resolver but is still not-done for another reason (held/in-progress) -- not yet individually examined this wave",
+      "todo_entry": "todo/levers.md L20",
+      "match": {
+        "evidence_regex": "_resolve_returned_a_real_stat_block$"
+      }
+    },
+    {
+      "id": "W30-MA-REALRECORD",
+      "label": "monster_ability resolves to a real record via a specific book's resolver but is still not-done for another reason -- not yet individually examined this wave",
+      "todo_entry": "todo/levers.md L20",
+      "match": {
+        "evidence_regex": "_monster_ability_resolve_returned_a_real_record$"
+      }
+    },
+    {
+      "id": "W30-COMPANION-REALRECORD",
+      "label": "companion resolves to a real record via a specific book's resolver but is still not-done for another reason -- not yet individually examined this wave",
+      "todo_entry": "todo/levers.md L20",
+      "match": {
+        "evidence_regex": "_companion_resolve_returned_a_real_record$"
+      }
+    },
+    {
+      "id": "W30-CATALOG-NOMAG",
+      "label": "feat in catalog whose corpus record carries no magnitude token at all (text-only zero-magnitude feats) -- not yet individually examined this wave",
+      "todo_entry": "todo/levers.md L20",
+      "match": {
+        "evidence_regex": "^in_catalog_and_corpus_record_carries_no_magnitude_token$"
+      }
+    },
+    {
+      "id": "W30-RACE-ABSENT-ROSTER",
+      "label": "race not offered by the character-creation roster at all -- wave-30 lane-2's full census: R1 6 (book missing from RACE_CORPUS_BOOKS) + R2 7 (book registered, never transcribed) both real onboarding levers; R4 43 (non-PC monster/companion/eidolon content reusing RACE syntax) + R5 1 (ARG Race Builder meta-tool) both need an operator ruling on whether kind=race applies at all",
+      "todo_entry": "todo/levers.md L11 (13) + todo/blocked.md B12 (43) + B13 (1)",
+      "match": {
+        "evidence_regex": "^race_absent_from_the_character_creation_roster$"
+      }
+    },
+    {
+      "id": "W30-FEAT-PLACEHOLDER",
+      "label": "feat's served description is a placeholder marker, not real prose -- not yet individually examined this wave",
+      "todo_entry": "todo/levers.md L20",
+      "match": {
+        "evidence_regex": "^feat_served_description_is_a_placeholder_marker_not_prose$"
+      }
+    },
+    {
+      "id": "W30-SPELL-DESCNOLVL",
+      "label": "spell list entry has a description but no corpus level -- not yet individually examined this wave",
+      "todo_entry": "todo/levers.md L20",
+      "match": {
+        "evidence_regex": "^spell_list_entry_with_description_but_no_corpus_level$"
+      }
+    },
+    {
+      "id": "W30-CF-G6",
+      "label": "class_feature near-miss: no dedicated magnitude id matched the record's own slug (wave-30 lane-3 G6, population confirmed unchanged at 29: 4 one-allowlist-word-away, 1 dot-namespace-miss, 10 two-words-away, 14 no-candidate-at-all)",
+      "todo_entry": "todo/levers.md L18 (5-unit cheap subset) + todo/sweeps.md S15 (recurrence elsewhere)",
+      "match": {
+        "evidence_regex": "^class_feature_no_dedicated_magnitude_id_matched_the_record_slug$"
+      }
+    },
+    {
+      "id": "W30-SPELL-NOLVL-NODESC",
+      "label": "spell list entry has neither a corpus level nor a description -- not yet individually examined this wave",
+      "todo_entry": "todo/levers.md L20",
+      "match": {
+        "evidence_regex": "^spell_list_entry_with_no_corpus_level_and_no_description$"
+      }
+    },
+    {
+      "id": "W30-FEAT-PROBE",
+      "label": "feat effect probe observed a real computed delta but the unit is still not-done (held, awaiting a further stamp) -- not yet individually examined this wave",
+      "todo_entry": "todo/levers.md L20",
+      "match": {
+        "evidence_regex": "^feat_effect_probe_observed_computed_delta$"
+      }
+    },
+    {
+      "id": "W30-CF-EXPLID-REALCOMP",
+      "label": "class_feature explanation id observed in a real computation but still not-done (held, awaiting a further stamp) -- not yet individually examined this wave",
+      "todo_entry": "todo/levers.md L20",
+      "match": {
+        "evidence_regex": "^explanation_id_observed_in_a_real_computation$"
+      }
+    },
+    {
+      "id": "W30-CF-EXPLID-SUFFIXSTRIP",
+      "label": "class_feature explanation id observed only after stripping a known magnitude suffix -- not yet individually examined this wave",
+      "todo_entry": "todo/levers.md L20",
+      "match": {
+        "evidence_regex": "^explanation_id_observed_after_known_magnitude_suffix_strip$"
+      }
+    },
+    {
+      "id": "W30-COMPANION-NOTABLE",
+      "label": "companion content has no engine table at all for this book -- not yet individually examined this wave",
+      "todo_entry": "todo/levers.md L20",
+      "match": {
+        "evidence_regex": "^companion_content_has_no_engine_table$"
+      }
+    },
+    {
+      "id": "W30-SPELL-PROBE",
+      "label": "spell effect probe observed a real computed delta but the unit is still not-done (held, awaiting a further stamp) -- not yet individually examined this wave",
+      "todo_entry": "todo/levers.md L20",
+      "match": {
+        "evidence_regex": "^spell_effect_probe_observed_computed_delta$"
+      }
+    },
+    {
+      "id": "W30-RT-UNIVERSALMOD",
+      "label": "race_trait states a universal sheet modifier pending compute -- not yet individually examined this wave",
+      "todo_entry": "todo/levers.md L20",
+      "match": {
+        "evidence_regex": "^race_trait_states_a_universal_sheet_modifier_pending_compute$"
+      }
+    },
+    {
+      "id": "W30-RACE-INPROGRESS",
+      "label": "race offered by the roster but no pilot_compute magnitude consumer -- wave-30 lane-2 R3, exact fix named: register in race_magnitude_consumer_races",
+      "todo_entry": "todo/levers.md L12",
+      "match": {
+        "evidence_regex": "^race_offered_by_the_roster_but_no_pilot_compute_magnitude_consumer$"
+      }
+    },
+    {
+      "id": "W30-SUPERSEDED",
+      "label": "byte-identical reprint, superseded per decisions.md 13/19 -- disposition already ruled, not a gap",
+      "todo_entry": "decisions.md 13/19 (ruled)",
+      "match": {
+        "evidence_regex": "^superseded_byte_identical_reprint_first_print_owns_it_decisions_13_19$"
+      }
+    },
+    {
+      "id": "W30-EQ-PROBE",
+      "label": "equipment effect probe observed a real computed delta but the unit is still not-done -- not yet individually examined this wave",
+      "todo_entry": "todo/levers.md L20",
+      "match": {
+        "evidence_regex": "^equipment_effect_probe_observed_computed_delta$"
+      }
+    },
+    {
+      "id": "W30-RT-NEVERAPPLIES",
+      "label": "race_trait record loaded but never applies -- not yet individually examined this wave",
+      "todo_entry": "todo/levers.md L20",
+      "match": {
+        "evidence_regex": "^race_trait_record_loaded_but_never_applies$"
+      }
+    },
+    {
+      "id": "W30-CLASS-NODELTA",
+      "label": "class is modelled but no observed delta on the rendered snapshot -- not yet individually examined this wave",
+      "todo_entry": "todo/levers.md L20",
+      "match": {
+        "evidence_regex": "^class_modelled_but_no_observed_delta_on_the_rendered_snapshot$"
+      }
+    },
+    {
+      "id": "W30-MONSTER-ABSENT",
+      "label": "monster absent from a specific bestiary/book's monster table (or from MonsterId::ALL entirely) -- book-by-book onboarding backlog, not yet individually examined this wave",
+      "todo_entry": "todo/levers.md L20",
+      "match": {
+        "evidence_regex": "^monster_absent_from_"
+      }
+    },
+    {
+      "id": "W30-CF-PROBE-DELTA",
+      "label": "class_feature probe observed a delta attributable to this record but the unit is still not-done -- not yet individually examined this wave",
+      "todo_entry": "todo/levers.md L20",
+      "match": {
+        "evidence_regex": "^class_feature_probe_observed_a_delta_attributable_to_this_record$"
+      }
+    },
+    {
+      "id": "W30-MA-HELD-DESC",
+      "label": "monster_ability held, corpus record carries a real description -- not yet individually examined this wave",
+      "todo_entry": "todo/levers.md L20",
+      "match": {
+        "evidence_regex": "^monster_ability_held_and_corpus_record_carries_real_description$"
+      }
+    }
+  ]
+}

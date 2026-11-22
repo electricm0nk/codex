@@ -1,0 +1,28 @@
+# SD13-E5 deterministic Human Barbarian level 1 low-Constitution edge-case fixture.
+# Identical to the accepted Human Barbarian level 1 deterministic chassis baseline
+# fixture except for a deliberately low Constitution score (1, modifier -5). It
+# exists solely to exercise the rage-rounds-per-day claim-blocking guard in
+# `explain_barbarian_level1_chassis`: 4 + Constitution modifier is non-positive at
+# this score (4 + -5 = -1), which has no PF1 Core Rulebook meaning as a "rounds per
+# day" count, so the compute seam must claim-block that record rather than assert a
+# fabricated negative value. It names selections only; it does not contain derived,
+# computed, or parity values.
+case_id=pf1-crb-human-barbarian-level1-low-constitution
+source_package_id=pf1.core_rulebook
+race_id=race:human
+class_level=class:barbarian:1
+ability=strength:16
+ability=dexterity:14
+ability=constitution:1
+ability=intelligence:8
+ability=wisdom:10
+ability=charisma:8
+feat=feat:power_attack
+skill=skill:survival:1
+equipment=item:chain_shirt:equipped_worn_active
+equipment=item:longsword:equipped_primary_active
+equipment=item:shield:absent
+choice=choice:level_1_character_feat:feat:power_attack
+choice=choice:human_bonus_feat:feat:dodge
+choice=choice:human_ability_bonus:ability:strength
+provenance=programs/codex/requirements/SD-13-core-class-race-roster-and-level-10-progression-matrix/artifacts/sd13-e3-r5-barbarian-martial-chassis-baseline-execution-handoff-2026-07-06.md

@@ -1,0 +1,49 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Demon Lord (Pazuzu) ~ Poison",
+    "delivery": "Extraordinary",
+    "description": "Sting-injury; save Fort DC 43; frequency 1/round for 6 rounds; effect 1d6 Wisdom drain and nauseated; cure 3 consecutive saves.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:demon_lord_pazuzu_poison",
+    "name": "Poison",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Sting-injury; save Fort DC 43; frequency 1/round for 6 rounds; effect 1d6 Wisdom drain and nauseated; cure 3 consecutive saves."
+      },
+      {
+        "key": "KEY",
+        "value": "Demon Lord (Pazuzu) ~ Poison"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary"
+      }
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T14:10:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 455,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "record_key": "Demon Lord (Pazuzu) ~ Poison",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

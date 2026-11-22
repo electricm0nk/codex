@@ -1,0 +1,167 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "ability_keys": [
+      "bestiary_2:monster_ability:carnivorous_blob_absorb_flesh",
+      "bestiary_2:monster_ability:carnivorous_blob_con_drain"
+    ],
+    "challenge_rating": "13",
+    "corpus_key": "Carnivorous Blob",
+    "external_ability_refs": [
+      "Can't Be Tripped",
+      "Carnivorous Blob ~ Reactive Strike",
+      "Carnivorous Blob ~ Split",
+      "Constrict",
+      "Grab ~ Slam",
+      "Immunity to Acid",
+      "Resistance to Electricity",
+      "Resistance to Fire",
+      "Vulnerability to Cold"
+    ],
+    "key": "bestiary_2:monster:carnivorous_blob",
+    "monster_class": "Ooze:16",
+    "name": "Carnivorous Blob",
+    "natural_attacks": [
+      {
+        "damage_dice": "8d6",
+        "name": "Slam"
+      }
+    ],
+    "race_subtype": null,
+    "race_type": "Ooze",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Can't Be Tripped|Carnivorous Blob ~ Absorb Flesh|Carnivorous Blob ~ Con Drain|Carnivorous Blob ~ Reactive Strike|Carnivorous Blob ~ Split|Constrict|Grab ~ Slam|Immunity to Acid|Resistance to Electricity|Resistance to Fire|Vulnerability to Cold"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CON|14"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|26"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|WIS,CHA|-9"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ConstrictBonusDamage|1.5*STR"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ConstrictDice|7"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ConstrictDieSize|6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FireResistanceBonus,ElectricityResistanceBonus|30|TYPE=Resistance"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Mindless|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TremorsenseRange|120|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Slam|DAMAGE|max(0,STR/2)"
+      },
+      {
+        "key": "CR",
+        "value": "13"
+      },
+      {
+        "key": "DR",
+        "value": "10/-"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|C"
+      },
+      {
+        "key": "HANDS",
+        "value": "0"
+      },
+      {
+        "key": "KIT",
+        "value": "1|TN"
+      },
+      {
+        "key": "LEGS",
+        "value": "0"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Ooze:16"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,20,Climb,20,Swim,20"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Slam,Weapon.Natural.Weapon Group Natural.Melee.Finesseable.Bludgeoning.Grab,*1,8d6"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Ooze"
+      },
+      {
+        "key": "REACH",
+        "value": "30"
+      },
+      {
+        "key": "SIZE",
+        "value": "C"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.51"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "0"
+      }
+    ],
+    "size": "C",
+    "source_page": "p.51",
+    "speeds": [
+      {
+        "feet": 20,
+        "mode": "Walk"
+      },
+      {
+        "feet": 20,
+        "mode": "Climb"
+      },
+      {
+        "feet": 20,
+        "mode": "Swim"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-15T01:24:19Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 160,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+    "record_key": "Carnivorous Blob",
+    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

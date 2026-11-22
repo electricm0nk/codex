@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Strategy ~ Directed Assault",
+    "name": "Directed Assault",
+    "class": "Strategy",
+    "description": "Grant a collective member a +%1 competence bonus to attack a single enemy for %2 rounds, and you may immediately make an attack at any target within range.|DirectedAssaultBonus|DirectedAssaultDuration",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Strategy ~ Directed Assault"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.TacticianStrategy"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DirectedAssaultDuration|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DirectedAssaultBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Grant a collective member a +%1 competence bonus to attack a single enemy for %2 rounds, and you may immediately make an attack at any target within range.|DirectedAssaultBonus|DirectedAssaultDuration"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DirectedAssaultDuration|TacticianSecondaryStat"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DirectedAssaultBonus|1+max(0,(StrategyLVL-4)/4)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.67"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 931,
+    "record_key": "Strategy ~ Directed Assault"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

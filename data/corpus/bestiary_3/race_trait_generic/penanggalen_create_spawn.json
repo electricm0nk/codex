@@ -1,0 +1,46 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Penanggalen ~ Create Spawn",
+    "name": "Create Spawn (Su)",
+    "description": "When a penanggalen slays a female humanoid via blood drain, and if that slain humanoid had at least 10 Hit Dice in life, that slain humanoid rises as a manananggal at the next sunset. This manananggal is under the command of the penanggalen who created it, and remains enslaved until that penanggalen's destruction. A penanggalen may have enslaved spawn totalling no more than twice its own Hit Dice any spawn it creates that would exceed this limit become free-willed undead.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Penanggalen ~ Create Spawn"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTrait.PenanggalenRacialAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "When a penanggalen slays a female humanoid via blood drain, and if that slain humanoid had at least 10 Hit Dice in life, that slain humanoid rises as a manananggal at the next sunset. This manananggal is under the command of the penanggalen who created it, and remains enslaved until that penanggalen's destruction. A penanggalen may have enslaved spawn totalling no more than twice its own Hit Dice any spawn it creates that would exceed this limit become free-willed undead."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.216"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f",
+    "line": 1401,
+    "record_key": "Penanggalen ~ Create Spawn"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

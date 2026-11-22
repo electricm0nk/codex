@@ -1,0 +1,14 @@
+## mutation 1: assertIsolated made a no-op
+AssertionError [ERR_ASSERTION]: Missing expected exception: the real app-data dir is refused
+exit=1
+## mutation 2: cleanup reports every created id as deleted
+AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+## restored
+appDataIsolation.test.mjs: all assertions passed
+## mutation 3: driver.sh _data_env reports the caller's real data home (isolation dropped)
+FAIL default launch data root is isolated
+     _data_env printed 'XDG_DATA_HOME=/home/ubuntu/.local/share'; expected XDG_DATA_HOME under /tmp
+FAIL a data root onto the real one is refused; a safe override is honoured
+     refusal exit was 0 (want 3); safe override gave XDG_DATA_HOME='/home/ubuntu/.local/share'
+
+passed: 7  failed: 2

@@ -1,0 +1,130 @@
+{
+  "results": [
+    {
+      "unit_id": "ultimate_equipment:equipment:anaconda_s_coils",
+      "ours": 18,
+      "oracle": 18,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:belt_of_thunderous_charging",
+      "ours": 18,
+      "oracle": 18,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:belt_of_the_weasel",
+      "ours": 16,
+      "oracle": 16,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:cord_of_stubborn_resolve",
+      "ours": 16,
+      "oracle": 16,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:elemental_earth_belt",
+      "ours": 18,
+      "oracle": 18,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:gorgon_belt",
+      "ours": 20,
+      "oracle": 20,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:headband_of_aerial_agility_cha_2",
+      "ours": 10,
+      "oracle": 10,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:headband_of_aerial_agility_cha_4",
+      "ours": 12,
+      "oracle": 12,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:headband_of_aerial_agility_cha_6",
+      "ours": 14,
+      "oracle": 14,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:headband_of_aerial_agility_int_2",
+      "ours": 12,
+      "oracle": 12,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:headband_of_aerial_agility_int_4",
+      "ours": 14,
+      "oracle": 14,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:headband_of_aerial_agility_int_6",
+      "ours": 16,
+      "oracle": 16,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:headband_of_aerial_agility_wis_2",
+      "ours": 12,
+      "oracle": 12,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:headband_of_aerial_agility_wis_4",
+      "ours": 14,
+      "oracle": 14,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:headband_of_aerial_agility_wis_6",
+      "ours": 16,
+      "oracle": 16,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:headband_of_ponderous_recollection",
+      "ours": 12,
+      "oracle": 12,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:headband_of_unshakeable_resolve",
+      "ours": 12,
+      "oracle": 12,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:minotaur_belt",
+      "ours": 18,
+      "oracle": 18,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:monkey_belt",
+      "ours": 16,
+      "oracle": 16,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:plague_rat_belt",
+      "ours": 16,
+      "oracle": 16,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:shadowform_belt",
+      "ours": 20,
+      "oracle": 20,
+      "verdict": "agree"
+    }
+  ]
+}

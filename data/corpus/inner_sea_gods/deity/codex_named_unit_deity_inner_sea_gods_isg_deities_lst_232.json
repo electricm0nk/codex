@@ -1,0 +1,74 @@
+{
+  "codex_generated_name": true,
+  "completeness": "full",
+  "data": {
+    "key": "Codex-Named Unit (deity_inner_sea_gods_isg_deities_lst_232)",
+    "name": "Codex-Named Unit (deity_inner_sea_gods_isg_deities_lst_232)",
+    "raw_tokens": [
+      {
+        "key": "NAMEISPI",
+        "value": "YES"
+      },
+      {
+        "key": "DOMAINS",
+        "value": "Chaos,Earth,Good,Weather|PREALIGN:NG,CG,CN"
+      },
+      {
+        "key": "DESC",
+        "value": "Empyreal lord of change, growth, primal forces"
+      },
+      {
+        "key": "FACT",
+        "value": "Title|Fireshaker"
+      },
+      {
+        "key": "FACT",
+        "value": "Symbol|Volcano with gold lava"
+      },
+      {
+        "key": "FACTSET",
+        "value": "Animal|Dinosaur"
+      },
+      {
+        "key": "FACTSET",
+        "value": "Colors|Brown|Gold"
+      },
+      {
+        "key": "FACTSET",
+        "value": "Pantheon|Empyreal Lords"
+      },
+      {
+        "key": "DEITYWEAP",
+        "value": "Club"
+      },
+      {
+        "key": "ALIGN",
+        "value": "CG"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.324"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T14:24:41Z",
+  "license": "PI-REDACTED",
+  "pi_field": "name",
+  "pi_marker": "redacted",
+  "population": "in_scope",
+  "rename": {
+    "coordinate": "inner_sea_gods:isg_deities.lst:232",
+    "reason": "name_pi_blocked"
+  },
+  "source": {
+    "kind": "lst_token",
+    "line": 232,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_deities.lst",
+    "record_key": "Codex-Named Unit (deity_inner_sea_gods_isg_deities_lst_232)",
+    "sha256": "dd9f008ef3f68cb4859b655e89ee526302624f53bfe113dee7d1d50b36330d7d"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T09:31:54Z",
+  "data": {
+    "corpus_key": "Half-Giant ~ Flame of Freedom",
+    "delivery": null,
+    "description": "+1 manifester level on fire powers.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "ultimate_psionics:monster_ability:half_giant_flame_of_freedom",
+    "name": "Flame of Freedom",
+    "owners": [
+      "ultimate_psionics:monster:half_giant"
+    ],
+    "source_page": "p.327",
+    "traits": [
+      "RacialTraits",
+      "Half-GiantRacialTrait",
+      "Half-GiantPsionics"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_race.lst",
+    "sha256": "3368f2a5e87f65a202fb5dce31ecbe9bf6a0b8d0b715abc99d8233796131d9c7",
+    "line": 223,
+    "record_key": "Half-Giant ~ Flame of Freedom"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

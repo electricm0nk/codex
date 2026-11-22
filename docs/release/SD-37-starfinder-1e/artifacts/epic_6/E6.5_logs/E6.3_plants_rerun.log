@@ -1,0 +1,8 @@
+P1 hand-kept score: FAIL (exit 1) restored=True :: Error: SF-Soldier-3: sf.ability_score.dexterity: expected 14, got 16
+P2 Pathfinder Flat-Footed tile: FAIL (exit 1) restored=True :: Error: SF-Soldier-3: every CMB|CMD|Touch|Flat-Footed in the render is the engine's printed text: expected 0, got 1
+P3 skills dropped: FAIL (exit 1) restored=True :: Error: SF-Soldier-3: sf.skill.athletics: expected +6, got 6
+P4 literal digit in a label: FAIL (exit 1) restored=True :: Error: SF-Soldier-3: label Resolve Points (max 20) has a digit outside its rows sf.resolve
+P5 route removed: FAIL (exit 1) restored=True :: Error: SF-Soldier-3: opens the Starfinder sheet
+P6 stale fixture: FAIL (exit 101) restored=True :: test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 689 filtered out; finished in 1.18s
+P7 engine score rows removed: FAIL (exit 101) restored=True :: test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 689 filtered out; finished in 0.81s
+verdict=PASS red=7 of 7

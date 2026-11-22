@@ -1,0 +1,2 @@
+?? apps/desktop/scripts/ui-smoke/.out/
+?? docs/release/SD-38-cyberpunk-red/artifacts/epic_6/E6.MC_evidence/

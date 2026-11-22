@@ -1,0 +1,52 @@
+{
+  "codex_generated_name": false,
+  "completeness": "chassis_only",
+  "data": {
+    "key": "Familial Lich",
+    "name": "Familial Lich",
+    "raw_tokens": [
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.251"
+      },
+      {
+        "key": "PRETEMPLATE",
+        "value": "1,Lich"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Race Traits ~ Familial Lich"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|LichDR|-15"
+      },
+      {
+        "key": "DR",
+        "value": "10/Good"
+      },
+      {
+        "key": "SR",
+        "value": "11+CR"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T16:43:18Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 38,
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_templates.lst",
+    "record_key": "Familial Lich",
+    "sha256": "2bdc330c9f1d4fcc2fd799ba7dd02a4511dab172cf39abefcd480a3a0f9d2edb"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:sr"
+  ]
+}

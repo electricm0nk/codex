@@ -1,0 +1,29 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Exorcising Mutilation",
+    "category": "General",
+    "name": "Exorcising Mutilation",
+    "description": "Malevolent entities that seek to possess or dominate you are unaware of how far you will go to stop them. When you fail a saving throw to resist possession or a dominate spell, you can deal 4 points of Constitution damage to yourself and reroll your saving throw as an immediate action. You cannot reduce or negate this damage in any way, and the only way to heal the damage is through natural recovery; magical methods don't work. You must take the result of the second roll, even if it is worse. If you succeed at the second saving throw, you also become immune to that spell or ability from that creature for 24 hours. You must be wielding a lethal piercing or slashing weapon, or possess a claw natural attack or some way to draw such a weapon reactively without using your immediate action, to use this ability.",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=FEAT,Clarity of Pain",
+      "PREVARGTEQ:PreStatScore_CON,15"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_feats.lst",
+    "sha256": "b8183ddca5eece895bf40f7765744bb470970418a8baca58aee907487f0140e6",
+    "line": 24,
+    "record_key": "Exorcising Mutilation"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

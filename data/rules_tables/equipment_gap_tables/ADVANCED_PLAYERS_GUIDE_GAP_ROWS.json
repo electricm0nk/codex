@@ -1,0 +1,383 @@
+{
+  "format": "codex.rules_tables/1",
+  "table": "equipment_gap_tables/ADVANCED_PLAYERS_GUIDE_GAP_ROWS",
+  "licence": {
+    "license": "OGL",
+    "book": "equipment_gap_tables",
+    "screen": "pi_screening::classify_field",
+    "pi_hits": [],
+    "redacted": []
+  },
+  "rows": [
+    {
+      "book": "APG",
+      "key": "Special Ability ~ Allying ~ Weapon",
+      "name": "Allying",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Allows transfer of some or all of its enhancement bonus to an ally's weapon.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "APG",
+      "key": "Special Ability ~ Conductive ~ Weapon",
+      "name": "Conductive",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Conducts touch attacks from spell-like and supernatural abilities.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "APG",
+      "key": "Special Ability ~ Corrosive ~ Weapon",
+      "name": "Corrosive",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "+1d6 acid damage",
+      "name_pi_citation": null
+    },
+    {
+      "book": "APG",
+      "key": "Special Ability ~ Corrosive Burst ~ Weapon",
+      "name": "Corrosive Burst",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "A corrosive burst weapon functions as a corrosive weapon that explodes with acid upon striking a successful critical hit. The acid does not harm the wielder. In addition to the extra acid damage from the corrosive ability, a corrosive burst weapon deals an extra 1d10 points of acid damage on a successful critical hit. If the weapon's critical modifier is x3, add an extra 2d10 points of acid damage instead, and if the modifier is x4, add an extra 3d10 points. Even if the corrosive ability is not active, the weapon still deals its extra acid damage on a successful critical hit.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "APG",
+      "key": "Special Ability ~ Cunning ~ Weapon",
+      "name": "Cunning",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "+2 on critical confirmation rolls; requires 5 or more ranks in Knowledge skill appropriate to target",
+      "name_pi_citation": null
+    },
+    {
+      "book": "APG",
+      "key": "Special Ability ~ Dueling ~ Melee",
+      "name": "Dueling",
+      "category": "Equipmods",
+      "cost_gp": 14000.0,
+      "weight_lbs": null,
+      "description": "+4 on initiative checks when in hand, +2 on disarm and feint checks, +2 to CMD to resist disarm, +2 to DC to feint against the wielder",
+      "name_pi_citation": null
+    },
+    {
+      "book": "APG",
+      "key": "Special Ability ~ Furious ~ Melee",
+      "name": "Furious",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "+2 to enhancement bonus when raging, always applies its enhancement bonus to skills which are enhanced by rage powers",
+      "name_pi_citation": null
+    },
+    {
+      "book": "APG",
+      "key": "Special Ability ~ Grayflame ~ Weapon",
+      "name": "Grayflame",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "+1 to enhancement bonus, +1d6 holy/unholy damage, counts as good/silver or evil/cold iron, when infused with channeled energy",
+      "name_pi_citation": null
+    },
+    {
+      "book": "APG",
+      "key": "Special Ability ~ Huntsman ~ Weapon",
+      "name": "Huntsman",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "+1d6 damage to creatures tracked with Survival, provides enhancement bonus to track creatures the weapon has damaged",
+      "name_pi_citation": null
+    },
+    {
+      "book": "APG",
+      "key": "Special Ability ~ Jurist ~ Weapon",
+      "name": "Jurist",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "+1 to +3 enhancement bonus to Perception checks and CMD when using judgement class ability",
+      "name_pi_citation": null
+    },
+    {
+      "book": "APG",
+      "key": "Special Ability ~ Menacing ~ Melee",
+      "name": "Menacing",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "+2 to flanking bonus for allies while wielder is adjacent to flanked creature",
+      "name_pi_citation": null
+    },
+    {
+      "book": "APG",
+      "key": "Special Ability ~ Transformative ~ Melee",
+      "name": "Transformative",
+      "category": "Equipmods",
+      "cost_gp": 10000.0,
+      "weight_lbs": null,
+      "description": "On command, alters its shape to become any other melee weapon of the same general shape and handedness.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "APG",
+      "key": "Special Ability ~ Champion ~ Armor",
+      "name": "Champion",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "+2 sacred bonus to AC against attacks from the chosen opponent.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "APG",
+      "key": "Special Ability ~ Dastard ~ Armor",
+      "name": "Dastard",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "+2 profane bonus to AC against attacks from the chosen opponent.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "APG",
+      "key": "Special Ability ~ Determination ~ Armor",
+      "name": "Determination",
+      "category": "Equipmods",
+      "cost_gp": 30000.0,
+      "weight_lbs": null,
+      "description": "Once per day, when the owner reaches 0 or fewer hit points, the item automatically provides a breath of life spell.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "APG",
+      "key": "Special Ability ~ Jousting ~ Armor",
+      "name": "Jousting",
+      "category": "Equipmods",
+      "cost_gp": 3750.0,
+      "weight_lbs": null,
+      "description": "+5 competence bonus on Ride skill checks.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "APG",
+      "key": "Special Ability ~ Righteous ~ Armor",
+      "name": "Righteous",
+      "category": "Equipmods",
+      "cost_gp": 27000.0,
+      "weight_lbs": null,
+      "description": "On command once per day can invoke an effect as per the spell righteous might.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "APG",
+      "key": "Special Ability ~ Unrighteous ~ Armor",
+      "name": "Unrighteous",
+      "category": "Equipmods",
+      "cost_gp": 27000.0,
+      "weight_lbs": null,
+      "description": "On command once per day can invoke an effect as per the spell righteous might.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "APG",
+      "key": "ALLYING",
+      "name": "ALLYING",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Allows transfer of some or all of its enhancement bonus to an ally's weapon.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "APG",
+      "key": "CONDUCTVE",
+      "name": "CONDUCTVE",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Conducts touch attacks from spell-like and supernatural abilities.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "APG",
+      "key": "CRRSVE",
+      "name": "CRRSVE",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "+1d6 acid damage",
+      "name_pi_citation": null
+    },
+    {
+      "book": "APG",
+      "key": "CRRSVE_BRST_M",
+      "name": "CRRSVE_BRST_M",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "A corrosive burst weapon functions as a corrosive weapon that explodes with acid upon striking a successful critical hit. The acid does not harm the wielder. In addition to the extra acid damage from the corrosive ability, a corrosive burst weapon deals an extra 1d10 points of acid damage on a successful critical hit. If the weapon's critical modifier is x3, add an extra 2d10 points of acid damage instead, and if the modifier is x4, add an extra 3d10 points. Even if the corrosive ability is not active, the weapon still deals its extra acid damage on a successful critical hit.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "APG",
+      "key": "CRRSVE_BRST_R",
+      "name": "CRRSVE_BRST_R",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "A corrosive burst weapon functions as a corrosive weapon that explodes with acid upon striking a successful critical hit. The acid does not harm the wielder. In addition to the extra acid damage from the corrosive ability, a corrosive burst weapon deals an extra 1d10 points of acid damage on a successful critical hit. If the weapon's critical modifier is x3, add an extra 2d10 points of acid damage instead, and if the modifier is x4, add an extra 3d10 points. Even if the corrosive ability is not active, the weapon still deals its extra acid damage on a successful critical hit.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "APG",
+      "key": "CNNING",
+      "name": "CNNING",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "+2 on critical confirmation rolls; requires 5 or more ranks in Knowledge skill appropriate to target",
+      "name_pi_citation": null
+    },
+    {
+      "book": "APG",
+      "key": "DUELING",
+      "name": "DUELING",
+      "category": "Equipmods",
+      "cost_gp": 14000.0,
+      "weight_lbs": null,
+      "description": "+4 on initiative checks when in hand, +2 on disarm and feint checks, +2 to CMD to resist disarm, +2 to DC to feint against the wielder",
+      "name_pi_citation": null
+    },
+    {
+      "book": "APG",
+      "key": "FURIOUS",
+      "name": "FURIOUS",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "+2 to enhancement bonus when raging, always applies its enhancement bonus to skills which are enhanced by rage powers",
+      "name_pi_citation": null
+    },
+    {
+      "book": "APG",
+      "key": "GRAYFLM",
+      "name": "GRAYFLM",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "+1 to enhancement bonus, +1d6 holy/unholy damage, counts as good/silver or evil/cold iron, when infused with channeled energy",
+      "name_pi_citation": null
+    },
+    {
+      "book": "APG",
+      "key": "HUNTSMAN",
+      "name": "HUNTSMAN",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "+1d6 damage to creatures tracked with Survival, provides enhancement bonus to track creatures the weapon has damaged",
+      "name_pi_citation": null
+    },
+    {
+      "book": "APG",
+      "key": "JURIST",
+      "name": "JURIST",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "+1 to +3 enhancement bonus to Perception checks and CMD when using judgement class ability",
+      "name_pi_citation": null
+    },
+    {
+      "book": "APG",
+      "key": "MENACING",
+      "name": "MENACING",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "+2 to flanking bonus for allies while wielder is adjacent to flanked creature",
+      "name_pi_citation": null
+    },
+    {
+      "book": "APG",
+      "key": "TRANSFORM",
+      "name": "TRANSFORM",
+      "category": "Equipmods",
+      "cost_gp": 10000.0,
+      "weight_lbs": null,
+      "description": "On command, alters its shape to become any other melee weapon of the same general shape and handedness.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "APG",
+      "key": "CHAMP",
+      "name": "CHAMP",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "+2 sacred bonus to AC against attacks from the chosen opponent.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "APG",
+      "key": "DSTRD",
+      "name": "DSTRD",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "+2 profane bonus to AC against attacks from the chosen opponent.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "APG",
+      "key": "DTRMN",
+      "name": "DTRMN",
+      "category": "Equipmods",
+      "cost_gp": 30000.0,
+      "weight_lbs": null,
+      "description": "Once per day, when the owner reaches 0 or fewer hit points, the item automatically provides a breath of life spell.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "APG",
+      "key": "JSTNG",
+      "name": "JSTNG",
+      "category": "Equipmods",
+      "cost_gp": 3750.0,
+      "weight_lbs": null,
+      "description": "+5 competence bonus on Ride skill checks.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "APG",
+      "key": "RGHTS",
+      "name": "RGHTS",
+      "category": "Equipmods",
+      "cost_gp": 27000.0,
+      "weight_lbs": null,
+      "description": "On command once per day can invoke an effect as per the spell righteous might.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "APG",
+      "key": "UNRGHTS",
+      "name": "UNRGHTS",
+      "category": "Equipmods",
+      "cost_gp": 27000.0,
+      "weight_lbs": null,
+      "description": "On command once per day can invoke an effect as per the spell righteous might.",
+      "name_pi_citation": null
+    }
+  ]
+}

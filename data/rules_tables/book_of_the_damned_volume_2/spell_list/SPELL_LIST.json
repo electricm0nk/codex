@@ -1,0 +1,90 @@
+{
+  "format": "codex.rules_tables/1",
+  "table": "book_of_the_damned_volume_2/spell_list/SPELL_LIST",
+  "licence": {
+    "license": "OGL",
+    "book": "book_of_the_damned_volume_2",
+    "screen": "pi_screening::classify_field",
+    "pi_hits": [],
+    "redacted": []
+  },
+  "rows": [
+    {
+      "key": "Portal Jump",
+      "name_pi_line": null,
+      "school": "Conjuration",
+      "level": null,
+      "description": "You step through one doorway, arch, or window and emerge from another at any point within 500 feet. This is a teleportation effect similar to dimension door, but you do not become disoriented when you use this ability."
+    },
+    {
+      "key": "Summon Monster VI (Demoniac)",
+      "name_pi_line": null,
+      "school": "Conjuration",
+      "level": null,
+      "description": "This spell summons one succubus, 1d3 babaus, or 1d4+1 brimoraks. It appears where you designate and acts immediately, on your turn. It attacks your opponents to the best of its ability. If you can communicate with the creature, you can direct it not to attack, to attack particular enemies, or to perform other actions. You choose which kind of creature to summon, and you can choose a different one each time you cast the spell. A summoned monster cannot summon or otherwise conjure another creature, nor can it use any teleportation or planar travel abilities."
+    },
+    {
+      "key": "Summon Monster VIII (Demoniac)",
+      "name_pi_line": null,
+      "school": "Conjuration",
+      "level": null,
+      "description": "This spell summons one hezrou, 1d3 vrocks, or 1d4+1 succubi. It appears where you designate and acts immediately, on your turn. It attacks your opponents to the best of its ability. If you can communicate with the creature, you can direct it not to attack, to attack particular enemies, or to perform other actions. You choose which kind of creature to summon, and you can choose a different one each time you cast the spell. A summoned monster cannot summon or otherwise conjure another creature, nor can it use any teleportation or planar travel abilities."
+    },
+    {
+      "key": "Disfiguring Touch",
+      "name_pi_line": null,
+      "school": "Transmutation",
+      "level": 2,
+      "description": "With a touch, you cause the victim of this spell to suffer a painful curse that causes it to grow horribly disfigured."
+    },
+    {
+      "key": "Rift of Ruin",
+      "name_pi_line": null,
+      "school": "Conjuration",
+      "level": 8,
+      "description": "This spell tears a rift in reality, creating an extradimensional hole with a depth of 60 feet."
+    },
+    {
+      "key": "Vermin Shape I",
+      "name_pi_line": null,
+      "school": "Transmutation",
+      "level": 3,
+      "description": "When you cast this spell, you assume the form of any Small or Medium creature of the vermin type."
+    },
+    {
+      "key": "Vermin Shape II",
+      "name_pi_line": null,
+      "school": "Transmutation",
+      "level": 4,
+      "description": "This spell functions as vermin shape I, except that it also allows you to assume the form of a Tiny or Large creature of the vermin type."
+    },
+    {
+      "key": "Summon Monster II (Vermlek)",
+      "name_pi_line": null,
+      "school": "Conjuration",
+      "level": null,
+      "description": "A creature with the summon ability can summon other specific creatures of its kind much as though casting a summon monster spell, but it usually has only a limited chance of success (as specified in the creature's entry). Roll d%%: On a failure, no creature answers the summons. Summoned creatures automatically return whence they came after 1 hour. A creature summoned in this way cannot use any spells or spell-like abilities that require material components costing more than 1 gp unless those components are supplied, nor can it use its own summon ability for 1 hour. An appropriate spell level is given for each summoning ability for purposes of Will saves, caster level checks, and concentration checks. No experience points are awarded for defeating summoned monsters."
+    },
+    {
+      "key": "Summon Monster III (Brimorak)",
+      "name_pi_line": null,
+      "school": "Conjuration",
+      "level": null,
+      "description": "A creature with the summon ability can summon other specific creatures of its kind much as though casting a summon monster spell, but it usually has only a limited chance of success (as specified in the creature's entry). Roll d%%: On a failure, no creature answers the summons. Summoned creatures automatically return whence they came after 1 hour. A creature summoned in this way cannot use any spells or spell-like abilities that require material components costing more than 1 gp unless those components are supplied, nor can it use its own summon ability for 1 hour. An appropriate spell level is given for each summoning ability for purposes of Will saves, caster level checks, and concentration checks. No experience points are awarded for defeating summoned monsters."
+    },
+    {
+      "key": "Summon Monster V (Seraptis)",
+      "name_pi_line": null,
+      "school": "Conjuration",
+      "level": null,
+      "description": "A creature with the summon ability can summon other specific creatures of its kind much as though casting a summon monster spell, but it usually has only a limited chance of success (as specified in the creature's entry). Roll d%%: On a failure, no creature answers the summons. Summoned creatures automatically return whence they came after 1 hour. A creature summoned in this way cannot use any spells or spell-like abilities that require material components costing more than 1 gp unless those components are supplied, nor can it use its own summon ability for 1 hour. An appropriate spell level is given for each summoning ability for purposes of Will saves, caster level checks, and concentration checks. No experience points are awarded for defeating summoned monsters."
+    },
+    {
+      "key": "Summon Monster VI (Vavakia)",
+      "name_pi_line": null,
+      "school": "Conjuration",
+      "level": null,
+      "description": "A creature with the summon ability can summon other specific creatures of its kind much as though casting a summon monster spell, but it usually has only a limited chance of success (as specified in the creature's entry). Roll d%%: On a failure, no creature answers the summons. Summoned creatures automatically return whence they came after 1 hour. A creature summoned in this way cannot use any spells or spell-like abilities that require material components costing more than 1 gp unless those components are supplied, nor can it use its own summon ability for 1 hour. An appropriate spell level is given for each summoning ability for purposes of Will saves, caster level checks, and concentration checks. No experience points are awarded for defeating summoned monsters."
+    }
+  ]
+}

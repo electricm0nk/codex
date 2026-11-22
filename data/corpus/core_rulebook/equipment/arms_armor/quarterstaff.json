@@ -1,0 +1,28 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "data": {
+    "key": "Quarterstaff",
+    "category": "arms_armor",
+    "name": "Quarterstaff (Base)",
+    "cost_gp": null,
+    "weight_lbs": null,
+    "description": "A quarterstaff is a simple piece of wood, about 5 feet in length."
+  },
+  "source": {
+    "kind": "lst_inherited_copy",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_arms_armor.lst",
+    "sha256": "93dbb7ca43793137955851a68d745a069885e059f5eed8d77402380fea934f3a",
+    "line": 210,
+    "record_key": "Quarterstaff",
+    "inherited_from_record_key": "Quarterstaff (Base)"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

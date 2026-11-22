@@ -1,0 +1,47 @@
+{
+  "codex_generated_name": false,
+  "completeness": "chassis_only",
+  "data": {
+    "key": "Devil Subdomain (Law)",
+    "name": "Devil Subdomain (Law)",
+    "raw_tokens": [
+      {
+        "key": "PREALIGN",
+        "value": "LG,LN,LE"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREDOMAIN:1,Devil Subdomain (Law)],[!PREMULT:1,[PREVARGT:LawDomain,0],[PREDOMAIN:1,Devil Subdomain (Evil)]]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Core Domain ~ Devil Subdomain (Law)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.45"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Devil Subdomain (Law)=1|Command|Devil Subdomain (Law)=2|Align Weapon (Law Only)|Devil Subdomain (Law)=3|Suggestion|Devil Subdomain (Law)=4|Order's Wrath|Devil Subdomain (Law)=5|Dispel Chaos|Devil Subdomain (Law)=6|Planar Binding|Devil Subdomain (Law)=7|Dictum|Devil Subdomain (Law)=8|Shield of Law|Devil Subdomain (Law)=9|Summon Monster IX (Law Spell Only)"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T15:18:05Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 29,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_domains.lst",
+    "record_key": "Devil Subdomain (Law)",
+    "sha256": "a5c270c30b0caee73d7ae2b9b45bfa4e26da0d52f99c6d1a8787f3d7cc73098e"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

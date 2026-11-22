@@ -1,0 +1,55 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Psychopomp ~ Unchained Eidolon LVL20",
+    "delivery": null,
+    "description": "At 20th level, psychopomp eidolons increase their damage reduction to 10/adamantine and gain the immunity (cold) and immunity (electricity) evolutions.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "pathfinder_unchained:monster_ability:psychopomp_unchained_eidolon_lvl20",
+    "name": "Eidolon Progession Lv.20",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "BONUS",
+        "value": "VAR|EidolonDR|5"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "At 20th level, psychopomp eidolons increase their damage reduction to 10/adamantine and gain the immunity (cold) and immunity (electricity) evolutions."
+      },
+      {
+        "key": "KEY",
+        "value": "Psychopomp ~ Unchained Eidolon LVL20"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.PsychopompLVL20"
+      }
+    ],
+    "source_page": null,
+    "traits": [
+      "PsychopompLVL20"
+    ]
+  },
+  "ingested_at": "2026-08-23T16:17:34Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 180,
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_race.lst",
+    "record_key": "Psychopomp ~ Unchained Eidolon LVL20",
+    "sha256": "700bcd41e1ee925d0a727c86097de8fa37bed2768529e4a750bdb8249c4d8b8d"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

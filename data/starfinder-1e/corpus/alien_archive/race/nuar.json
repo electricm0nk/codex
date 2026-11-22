@@ -1,0 +1,19 @@
+{
+  "data": {
+    "key": "Nuar",
+    "name": "Nuar",
+    "type": "Monstrous Humanoid"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 17,
+    "path": "starfinder/paizo/alien_archive/saa_races.lst",
+    "record_key": "Nuar",
+    "sha256": "0dc3128df8e4db6dea903cfbc06e480fda9fae265bb8f6c790a5031a52e6dcd2"
+  },
+  "unit_id": "alien_archive:race:nuar"
+}

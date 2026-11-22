@@ -1,0 +1,24 @@
+# Task #66 deterministic Human Wizard level 6 Abjuration-school fixture.
+# Widens the task-66 level-1 Abjuration fixture
+# (pf1_human_wizard_level1_abjuration_school_input.txt) to level 6, the
+# first level at which Energy Absorption unlocks (PREVARGTEQ:
+# AbjurationProgressionSchoolLVL,6 on the Abjuration School ~ Energy
+# Absorption record in cr_abilities_class.lst), keeping every other
+# selection identical.
+case_id=task66-pf1-crb-human-wizard-level6-abjuration
+source_package_id=pf1.core_rulebook
+race_id=race:human
+class_level=class:wizard:6
+ability=strength:8
+ability=dexterity:14
+ability=constitution:13
+ability=intelligence:17
+ability=wisdom:12
+ability=charisma:10
+feat=feat:dodge
+choice=choice:wizard_school_specialization:school:abjuration
+choice=choice:wizard_opposed_schools:school:necromancy
+choice=choice:wizard_opposed_schools:school:transmutation
+choice=choice:human_bonus_feat:feat:dodge
+choice=choice:human_ability_bonus:ability:intelligence
+provenance=task-66-wizard-abjuration-school-grounding

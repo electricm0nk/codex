@@ -1,0 +1,118 @@
+[
+  {
+    "kind": "hazard",
+    "name": "On Fire",
+    "source_page": "p181",
+    "text": "When you are On Fire, until you use an Action to put yourself out, you take an amount of damage direct to your HP at the end of your Turn. Your armor isn't ablated. Remember that each Turn is only three seconds. This adds up.",
+    "levels": [
+      {
+        "intensity": "Mild",
+        "example": "Wood Fire",
+        "effect": "2 Damage direct to HP"
+      },
+      {
+        "intensity": "Strong",
+        "example": "Gasoline Fire",
+        "effect": "4 Damage direct to HP"
+      },
+      {
+        "intensity": "Deadly",
+        "example": "Thermite",
+        "effect": "6 Damage direct to HP"
+      }
+    ],
+    "transcription_note": "Print-only (CUI F-78). Intensity table printed on p181 (Mild / Strong / Deadly)."
+  },
+  {
+    "kind": "hazard",
+    "name": "Drowning",
+    "source_page": "p181",
+    "text": "Characters can hold their breath for a number of minutes equal to their BODY. When you can't hold your breath any longer, you start Drowning. At the beginning of a Turn where you are Drowning, you take your BODY STAT directly to your Hit Points in damage. This damage ignores your armor and doesn't ablate it."
+  },
+  {
+    "kind": "hazard",
+    "name": "Asphyxiation",
+    "source_page": "p181",
+    "text": "Asphyxiation should be treated like Drowning, save that there are sometimes secondary effects. If you are Asphyxiating in space you will take an additional 1d6 in damage at the end of your Turn to your INT, REF, and DEX from exposure to the vacuum. If your INT reaches 0, you are dead. This damage to your STATs is reversed if you manage to get a breath of air."
+  },
+  {
+    "kind": "hazard",
+    "name": "Electrocution",
+    "source_page": "p181",
+    "text": "When you are electrocuted, you immediately take 6d6 damage. This damage is soaked by armor as normal. If you don't move away from the source of your electrocution, this damage repeats at the end of each of your Turns, starting with your next Turn."
+  },
+  {
+    "kind": "hazard",
+    "name": "Exposure",
+    "source_page": "p182",
+    "text": "Prolonged exposure to the extreme elements will deal 1d6 damage directly to your HP at the end of each day of exposure. While exposed to the extreme elements, even if Stabilized, you cannot heal naturally. With proper equipment for your environment, you will never risk exposure."
+  },
+  {
+    "kind": "hazard",
+    "name": "Falling",
+    "source_page": "p182",
+    "text": "Falling Characters fall 40m/yds at the end of their Turn. At the moment they are no longer on solid ground, if an edge or ledge is nearby, they get one attempt to save themselves from flight with a DV15 Athletics Check. No Check is required if you have a Grapple Hand, Grapple Gun, etc. Upon hitting the ground, Characters who fall 10 m/yds or more take 2d6 damage for every 10 m/yds they fell (soaked by body armor) and unless they then succeed a DV15 Athletics Check, also suffer the Broken Leg Critical Injury. Characters with 2 Cyberlegs do not take this damage or suffer the Critical Injury. However, Cyberlegs do nothing to prevent damage or Critical Injury if the fall is greater than 30 m/yds. Common sense also dictates that if for some reason you fell off a skyscraper without a parachute, don't bother rolling a Death Save, you are dead."
+  },
+  {
+    "kind": "hazard",
+    "name": "Poison",
+    "source_page": "p182",
+    "text": "When you are Poisoned or Drugged, you must make a Resist Torture/Drugs Check against the DV of the attack. If you fail, you suffer the effect of the poison or drug. Your armor isn't ablated. Street drugs, their effects, and addiction are described at length in the Trauma Team Section on pg. 227.",
+    "shared_text_with": "Drugs",
+    "levels": [
+      {
+        "intensity": "Mild",
+        "examples": "Belladonna, Toxic Waste",
+        "resist_torture_drugs_dv": 11,
+        "effect": "1d6 Damage direct to HP"
+      },
+      {
+        "intensity": "Strong",
+        "examples": "Arsenic",
+        "resist_torture_drugs_dv": 13,
+        "effect": "2d6 Damage direct to HP"
+      },
+      {
+        "intensity": "Deadly",
+        "examples": "Biotoxin, Designer Poison, Stonefish Venom",
+        "resist_torture_drugs_dv": 15,
+        "effect": "3d6 Damage direct to HP"
+      }
+    ],
+    "transcription_note": "Poisons and Drugs share one printed paragraph on p182 (text repeated in both records) and two separate intensity tables."
+  },
+  {
+    "kind": "hazard",
+    "name": "Drugs",
+    "source_page": "p182",
+    "text": "When you are Poisoned or Drugged, you must make a Resist Torture/Drugs Check against the DV of the attack. If you fail, you suffer the effect of the poison or drug. Your armor isn't ablated. Street drugs, their effects, and addiction are described at length in the Trauma Team Section on pg. 227.",
+    "shared_text_with": "Poison",
+    "levels": [
+      {
+        "intensity": "Mild",
+        "examples": "Alcohol",
+        "resist_torture_drugs_dv": 11,
+        "effect": "Inebriation"
+      },
+      {
+        "intensity": "Strong",
+        "examples": "Sodium Pentothal",
+        "resist_torture_drugs_dv": 13,
+        "effect": "Suggestibility"
+      },
+      {
+        "intensity": "Deadly",
+        "examples": "Designer Drug",
+        "resist_torture_drugs_dv": 15,
+        "effect": "Designer's Intention"
+      }
+    ],
+    "transcription_note": "Poisons and Drugs share one printed paragraph on p182 (text repeated in both records) and two separate intensity tables."
+  },
+  {
+    "kind": "hazard",
+    "name": "Radiation",
+    "source_page": "p182",
+    "text": "Low level radiation exposure won't kill you immediately. Over time, it will make you sick, and then it will kill you, eventually, possibly through cancer. This is up to the GM to interpret. High level radiation is immediately dangerous. Every Turn that you remain in the hot zone, you are treated as being Mildly On Fire (see Being on Fire on pg. 180), except you cannot use an Action to put yourself out while you remain in the hot zone. If you are in an extremely hot zone, like being in a leaking reactor, you are treated as being Deadly On Fire instead."
+  }
+]

@@ -1,0 +1,307 @@
+{
+  "format": "codex.rules_tables/1",
+  "table": "pathfinder_unchained/equipment_tables/equipment_tables",
+  "licence": {
+    "license": "OGL",
+    "book": "pathfinder_unchained",
+    "screen": "pi_screening::classify_field",
+    "pi_hits": [],
+    "redacted": []
+  },
+  "rows": [
+    {
+      "key": "Special Ability ~ ABP +0 ~ Weapon",
+      "name": "+0 ABP (Enhancement to Weapon)",
+      "equip_type": "Weapon",
+      "plus": null,
+      "description": "Add to a currently magical equipment to remove enhancement bonus and cost for ABP system."
+    },
+    {
+      "key": "Special Ability ~ ABP +1 ~ Weapon",
+      "name": "+1 ABP (Enhancement to Weapon)",
+      "equip_type": "Weapon",
+      "plus": 1,
+      "description": "Add to a currently magical equipment to remove enhancement bonus and cost for ABP system."
+    },
+    {
+      "key": "Special Ability ~ ABP +2 ~ Weapon",
+      "name": "+2 ABP (Enhancement to Weapon)",
+      "equip_type": "Weapon",
+      "plus": 2,
+      "description": "Add to a currently magical equipment to remove enhancement bonus and cost for ABP system."
+    },
+    {
+      "key": "Special Ability ~ ABP +3 ~ Weapon",
+      "name": "+3 ABP (Enhancement to Weapon)",
+      "equip_type": "Weapon",
+      "plus": 3,
+      "description": "Add to a currently magical equipment to remove enhancement bonus and cost for ABP system."
+    },
+    {
+      "key": "Special Ability ~ ABP +4 ~ Weapon",
+      "name": "+4 ABP (Enhancement to Weapon)",
+      "equip_type": "Weapon",
+      "plus": 4,
+      "description": "Add to a currently magical equipment to remove enhancement bonus and cost for ABP system."
+    },
+    {
+      "key": "Special Ability ~ ABP +5 ~ Weapon",
+      "name": "+5 ABP (Enhancement to Weapon)",
+      "equip_type": "Weapon",
+      "plus": 5,
+      "description": "Add to a currently magical equipment to remove enhancement bonus and cost for ABP system."
+    },
+    {
+      "key": "Special Ability ~ ABP +0 ~ Ammunition",
+      "name": "+0 ABP (Enhancement to Ammunition)",
+      "equip_type": "Ammunition",
+      "plus": null,
+      "description": "Add to a currently magical equipment to remove enhancement bonus and cost for ABP system."
+    },
+    {
+      "key": "Special Ability ~ ABP +1 ~ Ammunition",
+      "name": "+1 ABP (Enhancement to Ammunition)",
+      "equip_type": "Ammunition",
+      "plus": 1,
+      "description": "Add to a currently magical equipment to remove enhancement bonus and cost for ABP system."
+    },
+    {
+      "key": "Special Ability ~ ABP +2 ~ Ammunition",
+      "name": "+2 ABP (Enhancement to Ammunition)",
+      "equip_type": "Ammunition",
+      "plus": 2,
+      "description": "Add to a currently magical equipment to remove enhancement bonus and cost for ABP system."
+    },
+    {
+      "key": "Special Ability ~ ABP +3 ~ Ammunition",
+      "name": "+3 ABP (Enhancement to Ammunition)",
+      "equip_type": "Ammunition",
+      "plus": 3,
+      "description": "Add to a currently magical equipment to remove enhancement bonus and cost for ABP system."
+    },
+    {
+      "key": "Special Ability ~ ABP +4 ~ Ammunition",
+      "name": "+4 ABP (Enhancement to Ammunition)",
+      "equip_type": "Ammunition",
+      "plus": 4,
+      "description": "Add to a currently magical equipment to remove enhancement bonus and cost for ABP system."
+    },
+    {
+      "key": "Special Ability ~ ABP +5 ~ Ammunition",
+      "name": "+5 ABP (Enhancement to Ammunition)",
+      "equip_type": "Ammunition",
+      "plus": 5,
+      "description": "Add to a currently magical equipment to remove enhancement bonus and cost for ABP system."
+    },
+    {
+      "key": "Special Ability ~ ABP +0 ~ Armor",
+      "name": "+0 ABP (Enhancement to Armor)",
+      "equip_type": "Armor",
+      "plus": null,
+      "description": "Add to a currently magical equipment to remove enhancement bonus and cost for ABP system."
+    },
+    {
+      "key": "Special Ability ~ ABP +1 ~ Armor",
+      "name": "+1 ABP (Enhancement to Armor)",
+      "equip_type": "Armor",
+      "plus": 1,
+      "description": "Add to a currently magical equipment to remove enhancement bonus and cost for ABP system."
+    },
+    {
+      "key": "Special Ability ~ ABP +2 ~ Armor",
+      "name": "+2 ABP (Enhancement to Armor)",
+      "equip_type": "Armor",
+      "plus": 2,
+      "description": "Add to a currently magical equipment to remove enhancement bonus and cost for ABP system."
+    },
+    {
+      "key": "Special Ability ~ ABP +3 ~ Armor",
+      "name": "+3 ABP (Enhancement to Armor)",
+      "equip_type": "Armor",
+      "plus": 3,
+      "description": "Add to a currently magical equipment to remove enhancement bonus and cost for ABP system."
+    },
+    {
+      "key": "Special Ability ~ ABP +4 ~ Armor",
+      "name": "+4 ABP (Enhancement to Armor)",
+      "equip_type": "Armor",
+      "plus": 4,
+      "description": "Add to a currently magical equipment to remove enhancement bonus and cost for ABP system."
+    },
+    {
+      "key": "Special Ability ~ ABP +5 ~ Armor",
+      "name": "+5 ABP (Enhancement to Armor)",
+      "equip_type": "Armor",
+      "plus": 5,
+      "description": "Add to a currently magical equipment to remove enhancement bonus and cost for ABP system."
+    },
+    {
+      "key": "Special Ability ~ ABP +0 ~ Shield",
+      "name": "+0 ABP (Enhancement to Shield)",
+      "equip_type": "Shield",
+      "plus": null,
+      "description": "Add to a currently magical equipment to remove enhancement bonus and cost for ABP system."
+    },
+    {
+      "key": "Special Ability ~ ABP +1 ~ Shield",
+      "name": "+1 ABP (Enhancement to Shield)",
+      "equip_type": "Shield",
+      "plus": 1,
+      "description": "Add to a currently magical equipment to remove enhancement bonus and cost for ABP system."
+    },
+    {
+      "key": "Special Ability ~ ABP +2 ~ Shield",
+      "name": "+2 ABP (Enhancement to Shield)",
+      "equip_type": "Shield",
+      "plus": 2,
+      "description": "Add to a currently magical equipment to remove enhancement bonus and cost for ABP system."
+    },
+    {
+      "key": "Special Ability ~ ABP +3 ~ Shield",
+      "name": "+3 ABP (Enhancement to Shield)",
+      "equip_type": "Shield",
+      "plus": 3,
+      "description": "Add to a currently magical equipment to remove enhancement bonus and cost for ABP system."
+    },
+    {
+      "key": "Special Ability ~ ABP +4 ~ Shield",
+      "name": "+4 ABP (Enhancement to Shield)",
+      "equip_type": "Shield",
+      "plus": 4,
+      "description": "Add to a currently magical equipment to remove enhancement bonus and cost for ABP system."
+    },
+    {
+      "key": "Special Ability ~ ABP +5 ~ Shield",
+      "name": "+5 ABP (Enhancement to Shield)",
+      "equip_type": "Shield",
+      "plus": 5,
+      "description": "Add to a currently magical equipment to remove enhancement bonus and cost for ABP system."
+    },
+    {
+      "key": "ABP ~ +0 Attunement ~ Weapon",
+      "name": "+0 Attuned Weapon",
+      "equip_type": "Weapon",
+      "plus": null,
+      "description": "Attunement for equipment that has magic abilities, powering the ability rather than granting bonuses."
+    },
+    {
+      "key": "ABP ~ +1 Attunement ~ Weapon",
+      "name": "+1 Attuned Weapon",
+      "equip_type": "Weapon",
+      "plus": 1,
+      "description": "Adds enhancement bonus to attuned equipment."
+    },
+    {
+      "key": "ABP ~ +2 Attunement ~ Weapon",
+      "name": "+2 Attuned Weapon",
+      "equip_type": "Weapon",
+      "plus": 2,
+      "description": "Adds enhancement bonus to attuned equipment."
+    },
+    {
+      "key": "ABP ~ +3 Attunement ~ Weapon",
+      "name": "+3 Attuned Weapon",
+      "equip_type": "Weapon",
+      "plus": 3,
+      "description": "Adds enhancement bonus to attuned equipment."
+    },
+    {
+      "key": "ABP ~ +4 Attunement ~ Weapon",
+      "name": "+4 Attuned Weapon",
+      "equip_type": "Weapon",
+      "plus": 4,
+      "description": "Adds enhancement bonus to attuned equipment."
+    },
+    {
+      "key": "ABP ~ +5 Attunement ~ Weapon",
+      "name": "+5 Attuned Weapon",
+      "equip_type": "Weapon",
+      "plus": 5,
+      "description": "Adds enhancement bonus to attuned equipment."
+    },
+    {
+      "key": "ABP ~ +0 Attunement ~ Armor",
+      "name": "+0 Attuned Armor",
+      "equip_type": "Armor.Clothing",
+      "plus": null,
+      "description": "Attunement for equipment that has magic abilities, powering the ability rather than granting bonuses."
+    },
+    {
+      "key": "ABP ~ +1 Attunement ~ Armor",
+      "name": "+1 Attuned Armor",
+      "equip_type": "Armor.Clothing",
+      "plus": 1,
+      "description": "Adds enhancement bonus to attuned equipment."
+    },
+    {
+      "key": "ABP ~ +2 Attunement ~ Armor",
+      "name": "+2 Attuned Armor",
+      "equip_type": "Armor.Clothing",
+      "plus": 2,
+      "description": "Adds enhancement bonus to attuned equipment."
+    },
+    {
+      "key": "ABP ~ +3 Attunement ~ Armor",
+      "name": "+3 Attuned Armor",
+      "equip_type": "Armor.Clothing",
+      "plus": 3,
+      "description": "Adds enhancement bonus to attuned equipment."
+    },
+    {
+      "key": "ABP ~ +4 Attunement ~ Armor",
+      "name": "+4 Attuned Armor",
+      "equip_type": "Armor.Clothing",
+      "plus": 4,
+      "description": "Adds enhancement bonus to attuned equipment."
+    },
+    {
+      "key": "ABP ~ +5 Attunement ~ Armor",
+      "name": "+5 Attuned Armor",
+      "equip_type": "Armor.Clothing",
+      "plus": 5,
+      "description": "Adds enhancement bonus to attuned equipment."
+    },
+    {
+      "key": "ABP ~ +0 Attunement ~ Shield",
+      "name": "+0 Attuned Shield",
+      "equip_type": "Shield",
+      "plus": null,
+      "description": "Attunement for equipment that has magic abilities, powering the ability rather than granting bonuses."
+    },
+    {
+      "key": "ABP ~ +1 Attunement ~ Shield",
+      "name": "+1 Attuned Shield",
+      "equip_type": "Shield",
+      "plus": 1,
+      "description": "Adds enhancement bonus to attuned equipment."
+    },
+    {
+      "key": "ABP ~ +2 Attunement ~ Shield",
+      "name": "+2 Attuned Shield",
+      "equip_type": "Shield",
+      "plus": 2,
+      "description": "Adds enhancement bonus to attuned equipment."
+    },
+    {
+      "key": "ABP ~ +3 Attunement ~ Shield",
+      "name": "+3 Attuned Shield",
+      "equip_type": "Shield",
+      "plus": 3,
+      "description": "Adds enhancement bonus to attuned equipment."
+    },
+    {
+      "key": "ABP ~ +4 Attunement ~ Shield",
+      "name": "+4 Attuned Shield",
+      "equip_type": "Shield",
+      "plus": 4,
+      "description": "Adds enhancement bonus to attuned equipment."
+    },
+    {
+      "key": "ABP ~ +5 Attunement ~ Shield",
+      "name": "+5 Attuned Shield",
+      "equip_type": "Shield",
+      "plus": 5,
+      "description": "Adds enhancement bonus to attuned equipment."
+    }
+  ]
+}

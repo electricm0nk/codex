@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Empty Caste ~ Code of Conduct",
+    "name": "Code of Conduct",
+    "description": "You lose all class features except proficiencies if you ever willingly commit an act that threatens your hive or queen.  Additionally, your code requires that you respect your hive and queen, defend them, help them when in need and do whatever is necessary to secure the safety of the hive and queen.  Associates: While you may adventure with allies, you avoid working with characters that are a threat to your hive and queen or with anyone who consistently offends your moral code.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Empty Caste ~ Code of Conduct"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "NinjaClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "You lose all class features except proficiencies if you ever willingly commit an act that threatens your hive or queen.  Additionally, your code requires that you respect your hive and queen, defend them, help them when in need and do whatever is necessary to secure the safety of the hive and queen.  Associates: While you may adventure with allies, you avoid working with characters that are a threat to your hive and queen or with anyone who consistently offends your moral code."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.315"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_uc.lst",
+    "sha256": "2c97bc0e551c9846872c03df149c4ecd081e231a9e6753a35271d5f9708f5f80",
+    "line": 48,
+    "record_key": "Empty Caste ~ Code of Conduct"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

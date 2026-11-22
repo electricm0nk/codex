@@ -1,0 +1,26 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:34:12Z",
+  "data": {
+    "key": "Rift of Ruin",
+    "school": "Conjuration",
+    "level": 8,
+    "description": "This spell tears a rift in reality, creating an extradimensional hole with a depth of 60 feet."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_2/botd2_spells.lst",
+    "sha256": "cec56af35e0cda5fa61a508cd76ff21a42f9720dd11c459dec81cc3279d094ea",
+    "line": 17,
+    "record_key": "Rift of Ruin"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "derived:range_keyword"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

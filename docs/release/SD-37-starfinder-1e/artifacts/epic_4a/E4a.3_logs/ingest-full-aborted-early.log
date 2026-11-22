@@ -1,0 +1,1369 @@
+   Compiling codex v0.1.0 (/home/ubuntu/workspace/worktrees/codex-sd37)
+   Compiling codex-ingest v0.1.0 (/home/ubuntu/workspace/worktrees/codex-sd37/crates/codex-ingest)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 2m 04s
+     Running unittests src/lib.rs (/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/codex_ingest-06e24ac7d271e507)
+
+running 689 tests
+test oracle_validation::class_feature_scaling_bar_check::class_feature_scaling_bar_check_tests::a_wrong_expected_offset_pre_makes_run_class_feature_bar_check_report_a_failure ... ok
+test oracle_validation::class_feature_scaling_bar_check::class_feature_scaling_bar_check_tests::a_wrong_expected_divisor_makes_run_class_feature_bar_check_report_a_failure ... ok
+test oracle_validation::class_feature_scaling_bar_check::class_feature_scaling_bar_check_tests::a_correct_expected_class_feature_formula_clears_run_class_feature_bar_check ... ok
+test oracle_validation::class_feature_scaling_bar_check::class_feature_scaling_bar_check_tests::a_wrong_expected_level_var_makes_run_class_feature_bar_check_report_a_failure ... ok
+test oracle_validation::class_feature_scaling_bar_check::class_feature_scaling_bar_check_tests::a_wrong_expected_class_level_alias_makes_run_class_feature_bar_check_report_a_failure ... ok
+test oracle_validation::class_feature_scaling_bar_check::class_feature_scaling_bar_check_tests::a_wrong_expected_offset_post_makes_run_class_feature_bar_check_report_a_failure ... ok
+test oracle_validation::race_trait_formula_bar_check::race_trait_formula_bar_check_tests::a_transcription_regression_in_the_shipped_table_is_caught ... ok
+test pcgen_import::bonus_chain_reader::tests::a_chain_that_only_names_a_variable_states_no_magnitude ... ok
+test pcgen_import::bonus_chain_reader::tests::a_conditional_variable_contribution_is_unresolvable_not_zero ... ok
+test pcgen_import::bonus_chain_reader::tests::a_malformed_ability_chain_reports_absence_rather_than_a_guess ... ok
+test pcgen_import::bonus_chain_reader::tests::a_row_with_no_chains_declares_no_flags_rather_than_all_of_them ... ok
+test pcgen_import::bonus_chain_reader::tests::ability_adjustments_keep_the_whole_code_list_unparsed ... ok
+test pcgen_import::bonus_chain_reader::tests::ability_pool_picks_sum_only_the_ability_bonus_pool ... ok
+test pcgen_import::bonus_chain_reader::tests::an_internal_flag_chain_states_no_quantity_but_a_mixed_chain_keeps_its_magnitude ... ok
+test oracle_validation::race_trait_formula_bar_check::race_trait_formula_bar_check_tests::run_race_trait_formula_bar_check_clears_every_committed_fixture ... ok
+test pcgen_import::bonus_chain_reader::tests::flag_shaping_is_narrow_enough_to_leave_real_quantities_alone ... ok
+test pcgen_import::bonus_chain_reader::tests::magnitudes_are_read_in_source_order_and_deduplicated ... ok
+test pcgen_import::bonus_stack_reader::tests::a_token_with_more_than_one_trailing_pre_field_refuses ... ok
+test pcgen_import::bonus_stack_reader::tests::evaluate_producer_chain_with_no_define_defaults_base_to_zero_and_matches_evaluate_stack ... ok
+test pcgen_import::bonus_stack_reader::tests::evaluate_stack_matches_the_real_witch_ward_bonus_at_every_gate_boundary ... ok
+test pcgen_import::bonus_stack_reader::tests::extract_define_base_allows_identical_duplicate_define ... ok
+test pcgen_import::bonus_stack_reader::tests::extract_define_base_finds_the_matching_define_and_ignores_others ... ok
+test pcgen_import::bonus_stack_reader::tests::extract_define_base_refuses_on_disagreeing_duplicate_define ... ok
+test pcgen_import::bonus_stack_reader::tests::extract_define_base_returns_none_when_no_define_matches ... ok
+test pcgen_import::bonus_stack_reader::tests::extracts_only_the_matching_target_var_addends_in_order ... ok
+test pcgen_import::bonus_stack_reader::tests::mutated_ungated_sum_is_caught_diverging_below_the_top_gate ... ok
+test pcgen_import::bonus_stack_reader::tests::non_matching_tokens_are_skipped_not_errors ... ok
+test pcgen_import::bonus_stack_reader::tests::resolve_all_producer_chains_corpus_wide_over_no_records_reports_zero_population ... ok
+test pcgen_import::bonus_stack_reader::tests::resolve_all_producer_chains_corpus_wide_uses_every_scanned_record_not_just_the_first ... ok
+test pcgen_import::bonus_stack_reader::tests::resolve_all_producer_chains_corpus_wide_finds_and_classifies_every_distinct_target_var ... ok
+test pcgen_import::bonus_stack_reader::tests::resolve_producer_chain_corpus_wide_over_one_record_matches_the_narrow_extract_addends ... ok
+test pcgen_import::bonus_stack_reader::tests::resolve_producer_chain_corpus_wide_refuses_on_cross_record_disagreeing_define ... ok
+test pcgen_import::bonus_stack_reader::tests::resolve_producer_chain_corpus_wide_refuses_when_an_addend_gate_is_unrecognised ... ok
+test pcgen_import::bonus_stack_reader::tests::resolves_the_alchemist_bomb_lvl_producer_chain_across_two_real_corpus_records ... ok
+test pcgen_import::bonus_stack_reader::tests::unbound_gate_variable_refuses_not_defaults_to_ungated ... ok
+test pcgen_import::bonus_stack_reader::tests::single_record_scope_undercounts_the_alchemist_bomb_lvl_chain ... ok
+test pcgen_import::bonus_stack_reader::tests::unrecognised_pre_tag_on_a_matching_token_refuses_not_silently_dropped ... ok
+test pcgen_import::cache_gen::acg::tests::a_name_pi_equipment_entry_is_renamed_never_shipped_under_its_own_identity ... ok
+test pcgen_import::bonus_stack_reader::tests::wave_26_reads_the_real_ward_json_record_unmodified ... ok
+test pcgen_import::cache_gen::acg::tests::name_or_key_is_pi_catches_a_blacklisted_key ... ok
+test pcgen_import::cache_gen::acg::tests::name_or_key_is_pi_catches_a_blacklisted_name_even_when_key_is_clean ... ok
+test pcgen_import::cache_gen::acg::tests::slugify_handles_parens_and_collisions ... ok
+test pcgen_import::cache_gen::acg::tests::name_or_key_is_pi_is_false_for_an_ordinary_clean_value ... ok
+test pcgen_import::cache_gen::apg::tests::a_name_pi_equipment_entry_would_be_renamed_never_shipped_under_its_own_identity ... ok
+test pcgen_import::cache_gen::apg::tests::name_or_key_is_pi_catches_a_blacklisted_key ... ok
+test pcgen_import::cache_gen::acg::tests::write_json_never_overwrites_an_existing_file ... ok
+test oracle_validation::race_trait_formula_bar_check::race_trait_formula_bar_check_tests::a_mutated_evaluator_is_caught_by_the_race_trait_formula_gate ... ok
+test pcgen_import::cache_gen::apg::tests::name_or_key_is_pi_catches_a_blacklisted_name_even_when_key_is_clean ... ok
+test pcgen_import::cache_gen::apg::tests::slugify_handles_parens_and_collisions ... ok
+test pcgen_import::cache_gen::apg::tests::name_or_key_is_pi_is_false_for_an_ordinary_clean_value ... ok
+test pcgen_import::cache_gen::beastiary1::tests::a_name_pi_equipment_entry_would_be_renamed_never_shipped_under_its_own_identity ... ok
+test pcgen_import::cache_gen::beastiary1::tests::name_or_key_is_pi_catches_a_blacklisted_key ... ok
+test pcgen_import::cache_gen::beastiary1::tests::name_or_key_is_pi_catches_a_blacklisted_name_even_when_key_is_clean ... ok
+test pcgen_import::cache_gen::beastiary1::tests::slugify_handles_parens_and_spaces ... ok
+test pcgen_import::cache_gen::beastiary1::tests::name_or_key_is_pi_is_false_for_an_ordinary_clean_value ... ok
+test pcgen_import::cache_gen::class_feature::tests::a_blacklisted_name_is_flagged_even_with_no_nameispi_declaration ... ok
+test pcgen_import::cache_gen::beastiary1::tests::write_json_never_overwrites_an_existing_file ... ok
+test pcgen_import::cache_gen::class_feature::tests::book_primary_files_covers_the_23_in_scope_books ... ok
+test pcgen_import::cache_gen::class_feature::tests::category_label_alias_owner_refuses_the_known_multi_owner_and_not_class_owned_labels ... ok
+test pcgen_import::cache_gen::class_feature::tests::category_label_alias_owner_resolves_a_verified_text_free_label ... ok
+test pcgen_import::cache_gen::class_feature::tests::category_label_alias_owner_resolves_to_an_undispatched_corpus_declared_class ... ok
+test pcgen_import::cache_gen::class_feature::tests::category_label_alias_owner_returns_none_for_an_unregistered_group ... ok
+test pcgen_import::cache_gen::class_feature::tests::corpus_class_names_from_inventory_json_reads_every_class_kind_unit ... ok
+test pcgen_import::cache_gen::class_feature::tests::corpus_class_owner_resolves_a_genuinely_undispatched_real_class ... ok
+test pcgen_import::cache_gen::class_feature::tests::corpus_class_owner_returns_none_when_the_group_names_no_corpus_class ... ok
+test pcgen_import::cache_gen::class_feature::tests::desc_value_finds_the_desc_token ... ok
+test pcgen_import::cache_gen::class_feature::tests::desc_value_joins_a_safe_continuation_whose_last_segment_carries_a_display_condition_tail ... ok
+test pcgen_import::cache_gen::class_feature::tests::desc_value_joins_a_safe_two_segment_continuation ... ok
+test pcgen_import::cache_gen::class_feature::tests::desc_value_refuses_to_join_a_choice_branch_gated_multi_desc_row ... ok
+test pcgen_import::cache_gen::class_feature::tests::dispatched_class_title_names_len_matches_the_real_34_class_roster ... ok
+test pcgen_import::cache_gen::class_feature::tests::domain_power_owning_classes_returns_none_outside_the_namespace_and_when_unmapped ... ok
+test pcgen_import::cache_gen::class_feature::tests::effective_lst_key_prefers_the_explicit_key_token_over_the_display_name ... ok
+test pcgen_import::cache_gen::apg::tests::write_json_never_overwrites_an_existing_file ... ok
+test pcgen_import::cache_gen::class_feature::tests::foreign_citations_finds_only_records_carrying_class_key_never_this_generators_own ... ok
+test pcgen_import::cache_gen::class_feature::tests::generate_leaves_a_record_with_no_mod_row_unchanged ... ok
+test pcgen_import::cache_gen::class_feature::tests::generate_keeps_description_in_pi_field_when_both_name_and_desc_are_pi ... ok
+test pcgen_import::cache_gen::class_feature::tests::generate_finds_a_mod_row_in_a_nested_support_file_and_still_redacts_its_pi ... ok
+test pcgen_import::cache_gen::class_feature::tests::generate_redacts_a_description_carrying_an_ocr_glitched_blacklist_term_the_weak_scan_misses ... ok
+test pcgen_import::cache_gen::class_feature::tests::generate_renames_a_name_pi_row_instead_of_skipping_it ... ok
+test pcgen_import::cache_gen::class_feature::tests::generate_redacts_a_class_field_resolved_from_a_real_corpus_class_name_that_is_itself_pi ... ok
+test pcgen_import::cache_gen::class_feature::tests::generate_writes_the_alias_owner_for_a_text_free_category_label ... ok
+test pcgen_import::cache_gen::class_feature::tests::generate_renames_a_row_whose_key_owner_segment_carries_pi_even_when_name_is_clean ... ok
+test pcgen_import::cache_gen::class_feature::tests::generate_unions_every_mod_row_s_tokens_into_raw_tokens_not_just_the_base_row ... ok
+test pcgen_import::cache_gen::class_feature::tests::generate_writes_the_multi_owner_classes_for_a_domain_power_record_never_collapsing_class ... ok
+test pcgen_import::cache_gen::class_feature::tests::generate_writes_the_corpus_declared_undispatched_owner_for_the_t2a_t12_overlap ... ok
+test pcgen_import::cache_gen::class_feature::tests::name_skip_is_the_union_of_declared_and_blacklisted ... ok
+test pcgen_import::cache_gen::class_feature::tests::pool_catalog_owner_refuses_a_cross_class_collision ... ok
+test pcgen_import::cache_gen::class_feature::tests::pool_catalog_owner_refuses_a_verified_false_suffix_match ... ok
+test pcgen_import::cache_gen::class_feature::tests::pool_catalog_owner_resolves_a_registered_category_label_to_its_real_dispatched_class ... ok
+test pcgen_import::cache_gen::class_feature::tests::pool_catalog_owner_returns_none_for_an_unregistered_group ... ok
+test pcgen_import::cache_gen::class_feature::tests::redact_concatenated_blacklist_tokens_is_a_no_op_on_clean_tokens ... ok
+test pcgen_import::cache_gen::class_feature::tests::redact_concatenated_blacklist_tokens_redacts_a_pascalcase_concatenated_hit ... ok
+test pcgen_import::cache_gen::class_feature::tests::generate_writes_the_pool_catalog_owner_for_an_unregistered_grant_key ... ok
+test pcgen_import::cache_gen::class_feature::tests::redact_concatenated_blacklist_tokens_skips_a_value_already_redacted ... ok
+test pcgen_import::cache_gen::class_feature::tests::redact_desc_token_if_pi_is_a_no_op_when_license_is_not_pi_redacted ... ok
+test pcgen_import::cache_gen::class_feature::tests::redact_desc_token_if_pi_redacts_only_desc_when_license_says_pi_redacted ... ok
+test pcgen_import::cache_gen::class_feature::tests::row_tokens_skips_the_identity_column_and_splits_on_first_colon ... ok
+test pcgen_import::cache_gen::class_feature::tests::resolve_book_file_finds_a_nested_support_file_by_basename ... ok
+test pcgen_import::cache_gen::class_feature::tests::scrub_name_pi_tokens_does_not_over_redact_a_clean_formula_sharing_a_generic_key_segment ... ok
+test pcgen_import::cache_gen::class_feature::tests::scrub_name_pi_tokens_is_a_no_op_when_nothing_restates_the_identity ... ok
+test pcgen_import::cache_gen::class_feature::tests::scan_domain_power_owners_resolves_core_druid_inquisitor_and_bare_grants ... ok
+test pcgen_import::cache_gen::class_feature::tests::scrub_name_pi_tokens_redacts_identity_restatement_and_blacklist_hits_only ... ok
+test pcgen_import::cache_gen::class_feature::tests::slugify_handles_collisions ... ok
+test pcgen_import::cache_gen::class_feature::tests::true_class_by_key_omits_keys_with_no_grant_fact ... ok
+test pcgen_import::cache_gen::class_feature::tests::true_class_by_key_refuses_a_key_claimed_by_two_different_classes ... ok
+test pcgen_import::cache_gen::class_feature::tests::true_class_by_key_resolves_an_archetype_owned_key_to_the_real_class ... ok
+test pcgen_import::cache_gen::class_feature::tests::true_class_by_key_returns_empty_map_for_a_book_with_no_grant_directory ... ok
+test pcgen_import::cache_gen::class_feature::tests::generate_writes_the_true_class_not_the_key_prefix_guess ... ok
+test pcgen_import::cache_gen::class_feature::tests::type_facet_dispatched_owner_reads_the_class_feature_marker ... ok
+test pcgen_import::cache_gen::class_feature::tests::true_class_by_key_resolves_when_multiple_facts_agree ... ok
+test pcgen_import::cache_gen::class_feature::tests::type_facet_dispatched_owner_returns_none_with_no_marker ... ok
+test pcgen_import::cache_gen::class_feature::tests::units_from_inventory_json_accepts_any_abilities_class_file_of_a_known_book ... ok
+test pcgen_import::cache_gen::class_feature_grants::tests::a_feat_grant_with_no_tilde_key_is_not_class_feature_shaped ... ok
+test pcgen_import::cache_gen::class_feature_grants::tests::a_key_with_no_feature_half_is_rejected ... ok
+test pcgen_import::cache_gen::class_feature::tests::units_from_inventory_json_accepts_the_two_known_abilities_race_files_but_no_other_book ... ok
+test pcgen_import::cache_gen::class_feature_grants::tests::a_mod_row_resolution_is_never_flagged_archetype_sourced_regardless_of_row_category ... ok
+test pcgen_import::cache_gen::class_feature_grants::tests::a_modrow_gate_with_an_unaccounted_extra_segment_is_refused ... ok
+test pcgen_import::cache_gen::class_feature_grants::tests::a_preclass_gate_on_an_ordinary_class_feature_row_is_not_flagged_archetype_sourced ... ok
+test pcgen_import::cache_gen::class_feature_grants::tests::a_non_automatic_nature_is_skipped ... ok
+test pcgen_import::cache_gen::class_feature_grants::tests::a_preclass_gate_whose_row_is_an_archetype_definition_is_flagged_archetype_sourced ... ok
+test pcgen_import::cache_gen::class_feature_grants::tests::acg_wildcat_bonus_feat_resolves_against_the_live_oracle_row ... ignored, reads the live pinned PCGen oracle checkout; run with PCGEN_CORPUS_ROOT set
+test pcgen_import::cache_gen::class_feature_grants::tests::apg_fighter_roughrider_leap_from_the_saddle_resolves_against_the_live_oracle_row ... ignored, reads the live pinned PCGen oracle checkout; run with PCGEN_CORPUS_ROOT set
+test pcgen_import::cache_gen::class_feature_grants::tests::a_preclass_gate_with_an_unaccounted_negated_extra_segment_is_refused ... ok
+test pcgen_import::cache_gen::class_feature_grants::tests::a_type_qualifier_preclass_operand_is_refused_not_shipped_as_a_class ... ok
+test pcgen_import::cache_gen::class_feature_grants::tests::mod_row_fully_ungated_defaults_to_level_one_and_is_marked_implicit ... ok
+test pcgen_import::cache_gen::class_feature_grants::tests::mod_row_with_explicit_gate_resolves_class_and_level ... ok
+test pcgen_import::cache_gen::class_feature_grants::tests::bard_and_pathfinder_chronicler_each_grant_their_own_bardic_knowledge_record ... ok
+test pcgen_import::cache_gen::class_feature_grants::tests::mod_row_with_variant_suffix_still_resolves_the_base_class ... ok
+test pcgen_import::cache_gen::class_feature_grants::tests::oa_necroccultist_ghostly_horde_resolves_against_the_live_oracle_row ... ignored, reads the live pinned PCGen oracle checkout; run with PCGEN_CORPUS_ROOT set
+test pcgen_import::cache_gen::class_feature_grants::tests::multiple_sibling_keys_share_the_same_gate_none_dropped ... ok
+test pcgen_import::cache_gen::class_feature_grants::tests::negated_preclass_is_refused_not_treated_as_the_positive_gate ... ok
+test pcgen_import::cache_gen::class_feature_grants::tests::parse_grant_facts_reads_field0_from_the_row_not_from_tab_tokens_skip_one ... ok
+test pcgen_import::cache_gen::class_feature_grants::tests::preclass_conflicting_with_mod_row_class_is_refused ... ok
+test pcgen_import::cache_gen::class_feature_grants::tests::preability_gate_with_no_level_is_refused ... ok
+test pcgen_import::cache_gen::class_feature_grants::tests::preclass_gate_resolves_class_and_level_directly_not_from_the_key_text ... ok
+test pcgen_import::cache_gen::class_feature_grants::tests::preclass_multiclass_gate_is_refused_not_resolved ... ok
+test pcgen_import::cache_gen::class_feature_grants::tests::pu_class_feature_reproduction_barbarian ... ignored, reads the live pinned PCGen oracle checkout; run with PCGEN_CORPUS_ROOT set
+test pcgen_import::cache_gen::class_feature_grants::tests::pu_class_feature_reproduction_monk ... ignored, reads the live pinned PCGen oracle checkout; run with PCGEN_CORPUS_ROOT set
+test pcgen_import::cache_gen::class_feature_grants::tests::pu_class_feature_reproduction_rogue ... ignored, reads the live pinned PCGen oracle checkout; run with PCGEN_CORPUS_ROOT set
+test pcgen_import::cache_gen::class_feature_grants::tests::pu_class_feature_reproduction_summoner ... ignored, reads the live pinned PCGen oracle checkout; run with PCGEN_CORPUS_ROOT set
+test pcgen_import::cache_gen::class_feature_grants::tests::predomain_gate_is_refused_not_treated_as_a_class_grant ... ok
+test pcgen_import::cache_gen::class_feature_grants::tests::sigilus_inscribe_sihedron_resolves_against_the_live_oracle_row ... ignored, reads the live pinned PCGen oracle checkout; run with PCGEN_CORPUS_ROOT set
+test pcgen_import::cache_gen::class_feature_grants::tests::resolve_grants_keeps_the_first_successful_file_order_occurrence ... ok
+test pcgen_import::cache_gen::class_feature_grants::tests::uc_scarred_rager_improved_tolerance_resolves_against_the_live_oracle_row ... ignored, reads the live pinned PCGen oracle checkout; run with PCGEN_CORPUS_ROOT set
+test pcgen_import::cache_gen::class_feature_grants::tests::uw_chameleon_adept_terrain_chameleon_resolves_against_the_live_oracle_row ... ignored, reads the live pinned PCGen oracle checkout; run with PCGEN_CORPUS_ROOT set
+test pcgen_import::cache_gen::class_feature_grants::tests::two_different_classes_granting_the_same_feature_key_are_both_kept_not_collapsed ... ok
+test pcgen_import::cache_gen::class_feature_grants::tests::ungated_grant_on_a_non_mod_row_is_refused_not_defaulted_to_level_one ... ok
+test pcgen_import::cache_gen::equipment_copy_citation_repair::tests::refuses_when_the_old_line_has_no_independent_coverage ... ok
+test pcgen_import::cache_gen::equipment_copy_citation_repair::tests::dry_run_does_not_write ... ok
+test pcgen_import::cache_gen::equipment_gap::tests::a_blacklisted_name_is_flagged_by_the_term_scan ... ok
+test pcgen_import::cache_gen::equipment_gap::tests::a_nameispi_declared_row_would_be_renamed_not_redacted ... ok
+test pcgen_import::cache_gen::equipment_gap::tests::book_routing_b1_ships_under_bestiary_but_reads_core_essentials ... ok
+test pcgen_import::cache_gen::equipment_gap::tests::book_routing_covers_every_non_ue_gap_book ... ok
+test pcgen_import::cache_gen::equipment_gap::tests::book_routing_includes_ue_gap_residue ... ok
+test pcgen_import::cache_gen::equipment_gap::tests::coordinate_is_wanted_rejects_a_near_miss_on_any_single_field ... ok
+test pcgen_import::cache_gen::equipment_gap::tests::coordinate_is_wanted_rejects_an_unlisted_row_in_a_listed_book_and_file ... ok
+test pcgen_import::cache_gen::equipment_gap::tests::coordinate_is_wanted_with_a_filter_accepts_only_the_named_triple ... ok
+test pcgen_import::cache_gen::equipment_gap::tests::coordinate_is_wanted_with_no_filter_accepts_everything ... ok
+test pcgen_import::cache_gen::equipment_gap::tests::declared_pi_at_line_zero_is_no_declaration ... ok
+test pcgen_import::cache_gen::equipment_copy_citation_repair::tests::repairs_a_stale_copy_citation_when_the_old_line_has_independent_coverage ... ok
+test pcgen_import::cache_gen::equipment_gap::tests::a_different_citation_line_at_an_occupied_slug_is_disambiguated_not_dropped ... ok
+test pcgen_import::cache_gen::equipment_gap::tests::disabled_hash_prefixed_rows_are_recognized_and_live_rows_are_not ... ok
+test pcgen_import::cache_gen::equipment_gap::tests::existing_source_line_reads_a_real_record_and_is_none_otherwise ... ok
+test pcgen_import::cache_gen::equipment_gap::tests::find_citation_full_population_regression ... ignored
+test pcgen_import::cache_gen::equipment_gap::tests::find_citation_falls_back_to_a_non_equipment_shaped_file_when_no_equipment_shaped_file_resolves ... ok
+test pcgen_import::cache_gen::equipment_gap::tests::find_citation_falls_back_to_copy_variant ... ok
+test pcgen_import::cache_gen::equipment_gap::tests::find_citation_prefers_a_copy_variant_over_a_coincidental_first_column_match ... ok
+test pcgen_import::cache_gen::equipment_gap::tests::find_citation_key_then_first_column_then_name ... ok
+test pcgen_import::cache_gen::equipment_gap::tests::find_citation_prefers_an_equipment_shaped_file_over_a_proficiency_file_with_a_coincidental_key_match ... ok
+test pcgen_import::cache_gen::equipment_gap::tests::find_citation_returns_none_when_the_only_match_is_disabled ... ok
+test pcgen_import::cache_gen::equipment_gap::tests::find_citation_returns_none_when_nothing_matches ... ok
+test pcgen_import::cache_gen::equipment_gap::tests::find_citation_skips_a_disabled_key_line_in_favor_of_a_live_copy_variant ... ok
+test pcgen_import::cache_gen::equipment_gap::tests::forget_directive_keys_are_recognized_and_ordinary_keys_are_not ... ok
+test pcgen_import::cache_gen::equipment_gap::tests::resolve_name_or_rename_output_is_unchanged_when_the_original_name_is_swapped ... ok
+test pcgen_import::cache_gen::equipment_gap::tests::resolve_name_or_rename_passes_a_clean_row_through_unchanged ... ok
+test pcgen_import::cache_gen::equipment_gap::tests::resolve_name_or_rename_renames_a_name_pi_row_instead_of_excluding_it ... ok
+test pcgen_import::cache_gen::equipment_gap::tests::slugify_dedupes_collisions ... ok
+test pcgen_import::cache_gen::equipment_gap::tests::the_weak_scan_misses_a_lowercase_deity_occurrence_the_strong_scan_catches ... ok
+test pcgen_import::cache_gen::feat_gap::tests::a_nameispi_declared_row_would_be_excluded_not_redacted ... ok
+test pcgen_import::cache_gen::feat_gap::tests::book_specs_matches_gen_feat_gap_tables_book_count ... ok
+test pcgen_import::cache_gen::feat_gap::tests::declared_pi_at_line_zero_is_no_declaration ... ok
+test pcgen_import::cache_gen::feat_gap::tests::every_book_spec_rule_set_has_a_feat_gap_rows_for_arm ... ok
+test pcgen_import::cache_gen::equipment_gap::tests::write_json_never_overwrites_an_existing_file ... ok
+test pcgen_import::cache_gen::feat_gap::tests::find_citation_falls_back_to_first_column_name_match ... ok
+test pcgen_import::cache_gen::equipment_gap::tests::write_json_of_a_renamed_record_never_carries_the_original_name ... ok
+test pcgen_import::cache_gen::feat_gap::tests::find_citation_key_then_first_column_then_name ... ok
+test pcgen_import::cache_gen::feat_gap::tests::find_citation_returns_none_when_nothing_matches ... ok
+test pcgen_import::cache_gen::feat_gap::tests::screen_prerequisites_leaves_clean_lines_untouched_and_redacts_only_the_hit ... ok
+test pcgen_import::cache_gen::feat_gap::tests::screen_prerequisites_no_hit_is_untouched ... ok
+test pcgen_import::cache_gen::feat_gap::tests::screen_prerequisites_redacts_a_plainly_spelled_blacklist_term ... ok
+test pcgen_import::cache_gen::feat_gap::tests::screen_prerequisites_redacts_an_ocr_style_upstream_typo ... ok
+test pcgen_import::cache_gen::feat_gap::tests::slugify_dedupes_collisions ... ok
+test pcgen_import::cache_gen::hand_authored_equipment::tests::a_blacklisted_name_is_flagged_by_the_term_scan ... ok
+test pcgen_import::cache_gen::feat_gap::tests::write_json_never_overwrites_an_existing_file ... ok
+test pcgen_import::cache_gen::hand_authored_equipment::tests::a_nameispi_declared_row_would_be_renamed_not_redacted ... ok
+test pcgen_import::cache_gen::hand_authored_equipment::tests::every_book_short_code_routes ... ok
+test pcgen_import::cache_gen::hand_authored_equipment::tests::ultimate_magic_adapter_chains_an_empty_equipmod_tables_and_adds_nothing ... ok
+test pcgen_import::cache_gen::hand_authored_equipment::tests::ultimate_psionics_adapter_includes_equipmods_rows_too ... ok
+test pcgen_import::cache_gen::hand_authored_feat_dump::tests::every_book_spec_has_a_non_empty_hand_authored_table ... ok
+test pcgen_import::cache_gen::hand_authored_feat_dump::tests::generation_against_the_real_pinned_corpus_writes_records ... ok
+test pcgen_import::cache_gen::lst_provenance_repair::tests::a_copy_row_is_refused_rather_than_upgraded_on_a_partial_closure ... ok
+test pcgen_import::cache_gen::lst_provenance_repair::tests::a_corpus_backed_record_is_narrowed_to_an_lst_token_citation ... ok
+test pcgen_import::cache_gen::lst_provenance_repair::tests::a_cost_the_corpus_row_does_not_state_refuses ... ok
+test pcgen_import::cache_gen::lst_provenance_repair::tests::a_mod_row_override_satisfies_the_magnitude_check ... ok
+test pcgen_import::cache_gen::lst_provenance_repair::tests::a_record_claiming_no_magnitude_is_upgraded_on_identity_alone ... ok
+test pcgen_import::cache_gen::lst_provenance_repair::tests::a_weight_the_corpus_row_does_not_state_refuses_under_either_field_name ... ok
+test pcgen_import::cache_gen::lst_provenance_repair::tests::the_closure_this_module_builds_is_the_sweeps_own_tab_token_split ... ok
+test pcgen_import::cache_gen::spell_lane_dump::tests::a_record_whose_row_declares_nameispi_is_read_correctly ... ok
+test pcgen_import::cache_gen::hand_authored_equipment::tests::an_equipmods_row_lands_under_equipment_equipmods_not_the_equipment_root ... ok
+test pcgen_import::cache_gen::spell_lane_dump::tests::base_declaration_lines_also_indexes_a_declared_key_distinct_from_the_display_name ... ok
+test pcgen_import::cache_gen::spell_lane_dump::tests::base_declaration_lines_excludes_mod_and_copy_rows ... ok
+test pcgen_import::cache_gen::spell_lane_dump::tests::base_declaration_lines_indexes_a_copy_rows_own_variant_name ... ok
+test pcgen_import::cache_gen::spell_lane_dump::tests::description_classification_recognizes_an_already_redacted_compiled_table_value ... ok
+test pcgen_import::cache_gen::spell_lane_dump::tests::description_classification_still_re_screens_ordinary_clean_prose ... ok
+test pcgen_import::cache_gen::spell_lane_dump::tests::description_classification_still_redacts_a_genuinely_undeclared_blacklist_hit ... ok
+test oracle_validation::class_feature_scaling_bar_check::class_feature_scaling_bar_check_tests::run_class_feature_bar_check_clears_every_committed_class_feature_fixture ... ok
+test pcgen_import::cache_gen::spell_lane_dump::tests::slugify_disambiguates_repeated_names ... ok
+test pcgen_import::cache_gen::spell_mod_access::tests::a_second_run_does_not_clobber_the_first ... ok
+test pcgen_import::cache_gen::spell_mod_access::tests::generation_against_a_scratch_corpus_writes_one_record_and_skips_the_no_classes_row ... ok
+test pcgen_import::cache_gen::spell_mod_access::tests::generation_against_the_real_pinned_corpus_writes_records ... ok
+test pcgen_import::cache_gen::spell_mod_access::tests::parse_mod_row_accepts_the_real_occultist_shape ... ok
+test pcgen_import::cache_gen::spell_mod_access::tests::parse_mod_row_reads_a_declared_name_pi_token ... ok
+test pcgen_import::cache_gen::spell_mod_access::tests::parse_mod_row_rejects_a_mod_row_with_no_classes_token ... ok
+test pcgen_import::cache_gen::spell_mod_access::tests::parse_mod_row_rejects_a_non_mod_line ... ok
+test pcgen_import::cache_gen::tests::build_alone_cannot_see_a_file_outside_its_own_directory ... ok
+test pcgen_import::cache_gen::tests::wiring_class_for_book_resolves_a_citation_only_present_in_the_extra_directory ... ok
+test pcgen_import::cache_gen::ultimate_equipment::tests::a_dropped_record_does_not_linger_from_a_prior_run ... ok
+test pcgen_import::cache_gen::ultimate_equipment::tests::a_second_run_does_not_erase_a_later_enrichment_pass_on_a_still_valid_record ... ok
+test pcgen_import::cache_gen::ultimate_equipment::tests::a_sibling_generators_record_sharing_the_same_key_and_file_survives ... ok
+test pcgen_import::cache_gen::ultimate_equipment::tests::an_unscoped_key_only_predicate_reproduces_the_incident ... ok
+test pcgen_import::cache_gen::ultimate_equipment::tests::declared_pi_at_line_zero_is_no_declaration ... ok
+test pcgen_import::cache_gen::ultimate_equipment::tests::equipment_category_file_covers_every_category ... ok
+test pcgen_import::cache_gen::ultimate_equipment::tests::name_or_key_is_pi_is_false_for_an_ordinary_undeclared_name ... ok
+test pcgen_import::cache_gen::ultimate_equipment::tests::name_or_key_is_pi_is_true_for_an_undeclared_blacklisted_term ... ok
+test pcgen_import::cache_gen::ultimate_equipment::tests::name_or_key_is_pi_is_true_when_declared ... ok
+test pcgen_import::cache_gen::ultimate_equipment::tests::nameispi_yes_renames_the_record_instead_of_dropping_it ... ok
+test pcgen_import::cache_gen::ultimate_equipment::tests::slugify_handles_parens_and_collisions ... ok
+test pcgen_import::cache_gen::ultimate_equipment::tests::the_weak_description_scan_misses_a_lowercase_term_the_strong_scan_catches ... ok
+test pcgen_import::cache_gen::ultimate_equipment::tests::this_generators_own_stale_record_is_still_removed ... ok
+test pcgen_import::cache_gen::ultimate_equipment::tests::without_the_declaration_the_same_row_ships_normally ... ok
+test pcgen_import::class_feature_vars::tests::a_bare_comparison_is_a_numeric_one_or_zero ... ok
+test pcgen_import::class_feature_vars::tests::a_division_truncates_once_at_the_boundary_not_at_each_step ... ok
+test pcgen_import::class_feature_vars::tests::a_shape_the_parser_refuses_is_refused_here_too_never_guessed ... ok
+test pcgen_import::class_feature_vars::tests::a_type_field_is_stripped_and_never_read_as_a_gate ... ok
+test pcgen_import::class_feature_vars::tests::an_and_of_two_comparisons_is_their_product ... ok
+test pcgen_import::class_feature_vars::tests::an_if_selects_its_branch ... ok
+test pcgen_import::class_feature_vars::tests::floor_rounds_toward_negative_infinity ... ok
+test pcgen_import::class_feature_vars::tests::min_and_max_are_variadic_and_abs_is_a_max ... ok
+test pcgen_import::class_feature_vars::tests::the_row_reader_sums_a_multi_row_gated_target_and_keeps_a_sole_ungated_row ... ok
+test pcgen_import::companion_pcgen_guards::tests::every_converted_external_ability_ref_array_round_trips ... ok
+test pcgen_import::companion_pcgen_guards::tests::every_converted_guard_round_trips_from_the_live_typed_form ... ok
+test pcgen_import::companion_pcgen_guards::tests::no_live_external_ability_ref_is_an_ingest_token ... ok
+test pcgen_import::companion_pcgen_guards::tests::the_rebuilt_array_matches_the_shipped_book_cache ... ok
+test pcgen_import::companion_pcgen_guards::tests::the_table_is_not_empty_and_every_row_names_a_real_guard ... ok
+test pcgen_import::corpus_equipment_json::tests::a_data_object_with_no_key_is_not_a_record ... ok
+test pcgen_import::corpus_equipment_json::tests::equipment_record_from_json_never_overrides_a_real_raw_tokens_wt_or_cost ... ok
+test pcgen_import::corpus_equipment_json::tests::equipment_record_from_json_synthesizes_nothing_when_neither_field_is_present ... ok
+test pcgen_import::corpus_equipment_json::tests::equipment_record_from_json_synthesizes_wt_and_cost_when_raw_tokens_is_absent ... ok
+test pcgen_import::corpus_literal_sweep::tests::a_codex_generated_name_record_still_catches_a_non_redacted_drifted_token ... ok
+test pcgen_import::corpus_literal_sweep::tests::a_codex_generated_name_record_still_catches_a_non_self_referential_drifted_token ... ok
+test pcgen_import::corpus_literal_sweep::tests::a_codex_generated_name_records_multi_field_redaction_is_exempt_and_counted ... ok
+test pcgen_import::corpus_literal_sweep::tests::a_copy_rows_closure_with_its_resolved_base_proves_the_inherited_cost ... ok
+test pcgen_import::corpus_literal_sweep::tests::a_copy_rows_closure_without_its_base_cannot_prove_an_inherited_cost ... ok
+test pcgen_import::corpus_literal_sweep::tests::a_corrected_ingest_record_is_out_of_population ... ok
+test pcgen_import::corpus_literal_sweep::tests::a_cost_gp_present_in_the_closure_is_not_a_finding ... ok
+test pcgen_import::corpus_literal_sweep::tests::a_cost_gp_the_closure_never_states_is_a_finding_even_with_empty_raw_tokens ... ok
+test pcgen_import::corpus_literal_sweep::tests::a_declared_pi_redacted_desc_token_is_exempt_from_the_byte_match ... ok
+test pcgen_import::corpus_literal_sweep::tests::a_digest_that_no_longer_matches_the_corpus_file_is_a_finding ... ok
+test pcgen_import::corpus_literal_sweep::tests::a_faithful_record_produces_no_findings ... ok
+test pcgen_import::corpus_literal_sweep::tests::a_matching_digest_produces_no_finding ... ok
+test pcgen_import::corpus_literal_sweep::tests::a_multi_field_pi_field_list_including_description_still_exempts_desc ... ok
+test pcgen_import::corpus_literal_sweep::tests::a_non_desc_token_whose_raw_corpus_value_independently_reconfirms_as_blacklisted_is_exempt ... ok
+test pcgen_import::corpus_literal_sweep::tests::a_non_desc_token_whose_value_only_the_concatenated_scan_reconfirms_is_exempt ... ok
+test pcgen_import::corpus_literal_sweep::tests::a_plain_rows_own_tokens_are_unaffected_by_an_absent_copy_base ... ok
+test pcgen_import::corpus_literal_sweep::tests::a_record_claiming_no_digest_makes_no_claim_to_check ... ok
+test pcgen_import::corpus_literal_sweep::tests::a_record_outside_the_token_population_still_makes_a_checkable_digest_claim ... ok
+test pcgen_import::corpus_literal_sweep::tests::a_record_with_no_raw_tokens_is_out_of_population_not_a_pass ... ok
+test pcgen_import::corpus_literal_sweep::tests::a_record_with_no_typed_fields_is_unaffected ... ok
+test pcgen_import::corpus_literal_sweep::tests::a_self_referential_token_containing_the_records_own_neutral_name_is_exempt ... ok
+test pcgen_import::corpus_literal_sweep::tests::a_synthesized_token_absent_from_the_book_corpus_is_a_finding ... ok
+test pcgen_import::corpus_literal_sweep::tests::a_synthesized_token_present_in_the_book_corpus_is_faithful ... ok
+test pcgen_import::corpus_literal_sweep::tests::a_token_carried_by_a_mod_row_in_the_same_book_is_faithful ... ok
+test pcgen_import::corpus_literal_sweep::tests::a_token_merely_reading_the_marker_string_with_no_real_blacklist_backing_it_is_still_flagged ... ok
+test pcgen_import::corpus_literal_sweep::tests::a_token_the_corpus_row_never_carried_is_a_finding ... ok
+test pcgen_import::corpus_literal_sweep::tests::a_trailing_space_the_real_corpus_row_carries_is_kept_not_normalised_away ... ok
+test pcgen_import::corpus_literal_sweep::tests::a_value_that_drifted_by_one_byte_is_a_finding ... ok
+test pcgen_import::corpus_literal_sweep::tests::an_lst_token_record_missing_its_line_is_an_error_never_a_silent_skip ... ok
+test pcgen_import::corpus_literal_sweep::tests::an_undeclared_desc_redaction_is_exempt_when_the_real_corpus_desc_independently_rescreens_as_blacklisted ... ok
+test pcgen_import::corpus_literal_sweep::tests::an_undeclared_namespaced_key_is_a_finding_not_an_exemption ... ok
+test pcgen_import::corpus_literal_sweep::tests::an_unmarked_record_gets_no_24_exemption_for_the_sentinel_value ... ok
+test pcgen_import::corpus_literal_sweep::tests::codex_generated_name_is_parsed_from_the_records_own_top_level_field ... ok
+test pcgen_import::corpus_literal_sweep::tests::field_zero_is_never_read_as_a_token ... ok
+test pcgen_import::corpus_literal_sweep::tests::malformed_json_is_an_error_never_a_silent_skip ... ok
+test pcgen_import::corpus_literal_sweep::tests::negative_and_fractional_typed_values_compare_correctly ... ok
+test pcgen_import::corpus_literal_sweep::tests::parsing_collects_every_identity_a_mod_row_could_target ... ok
+test pcgen_import::corpus_literal_sweep::tests::the_concatenated_scan_disjunct_does_not_wave_through_a_genuinely_clean_value ... ok
+test pcgen_import::corpus_literal_sweep::tests::the_real_catapult_standard_shape_trips_the_typed_field_check_pre_fix ... ok
+test pcgen_import::corpus_literal_sweep::tests::the_redaction_exemption_does_not_cover_other_tokens_or_undeclared_records ... ok
+test pcgen_import::corpus_literal_sweep::tests::whitespace_is_not_normalised_away ... ok
+test pcgen_import::corpus_race_json::tests::a_data_object_with_no_key_is_not_a_race_record ... ok
+test pcgen_import::corpus_race_json::tests::every_live_corpus_race_record_carries_the_same_values_the_payload_read_produced ... ok
+test pcgen_import::corpus_race_json::tests::every_live_corpus_race_trait_record_carries_the_same_values_the_token_reads_produced ... ok
+test oracle_validation::selected_parity_dimensions::tests::from_receipt_includes_the_raw_base_attack_bonus_distinct_from_the_melee_total ... ok
+test oracle_validation::selected_parity_dimensions::tests::from_receipt_is_unchanged_and_still_compiles_against_its_existing_three_dot_rs_callers ... ok
+test oracle_validation::selected_parity_dimensions::tests::from_pilot_receipt_includes_the_original_eight_dimensions_plus_base_attack_bonus_durability_and_encumbrance ... ok
+test pcgen_import::corpus_settled_bundle::tests::the_generator_walks_exactly_the_files_the_live_loader_walks ... ok
+test pcgen_import::corpus_trap_baseline::tests::a_bad_count_is_an_error_not_a_silent_default ... ok
+test pcgen_import::corpus_trap_baseline::tests::a_live_count_above_baseline_is_added_not_silently_accepted ... ok
+test pcgen_import::corpus_trap_baseline::tests::a_live_count_below_baseline_is_stale_not_silently_accepted ... ok
+test pcgen_import::corpus_trap_baseline::tests::a_matching_count_is_matched ... ok
+test pcgen_import::corpus_trap_baseline::tests::a_note_less_row_still_parses ... ok
+test pcgen_import::corpus_trap_baseline::tests::a_row_with_no_count_column_is_an_error ... ok
+test pcgen_import::corpus_trap_baseline::tests::a_trap_with_no_baseline_row_is_unbaselined ... ok
+test pcgen_import::corpus_trap_baseline::tests::comments_and_blank_lines_are_ignored ... ok
+test pcgen_import::corpus_trap_baseline::tests::zero_baselined_at_zero_is_matched ... ok
+test pcgen_import::corpus_traps::tests::a_disabled_row_is_reported_once_as_disabled_not_under_every_other_trap ... ok
+test pcgen_import::corpus_traps::tests::a_single_cost_row_does_not_trip_the_multi_cost_guard ... ok
+test pcgen_import::corpus_traps::tests::bonus_var_parsing_reads_the_variable_not_the_formula ... ok
+test pcgen_import::corpus_traps::tests::category_qualifier_on_field_zero_is_stripped_from_the_name ... ok
+test pcgen_import::corpus_traps::tests::declaring_lines_counts_declarations_and_copies_but_never_mods ... ok
+test pcgen_import::corpus_traps::tests::define_with_a_nonzero_initial_value_is_not_a_zero_define ... ok
+test pcgen_import::corpus_traps::tests::empty_padding_fields_do_not_become_tokens ... ok
+test pcgen_import::corpus_traps::tests::every_trap_has_a_distinct_id_and_a_miscount_sentence ... ok
+test pcgen_import::corpus_traps::tests::findings_are_ordered_by_line_so_a_report_reads_like_the_file ... ok
+test pcgen_import::corpus_traps::tests::identity_prefers_key_over_display_name ... ok
+test pcgen_import::corpus_traps::tests::key_namespace_splits_on_the_spaced_tilde_only ... ok
+test pcgen_import::corpus_traps::tests::non_bonus_var_bonuses_are_not_counted_as_var_tokens ... ok
+test pcgen_import::corpus_traps::tests::the_real_misers_mask_mitre_of_the_hierophant_glued_row_trips_the_guard ... ok
+test pcgen_import::corpus_traps::tests::two_cost_tokens_on_one_row_trips_the_multi_cost_guard ... ok
+test pcgen_import::corpus_traps::tests::two_records_on_two_separate_lines_do_not_trip_the_guard ... ok
+test pcgen_import::corpus_traps::tests::wiring_class_mismatch_fails_when_stored_value_disagrees_with_a_fresh_computation ... ok
+test pcgen_import::corpus_traps::tests::wiring_class_mismatch_is_not_flagged_when_stored_value_agrees ... ok
+test pcgen_import::corpus_traps::tests::wiring_class_mismatch_is_skipped_not_assumed_when_field_absent ... ok
+test pcgen_import::corpus_traps::tests::wiring_class_mismatch_reads_a_citation_nested_one_level_under_a_book_subdirectory ... ok
+test pcgen_import::corpus_settled_bundle::tests::every_on_disk_equipment_bundle_matches_the_run_time_call_it_replaced ... ok
+test pcgen_import::corpus_settled_bundle::tests::every_on_disk_race_bundle_matches_the_run_time_call_it_replaced ... ok
+test pcgen_import::desc_template_convert::tests::the_shapes_the_renderer_documents_settle_the_way_it_describes_them ... ok
+test pcgen_import::equipment_bonus_reader::tests::bonus_type_qualifiers_are_unchanged_by_this_module ... ok
+test pcgen_import::equipment_bonus_reader::tests::the_token_and_slice_entry_points_agree ... ok
+test pcgen_import::equipment_bonus_reader::tests::the_two_predicates_keep_their_deliberate_differences ... ok
+test pcgen_import::feat_effect_conditions::tests::every_converted_tail_round_trips_from_the_live_typed_form ... ok
+test pcgen_import::feat_effect_conditions::tests::the_table_addresses_exactly_the_live_bonuses_that_carry_a_tail ... ok
+test pcgen_import::feat_effect_selections::tests::every_converted_chain_round_trips_from_the_live_typed_form ... ok
+test pcgen_import::feat_effect_selections::tests::the_recorded_marker_matches_the_inverse_function ... ok
+test pcgen_import::feat_effect_selections::tests::the_table_addresses_exactly_the_live_bonuses_that_carry_a_selection ... ok
+test pcgen_import::feat_effect_tokens::tests::a_key_that_does_not_match_its_index_panics ... ok
+test pcgen_import::feat_effect_tokens::tests::every_relocated_row_still_names_its_own_live_record ... ok
+test pcgen_import::feat_effect_tokens::tests::the_live_table_is_the_length_the_relocation_was_taken_from ... ok
+test pcgen_import::feat_prereq_tokens::tests::every_backfilled_book_key_was_checked ... ok
+test pcgen_import::feat_prereq_tokens::tests::every_mythic_collision_names_the_base_feat_it_upgrades ... ok
+test pcgen_import::feat_prereq_tokens::tests::every_row_still_names_the_record_it_was_taken_from ... ok
+test pcgen_import::feat_prereq_tokens::tests::every_token_is_a_pre_family_token ... ok
+test pcgen_import::feat_prereq_tokens::tests::the_colliding_crb_key_keeps_both_distinct_token_sets ... ok
+test pcgen_import::feat_prereq_tokens::tests::the_per_book_coverage_survived_the_move_unchanged ... ok
+test pcgen_import::feat_prereq_tokens::tests::the_relocated_row_counts_are_the_ones_the_receipt_states ... ok
+test pcgen_import::feat_prereq_tokens::tests::the_relocated_tokens_are_the_ones_the_corpus_rows_carry ... ok
+test pcgen_import::formula_interpreter::tests::and_both_sides_always_evaluate_no_short_circuit ... ok
+test pcgen_import::formula_interpreter::tests::and_combines_two_comparisons_matching_the_sorcerer_bloodline_gate_shape ... ok
+test pcgen_import::formula_interpreter::tests::arithmetic_and_parens ... ok
+test pcgen_import::formula_interpreter::tests::bare_comparison_as_a_min_max_function_argument_matches_the_warpriest_corpus_shape ... ok
+test pcgen_import::formula_interpreter::tests::bare_comparison_as_a_value_matches_the_kineticist_corpus_shape ... ok
+test pcgen_import::formula_interpreter::tests::bare_top_level_comparison_is_a_valid_formula ... ok
+test pcgen_import::formula_interpreter::tests::classlevel_reads_the_level_binding ... ok
+test pcgen_import::formula_interpreter::tests::classlevel_refuses_a_genuinely_different_class_it_has_no_binding_for ... ok
+test pcgen_import::formula_interpreter::tests::classlevel_two_argument_appliedas_nonepic_form_reads_the_same_binding ... ok
+test pcgen_import::formula_interpreter::tests::classlevel_two_argument_form_refuses_an_unrecognised_appliedas_qualifier ... ok
+test pcgen_import::formula_interpreter::tests::classlevel_two_argument_form_still_refuses_an_unbound_or_wrong_class ... ok
+test pcgen_import::formula_interpreter::tests::classlevel_with_no_argument_parses_and_reads_the_empty_key_binding ... ok
+test pcgen_import::formula_interpreter::tests::classlevel_with_no_argument_refuses_without_a_binding ... ok
+test pcgen_import::formula_interpreter::tests::cmp_gt_is_strictly_greater_not_greater_or_equal ... ok
+test pcgen_import::formula_interpreter::tests::cmp_le_is_less_or_equal_not_strictly_less ... ok
+test pcgen_import::formula_interpreter::tests::cmp_lt_is_strictly_less_not_less_or_equal ... ok
+test pcgen_import::corpus_settled_bundle::tests::no_on_disk_bundle_has_drifted_from_the_corpus ... ok
+test pcgen_import::formula_interpreter::tests::division_by_zero_refuses_rather_than_producing_infinity ... ok
+test pcgen_import::formula_interpreter::tests::division_truncates_toward_zero_matching_int_value ... ok
+test pcgen_import::formula_interpreter::tests::embedded_pre_conditional_clause_refuses_not_silently_dropped ... ok
+test pcgen_import::formula_interpreter::tests::extract_formula_field_matches_the_sampled_corpus_shape ... ok
+test pcgen_import::formula_interpreter::tests::floor_and_bare_division_diverge_only_on_negative_operands ... ok
+test pcgen_import::formula_interpreter::tests::if_and_comparisons ... ok
+test pcgen_import::formula_interpreter::tests::if_condition_still_refuses_a_bare_numeric_value ... ok
+test pcgen_import::formula_interpreter::tests::min_max_are_n_ary_and_accept_only_the_oracles_two_registered_spellings ... ok
+test pcgen_import::formula_interpreter::tests::mutated_and_as_or_is_caught_by_the_bloodline_gate_assertion ... ok
+test pcgen_import::formula_interpreter::tests::mutated_evaluator_is_caught_disagreeing ... ok
+test pcgen_import::formula_interpreter::tests::reproduces_all_22_hand_modelled_dispatch_cases ... ok
+test pcgen_import::formula_interpreter::tests::review_mixed_case_function_names_are_refused_not_accepted ... ok
+test pcgen_import::formula_interpreter::tests::single_argument_min_max_now_matches_the_oracles_variable_arity_max_min_command ... ok
+test pcgen_import::formula_interpreter::tests::skillinfo_other_first_arguments_refuse_not_implemented ... ok
+test pcgen_import::formula_interpreter::tests::skillinfo_totalrank_case_insensitive_first_argument_matching_the_oracle ... ok
+test pcgen_import::formula_interpreter::tests::skillinfo_totalrank_reads_the_bound_skill_rank ... ok
+test pcgen_import::formula_interpreter::tests::skillinfo_unbound_skill_refuses_not_defaults_to_zero ... ok
+test pcgen_import::formula_interpreter::tests::trailing_tokens_refuse ... ok
+test pcgen_import::formula_interpreter::tests::unary_plus_refuses_rather_than_being_treated_as_a_no_op ... ok
+test pcgen_import::formula_interpreter::tests::unbound_variable_refuses_not_defaults_to_zero ... ok
+test pcgen_import::formula_interpreter::tests::unknown_function_refuses ... ok
+test pcgen_import::formula_interpreter::tests::wrong_arg_counts_refuse ... ok
+test oracle_validation::selected_parity_dimensions::tests::from_pilot_receipt_omits_durability_max_hp_for_a_multiclass_build_rather_than_fabricating_one ... ok
+test pcgen_import::cache_gen::spell_lane_dump::tests::generation_against_the_real_pinned_corpus_resolves_every_citation ... ok
+test pcgen_import::cache_gen::spell_lane_dump::tests::a_second_run_does_not_erase_a_later_enrichment_pass_on_a_still_valid_record ... ok
+test pcgen_import::formula_reproduction_harness::tests::all_cases_names_are_unique ... ok
+test pcgen_import::formula_reproduction_harness::tests::enumeration_finds_a_doc_cited_function_and_skips_an_undoc_cited_one ... ok
+test pcgen_import::formula_reproduction_harness::tests::enumeration_is_mechanical_not_a_fixed_number ... ok
+test pcgen_import::formula_reproduction_harness::tests::enumeration_survives_an_attribute_between_doc_and_fn ... ok
+test pcgen_import::formula_reproduction_harness::tests::every_doc_cited_dispatch_case_really_is_in_the_live_enumeration ... ok
+test pcgen_import::formula_reproduction_harness::tests::hand_eval_closures_match_manually_worked_values ... ok
+test pcgen_import::formula_reproduction_harness::tests::harness_detects_a_deliberately_wrong_evaluator ... ok
+test pcgen_import::formula_reproduction_harness::tests::live_enumeration_over_the_real_pilot_compute_source_is_a_real_and_substantial_population ... ok
+test pcgen_import::formula_reproduction_harness::tests::the_enumerator_has_a_known_blind_spot ... ok
+test pcgen_import::formula_reproduction_harness::tests::toy_evaluator_parses_the_dispatched_grammar_shapes_directly ... ok
+test pcgen_import::formula_reproduction_harness::tests::toy_evaluator_reproduces_every_dispatched_case_exactly ... ok
+test pcgen_import::ingest_payload::tests::real_pre_existing_equipment_json_deserializes_with_raw_token_fields_defaulting_to_empty ... ok
+test pcgen_import::ingest_record::tests::a_thin_record_with_no_token_array_is_empty_not_a_panic ... ok
+test pcgen_import::ingest_record::tests::a_type_token_yields_only_the_tail_behind_its_prefix ... ok
+test pcgen_import::ingest_record::tests::an_absent_token_is_none_not_a_fabricated_empty_string ... ok
+test pcgen_import::ingest_record::tests::pairs_preserve_file_order ... ok
+test pcgen_import::ingest_record::tests::reads_the_bare_data_object_shape ... ok
+test pcgen_import::ingest_record::tests::reads_the_full_document_shape ... ok
+test pcgen_import::ingest_record::tests::rebuilding_a_bonus_chain_is_the_inverse_of_splitting_it ... ok
+test pcgen_import::ir_content_payload::boundary_tests::an_unsettled_kind_crosses_the_boundary_as_identity_only ... ok
+test pcgen_import::ir_content_payload::boundary_tests::package_projection_preserves_record_order_and_diagnostics ... ok
+test pcgen_import::ir_content_payload::boundary_tests::the_kind_token_and_slice_survive_the_projection_for_every_kind ... ok
+test pcgen_import::ir_converter::tests::class_record_carries_zero_copy_payload ... ok
+test pcgen_import::ir_converter::tests::equipment_record_zero_copy ... ok
+test pcgen_import::ir_converter::tests::ir_diagnostic_to_canonical_handles_container_wide_line_placeholder ... ok
+test pcgen_import::ir_converter::tests::ir_diagnostic_to_canonical_routes_converter_originated_as_partial ... ok
+test pcgen_import::ir_converter::tests::ir_diagnostic_to_canonical_routes_forwarded_as_malformed ... ok
+test pcgen_import::ir_converter::tests::schema_version_follows_source_ir_version ... ok
+test pcgen_import::ir_converter::tests::spell_record_zero_copy ... ok
+test pcgen_import::lst_parser::equipment::tests::a_copy_declared_row_never_merges_with_a_different_copy_variant_sharing_its_base_template ... ok
+test pcgen_import::lst_parser::equipment::tests::bonus_chains_on_line_isolates_by_source_line ... ok
+test pcgen_import::lst_parser::equipment::tests::bonus_token_flattening_does_not_recurse ... ok
+test pcgen_import::lst_parser::equipment::tests::bonus_token_strips_bonus_prefix ... ok
+test pcgen_import::lst_parser::equipment::tests::copy_declared_variants_never_merge_into_the_plain_base_item_sharing_their_name ... ok
+test pcgen_import::lst_parser::equipment::tests::extract_record_name_handles_copy_suffix ... ok
+test pcgen_import::lst_parser::equipment::tests::infer_kind_uses_equipmods_substring ... ok
+test pcgen_import::lst_parser::equipment::tests::raw_pair_preserves_a_fields_own_trailing_whitespace_even_though_value_trims_it ... ok
+test pcgen_import::lst_parser::equipment::tests::recognize_directive_prefix_only_matches_equip_or_equipmod ... ok
+test pcgen_import::lst_parser::equipment::tests::tokens_on_line_isolates_mountain_pattern_armor_from_its_own_restated_duplicate_line ... ok
+test pcgen_import::lst_parser::equipment::tests::tokens_on_line_returns_empty_for_a_line_the_record_never_touched ... ok
+test pcgen_import::lst_parser::monster_stat_block::tests::ignores_mod_and_copy_override_rows ... ok
+test pcgen_import::lst_parser::monster_stat_block::tests::ignores_race_pointer_and_ability_and_comment_and_blank_lines ... ok
+test pcgen_import::lst_parser::monster_stat_block::tests::ignores_rows_with_no_cr_token_as_out_of_scope ... ok
+test pcgen_import::lst_parser::monster_stat_block::tests::parses_a_bare_row_with_single_natural_attack ... ok
+test pcgen_import::lst_parser::monster_stat_block::tests::parses_fractional_challenge_rating ... ok
+test pcgen_import::lst_parser::monster_stat_block::tests::parses_pipe_separated_natural_attacks_in_one_token ... ok
+test pcgen_import::lst_parser::race_ability::tests::diagnostic_carries_malformed_race_or_ability_kind ... ok
+test pcgen_import::lst_parser::race_ability::tests::kind_display_matches_recognized_tokens ... ok
+test pcgen_import::lst_parser::race_ability::tests::split_trailing_modifiers_handles_no_boundary ... ok
+test pcgen_import::lst_parser::race_ability::tests::split_trailing_modifiers_handles_tab_boundary ... ok
+test pcgen_import::lst_parser::spell::copy_only_row_tests::bare_copy_row_with_no_tab_parses_instead_of_malformed ... ok
+test pcgen_import::lst_parser::spell::copy_only_row_tests::bare_non_copy_row_with_no_tab_is_still_malformed ... ok
+test pcgen_import::pcc_package_loader::tests::project_corpus_from_owned_handles_empty_owned_inputs ... ok
+test pcgen_import::pcgen_desc::tests::a_bare_percent_hole_drop_preserves_percentile_dice_notation ... ok
+test pcgen_import::pcgen_desc::tests::a_bare_percent_hole_is_dropped_the_same_way_a_keyword_is ... ok
+test pcgen_import::pcgen_desc::tests::a_decidably_false_prevar_gate_drops_its_segment ... ok
+test pcgen_import::pcgen_desc::tests::a_decoded_newline_survives_the_dropped_argument_whitespace_collapse ... ok
+test pcgen_import::pcgen_desc::tests::a_different_percent_keyword_is_also_dropped ... ok
+test pcgen_import::pcgen_desc::tests::a_digit_preceded_percent_sign_is_a_literal_sign_not_a_drop ... ok
+test pcgen_import::pcgen_desc::tests::a_double_percent_before_a_digit_is_an_argument_when_the_row_supplies_one ... ok
+test pcgen_import::pcgen_desc::tests::a_double_percent_before_a_digit_with_no_such_argument_stays_a_literal_sign ... ok
+test pcgen_import::pcgen_desc::tests::a_dropped_argument_takes_its_introducing_sign_with_it ... ok
+test pcgen_import::pcgen_desc::tests::a_percent_hole_not_followed_by_a_digit_or_keyword_still_leaks ... ok
+test pcgen_import::pcgen_desc::tests::a_percent_keyword_argument_is_dropped_the_same_way_an_unresolved_percent_n_is ... ok
+test pcgen_import::pcgen_desc::tests::a_percent_keyword_at_the_end_of_the_sentence_leaves_no_trailing_leak ... ok
+test pcgen_import::pcgen_desc::tests::a_percent_keyword_at_the_start_of_the_sentence_leaves_no_leading_leak ... ok
+test pcgen_import::pcgen_desc::tests::a_percent_n_backed_by_a_formula_is_dropped_and_reported_never_guessed ... ok
+test pcgen_import::pcgen_desc::tests::a_percent_n_backed_by_an_integer_literal_is_substituted ... ok
+test pcgen_import::pcgen_desc::tests::a_percent_n_naming_a_known_variable_renders_its_value ... ok
+test pcgen_import::pcgen_desc::tests::a_prose_table_beside_a_real_argument_keeps_the_table_and_loses_the_tail ... ok
+test pcgen_import::pcgen_desc::tests::a_prose_table_separator_is_not_an_argument_tail ... ok
+test pcgen_import::pcgen_desc::tests::a_qualifier_behind_an_argument_tail_is_stripped_before_the_arguments_are_numbered ... ok
+test pcgen_import::pcgen_desc::tests::a_segment_that_merely_starts_with_pre_is_not_a_qualifier ... ok
+test pcgen_import::pcgen_desc::tests::a_spaced_percentile_dice_escape_with_no_adjacent_d_is_dropped_not_guessed ... ok
+test pcgen_import::pcgen_desc::tests::a_trailing_pre_qualifier_is_stripped_even_with_no_percent_n_in_the_prose ... ok
+test pcgen_import::pcgen_desc::tests::an_escaped_percent_orphaned_by_its_own_dropped_argument_is_dropped_too ... ok
+test pcgen_import::pcgen_desc::tests::an_undecidable_gate_keeps_its_segment ... ok
+test pcgen_import::pcgen_desc::tests::an_unknown_variable_is_still_dropped_and_reported ... ok
+test pcgen_import::pcgen_desc::tests::an_unmatched_percent_n_is_dropped_rather_than_rendered ... ok
+test pcgen_import::pcgen_desc::tests::leak_guard_catches_percent_choice_and_other_uppercase_pcgen_substitution_keywords ... ok
+test pcgen_import::pcgen_desc::tests::leak_guard_names_every_shape_that_must_never_reach_a_player ... ok
+test pcgen_import::pcgen_desc::tests::prose_with_no_pcgen_syntax_is_returned_byte_identical ... ok
+test pcgen_import::pcgen_desc::tests::the_double_percent_escape_collapses_to_one_sign ... ok
+test pcgen_import::pcgen_desc::tests::the_pcgen_newline_entity_is_decoded_rather_than_shown ... ok
+test pcgen_import::pcgen_desc::tests::the_rogues_edge_gate_pair_selects_singular_or_plural_prose ... ok
+test pcgen_import::pcgen_desc::tests::the_same_token_renders_a_different_number_for_a_different_character ... ok
+test pcgen_import::pcgen_desc::tests::the_single_offset_argument_shape_the_corpus_uses_resolves ... ok
+test pcgen_import::pcgen_desc::tests::the_value_free_entry_point_is_unchanged_by_the_new_capability ... ok
+test pcgen_import::pcgen_desc::tests::two_arguments_are_taken_from_the_right_in_order ... ok
+test pcgen_import::cache_gen::feat_gap::tests::generation_against_the_real_pinned_corpus_writes_records ... ok
+test pcgen_import::formula_interpreter::tests::corpus_shape_coverage ... ok
+test pcgen_import::desc_template_convert::tests::every_other_record_kinds_description_settles_the_same_way_too ... ok
+test pcgen_import::pool_gate_settle::tests::a_record_is_either_admitted_or_refused_never_both ... ok
+test pcgen_import::pool_member_tokens::tests::a_thin_record_with_no_token_array_is_prose_only_and_unlocked ... ok
+test pcgen_import::pool_member_tokens::tests::carries_more_than_one_desc_segment_counts_desc_keys_only ... ok
+test pcgen_import::pool_member_tokens::tests::has_no_engine_effect_token_refuses_ability_and_select_but_allows_a_plain_desc_only_record ... ok
+test pcgen_import::pool_member_tokens::tests::is_archetype_locked_refuses_only_a_preability_category_archetype_token ... ok
+test pcgen_import::pool_member_tokens::tests::shipped_description_is_the_already_regenerated_safe_multi_desc_join_requires_an_exact_match ... ok
+test pcgen_import::pre_tokens::tests::a_duergar_satisfies_a_dwarf_subtype_prerequisite ... ok
+test pcgen_import::pre_tokens::tests::a_fighter_1_fails_every_improved_two_weapon_fighting_clause ... ok
+test pcgen_import::pre_tokens::tests::a_fighter_6_with_dex_17_and_twf_meets_every_clause ... ok
+test pcgen_import::pre_tokens::tests::a_negated_feat_prerequisite_inverts_the_verdict ... ok
+test pcgen_import::pre_tokens::tests::a_premult_with_an_unmodelled_alternative_reports_rather_than_denies ... ok
+test pcgen_import::pre_tokens::tests::a_race_gate_denies_the_wrong_race_and_admits_the_right_one ... ok
+test pcgen_import::pre_tokens::tests::a_special_ability_prerequisite_is_reported_not_guessed ... ok
+test pcgen_import::pre_tokens::tests::an_unrecognised_kind_never_blocks ... ok
+test pcgen_import::pre_tokens::tests::negating_an_unmodelled_clause_stays_unmodelled ... ok
+test pcgen_import::pre_tokens::tests::nested_bracket_clauses_split_without_losing_the_inner_ones ... ok
+test pcgen_import::pre_tokens::tests::pretext_is_informational_and_never_a_gap_or_a_block ... ok
+test pcgen_import::pre_tokens::tests::size_at_least_is_evaluated_against_the_characters_real_size ... ok
+test pcgen_import::pre_tokens::tests::skill_rank_prerequisites_read_the_characters_allocations ... ok
+test pcgen_import::pre_tokens::tests::the_engine_feat_token_shape_satisfies_a_catalog_key_prerequisite ... ok
+test pcgen_import::prose_ingest_tails::tests::every_row_carries_prose_on_one_side_and_ingest_vocabulary_on_the_other ... ok
+test pcgen_import::prose_ingest_tails::tests::the_tails_are_addressed_uniquely ... ok
+test pcgen_import::race_trait_formula_binding::tests::a_bare_integer_literal_resolves ... ok
+test pcgen_import::race_trait_formula_binding::tests::a_direct_variable_key_resolves_without_touching_the_interpreter ... ok
+test pcgen_import::race_trait_formula_binding::tests::refuses_an_unrecognised_token_shape_cleanly_rather_than_guessing ... ok
+test pcgen_import::race_trait_formula_binding::tests::refuses_when_the_formula_references_a_variable_this_row_never_defines ... ok
+test pcgen_import::race_trait_formula_binding::tests::refuses_when_the_formula_references_an_unresolved_same_row_variable ... ok
+test pcgen_import::race_trait_formula_binding::tests::resolves_a_multi_operator_formula_over_bound_same_row_variables ... ok
+test pcgen_import::race_trait_formula_binding::tests::resolves_the_halfling_adaptable_luck_desc_arg_against_the_real_corpus_row ... ok
+test pcgen_import::race_trait_tokens::declared_template_bonus_languages_tests::any_spoken_marker_transcribes_literally_not_as_a_language_name ... ok
+test pcgen_import::race_trait_tokens::declared_template_bonus_languages_tests::no_template_token_yields_nothing ... ok
+test pcgen_import::race_trait_tokens::declared_template_bonus_languages_tests::non_bonus_language_template_yields_nothing ... ok
+test pcgen_import::race_trait_tokens::declared_template_bonus_languages_tests::tribalistic_languages_template_chain_transcribes_to_four_real_languages ... ok
+test pcgen_import::race_trait_tokens::moved_from_race_resolver_tests::move_and_prefact_token_parsing_reads_the_real_token_forms ... ok
+test pcgen_import::race_trait_tokens::moved_from_race_resolver_tests::only_a_real_size_template_token_is_read_as_a_size ... ok
+test pcgen_import::race_trait_tokens::moved_from_race_trait_picker_tests::the_exclusion_guard_readings_are_unchanged_by_this_module ... ok
+test pcgen_import::race_trait_tokens::moved_from_race_trait_picker_tests::the_readings_keep_their_deliberate_narrowness ... ok
+test pcgen_import::race_trait_tokens::reader_tests::a_choice_selector_yields_the_pool_suffix_after_its_prefix ... ok
+test pcgen_import::race_trait_tokens::reader_tests::a_positive_gate_names_its_flag_and_a_negated_one_is_not_a_token_this_reads ... ok
+test pcgen_import::race_trait_tokens::reader_tests::a_row_with_no_vision_token_declares_no_sense ... ok
+test pcgen_import::race_trait_tokens::reader_tests::automatic_grants_stop_at_the_first_gate_and_skip_the_choice_placeholder ... ok
+test pcgen_import::race_trait_tokens::reader_tests::both_vision_shapes_flatten_to_the_same_segment_list ... ok
+test pcgen_import::race_trait_tokens::reader_tests::defines_read_name_and_integer_base_and_report_an_unresolvable_base_as_none ... ok
+test pcgen_import::race_trait_tokens::reader_tests::description_segments_preserve_file_order_and_are_empty_when_the_row_states_none ... ok
+test pcgen_import::race_trait_tokens::reader_tests::walk_speed_and_size_read_their_own_token_and_nothing_else ... ok
+test pcgen_import::sf_corpus::tests::the_screen_reads_names_descriptions_and_declarations ... ok
+test pcgen_import::sheet_rule::always_held::tests::only_an_unconditional_automatic_grant_is_global ... ok
+test pcgen_import::sheet_rule::attest::tests::a_class_selection_class_inherits_its_base_class_defects ... ok
+test pcgen_import::sheet_rule::attest::tests::attestation_is_false_when_any_closure_rule_has_a_defect ... ok
+test pcgen_import::desc_template_convert::tests::every_described_class_feature_record_settles_to_the_same_prose_the_renderer_produced ... ok
+test pcgen_import::sheet_rule::closure::tests::a_copy_shaped_class_header_still_reanchors_current_class ... ok
+test pcgen_import::sheet_rule::closure::tests::a_second_class_header_row_still_reanchors_current_class ... ok
+test pcgen_import::sheet_rule::closure::tests::a_subclass_row_does_not_steal_current_class_from_its_level_lines ... ok
+test pcgen_import::sheet_rule::closure::tests::ability_category_parent_excludes_a_name_declared_under_two_different_parents ... ok
+test pcgen_import::sheet_rule::closure::tests::ability_category_parent_excludes_a_self_referential_category ... ok
+test pcgen_import::sheet_rule::closure::tests::ability_category_parent_maps_a_child_to_its_declared_parent ... ok
+test pcgen_import::sheet_rule::closure::tests::ability_category_parent_tolerates_a_repeated_identical_declaration ... ok
+test pcgen_import::sheet_rule::closure::tests::file_family_is_by_basename ... ok
+test pcgen_import::sheet_rule::closure::tests::row_identity_reads_category_key_and_shape ... ok
+test pcgen_import::sheet_rule::closure::tests::the_armor_class_split_is_read_from_the_game_mode_rows ... ok
+test pcgen_import::sheet_rule::closure::tests::the_book_subtree_is_keyed_by_game_system ... ok
+test pcgen_import::sheet_rule::closure::tests::variable_rows_excludes_an_aligned_class_minus_one_mirror_row ... ok
+test pcgen_import::sheet_rule::closure::tests::variable_rows_finds_a_comma_separated_bonus_var_target_under_each_of_its_own_names ... ok
+test pcgen_import::sheet_rule::closure::tests::variable_rows_keeps_an_aligned_class_row_that_owns_its_own_target_var ... ok
+test pcgen_import::sheet_rule::convert::ability_type_selector_tests::a_type_selector_grants_every_record_of_the_category_carrying_the_tag ... ok
+test pcgen_import::sheet_rule::convert::ability_type_selector_tests::accumulated_facets_fold_mod_rows_like_the_converted_rule ... ok
+test pcgen_import::sheet_rule::convert::ability_type_selector_tests::an_unexpandable_type_selector_stays_a_named_defect ... ok
+test pcgen_import::sheet_rule::convert::sf_modifier_stat_tests::starfinder_modifier_level_and_bulk_sprops_are_stat_rows ... ok
+test pcgen_import::sheet_rule::convert::sf_text_repair_tests::starfinder_mis_decoded_text_prints_as_the_characters_it_encodes ... ok
+test pcgen_import::sheet_rule::ctx::tests::a_category_with_no_known_parent_at_all_simply_misses ... ok
+test pcgen_import::sheet_rule::ctx::tests::a_child_category_reference_resolves_through_its_parent ... ok
+test pcgen_import::sheet_rule::ctx::tests::a_direct_match_never_needs_the_parent_retry ... ok
+test pcgen_import::sheet_rule::ctx::tests::ambiguity_under_one_category_does_not_leak_into_a_different_categorys_lookup ... ok
+test pcgen_import::sheet_rule::ctx::tests::an_ambiguous_parent_match_stays_a_defect ... ok
+test pcgen_import::sheet_rule::ctx::tests::an_ambiguous_parent_retry_target_is_reported_distinctly_from_a_plain_miss ... ok
+test pcgen_import::sheet_rule::ctx::tests::split_gates_peels_trailing_pre_segments ... ok
+test pcgen_import::sheet_rule::ctx::tests::split_top_level_respects_brackets ... ok
+test pcgen_import::sheet_rule::ctx::tests::typed_fold_takes_max_for_non_stacking_and_sums_stacking ... ok
+test pcgen_import::sheet_rule::ctx::tests::var_id_is_case_folded_and_opaque ... ok
+test pcgen_import::sheet_rule::formula::tests::comparison_encoding_is_the_exact_min_max_form ... ok
+test pcgen_import::sheet_rule::formula::tests::literals_are_exact_rationals ... ok
+test pcgen_import::sheet_rule::formula::tests::parser_accepts_the_corpus_grammar ... ok
+test pcgen_import::sheet_rule::formula_system::tests::datatables_reject_ragged_rows ... ok
+test pcgen_import::sheet_rule::formula_system::tests::every_failed_check_refuses_by_name ... ok
+test pcgen_import::sheet_rule::formula_system::tests::formulas_keep_precedence_and_spelling ... ok
+test pcgen_import::sheet_rule::formula_system::tests::mapped_shapes ... ok
+test pcgen_import::sheet_rule::formula_system::tests::split_respects_grouping ... ok
+test pcgen_import::sheet_rule::natural_attack::tests::a_token_beyond_the_attack_is_named ... ok
+test pcgen_import::sheet_rule::natural_attack::tests::the_bite_helper_tokens_read_as_one_natural_attack ... ok
+test pcgen_import::sheet_rule::oracle_terms::tests::a_mixed_case_data_name_is_not_a_builtin_term ... ok
+test pcgen_import::sheet_rule::oracle_terms::tests::an_upper_case_or_prefix_matched_name_may_be_builtin ... ok
+test pcgen_import::sheet_rule::oracle_terms::tests::only_a_plain_non_builtin_identifier_reads_as_zero ... ok
+test pcgen_import::sheet_rule::pool_link::tests::a_domain_count_its_own_class_grants_fill_is_withheld ... ok
+test pcgen_import::sheet_rule::pool_link::tests::ability_pool_picks_and_domain_counts_offer_their_members ... ok
+test pcgen_import::sheet_rule::pool_option::tests::criteria_read_the_oracle_grammar ... ok
+test pcgen_import::sheet_rule::pool_pick::tests::a_negative_amount_spends_a_pick_and_offers_none ... ok
+test pcgen_import::sheet_rule::prereq::tests::an_ambiguous_parent_retry_target_gets_its_own_named_defect ... ok
+test pcgen_import::sheet_rule::prereq::tests::an_unambiguous_parent_retry_target_still_resolves_normally ... ok
+test pcgen_import::sheet_rule::prereq::tests::applies_01_encodes_compare_gates_only ... ok
+test pcgen_import::sheet_rule::prereq::tests::count_prefix_defaults_to_one ... ok
+test pcgen_import::sheet_rule::prereq::tests::size_ranks_are_the_pathfinder_ordinals ... ok
+test pcgen_import::sheet_rule::prose::tests::a_bracketed_aside_that_is_the_rules_own_words_survives_the_scrub ... ok
+test pcgen_import::sheet_rule::prose::tests::an_out_of_inventory_condition_is_decided_never_printed ... ok
+test pcgen_import::sheet_rule::prose::tests::an_unknown_leaf_is_words_not_its_source_name ... ok
+test pcgen_import::sheet_rule::prose::tests::an_unlowerable_argument_prints_the_terms_words ... ok
+test pcgen_import::sheet_rule::prose::tests::an_upstream_annotation_head_is_scrubbed_and_the_seam_is_closed ... ok
+test pcgen_import::sheet_rule::prose::tests::dice_around_a_formula_are_read_as_dice ... ok
+test pcgen_import::sheet_rule::prose::tests::entities_decode ... ok
+test pcgen_import::sheet_rule::prose::tests::glued_gate_is_split_off_the_text ... ok
+test pcgen_import::sheet_rule::prose::tests::nothing_the_detector_flags_survives_the_scrub ... ok
+test pcgen_import::sheet_rule::prose::tests::output_name_expands_name_and_base ... ok
+test pcgen_import::sheet_rule::prose::tests::pi_hit_screens_starfinder_terms_for_starfinder_only ... ok
+test pcgen_import::sheet_rule::prose::tests::prose_formula_spans_find_source_formulas_and_leave_the_books_asides ... ok
+test pcgen_import::sheet_rule::prose::tests::upstream_editorial_not_implemented_markers_are_stripped_from_prose ... ok
+test pcgen_import::sheet_rule::sf_mapping::tests::find_field_matches_whole_token_or_token_prefix ... ok
+test pcgen_import::sheet_rule::check_tests::check_reports_every_problem_not_just_the_first_two_hundred ... ok
+test pcgen_import::sheet_rule::sf_mapping::tests::modifier_is_floor_score_over_two_minus_five ... ok
+test pcgen_import::sheet_rule::table::tests::heads_route_to_their_rows ... ok
+test pcgen_import::pool_gate_settle::tests::an_unknown_key_is_not_admitted ... ok
+test pcgen_import::sheet_rule::sf_mapping::tests::hp_pool_row_routes_claimed_tokens_and_refuses_the_rest ... ok
+test pcgen_import::sheet_rule::table::tests::table_is_a_transcription_of_the_json ... ok
+test pcgen_import::pool_gate_settle::tests::no_book_or_record_key_in_this_corpus_contains_the_key_separator ... ok
+test pcgen_import::sheet_rule::term_level_refusal_gate::the_only_record_level_refusals_are_the_named_shapes ... ok
+test pcgen_import::sheet_rule::term_level_refusal_gate::the_report_counts_degradations_as_converted ... ok
+test pcgen_import::sheet_rule::weapon_membership::tests::a_key_field_is_the_weapons_identity_and_a_mod_row_addressed_by_key_unions_onto_it ... ok
+test pcgen_import::sheet_rule::weapon_membership::tests::a_mod_row_tag_adds_the_weapon_to_that_groups_membership ... ok
+test pcgen_import::sheet_rule::weapon_membership::tests::a_non_proficiency_file_is_not_scanned ... ok
+test pcgen_import::sheet_rule::weapon_membership::tests::members_with_all_requires_every_tag ... ok
+test pcgen_import::sheet_rule::weapon_membership::tests::membership_matching_is_case_insensitive_on_the_oracle_tag_spelling ... ok
+test pcgen_import::sheet_rule::weapon_membership::tests::pfs_overlay_rows_are_excluded ... ok
+test pcgen_import::spell_formula_settle::tests::a_record_is_either_settled_or_refused_never_both ... ok
+test pcgen_import::pool_gate_settle::tests::every_ingested_class_feature_records_gate_verdict_settles_to_what_the_predicates_read ... ok
+test pcgen_import::spell_formula_settle::tests::every_ingested_spell_records_duration_and_range_settle_to_what_the_parsers_read ... ok
+test pcgen_import::system_books::tests::an_include_into_an_excluded_book_is_refused ... ok
+test pcgen_import::system_books::tests::game_mode_rows_split_on_tabs_and_skip_comments_and_blanks ... ok
+test pcgen_import::wiring_class::tests::ability_scaling_discriminator_matches_reference_selftest ... ok
+test pcgen_import::wiring_class::tests::accursed_worked_case_is_ambiguous_not_display_or_derived ... ok
+test pcgen_import::wiring_class::tests::classify_ordering_puts_ambiguous_above_display ... ok
+test pcgen_import::wiring_class::tests::closure_marker_report_sees_the_uppercase_form_too ... ok
+test pcgen_import::wiring_class::tests::closure_promotes_display_base_to_derived_via_mod_row ... ok
+test pcgen_import::wiring_class::tests::corpus_lines_direct_join_still_resolves_when_no_nested_duplicate_exists ... ok
+test pcgen_import::wiring_class::tests::corpus_lines_direct_join_unchanged_for_a_flat_book_layout ... ok
+test pcgen_import::wiring_class::tests::corpus_lines_nested_resolution_stays_scoped_to_its_own_book_not_a_same_named_sibling ... ok
+test pcgen_import::wiring_class::tests::corpus_lines_refuses_to_guess_when_a_nested_basename_collides_within_one_book ... ok
+test pcgen_import::wiring_class::tests::corpus_lines_refuses_to_guess_when_a_root_file_shadows_a_nested_basename_collision ... ok
+test pcgen_import::wiring_class::tests::corpus_lines_resolves_a_nested_lst_file_the_direct_join_misses ... ok
+test pcgen_import::wiring_class::tests::corpus_lines_still_none_for_a_file_absent_at_every_depth ... ok
+test pcgen_import::wiring_class::tests::d0_no_corpus_line_is_ambiguous ... ok
+test pcgen_import::wiring_class::tests::d1_no_magnitude_token_is_display ... ok
+test pcgen_import::wiring_class::tests::d1_pre_guard_on_no_magnitude_row_stays_display ... ok
+test pcgen_import::wiring_class::tests::d2_choice_is_computed ... ok
+test pcgen_import::wiring_class::tests::d2_pre_guard_is_computed ... ok
+test pcgen_import::wiring_class::tests::d2_prerule_guard_is_excluded_load_bearing ... ok
+test pcgen_import::wiring_class::tests::d2_tempbonus_is_computed ... ok
+test pcgen_import::wiring_class::tests::d3_arith_uppercase_run_matches_mid_word_not_only_trailing ... ok
+test pcgen_import::wiring_class::tests::d3_bonus_stat_and_dr_false_positives_alone_resolve_to_static ... ok
+test pcgen_import::wiring_class::tests::d3_bonus_stat_false_positive_does_not_hide_a_real_bonus_formula ... ok
+test pcgen_import::wiring_class::tests::d3_bonus_stat_selector_false_positive_second_real_row ... ok
+test pcgen_import::wiring_class::tests::d3_bonus_stat_selector_flat_literal_is_static_not_derived ... ok
+test pcgen_import::wiring_class::tests::d3_cr_fraction_slash_is_not_arithmetic ... ok
+test pcgen_import::wiring_class::tests::d3_dr_bypass_slash_fix_does_not_hide_a_real_multiplicative_dr ... ok
+test pcgen_import::wiring_class::tests::d3_dr_bypass_slash_is_not_arithmetic ... ok
+test pcgen_import::wiring_class::tests::d3_percent_placeholder_formula_survives_a_trailing_pre_guard ... ok
+test pcgen_import::wiring_class::tests::d3_percent_placeholder_with_trailing_formula_is_derived ... ok
+test pcgen_import::wiring_class::tests::d3_prose_expr_is_derived ... ok
+test pcgen_import::wiring_class::tests::d3_range_keyword_is_derived ... ok
+test pcgen_import::wiring_class::tests::d3_scalar_field_is_derived ... ok
+test pcgen_import::wiring_class::tests::d4_bonus_stat_literal_magnitude_still_static ... ok
+test pcgen_import::wiring_class::tests::d4_bonus_stat_variable_magnitude_is_derived_not_static ... ok
+test pcgen_import::wiring_class::tests::d4_dr_literal_amount_slash_still_static ... ok
+test pcgen_import::wiring_class::tests::d4_dr_variable_amount_slash_is_derived_not_static ... ok
+test pcgen_import::wiring_class::tests::d4_prose_scaling_phrase_is_ambiguous ... ok
+test pcgen_import::wiring_class::tests::d5_literal_magnitude_is_static ... ok
+test pcgen_import::wiring_class::tests::d6_lowercase_classlevel_function_call_is_derived ... ok
+test pcgen_import::wiring_class::tests::d6_neothelid_full_row_is_derived_via_spells_not_static ... ok
+test pcgen_import::wiring_class::tests::d6_plus_paren_subexpression_is_derived ... ok
+test pcgen_import::wiring_class::tests::d6_plus_then_lowercase_word_without_paren_stays_non_arith ... ok
+test pcgen_import::wiring_class::tests::d6_spells_field_casterlevel_scalar_keyword_is_derived ... ok
+test pcgen_import::wiring_class::tests::d6_spells_field_scalar_formula_is_derived ... ok
+test pcgen_import::wiring_class::tests::d6_spells_field_times_per_day_does_not_hide_a_real_scalar ... ok
+test pcgen_import::wiring_class::tests::d6_spells_field_times_per_day_slash_is_not_arithmetic ... ok
+test pcgen_import::wiring_class::tests::d6_spells_field_with_no_scalar_stays_static ... ok
+test pcgen_import::wiring_class::tests::d7_spells_field_blindness_deafness_is_not_arithmetic ... ok
+test pcgen_import::wiring_class::tests::d7_spells_field_slash_in_name_does_not_hide_a_real_dc_formula ... ok
+test pcgen_import::wiring_class::tests::d7_spells_field_slash_in_spell_name_is_not_arithmetic ... ok
+test pcgen_import::wiring_class::tests::dual_signal_collapses_to_computed_but_retains_both_signals ... ok
+test pcgen_import::wiring_class::tests::editorial_not_implemented_marker_does_not_fire_on_ordinary_prose ... ok
+test pcgen_import::wiring_class::tests::editorial_not_implemented_marker_is_detected_in_every_shipped_form ... ok
+test pcgen_import::wiring_class::tests::percent_placeholder_without_a_resolvable_formula_segment_stays_display ... ok
+test pcgen_import::wiring_class::tests::signal_rules_are_swappable_without_touching_scan_logic ... ok
+test pcgen_import::wiring_class::tests::upstream_not_implemented_marker_does_not_suppress_a_real_magnitude ... ok
+test pcgen_import::wiring_class::tests::wiring_class_lattice_ordering ... ok
+test pcgen_import::sheet_rule::term_level_refusal_gate::every_degraded_record_converted_and_prints_its_words ... ok
+test pcgen_import::spell_formula_settle::tests::no_book_or_record_key_in_this_corpus_contains_the_key_separator ... ok
+test pcgen_import::sheet_rule::term_level_refusal_gate::every_ingested_bonus_chain_reaches_the_converter ... ok
+test pcgen_import::sheet_rule::term_level_refusal_gate::a_copy_rows_own_visible_no_reaches_the_converted_rule ... ok
+test pcgen_import::formula_interpreter_corpus_wide::tests::corpus_wide_scan_population_matches_the_closed_gate1_census ... ok
+test pcgen_import::formula_interpreter_corpus_wide::tests::f1_population_matches_the_current_true_formula_bearing_count_not_the_stale_sd32_census ... ok
+test pcgen_import::formula_interpreter_corpus_wide::tests::a_subset_run_trips_the_population_mismatch_check ... ok
+
+test result: ok. 678 passed; 0 failed; 11 ignored; 0 measured; 0 filtered out; finished in 54.74s
+
+     Running unittests src/bin/bonus_stack_reader.rs (/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/bonus_stack_reader-a632f2de39995775)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/bin/corpus_literal_sweep.rs (/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/corpus_literal_sweep-12b852cbea91766b)
+
+running 13 tests
+test short_book_of_tests::a_four_segment_non_dreamscarred_press_path_still_rejects ... ok
+test short_book_of_tests::a_race_absent_from_newest_printing_keeps_resolving_to_its_true_book ... ok
+test short_book_of_tests::a_race_trait_file_from_the_same_race_directory_is_not_moved_by_the_newest_printing_layer ... ok
+test short_book_of_tests::an_ambiguous_race_still_resolves_to_core_essentials_not_its_own_directory_name ... ok
+test copy_base_row_tests::copy_base_row_still_falls_back_to_the_rest_of_the_book_when_no_same_file_base_exists ... ok
+test short_book_of_tests::crb_race_chassis_resolves_to_its_newest_printing_not_core_essentials_or_the_race_name ... ok
+test copy_base_row_tests::copy_base_row_prefers_the_citing_records_own_file_over_a_same_named_decoy_elsewhere_in_the_book ... ok
+test short_book_of_tests::dreamscarred_press_four_segment_path_resolves_one_tier_shallower ... ok
+test short_book_of_tests::flat_filed_record_resolves_to_its_own_book_same_as_before ... ok
+test short_book_of_tests::nested_race_trait_resolves_to_its_true_book_not_core_essentials ... ok
+test short_book_of_tests::rejects_a_source_path_not_shaped_system_publisher_line_book_file ... ok
+test short_book_of_tests::synthetic_collision_two_different_books_sharing_a_nested_directory_name_resolve_correctly ... ok
+test short_book_of_tests::every_shipped_race_source_path_agrees_with_book_dir_of_or_the_resolved_true_book ... ok
+
+test result: ok. 13 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.78s
+
+     Running unittests src/bin/declared_pi_shipping_audit.rs (/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/declared_pi_shipping_audit-93014eb1982dce63)
+
+running 21 tests
+test tests::a_blacklist_only_redaction_with_a_leaking_raw_token_is_also_caught ... ok
+test tests::a_correctly_redacted_description_is_not_a_violation ... ok
+test tests::a_correctly_redacted_description_with_a_leaking_raw_token_is_a_violation ... ok
+test tests::a_multi_field_pi_field_list_including_description_still_clears_the_desc_check ... ok
+test tests::a_key_field_carrying_a_live_blacklist_term_is_a_violation ... ok
+test tests::a_license_claim_naming_a_writer_that_does_not_call_the_reader_is_a_violation ... ok
+test tests::a_license_claim_naming_a_writer_that_does_call_the_reader_is_clean ... ok
+test tests::a_record_marked_codex_generated_name_is_not_a_name_pi_violation ... ok
+test tests::a_prerequisites_or_raw_tokens_field_carrying_a_live_blacklist_term_is_a_violation ... ok
+test tests::a_raw_tokens_desc_entry_that_is_also_redacted_is_not_a_violation ... ok
+test tests::a_known_ocr_fold_false_positive_coordinate_is_exempted_but_only_that_exact_file ... ok
+test tests::a_record_written_before_the_term_existed_is_still_caught_by_a_fresh_scan ... ok
+test tests::a_properly_redacted_equipment_name_is_never_flagged ... ok
+test tests::a_record_shipping_the_original_name_without_the_marker_is_still_a_violation ... ok
+test tests::a_redaction_marker_value_is_never_flagged ... ok
+test tests::an_unopted_in_license_json_is_never_flagged ... ok
+test tests::a_shipped_description_whose_corpus_row_declares_descispi_but_ships_unredacted_is_a_violation ... ok
+test tests::dropping_the_record_clears_the_violation ... ok
+test tests::a_shipped_record_whose_corpus_row_declares_nameispi_is_a_violation ... ok
+test tests::an_undeclared_record_is_never_flagged ... ok
+test tests::an_equipment_name_field_carrying_a_live_blacklist_term_with_no_marker_is_a_violation ... ok
+
+test result: ok. 21 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running unittests src/bin/derived_evaluator_fixture_check.rs (/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/derived_evaluator_fixture_check-e3498bbda8d66851)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/bin/enrich_class_raw_tokens.rs (/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/enrich_class_raw_tokens-d949ed4ab73e08ee)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/bin/enrich_companion_raw_tokens.rs (/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/enrich_companion_raw_tokens-56a5a0185ae2e96b)
+
+running 12 tests
+test tests::enrich_one_drops_a_record_whose_mod_row_declares_nameispi ... ok
+test tests::enrich_one_drops_a_record_whose_base_row_declares_nameispi ... ok
+test tests::enrich_one_leaves_an_already_enriched_record_untouched ... ok
+test tests::split_token_field_every_result_reconstructs_the_original_field ... ok
+test tests::enrich_one_skips_a_non_lst_token_source_without_error ... ok
+test tests::split_token_field_refuses_a_field_with_no_colon ... ok
+test tests::split_token_field_splits_on_the_first_colon_only ... ok
+test tests::enrich_one_reports_a_citation_miss_rather_than_inventing_tokens_for_a_missing_line ... ok
+test tests::find_companion_json_files_finds_flat_files ... ok
+test tests::enrich_one_adds_the_full_token_closure_byte_for_byte ... ok
+test tests::enrich_one_redacts_a_blacklist_term_hit_anywhere_in_the_closure ... ok
+test tests::enrich_one_includes_a_mod_rows_tokens_in_the_closure ... ok
+
+test result: ok. 12 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.08s
+
+     Running unittests src/bin/enrich_equipment_raw_tokens.rs (/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/enrich_equipment_raw_tokens-1d0d4a676af0f309)
+
+running 9 tests
+test copy_base_tests::copy_base_identity_splits_on_the_literal_marker ... ok
+test copy_base_tests::find_copy_base_resolves_by_key_token ... ok
+test copy_base_tests::find_copy_base_never_matches_another_copy_row ... ok
+test pi_screen_tests::declared_pi_on_line_reads_nameispi_and_descispi_off_the_raw_line ... ok
+test pi_screen_tests::screen_field_value_redacts_desc_when_declared_even_without_a_blacklist_hit ... ok
+test pi_screen_tests::screen_field_value_redacts_a_blacklist_term_hit_on_any_key_not_just_desc ... ok
+test pi_screen_tests::enrich_one_skips_enrichment_for_a_declared_nameispi_record ... ok
+test pi_screen_tests::enrich_one_redacts_an_undeclared_blacklist_hit_in_raw_tokens ... ok
+test pi_screen_tests::enrich_one_folds_in_a_dot_mod_row_targeting_the_copy_created_identity ... ok
+
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.04s
+
+     Running unittests src/bin/enrich_monster_ability_raw_tokens.rs (/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/enrich_monster_ability_raw_tokens-62bff68e0fa6b950)
+
+running 19 tests
+test tests::book_dir_of_refuses_a_four_segment_path_from_a_non_dreamscarred_publisher ... ok
+test tests::book_dir_of_resolves_a_standard_five_segment_publisher_path ... ok
+test tests::book_dir_of_resolves_the_four_segment_dreamscarred_press_shape ... ok
+test tests::enrich_one_adds_the_full_token_closure_byte_for_byte ... ok
+test tests::enrich_one_leaves_an_already_enriched_record_untouched ... ok
+test tests::enrich_one_skips_a_non_lst_token_source_without_error ... ok
+test tests::enrich_one_reports_a_citation_miss_rather_than_inventing_tokens_for_a_missing_line ... ok
+test tests::enrich_one_drops_a_record_whose_mod_row_declares_nameispi ... ok
+test tests::screen_field_value_leaves_a_non_desc_field_alone_even_when_description_is_declared ... ok
+test tests::find_monster_ability_json_files_finds_flat_files ... ok
+test tests::screen_field_value_passes_through_a_clean_value ... ok
+test tests::split_token_field_every_result_reconstructs_the_original_field ... ok
+test tests::screen_field_value_redacts_a_blacklist_term_hit_on_any_key ... ok
+test tests::screen_field_value_redacts_a_desc_field_when_description_is_declared_even_without_a_blacklist_hit ... ok
+test tests::split_token_field_refuses_a_field_with_no_colon ... ok
+test tests::split_token_field_splits_on_the_first_colon_only ... ok
+test tests::enrich_one_drops_a_record_whose_base_row_declares_nameispi ... ok
+test tests::enrich_one_includes_a_mod_rows_tokens_in_the_closure ... ok
+test tests::enrich_one_redacts_a_blacklist_term_hit_anywhere_in_the_closure ... ok
+
+test result: ok. 19 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.08s
+
+     Running unittests src/bin/enrich_monster_raw_tokens.rs (/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/enrich_monster_raw_tokens-d748720c5bac584f)
+
+running 18 tests
+test tests::book_dir_of_refuses_a_four_segment_path_from_a_non_dreamscarred_publisher ... ok
+test tests::book_dir_of_resolves_a_standard_five_segment_publisher_path ... ok
+test tests::book_dir_of_resolves_the_four_segment_dreamscarred_press_shape ... ok
+test tests::enrich_one_drops_a_record_whose_base_row_declares_nameispi ... ok
+test tests::enrich_one_reports_a_citation_miss_rather_than_inventing_tokens_for_a_missing_line ... ok
+test tests::enrich_one_leaves_an_already_enriched_record_untouched ... ok
+test tests::enrich_one_skips_a_non_lst_token_source_without_error ... ok
+test tests::screen_field_value_leaves_a_non_desc_field_alone_even_when_description_is_declared ... ok
+test tests::screen_field_value_passes_through_a_clean_value ... ok
+test tests::screen_field_value_redacts_a_blacklist_term_hit_on_any_key ... ok
+test tests::screen_field_value_redacts_a_desc_field_when_description_is_declared_even_without_a_blacklist_hit ... ok
+test tests::split_token_field_refuses_a_field_with_no_colon ... ok
+test tests::split_token_field_splits_on_the_first_colon_only ... ok
+test tests::enrich_one_drops_a_record_whose_mod_row_declares_nameispi ... ok
+test tests::find_monster_json_files_finds_flat_files ... ok
+test tests::enrich_one_redacts_a_blacklist_term_hit_anywhere_in_the_closure ... ok
+test tests::enrich_one_adds_the_full_token_closure_byte_for_byte ... ok
+test tests::enrich_one_includes_a_mod_rows_tokens_in_the_closure ... ok
+
+test result: ok. 18 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.06s
+
+     Running unittests src/bin/enrich_pu_class_feature_mod_closure.rs (/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/enrich_pu_class_feature_mod_closure-e7a2f44a00402260)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/bin/enrich_spell_raw_tokens.rs (/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/enrich_spell_raw_tokens-bca53ee2353ef586)
+
+running 12 tests
+test tests::enrich_one_hard_stops_when_the_row_declares_nameispi_yes ... ok
+test tests::enrich_one_leaves_an_already_enriched_record_untouched ... ok
+test tests::split_token_field_every_result_reconstructs_the_original_field ... ok
+test tests::split_token_field_refuses_a_field_with_no_colon ... ok
+test tests::split_token_field_splits_on_the_first_colon_only ... ok
+test tests::enrich_one_reports_a_citation_miss_rather_than_inventing_tokens_for_a_missing_line ... ok
+test tests::enrich_one_skips_a_non_lst_token_source_without_error ... ok
+test tests::find_spell_json_files_walks_into_level_subdirectories ... ok
+test tests::enrich_one_redacts_a_raw_token_whose_value_hits_the_blacklist ... ok
+test tests::enrich_one_adds_the_full_token_closure_byte_for_byte ... ok
+test tests::enrich_one_redacts_a_desc_field_when_the_row_declares_descispi_yes ... ok
+test tests::enrich_one_includes_a_mod_rows_tokens_in_the_closure ... ok
+
+test result: ok. 12 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.04s
+
+     Running unittests src/bin/formula_interpreter.rs (/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/formula_interpreter-929e9d3511c1637c)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/bin/gen_book_cache.rs (/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/gen_book_cache-4c2c42b77948f29d)
+
+running 8 tests
+test tests::verified_citation_line_exempts_a_copy_overlay_rows_compound_first_column ... ok
+test tests::wiring_class_file_arg_is_the_bare_basename_when_the_citation_sits_at_the_book_top_level ... ok
+test tests::verified_citation_line_still_catches_a_genuinely_stale_citation ... ok
+test tests::existing_equipment_record_path_is_none_when_neither_layout_has_the_slug ... ok
+test tests::wiring_class_file_arg_keeps_the_subdirectory_a_bare_basename_would_drop ... ok
+test tests::existing_equipment_record_path_finds_a_record_nested_under_its_category_slug ... ok
+test tests::existing_equipment_record_path_finds_a_record_in_the_flat_layout ... ok
+test tests::wiring_class_file_arg_falls_back_to_the_bare_basename_when_the_book_marker_is_absent ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/bin/gen_cache_acg.rs (/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/gen_cache_acg-b8405288d132c08e)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/bin/gen_cache_apg.rs (/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/gen_cache_apg-e9d995bc75466244)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/bin/gen_cache_beastiary.rs (/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/gen_cache_beastiary-934ea0e166b26126)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/bin/gen_cache_class_feature.rs (/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/gen_cache_class_feature-63efe37bd1460ae3)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/bin/gen_cache_equipment_gap.rs (/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/gen_cache_equipment_gap-35234b4404e0edb9)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/bin/gen_cache_feat_gap.rs (/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/gen_cache_feat_gap-c01d35584ea046a9)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/bin/gen_cache_hand_authored_equipment.rs (/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/gen_cache_hand_authored_equipment-66437ad628ea4a91)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/bin/gen_cache_hand_authored_feat_dump.rs (/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/gen_cache_hand_authored_feat_dump-fa30808718e795d6)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/bin/gen_cache_spell_lane_dump.rs (/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/gen_cache_spell_lane_dump-a232d1209d136c24)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/bin/gen_cache_spell_mod_access.rs (/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/gen_cache_spell_mod_access-76f58762540fdb3d)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/bin/gen_cache_ultimate_equipment.rs (/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/gen_cache_ultimate_equipment-ad176cdbcc4830ee)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/bin/gen_class_feature_grants.rs (/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/gen_class_feature_grants-dffa18512484a43e)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/bin/gen_core_rulebook_cache.rs (/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/gen_core_rulebook_cache-e8e421e247b3f163)
+
+running 4 tests
+test tests::an_ordinary_key_passes_through_the_shared_helper_unchanged ... ok
+test tests::source_coordinate_falls_back_to_the_url_for_web_second_source ... ok
+test tests::source_coordinate_reads_path_and_line_for_every_lst_backed_variant ... ok
+test tests::an_undeclared_blacklisted_key_renames_via_the_shared_helper ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/bin/gen_desktop_fixture_corpus.rs (/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/gen_desktop_fixture_corpus-c4c86fd010f2e23a)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/bin/gen_equipment_gap_tables.rs (/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/gen_equipment_gap_tables-82abe5a64a04b456)
+
+running 31 tests
+test blacklist_screen_tests::a_declared_name_hit_is_flagged_for_rename_even_with_no_blacklist_term ... ok
+test blacklist_screen_tests::a_renamed_row_carries_a_neutral_identity_and_its_real_citation ... ok
+test blacklist_screen_tests::book_relative_path_strips_everything_before_the_book_slug_directory ... ok
+test blacklist_screen_tests::production_logic_excludes_a_blacklisted_name_and_redacts_a_blacklisted_description ... ok
+test chosen_selection_tests::a_list_tailed_percent_ships_the_noun_its_own_choose_token_names ... ok
+test chosen_selection_tests::every_shape_the_rule_does_not_claim_falls_through_untouched ... ok
+test chosen_selection_tests::a_sentence_initial_percent_is_capitalised ... ok
+test blacklist_screen_tests::a_name_field_hit_is_found_and_a_clean_record_is_not ... ok
+test copy_inheritance_tests::a_copy_row_inherits_the_base_records_description_when_it_states_none_of_its_own ... ok
+test copy_inheritance_tests::a_copy_row_inherits_cost_and_weight_when_it_states_neither ... ok
+test chosen_selection_tests::the_shipped_sentence_carries_no_ingest_vocabulary ... ok
+test copy_inheritance_tests::a_copy_row_stating_its_own_field_is_never_overridden_by_the_base ... ok
+test copy_inheritance_tests::a_copy_row_is_never_used_as_a_base_for_another_copy_row ... ok
+test copy_inheritance_tests::a_copy_row_with_no_resolvable_base_stays_none_rather_than_fabricating ... ok
+test copy_inheritance_tests::base_lookup_spans_multiple_files_of_the_same_book ... ok
+test copy_inheritance_tests::resolution_is_by_key_not_by_bare_first_column_name ... ok
+test declared_pi_tests::line_zero_is_no_declaration ... ok
+test desc_clear_directive_tests::a_bare_clear_with_no_following_desc_yields_none ... ok
+test desc_clear_directive_tests::a_desc_clear_directive_is_skipped_in_favor_of_the_real_desc_that_follows_it ... ok
+test desc_clear_directive_tests::an_ordinary_single_desc_field_is_unaffected ... ok
+test pfs_not_legal_overlay_tests::a_bare_pfs_not_legal_overlay_row_is_not_a_record ... ok
+test pfs_not_legal_overlay_tests::a_pfs_not_legal_row_that_also_carries_real_content_still_parses ... ok
+test safe_description_tests::a_bare_choice_keyword_with_no_pipe_tail_ships_rendered_not_raw ... ok
+test safe_description_tests::a_clean_description_passes_through_unchanged ... ok
+test safe_description_tests::a_description_whose_render_still_leaks_pcgen_syntax_is_refused ... ok
+test safe_description_tests::a_dropped_keyword_does_not_leave_a_dangling_preposition ... ok
+test safe_description_tests::a_percent_standing_in_for_a_number_is_left_raw_not_rendered ... ok
+test safe_description_tests::none_stays_none ... ok
+test safe_description_tests::a_resolvable_pipe_argument_tail_never_reaches_the_shipped_row ... ok
+test declared_pi_tests::a_nameispi_row_is_flagged_and_a_descispi_row_is_flagged_separately ... ok
+test blacklist_screen_tests::a_deity_name_inside_undeclared_description_prose_is_a_blacklist_hit_but_not_a_declared_pi_hit ... ok
+
+test result: ok. 31 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running unittests src/bin/gen_feat_gap_tables.rs (/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/gen_feat_gap_tables-30c17773e1a4c819)
+
+running 9 tests
+test pi_screen_tests::parse_lst_does_not_flag_an_undeclared_row ... ok
+test pi_screen_tests::parse_lst_does_not_redact_an_ordinary_prerequisite ... ok
+test pi_screen_tests::parse_lst_flags_a_nameispi_declared_row ... ok
+test pi_screen_tests::parse_lst_never_leaves_a_pipe_tail_stranded_mid_string_when_desc_and_benefit_both_carry_one ... ok
+test pi_screen_tests::parse_lst_redacts_a_descispi_declared_description ... ok
+test pi_screen_tests::parse_lst_redacts_a_description_that_hits_the_blacklist ... ok
+test pi_screen_tests::parse_lst_redacts_a_prerequisite_that_hits_the_blacklist ... ok
+test pi_screen_tests::parse_lst_skips_a_visible_export_row ... ok
+test pi_screen_tests::parse_lst_still_parses_the_real_gated_sibling_row ... ok
+
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/bin/gen_record_vars.rs (/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/gen_record_vars-37ab1bdba53dcfce)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/bin/gen_settled_corpus.rs (/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/gen_settled_corpus-ca670a95f854edaa)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/bin/ingest_apg_race_traits.rs (/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/ingest_apg_race_traits-f69e083286f14584)
+
+running 8 tests
+test tests::already_ingested_keys_is_empty_for_a_nonexistent_directory ... ok
+test tests::favored_class_bonus_rows_are_not_racial_traits ... ok
+test tests::in_scope_roster_is_exactly_the_7_crb_races ... ok
+test tests::alternate_row_sets_its_replace_flag_and_is_not_suppressed_by_its_own_guard ... ok
+test tests::race_directory_slugs_match_the_corpus_directory_convention ... ok
+test tests::spell_like_ability_grant_and_dc_bonus_are_preserved_verbatim ... ok
+test tests::no_committed_apg_trait_description_leaks_pcgen_syntax ... ok
+test tests::already_ingested_keys_reads_real_keys_off_disk_not_a_hand_list ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.07s
+
+     Running unittests src/bin/ingest_class_spell_levels_arg.rs (/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/ingest_class_spell_levels_arg-193d42a373f2667f)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/bin/ingest_pu_classes.rs (/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/ingest_pu_classes-de6d164e6fd53e30)
+
+running 24 tests
+test tests::a_descispi_row_is_redacted_through_the_shared_reader_even_with_no_blacklist_term ... ok
+test tests::cskill_list_is_transcribed_verbatim_including_type_selectors ... ok
+test tests::an_undecidable_gate_yields_no_description_rather_than_a_mangled_one ... ok
+test tests::chassis_overrides_reads_the_unchained_monk_columns ... ok
+test tests::chassis_overrides_is_all_none_for_a_variant_that_overrides_nothing ... ok
+test tests::declared_product_identity_of_reads_nameispi_and_descispi_off_the_row ... ok
+test tests::description_drops_an_unresolvable_argument_rather_than_guessing ... ok
+test tests::description_substitutes_a_same_row_literal ... ok
+test tests::granted_internal_class_skill_keys_finds_the_indirection ... ok
+test tests::description_excludes_the_pcgen_application_instruction ... ok
+test tests::drop_pi_named_grants_removes_only_the_grant_naming_a_nameispi_row ... ok
+test tests::level_progression_refuses_any_shape_it_does_not_model ... ok
+test tests::leak_guard_catches_every_shape_of_pcgen_substitution_syntax ... ok
+test tests::level_progression_substitutes_level_and_keeps_the_tail_byte_identical ... ok
+test tests::parse_grant_ignores_non_automatic_clauses ... ok
+test tests::mod_target_reads_the_category_selector ... ok
+test tests::parse_grant_leaves_min_level_none_when_the_row_states_none ... ok
+test tests::parse_grant_reads_the_level_literal_off_the_clause ... ok
+test tests::parse_rows_drops_comments_blanks_and_padding_tabs ... ok
+test tests::raw_tokens_keep_the_placeholder_verbatim_even_though_source_page_drops_it ... ok
+test tests::slugify_matches_the_convention_every_other_content_kind_uses ... ok
+test tests::source_page_maps_the_placeholder_to_none_and_keeps_a_real_page ... ok
+test tests::record_key_prefers_key_token_over_display_name ... ok
+test tests::template_hit_die_reads_the_same_row_literal ... ok
+
+test result: ok. 24 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/bin/ingest_race_traits.rs (/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/ingest_race_traits-2da26baea44eac4a)
+
+running 24 tests
+test tests::a_background_category_row_with_a_different_type_is_not_the_ethnicity_placeholder_shape ... ok
+test tests::a_mod_row_declares_nothing_even_when_it_carries_a_racial_trait_type ... ok
+test tests::a_row_with_no_type_and_no_adoptive_parentage_category_is_still_dropped ... ok
+test tests::a_selector_only_book_never_admits_the_standard_trait_row_sharing_its_own_file ... ok
+test tests::a_type_adoptiverace_row_with_no_choose_token_is_not_the_selector_shape ... ok
+test tests::a_preregion_prerequisite_naming_a_blacklisted_place_is_caught_by_the_strong_scan ... ok
+test tests::adopted_race_choose_selector_admits_a_race_this_project_models_no_chassis_for ... ok
+test tests::adopted_race_choose_selector_row_resolves_to_the_race_it_names ... ok
+test tests::adaptable_luck_resolves_what_the_row_states_and_drops_only_what_it_does_not ... ok
+test tests::alternate_row_captures_every_flag_it_sets_not_just_the_guarded_ones ... ok
+test tests::alternate_row_sets_its_replace_flag_and_is_not_suppressed_by_its_own_guard ... ok
+test tests::description_drops_pcgen_argument_and_prerequisite_segments ... ok
+test tests::an_adoptive_parentage_row_resolves_to_the_race_it_adopts_despite_carrying_no_type ... ok
+test tests::human_ethnicity_placeholder_row_resolves_to_human_and_is_admitted ... ok
+test tests::leaked_pcgen_syntax_names_every_shape_that_must_never_reach_a_player ... ok
+test tests::in_scope_roster_is_exactly_the_34_races_sd31_e6_f4_006_names ... ok
+test tests::literal_percent_escape_renders_as_a_single_percent_sign ... ok
+test tests::only_true_valued_replace_facts_count_as_settings ... ok
+test tests::prefact_flag_reads_only_abilities_scoped_true_assertions ... ok
+test tests::race_directory_slugs_match_the_corpus_directory_convention ... ok
+test tests::rows_without_a_racial_trait_type_are_not_racial_traits ... ok
+test tests::selector_only_book_sources_are_exactly_the_five_named_entries ... ok
+test tests::standard_row_populates_suppressed_by_flag_and_the_racial_default_marker ... ok
+test tests::no_committed_trait_description_leaks_pcgen_syntax_in_any_declared_book ... ok
+
+test result: ok. 24 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.12s
+
+     Running unittests src/bin/ingest_races.rs (/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/ingest_races-7bf8c75aec633d8c)
+
+running 44 tests
+test tests::a_bonus_abilitypool_prevareq_is_read_as_a_gated_flag ... ok
+test tests::a_prevareq_1_clause_is_not_read_as_a_suppressor_flag ... ok
+test tests::a_declared_name_cannot_be_screened_into_something_publishable ... ok
+test tests::a_declared_description_is_redacted_by_the_real_screening_call ... ok
+test tests::a_hag_mother_choice_row_is_a_heritage_choice_subtrait ... ok
+test tests::a_trait_without_prefact_takes_its_gate_from_the_globalvar_file ... ok
+test tests::an_ordinary_default_trait_is_not_a_heritage_choice_subtrait ... ok
+test tests::base_move_walk_reads_pairwise_not_positionally ... ok
+test tests::chassis_move_walk_zero_is_recorded_faithfully ... ok
+test tests::chassis_raw_tokens_include_bonus_clauses ... ok
+test tests::chassis_placeholder_page_is_never_promoted_to_a_citation ... ok
+test tests::declared_product_identity_of_reads_nameispi_off_a_parsed_chassis ... ok
+test tests::declared_product_identity_of_reads_descispi_off_a_parsed_trait ... ok
+test tests::defensive_training_renders_the_resolved_bonus_not_the_raw_desc ... ok
+test tests::globalvar_gates_alone_still_misses_the_bonus_abilitypool_shape ... ok
+test tests::dwarf_chassis_parses_every_named_field_and_preserves_all_tokens ... ok
+test tests::dwarf_greed_trait_parses_to_the_documented_exemplar ... ok
+test tests::multi_flag_prefact_stores_the_first_flag_and_keeps_the_whole_token ... ok
+test tests::placeholder_with_no_argument_is_dropped ... ok
+test tests::literal_percent_escape_renders_as_a_single_percent_sign ... ok
+test tests::orc_ferocity_renders_the_gated_segment_that_actually_applies ... ok
+test tests::prevar_gate_evaluates_the_closed_comparison_family_against_same_row_literals ... ok
+test tests::plain_description_passes_through_unchanged ... ok
+test tests::parse_rows_discards_consecutive_empty_columns_and_comment_lines ... ok
+test tests::race_key_is_read_off_the_trait_key_including_hyphenated_races ... ok
+test tests::racial_default_marker_match_is_case_insensitive ... ok
+test tests::replace_flag_extraction_is_case_insensitive_on_the_boolean ... ok
+test tests::same_row_vars_refuse_a_conditional_bonus_var ... ok
+test tests::same_row_vars_refuse_a_non_literal_bonus_var_formula ... ok
+test tests::same_row_vars_refuse_a_variable_this_row_never_defines ... ok
+test tests::same_row_vars_resolve_define_base_plus_bonus_var_literal ... ok
+test tests::slugify_disambiguates_the_two_duergar_spell_like_ability_traits ... ok
+test tests::split_token_splits_on_the_first_colon_only ... ok
+test tests::the_globalvar_gate_never_overrides_a_gate_the_row_itself_declares ... ok
+test tests::standard_trait_selector_rejects_non_trait_rows ... ok
+test tests::the_globalvar_reader_takes_negative_gates_and_never_positive_requirements ... ok
+test tests::the_hag_racial_trait_grantor_row_is_not_a_heritage_choice_subtrait ... ok
+test tests::trait_placeholder_source_page_becomes_none ... ok
+test tests::trait_gated_by_neither_source_has_no_suppression_flag ... ok
+test tests::undecidable_desc_gate_is_an_error_not_a_guess ... ok
+test tests::the_two_reported_rows_render_exactly_as_specified ... ok
+test tests::unresolvable_desc_argument_is_dropped_never_guessed ... ok
+test tests::no_committed_trait_description_leaks_pcgen_substitution_syntax ... ok
+test tests::every_committed_race_record_on_disk_deserializes_through_the_shape_b_v1_schema ... ok
+
+test result: ok. 44 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.08s
+
+     Running unittests src/bin/ingest_spells.rs (/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/ingest_spells-609739876c1db929)
+
+running 24 tests
+test tests::book_input_carries_no_per_book_pi_screen_override_field ... ok
+test tests::books_table_names_exactly_the_twenty_one_spell_bearing_books_this_binary_replaces ... ok
+test tests::copy_variant_split_is_none_for_a_mod_row_even_if_it_also_names_copy ... ok
+test tests::copy_variant_split_is_none_for_a_plain_base_declaration ... ok
+test tests::domains_field_is_none_when_absent_even_with_a_subschool_token ... ok
+test tests::copy_variant_split_reads_base_before_and_variant_after ... ok
+test tests::is_base_declaration_excludes_mod_and_copy_rows ... ok
+test tests::key_field_is_none_when_no_key_token_is_declared ... ok
+test tests::key_field_reads_a_declared_key_distinct_from_the_display_name ... ok
+test tests::levels_in_field_parses_every_pipe_separated_group ... ok
+test tests::levels_in_field_strips_a_bracketed_predeity_clause_before_finding_the_level ... ok
+test tests::levels_in_field_strips_a_bracketed_preskill_clause_before_finding_the_level ... ok
+test tests::min_level_combines_classes_and_domains_taking_the_true_minimum ... ok
+test tests::min_level_is_none_when_neither_token_is_present ... ok
+test tests::global_base_index_resolves_a_copy_variants_base_across_files ... ok
+test tests::min_level_takes_the_minimum_across_multiple_classes_groups ... ok
+test tests::min_level_reads_domains_when_classes_is_absent ... ok
+test tests::pi_screen_output_is_unchanged_when_the_original_name_is_swapped ... ok
+test tests::pi_screen_passes_a_clean_record_through_unredacted ... ok
+test tests::pi_screen_redacts_a_description_whose_row_declares_descispi_yes ... ok
+test tests::pi_screen_renames_a_record_whose_name_is_blacklisted_with_no_declared_pi_token_at_all ... ok
+test tests::pi_screen_renames_a_record_whose_row_declares_nameispi_yes ... ok
+test tests::school_variant_name_recognizes_all_nine_schools ... ok
+test tests::school_variant_name_rejects_subschool_names ... ok
+
+test result: ok. 24 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/bin/reconcile_description_pi_stamps.rs (/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/reconcile_description_pi_stamps-42617c24d435408d)
+
+running 6 tests
+test tests::reconcile_one_is_a_true_no_op_on_an_already_correct_record ... ok
+test tests::find_json_files_skips_license_json ... ok
+test tests::reconcile_one_never_touches_a_record_with_no_description_field ... ok
+test tests::reconcile_one_never_touches_an_ordinary_unredacted_record ... ok
+test tests::reconcile_one_unions_description_into_an_existing_name_redaction ... ok
+test tests::reconcile_one_fixes_the_bestiary_4_shape_and_touches_nothing_else ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.38s
+
+     Running unittests src/bin/repair_equipment_copy_citations.rs (/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/repair_equipment_copy_citations-555521d43b37d29f)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/bin/repair_lst_provenance.rs (/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/repair_lst_provenance-a2bacfe40da99375)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/bin/repair_spell_citations.rs (/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/repair_spell_citations-c0250a7363709341)
+
+running 6 tests
+test tests::repair_one_leaves_an_already_correct_citation_untouched ... ok
+test tests::repair_one_skips_a_non_lst_token_source_without_error ... ok
+test tests::repair_one_reports_a_miss_rather_than_inventing_a_line_when_no_declaration_row_exists ... ok
+test tests::repair_one_skips_a_record_with_no_raw_tokens_yet ... ok
+test tests::repair_one_repoints_a_mod_row_citation_to_the_base_declaration ... ok
+test tests::repair_one_strips_a_dot_mod_suffixed_record_key_before_using_it_as_an_identity ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.07s
+
+     Running unittests src/bin/restamp_wiring_class.rs (/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/restamp_wiring_class-f55eb5aaabf5b34b)
+
+running 3 tests
+test tests::a_non_lst_token_source_is_skipped ... ok
+test tests::a_record_that_already_agrees_is_not_rewritten ... ok
+test tests::a_stale_display_record_with_a_real_bonus_token_restamps_to_static ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.09s
+
+     Running unittests src/bin/sf_corpus.rs (/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/sf_corpus-27505bb0b6829c53)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/bin/sf_formula_census.rs (/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/sf_formula_census-bd28295b6c4df46d)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/bin/sheet_rule_bucket_v_render.rs (/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/sheet_rule_bucket_v_render-08d3c7fceea3e786)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/bin/sheet_rule_convert.rs (/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/sheet_rule_convert-67f2176243580cd0)
+
+running 2 tests
+test tests::an_unknown_or_missing_system_is_a_usage_error ... ok
+test tests::system_defaults_to_pathfinder_and_accepts_the_explicit_spelling ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/bin/sheet_rule_parity.rs (/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/sheet_rule_parity-42958011334bca55)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/bin/v06_corpus_trap_report.rs (/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/v06_corpus_trap_report-e3fa254348dcc5fd)
+
+running 9 tests
+test tests::a_bare_book_name_resolves_under_the_roleplaying_game_directory ... ok
+test tests::a_second_book_argument_is_rejected_rather_than_silently_dropped ... ok
+test tests::an_absolute_book_path_is_used_verbatim ... ok
+test tests::census_requires_its_search_string ... ok
+test tests::every_trap_variant_appears_in_the_report_order ... ok
+test tests::examples_zero_means_show_everything ... ok
+test tests::leaf_keeps_the_book_directory_so_a_filename_is_unambiguous ... ok
+test tests::no_arguments_is_a_usage_error_rather_than_a_silent_success ... ok
+test tests::a_bare_book_name_resolves_across_the_known_corpus_subtrees ... ok
+
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.03s
+
+     Running tests/ability_pool_picks.rs (/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/ability_pool_picks-4c4f1e51ea5780ed)
+
+running 2 tests
+test a_pool_member_that_does_not_resolve_is_a_named_defect has been running for over 60 seconds
+test summoner_class_selection_is_a_converted_choice_with_members has been running for over 60 seconds
+test summoner_class_selection_is_a_converted_choice_with_members ... ok
+test a_pool_member_that_does_not_resolve_is_a_named_defect ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 267.04s
+
+     Running tests/class_proficiency_line_gate.rs (/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/class_proficiency_line_gate-5fda02f4f972360a)
+
+running 4 tests
+test no_principal_carries_one_lines_condition ... ok
+test fighter_proficiencies_are_ungated_at_level_1 has been running for over 60 seconds
+test medium_mesmerist_spiritualist_proficiencies_are_ungated_at_level_1 has been running for over 60 seconds
+test weapon_mastery_stays_gated_at_20 has been running for over 60 seconds
+test fighter_proficiencies_are_ungated_at_level_1 ... ok
+test weapon_mastery_stays_gated_at_20 ... ok
+test medium_mesmerist_spiritualist_proficiencies_are_ungated_at_level_1 ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 750.07s
+
+     Running tests/class_records_and_closure_attestation.rs (/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/class_records_and_closure_attestation-b3196a9b4ad925f3)
+
+running 5 tests
+test a_preability_bracket_item_is_an_exclusion ... ok
+test the_commoner_pick_is_linked_to_the_simple_tier ... ok
+test an_unchained_class_is_taken_on_its_base_class ... ok
+test every_census_class_has_a_converted_class_record ... ok
+test the_real_package_attests_complete_closures_only ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 4.25s
+
+     Running tests/class_weapon_proficiency_grant_by_type.rs (/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/class_weapon_proficiency_grant_by_type-9ede86ddfd7026ba)
+
+running 4 tests
+test antipaladin_and_magus_gain_the_martial_tier ... ok
+test every_grant_by_type_row_left_is_unexpandable ... ok
+test alchemist_inquisitor_gunslinger_gain_their_missing_tier ... ok
+test cavalier_oracle_and_the_occult_classes_answer_known ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 5.86s
+
+     Running tests/class_weapon_proficiency_via_converter.rs (/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/class_weapon_proficiency_via_converter-201c2303be337691)
+
+running 7 tests
+test print_reader_answers_for_the_weapon_proficiency_blocked_classes ... ignored, report generator; run with --ignored --nocapture
+test an_unrecognized_proficiency_tag_makes_the_class_unknown ... ok
+test summoner_reads_simple_through_the_standard_class_pick ... ok
+test wizard_is_not_granted_the_simple_tier ... ok
+error: test failed, to rerun pass `--test class_weapon_proficiency_via_converter`
+
+Caused by:
+  process didn't exit successfully: `/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/class_weapon_proficiency_via_converter-201c2303be337691 --test-threads=8` (signal: 15, SIGTERM: termination signal)
+     Running tests/derived_evaluator_fixture_check.rs (/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/derived_evaluator_fixture_check-8a523c48687eb014)
+
+running 5 tests
+test reference_derivation_refuses_what_it_cannot_parse ... ok
+test fixture_expected_values_are_re_derivable_from_the_pinned_corpus_field ... ok
+test pinned_corpus_field_is_byte_identical_to_the_upstream_lst ... ok
+test engine_ingest_cites_the_same_upstream_bytes_the_fixture_was_read_from ... ok
+test engine_evaluator_output_equals_the_corpus_derived_expected_value ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 7.63s
+
+     Running tests/derived_evaluator_fixture_check_class_feature_description.rs (/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/derived_evaluator_fixture_check_class_feature_description-acecd883d5327d01)
+
+running 5 tests
+test class_feature_description_entries_are_present_and_one_per_unit ... ok
+test class_feature_description_pinned_corpus_field_is_byte_identical_to_the_upstream_lst ... ok
+test class_feature_description_expected_values_are_re_derivable_from_the_pinned_corpus_field ... ok
+test class_feature_description_pinned_upstream_lst_still_hashes_to_the_pinned_sha256 ... ok
+test every_fixture_clears_the_real_production_bar_check ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 7.71s
+

@@ -1,0 +1,57 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Sasquatch ~ Pungency",
+    "delivery": "Extraordinary",
+    "description": "A sasquatch's odor is quite powerful, and can be detected at twice the normal distance by scent.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:sasquatch_pungency",
+    "name": "Pungency",
+    "owners": [
+      "bestiary_3:monster:sasquatch"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A sasquatch's odor is quite powerful, and can be detected at twice the normal distance by scent."
+      },
+      {
+        "key": "KEY",
+        "value": "Sasquatch ~ Pungency"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.236"
+      },
+      {
+        "key": "TYPE",
+        "value": "SasquatchRacialAbility.SpecialQuality.Extraordinary"
+      }
+    ],
+    "source_page": "p.236",
+    "traits": [
+      "SasquatchRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T10:26:03Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1488,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Sasquatch ~ Pungency",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

@@ -1,0 +1,72 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Bleed",
+    "delivery": "Extraordinary",
+    "description": "You can cause wounds that continue to bleed, inflicting an additional %1d%2 damage each round at the start of the affected creature's turn. This bleeding can be stopped by a successful DC 15 Heal skill check or through the application of any magical healing.",
+    "description_variables": [
+      "BleedDamageDice",
+      "BleedDamageDieSize"
+    ],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:bleed",
+    "name": "Bleed",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|%1d%2/round|BleedDamageDice|BleedDamageDieSize"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BleedDamageDice|1"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BleedDamageDice|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BleedDamageDieSize|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can cause wounds that continue to bleed, inflicting an additional %1d%2 damage each round at the start of the affected creature's turn. This bleeding can be stopped by a successful DC 15 Heal skill check or through the application of any magical healing.|BleedDamageDice|BleedDamageDieSize|PRERULE:1,DisplayFullAbility"
+      },
+      {
+        "key": "DESC",
+        "value": "You can cause wounds that continue to bleed, inflicting an additional %1d%2 damage each round.|BleedDamageDice|BleedDamageDieSize|!PRERULE:1,DisplayFullAbility"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.298"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary"
+      }
+    ],
+    "source_page": "p.298",
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T12:58:07Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1294,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "record_key": "Bleed",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

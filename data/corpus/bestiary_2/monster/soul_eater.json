@@ -1,0 +1,164 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "ability_keys": [
+      "bestiary_2:monster_ability:soul_eater_caster_link",
+      "bestiary_2:monster_ability:soul_eater_find_target",
+      "bestiary_2:monster_ability:soul_eater_soul_drain",
+      "bestiary_2:monster_ability:soul_eater_wisdom_damage"
+    ],
+    "challenge_rating": "7",
+    "corpus_key": "Soul Eater",
+    "external_ability_refs": [
+      "All-Around Vision",
+      "Can't Be Tripped",
+      "Flight Maneuverability",
+      "Immunity to Critical Hits",
+      "Immunity to Paralysis",
+      "Immunity to Poison",
+      "Immunity to Sleep",
+      "Immunity to Stunning"
+    ],
+    "key": "bestiary_2:monster:soul_eater",
+    "monster_class": "Outsider (Ref/Will):11",
+    "name": "Soul Eater",
+    "natural_attacks": [
+      {
+        "damage_dice": "1d6",
+        "name": "Claw"
+      }
+    ],
+    "race_subtype": "Evil|Extraplanar",
+    "race_type": "Outsider",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|All-Around Vision|Can't Be Tripped|Flight Maneuverability|Immunity to Critical Hits|Immunity to Paralysis|Immunity to Poison|Immunity to Sleep|Immunity to Stunning|Soul Eater ~ Caster Link|Soul Eater ~ Find Target|Soul Eater ~ Soul Drain|Soul Eater ~ Wisdom Damage"
+      },
+      {
+        "key": "AUTO",
+        "value": "LANG|Abyssal|Infernal"
+      },
+      {
+        "key": "BONUS",
+        "value": "SITUATION|Stealth=Darkness or smoke|8|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CON|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|12"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR,INT|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|4|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Maneuverability|5"
+      },
+      {
+        "key": "CR",
+        "value": "7"
+      },
+      {
+        "key": "DR",
+        "value": "10/magic"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|M"
+      },
+      {
+        "key": "HANDS",
+        "value": "2"
+      },
+      {
+        "key": "KIT",
+        "value": "1|NE"
+      },
+      {
+        "key": "LEGS",
+        "value": "0"
+      },
+      {
+        "key": "MONCSKILL",
+        "value": "Acrobatics|Escape Artist|Intimidate"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Outsider (Ref/Will):11"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,30,Fly,100"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Claw,Weapon.Natural.Weapon Group Natural.Melee.Finesseable.Slashing,*2,1d6"
+      },
+      {
+        "key": "RACESUBTYPE",
+        "value": "Evil|Extraplanar"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Outsider"
+      },
+      {
+        "key": "REACH",
+        "value": "5"
+      },
+      {
+        "key": "ROLE",
+        "value": "Combat"
+      },
+      {
+        "key": "SIZE",
+        "value": "M"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.254"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      }
+    ],
+    "size": "M",
+    "source_page": "p.254",
+    "speeds": [
+      {
+        "feet": 30,
+        "mode": "Walk"
+      },
+      {
+        "feet": 100,
+        "mode": "Fly"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-15T01:24:19Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 821,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+    "record_key": "Soul Eater",
+    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

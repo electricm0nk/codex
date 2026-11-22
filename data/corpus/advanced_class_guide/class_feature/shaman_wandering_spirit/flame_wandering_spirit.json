@@ -1,0 +1,100 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-24T03:51:47Z",
+  "data": {
+    "key": "Shaman Wandering Spirit ~ Flame",
+    "name": "Flame (Wandering Spirit)",
+    "class": "Shaman",
+    "description": "Spirit Magic Spells: burning hands (1st), resist energy (2nd), fireball (3rd), wall of fire (4th), summon monster V (fire elementals only, 5th), fire seeds (6th), fire storm (7th), incendiary cloud (8th), fiery body (9th)",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shaman Wandering Spirit ~ Flame"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ShamanWanderingSpirit.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "Spirit Magic Spells: burning hands (1st), resist energy (2nd), fireball (3rd), wall of fire (4th), summon monster V (fire elementals only, 5th), fire seeds (6th), fire storm (7th), incendiary cloud (8th), fiery body (9th)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Flame Spirit ~ Touch of Flame|PREVARGTEQ:ShamanWanderingSpiritBase,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Flame Spirit ~ Fiery Soul|PREVARGTEQ:ShamanWanderingSpiritGreater,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Flame Spirit ~ Elemental Form|PREVARGTEQ:ShamanWanderingSpiritTrue,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Shaman Flame Wandering Hex|ShamanWanderingHexUses"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.39"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "CLASS|Shaman=1|burning hands"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "CLASS|Shaman=2|resist energy"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "CLASS|Shaman=3|fireball"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "CLASS|Shaman=4|wall of fire"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "CLASS|Shaman=5|summon monster V (fire elementals only)"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "CLASS|Shaman=6|fire seeds"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "CLASS|Shaman=7|fire storm"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "CLASS|Shaman=8|incendiary cloud"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "CLASS|Shaman=9|fiery body"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1460,
+    "record_key": "Shaman Wandering Spirit ~ Flame"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

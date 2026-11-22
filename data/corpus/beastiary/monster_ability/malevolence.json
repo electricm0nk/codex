@@ -1,0 +1,71 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Malevolence",
+    "delivery": "Supernatural",
+    "description": "The ghost's jealousy of the living is particularly potent. Once per round, the ghost can merge its body with a creature on the Material Plane. This ability is similar to a magic jar spell (caster level 10th or the ghost's Hit Dice, whichever is higher), except that it does not require a receptacle. To use this ability, the ghost must be adjacent to the target. The target can resist the attack with a successful Will save DC %1. A creature that successfully saves is immune to that same ghost's malevolence for 24 hours.",
+    "description_variables": [
+      "MalevolenceDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:malevolence",
+    "name": "Malevolence",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Malevolence"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MalevolenceDC|10+(TL/2)+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MalevolenceDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Malevolence)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MalevolenceDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The ghost's jealousy of the living is particularly potent. Once per round, the ghost can merge its body with a creature on the Material Plane. This ability is similar to a magic jar spell (caster level 10th or the ghost's Hit Dice, whichever is higher), except that it does not require a receptacle. To use this ability, the ghost must be adjacent to the target. The target can resist the attack with a successful Will save DC %1. A creature that successfully saves is immune to that same ghost's malevolence for 24 hours.|MalevolenceDC"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.144"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.GhostAbility.AttackOption.Supernatural"
+      }
+    ],
+    "source_page": "p.144",
+    "traits": [
+      "GhostAbility",
+      "AttackOption"
+    ]
+  },
+  "ingested_at": "2026-08-23T12:58:07Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1306,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "record_key": "Malevolence",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

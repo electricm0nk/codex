@@ -1,0 +1,198 @@
+# Run on f91eebe370 with a test pasted after OVERRIDES_AT in character_hub.rs tests; never committed.
+# cargo test --locked -j 8 --bins mcprobe_all -- --test-threads=8 --nocapture
+    // PROBE (E6.MC, never committed)
+    fn mcp_show(label: &str, r: Result<CreateCharacterResponse, String>) {
+        match r {
+            Ok(CreateCharacterResponse::Saved { .. }) => println!("MCP {label}: Saved"),
+            Ok(CreateCharacterResponse::Blocked { diagnostics }) => println!("MCP {label}: BLOCKED {:?}", diagnostics.iter().map(|d| (d.id.clone(), d.message.chars().take(90).collect::<String>())).collect::<Vec<_>>()),
+            Ok(other) => println!("MCP {label}: other {:?}", std::mem::discriminant(&other)),
+            Err(e) => println!("MCP {label}: ERR {}", e.chars().take(160).collect::<String>()),
+        }
+    }
+    fn mcp_sheet(label: &str, root: &Path) {
+        let loaded = load_saved_character_at_root(root).expect("loads");
+        let blocking: Vec<_> = loaded.diagnostics.iter().filter(|d| d.claim_blocking).map(|d| (d.id.clone(), d.message.chars().take(100).collect::<String>())).collect();
+        println!("MCP {label}: snapshot={} blocking={blocking:?} admitted={:?}", loaded.snapshot.is_some(), loaded.admitted_under_override.iter().map(|r| (r.kind, r.id.clone(), r.override_flag)).collect::<Vec<_>>());
+    }
+    fn mcp_class_char(label: &str, race: &str, class: &str, level: u8) -> PathBuf {
+        let root = tempdir(label);
+        let mut envelope = level_up_test_envelope(race, level);
+        envelope.character_input = compose_character_input(&request_for_class(race, class, level));
+        let (choices, spells) = codex::rules_core::class_seeds::canonical_seeds_for(class.strip_prefix("class:").unwrap(), level);
+        envelope.character_input.chosen.selected_choices.extend(choices);
+        envelope.character_input.chosen.spells_selected.extend(spells);
+        SavedCharacterStore::save(&envelope, &root).expect("save");
+        root
+    }
+    #[test]
+    fn mcprobe_all() {
+        // P1 spells across classes
+        for class in ["fighter", "cleric", "sorcerer", "bard", "paladin", "ranger", "druid", "rogue", "wizard", "magus", "oracle"] {
+            let id = format!("class:{class}");
+            for level in [1u8, 5] {
+                let root = mcp_class_char(&format!("mcp-spell-{class}-{level}"), "race:human", &id, level);
+                mcp_sheet(&format!("P1 {class} {level} base"), &root);
+                let off = if class == "cleric" || class=="oracle" || class=="druid" { "Magic Missile" } else { "Cure Light Wounds" };
+                let off = if class=="bard"||class=="ranger"||class=="paladin" { "Fireball" } else { off };
+                mcp_show(&format!("P1 {class} {level} off flag-off"), add_spell_selection_at_root(&root, off, &id, AcquisitionMode::Known, OVERRIDES_AT));
+                overrides_set(&root, |f| f.spells_outside_class_list = true);
+                mcp_show(&format!("P1 {class} {level} off flag-on"), add_spell_selection_at_root(&root, off, &id, AcquisitionMode::Known, OVERRIDES_AT));
+                mcp_sheet(&format!("P1 {class} {level} after"), &root);
+                println!("MCP P1 {class} {level} ledger: {:?}", list_progression_ledger_at_root(&root).map(|l| serde_json::to_string(&l).unwrap().contains(off)));
+                mcp_show(&format!("P1 {class} {level} levelup"), crate::pf1_adapter::level_up_character_at_root(&root, &id, Vec::new(), None, OVERRIDES_AT));
+                mcp_show(&format!("P1 {class} {level} remove"), remove_spell_selection_at_root(&root, off, crate::pf1_adapter::OVERRIDE_SPELL_SOURCE, OVERRIDES_AT));
+                mcp_sheet(&format!("P1 {class} {level} removed"), &root);
+                std::fs::remove_dir_all(&root).ok();
+            }
+        }
+        // P8 bootstrap
+        let root = mcp_class_char("mcp-boot", "race:human", "class:wizard", 1);
+        {
+            let mut e = SavedCharacterStore::load(&root).unwrap();
+            e.character_input.chosen.spells_selected.clear();
+            SavedCharacterStore::save(&e, &root).unwrap();
+        }
+        mcp_sheet("P8 empty wizard", &root);
+        overrides_set(&root, |f| f.spells_outside_class_list = true);
+        mcp_show("P8 boot off-list", crate::pf1_adapter::record_and_prepare_spell_selection_at_root(&root, "Cure Light Wounds", "class:wizard", OVERRIDES_AT));
+        mcp_show("P8 boot on-list", crate::pf1_adapter::record_and_prepare_spell_selection_at_root(&root, "Magic Missile", "class:wizard", OVERRIDES_AT));
+        mcp_show("P8 then off-list", add_spell_selection_at_root(&root, "Cure Light Wounds", "class:wizard", AcquisitionMode::Known, OVERRIDES_AT));
+        std::fs::remove_dir_all(&root).ok();
+
+        // P2 prereq/budget admitted, flag off, later changes
+        let root = overrides_fighter("mcp-feats", 3);
+        overrides_set(&root, |f| { f.feats_without_prerequisites = true; f.ignore_feat_budget = true; });
+        assert_worn(&overrides_prereq_add(&root).unwrap());
+        overrides_set(&root, |f| { f.feats_without_prerequisites = false; f.ignore_feat_budget = false; });
+        mcp_sheet("P2 after", &root);
+        mcp_show("P2 add legit", add_feat_selection_enforcing_prerequisites_at_root(&root, "Toughness", None, OVERRIDES_AT));
+        mcp_show("P2 levelup", crate::pf1_adapter::level_up_character_at_root(&root, "class:fighter", Vec::new(), None, OVERRIDES_AT));
+        mcp_show("P2 add legit after lv", add_feat_selection_enforcing_prerequisites_at_root(&root, "Toughness", None, OVERRIDES_AT));
+        mcp_show("P2 remove toughness", remove_feat_selection_at_root(&root, "Toughness", None, OVERRIDES_AT));
+        mcp_show("P2 remove admitted", remove_feat_selection_at_root(&root, "Improved Two-Weapon Fighting", None, OVERRIDES_AT));
+        mcp_sheet("P2 end", &root);
+        std::fs::remove_dir_all(&root).ok();
+
+        // P3 proficiency
+        use codex::rules_core::equipment_resolver::character_lacks_proficiency_with as lacks;
+        let weapon_table = [
+            ("race:elf", "class:wizard", &["Longbow", "Longsword", "Rapier", "Shortbow", "Greatsword"][..]),
+            ("race:dwarf", "class:wizard", &["Battleaxe", "Heavy Pick", "Warhammer", "Waraxe (Dwarven)", "Dwarven Waraxe", "Greatsword"][..]),
+            ("race:halfling", "class:wizard", &["Sling", "Sling Staff (Halfling)", "Greatsword"][..]),
+            ("race:half_orc", "class:wizard", &["Greataxe", "Falchion", "Greatsword"][..]),
+            ("race:gnome", "class:wizard", &["Hooked Hammer (Gnome)", "Greatsword"][..]),
+            ("race:human", "class:rogue", &["Rapier", "Hand Crossbow", "Crossbow (Hand)", "Shortsword", "Sword (Short)", "Longsword"][..]),
+            ("race:human", "class:bard", &["Whip", "Longsword", "Rapier", "Greatsword"][..]),
+            ("race:human", "class:monk", &["Kama", "Nunchaku", "Longsword", "Quarterstaff"][..]),
+            ("race:human", "class:druid", &["Scimitar", "Club", "Longsword"][..]),
+            ("race:human", "class:cleric", &["Heavy Mace", "Mace (Heavy)", "Longsword"][..]),
+            ("race:human", "class:wizard", &["Quarterstaff", "Club", "Dagger", "Light Crossbow", "Crossbow (Light)", "Heavy Crossbow", "Longsword"][..]),
+            ("race:human", "class:fighter", &["Longsword", "Bastard Sword", "Sword (Bastard)", "Spiked Chain", "Shield (Heavy/Steel)"][..]),
+        ];
+        for (race, class, items) in weapon_table {
+            let root = mcp_class_char("mcp-prof", race, class, 1);
+            let input = SavedCharacterStore::load(&root).unwrap().character_input;
+            for item in items {
+                println!("MCP P3 {race} {class} {item}: {:?} stat={}", lacks(&input, item), codex::rules_core::pilot_compute::equipped_weapon_stat_block(item).is_some());
+            }
+            std::fs::remove_dir_all(&root).ok();
+        }
+        let root = mcp_class_char("mcp-prof-feat", "race:human", "class:wizard", 5);
+        overrides_set(&root, |f| { f.feats_without_prerequisites = true; f.ignore_feat_budget = true; });
+        let input = SavedCharacterStore::load(&root).unwrap().character_input;
+        for item in ["Chain Shirt", "Chainmail", "Full Plate", "Shield (Heavy/Steel)", "Shield (Tower)", "Buckler", "Longsword", "Rapier", "Bastard Sword", "Sword (Bastard)"] {
+            println!("MCP P3b before {item}: {:?}", lacks(&input, item));
+        }
+        for (feat, target) in [("Armor Proficiency (Light)", None), ("Armor Proficiency, Light", None), ("Armor Proficiency (Medium)", None), ("Armor Proficiency, Medium", None), ("Armor Proficiency (Heavy)", None), ("Armor Proficiency, Heavy", None), ("Shield Proficiency", None), ("Tower Shield Proficiency", None), ("Martial Weapon Proficiency", Some("Rapier")), ("Exotic Weapon Proficiency", Some("Sword (Bastard)"))] {
+            mcp_show(&format!("P3b add {feat}"), add_feat_selection_enforcing_prerequisites_at_root(&root, feat, target, OVERRIDES_AT));
+        }
+        let input = SavedCharacterStore::load(&root).unwrap().character_input;
+        println!("MCP P3b feats {:?}", input.chosen.selected_feats);
+        for item in ["Chain Shirt", "Chainmail", "Full Plate", "Shield (Heavy/Steel)", "Shield (Tower)", "Buckler", "Longsword", "Rapier", "Bastard Sword", "Sword (Bastard)"] {
+            println!("MCP P3b after {item}: {:?}", lacks(&input, item));
+        }
+        std::fs::remove_dir_all(&root).ok();
+        // All armor-ish records
+        use codex::rules_core::equipment_resolver::ItemProficiencyGap as G;
+        let package = codex::rules_core::corpus_loader::live_sheet_rules().unwrap();
+        let fighter_root = mcp_class_char("mcp-all-f", "race:human", "class:fighter", 1);
+        let wizard_root = mcp_class_char("mcp-all-w", "race:human", "class:wizard", 1);
+        let fighter = SavedCharacterStore::load(&fighter_root).unwrap().character_input;
+        let wizard = SavedCharacterStore::load(&wizard_root).unwrap().character_input;
+        let mut ids: Vec<(String, Vec<String>)> = Vec::new();
+        for rule in package.rules_of_kind("equipment") { ids.push((rule.label.clone(), rule.tags.clone())); }
+        let (mut armorish, mut f_ref, mut w_ref) = (0, Vec::new(), Vec::new());
+        for (label, tags) in &ids {
+            let has = |t: &str| tags.iter().any(|x| x.eq_ignore_ascii_case(t));
+            if !(has("Shield") || (has("Armor") && has("Suit"))) { continue; }
+            armorish += 1;
+            if lacks(&fighter, label) != G::None { f_ref.push(label.clone()); }
+            if lacks(&wizard, label) != G::None {
+                if !tags.iter().any(|t| t.starts_with("ArmorProf") ) { w_ref.push(format!("{label} {tags:?}")); }
+            }
+        }
+        println!("MCP P3c armorish {armorish} fighter refused {} {:?}", f_ref.len(), &f_ref[..f_ref.len().min(60)]);
+        println!("MCP P3c wizard refused with no ArmorProf tag {} {:?}", w_ref.len(), &w_ref[..w_ref.len().min(40)]);
+        std::fs::remove_dir_all(&fighter_root).ok();
+        std::fs::remove_dir_all(&wizard_root).ok();
+
+        // P4 custom slots
+        let root = slot_conflict_character("mcp-slot", &["Helm of Brilliance"]);
+        assert_worn(&slot_conflict_wear(&root, "Helm of Brilliance"));
+        overrides_set(&root, |f| f.ignore_slot_limits = true);
+        let overrides = load_character_custom_at_root(&root).unwrap().overrides;
+        let ring = CustomRecordDto { id: "r1".to_owned(), name: "GM Ring".to_owned(), slot: Some(BodySlot::Ring), worn: true, ..Default::default() };
+        save_character_custom_at_root(&root, &CharacterCustomDto { equipment: vec![ring.clone()], overrides, ..Default::default() }, OVERRIDES_AT).unwrap();
+        let moved = CustomRecordDto { slot: Some(BodySlot::Head), ..ring.clone() };
+        save_character_custom_at_root(&root, &CharacterCustomDto { equipment: vec![moved.clone()], overrides, ..Default::default() }, OVERRIDES_AT).unwrap();
+        println!("MCP P4 moved onto head under flag, tag: {:?}", admitted_tag_on_copy(&root, "custom:r1"));
+        let ring2 = CustomRecordDto { id: "r2".to_owned(), name: "GM Ring 2".to_owned(), slot: Some(BodySlot::Ring), worn: true, ..Default::default() };
+        let mut off = overrides; off.ignore_slot_limits = false;
+        println!("MCP P4 flag off, add unrelated ring: {:?}", save_character_custom_at_root(&root, &CharacterCustomDto { equipment: vec![moved.clone(), ring2.clone()], overrides: off, ..Default::default() }, OVERRIDES_AT).map(|_| "ok"));
+        println!("MCP P4 flag off, state: {:?}", load_character_custom_at_root(&root).unwrap().overrides.ignore_slot_limits);
+        overrides_set(&root, |f| f.ignore_slot_limits = false);
+        println!("MCP P4 stow helm over: {:?}", set_custom_item_state_at_root(&root, "r1", ActiveState::SelectedInactive, OVERRIDES_AT).map(|_| "ok"));
+        std::fs::remove_dir_all(&root).ok();
+
+        // P4b: two worn rings + head overflow, flag off, delete a worn ring
+        let root = slot_conflict_character("mcp-slot2", &["Helm of Brilliance"]);
+        assert_worn(&slot_conflict_wear(&root, "Helm of Brilliance"));
+        overrides_set(&root, |f| f.ignore_slot_limits = true);
+        let overrides = load_character_custom_at_root(&root).unwrap().overrides;
+        let helm = CustomRecordDto { worn: true, ..override_helmet() };
+        save_character_custom_at_root(&root, &CharacterCustomDto { equipment: vec![helm.clone(), ring.clone()], overrides, ..Default::default() }, OVERRIDES_AT).unwrap();
+        overrides_set(&root, |f| f.ignore_slot_limits = false);
+        let off = load_character_custom_at_root(&root).unwrap().overrides;
+        println!("MCP P4b flag off, delete worn ring: {:?}", save_character_custom_at_root(&root, &CharacterCustomDto { equipment: vec![helm.clone()], overrides: off, ..Default::default() }, OVERRIDES_AT).map(|_| "ok"));
+        // P5 round trip
+        overrides_set(&root, |f| f.ignore_encumbrance = true);
+        let file = export_character_to_json(&root).unwrap();
+        let import_root = tempdir("mcp-import");
+        assert_worn(&import_character_from_json(&file, &import_root, "imported", OVERRIDES_AT, "0.0.0-test").unwrap());
+        println!("MCP P5 import overrides {:?} rows {:?} tag {:?}", load_character_custom_at_root(&import_root).unwrap().overrides, admitted_tag_rows(&import_root), admitted_tag_on_copy(&import_root, "custom:c1"));
+        std::fs::remove_dir_all(&root).ok();
+        std::fs::remove_dir_all(&import_root).ok();
+
+        // P6 alignment
+        for (class, table) in [("paladin", "LG"), ("barbarian", "NG TN NE CG CN CE"), ("monk", "LG LN LE"), ("druid", "NG LN TN CN NE"), ("antipaladin", "CE"), ("cleric", "LG NG CG LN TN CN LE NE CE"), ("wizard", "LG NG CG LN TN CN LE NE CE"), ("assassin", "LE NE CE"), ("arcane_archer", "LG NG CG LN TN CN LE NE CE"), ("dragon_disciple", "LG NG CG LN TN CN LE NE CE"), ("shadowdancer", "LG NG CG LN TN CN LE NE CE"), ("holy_vindicator", "LG NG CG LN TN CN LE NE CE"), ("inquisitor", "LG NG CG LN TN CN LE NE CE"), ("oracle", "LG NG CG LN TN CN LE NE CE"), ("gunslinger", "LG NG CG LN TN CN LE NE CE"), ("hellknight", "LG LN LE"), ("swashbuckler", "LG NG CG LN TN CN LE NE CE"), ("warpriest", "LG NG CG LN TN CN LE NE CE"), ("skald", "NG TN NE CG CN CE"), ("bloodrager", "NG TN NE CG CN CE")] {
+            let root = overrides_fighter("mcp-align", 1);
+            let mut wrong = Vec::new();
+            for (word, al) in [("Lawful Good", "LG"), ("Neutral Good", "NG"), ("Chaotic Good", "CG"), ("Lawful Neutral", "LN"), ("True Neutral", "TN"), ("Chaotic Neutral", "CN"), ("Lawful Evil", "LE"), ("Neutral Evil", "NE"), ("Chaotic Evil", "CE")] {
+                save_character_bio_at_root(&root, &CharacterBioDto { alignment: word.to_owned(), ..Default::default() }).unwrap();
+                let refused = class_alignment_gate_at_root(&root, &format!("class:{class}")).is_err();
+                if refused == table.split(' ').any(|a| a == al) { wrong.push(al); }
+            }
+            println!("MCP P6 {class}: wrong {wrong:?}");
+            std::fs::remove_dir_all(&root).ok();
+        }
+
+        // P9 sell an admitted copy
+        let (dir, root) = overrides_wizard("mcp-sell", "Rope (Hemp/50 ft.)");
+        overrides_set(&root, |f| f.weapons_without_proficiency = true);
+        let _ = purchase_equipment_priced_at_root(&root, "Rapier", ActiveState::EquippedActive, OVERRIDES_AT, PriceMode::Cashless).unwrap();
+        println!("MCP P9 rows {:?}", admitted_tag_rows(&root));
+        mcp_show("P9 remove", remove_equipment_selection_at_root(&root, "Rapier", OVERRIDES_AT));
+        println!("MCP P9 rows after {:?}", admitted_tag_rows(&root));
+        std::fs::remove_dir_all(&dir).ok();
+    }
+

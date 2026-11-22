@@ -1,0 +1,73 @@
+    // E1.MC population probe (SD-40). NOT shipped: pasted into a scratch tree's
+    // `apps/desktop/src-tauri/src/character_hub.rs` test module (after
+    // `pcg_sidecar_missing_gives_a_named_error`), where `pcg_import_via_sidecar` and `tempdir` live.
+    // Run: PCG_PROBE_OUT=<file> cargo test --locked -j 8 pcg_print_population_probe -- --test-threads=8 --nocapture
+    // Population: the F-16 set `codex-ingest/src/pcg_import/fixtures_tests.rs` imports:
+    // scripts/oracle_harness/eqm-fixtures/*.pcg + every .pcg under the pinned oracle checkout.
+    #[test]
+    fn pcg_print_population_probe() {
+        fn walk(dir: &Path, out: &mut Vec<PathBuf>) {
+            let Ok(entries) = std::fs::read_dir(dir) else { return };
+            for entry in entries.flatten() {
+                let path = entry.path();
+                if path.is_dir() {
+                    walk(&path, out);
+                } else if path.extension().is_some_and(|ext| ext == "pcg") {
+                    out.push(path);
+                }
+            }
+        }
+        let mut files = Vec::new();
+        walk(&pcg_repo_root().join("scripts/oracle_harness/eqm-fixtures"), &mut files);
+        let oracle = match std::env::var("PCGEN_REPO_DIR") {
+            Ok(dir) if !dir.is_empty() => PathBuf::from(dir),
+            _ => PathBuf::from(std::env::var("HOME").unwrap()).join("workspace/repos/pcgen"),
+        };
+        walk(&oracle, &mut files);
+        files.sort();
+        let mut lines = Vec::new();
+        let (mut saved, mut blocked, mut refused, mut renders, mut warned) = (0, 0, 0, 0, 0);
+        for (n, file) in files.iter().enumerate() {
+            let root = tempdir(&format!("pcg-probe-{n}")).join("imported");
+            match pcg_import_via_sidecar(file, &root) {
+                Ok(ImportPcgResponse { outcome: CreateCharacterResponse::Saved { .. }, .. }) => {
+                    saved += 1;
+                    for paper in [crate::print::Paper::A4, crate::print::Paper::Letter] {
+                        for (spellbook, math, bio) in [(false, false, false), (true, false, false), (false, true, false), (true, true, true)] {
+                            let request = crate::print::PrintRequest { paper, spellbook, math, bio, ..Default::default() };
+                            let case = format!("{} {paper:?} {spellbook}/{math}/{bio}", file.display());
+                            let document = crate::print::sheet_document_at_root(&root, &request).unwrap_or_else(|e| panic!("{case}: {e}"));
+                            let grid = document.columns();
+                            match crate::print::render_sheet_pdf_at_root(&root, &request) {
+                                Ok(sheet) => {
+                                    renders += 1;
+                                    let pages = lopdf::Document::load_mem(&sheet.pdf).map(|d| d.get_pages().len()).unwrap_or(0);
+                                    if !sheet.warnings.is_empty() {
+                                        warned += 1;
+                                    }
+                                    lines.push(format!("RENDER\t{case}\tcolumns={grid}\tpages={pages}\twarnings={}", sheet.warnings.len()));
+                                }
+                                Err(err) => lines.push(format!("RENDER_ERR\t{case}\t{err}")),
+                            }
+                        }
+                    }
+                }
+                Ok(_) => {
+                    blocked += 1;
+                    lines.push(format!("BLOCKED\t{}", file.display()));
+                }
+                Err(err) => {
+                    refused += 1;
+                    lines.push(format!("REFUSED\t{}\t{}", file.display(), err.lines().next().unwrap_or("")));
+                }
+            }
+        }
+        lines.push(format!("SUMMARY\tfiles={}\tsaved={saved}\tblocked={blocked}\trefused={refused}\trenders={renders}\twarned={warned}", files.len()));
+        let text = lines.join("\n") + "\n";
+        if let Ok(out) = std::env::var("PCG_PROBE_OUT") {
+            std::fs::write(out, &text).unwrap();
+        }
+        println!("{text}");
+        assert_eq!(warned, 0, "every saved import renders with no Typst diagnostic");
+        assert!(!text.contains("RENDER_ERR"), "every saved import renders");
+    }

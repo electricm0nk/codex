@@ -1,0 +1,58 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "+2 bonus to Perception and Stealth; DC to make Perception while sleeping is only +5.",
+    "key": "DuergarDSP ~ Whispers of Insanity",
+    "name": "Whispers of Insanity",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "DuergarDSP ~ Whispers of Insanity"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.SpecialQuality.DuergarDSPRacialTrait.DuergarDSPPsionics"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,DuergarDSP ~ Whispers of Insanity],[!PREABILITY:1,CATEGORY=Special Ability,TYPE.DuergarDSPPsionics]"
+      },
+      {
+        "key": "DESC",
+        "value": "+2 bonus to Perception and Stealth; DC to make Perception while sleeping is only +5."
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Perception,Stealth|2"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.317"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 110,
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_race.lst",
+    "record_key": "DuergarDSP ~ Whispers of Insanity",
+    "sha256": "3368f2a5e87f65a202fb5dce31ecbe9bf6a0b8d0b715abc99d8233796131d9c7"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

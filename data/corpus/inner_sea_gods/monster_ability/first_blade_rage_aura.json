@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T10:26:11Z",
+  "data": {
+    "corpus_key": "First Blade ~ Rage Aura",
+    "delivery": "Supernatural",
+    "description": "Willing creatures within 100 feet of the First Blade gain the effects of rage automatically (as Rage spell), whether they are allies or enemies of the herald. Those who choose not to be affected are immune to the aura until they leave the area and return.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "inner_sea_gods:monster_ability:first_blade_rage_aura",
+    "name": "Rage Aura",
+    "owners": [
+      "inner_sea_gods:monster:the_first_blade"
+    ],
+    "source_page": null,
+    "traits": [
+      "Aura"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/support/isg_abilities_races_b4.lst",
+    "sha256": "f66eccddcddfe51b19ba3723366fc2458ce67888f4c501f8088f6d4101e8bd50",
+    "line": 20,
+    "record_key": "First Blade ~ Rage Aura"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

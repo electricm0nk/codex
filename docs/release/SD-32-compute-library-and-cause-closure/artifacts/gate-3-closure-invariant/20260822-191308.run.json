@@ -1,0 +1,20 @@
+{
+  "population": 24914,
+  "unclassified_count": 0,
+  "family_total": 24914,
+  "piles_reconcile": true,
+  "families": {
+    "F0": 20113,
+    "F2": 1490,
+    "F1": 1790,
+    "F10": 3,
+    "F4": 570,
+    "F3": 303,
+    "F5": 361,
+    "F8": 41,
+    "F6": 211,
+    "F9": 27,
+    "F7": 5
+  },
+  "corpus_sha": "7f818006e371188e5717fd18d74d18a420747fc6"
+}

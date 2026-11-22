@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-24T03:51:47Z",
+  "data": {
+    "key": "Arcane Talent ~ Haunted Fey Aspect",
+    "name": "Haunted Fey Aspect",
+    "class": "Arcane Talent",
+    "description": "You surround yourself with disturbing illusions.|!PRERULE:1,DisplayFullSpell",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Arcane Talent ~ Haunted Fey Aspect"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArcaneTalentSelection"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Spell-Like Ability|AUTOMATIC|Haunted Fey Aspect"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SLA_HauntedFeyAspect_Times|3|TYPE=Base"
+      },
+      {
+        "key": "DESC",
+        "value": "You surround yourself with disturbing illusions.|!PRERULE:1,DisplayFullSpell"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 1768,
+    "record_key": "Arcane Talent ~ Haunted Fey Aspect"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

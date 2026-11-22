@@ -1,0 +1,167 @@
+{
+  "corrections": {
+    "by_corrector": {
+      "sd37-e6-2": 1
+    },
+    "by_subject": {
+      "E4.2 selection hop (convert.rs internal_hop_grants)": 1
+    },
+    "by_verification_method": {
+      "cargo test -p codex-ingest --test sf_core_proof a_selection_hop_carries_its_ability_pool_onto_the_race_ability (RED before, GREEN after); awk over scr_*.lst Race Selection rows with ABILITYPOOL -> 1 of 76": 1
+    },
+    "caught_before": {},
+    "recent": [
+      {
+        "actor": "sd37-e6-2",
+        "id": "1791231583906-sd37-e6-2-92b60c",
+        "summary": "E4.2 selection hop (convert.rs internal_hop_grants) claimed the Internal selection hop carries the row's effects onto the race ability (human holds its racial traits); actual the hop carried ABILITY: grants only; Human Race Selection ~ Default's BONUS:ABILITYPOOL|+2 Racial Stat Bonus|1 (scr_abilities.lst:809, 1 of 76 SF race selection rows) was dropped, so no converted record said a human picks the +2",
+        "ts": "2026-10-05T20:19:43Z"
+      }
+    ],
+    "repeat_subjects": [],
+    "total": 1,
+    "with_blast_radius": 1
+  },
+  "deferrals": {
+    "open": 0,
+    "open_items": [],
+    "recent": [],
+    "resolved": 0,
+    "total": 0
+  },
+  "events": {
+    "by_actor": {
+      "codex-sd37": 5,
+      "sd37-e6-2": 1,
+      "sd37-e6-3": 1,
+      "sd37-e6-4": 1,
+      "sd37-e6-5": 3,
+      "sd37-e6-5a": 2,
+      "sd37-e6-6": 1
+    },
+    "by_origin": {
+      "agent": 9,
+      "derived": 5
+    },
+    "by_type": {
+      "correction": 1,
+      "incident": 1,
+      "rework": 7,
+      "verification": 5
+    },
+    "total": 14
+  },
+  "generated_at": "2026-10-06T08:35:12Z",
+  "generated_by": "scripts/retro.py summary",
+  "git_join": {
+    "authors": 1,
+    "available": true,
+    "commits": 16,
+    "events_per_commit": 0.875,
+    "top_authors": [
+      [
+        "Todd Hintzmann",
+        16
+      ]
+    ]
+  },
+  "incidents": {
+    "by_recurrence_key": {
+      "root-sweep-skipped-on-desktop-card": 1
+    },
+    "recent": [
+      {
+        "actor": "sd37-e6-5",
+        "id": "1791259622731-sd37-e6-5-3d56b9",
+        "summary": "root sweep red since E6.3 (9cf7cf76fc): tests/sd24_wired_integration_audit.rs no_zero_tolerance_forbidden_tokens_in_shipping_source flags the corpus words 'Magic Hack' in the E6.3 test fixture apps/desktop/src/characterHub/starfinderSheetFixtures/SF-Technomancer-5.json; E6.3 and E6.4 ran desktop + frontend only, so no card saw it (detected by E6.5 root full sweep: awk '/^     Running/{r=$2} /^test result: FAILED/{print r}' E6.5_logs/verify_root.log -> tests/sd24_wired_integration_audit.rs (1 of 468 suites))",
+        "ts": "2026-10-06T04:07:02Z"
+      }
+    ],
+    "recurring": [],
+    "silent": 0,
+    "time_lost_minutes": 0,
+    "total": 1
+  },
+  "log": {
+    "invalid_lines": 0,
+    "path": "/home/ubuntu/workspace/worktrees/codex-sd37/docs/retro/events",
+    "problems": [],
+    "shards": 7
+  },
+  "near_misses": {
+    "by_caught_by": {},
+    "escaped": 0,
+    "recent": [],
+    "total": 0
+  },
+  "rework": {
+    "by_cause": {
+      "drafted rows from the open-starfinder-sheet precedent without reading the sheet's onClose/onOpen wiring or the sheet's own text; 'Touch' matches 'Healing Touch'/'Touch' spell text on a Mystic and a Technomancer sheet": 1,
+      "hand-built seed inputs name only records that feed a total; the comparison was narrowed to feat/spell/equipment/modifier lines, the kinds this card writes": 1,
+      "json.dump of the whole spec reformatted 861 lines (2755+/861-); restored from HEAD and inserted the two rows textually (341+/0-)": 1,
+      "plant script wrote the arrow as the escape \\u2192 while the source holds the literal character; P9 aborted before running, whole plant set re-run": 1,
+      "ran clippy only inside the final verify, not after the last code edit": 1,
+      "test helper prefixed ids that were already full rule ids": 1,
+      "the plant named a row id the engine does not send; the model lays out no row without an engine value, so the plant rendered nothing; replaced by a plant that writes 'Flat-Footed' into the component": 1
+    },
+    "recent": [
+      {
+        "actor": "sd37-e6-3",
+        "id": "1791244800184-sd37-e6-3-d1d0c1",
+        "summary": "redid E6.3 planted mutation P2 (a CMD layout row) did not turn the sheet test red: the plant named a row id the engine does not send; the model lays out no row without an engine value, so the plant rendered nothing; replaced by a plant that writes 'Flat-Footed' into the component",
+        "ts": "2026-10-06T00:00:00Z"
+      },
+      {
+        "actor": "sd37-e6-4",
+        "id": "1791248143414-sd37-e6-4-247fb2",
+        "summary": "redid E6.4 one-pass verify: desktop clippy -D warnings red on sf_catalog.rs needless_lifetimes; fixed (signature only), clippy re-run: ran clippy only inside the final verify, not after the last code edit",
+        "ts": "2026-10-06T00:55:43Z"
+      },
+      {
+        "actor": "sd37-e6-5",
+        "id": "1791253265411-sd37-e6-5-ac23c7",
+        "summary": "redid ui-smoke spec.json rows re-inserted: json.dump of the whole spec reformatted 861 lines (2755+/861-); restored from HEAD and inserted the two rows textually (341+/0-)",
+        "ts": "2026-10-06T02:21:05Z"
+      },
+      {
+        "actor": "sd37-e6-5",
+        "id": "1791253265546-sd37-e6-5-3c620e",
+        "summary": "redid E6.5 plant P9 anchor: plant script wrote the arrow as the escape \\u2192 while the source holds the literal character; P9 aborted before running, whole plant set re-run",
+        "ts": "2026-10-06T02:21:05Z"
+      },
+      {
+        "actor": "sd37-e6-5a",
+        "id": "1791262750023-sd37-e6-5a-9139be",
+        "summary": "redid sf_choices spells test: built spell ids as core:spell:<option id>, so options from other books became core:spell:alien_archive_2:spell:..., and the over-known assertion failed on spell_not_offered instead: test helper prefixed ids that were already full rule ids",
+        "ts": "2026-10-06T04:59:10Z"
+      },
+      {
+        "actor": "sd37-e6-5a",
+        "id": "1791262750145-sd37-e6-5a-cd96e9",
+        "summary": "redid sf_choices seed test compared every printed line id of the app-built seed with the hand-built seed input; the app-built one also prints its creation picks (fighting style, No Archetype, key-ability pool option): hand-built seed inputs name only records that feed a total; the comparison was narrowed to feat/spell/equipment/modifier lines, the kinds this card writes",
+        "ts": "2026-10-06T04:59:10Z"
+      },
+      {
+        "actor": "sd37-e6-6",
+        "id": "1791274259521-sd37-e6-6-376ed6",
+        "summary": "redid open-starfinder-* rows: two first-draft step/forbid choices redone (Close -> Open to reach the Load list; forbid 'Touch' dropped): drafted rows from the open-starfinder-sheet precedent without reading the sheet's onClose/onOpen wiring or the sheet's own text; 'Touch' matches 'Healing Touch'/'Touch' spell text on a Mystic and a Technomancer sheet",
+        "ts": "2026-10-06T08:10:59Z"
+      }
+    ],
+    "total": 7
+  },
+  "schema_version": 1,
+  "verification": {
+    "by_failing_stage": {
+      "clippy": 1
+    },
+    "fail_rate": 0.2,
+    "failed_runs": 1,
+    "runs": 5
+  },
+  "window": {
+    "since": "2026-10-05T15:25:50-04:00",
+    "spec": "2026-10-05T15:25:50-04:00",
+    "until": null
+  }
+}

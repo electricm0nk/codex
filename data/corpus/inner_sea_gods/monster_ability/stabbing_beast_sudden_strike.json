@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T10:26:11Z",
+  "data": {
+    "corpus_key": "Stabbing Beast ~ Sudden Strike",
+    "delivery": "Extraordinary",
+    "description": "During a surprise round, the herald may act as if it had a full round to act, rather than just one standard action.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "inner_sea_gods:monster_ability:stabbing_beast_sudden_strike",
+    "name": "Sudden Strike",
+    "owners": [
+      "inner_sea_gods:monster:the_stabbing_beast"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities_races.lst",
+    "sha256": "b309f3f779ee8d564aacff977e2a9119410a70844107ecd3e6bdc0170fe79ea8",
+    "line": 225,
+    "record_key": "Stabbing Beast ~ Sudden Strike"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

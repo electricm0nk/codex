@@ -1,0 +1,23 @@
+{
+  "codex_generated_name": true,
+  "data": {
+    "key": "Codex-Named Unit (proficiency_pact_worlds_spw_profs_armor_lst_12)",
+    "name": "Codex-Named Unit (proficiency_pact_worlds_spw_profs_armor_lst_12)"
+  },
+  "license": "PI-REDACTED",
+  "pi_field": "name",
+  "pi_marker": "redacted",
+  "population": "in_scope",
+  "rename": {
+    "coordinate": "pact_worlds:spw_profs_armor.lst:12",
+    "reason": "name_pi_blocked"
+  },
+  "source": {
+    "kind": "lst_token",
+    "line": 12,
+    "path": "starfinder/paizo/pact_worlds/spw_profs_armor.lst",
+    "record_key": "Codex-Named Unit (proficiency_pact_worlds_spw_profs_armor_lst_12)",
+    "sha256": "5fef8bc6ec8b28f467cce3b06f6b4d76739e6e24e0931e22253c9fe666e24f55"
+  },
+  "unit_id": "pact_worlds:proficiency:hellknight_plate_maralictor"
+}

@@ -1,0 +1,98 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "category": "ArmsArmor",
+    "cost_gp": null,
+    "description": null,
+    "key": "Dissonance",
+    "name": "Dissonance, Wind of the Mind",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "OUTPUTNAME",
+        "value": "Dissonance, Wind of the Mind"
+      },
+      {
+        "key": "PROFICIENCY",
+        "value": "WEAPON|Meteor Hammer"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weapon.EasternWeapon.Eastern.Melee.Double.TwoHanded.Exotic.Bludgeoning.Reach.Trip.Hammer.Psionic.Legendary"
+      },
+      {
+        "key": "ALTTYPE",
+        "value": "Weapon.Melee.Bludgeoning"
+      },
+      {
+        "key": "WT",
+        "value": "10"
+      },
+      {
+        "key": "CRITMULT",
+        "value": "x2"
+      },
+      {
+        "key": "CRITRANGE",
+        "value": "1"
+      },
+      {
+        "key": "ALTCRITMULT",
+        "value": "x2"
+      },
+      {
+        "key": "ALTCRITRANGE",
+        "value": "1"
+      },
+      {
+        "key": "DAMAGE",
+        "value": "1d8"
+      },
+      {
+        "key": "ALTDAMAGE",
+        "value": "1d8"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Quality ~ Dissonance / Enhancement Bonus / Main.Material ~ Steel.Special Quality ~ Dissonance / Whistling / Main"
+      },
+      {
+        "key": "ALTEQMOD",
+        "value": "Special Quality ~ Dissonance / Enhancement Bonus / Alt.Material ~ Steel.Special Quality ~ Dissonance / Whistling / Alt"
+      },
+      {
+        "key": "WIELD",
+        "value": "TwoHanded"
+      },
+      {
+        "key": "SIZE",
+        "value": "M"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.435"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Dissonance Attunement|PREMULT:3,[PREABILITY:2,CATEGORY=FEAT,Weapon Focus (Meteor Hammer),Exotic Weapon Proficiency (Meteor Hammer)],[PRESKILL:1,Perform (Wind Instruments)=4],[PREVARGTEQ:TL,4]"
+      }
+    ],
+    "weight_lbs": 10.0
+  },
+  "ingested_at": "2026-08-16T05:06:54Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 467,
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_equipment.lst",
+    "record_key": "Dissonance",
+    "sha256": "ffdbcf81cb0f2d832299a9c6e4c6b124f35fd447a720b0fdda11cf88fe1ca371"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

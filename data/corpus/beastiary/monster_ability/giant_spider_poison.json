@@ -1,0 +1,74 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Giant Spider ~ Poison",
+    "delivery": "Extraordinary",
+    "description": "Bite-injury; save Fort DC %1; frequency 1/round for 4 rounds; effect 1d2 Str damage; cure 1 save.",
+    "description_variables": [
+      "PoisonSaveDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:giant_spider_poison",
+    "name": "Poison",
+    "owners": [
+      "beastiary:monster:spider_scarlet",
+      "beastiary:monster:spider_giant_crab",
+      "beastiary:monster:spider_giant",
+      "beastiary:monster:spider_black_widow",
+      "beastiary:monster:spider_giant_tarantula",
+      "beastiary:monster:spider_goliath"
+    ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Poison"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(Fort DC %1;1/round for 4 rounds;1d2 Str;1 save)|PoisonSaveDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PoisonSaveDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Poison)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Bite-injury; save Fort DC %1; frequency 1/round for 4 rounds; effect 1d2 Str damage; cure 1 save.|PoisonSaveDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Giant Spider ~ Poison"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.258"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary"
+      }
+    ],
+    "source_page": "p.258",
+    "traits": []
+  },
+  "ingested_at": "2026-08-15T01:24:18Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1154,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "record_key": "Giant Spider ~ Poison",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

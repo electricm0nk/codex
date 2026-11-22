@@ -1,0 +1,66 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "Equipmods",
+    "cost_gp": 0.0,
+    "description": "performance",
+    "key": "Special Quality ~ Performance",
+    "name": "Performance",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Special Quality ~ Performance"
+      },
+      {
+        "key": "NAMEOPT",
+        "value": "NOTHING"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialWeaponQualities"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "ITYPE",
+        "value": "Performance"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.144"
+      },
+      {
+        "key": "SPROP",
+        "value": "performance"
+      },
+      {
+        "key": "INFO",
+        "value": "SPROP|When wielding this weapon, if an attack or combat maneuver made with this weapon prompts a combat performance check, you gain a +2 bonus on that check."
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-23T15:10:33Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 35,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_equipmods.lst",
+    "record_key": "Special Quality ~ Performance",
+    "sha256": "74c6f604d044b7bd0487c13c03d4aefad9eab3f2f7b814b54d424da334adedcc"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

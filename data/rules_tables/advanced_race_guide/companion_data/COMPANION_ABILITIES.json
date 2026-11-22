@@ -1,0 +1,207 @@
+{
+  "format": "codex.rules_tables/1",
+  "table": "advanced_race_guide/companion_data/COMPANION_ABILITIES",
+  "licence": {
+    "license": "OGL",
+    "book": "advanced_race_guide",
+    "screen": "pi_screening::classify_field",
+    "pi_hits": [],
+    "redacted": []
+  },
+  "rows": [
+    {
+      "key": "Puffball ~ Poison",
+      "name": "Poison",
+      "facet": null,
+      "delivery": null,
+      "type_segments": [
+        "RaceAbility",
+        "SpecialAbility"
+      ],
+      "description": "(Frequency 1 round [6], Effect 1 Con damage, Cure 1 save, Con-based DC; DC %1).",
+      "description_variables": [
+        "PuffballPoisonDC"
+      ],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": null,
+      "owners": [
+        "Companion (Puffball)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "arg_abilities_companion",
+      "source_line": 9
+    },
+    {
+      "key": "Sapling Treant ~ Double Damage",
+      "name": "Double Damage",
+      "facet": null,
+      "delivery": null,
+      "type_segments": [
+        "RaceAbility",
+        "SpecialAbility"
+      ],
+      "description": "Sapling treant attacks do double damage against objects",
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": null,
+      "owners": [
+        "Companion (Sapling Treant)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "arg_abilities_companion",
+      "source_line": 10
+    },
+    {
+      "key": "Crawling Vine ~ Constrict",
+      "name": "Constrict",
+      "facet": "SpecialAttack",
+      "delivery": null,
+      "type_segments": [
+        "RaceAbility",
+        "SpecialAttack",
+        "SpecialAbility"
+      ],
+      "description": "1d6 bludgeoning with a successful grapple check",
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": null,
+      "owners": [
+        "Companion (Crawling Vine)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "arg_abilities_companion",
+      "source_line": 11
+    },
+    {
+      "key": "Companion Advancement ~ Carnivorous Flower",
+      "name": "Companion Advancement (Carnivorous Flower)",
+      "facet": "CompanionAdvancement",
+      "delivery": null,
+      "type_segments": [
+        "CompanionAdvancement"
+      ],
+      "description": null,
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 4
+        },
+        {
+          "ability": "DEX",
+          "amount": -2
+        },
+        {
+          "ability": "CON",
+          "amount": 2
+        }
+      ],
+      "source_page": null,
+      "owners": [
+        "Companion (Carnivorous Flower)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "arg_abilities_companion",
+      "source_line": 56
+    },
+    {
+      "key": "Companion Advancement ~ Crawling Vine",
+      "name": "Companion Advancement (Crawling Vine)",
+      "facet": "CompanionAdvancement",
+      "delivery": null,
+      "type_segments": [
+        "CompanionAdvancement"
+      ],
+      "description": null,
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 8
+        },
+        {
+          "ability": "DEX",
+          "amount": -2
+        },
+        {
+          "ability": "CON",
+          "amount": 4
+        }
+      ],
+      "source_page": null,
+      "owners": [
+        "Companion (Crawling Vine)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "arg_abilities_companion",
+      "source_line": 57
+    },
+    {
+      "key": "Companion Advancement ~ Puffball",
+      "name": "Companion Advancement (Puffball)",
+      "facet": "CompanionAdvancement",
+      "delivery": null,
+      "type_segments": [
+        "CompanionAdvancement"
+      ],
+      "description": null,
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 2
+        },
+        {
+          "ability": "CON",
+          "amount": 2
+        }
+      ],
+      "source_page": null,
+      "owners": [
+        "Companion (Puffball)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "arg_abilities_companion",
+      "source_line": 58
+    },
+    {
+      "key": "Companion Advancement ~ Sapling Treant",
+      "name": "Companion Advancement (Sapling Treant)",
+      "facet": "CompanionAdvancement",
+      "delivery": null,
+      "type_segments": [
+        "CompanionAdvancement"
+      ],
+      "description": null,
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 8
+        },
+        {
+          "ability": "CON",
+          "amount": 4
+        },
+        {
+          "ability": "DEX",
+          "amount": -2
+        }
+      ],
+      "source_page": null,
+      "owners": [
+        "Companion (Sapling Treant)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "arg_abilities_companion",
+      "source_line": 59
+    }
+  ]
+}

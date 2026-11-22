@@ -1,0 +1,15 @@
+$ test -s "$f" || exit 1
+exit 0
+--- awk rows without URL (expect nothing):
+--- per seed:
+ SF-Envoy-3  29
+ SF-Mystic-5  34
+ SF-Soldier-3  29
+ SF-Technomancer-5  34
+--- reviewer table:
+review_rows=126 disagree=0
+--- second implementation (Python):
+[('SF-Envoy-3', 29), ('SF-Mystic-5', 34), ('SF-Soldier-3', 29), ('SF-Technomancer-5', 34)] 126 review_rows 126 disagree 0
+--- derive script:
+reviewed=126 transcribed=126 derived=126 disagree=0
+exit=0

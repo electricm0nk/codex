@@ -1,0 +1,31 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Awe-Inspiring Smash",
+    "category": "Combat",
+    "name": "Awe-Inspiring Smash",
+    "description": "Your fury in combat translates into crowd-pleasing displays. You can apply your Strength modifier instead of your Charisma modifier to performance combat checks. In addition, when you spend a swift action to attempt a performance combat check that was triggered by a successful bull rush or sunder combat maneuver check, you gain a +2 bonus on the performance combat check. For every 5 points by which your attack exceeded your opponent's CMD, this bonus increases by 2.",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=FEAT,Power Attack",
+      "PRESTAT:1,STR=15",
+      "PRETEXT:Prerequisites: Str 15, Power Attack, base attack bonus +3.",
+      "PRETOTALAB:3"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_abilities_feat.lst",
+    "sha256": "d77ff4698e10a0e51f391d4d1a489ad30acc64122d09842e1007a670cf81db5b",
+    "line": 13,
+    "record_key": "Awe-Inspiring Smash"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

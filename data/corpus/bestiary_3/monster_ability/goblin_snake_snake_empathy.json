@@ -1,0 +1,57 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Goblin Snake ~ Snake Empathy",
+    "delivery": "Extraordinary",
+    "description": "This ability functions similarly to a druid's wild empathy ability, but allows a goblin snake to verbally communicate with and be understood by snakes and similar serpentine reptiles. The bonus equals the goblin snake's racial Hit Dice plus its Charisma modifier and a +4 racial bonus.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:goblin_snake_snake_empathy",
+    "name": "Snake Empathy",
+    "owners": [
+      "bestiary_3:monster:goblin_snake"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "This ability functions similarly to a druid's wild empathy ability, but allows a goblin snake to verbally communicate with and be understood by snakes and similar serpentine reptiles. The bonus equals the goblin snake's racial Hit Dice plus its Charisma modifier and a +4 racial bonus."
+      },
+      {
+        "key": "KEY",
+        "value": "Goblin Snake ~ Snake Empathy"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.132"
+      },
+      {
+        "key": "TYPE",
+        "value": "GoblinSnakeRacialAbility.SpecialQuality.Extraordinary"
+      }
+    ],
+    "source_page": "p.132",
+    "traits": [
+      "GoblinSnakeRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T10:26:03Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 932,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Goblin Snake ~ Snake Empathy",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

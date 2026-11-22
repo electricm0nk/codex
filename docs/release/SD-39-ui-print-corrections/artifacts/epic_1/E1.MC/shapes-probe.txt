@@ -1,0 +1,96 @@
+TOKENS ["feat:weapon_focus:weapon:longsword"] over=0 [("level", 1, 1), ("fighter_bonus_feat", 1, 0)]
+RACEPOOL race:human class:fighter feats=["feat:power_attack", "feat:dodge", "feat:weapon_focus"] pools=[("level", 1, 1), ("racial", 1, 1), ("fighter_bonus_feat", 1, 1)] over=0
+TOKENS ["Weapon Focus (Longsword)"] over=0 [("level", 1, 0), ("fighter_bonus_feat", 1, 1)]
+TOKENS ["feat:weapon_focus"] over=0 [("level", 1, 0), ("fighter_bonus_feat", 1, 1)]
+RACEPOOL race:human class:wizard feats=["feat:power_attack", "feat:dodge", "feat:weapon_focus"] pools=[("level", 1, 1), ("racial", 1, 1)] over=0
+TOKENS ["Weapon Focus"] over=0 [("level", 1, 0), ("fighter_bonus_feat", 1, 1)]
+RACEPOOL race:elf class:fighter feats=["feat:power_attack", "feat:weapon_focus"] pools=[("level", 1, 1), ("fighter_bonus_feat", 1, 1)] over=0
+TOKENS ["feat:power_attack"] over=0 [("level", 1, 0), ("fighter_bonus_feat", 1, 1)]
+TOKENS ["feat:weapon_focus:weapon:longsword", "feat:power_attack"] over=0 [("level", 1, 1), ("fighter_bonus_feat", 1, 1)]
+RACEPOOL race:elf class:wizard feats=["feat:power_attack", "feat:weapon_focus"] pools=[("level", 1, 1)] over=0
+TOKENS ["Toughness", "Weapon Focus (Longsword)"] over=0 [("level", 1, 1), ("fighter_bonus_feat", 1, 1)]
+SEEDPICK race:human class:fighter ["Power Attack"] feats ["feat:power_attack", "feat:dodge", "feat:weapon_focus"] -> ["feat:dodge", "feat:weapon_focus", "Power Attack"] snapshot true diag [] ndiffs 0 []
+RACEPOOL race:dwarf class:fighter feats=["feat:power_attack", "feat:weapon_focus"] pools=[("level", 1, 1), ("fighter_bonus_feat", 1, 1)] over=0
+ADD start ["feat:power_attack", "feat:weapon_focus"] [("feats.budget.level.granted", 1), ("feats.budget.level.spent", 0), ("feats.budget.level.remaining", 1), ("feats.budget.fighter_bonus_feat.granted", 2), ("feats.budget.fighter_bonus_feat.spent", 2), ("feats.budget.fighter_bonus_feat.remaining", 0)]
+RACEPOOL race:dwarf class:wizard feats=["feat:power_attack", "feat:weapon_focus"] pools=[("level", 1, 1)] over=0
+ADD Toughness: ok
+RACEPOOL race:gnome class:fighter feats=["feat:power_attack", "feat:weapon_focus"] pools=[("level", 1, 1), ("fighter_bonus_feat", 1, 1)] over=0
+RACEPOOL race:gnome class:wizard feats=["feat:power_attack", "feat:weapon_focus"] pools=[("level", 1, 1)] over=0
+ADD Cleave: 'Cleave' cannot be taken: no feat pool has room for it (the level pool has 0 of 1 left, the fighter bonus feat pool has 0 of 2 left).
+RACEPOOL race:halfling class:fighter feats=["feat:power_attack", "feat:weapon_focus"] pools=[("level", 1, 1), ("fighter_bonus_feat", 1, 1)] over=0
+SEEDPICK race:human class:fighter ["Dodge"] feats ["feat:power_attack", "feat:dodge", "feat:weapon_focus"] -> ["feat:power_attack", "feat:weapon_focus", "Dodge"] snapshot true diag [] ndiffs 1 ["race.human.bonus_feat_grant: Some(1)->None"]
+ADD Combat Expertise: 'Combat Expertise' cannot be taken: no feat pool has room for it (the level pool has 0 of 1 left, the fighter bonus feat pool has 0 of 2 left).
+RACEPOOL race:halfling class:wizard feats=["feat:power_attack", "feat:weapon_focus"] pools=[("level", 1, 1)] over=0
+RACEPOOL race:half-elf class:fighter feats=["feat:power_attack", "feat:weapon_focus"] pools=[("level", 1, 1), ("adaptability_bonus_feat", 1, 0), ("fighter_bonus_feat", 1, 1)] over=0
+ADD Improved Initiative: 'Improved Initiative' cannot be taken: no feat pool has room for it (the level pool has 0 of 1 left, the fighter bonus feat pool has 0 of 2 left).
+RACEPOOL race:half-elf class:wizard feats=["feat:power_attack", "feat:weapon_focus"] pools=[("level", 1, 1), ("adaptability_bonus_feat", 1, 0)] over=0
+ADD Blind-Fight: 'Blind-Fight' cannot be taken: no feat pool has room for it (the level pool has 0 of 1 left, the fighter bonus feat pool has 0 of 2 left).
+RACEPOOL race:half-orc class:fighter feats=["feat:power_attack", "feat:weapon_focus"] pools=[("level", 1, 1), ("fighter_bonus_feat", 1, 1)] over=0
+RACEPOOL race:half-orc class:wizard feats=["feat:power_attack", "feat:weapon_focus"] pools=[("level", 1, 1)] over=0
+SEEDPICK race:human class:fighter ["Power Attack", "Dodge"] feats ["feat:power_attack", "feat:dodge", "feat:weapon_focus"] -> ["feat:weapon_focus", "Power Attack", "Dodge"] snapshot true diag [] ndiffs 1 ["race.human.bonus_feat_grant: Some(1)->None"]
+ADD Alertness: 'Alertness' cannot be taken: no feat pool has room for it (the level pool has 0 of 1 left).
+RACEPOOL race:aasimar class:fighter feats=["feat:power_attack", "feat:weapon_focus"] pools=[("level", 1, 1), ("fighter_bonus_feat", 1, 1)] over=0
+RACEPOOL race:aasimar class:wizard feats=["feat:power_attack", "feat:weapon_focus"] pools=[("level", 1, 1)] over=0
+RACEPOOL race:tiefling class:fighter feats=["feat:power_attack", "feat:weapon_focus"] pools=[("level", 1, 1), ("fighter_bonus_feat", 1, 1)] over=0
+RACEPOOL race:tiefling class:wizard feats=["feat:power_attack", "feat:weapon_focus"] pools=[("level", 1, 1)] over=0
+RACEPOOL race:kitsune class:fighter feats=["feat:power_attack", "feat:weapon_focus"] pools=[("level", 1, 1), ("fighter_bonus_feat", 1, 1)] over=0
+RACEPOOL race:kitsune class:wizard feats=["feat:power_attack", "feat:weapon_focus"] pools=[("level", 1, 1)] over=0
+RACEPOOL race:tengu class:fighter feats=["feat:power_attack", "feat:weapon_focus"] pools=[("level", 1, 1), ("fighter_bonus_feat", 1, 1)] over=0
+RACEPOOL race:tengu class:wizard feats=["feat:power_attack", "feat:weapon_focus"] pools=[("level", 1, 1)] over=0
+RACEPOOL race:goblin class:fighter feats=["feat:power_attack", "feat:weapon_focus"] pools=[("level", 1, 1), ("fighter_bonus_feat", 1, 1)] over=0
+SEEDPICK race:human class:monk ["Dodge"] feats ["feat:power_attack", "feat:dodge", "feat:weapon_focus"] -> ["feat:power_attack", "feat:weapon_focus", "Dodge"] snapshot true diag [] ndiffs 1 ["race.human.bonus_feat_grant: Some(1)->None"]
+RACEPOOL race:goblin class:wizard feats=["feat:power_attack", "feat:weapon_focus"] pools=[("level", 1, 1)] over=0
+RACEPOOL race:hobgoblin class:fighter feats=["feat:power_attack", "feat:weapon_focus"] pools=[("level", 1, 1), ("fighter_bonus_feat", 1, 1)] over=0
+RACEPOOL race:hobgoblin class:wizard feats=["feat:power_attack", "feat:weapon_focus"] pools=[("level", 1, 1)] over=0
+RACEPOOL race:orc class:fighter feats=["feat:power_attack", "feat:weapon_focus"] pools=[("level", 1, 1), ("fighter_bonus_feat", 1, 1)] over=0
+RACEPOOL race:orc class:wizard feats=["feat:power_attack", "feat:weapon_focus"] pools=[("level", 1, 1)] over=0
+RACEPOOL race:kobold class:fighter feats=["feat:power_attack", "feat:weapon_focus"] pools=[("level", 1, 1), ("fighter_bonus_feat", 1, 1)] over=0
+RACEPOOL race:kobold class:wizard feats=["feat:power_attack", "feat:weapon_focus"] pools=[("level", 1, 1)] over=0
+RACEPOOL race:ratfolk class:fighter feats=["feat:power_attack", "feat:weapon_focus"] pools=[("level", 1, 1), ("fighter_bonus_feat", 1, 1)] over=0
+RACEPOOL race:ratfolk class:wizard feats=["feat:power_attack", "feat:weapon_focus"] pools=[("level", 1, 1)] over=0
+RACEPOOL race:catfolk class:fighter feats=["feat:power_attack", "feat:weapon_focus"] pools=[("level", 1, 1), ("fighter_bonus_feat", 1, 1)] over=0
+RACEPOOL race:catfolk class:wizard feats=["feat:power_attack", "feat:weapon_focus"] pools=[("level", 1, 1)] over=0
+RACEPOOL race:dhampir class:fighter feats=["feat:power_attack", "feat:weapon_focus"] pools=[("level", 1, 1), ("fighter_bonus_feat", 1, 1)] over=0
+RACEPOOL race:dhampir class:wizard feats=["feat:power_attack", "feat:weapon_focus"] pools=[("level", 1, 1)] over=0
+RACEPOOL race:drow class:fighter feats=["feat:power_attack", "feat:weapon_focus"] pools=[("level", 1, 1), ("fighter_bonus_feat", 1, 1)] over=0
+RACEPOOL race:drow class:wizard feats=["feat:power_attack", "feat:weapon_focus"] pools=[("level", 1, 1)] over=0
+RACEPOOL race:fetchling class:fighter feats=["feat:power_attack", "feat:weapon_focus"] pools=[("level", 1, 1), ("fighter_bonus_feat", 1, 1)] over=0
+RACEPOOL race:fetchling class:wizard feats=["feat:power_attack", "feat:weapon_focus"] pools=[("level", 1, 1)] over=0
+RACEPOOL race:ifrit class:fighter feats=["feat:power_attack", "feat:weapon_focus"] pools=[("level", 1, 1), ("fighter_bonus_feat", 1, 1)] over=0
+RACEPOOL race:ifrit class:wizard feats=["feat:power_attack", "feat:weapon_focus"] pools=[("level", 1, 1)] over=0
+RACEPOOL race:oread class:fighter feats=["feat:power_attack", "feat:weapon_focus"] pools=[("level", 1, 1), ("fighter_bonus_feat", 1, 1)] over=0
+RACEPOOL race:oread class:wizard feats=["feat:power_attack", "feat:weapon_focus"] pools=[("level", 1, 1)] over=0
+RACEPOOL race:sylph class:fighter feats=["feat:power_attack", "feat:weapon_focus"] pools=[("level", 1, 1), ("fighter_bonus_feat", 1, 1)] over=0
+RACEPOOL race:sylph class:wizard feats=["feat:power_attack", "feat:weapon_focus"] pools=[("level", 1, 1)] over=0
+RACEPOOL race:undine class:fighter feats=["feat:power_attack", "feat:weapon_focus"] pools=[("level", 1, 1), ("fighter_bonus_feat", 1, 1)] over=0
+RACEPOOL race:undine class:wizard feats=["feat:power_attack", "feat:weapon_focus"] pools=[("level", 1, 1)] over=0
+RACEPOOL race:vishkanya class:fighter feats=["feat:power_attack", "feat:weapon_focus"] pools=[("level", 1, 1), ("fighter_bonus_feat", 1, 1)] over=0
+RACEPOOL race:vishkanya class:wizard feats=["feat:power_attack", "feat:weapon_focus"] pools=[("level", 1, 1)] over=0
+RACEPOOL race:wayang class:fighter feats=["feat:power_attack", "feat:weapon_focus"] pools=[("level", 1, 1), ("fighter_bonus_feat", 1, 1)] over=0
+RACEPOOL race:wayang class:wizard feats=["feat:power_attack", "feat:weapon_focus"] pools=[("level", 1, 1)] over=0
+RACEPOOL race:changeling class:fighter feats=["feat:power_attack", "feat:weapon_focus"] pools=[("level", 1, 1), ("fighter_bonus_feat", 1, 1)] over=0
+RACEPOOL race:changeling class:wizard feats=["feat:power_attack", "feat:weapon_focus"] pools=[("level", 1, 1)] over=0
+RACEPOOL race:gillman class:fighter feats=["feat:power_attack", "feat:weapon_focus"] pools=[("level", 1, 1), ("fighter_bonus_feat", 1, 1)] over=0
+RACEPOOL race:gillman class:wizard feats=["feat:power_attack", "feat:weapon_focus"] pools=[("level", 1, 1)] over=0
+RACEPOOL race:grippli class:fighter feats=["feat:power_attack", "feat:weapon_focus"] pools=[("level", 1, 1), ("fighter_bonus_feat", 1, 1)] over=0
+RACEPOOL race:grippli class:wizard feats=["feat:power_attack", "feat:weapon_focus"] pools=[("level", 1, 1)] over=0
+RACEPOOL race:merfolk class:fighter feats=["feat:power_attack", "feat:weapon_focus"] pools=[("level", 1, 1), ("fighter_bonus_feat", 1, 1)] over=0
+RACEPOOL race:merfolk class:wizard feats=["feat:power_attack", "feat:weapon_focus"] pools=[("level", 1, 1)] over=0
+RACEPOOL race:nagaji class:fighter feats=["feat:power_attack", "feat:weapon_focus"] pools=[("level", 1, 1), ("fighter_bonus_feat", 1, 1)] over=0
+RACEPOOL race:nagaji class:wizard feats=["feat:power_attack", "feat:weapon_focus"] pools=[("level", 1, 1)] over=0
+RACEPOOL race:samsaran class:fighter feats=["feat:power_attack", "feat:weapon_focus"] pools=[("level", 1, 1), ("fighter_bonus_feat", 1, 1)] over=0
+RACEPOOL race:samsaran class:wizard feats=["feat:power_attack", "feat:weapon_focus"] pools=[("level", 1, 1)] over=0
+RACEPOOL race:strix class:fighter feats=["feat:power_attack", "feat:weapon_focus"] pools=[("level", 1, 1), ("fighter_bonus_feat", 1, 1)] over=0
+RACEPOOL race:strix class:wizard feats=["feat:power_attack", "feat:weapon_focus"] pools=[("level", 1, 1)] over=0
+RACEPOOL race:suli class:fighter feats=["feat:power_attack", "feat:weapon_focus"] pools=[("level", 1, 1), ("fighter_bonus_feat", 1, 1)] over=0
+RACEPOOL race:suli class:wizard feats=["feat:power_attack", "feat:weapon_focus"] pools=[("level", 1, 1)] over=0
+RACEPOOL race:svirfneblin class:fighter feats=["feat:power_attack", "feat:weapon_focus"] pools=[("level", 1, 1), ("fighter_bonus_feat", 1, 1)] over=0
+RACEPOOL race:svirfneblin class:wizard feats=["feat:power_attack", "feat:weapon_focus"] pools=[("level", 1, 1)] over=0
+RACEPOOL race:vanara class:fighter feats=["feat:power_attack", "feat:weapon_focus"] pools=[("level", 1, 1), ("fighter_bonus_feat", 1, 1)] over=0
+RACEPOOL race:vanara class:wizard feats=["feat:power_attack", "feat:weapon_focus"] pools=[("level", 1, 1)] over=0
+RACEPOOL race:duergar class:fighter feats=["feat:power_attack", "feat:weapon_focus"] pools=[("level", 1, 1), ("fighter_bonus_feat", 1, 1)] over=0
+RACEPOOL race:duergar class:wizard feats=["feat:power_attack", "feat:weapon_focus"] pools=[("level", 1, 1)] over=0
+RACEPOOL race:android class:fighter feats=["feat:power_attack", "feat:weapon_focus"] pools=[("level", 1, 1), ("fighter_bonus_feat", 1, 1)] over=0
+RACEPOOL race:android class:wizard feats=["feat:power_attack", "feat:weapon_focus"] pools=[("level", 1, 1)] over=0
+RACEPOOL race:gathlain class:fighter feats=["feat:power_attack", "feat:weapon_focus"] pools=[("level", 1, 1), ("fighter_bonus_feat", 1, 1)] over=0
+RACEPOOL race:gathlain class:wizard feats=["feat:power_attack", "feat:weapon_focus"] pools=[("level", 1, 1)] over=0

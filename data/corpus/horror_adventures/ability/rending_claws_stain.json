@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Ghoul Corruption ~ Rending Claws Stain",
+    "name": "Rending Claws Stain",
+    "description": "You take a -2 penalty on attacks with manufactured weapons and on all ranged attacks.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ghoul Corruption ~ Rending Claws Stain"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.GhoulRendingClawsStain"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.21"
+      },
+      {
+        "key": "DESC",
+        "value": "You take a -2 penalty on attacks with manufactured weapons and on all ranged attacks."
+      },
+      {
+        "key": "ASPECT",
+        "value": "CombatBonus|-2 on attacks with manufactured weapons and on all ranged attacks.|!PREABILITY:1,CATEGORY=Special Ability,Ghoul Corruption ~ Staggering Claw"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
+    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381",
+    "line": 269,
+    "record_key": "Ghoul Corruption ~ Rending Claws Stain"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Domain Power ~ The Stars Are Right",
+    "name": "The Stars Are Right",
+    "description": "If you prepare your cleric spells while the stars are visible to you, you may spontaneously cast any of your Stars subdomain spells by swapping out a spell of an equal spell level. Any Stars subdomain spell that you cast while the stars are visible to you heals you of an amount of hit point damage equal to the spell's level; this effect happens as you cast the spell.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Domain Power ~ The Stars Are Right"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.DomainPower"
+      },
+      {
+        "key": "DESC",
+        "value": "If you prepare your cleric spells while the stars are visible to you, you may spontaneously cast any of your Stars subdomain spells by swapping out a spell of an equal spell level. Any Stars subdomain spell that you cast while the stars are visible to you heals you of an amount of hit point damage equal to the spell's level; this effect happens as you cast the spell."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.227"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities.lst",
+    "sha256": "e31ff7fb4fed812ae719cb19526442b9b9c9575efc25c169c06690f7a236fafd",
+    "line": 279,
+    "record_key": "Domain Power ~ The Stars Are Right"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

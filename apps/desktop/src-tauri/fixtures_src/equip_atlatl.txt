@@ -1,0 +1,2 @@
+# Fixture for desktop Market +N (AC and attack rows), source: ue_equip_arms_armor.lst, KEY: Atlatl
+Atlatl																				PROFICIENCY:WEAPON|Atlatl								TYPE:Weapon.Resizable.Ranged.Martial.Piercing																																						COST:2	WT:2										CRITMULT:x2	CRITRANGE:1							DAMAGE:1d6					EQMOD:Material ~ Wood																																													RANGE:50						SOURCEPAGE:p.23

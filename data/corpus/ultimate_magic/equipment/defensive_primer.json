@@ -1,0 +1,54 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "General",
+    "cost_gp": 185.0,
+    "description": "Level 1 Abjurer; Protection - Average lock (DC 25); Opposition Schools - Conjuration, enchantment; Spells - 1.burning hands, detect undead, expeditious retreat, magic missile, protection from evil(S), ray of enfeeblement, shield(S)",
+    "key": "Defensive Primer",
+    "name": "Defensive Primer",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "COST",
+        "value": "185"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.121"
+      },
+      {
+        "key": "SPROP",
+        "value": "Level 1 Abjurer"
+      },
+      {
+        "key": "SPROP",
+        "value": "Protection - Average lock (DC 25)"
+      },
+      {
+        "key": "SPROP",
+        "value": "Opposition Schools - Conjuration, enchantment"
+      },
+      {
+        "key": "SPROP",
+        "value": "Spells - 1.burning hands, detect undead, expeditious retreat, magic missile, protection from evil(S), ray of enfeeblement, shield(S)"
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-16T05:06:54Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 12,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_equip_general.lst",
+    "record_key": "Defensive Primer",
+    "sha256": "9b2e23c56f9f7c79d3b52169c9fc786a3bad00c8587abc03796c306d122de9f5"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Unchained Rogue Talent ~ Certainty Display",
+    "name": "Certainty",
+    "class": "Unchained Rogue Talent",
+    "description": "You choose one of the skills you selected with rogue's edge. You can reroll a skill check you just made with the selected skill and take the better result.  You can select this talent multiple times. Each time, you must choose a different skill. You must have the rogue's edge class feature before selecting this talent.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Unchained Rogue Talent ~ Certainty Display"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "You choose one of the skills you selected with rogue's edge. You can reroll a skill check you just made with the selected skill and take the better result.  You can select this talent multiple times. Each time, you must choose a different skill. You must have the rogue's edge class feature before selecting this talent."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RogueCertaintyLevel|RogueTalentLVL/5"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst",
+    "sha256": "2becbb0524bd4c367cc1273434c20bcd8e42e3e08abd372f99b005e69e8c4725",
+    "line": 635,
+    "record_key": "Unchained Rogue Talent ~ Certainty Display"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

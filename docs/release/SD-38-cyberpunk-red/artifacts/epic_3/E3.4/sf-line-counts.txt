@@ -1,0 +1,5 @@
+   42 SF-Envoy-3.txt
+   72 SF-Mystic-5.txt
+   51 SF-Soldier-3.txt
+   63 SF-Technomancer-5.txt
+  228 total

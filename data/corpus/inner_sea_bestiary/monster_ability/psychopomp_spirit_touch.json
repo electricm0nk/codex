@@ -1,0 +1,53 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Psychopomp ~ Spirit Touch",
+    "delivery": "Extraordinary",
+    "description": "A psychopomp's natural weapons, as well as any weapon it wields , are treated as though they had the .Ghost Touch weapon special ability.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "inner_sea_bestiary:monster_ability:psychopomp_spirit_touch",
+    "name": "Spirit Touch",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A psychopomp's natural weapons, as well as any weapon it wields , are treated as though they had the .Ghost Touch weapon special ability."
+      },
+      {
+        "key": "KEY",
+        "value": "Psychopomp ~ Spirit Touch"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.38"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary"
+      }
+    ],
+    "source_page": "p.38",
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T14:10:32Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 262,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_bestiary/isb_abilities_race.lst",
+    "record_key": "Psychopomp ~ Spirit Touch",
+    "sha256": "d7e5ffd6c7f0421a33b7e7c67872d9364a3f1e5ad82daa9b7f727b64ab71c595"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

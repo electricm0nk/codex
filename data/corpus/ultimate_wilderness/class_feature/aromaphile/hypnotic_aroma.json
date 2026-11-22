@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Aromaphile ~ Hypnotic Aroma",
+    "name": "Hypnotic Aroma",
+    "class": "Mesmerist",
+    "description": "As a swift action, an aromaphile can use unique aspects of ghoran biology to release intoxicating aromas in a 10-foot-radius burst centered on him. All creatures within this area, as well as creatures with scent within 30 feet, take a -%1 penalty on Will saving throws. The aroma hovers around the aromaphile, moving with him, and lasts for 1 minute. The hypnotic aroma must be inhaled to be effective, and creatures that choose to hold their breath, do not breathe, or are immune to inhaled poisons are immune to its effect.|AromaphileHypnoticAroma",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Aromaphile ~ Hypnotic Aroma"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mesmerist Class Features.AromaphileClassFeatures.SpecialAttack.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AromaphileHypnoticAroma|0"
+      },
+      {
+        "key": "DESC",
+        "value": "As a swift action, an aromaphile can use unique aspects of ghoran biology to release intoxicating aromas in a 10-foot-radius burst centered on him. All creatures within this area, as well as creatures with scent within 30 feet, take a -%1 penalty on Will saving throws. The aroma hovers around the aromaphile, moving with him, and lasts for 1 minute. The hypnotic aroma must be inhaled to be effective, and creatures that choose to hold their breath, do not breathe, or are immune to inhaled poisons are immune to its effect.|AromaphileHypnoticAroma"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AromaphileHypnoticAroma|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AromaphileHypnoticAroma|1|PRECLASS:1,Mesmerist=8"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.18"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/support/uw_abilities_class_oa.lst",
+    "sha256": "26a03f73c3534cd6bae0bcda9581b3a89fa28ce5f78f854e009fc8110c477568",
+    "line": 104,
+    "record_key": "Aromaphile ~ Hypnotic Aroma"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

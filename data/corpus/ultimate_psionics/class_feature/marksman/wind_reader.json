@@ -1,0 +1,80 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Marksman ~ Wind Reader",
+    "name": "Wind Reader",
+    "class": "Marksman",
+    "description": "Gain +%1 on ranged attacks in a round, %2/day.|WindReaderBonus|WindReaderTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Marksman ~ Wind Reader"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MarksmanClassFeatures.SpecialAttack.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WindReaderBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WindReaderTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WindReaderLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Gain +%1 on ranged attacks in a round, %2/day.|WindReaderBonus|WindReaderTimes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WindReaderBonus|MarksmanPrimeStat"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WindReaderTimes|3+WindReaderLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WindReaderLVL|MarksmanLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.44"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|WindReaderTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 331,
+    "record_key": "Marksman ~ Wind Reader"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

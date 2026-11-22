@@ -1,0 +1,66 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "Humans from bustling cities are skilled with crowds. They gain a +1 bonus on Reflex saves and a +1 dodge bonus to Armor Class when adjacent to at least two other allies. Crowds do not count as difficult terrain for them.",
+    "key": "Human ~ Heart of the Streets",
+    "name": "Heart of the Streets",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Human ~ Heart of the Streets"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Human Racial Trait.SpecialQuality.Special Quality.Applied Bonus"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Human ~ Heart of the Streets],[!PREFACT:1,ABILITIES,Human_ReplaceSkilled=true]"
+      },
+      {
+        "key": "DESC",
+        "value": "Humans from bustling cities are skilled with crowds. They gain a +1 bonus on Reflex saves and a +1 dodge bonus to Armor Class when adjacent to at least two other allies. Crowds do not count as difficult terrain for them."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces the skilled racial trait.|!PREABILITY:1,CATEGORY=Special Ability,Human ~ Heart of the Streets"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.23"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CombatBonus|+1 bonus on Reflex saves and a +1 dodge bonus to Armor Class when adjacent to at least two other allies."
+      },
+      {
+        "key": "FACT",
+        "value": "Human_ReplaceSkilled|true"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 112,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_race.lst",
+    "record_key": "Human ~ Heart of the Streets",
+    "sha256": "50f01990edfb0f144b0188746acb06ff18ee798b5a699c6a0bf69d2bec4eb253"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

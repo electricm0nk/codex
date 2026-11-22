@@ -1,0 +1,186 @@
+MCP P1 fighter 1 base: snapshot=true blocking=[] admitted=[]
+MCP P1 fighter 1 off flag-off: BLOCKED [("spell.outside_class_list", "a fighter does not cast spells, so no fighter can learn 'Cure Light Wounds'")]
+MCP P1 fighter 1 off flag-on: Saved
+MCP P1 fighter 1 after: snapshot=true blocking=[] admitted=[(Spell, "Cure Light Wounds", SpellsOutsideClassList)]
+MCP P1 fighter 1 ledger: Ok(true)
+MCP P1 fighter 1 levelup: Saved
+MCP P1 fighter 1 remove: Saved
+MCP P1 fighter 1 removed: snapshot=true blocking=[] admitted=[]
+MCP P1 fighter 5 base: snapshot=true blocking=[] admitted=[]
+MCP P1 fighter 5 off flag-off: BLOCKED [("spell.outside_class_list", "a fighter does not cast spells, so no fighter can learn 'Cure Light Wounds'")]
+MCP P1 fighter 5 off flag-on: Saved
+MCP P1 fighter 5 after: snapshot=true blocking=[] admitted=[(Spell, "Cure Light Wounds", SpellsOutsideClassList)]
+MCP P1 fighter 5 ledger: Ok(true)
+MCP P1 fighter 5 levelup: Saved
+MCP P1 fighter 5 remove: Saved
+MCP P1 fighter 5 removed: snapshot=true blocking=[] admitted=[]
+MCP P1 cleric 1 base: snapshot=true blocking=[] admitted=[]
+MCP P1 cleric 1 off flag-off: BLOCKED [("spell.outside_class_list", "recorded spell 'Magic Missile' is not on the cleric spell list in any ingested book, so no")]
+MCP P1 cleric 1 off flag-on: Saved
+MCP P1 cleric 1 after: snapshot=true blocking=[] admitted=[(Spell, "Magic Missile", SpellsOutsideClassList)]
+MCP P1 cleric 1 ledger: Ok(true)
+MCP P1 cleric 1 levelup: Saved
+MCP P1 cleric 1 remove: Saved
+MCP P1 cleric 1 removed: snapshot=true blocking=[] admitted=[]
+MCP P1 cleric 5 base: snapshot=true blocking=[] admitted=[]
+MCP P1 cleric 5 off flag-off: BLOCKED [("spell.outside_class_list", "recorded spell 'Magic Missile' is not on the cleric spell list in any ingested book, so no")]
+MCP P1 cleric 5 off flag-on: Saved
+MCP P1 cleric 5 after: snapshot=true blocking=[] admitted=[(Spell, "Magic Missile", SpellsOutsideClassList)]
+MCP P1 cleric 5 ledger: Ok(true)
+MCP P1 cleric 5 levelup: Saved
+MCP P1 cleric 5 remove: Saved
+MCP P1 cleric 5 removed: snapshot=true blocking=[] admitted=[]
+MCP P1 sorcerer 1 base: snapshot=true blocking=[] admitted=[]
+MCP P1 sorcerer 1 off flag-off: BLOCKED [("spell.outside_class_list", "recorded spell 'Cure Light Wounds' is not on the sorcerer spell list in any ingested book,")]
+MCP P1 sorcerer 1 off flag-on: Saved
+MCP P1 sorcerer 1 after: snapshot=true blocking=[] admitted=[(Spell, "Cure Light Wounds", SpellsOutsideClassList)]
+MCP P1 sorcerer 1 ledger: Ok(true)
+MCP P1 sorcerer 1 levelup: Saved
+MCP P1 sorcerer 1 remove: Saved
+MCP P1 sorcerer 1 removed: snapshot=true blocking=[] admitted=[]
+MCP P1 sorcerer 5 base: snapshot=true blocking=[] admitted=[]
+MCP P1 sorcerer 5 off flag-off: BLOCKED [("spell.outside_class_list", "recorded spell 'Cure Light Wounds' is not on the sorcerer spell list in any ingested book,")]
+MCP P1 sorcerer 5 off flag-on: Saved
+MCP P1 sorcerer 5 after: snapshot=true blocking=[] admitted=[(Spell, "Cure Light Wounds", SpellsOutsideClassList)]
+MCP P1 sorcerer 5 ledger: Ok(true)
+MCP P1 sorcerer 5 levelup: Saved
+MCP P1 sorcerer 5 remove: Saved
+MCP P1 sorcerer 5 removed: snapshot=true blocking=[] admitted=[]
+MCP P1 magus 1 base: snapshot=true blocking=[] admitted=[]
+MCP P1 magus 1 off flag-off: Saved
+MCP P1 magus 1 off flag-on: Saved
+MCP P1 magus 1 after: snapshot=true blocking=[] admitted=[]
+MCP P1 magus 1 ledger: Ok(true)
+MCP P1 magus 1 levelup: Saved
+MCP P1 magus 1 remove: ERR 'Cure Light Wounds' cannot be removed: this character has no Cure Light Wounds recorded for override:spells_outside_class_list
+MCP P1 magus 1 removed: snapshot=true blocking=[] admitted=[]
+MCP P1 magus 5 base: snapshot=true blocking=[] admitted=[]
+MCP P1 magus 5 off flag-off: Saved
+MCP P1 magus 5 off flag-on: Saved
+MCP P1 magus 5 after: snapshot=true blocking=[] admitted=[]
+MCP P1 magus 5 ledger: Ok(true)
+MCP P1 magus 5 levelup: Saved
+MCP P1 magus 5 remove: ERR 'Cure Light Wounds' cannot be removed: this character has no Cure Light Wounds recorded for override:spells_outside_class_list
+MCP P1 magus 5 removed: snapshot=true blocking=[] admitted=[]
+MCP P1 oracle 1 base: snapshot=true blocking=[] admitted=[]
+MCP P1 oracle 1 off flag-off: BLOCKED [("class_spell.apg.oracle.known_spells.unsupported", "Oracle remains blocked on its known-spell posture burden: known spell 'Magic Missile' is n"), ("class_feature.apg.oracle.curses_beyond_grounded_set.unmodeled", "Oracle Curse content beyond Clouded Vision, Lame, Wasting, and Deaf remains unmodeled: Hau"), ("class_feature.apg.oracle.other_features_deferred.un
+MCP P1 oracle 1 off flag-on: Saved
+MCP P1 oracle 1 after: snapshot=true blocking=[] admitted=[(Spell, "Magic Missile", SpellsOutsideClassList)]
+MCP P1 oracle 1 ledger: Ok(true)
+MCP P1 oracle 1 levelup: Saved
+MCP P1 oracle 1 remove: Saved
+MCP P1 oracle 1 removed: snapshot=true blocking=[] admitted=[]
+MCP P1 oracle 5 base: snapshot=true blocking=[] admitted=[]
+MCP P1 oracle 5 off flag-off: BLOCKED [("class_spell.apg.oracle.known_spells.unsupported", "Oracle remains blocked on its known-spell posture burden: known spell 'Magic Missile' is n"), ("class_feature.apg.oracle.curses_beyond_grounded_set.unmodeled", "Oracle Curse content beyond Clouded Vision, Lame, Wasting, and Deaf remains unmodeled: Hau"), ("class_feature.apg.oracle.other_features_deferred.un
+MCP P1 oracle 5 off flag-on: Saved
+MCP P1 oracle 5 after: snapshot=true blocking=[] admitted=[(Spell, "Magic Missile", SpellsOutsideClassList)]
+MCP P2 after: snapshot=true blocking=[] admitted=[(Feat, "Improved Two-Weapon Fighting", FeatsWithoutPrerequisites)]
+MCP P2 add legit: Saved
+MCP P2 levelup: Saved
+MCP P2 add legit after lv: ERR This character already holds 'Toughness', and it cannot be taken twice.
+MCP P2 remove toughness: Saved
+MCP P2 remove admitted: Saved
+MCP P2 end: snapshot=true blocking=[] admitted=[]
+MCP P3 race:elf class:wizard Longbow: Weapon
+MCP P3 race:elf class:wizard Longsword: Weapon
+MCP P3 race:elf class:wizard Rapier: Weapon
+MCP P3 race:elf class:wizard Shortbow: Weapon
+MCP P3 race:elf class:wizard Greatsword: Weapon
+MCP P3 race:dwarf class:wizard Battleaxe: Weapon
+MCP P3 race:dwarf class:wizard Heavy Pick: Weapon
+MCP P3 race:dwarf class:wizard Warhammer: Weapon
+MCP P3 race:dwarf class:wizard Waraxe (Dwarven): None
+MCP P3 race:dwarf class:wizard Dwarven Waraxe: Weapon
+MCP P3 race:dwarf class:wizard Greatsword: Weapon
+MCP P3 race:halfling class:wizard Sling: Weapon
+MCP P3 race:halfling class:wizard Sling Staff (Halfling): None
+MCP P3 race:halfling class:wizard Greatsword: Weapon
+MCP P3 race:half_orc class:wizard Greataxe: Weapon
+MCP P3 race:half_orc class:wizard Falchion: Weapon
+MCP P3 race:half_orc class:wizard Greatsword: Weapon
+MCP P3 race:gnome class:wizard Hooked Hammer (Gnome): None
+MCP P3 race:gnome class:wizard Greatsword: Weapon
+MCP P3 race:human class:rogue Rapier: None
+MCP P3 race:human class:rogue Hand Crossbow: None
+MCP P3 race:human class:rogue Crossbow (Hand): None
+MCP P3 race:human class:rogue Shortsword: None
+MCP P3 race:human class:rogue Sword (Short): None
+MCP P3 race:human class:rogue Longsword: Weapon
+MCP P3 race:human class:bard Whip: None
+MCP P3 race:human class:bard Longsword: None
+MCP P3 race:human class:bard Rapier: None
+MCP P3 race:human class:bard Greatsword: Weapon
+MCP P3 race:human class:monk Kama: None
+MCP P3 race:human class:monk Nunchaku: None
+MCP P3 race:human class:monk Longsword: Weapon
+MCP P3 race:human class:monk Quarterstaff: None
+MCP P3 race:human class:druid Scimitar: None
+MCP P3 race:human class:druid Club: None
+MCP P3 race:human class:druid Longsword: Weapon
+MCP P3 race:human class:cleric Heavy Mace: None
+MCP P3 race:human class:cleric Mace (Heavy): None
+MCP P3 race:human class:cleric Longsword: Weapon
+MCP P3 race:human class:wizard Quarterstaff: None
+MCP P3 race:human class:wizard Club: None
+MCP P3 race:human class:wizard Dagger: None
+MCP P3 race:human class:wizard Light Crossbow: None
+MCP P3 race:human class:wizard Crossbow (Light): None
+MCP P3 race:human class:wizard Heavy Crossbow: None
+MCP P3 race:human class:wizard Longsword: Weapon
+MCP P3 race:human class:fighter Longsword: None
+MCP P3 race:human class:fighter Bastard Sword: None
+MCP P3 race:human class:fighter Sword (Bastard): None
+MCP P3 race:human class:fighter Spiked Chain: Weapon
+MCP P3 race:human class:fighter Shield (Heavy/Steel): None
+MCP P3b before Chain Shirt: Armor
+MCP P3b before Chainmail: Armor
+MCP P3b before Full Plate: Armor
+MCP P3b before Shield (Heavy/Steel): Armor
+MCP P3b before Shield (Tower): Armor
+MCP P3b before Buckler: Armor
+MCP P3b before Longsword: Weapon
+MCP P3b before Rapier: Weapon
+MCP P3b before Bastard Sword: Weapon
+MCP P3b before Sword (Bastard): None
+MCP P3b feats ["feat:power_attack", "feat:dodge", "feat:weapon_focus"]
+MCP P3b after Chain Shirt: Armor
+MCP P3b after Chainmail: Armor
+MCP P3b after Full Plate: Armor
+MCP P3b after Shield (Heavy/Steel): Armor
+MCP P3b after Shield (Tower): Armor
+MCP P3b after Buckler: Armor
+MCP P3b after Longsword: Weapon
+MCP P3b after Rapier: Weapon
+MCP P3b after Bastard Sword: Weapon
+MCP P3b after Sword (Bastard): None
+MCP P3c armorish 356 fighter refused 9 ["Heavy Steel Shield", "Heavy Wooden Shield", "Light Steel Shield", "Light Wooden Shield", "Heavy Steel Shield", "Heavy Wooden Shield", "Light Steel Shield", "Light Wooden Shield", "Mind Shield"]
+MCP P3c wizard refused with no ArmorProf tag 42 ["Clawhand Shield [\"Shield\", \"Heavy\", \"Standard\", \"Close\", \"Weapon\", \"Resizable\", \"Melee\", \"ShieldBash\", \"Nonmetal\", \"Specific\", \"Enhancement\"]", "Battlement Shield [\"Magic\", \"Shield\", \"Tower\", \"Specific\", \"Close\", \"Nonmetal\", \"LesserMajor\"]", "Fortress Shield [\"Magic\", \"Shield\", \"Tower\", \"Standard\", \"Clos
+MCP P4 moved onto head under flag, tag: [None]
+MCP P4 flag off, add unrelated ring: Err("head slot is taken by Helm of Brilliance")
+MCP P4 flag off, state: true
+MCP P4 stow helm over: Ok("ok")
+MCP P4b flag off, delete worn ring: Err("head slot is taken by Helm of Brilliance")
+MCP P5 import overrides Overrides { feats_without_prerequisites: false, weapons_without_proficiency: false, spells_outside_class_list: false, armor_without_proficiency: false, ignore_slot_limits: false, ignore_feat_budget: false, ignore_alignment_restrictions: false, ignore_encumbrance: true } rows [(Equipment, "custom:c1", IgnoreSlotLimits)] tag [Some(IgnoreSlotLimits)]
+MCP P6 paladin: wrong []
+MCP P6 barbarian: wrong []
+MCP P6 monk: wrong []
+MCP P6 druid: wrong []
+MCP P6 antipaladin: wrong []
+MCP P6 cleric: wrong []
+MCP P6 wizard: wrong []
+MCP P6 assassin: wrong []
+MCP P6 arcane_archer: wrong []
+MCP P6 dragon_disciple: wrong []
+MCP P6 shadowdancer: wrong []
+MCP P6 holy_vindicator: wrong []
+MCP P6 inquisitor: wrong []
+MCP P6 oracle: wrong []
+MCP P6 gunslinger: wrong []
+MCP P6 hellknight: wrong []
+MCP P6 swashbuckler: wrong []
+MCP P6 warpriest: wrong []
+MCP P6 skald: wrong ["LG", "LN", "LE"]
+MCP P6 bloodrager: wrong ["LG", "LN", "LE"]
+MCP P9 rows [(Equipment, "Rapier", WeaponsWithoutProficiency)]
+MCP P9 remove: Saved
+MCP P9 rows after []

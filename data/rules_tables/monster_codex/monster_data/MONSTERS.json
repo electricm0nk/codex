@@ -1,0 +1,128 @@
+{
+  "format": "codex.rules_tables/1",
+  "table": "monster_codex/monster_data/MONSTERS",
+  "licence": {
+    "license": "OGL",
+    "book": "monster_codex",
+    "screen": "pi_screening::classify_field",
+    "pi_hits": [],
+    "redacted": []
+  },
+  "rows": [
+    {
+      "key": "Seru",
+      "name": "Seru",
+      "size": "S",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 20
+        },
+        {
+          "mode": "Fly",
+          "feet": 40
+        }
+      ],
+      "race_type": "Magical Beast",
+      "race_subtype": null,
+      "challenge_rating": "3",
+      "monster_class": "Magical Beast:3",
+      "source_page": "p.208",
+      "natural_attacks": [
+        {
+          "name": "Bite",
+          "damage_dice": "1d6"
+        },
+        {
+          "name": "Venom",
+          "damage_dice": null
+        }
+      ],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": -4
+        },
+        {
+          "ability": "DEX",
+          "amount": 2
+        },
+        {
+          "ability": "CON",
+          "amount": 2
+        },
+        {
+          "ability": "WIS",
+          "amount": 2
+        }
+      ],
+      "has_spell_like_abilities": false,
+      "sla_cl_token": null,
+      "spell_like_abilities": [],
+      "ability_keys": [
+        "Seru ~ Poison",
+        "Seru ~ Spit Venom"
+      ],
+      "external_ability_refs": [],
+      "source_file": "mc_races",
+      "source_line": 5
+    },
+    {
+      "key": "Bat (Sootwing)",
+      "name": "Sootwing Bat",
+      "size": "T",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 5
+        },
+        {
+          "mode": "Fly",
+          "feet": 40
+        }
+      ],
+      "race_type": "Undead",
+      "race_subtype": null,
+      "challenge_rating": "1/2",
+      "monster_class": "Undead:2",
+      "source_page": "p.88",
+      "natural_attacks": [
+        {
+          "name": "Bite",
+          "damage_dice": "1d3"
+        }
+      ],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": -6
+        },
+        {
+          "ability": "DEX",
+          "amount": 2
+        },
+        {
+          "ability": "INT",
+          "amount": -8
+        },
+        {
+          "ability": "WIS",
+          "amount": 2
+        },
+        {
+          "ability": "CHA",
+          "amount": -2
+        }
+      ],
+      "has_spell_like_abilities": false,
+      "sla_cl_token": null,
+      "spell_like_abilities": [],
+      "ability_keys": [
+        "Bat (Sootwing) ~ Disease"
+      ],
+      "external_ability_refs": [],
+      "source_file": "mc_races",
+      "source_line": 6
+    }
+  ]
+}

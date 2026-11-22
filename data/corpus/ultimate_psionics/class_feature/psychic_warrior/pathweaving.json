@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Psychic Warrior ~ Pathweaving",
+    "name": "Pathweaving",
+    "class": "Psychic Warrior",
+    "description": "Can gain the benefits of both trances for 5 minutes; %1/day.|PathweavingTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Psychic Warrior ~ Pathweaving"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "PsychicWarriorClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PathweavingTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Can gain the benefits of both trances for 5 minutes; %1/day.|PathweavingTimes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PathweavingTimes|(PathweavingLVL-12)/3"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.55"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|PathweavingTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 540,
+    "record_key": "Psychic Warrior ~ Pathweaving"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

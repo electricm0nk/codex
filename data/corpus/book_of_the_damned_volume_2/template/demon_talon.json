@@ -1,0 +1,35 @@
+{
+  "codex_generated_name": false,
+  "completeness": "chassis_only",
+  "data": {
+    "key": "Demon Talon",
+    "name": "Demon Talon",
+    "raw_tokens": [
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "CHOOSE:Demon Talon ~ Fine|Demon Talon ~ Diminutive|Demon Talon ~ Tiny|Demon Talon ~ Small|Demon Talon ~ Medium|Demon Talon ~ Large|Demon Talon ~ Huge|Demon Talon ~ Gargantuan|Demon Talon ~ Colossal"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T16:43:17Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 7,
+    "path": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_2/botd2_templates.lst",
+    "record_key": "Demon Talon",
+    "sha256": "07b373534c84464f24a6cfa5278912ea1081076e1739c0486f843d74e65c93d6"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

@@ -1,0 +1,398 @@
+   Compiling codex v0.1.0 (/home/ubuntu/workspace/repos/codex/.worktrees/sd38-e3)
+error[E0432]: unresolved imports `crate::rules_core::cpr::input::CprRoleChoices`, `crate::rules_core::cpr::input::CprRolePick`
+   --> src/rules_core/cpr/store.rs:399:45
+    |
+399 |         use crate::rules_core::cpr::input::{CprRoleChoices, CprRolePick};
+    |                                             ^^^^^^^^^^^^^^  ^^^^^^^^^^^ no `CprRolePick` in `rules_core::cpr::input`
+    |                                             |
+    |                                             no `CprRoleChoices` in `rules_core::cpr::input`
+    |
+help: a similar name exists in the module
+    |
+399 -         use crate::rules_core::cpr::input::{CprRoleChoices, CprRolePick};
+399 +         use crate::rules_core::cpr::input::{CprSheetChoices, CprRolePick};
+    |
+
+error[E0422]: cannot find struct, variant or union type `CprRoleChoices` in this scope
+   --> src/rules_core/cpr/input.rs:632:23
+    |
+186 | pub struct CprSheetChoices {
+    | -------------------------- similarly named struct `CprSheetChoices` defined here
+...
+632 |         let choices = CprRoleChoices {
+    |                       ^^^^^^^^^^^^^^
+    |
+help: a struct with a similar name exists
+    |
+632 -         let choices = CprRoleChoices {
+632 +         let choices = CprSheetChoices {
+    |
+
+error[E0422]: cannot find struct, variant or union type `CprRolePick` in this scope
+   --> src/rules_core/cpr/input.rs:635:17
+    |
+635 |                 CprRolePick { name: "Compact Groundcar".to_owned(), on: None },
+    |                 ^^^^^^^^^^^ not found in this scope
+
+error[E0422]: cannot find struct, variant or union type `CprRolePick` in this scope
+   --> src/rules_core/cpr/input.rs:636:17
+    |
+636 |                 CprRolePick { name: "Heavy Chassis".to_owned(), on: Some("Compact Groundcar".to_owned()) },
+    |                 ^^^^^^^^^^^ not found in this scope
+
+error[E0425]: cannot find type `CprRoleChoices` in this scope
+   --> src/rules_core/cpr/roles.rs:523:74
+    |
+523 |     fn choices(points: &[(&str, u8)], picks: &[(&str, Option<&str>)]) -> CprRoleChoices {
+    |                                                                          ^^^^^^^^^^^^^^ not found in this scope
+
+error[E0422]: cannot find struct, variant or union type `CprRoleChoices` in this scope
+   --> src/rules_core/cpr/roles.rs:524:9
+    |
+524 |         CprRoleChoices {
+    |         ^^^^^^^^^^^^^^ not found in this scope
+
+error[E0422]: cannot find struct, variant or union type `CprRolePick` in this scope
+   --> src/rules_core/cpr/roles.rs:526:47
+    |
+526 |             picks: picks.iter().map(|(n, on)| CprRolePick { name: (*n).to_owned(), on: on.map(str::to_owned) }).collect(),
+    |                                               ^^^^^^^^^^^ not found in this scope
+
+error[E0425]: cannot find type `CprRoleChoices` in this scope
+   --> src/rules_core/cpr/roles.rs:530:61
+    |
+530 |     fn rows_of(catalog: &CprRoleCatalog, role: CprRole, c: &CprRoleChoices) -> BTreeMap<String, i16> {
+    |                                                             ^^^^^^^^^^^^^^ not found in this scope
+
+error[E0425]: cannot find type `CprRoleChoices` in this scope
+   --> src/rules_core/cpr/roles.rs:539:61
+    |
+539 |     fn refusal(catalog: &CprRoleCatalog, role: CprRole, c: &CprRoleChoices) -> String {
+    |                                                             ^^^^^^^^^^^^^^ not found in this scope
+
+error[E0425]: cannot find function `render_cpr_role_choices` in this scope
+   --> src/rules_core/cpr/input.rs:639:20
+    |
+252 | pub fn render_cpr_sheet_choices(choices: &CprSheetChoices) -> String {
+    | -------------------------------------------------------------------- similarly named function `render_cpr_sheet_choices` defined here
+...
+639 |         let text = render_cpr_role_choices(&choices);
+    |                    ^^^^^^^^^^^^^^^^^^^^^^^
+    |
+help: a function with a similar name exists
+    |
+639 -         let text = render_cpr_role_choices(&choices);
+639 +         let text = render_cpr_sheet_choices(&choices);
+    |
+
+error[E0425]: cannot find function `parse_cpr_role_choices` in this scope
+   --> src/rules_core/cpr/input.rs:644:20
+    |
+332 | pub fn parse_cpr_sheet_choices(text: &str) -> Result<CprSheetChoices, String> {
+    | ----------------------------------------------------------------------------- similarly named function `parse_cpr_sheet_choices` defined here
+...
+644 |         assert_eq!(parse_cpr_role_choices(&text), Ok(choices));
+    |                    ^^^^^^^^^^^^^^^^^^^^^^
+    |
+help: a function with a similar name exists
+    |
+644 -         assert_eq!(parse_cpr_role_choices(&text), Ok(choices));
+644 +         assert_eq!(parse_cpr_sheet_choices(&text), Ok(choices));
+    |
+
+error[E0433]: cannot find type `CprRoleChoices` in this scope
+   --> src/rules_core/cpr/input.rs:645:45
+    |
+645 |         assert_eq!(render_cpr_role_choices(&CprRoleChoices::default()), "");
+    |                                             ^^^^^^^^^^^^^^ use of undeclared type `CprRoleChoices`
+    |
+help: a struct with a similar name exists
+    |
+645 -         assert_eq!(render_cpr_role_choices(&CprRoleChoices::default()), "");
+645 +         assert_eq!(render_cpr_role_choices(&CprSheetChoices::default()), "");
+    |
+
+error[E0425]: cannot find function `render_cpr_role_choices` in this scope
+   --> src/rules_core/cpr/input.rs:645:20
+    |
+252 | pub fn render_cpr_sheet_choices(choices: &CprSheetChoices) -> String {
+    | -------------------------------------------------------------------- similarly named function `render_cpr_sheet_choices` defined here
+...
+645 |         assert_eq!(render_cpr_role_choices(&CprRoleChoices::default()), "");
+    |                    ^^^^^^^^^^^^^^^^^^^^^^^
+    |
+help: a function with a similar name exists
+    |
+645 -         assert_eq!(render_cpr_role_choices(&CprRoleChoices::default()), "");
+645 +         assert_eq!(render_cpr_sheet_choices(&CprRoleChoices::default()), "");
+    |
+
+error[E0425]: cannot find function `parse_cpr_role_choices` in this scope
+   --> src/rules_core/cpr/input.rs:646:20
+    |
+332 | pub fn parse_cpr_sheet_choices(text: &str) -> Result<CprSheetChoices, String> {
+    | ----------------------------------------------------------------------------- similarly named function `parse_cpr_sheet_choices` defined here
+...
+646 |         assert_eq!(parse_cpr_role_choices(""), Ok(CprRoleChoices::default()));
+    |                    ^^^^^^^^^^^^^^^^^^^^^^
+    |
+help: a function with a similar name exists
+    |
+646 -         assert_eq!(parse_cpr_role_choices(""), Ok(CprRoleChoices::default()));
+646 +         assert_eq!(parse_cpr_sheet_choices(""), Ok(CprRoleChoices::default()));
+    |
+
+error[E0433]: cannot find type `CprRoleChoices` in this scope
+   --> src/rules_core/cpr/input.rs:646:51
+    |
+646 |         assert_eq!(parse_cpr_role_choices(""), Ok(CprRoleChoices::default()));
+    |                                                   ^^^^^^^^^^^^^^ use of undeclared type `CprRoleChoices`
+    |
+help: a struct with a similar name exists
+    |
+646 -         assert_eq!(parse_cpr_role_choices(""), Ok(CprRoleChoices::default()));
+646 +         assert_eq!(parse_cpr_role_choices(""), Ok(CprSheetChoices::default()));
+    |
+
+error[E0425]: cannot find function `parse_cpr_role_choices` in this scope
+   --> src/rules_core/cpr/input.rs:648:36
+    |
+332 | pub fn parse_cpr_sheet_choices(text: &str) -> Result<CprSheetChoices, String> {
+    | ----------------------------------------------------------------------------- similarly named function `parse_cpr_sheet_choices` defined here
+...
+648 |         let refused = |text: &str| parse_cpr_role_choices(text).unwrap_err();
+    |                                    ^^^^^^^^^^^^^^^^^^^^^^
+    |
+help: a function with a similar name exists
+    |
+648 -         let refused = |text: &str| parse_cpr_role_choices(text).unwrap_err();
+648 +         let refused = |text: &str| parse_cpr_sheet_choices(text).unwrap_err();
+    |
+
+error[E0425]: cannot find function `role_choice_text_ok` in this scope
+   --> src/rules_core/cpr/input.rs:654:17
+    |
+654 |         assert!(role_choice_text_ok("High Performance Groundcar") && role_choice_text_ok("Medical Tech (Pharmaceuticals)"));
+    |                 ^^^^^^^^^^^^^^^^^^^ not found in this scope
+
+error[E0425]: cannot find function `role_choice_text_ok` in this scope
+   --> src/rules_core/cpr/input.rs:654:70
+    |
+654 |         assert!(role_choice_text_ok("High Performance Groundcar") && role_choice_text_ok("Medical Tech (Pharmaceuticals)"));
+    |                                                                      ^^^^^^^^^^^^^^^^^^^ not found in this scope
+
+error[E0425]: cannot find function `role_choice_text_ok` in this scope
+   --> src/rules_core/cpr/input.rs:655:18
+    |
+655 | ...   assert!(!role_choice_text_ok("a @ b") && !role_choice_text_ok("a = b") && !role_choice_text_ok("x\ny") && !role_choice_text_o...
+    |                ^^^^^^^^^^^^^^^^^^^ not found in this scope
+
+error[E0425]: cannot find function `role_choice_text_ok` in this scope
+   --> src/rules_core/cpr/input.rs:655:51
+    |
+655 | ...   assert!(!role_choice_text_ok("a @ b") && !role_choice_text_ok("a = b") && !role_choice_text_ok("x\ny") && !role_choice_text_o...
+    |                                                 ^^^^^^^^^^^^^^^^^^^ not found in this scope
+
+error[E0425]: cannot find function `role_choice_text_ok` in this scope
+   --> src/rules_core/cpr/input.rs:655:84
+    |
+655 | ...   assert!(!role_choice_text_ok("a @ b") && !role_choice_text_ok("a = b") && !role_choice_text_ok("x\ny") && !role_choice_text_o...
+    |                                                                                  ^^^^^^^^^^^^^^^^^^^ not found in this scope
+
+error[E0425]: cannot find function `role_choice_text_ok` in this scope
+   --> src/rules_core/cpr/input.rs:655:116
+    |
+655 | ...= b") && !role_choice_text_ok("x\ny") && !role_choice_text_ok(" "));
+    |                                              ^^^^^^^^^^^^^^^^^^^ not found in this scope
+
+error[E0599]: no associated function or constant named `load_role_choices` found for struct `store::CprCharacterStore` in the current scope
+   --> src/rules_core/cpr/store.rs:403:39
+    |
+ 56 | pub struct CprCharacterStore;
+    | ---------------------------- associated function or constant `load_role_choices` not found for this struct
+...
+403 |         assert_eq!(CprCharacterStore::load_role_choices(&root), Ok(CprRoleChoices::default()));
+    |                                       ^^^^^^^^^^^^^^^^^ associated function or constant not found in `store::CprCharacterStore`
+    |
+help: there is an associated function `load_choices` with a similar name
+    |
+403 -         assert_eq!(CprCharacterStore::load_role_choices(&root), Ok(CprRoleChoices::default()));
+403 +         assert_eq!(CprCharacterStore::load_choices(&root), Ok(CprRoleChoices::default()));
+    |
+
+error[E0599]: no associated function or constant named `save_role_choices` found for struct `store::CprCharacterStore` in the current scope
+   --> src/rules_core/cpr/store.rs:408:28
+    |
+ 56 | pub struct CprCharacterStore;
+    | ---------------------------- associated function or constant `save_role_choices` not found for this struct
+...
+408 |         CprCharacterStore::save_role_choices(&choices, &root).expect("saves the choices");
+    |                            ^^^^^^^^^^^^^^^^^ associated function or constant not found in `store::CprCharacterStore`
+    |
+help: there is an associated function `save_choices` with a similar name
+    |
+408 -         CprCharacterStore::save_role_choices(&choices, &root).expect("saves the choices");
+408 +         CprCharacterStore::save_choices(&choices, &root).expect("saves the choices");
+    |
+
+error[E0599]: no associated function or constant named `load_role_choices` found for struct `store::CprCharacterStore` in the current scope
+   --> src/rules_core/cpr/store.rs:411:39
+    |
+ 56 | pub struct CprCharacterStore;
+    | ---------------------------- associated function or constant `load_role_choices` not found for this struct
+...
+411 |         assert_eq!(CprCharacterStore::load_role_choices(&root), Ok(choices.clone()));
+    |                                       ^^^^^^^^^^^^^^^^^ associated function or constant not found in `store::CprCharacterStore`
+    |
+help: there is an associated function `load_choices` with a similar name
+    |
+411 -         assert_eq!(CprCharacterStore::load_role_choices(&root), Ok(choices.clone()));
+411 +         assert_eq!(CprCharacterStore::load_choices(&root), Ok(choices.clone()));
+    |
+
+error[E0599]: no associated function or constant named `save_role_choices` found for struct `store::CprCharacterStore` in the current scope
+   --> src/rules_core/cpr/store.rs:415:36
+    |
+ 56 | pub struct CprCharacterStore;
+    | ---------------------------- associated function or constant `save_role_choices` not found for this struct
+...
+415 |         assert!(CprCharacterStore::save_role_choices(&choices, &empty).is_err_and(|e| e.contains("envelope.txt")));
+    |                                    ^^^^^^^^^^^^^^^^^ associated function or constant not found in `store::CprCharacterStore`
+    |
+help: there is an associated function `save_choices` with a similar name
+    |
+415 -         assert!(CprCharacterStore::save_role_choices(&choices, &empty).is_err_and(|e| e.contains("envelope.txt")));
+415 +         assert!(CprCharacterStore::save_choices(&choices, &empty).is_err_and(|e| e.contains("envelope.txt")));
+    |
+
+error[E0599]: no method named `choice_rows` found for reference `&roles::CprRoleCatalog` in the current scope
+   --> src/rules_core/cpr/roles.rs:532:14
+    |
+531 | /         catalog
+532 | |             .choice_rows(role, 4, c)
+    | |             -^^^^^^^^^^^ method not found in `&roles::CprRoleCatalog`
+    | |_____________|
+    |
+
+error[E0599]: no method named `choice_rows` found for reference `&roles::CprRoleCatalog` in the current scope
+   --> src/rules_core/cpr/roles.rs:540:17
+    |
+540 |         catalog.choice_rows(role, 4, c).expect_err("refused").join(" / ")
+    |                 ^^^^^^^^^^^ method not found in `&roles::CprRoleCatalog`
+
+error[E0599]: no method named `choice_menu` found for struct `roles::CprRoleCatalog` in the current scope
+   --> src/rules_core/cpr/roles.rs:548:28
+    |
+172 | pub struct CprRoleCatalog {
+    | ------------------------- method `choice_menu` not found for this struct
+...
+548 |         let menu = catalog.choice_menu(CprRole::Solo, 4, &CprRoleChoices::default()).expect("menu");
+    |                            ^^^^^^^^^^^ method not found in `roles::CprRoleCatalog`
+
+error[E0433]: cannot find type `CprRoleChoices` in this scope
+   --> src/rules_core/cpr/roles.rs:548:59
+    |
+548 |         let menu = catalog.choice_menu(CprRole::Solo, 4, &CprRoleChoices::default()).expect("menu");
+    |                                                           ^^^^^^^^^^^^^^ use of undeclared type `CprRoleChoices`
+
+error[E0599]: no method named `choice_menu` found for struct `roles::CprRoleCatalog` in the current scope
+   --> src/rules_core/cpr/roles.rs:582:28
+    |
+172 | pub struct CprRoleCatalog {
+    | ------------------------- method `choice_menu` not found for this struct
+...
+582 |         let menu = catalog.choice_menu(CprRole::Tech, 4, &CprRoleChoices::default()).expect("menu");
+    |                            ^^^^^^^^^^^ method not found in `roles::CprRoleCatalog`
+
+error[E0433]: cannot find type `CprRoleChoices` in this scope
+   --> src/rules_core/cpr/roles.rs:582:59
+    |
+582 |         let menu = catalog.choice_menu(CprRole::Tech, 4, &CprRoleChoices::default()).expect("menu");
+    |                                                           ^^^^^^^^^^^^^^ use of undeclared type `CprRoleChoices`
+
+error[E0433]: cannot find type `CprRoleChoices` in this scope
+   --> src/rules_core/cpr/roles.rs:600:51
+    |
+600 |         assert!(refusal(&catalog, CprRole::Tech, &CprRoleChoices::default()).contains("0 of 8"));
+    |                                                   ^^^^^^^^^^^^^^ use of undeclared type `CprRoleChoices`
+
+error[E0599]: no method named `choice_menu` found for struct `roles::CprRoleCatalog` in the current scope
+   --> src/rules_core/cpr/roles.rs:613:28
+    |
+172 | pub struct CprRoleCatalog {
+    | ------------------------- method `choice_menu` not found for this struct
+...
+613 |         let menu = catalog.choice_menu(CprRole::Medtech, 4, &c).expect("menu");
+    |                            ^^^^^^^^^^^ method not found in `roles::CprRoleCatalog`
+
+error[E0599]: no method named `choice_menu` found for struct `roles::CprRoleCatalog` in the current scope
+   --> src/rules_core/cpr/roles.rs:639:28
+    |
+172 | pub struct CprRoleCatalog {
+    | ------------------------- method `choice_menu` not found for this struct
+...
+639 |         let menu = catalog.choice_menu(CprRole::Nomad, 4, &CprRoleChoices::default()).expect("menu");
+    |                            ^^^^^^^^^^^ method not found in `roles::CprRoleCatalog`
+
+error[E0433]: cannot find type `CprRoleChoices` in this scope
+   --> src/rules_core/cpr/roles.rs:639:60
+    |
+639 |         let menu = catalog.choice_menu(CprRole::Nomad, 4, &CprRoleChoices::default()).expect("menu");
+    |                                                            ^^^^^^^^^^^^^^ use of undeclared type `CprRoleChoices`
+
+error[E0609]: no field `upgrades` on type `roles::CprRoleCatalog`
+   --> src/rules_core/cpr/roles.rs:673:21
+    |
+673 |             catalog.upgrades.iter().map(|u| (u.name.clone(), format!("{:?} {:?}", u.repeat, u.requires_heavy_chassis))).collect();
+    |                     ^^^^^^^^ unknown field
+    |
+    = note: available fields are: `roles`, `net_actions`, `believability`, `backup`, `team_members` ... and 2 others
+
+error[E0599]: no method named `choice_menu` found for struct `roles::CprRoleCatalog` in the current scope
+   --> src/rules_core/cpr/roles.rs:693:28
+    |
+172 | pub struct CprRoleCatalog {
+    | ------------------------- method `choice_menu` not found for this struct
+...
+693 |         let menu = catalog.choice_menu(CprRole::Exec, 4, &CprRoleChoices::default()).expect("menu");
+    |                            ^^^^^^^^^^^ method not found in `roles::CprRoleCatalog`
+
+error[E0433]: cannot find type `CprRoleChoices` in this scope
+   --> src/rules_core/cpr/roles.rs:693:59
+    |
+693 |         let menu = catalog.choice_menu(CprRole::Exec, 4, &CprRoleChoices::default()).expect("menu");
+    |                                                           ^^^^^^^^^^^^^^ use of undeclared type `CprRoleChoices`
+
+error[E0599]: no method named `choice_menu` found for struct `roles::CprRoleCatalog` in the current scope
+   --> src/rules_core/cpr/roles.rs:713:32
+    |
+172 | pub struct CprRoleCatalog {
+    | ------------------------- method `choice_menu` not found for this struct
+...
+713 |             let menu = catalog.choice_menu(role, 4, &CprRoleChoices::default()).expect("menu");
+    |                                ^^^^^^^^^^^ method not found in `roles::CprRoleCatalog`
+
+error[E0433]: cannot find type `CprRoleChoices` in this scope
+   --> src/rules_core/cpr/roles.rs:713:54
+    |
+713 |             let menu = catalog.choice_menu(role, 4, &CprRoleChoices::default()).expect("menu");
+    |                                                      ^^^^^^^^^^^^^^ use of undeclared type `CprRoleChoices`
+
+error[E0599]: no method named `choice_rows` found for struct `roles::CprRoleCatalog` in the current scope
+   --> src/rules_core/cpr/roles.rs:715:29
+    |
+172 | pub struct CprRoleCatalog {
+    | ------------------------- method `choice_rows` not found for this struct
+...
+715 |             assert!(catalog.choice_rows(role, 4, &CprRoleChoices::default()).expect("none is valid").is_empty());
+    |                             ^^^^^^^^^^^ method not found in `roles::CprRoleCatalog`
+
+error[E0433]: cannot find type `CprRoleChoices` in this scope
+   --> src/rules_core/cpr/roles.rs:715:51
+    |
+715 |             assert!(catalog.choice_rows(role, 4, &CprRoleChoices::default()).expect("none is valid").is_empty());
+    |                                                   ^^^^^^^^^^^^^^ use of undeclared type `CprRoleChoices`
+
+Some errors have detailed explanations: E0422, E0425, E0432, E0433, E0599, E0609.
+For more information about an error, try `rustc --explain E0422`.
+error: could not compile `codex` (lib test) due to 43 previous errors

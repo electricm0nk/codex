@@ -1,0 +1,58 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Wereshark-Kin ~ Change Shape",
+    "name": "Change Shape",
+    "description": "A seascarred skinwalker can change shape to a bestial form as a standard action. In bestial form, a seascarred skinwalker gains a +2 racial bonus to Constitution. While in this form, a skinwalker also takes on an animalistic feature that provides a special effect. Each time a seascarred skinwalker assumes bestial form, he can choose to gain the ability to breathe water as well as air, a bite attack that deals 1d6 points of damage, ferocity (Pathfinder RPG Bestiary), or a swim speed of 30 feet. These benefits last until the skinwalker returns to his humanoid form as a swift action. A skinwalker must first return to his humanoid form before changing to bestial form again to change benefits.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wereshark-Kin ~ Change Shape"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Skinwalker Racial Trait.SpecialQuality.Special Quality.Special Ability.Supernatural"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Skinwalker ~ Wereshark-Kin"
+      },
+      {
+        "key": "DESC",
+        "value": "A seascarred skinwalker can change shape to a bestial form as a standard action. In bestial form, a seascarred skinwalker gains a +2 racial bonus to Constitution. While in this form, a skinwalker also takes on an animalistic feature that provides a special effect. Each time a seascarred skinwalker assumes bestial form, he can choose to gain the ability to breathe water as well as air, a bite attack that deals 1d6 points of damage, ferocity (Pathfinder RPG Bestiary), or a swim speed of 30 feet. These benefits last until the skinwalker returns to his humanoid form as a swift action. A skinwalker must first return to his humanoid form before changing to bestial form again to change benefits."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Skinwalker Racial Trait|AUTOMATIC|TYPE=Skinwalker Change Shape Wereshark-Kin"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.xx"
+      },
+      {
+        "key": "FACT",
+        "value": "Skinwalker_ReplaceChangeShape|True"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/skinwalker/skinwalker_abilities_race_subrace.lst",
+    "sha256": "a5b5c3f65d28e5a01b935ffc2a177752184be170e340fdddc14cdbf3ba6c3b27",
+    "line": 141,
+    "record_key": "Wereshark-Kin ~ Change Shape"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

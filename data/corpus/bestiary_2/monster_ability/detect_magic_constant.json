@@ -1,0 +1,86 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Detect Magic ~ Constant",
+    "delivery": "SpellLike",
+    "description": "You detect magical auras, as per the spell Detect Magic, as a constant ability. Constant spell-like abilities function at all times but can be dispelled. Constant spell-like abilities can be reactivated a as a swift action.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_2:monster_ability:detect_magic_constant",
+    "name": "Detect Magic",
+    "owners": [
+      "bestiary_2:monster:agathion_avoral",
+      "bestiary_2:monster:azata_lyrakien",
+      "bestiary_2:monster:daemon_cacodaemon",
+      "bestiary_2:monster:daemon_ceustodaemon",
+      "bestiary_2:monster:daemon_ceustodaemon_lesser",
+      "bestiary_2:monster:daemon_ceustodaemon_greater",
+      "bestiary_2:monster:daemon_derghodaemon",
+      "bestiary_2:monster:daemon_hydrodaemon",
+      "bestiary_2:monster:daemon_meladaemon",
+      "bestiary_2:monster:daemon_piscodaemon",
+      "bestiary_2:monster:dark_slayer",
+      "bestiary_2:monster:inevitable_lhaksharut",
+      "bestiary_2:monster:nightshade_nightcrawler",
+      "bestiary_2:monster:nightshade_nightwalker",
+      "bestiary_2:monster:nightshade_nightwave",
+      "bestiary_2:monster:nightshade_nightwing",
+      "bestiary_2:monster:qlippoth_cythnigot",
+      "bestiary_2:monster:witchwyrd"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SLA_CL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You detect magical auras, as per the spell Detect Magic, as a constant ability. Constant spell-like abilities function at all times but can be dispelled. Constant spell-like abilities can be reactivated a as a swift action.|PRERULE:1,DisplayFullAbility"
+      },
+      {
+        "key": "DESC",
+        "value": "You detect magical auras, as per the spell Detect Magic, as a constant ability.|!PRERULE:1,DisplayFullAbility"
+      },
+      {
+        "key": "KEY",
+        "value": "Detect Magic ~ Constant"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.266"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=ATWILL|TIMEUNIT=Constant|CASTERLEVEL=SLA_CL|Detect Magic,10+CHA"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.SpellLike.Sense"
+      }
+    ],
+    "source_page": "p.266",
+    "traits": [
+      "Sense"
+    ]
+  },
+  "ingested_at": "2026-08-17T12:26:27Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 2203,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "record_key": "Detect Magic ~ Constant",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:spells"
+  ]
+}

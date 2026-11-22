@@ -1,0 +1,32 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:38:17Z",
+  "data": {
+    "key": "Greater Cushion the Blow",
+    "category": "Psionic",
+    "name": "Greater Cushion the Blow",
+    "description": "When using the Cushion the Blow feat, the effect applies to all damage for that collective member until the beginning of your next turn.",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=Special Ability,TYPE.Collective",
+      "PREABILITY:2,CATEGORY=FEAT,Cushion the Blow,Improved Cushion the Blow",
+      "PRESTAT:1,WIS=17",
+      "PREVARGTEQ:MaxManifesterLVL,18",
+      "PREVARGTEQ:IsPsionic,1"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_feats.lst",
+    "sha256": "528096cb97ebe8255b9f9fe67682dd7e045f53b65e32295cd57967002eccb137",
+    "line": 142,
+    "record_key": "Greater Cushion the Blow"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

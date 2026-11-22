@@ -1,0 +1,20 @@
+{
+  "data": {
+    "category": "Archetype",
+    "key": "Mystic Archetype ~ Free Trader",
+    "name": "Free Trader",
+    "type": "Archetype.Mystic Archetype"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 737,
+    "path": "starfinder/paizo/character_operations_manual/scom_abilities_class.lst",
+    "record_key": "Mystic Archetype ~ Free Trader",
+    "sha256": "8b2b5d75240ea056952e4f05a02c832cfffd733e3f671c352c993fe7c3845fac"
+  },
+  "unit_id": "character_operations_manual:ability:mystic_archetype_free_trader"
+}

@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Shadow Caller ~ Weakening Touch",
+    "name": "Weakening Touch",
+    "class": "Spiritualist",
+    "description": "A shade's slam attack causes its victim to take a -2 penalty to Strength for 1 round. As a standard action, a shade in incorporeal form can deliver the penalty as a touch attack. This penalty does not stack with itself. This is a negative energy effect.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shadow Caller ~ Weakening Touch"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Emotional Focus 2a"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Spiritualist Class Features.ShadowCallerClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "A shade's slam attack causes its victim to take a -2 penalty to Strength for 1 round. As a standard action, a shade in incorporeal form can deliver the penalty as a touch attack. This penalty does not stack with itself. This is a negative energy effect."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.50"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/support/ui_abilities_class_oa.lst",
+    "sha256": "123f008e9a2f31828861df9025f48f5c2f7c78a648553f22dba96a8d8a2e24dc",
+    "line": 134,
+    "record_key": "Shadow Caller ~ Weakening Touch"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

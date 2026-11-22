@@ -1,0 +1,902 @@
+[
+  {
+    "unit_id": "book_of_the_damned_volume_2:equipment:demon_senses",
+    "slug": "demon_senses",
+    "book": "book_of_the_damned_volume_2",
+    "key": "Demon Senses",
+    "pcg_path": "/tmp/e5rem/skill-pcg/demon_senses.pcg",
+    "ftl_path": "/tmp/e5rem/skill-pcg/demon_senses.txt.ftl",
+    "skill": "Perception",
+    "expected_bonus": 8
+  },
+  {
+    "unit_id": "core_rulebook:equipment:robe_of_eyes",
+    "slug": "robe_of_eyes",
+    "book": "core_rulebook",
+    "key": "Robe of Eyes",
+    "pcg_path": "/tmp/e5rem/skill-pcg/robe_of_eyes.pcg",
+    "ftl_path": "/tmp/e5rem/skill-pcg/robe_of_eyes.txt.ftl",
+    "skill": "Perception",
+    "expected_bonus": 10
+  },
+  {
+    "unit_id": "core_rulebook:equipment:lens_of_detection",
+    "slug": "lens_of_detection",
+    "book": "core_rulebook",
+    "key": "Lens of Detection",
+    "pcg_path": "/tmp/e5rem/skill-pcg/lens_of_detection.pcg",
+    "ftl_path": "/tmp/e5rem/skill-pcg/lens_of_detection.txt.ftl",
+    "skill": "Perception",
+    "expected_bonus": 5
+  },
+  {
+    "unit_id": "inner_sea_gods:equipment:ring_of_unquenchable_passions",
+    "slug": "ring_of_unquenchable_passions",
+    "book": "inner_sea_gods",
+    "key": "Ring Of Unquenchable Passions",
+    "pcg_path": "/tmp/e5rem/skill-pcg/ring_of_unquenchable_passions.pcg",
+    "ftl_path": "/tmp/e5rem/skill-pcg/ring_of_unquenchable_passions.txt.ftl",
+    "skill": "Acrobatics",
+    "expected_bonus": 5
+  },
+  {
+    "unit_id": "ultimate_equipment:equipment:rod_sapling",
+    "slug": "rod_sapling",
+    "book": "ultimate_equipment",
+    "key": "Rod (Sapling)",
+    "pcg_path": "/tmp/e5rem/skill-pcg/rod_sapling.pcg",
+    "ftl_path": "/tmp/e5rem/skill-pcg/rod_sapling.txt.ftl",
+    "skill": "Survival",
+    "expected_bonus": 5
+  },
+  {
+    "unit_id": "core_rulebook:equipment:eyes_of_the_eagle",
+    "slug": "eyes_of_the_eagle",
+    "book": "core_rulebook",
+    "key": "Eyes of the Eagle",
+    "pcg_path": "/tmp/e5rem/skill-pcg/eyes_of_the_eagle.pcg",
+    "ftl_path": "/tmp/e5rem/skill-pcg/eyes_of_the_eagle.txt.ftl",
+    "skill": "Perception",
+    "expected_bonus": 5
+  },
+  {
+    "unit_id": "ultimate_equipment:equipment:horsemaster_s_saddle_mount",
+    "slug": "horsemaster_s_saddle_mount",
+    "book": "ultimate_equipment",
+    "key": "Horsemaster's Saddle (Mount)",
+    "pcg_path": "/tmp/e5rem/skill-pcg/horsemaster_s_saddle_mount.pcg",
+    "ftl_path": "/tmp/e5rem/skill-pcg/horsemaster_s_saddle_mount.txt.ftl",
+    "skill": "Acrobatics",
+    "expected_bonus": 5
+  },
+  {
+    "unit_id": "advanced_race_guide:equipment:halfling_jugglesticks",
+    "slug": "halfling_jugglesticks",
+    "book": "advanced_race_guide",
+    "key": "Halfling Jugglesticks",
+    "pcg_path": "/tmp/e5rem/skill-pcg/halfling_jugglesticks.pcg",
+    "ftl_path": "/tmp/e5rem/skill-pcg/halfling_jugglesticks.txt.ftl",
+    "skill": "Perform (Comedy)",
+    "expected_bonus": 2
+  },
+  {
+    "unit_id": "ultimate_psionics:equipment:leather_of_confined_spaces",
+    "slug": "leather_of_confined_spaces",
+    "book": "ultimate_psionics",
+    "key": "Leather of Confined Spaces",
+    "pcg_path": "/tmp/e5rem/skill-pcg/leather_of_confined_spaces.pcg",
+    "ftl_path": "/tmp/e5rem/skill-pcg/leather_of_confined_spaces.txt.ftl",
+    "skill": "Escape Artist",
+    "expected_bonus": 5
+  },
+  {
+    "unit_id": "ultimate_equipment:equipment:ring_of_the_sea_strider",
+    "slug": "ring_of_the_sea_strider",
+    "book": "ultimate_equipment",
+    "key": "Ring of the Sea Strider",
+    "pcg_path": "/tmp/e5rem/skill-pcg/ring_of_the_sea_strider.pcg",
+    "ftl_path": "/tmp/e5rem/skill-pcg/ring_of_the_sea_strider.txt.ftl",
+    "skill": "Swim",
+    "expected_bonus": 8
+  },
+  {
+    "unit_id": "core_rulebook:equipment:ring_of_swimming",
+    "slug": "ring_of_swimming",
+    "book": "core_rulebook",
+    "key": "Ring of Swimming",
+    "pcg_path": "/tmp/e5rem/skill-pcg/ring_of_swimming.pcg",
+    "ftl_path": "/tmp/e5rem/skill-pcg/ring_of_swimming.txt.ftl",
+    "skill": "Swim",
+    "expected_bonus": 5
+  },
+  {
+    "unit_id": "ultimate_equipment:equipment:crown_of_conquest",
+    "slug": "crown_of_conquest",
+    "book": "ultimate_equipment",
+    "key": "Crown of Conquest",
+    "pcg_path": "/tmp/e5rem/skill-pcg/crown_of_conquest.pcg",
+    "ftl_path": "/tmp/e5rem/skill-pcg/crown_of_conquest.txt.ftl",
+    "skill": "Intimidate",
+    "expected_bonus": 4
+  },
+  {
+    "unit_id": "ultimate_equipment:equipment:rod_trap_stealer_s",
+    "slug": "rod_trap_stealer_s",
+    "book": "ultimate_equipment",
+    "key": "Rod (Trap-Stealer's)",
+    "pcg_path": "/tmp/e5rem/skill-pcg/rod_trap_stealer_s.pcg",
+    "ftl_path": "/tmp/e5rem/skill-pcg/rod_trap_stealer_s.txt.ftl",
+    "skill": "Disable Device",
+    "expected_bonus": 4
+  },
+  {
+    "unit_id": "ultimate_equipment:equipment:heritage_book",
+    "slug": "heritage_book",
+    "book": "ultimate_equipment",
+    "key": "Heritage Book",
+    "pcg_path": "/tmp/e5rem/skill-pcg/heritage_book.pcg",
+    "ftl_path": "/tmp/e5rem/skill-pcg/heritage_book.txt.ftl",
+    "skill": "Knowledge (Nobility)",
+    "expected_bonus": 2
+  },
+  {
+    "unit_id": "ultimate_equipment:equipment:lenses_of_detection",
+    "slug": "lenses_of_detection",
+    "book": "ultimate_equipment",
+    "key": "Lenses of Detection",
+    "pcg_path": "/tmp/e5rem/skill-pcg/lenses_of_detection.pcg",
+    "ftl_path": "/tmp/e5rem/skill-pcg/lenses_of_detection.txt.ftl",
+    "skill": "Perception",
+    "expected_bonus": 5
+  },
+  {
+    "unit_id": "advanced_players_guide:equipment:alchemist_s_lab_portable",
+    "slug": "alchemist_s_lab_portable",
+    "book": "advanced_players_guide",
+    "key": "Alchemist's Lab (Portable)",
+    "pcg_path": "/tmp/e5rem/skill-pcg/alchemist_s_lab_portable.pcg",
+    "ftl_path": "/tmp/e5rem/skill-pcg/alchemist_s_lab_portable.txt.ftl",
+    "skill": "Craft (Alchemy)",
+    "expected_bonus": 2
+  },
+  {
+    "unit_id": "core_rulebook:equipment:boots_of_elvenkind",
+    "slug": "boots_of_elvenkind",
+    "book": "core_rulebook",
+    "key": "Boots of Elvenkind",
+    "pcg_path": "/tmp/e5rem/skill-pcg/boots_of_elvenkind.pcg",
+    "ftl_path": "/tmp/e5rem/skill-pcg/boots_of_elvenkind.txt.ftl",
+    "skill": "Acrobatics",
+    "expected_bonus": 5
+  },
+  {
+    "unit_id": "ultimate_equipment:equipment:stalker_s_mask",
+    "slug": "stalker_s_mask",
+    "book": "ultimate_equipment",
+    "key": "Stalker's Mask",
+    "pcg_path": "/tmp/e5rem/skill-pcg/stalker_s_mask.pcg",
+    "ftl_path": "/tmp/e5rem/skill-pcg/stalker_s_mask.txt.ftl",
+    "skill": "Stealth",
+    "expected_bonus": 5
+  },
+  {
+    "unit_id": "core_rulebook:equipment:alchemist_s_lab",
+    "slug": "alchemist_s_lab",
+    "book": "core_rulebook",
+    "key": "Alchemist's Lab",
+    "pcg_path": "/tmp/e5rem/skill-pcg/alchemist_s_lab.pcg",
+    "ftl_path": "/tmp/e5rem/skill-pcg/alchemist_s_lab.txt.ftl",
+    "skill": "Craft (Alchemy)",
+    "expected_bonus": 2
+  },
+  {
+    "unit_id": "ultimate_equipment:equipment:seducer_s_bane",
+    "slug": "seducer_s_bane",
+    "book": "ultimate_equipment",
+    "key": "Seducer's Bane",
+    "pcg_path": "/tmp/e5rem/skill-pcg/seducer_s_bane.pcg",
+    "ftl_path": "/tmp/e5rem/skill-pcg/seducer_s_bane.txt.ftl",
+    "skill": "Sense Motive",
+    "expected_bonus": 5
+  },
+  {
+    "unit_id": "ultimate_psionics:equipment:eyes_of_expanded_vision",
+    "slug": "eyes_of_expanded_vision",
+    "book": "ultimate_psionics",
+    "key": "Eyes of Expanded Vision",
+    "pcg_path": "/tmp/e5rem/skill-pcg/eyes_of_expanded_vision.pcg",
+    "ftl_path": "/tmp/e5rem/skill-pcg/eyes_of_expanded_vision.txt.ftl",
+    "skill": "Perception",
+    "expected_bonus": 1
+  },
+  {
+    "unit_id": "ultimate_equipment:equipment:xorn_robe",
+    "slug": "xorn_robe",
+    "book": "ultimate_equipment",
+    "key": "Xorn Robe",
+    "pcg_path": "/tmp/e5rem/skill-pcg/xorn_robe.pcg",
+    "ftl_path": "/tmp/e5rem/skill-pcg/xorn_robe.txt.ftl",
+    "skill": "Perception",
+    "expected_bonus": 5
+  },
+  {
+    "unit_id": "ultimate_equipment:equipment:mask_of_a_thousand_tomes",
+    "slug": "mask_of_a_thousand_tomes",
+    "book": "ultimate_equipment",
+    "key": "Mask of a Thousand Tomes",
+    "pcg_path": "/tmp/e5rem/skill-pcg/mask_of_a_thousand_tomes.pcg",
+    "ftl_path": "/tmp/e5rem/skill-pcg/mask_of_a_thousand_tomes.txt.ftl",
+    "skill": "TYPE=Knowledge",
+    "expected_bonus": 10
+  },
+  {
+    "unit_id": "core_rulebook:equipment:ioun_stone_pale_green_prism",
+    "slug": "ioun_stone_pale_green_prism",
+    "book": "core_rulebook",
+    "key": "Ioun Stone (Pale green Prism)",
+    "pcg_path": "/tmp/e5rem/skill-pcg/ioun_stone_pale_green_prism.pcg",
+    "ftl_path": "/tmp/e5rem/skill-pcg/ioun_stone_pale_green_prism.txt.ftl",
+    "skill": "TYPE.Base",
+    "expected_bonus": 1
+  },
+  {
+    "unit_id": "core_rulebook:equipment:healer_s_kit",
+    "slug": "healer_s_kit",
+    "book": "core_rulebook",
+    "key": "Healer's Kit",
+    "pcg_path": "/tmp/e5rem/skill-pcg/healer_s_kit.pcg",
+    "ftl_path": "/tmp/e5rem/skill-pcg/healer_s_kit.txt.ftl",
+    "skill": "Heal",
+    "expected_bonus": 2
+  },
+  {
+    "unit_id": "ultimate_equipment:equipment:horsemaster_s_saddle",
+    "slug": "horsemaster_s_saddle",
+    "book": "ultimate_equipment",
+    "key": "Horsemaster's Saddle",
+    "pcg_path": "/tmp/e5rem/skill-pcg/horsemaster_s_saddle.pcg",
+    "ftl_path": "/tmp/e5rem/skill-pcg/horsemaster_s_saddle.txt.ftl",
+    "skill": "Ride",
+    "expected_bonus": 5
+  },
+  {
+    "unit_id": "ultimate_equipment:equipment:boots_of_the_mastodon",
+    "slug": "boots_of_the_mastodon",
+    "book": "ultimate_equipment",
+    "key": "Boots of the Mastodon",
+    "pcg_path": "/tmp/e5rem/skill-pcg/boots_of_the_mastodon.pcg",
+    "ftl_path": "/tmp/e5rem/skill-pcg/boots_of_the_mastodon.txt.ftl",
+    "skill": "Stealth",
+    "expected_bonus": -2
+  },
+  {
+    "unit_id": "ultimate_equipment:equipment:trapspringer_s_gloves",
+    "slug": "trapspringer_s_gloves",
+    "book": "ultimate_equipment",
+    "key": "Trapspringer's Gloves",
+    "pcg_path": "/tmp/e5rem/skill-pcg/trapspringer_s_gloves.pcg",
+    "ftl_path": "/tmp/e5rem/skill-pcg/trapspringer_s_gloves.txt.ftl",
+    "skill": "Disable Device",
+    "expected_bonus": 5
+  },
+  {
+    "unit_id": "ultimate_equipment:equipment:healer_s_gloves",
+    "slug": "healer_s_gloves",
+    "book": "ultimate_equipment",
+    "key": "Healer's Gloves",
+    "pcg_path": "/tmp/e5rem/skill-pcg/healer_s_gloves.pcg",
+    "ftl_path": "/tmp/e5rem/skill-pcg/healer_s_gloves.txt.ftl",
+    "skill": "Heal",
+    "expected_bonus": 5
+  },
+  {
+    "unit_id": "inner_sea_gods:equipment:silent_blade_vest",
+    "slug": "silent_blade_vest",
+    "book": "inner_sea_gods",
+    "key": "Silent Blade Vest",
+    "pcg_path": "/tmp/e5rem/skill-pcg/silent_blade_vest.pcg",
+    "ftl_path": "/tmp/e5rem/skill-pcg/silent_blade_vest.txt.ftl",
+    "skill": "Sleight of Hand",
+    "expected_bonus": 5
+  },
+  {
+    "unit_id": "advanced_class_guide:equipment:hunter_s_sight",
+    "slug": "hunter_s_sight",
+    "book": "advanced_class_guide",
+    "key": "Hunter's Sight",
+    "pcg_path": "/tmp/e5rem/skill-pcg/hunter_s_sight.pcg",
+    "ftl_path": "/tmp/e5rem/skill-pcg/hunter_s_sight.txt.ftl",
+    "skill": "Perception",
+    "expected_bonus": -2
+  },
+  {
+    "unit_id": "ultimate_psionics:equipment:crystal_mask_discernment",
+    "slug": "crystal_mask_discernment",
+    "book": "ultimate_psionics",
+    "key": "Crystal Mask (Discernment)",
+    "pcg_path": "/tmp/e5rem/skill-pcg/crystal_mask_discernment.pcg",
+    "ftl_path": "/tmp/e5rem/skill-pcg/crystal_mask_discernment.txt.ftl",
+    "skill": "Sense Motive",
+    "expected_bonus": 10
+  },
+  {
+    "unit_id": "core_rulebook:equipment:cloak_of_the_bat",
+    "slug": "cloak_of_the_bat",
+    "book": "core_rulebook",
+    "key": "Cloak of the Bat",
+    "pcg_path": "/tmp/e5rem/skill-pcg/cloak_of_the_bat.pcg",
+    "ftl_path": "/tmp/e5rem/skill-pcg/cloak_of_the_bat.txt.ftl",
+    "skill": "Stealth",
+    "expected_bonus": 5
+  },
+  {
+    "unit_id": "ultimate_psionics:equipment:crystal_mask_detection",
+    "slug": "crystal_mask_detection",
+    "book": "ultimate_psionics",
+    "key": "Crystal Mask (Detection)",
+    "pcg_path": "/tmp/e5rem/skill-pcg/crystal_mask_detection.pcg",
+    "ftl_path": "/tmp/e5rem/skill-pcg/crystal_mask_detection.txt.ftl",
+    "skill": "Perception",
+    "expected_bonus": 10
+  },
+  {
+    "unit_id": "core_rulebook:equipment:vest_of_escape",
+    "slug": "vest_of_escape",
+    "book": "core_rulebook",
+    "key": "Vest of Escape",
+    "pcg_path": "/tmp/e5rem/skill-pcg/vest_of_escape.pcg",
+    "ftl_path": "/tmp/e5rem/skill-pcg/vest_of_escape.txt.ftl",
+    "skill": "Disable Device",
+    "expected_bonus": 4
+  },
+  {
+    "unit_id": "core_rulebook:equipment:disguise_kit",
+    "slug": "disguise_kit",
+    "book": "core_rulebook",
+    "key": "Disguise Kit",
+    "pcg_path": "/tmp/e5rem/skill-pcg/disguise_kit.pcg",
+    "ftl_path": "/tmp/e5rem/skill-pcg/disguise_kit.txt.ftl",
+    "skill": "Disguise",
+    "expected_bonus": 2
+  },
+  {
+    "unit_id": "ultimate_psionics:equipment:psychoactive_skin_chameleon",
+    "slug": "psychoactive_skin_chameleon",
+    "book": "ultimate_psionics",
+    "key": "Psychoactive Skin (Chameleon)",
+    "pcg_path": "/tmp/e5rem/skill-pcg/psychoactive_skin_chameleon.pcg",
+    "ftl_path": "/tmp/e5rem/skill-pcg/psychoactive_skin_chameleon.txt.ftl",
+    "skill": "Stealth",
+    "expected_bonus": 10
+  },
+  {
+    "unit_id": "ultimate_equipment:equipment:headband_of_stupidity",
+    "slug": "headband_of_stupidity",
+    "book": "ultimate_equipment",
+    "key": "Headband of Stupidity",
+    "pcg_path": "/tmp/e5rem/skill-pcg/headband_of_stupidity.pcg",
+    "ftl_path": "/tmp/e5rem/skill-pcg/headband_of_stupidity.txt.ftl",
+    "skill": "TYPE.Knowledge",
+    "expected_bonus": -2
+  },
+  {
+    "unit_id": "advanced_players_guide:equipment:cauldron_of_brewing",
+    "slug": "cauldron_of_brewing",
+    "book": "advanced_players_guide",
+    "key": "Cauldron of Brewing",
+    "pcg_path": "/tmp/e5rem/skill-pcg/cauldron_of_brewing.pcg",
+    "ftl_path": "/tmp/e5rem/skill-pcg/cauldron_of_brewing.txt.ftl",
+    "skill": "Craft (Alchemy)",
+    "expected_bonus": 5
+  },
+  {
+    "unit_id": "ultimate_equipment:equipment:headband_of_counterspelling",
+    "slug": "headband_of_counterspelling",
+    "book": "ultimate_equipment",
+    "key": "Headband of Counterspelling",
+    "pcg_path": "/tmp/e5rem/skill-pcg/headband_of_counterspelling.pcg",
+    "ftl_path": "/tmp/e5rem/skill-pcg/headband_of_counterspelling.txt.ftl",
+    "skill": "Spellcraft",
+    "expected_bonus": 5
+  },
+  {
+    "unit_id": "ultimate_psionics:equipment:crystal_mask_dread",
+    "slug": "crystal_mask_dread",
+    "book": "ultimate_psionics",
+    "key": "Crystal Mask (Dread)",
+    "pcg_path": "/tmp/e5rem/skill-pcg/crystal_mask_dread.pcg",
+    "ftl_path": "/tmp/e5rem/skill-pcg/crystal_mask_dread.txt.ftl",
+    "skill": "Intimidate",
+    "expected_bonus": 10
+  },
+  {
+    "unit_id": "ultimate_equipment:equipment:prestidigitator_s_cloak",
+    "slug": "prestidigitator_s_cloak",
+    "book": "ultimate_equipment",
+    "key": "Prestidigitator's Cloak",
+    "pcg_path": "/tmp/e5rem/skill-pcg/prestidigitator_s_cloak.pcg",
+    "ftl_path": "/tmp/e5rem/skill-pcg/prestidigitator_s_cloak.txt.ftl",
+    "skill": "Sleight of Hand",
+    "expected_bonus": 8
+  },
+  {
+    "unit_id": "ultimate_equipment:equipment:gloves_of_larceny",
+    "slug": "gloves_of_larceny",
+    "book": "ultimate_equipment",
+    "key": "Gloves of Larceny",
+    "pcg_path": "/tmp/e5rem/skill-pcg/gloves_of_larceny.pcg",
+    "ftl_path": "/tmp/e5rem/skill-pcg/gloves_of_larceny.txt.ftl",
+    "skill": "Sleight of Hand",
+    "expected_bonus": 5
+  },
+  {
+    "unit_id": "ultimate_equipment:equipment:ring_of_tactical_precision",
+    "slug": "ring_of_tactical_precision",
+    "book": "ultimate_equipment",
+    "key": "Ring of Tactical Precision",
+    "pcg_path": "/tmp/e5rem/skill-pcg/ring_of_tactical_precision.pcg",
+    "ftl_path": "/tmp/e5rem/skill-pcg/ring_of_tactical_precision.txt.ftl",
+    "skill": "Profession (Soldier)",
+    "expected_bonus": 5
+  },
+  {
+    "unit_id": "ultimate_psionics:equipment:meld_stone_alchemist",
+    "slug": "meld_stone_alchemist",
+    "book": "ultimate_psionics",
+    "key": "Meld Stone (Alchemist)",
+    "pcg_path": "/tmp/e5rem/skill-pcg/meld_stone_alchemist.pcg",
+    "ftl_path": "/tmp/e5rem/skill-pcg/meld_stone_alchemist.txt.ftl",
+    "skill": "Craft (Alchemy)",
+    "expected_bonus": 8
+  },
+  {
+    "unit_id": "advanced_race_guide:equipment:training_harness",
+    "slug": "training_harness",
+    "book": "advanced_race_guide",
+    "key": "Training Harness",
+    "pcg_path": "/tmp/e5rem/skill-pcg/training_harness.pcg",
+    "ftl_path": "/tmp/e5rem/skill-pcg/training_harness.txt.ftl",
+    "skill": "Handle Animal",
+    "expected_bonus": 2
+  },
+  {
+    "unit_id": "ultimate_equipment:equipment:serpent_belt",
+    "slug": "serpent_belt",
+    "book": "ultimate_equipment",
+    "key": "Serpent Belt",
+    "pcg_path": "/tmp/e5rem/skill-pcg/serpent_belt.pcg",
+    "ftl_path": "/tmp/e5rem/skill-pcg/serpent_belt.txt.ftl",
+    "skill": "Escape Artist",
+    "expected_bonus": 2
+  },
+  {
+    "unit_id": "ultimate_psionics:equipment:ring_self_sufficiency",
+    "slug": "ring_self_sufficiency",
+    "book": "ultimate_psionics",
+    "key": "Ring (Self Sufficiency)",
+    "pcg_path": "/tmp/e5rem/skill-pcg/ring_self_sufficiency.pcg",
+    "ftl_path": "/tmp/e5rem/skill-pcg/ring_self_sufficiency.txt.ftl",
+    "skill": "Autohypnosis",
+    "expected_bonus": 10
+  },
+  {
+    "unit_id": "core_rulebook:equipment:cloak_of_elvenkind",
+    "slug": "cloak_of_elvenkind",
+    "book": "core_rulebook",
+    "key": "Cloak of Elvenkind",
+    "pcg_path": "/tmp/e5rem/skill-pcg/cloak_of_elvenkind.pcg",
+    "ftl_path": "/tmp/e5rem/skill-pcg/cloak_of_elvenkind.txt.ftl",
+    "skill": "Stealth",
+    "expected_bonus": 5
+  },
+  {
+    "unit_id": "ultimate_psionics:equipment:shadow_shirt",
+    "slug": "shadow_shirt",
+    "book": "ultimate_psionics",
+    "key": "Shadow Shirt",
+    "pcg_path": "/tmp/e5rem/skill-pcg/shadow_shirt.pcg",
+    "ftl_path": "/tmp/e5rem/skill-pcg/shadow_shirt.txt.ftl",
+    "skill": "Stealth",
+    "expected_bonus": 5
+  },
+  {
+    "unit_id": "core_rulebook:equipment:climber_s_kit",
+    "slug": "climber_s_kit",
+    "book": "core_rulebook",
+    "key": "Climber's Kit",
+    "pcg_path": "/tmp/e5rem/skill-pcg/climber_s_kit.pcg",
+    "ftl_path": "/tmp/e5rem/skill-pcg/climber_s_kit.txt.ftl",
+    "skill": "Climb",
+    "expected_bonus": 2
+  },
+  {
+    "unit_id": "ultimate_equipment:equipment:serpent_belt_greater",
+    "slug": "serpent_belt_greater",
+    "book": "ultimate_equipment",
+    "key": "Serpent Belt (Greater)",
+    "pcg_path": "/tmp/e5rem/skill-pcg/serpent_belt_greater.pcg",
+    "ftl_path": "/tmp/e5rem/skill-pcg/serpent_belt_greater.txt.ftl",
+    "skill": "Escape Artist",
+    "expected_bonus": 2
+  },
+  {
+    "unit_id": "ultimate_equipment:equipment:needles_of_fleshgraving",
+    "slug": "needles_of_fleshgraving",
+    "book": "ultimate_equipment",
+    "key": "Needles of Fleshgraving",
+    "pcg_path": "/tmp/e5rem/skill-pcg/needles_of_fleshgraving.pcg",
+    "ftl_path": "/tmp/e5rem/skill-pcg/needles_of_fleshgraving.txt.ftl",
+    "skill": "Craft (Tattoos)",
+    "expected_bonus": 5
+  },
+  {
+    "unit_id": "ultimate_wilderness:equipment:guiding_scarab",
+    "slug": "guiding_scarab",
+    "book": "ultimate_wilderness",
+    "key": "Guiding Scarab",
+    "pcg_path": "/tmp/e5rem/skill-pcg/guiding_scarab.pcg",
+    "ftl_path": "/tmp/e5rem/skill-pcg/guiding_scarab.txt.ftl",
+    "skill": "Knowledge (geography)",
+    "expected_bonus": 5
+  },
+  {
+    "unit_id": "ultimate_equipment:equipment:hunter_s_band",
+    "slug": "hunter_s_band",
+    "book": "ultimate_equipment",
+    "key": "Hunter's Band",
+    "pcg_path": "/tmp/e5rem/skill-pcg/hunter_s_band.pcg",
+    "ftl_path": "/tmp/e5rem/skill-pcg/hunter_s_band.txt.ftl",
+    "skill": "Survival",
+    "expected_bonus": 5
+  },
+  {
+    "unit_id": "core_rulebook:equipment:ring_of_climbing",
+    "slug": "ring_of_climbing",
+    "book": "core_rulebook",
+    "key": "Ring of Climbing",
+    "pcg_path": "/tmp/e5rem/skill-pcg/ring_of_climbing.pcg",
+    "ftl_path": "/tmp/e5rem/skill-pcg/ring_of_climbing.txt.ftl",
+    "skill": "Climb",
+    "expected_bonus": 5
+  },
+  {
+    "unit_id": "ultimate_equipment:equipment:maw_of_the_wyrm",
+    "slug": "maw_of_the_wyrm",
+    "book": "ultimate_equipment",
+    "key": "Maw of the Wyrm",
+    "pcg_path": "/tmp/e5rem/skill-pcg/maw_of_the_wyrm.pcg",
+    "ftl_path": "/tmp/e5rem/skill-pcg/maw_of_the_wyrm.txt.ftl",
+    "skill": "Intimidate",
+    "expected_bonus": 4
+  },
+  {
+    "unit_id": "ultimate_psionics:equipment:crystal_mask_psionic_craft",
+    "slug": "crystal_mask_psionic_craft",
+    "book": "ultimate_psionics",
+    "key": "Crystal Mask (Psionic Craft)",
+    "pcg_path": "/tmp/e5rem/skill-pcg/crystal_mask_psionic_craft.pcg",
+    "ftl_path": "/tmp/e5rem/skill-pcg/crystal_mask_psionic_craft.txt.ftl",
+    "skill": "Spellcraft",
+    "expected_bonus": 10
+  },
+  {
+    "unit_id": "ultimate_equipment:equipment:staff_of_accompaniment",
+    "slug": "staff_of_accompaniment",
+    "book": "ultimate_equipment",
+    "key": "Staff of Accompaniment",
+    "pcg_path": "/tmp/e5rem/skill-pcg/staff_of_accompaniment.pcg",
+    "ftl_path": "/tmp/e5rem/skill-pcg/staff_of_accompaniment.txt.ftl",
+    "skill": "TYPE=Perform",
+    "expected_bonus": 2
+  },
+  {
+    "unit_id": "ultimate_equipment:equipment:filter_hood",
+    "slug": "filter_hood",
+    "book": "ultimate_equipment",
+    "key": "Filter Hood",
+    "pcg_path": "/tmp/e5rem/skill-pcg/filter_hood.pcg",
+    "ftl_path": "/tmp/e5rem/skill-pcg/filter_hood.txt.ftl",
+    "skill": "Perception",
+    "expected_bonus": -2
+  },
+  {
+    "unit_id": "inner_sea_gods:equipment:featherscale_cloak",
+    "slug": "featherscale_cloak",
+    "book": "inner_sea_gods",
+    "key": "Featherscale Cloak",
+    "pcg_path": "/tmp/e5rem/skill-pcg/featherscale_cloak.pcg",
+    "ftl_path": "/tmp/e5rem/skill-pcg/featherscale_cloak.txt.ftl",
+    "skill": "Swim",
+    "expected_bonus": 5
+  },
+  {
+    "unit_id": "ultimate_equipment:equipment:aquatic_cummerbund",
+    "slug": "aquatic_cummerbund",
+    "book": "ultimate_equipment",
+    "key": "Aquatic Cummerbund",
+    "pcg_path": "/tmp/e5rem/skill-pcg/aquatic_cummerbund.pcg",
+    "ftl_path": "/tmp/e5rem/skill-pcg/aquatic_cummerbund.txt.ftl",
+    "skill": "Swim",
+    "expected_bonus": 4
+  },
+  {
+    "unit_id": "core_rulebook:equipment:ring_of_swimming_improved",
+    "slug": "ring_of_swimming_improved",
+    "book": "core_rulebook",
+    "key": "Ring of Swimming (Improved)",
+    "pcg_path": "/tmp/e5rem/skill-pcg/ring_of_swimming_improved.pcg",
+    "ftl_path": "/tmp/e5rem/skill-pcg/ring_of_swimming_improved.txt.ftl",
+    "skill": "Swim",
+    "expected_bonus": 10
+  },
+  {
+    "unit_id": "core_rulebook:equipment:ring_of_climbing_improved",
+    "slug": "ring_of_climbing_improved",
+    "book": "core_rulebook",
+    "key": "Ring of Climbing (Improved)",
+    "pcg_path": "/tmp/e5rem/skill-pcg/ring_of_climbing_improved.pcg",
+    "ftl_path": "/tmp/e5rem/skill-pcg/ring_of_climbing_improved.txt.ftl",
+    "skill": "Climb",
+    "expected_bonus": 10
+  },
+  {
+    "unit_id": "ultimate_equipment:equipment:eyes_of_keen_sight",
+    "slug": "eyes_of_keen_sight",
+    "book": "ultimate_equipment",
+    "key": "Eyes of Keen Sight",
+    "pcg_path": "/tmp/e5rem/skill-pcg/eyes_of_keen_sight.pcg",
+    "ftl_path": "/tmp/e5rem/skill-pcg/eyes_of_keen_sight.txt.ftl",
+    "skill": "Perception",
+    "expected_bonus": 2
+  },
+  {
+    "unit_id": "ultimate_psionics:equipment:third_eye_aware",
+    "slug": "third_eye_aware",
+    "book": "ultimate_psionics",
+    "key": "Third Eye (Aware)",
+    "pcg_path": "/tmp/e5rem/skill-pcg/third_eye_aware.pcg",
+    "ftl_path": "/tmp/e5rem/skill-pcg/third_eye_aware.txt.ftl",
+    "skill": "Perception",
+    "expected_bonus": 10
+  },
+  {
+    "unit_id": "ultimate_psionics:equipment:psychoactive_skin_spider",
+    "slug": "psychoactive_skin_spider",
+    "book": "ultimate_psionics",
+    "key": "Psychoactive Skin (Spider)",
+    "pcg_path": "/tmp/e5rem/skill-pcg/psychoactive_skin_spider.pcg",
+    "ftl_path": "/tmp/e5rem/skill-pcg/psychoactive_skin_spider.txt.ftl",
+    "skill": "Climb",
+    "expected_bonus": 20
+  },
+  {
+    "unit_id": "ultimate_equipment:equipment:veterinarian_s_kit",
+    "slug": "veterinarian_s_kit",
+    "book": "ultimate_equipment",
+    "key": "Veterinarian's Kit",
+    "pcg_path": "/tmp/e5rem/skill-pcg/veterinarian_s_kit.pcg",
+    "ftl_path": "/tmp/e5rem/skill-pcg/veterinarian_s_kit.txt.ftl",
+    "skill": "Heal",
+    "expected_bonus": 1
+  },
+  {
+    "unit_id": "advanced_race_guide:equipment:living_garments",
+    "slug": "living_garments",
+    "book": "advanced_race_guide",
+    "key": "Living Garments",
+    "pcg_path": "/tmp/e5rem/skill-pcg/living_garments.pcg",
+    "ftl_path": "/tmp/e5rem/skill-pcg/living_garments.txt.ftl",
+    "skill": "Diplomacy",
+    "expected_bonus": 5
+  },
+  {
+    "unit_id": "ultimate_psionics:equipment:companion_stone_diplomacy",
+    "slug": "companion_stone_diplomacy",
+    "book": "ultimate_psionics",
+    "key": "Companion Stone (Diplomacy)",
+    "pcg_path": "/tmp/e5rem/skill-pcg/companion_stone_diplomacy.pcg",
+    "ftl_path": "/tmp/e5rem/skill-pcg/companion_stone_diplomacy.txt.ftl",
+    "skill": "Diplomacy",
+    "expected_bonus": 4
+  },
+  {
+    "unit_id": "inner_sea_gods:equipment:ring_of_serene_contortions",
+    "slug": "ring_of_serene_contortions",
+    "book": "inner_sea_gods",
+    "key": "Ring Of Serene Contortions",
+    "pcg_path": "/tmp/e5rem/skill-pcg/ring_of_serene_contortions.pcg",
+    "ftl_path": "/tmp/e5rem/skill-pcg/ring_of_serene_contortions.txt.ftl",
+    "skill": "Escape Artist",
+    "expected_bonus": 2
+  },
+  {
+    "unit_id": "ultimate_equipment:equipment:gambler_s_kit_cheating",
+    "slug": "gambler_s_kit_cheating",
+    "book": "ultimate_equipment",
+    "key": "Gambler's Kit (Cheating)",
+    "pcg_path": "/tmp/e5rem/skill-pcg/gambler_s_kit_cheating.pcg",
+    "ftl_path": "/tmp/e5rem/skill-pcg/gambler_s_kit_cheating.txt.ftl",
+    "skill": "Profession (Gambler)",
+    "expected_bonus": 4
+  },
+  {
+    "unit_id": "ultimate_psionics:equipment:meld_stone_inflitrator",
+    "slug": "meld_stone_inflitrator",
+    "book": "ultimate_psionics",
+    "key": "Meld Stone (Inflitrator)",
+    "pcg_path": "/tmp/e5rem/skill-pcg/meld_stone_inflitrator.pcg",
+    "ftl_path": "/tmp/e5rem/skill-pcg/meld_stone_inflitrator.txt.ftl",
+    "skill": "Bluff",
+    "expected_bonus": 8
+  },
+  {
+    "unit_id": "ultimate_equipment:equipment:claws_of_the_ice_bear",
+    "slug": "claws_of_the_ice_bear",
+    "book": "ultimate_equipment",
+    "key": "Claws of the Ice Bear",
+    "pcg_path": "/tmp/e5rem/skill-pcg/claws_of_the_ice_bear.pcg",
+    "ftl_path": "/tmp/e5rem/skill-pcg/claws_of_the_ice_bear.txt.ftl",
+    "skill": "Climb",
+    "expected_bonus": 2
+  },
+  {
+    "unit_id": "ultimate_psionics:equipment:crystal_mask_insightful_detection",
+    "slug": "crystal_mask_insightful_detection",
+    "book": "ultimate_psionics",
+    "key": "Crystal Mask (Insightful Detection)",
+    "pcg_path": "/tmp/e5rem/skill-pcg/crystal_mask_insightful_detection.pcg",
+    "ftl_path": "/tmp/e5rem/skill-pcg/crystal_mask_insightful_detection.txt.ftl",
+    "skill": "Perception",
+    "expected_bonus": 9
+  },
+  {
+    "unit_id": "ultimate_equipment:equipment:bell_net",
+    "slug": "bell_net",
+    "book": "ultimate_equipment",
+    "key": "Bell Net",
+    "pcg_path": "/tmp/e5rem/skill-pcg/bell_net.pcg",
+    "ftl_path": "/tmp/e5rem/skill-pcg/bell_net.txt.ftl",
+    "skill": "Stealth",
+    "expected_bonus": -2
+  },
+  {
+    "unit_id": "ultimate_equipment:equipment:scholar_s_ring",
+    "slug": "scholar_s_ring",
+    "book": "ultimate_equipment",
+    "key": "Scholar's Ring",
+    "pcg_path": "/tmp/e5rem/skill-pcg/scholar_s_ring.pcg",
+    "ftl_path": "/tmp/e5rem/skill-pcg/scholar_s_ring.txt.ftl",
+    "skill": "Knowledge (History)",
+    "expected_bonus": 5
+  },
+  {
+    "unit_id": "ultimate_psionics:equipment:psychoactive_skin_nimbleness",
+    "slug": "psychoactive_skin_nimbleness",
+    "book": "ultimate_psionics",
+    "key": "Psychoactive Skin (Nimbleness)",
+    "pcg_path": "/tmp/e5rem/skill-pcg/psychoactive_skin_nimbleness.pcg",
+    "ftl_path": "/tmp/e5rem/skill-pcg/psychoactive_skin_nimbleness.txt.ftl",
+    "skill": "Acrobatics",
+    "expected_bonus": 10
+  },
+  {
+    "unit_id": "inner_sea_gods:equipment:robe_of_the_master_of_masters",
+    "slug": "robe_of_the_master_of_masters",
+    "book": "inner_sea_gods",
+    "key": "Robe Of The Master Of Masters",
+    "pcg_path": "/tmp/e5rem/skill-pcg/robe_of_the_master_of_masters.pcg",
+    "ftl_path": "/tmp/e5rem/skill-pcg/robe_of_the_master_of_masters.txt.ftl",
+    "skill": "Perform (Dance)",
+    "expected_bonus": 2
+  },
+  {
+    "unit_id": "inner_sea_gods:equipment:great_barghest_hero_cloak",
+    "slug": "great_barghest_hero_cloak",
+    "book": "inner_sea_gods",
+    "key": "Great Barghest Hero Cloak",
+    "pcg_path": "/tmp/e5rem/skill-pcg/great_barghest_hero_cloak.pcg",
+    "ftl_path": "/tmp/e5rem/skill-pcg/great_barghest_hero_cloak.txt.ftl",
+    "skill": "Intimidate",
+    "expected_bonus": 2
+  },
+  {
+    "unit_id": "ultimate_equipment:equipment:lion_cloak",
+    "slug": "lion_cloak",
+    "book": "ultimate_equipment",
+    "key": "Lion Cloak",
+    "pcg_path": "/tmp/e5rem/skill-pcg/lion_cloak.pcg",
+    "ftl_path": "/tmp/e5rem/skill-pcg/lion_cloak.txt.ftl",
+    "skill": "Intimidate",
+    "expected_bonus": 2
+  },
+  {
+    "unit_id": "ultimate_equipment:equipment:dead_man_s_headband",
+    "slug": "dead_man_s_headband",
+    "book": "ultimate_equipment",
+    "key": "Dead Man's Headband",
+    "pcg_path": "/tmp/e5rem/skill-pcg/dead_man_s_headband.pcg",
+    "ftl_path": "/tmp/e5rem/skill-pcg/dead_man_s_headband.txt.ftl",
+    "skill": "Intimidate",
+    "expected_bonus": 2
+  },
+  {
+    "unit_id": "ultimate_equipment:equipment:bracers_of_the_glib_entertainer",
+    "slug": "bracers_of_the_glib_entertainer",
+    "book": "ultimate_equipment",
+    "key": "Bracers of the Glib Entertainer",
+    "pcg_path": "/tmp/e5rem/skill-pcg/bracers_of_the_glib_entertainer.pcg",
+    "ftl_path": "/tmp/e5rem/skill-pcg/bracers_of_the_glib_entertainer.txt.ftl",
+    "skill": "TYPE.Perform",
+    "expected_bonus": 5
+  },
+  {
+    "unit_id": "ultimate_equipment:equipment:inquisitor_s_monocle",
+    "slug": "inquisitor_s_monocle",
+    "book": "ultimate_equipment",
+    "key": "Inquisitor's Monocle",
+    "pcg_path": "/tmp/e5rem/skill-pcg/inquisitor_s_monocle.pcg",
+    "ftl_path": "/tmp/e5rem/skill-pcg/inquisitor_s_monocle.txt.ftl",
+    "skill": "Sense Motive",
+    "expected_bonus": 5
+  },
+  {
+    "unit_id": "ultimate_equipment:equipment:rod_escape",
+    "slug": "rod_escape",
+    "book": "ultimate_equipment",
+    "key": "Rod (Escape)",
+    "pcg_path": "/tmp/e5rem/skill-pcg/rod_escape.pcg",
+    "ftl_path": "/tmp/e5rem/skill-pcg/rod_escape.txt.ftl",
+    "skill": "Escape Artist",
+    "expected_bonus": 5
+  },
+  {
+    "unit_id": "occult_adventures:equipment:caduceus_rod",
+    "slug": "caduceus_rod",
+    "book": "occult_adventures",
+    "key": "Caduceus Rod",
+    "pcg_path": "/tmp/e5rem/skill-pcg/caduceus_rod.pcg",
+    "ftl_path": "/tmp/e5rem/skill-pcg/caduceus_rod.txt.ftl",
+    "skill": "Craft (alchemy)",
+    "expected_bonus": 5
+  },
+  {
+    "unit_id": "ultimate_equipment:equipment:cackling_hag_s_blouse",
+    "slug": "cackling_hag_s_blouse",
+    "book": "ultimate_equipment",
+    "key": "Cackling Hag's Blouse",
+    "pcg_path": "/tmp/e5rem/skill-pcg/cackling_hag_s_blouse.pcg",
+    "ftl_path": "/tmp/e5rem/skill-pcg/cackling_hag_s_blouse.txt.ftl",
+    "skill": "Intimidate",
+    "expected_bonus": 2
+  },
+  {
+    "unit_id": "ultimate_equipment:equipment:survival_kit_masterwork",
+    "slug": "survival_kit_masterwork",
+    "book": "ultimate_equipment",
+    "key": "Survival Kit (Masterwork)",
+    "pcg_path": "/tmp/e5rem/skill-pcg/survival_kit_masterwork.pcg",
+    "ftl_path": "/tmp/e5rem/skill-pcg/survival_kit_masterwork.txt.ftl",
+    "skill": "Survival",
+    "expected_bonus": 2
+  },
+  {
+    "unit_id": "inner_sea_gods:equipment:wayfinder_of_zephyrs",
+    "slug": "wayfinder_of_zephyrs",
+    "book": "inner_sea_gods",
+    "key": "Wayfinder Of Zephyrs",
+    "pcg_path": "/tmp/e5rem/skill-pcg/wayfinder_of_zephyrs.pcg",
+    "ftl_path": "/tmp/e5rem/skill-pcg/wayfinder_of_zephyrs.txt.ftl",
+    "skill": "Profession (Sailor)",
+    "expected_bonus": 5
+  },
+  {
+    "unit_id": "core_rulebook:equipment:goggles_of_minute_seeing",
+    "slug": "goggles_of_minute_seeing",
+    "book": "core_rulebook",
+    "key": "Goggles of Minute Seeing",
+    "pcg_path": "/tmp/e5rem/skill-pcg/goggles_of_minute_seeing.pcg",
+    "ftl_path": "/tmp/e5rem/skill-pcg/goggles_of_minute_seeing.txt.ftl",
+    "skill": "Disable Device",
+    "expected_bonus": 5
+  }
+]

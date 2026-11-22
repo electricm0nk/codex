@@ -1,0 +1,76 @@
+{
+  "format": "codex.rules_tables/1",
+  "table": "pathfinder_unchained/rogue_features/class_skills",
+  "licence": {
+    "license": "OGL",
+    "book": "pathfinder_unchained",
+    "screen": "pi_screening::classify_field",
+    "pi_hits": [],
+    "redacted": []
+  },
+  "rows": [
+    {
+      "Named": "Acrobatics"
+    },
+    {
+      "Named": "Appraise"
+    },
+    {
+      "Named": "Bluff"
+    },
+    {
+      "Named": "Climb"
+    },
+    {
+      "Family": "Craft"
+    },
+    {
+      "Named": "Diplomacy"
+    },
+    {
+      "Named": "Disable Device"
+    },
+    {
+      "Named": "Disguise"
+    },
+    {
+      "Named": "Escape Artist"
+    },
+    {
+      "Named": "Intimidate"
+    },
+    {
+      "Named": "Knowledge (Dungeoneering)"
+    },
+    {
+      "Named": "Knowledge (Local)"
+    },
+    {
+      "Named": "Linguistics"
+    },
+    {
+      "Named": "Perception"
+    },
+    {
+      "Family": "Perform"
+    },
+    {
+      "Family": "Profession"
+    },
+    {
+      "Named": "Sense Motive"
+    },
+    {
+      "Named": "Sleight of Hand"
+    },
+    {
+      "Named": "Stealth"
+    },
+    {
+      "Named": "Swim"
+    },
+    {
+      "Named": "Use Magic Device"
+    }
+  ]
+}

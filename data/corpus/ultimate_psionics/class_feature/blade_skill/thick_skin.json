@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Blade Skill ~ Thick Skin",
+    "name": "Thick Skin",
+    "class": "Blade Skill",
+    "description": "You gain +%1 natural armor AC.|FeralHeartThickSkinACBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Blade Skill ~ Thick Skin"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "FeralHeartBladeSkill.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FeralHeartThickSkinACBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain +%1 natural armor AC.|FeralHeartThickSkinACBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|AC|FeralHeartThickSkinACBonus|TYPE=NaturalArmor"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FeralHeartThickSkinACBonus|2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.282"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 890,
+    "record_key": "Blade Skill ~ Thick Skin"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

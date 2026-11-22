@@ -1,0 +1,172 @@
+[
+{
+"id": "sheet-open-for-tabs",
+"status": "green",
+"reason": null
+},
+{
+"id": "sheet-tab-weapons",
+"status": "green",
+"reason": null
+},
+{
+"id": "sheet-tab-defense",
+"status": "green",
+"reason": null
+},
+{
+"id": "sheet-tab-gear",
+"status": "green",
+"reason": null
+},
+{
+"id": "sheet-tab-spells",
+"status": "green",
+"reason": null
+},
+{
+"id": "sheet-tab-pets",
+"status": "green",
+"reason": null
+},
+{
+"id": "sheet-tab-feats",
+"status": "green",
+"reason": null
+},
+{
+"id": "sheet-tab-actions",
+"status": "green",
+"reason": null
+},
+{
+"id": "sheet-action-money-adjust",
+"status": "green",
+"reason": null
+},
+{
+"id": "choices-starfinder-soldier-loadout",
+"status": "green",
+"reason": null
+},
+{
+"id": "build-starfinder-soldier",
+"status": "green",
+"reason": null
+},
+{
+"id": "build-starfinder-mystic",
+"status": "green",
+"reason": null
+},
+{
+"id": "build-starfinder-technomancer",
+"status": "green",
+"reason": null
+},
+{
+"id": "build-starfinder-envoy",
+"status": "green",
+"reason": null
+},
+{
+"id": "sheet-market-open-weapons",
+"status": "red",
+"reason": "target not found: 'Aldric Ironhand (no element named 'Aldric Ironhand')' at row step 2/8 (click \"Aldric Ironhand\")"
+},
+{
+"id": "sheet-market-open-defense",
+"status": "not-run",
+"reason": "not executed"
+},
+{
+"id": "sheet-market-filter-armor",
+"status": "not-run",
+"reason": "not executed"
+},
+{
+"id": "sheet-market-buy-refused",
+"status": "not-run",
+"reason": "not executed"
+},
+{
+"id": "sheet-market-buy",
+"status": "not-run",
+"reason": "not executed"
+},
+{
+"id": "sheet-market-sell",
+"status": "not-run",
+"reason": "not executed"
+},
+{
+"id": "sheet-market-buy-weapon-carried",
+"status": "not-run",
+"reason": "not executed"
+},
+{
+"id": "sheet-market-cashless",
+"status": "not-run",
+"reason": "not executed"
+},
+{
+"id": "sheet-market-enhancement-ac",
+"status": "not-run",
+"reason": "not executed"
+},
+{
+"id": "sheet-market-starfinder-open",
+"status": "not-run",
+"reason": "not executed"
+},
+{
+"id": "sheet-market-starfinder-buy",
+"status": "not-run",
+"reason": "not executed"
+},
+{
+"id": "sheet-market-starfinder-sell",
+"status": "not-run",
+"reason": "not executed"
+},
+{
+"id": "sheet-market-starfinder-cashless",
+"status": "not-run",
+"reason": "not executed"
+},
+{
+"id": "sheet-market-starfinder-refused",
+"status": "not-run",
+"reason": "not executed"
+},
+{
+"id": "sheet-market-cyberpunk-open",
+"status": "not-run",
+"reason": "not executed"
+},
+{
+"id": "sheet-market-cyberpunk-buy",
+"status": "not-run",
+"reason": "not executed"
+},
+{
+"id": "sheet-market-cyberpunk-sell",
+"status": "not-run",
+"reason": "not executed"
+},
+{
+"id": "sheet-market-cyberpunk-refused",
+"status": "not-run",
+"reason": "not executed"
+},
+{
+"id": "sheet-market-cyberpunk-cashless",
+"status": "not-run",
+"reason": "not executed"
+},
+{
+"id": "sheet-market-restore-pathfinder",
+"status": "not-run",
+"reason": "not executed"
+}
+]

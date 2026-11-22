@@ -1,0 +1,445 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-24T03:51:47Z",
+  "data": {
+    "key": "Rogue ~ Class",
+    "name": "Rogue",
+    "class": "Rogue",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Class"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Rogue_CFP_Level|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Pool_Rogue_Class_Selection|0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Rogue Archetype|AUTOMATIC|Archetype Rogue"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Class Skills ~ Rogue|PREVAREQ:Rogue_CF_ClassSkills,0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Class|AUTOMATIC|Rogue ~ Standard Class|!PREABILITY:1,CATEGORY=CLASS,TYPE.AltRogueChoice"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Rogue_CFP_Level|RogueLVL|TYPE=Base"
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "PFS Starting Gold"
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "Starting Gold ~ CRB.REMOVE"
+      },
+      {
+        "key": "!PREALIGN",
+        "value": "CE,NE,LE"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Rogue_CF_UncannyDodge|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Rogue_CF_ImprovedUncannyDodge|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Rogue_CF_SneakAttack|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Rogue_CF_Trapfinding|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Rogue_CF_Evasion|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Rogue_CF_RogueTalents|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Rogue_CF_TrapSense|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Rogue_CF_MasterStrike|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Rogue_CF_ClassSkills|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Rogue_CF_WeaponProficiencies|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Rogue_CF_ArmorProficiencies|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Rogue_CF_TrapSense1|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Rogue_CF_TrapSense2|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Rogue_CF_TrapSense3|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Rogue_CF_TrapSense4|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Rogue_CF_TrapSense5|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Rogue_CF_TrapSense6|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Rogue_CF_AdvancedTalents|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Rogue_CF_RogueTalent2|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Rogue_CF_RogueTalent4|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Rogue_CF_RogueTalent6|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Rogue_CF_RogueTalent8|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Rogue_CF_RogueTalent10|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Rogue_CF_RogueTalent12|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Rogue_CF_RogueTalent14|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Rogue_CF_RogueTalent16|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Rogue_CF_RogueTalent18|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Rogue_CF_RogueTalent20|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Rogue_CF_SneakAttack1|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Rogue_CF_SneakAttack3|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Rogue_CF_SneakAttack5|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Rogue_CF_SneakAttack7|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Rogue_CF_SneakAttack9|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Rogue_CF_SneakAttack11|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Rogue_CF_SneakAttack13|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Rogue_CF_SneakAttack15|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Rogue_CF_SneakAttack17|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Rogue_CF_SneakAttack19|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Rogue_CF_TrapSense1|1|TYPE=Boolean|PREFACT:1,ABILITIES,Rogue_CF_TrapSense1=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Rogue_CF_TrapSense2|1|TYPE=Boolean|PREFACT:1,ABILITIES,Rogue_CF_TrapSense2=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Rogue_CF_TrapSense3|1|TYPE=Boolean|PREFACT:1,ABILITIES,Rogue_CF_TrapSense3=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Rogue_CF_TrapSense4|1|TYPE=Boolean|PREFACT:1,ABILITIES,Rogue_CF_TrapSense4=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Rogue_CF_TrapSense5|1|TYPE=Boolean|PREFACT:1,ABILITIES,Rogue_CF_TrapSense5=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Rogue_CF_TrapSense6|1|TYPE=Boolean|PREFACT:1,ABILITIES,Rogue_CF_TrapSense6=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Rogue_CF_AdvancedTalents|1|TYPE=Boolean|PREFACT:1,ABILITIES,Rogue_CF_AdvancedTalents=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Rogue_CF_RogueTalent2|1|TYPE=Boolean|PREFACT:1,ABILITIES,Rogue_CF_RogueTalent2=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Rogue_CF_RogueTalent4|1|TYPE=Boolean|PREFACT:1,ABILITIES,Rogue_CF_RogueTalent4=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Rogue_CF_RogueTalent6|1|TYPE=Boolean|PREFACT:1,ABILITIES,Rogue_CF_RogueTalent6=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Rogue_CF_RogueTalent8|1|TYPE=Boolean|PREFACT:1,ABILITIES,Rogue_CF_RogueTalent8=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Rogue_CF_RogueTalent10|1|TYPE=Boolean|PREFACT:1,ABILITIES,Rogue_CF_RogueTalent10=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Rogue_CF_RogueTalent12|1|TYPE=Boolean|PREFACT:1,ABILITIES,Rogue_CF_RogueTalent12=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Rogue_CF_RogueTalent14|1|TYPE=Boolean|PREFACT:1,ABILITIES,Rogue_CF_RogueTalent14=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Rogue_CF_RogueTalent16|1|TYPE=Boolean|PREFACT:1,ABILITIES,Rogue_CF_RogueTalent16=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Rogue_CF_RogueTalent18|1|TYPE=Boolean|PREFACT:1,ABILITIES,Rogue_CF_RogueTalent18=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Rogue_CF_RogueTalent20|1|TYPE=Boolean|PREFACT:1,ABILITIES,Rogue_CF_RogueTalent20=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Rogue_CF_SneakAttack1|1|TYPE=Boolean|PREFACT:1,ABILITIES,Rogue_CF_SneakAttack1=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Rogue_CF_SneakAttack3|1|TYPE=Boolean|PREFACT:1,ABILITIES,Rogue_CF_SneakAttack3=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Rogue_CF_SneakAttack5|1|TYPE=Boolean|PREFACT:1,ABILITIES,Rogue_CF_SneakAttack5=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Rogue_CF_SneakAttack7|1|TYPE=Boolean|PREFACT:1,ABILITIES,Rogue_CF_SneakAttack7=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Rogue_CF_SneakAttack9|1|TYPE=Boolean|PREFACT:1,ABILITIES,Rogue_CF_SneakAttack9=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Rogue_CF_SneakAttack11|1|TYPE=Boolean|PREFACT:1,ABILITIES,Rogue_CF_SneakAttack11=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Rogue_CF_SneakAttack13|1|TYPE=Boolean|PREFACT:1,ABILITIES,Rogue_CF_SneakAttack13=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Rogue_CF_SneakAttack15|1|TYPE=Boolean|PREFACT:1,ABILITIES,Rogue_CF_SneakAttack15=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Rogue_CF_SneakAttack17|1|TYPE=Boolean|PREFACT:1,ABILITIES,Rogue_CF_SneakAttack17=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Rogue_CF_SneakAttack19|1|TYPE=Boolean|PREFACT:1,ABILITIES,Rogue_CF_SneakAttack19=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Rogue_CF_UncannyDodge|1|TYPE=Boolean|PREFACT:1,ABILITIES,Rogue_CF_UncannyDodge=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Rogue_CF_ImprovedUncannyDodge|1|TYPE=Boolean|PREFACT:1,ABILITIES,Rogue_CF_ImprovedUncannyDodge=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Rogue_CF_SneakAttack|1|TYPE=Boolean|PREFACT:1,ABILITIES,Rogue_CF_SneakAttack=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Rogue_CF_Trapfinding|1|TYPE=Boolean|PREFACT:1,ABILITIES,Rogue_CF_Trapfinding=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Rogue_CF_Evasion|1|TYPE=Boolean|PREFACT:1,ABILITIES,Rogue_CF_Evasion=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Rogue_CF_RogueTalents|1|TYPE=Boolean|PREFACT:1,ABILITIES,Rogue_CF_RogueTalents=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Rogue_CF_TrapSense|1|TYPE=Boolean|PREFACT:1,ABILITIES,Rogue_CF_TrapSense=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Rogue_CF_MasterStrike|1|TYPE=Boolean|PREFACT:1,ABILITIES,Rogue_CF_MasterStrike=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Rogue_CF_ClassSkills|1|TYPE=Boolean|PREFACT:1,ABILITIES,Rogue_CF_ClassSkills=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Rogue_CF_WeaponProficiencies|1|TYPE=Boolean|PREFACT:1,ABILITIES,Rogue_CF_WeaponProficiencies=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Rogue_CF_ArmorProficiencies|1|TYPE=Boolean|PREFACT:1,ABILITIES,Rogue_CF_ArmorProficiencies=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Rogue_CF_UncannyDodge|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.RogueUncannyDodge"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Rogue_CF_ImprovedUncannyDodge|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.RogueImprovedUncannyDodge"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Rogue_CF_SneakAttack|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.RogueSneakAttack"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Rogue_CF_Trapfinding|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.RogueTrapfinding"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Rogue_CF_Evasion|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.RogueEvasion"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Rogue_CF_RogueTalents|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.RogueTalents"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Rogue_CF_TrapSense|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.RogueTrapSense"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Rogue_CF_MasterStrike|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.RogueMasterStrike"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Rogue_CF_RogueTalent2|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.RogueTalent2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Rogue_CF_RogueTalent4|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.RogueTalent4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Rogue_CF_RogueTalent6|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.RogueTalent6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Rogue_CF_RogueTalent8|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.RogueTalent8"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Rogue_CF_RogueTalent10|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.RogueTalent10"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Rogue_CF_RogueTalent12|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.RogueTalent12"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Rogue_CF_RogueTalent14|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.RogueTalent14"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Rogue_CF_RogueTalent16|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.RogueTalent16"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Rogue_CF_RogueTalent18|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.RogueTalent18"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Rogue_CF_RogueTalent20|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.RogueTalent20"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 106,
+    "record_key": "Rogue ~ Class"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

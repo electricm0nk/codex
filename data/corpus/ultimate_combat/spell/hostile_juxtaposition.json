@@ -1,0 +1,88 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "You create a dimensional link to the target creature. When attacked or the subject of a spell that deals damage to you, you can spend an immediate action to cause yourself and the target creature to teleport and switch places. The target then becomes the target of the triggering attack or spell instead of you. If you fail to teleport out of the area of an effect, that effect might still affect you. If the target creature cannot fit safely into the new space without squeezing, or you try to teleport the target into an occupied space or a space it could not normally stand within, the juxtaposition fails. Further, if the target is unconscious or dead when you attempt to switch places, the juxtaposition fails. Once you have used it to teleport once, this spell is discharged.",
+    "key": "Hostile Juxtaposition",
+    "level": 5,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Sorcerer,Witch,Wizard=5"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, M"
+      },
+      {
+        "key": "DESC",
+        "value": "You create a dimensional link to the target creature. When attacked or the subject of a spell that deals damage to you, you can spend an immediate action to cause yourself and the target creature to teleport and switch places. The target then becomes the target of the triggering attack or spell instead of you. If you fail to teleport out of the area of an effect, that effect might still affect you. If the target creature cannot fit safely into the new space without squeezing, or you try to teleport the target into an occupied space or a space it could not normally stand within, the juxtaposition fails. Further, if the target is unconscious or dead when you attempt to switch places, the juxtaposition fails. Once you have used it to teleport once, this spell is discharged.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "You create a dimensional link with a targeted creature, and switch spots with it.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) rounds or until discharged"
+      },
+      {
+        "key": "FACT",
+        "value": "CompMaterial|(a coin)"
+      },
+      {
+        "key": "RANGE",
+        "value": "Close"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Will negates"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Conjuration"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/ultimateCombat/spells/hostileJuxtaposition.html#_hostile-juxtaposition"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.231"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes"
+      },
+      {
+        "key": "SUBSCHOOL",
+        "value": "Teleportation"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "one creature of your size or smaller"
+      }
+    ],
+    "school": "Conjuration"
+  },
+  "ingested_at": "2026-08-16T12:10:17Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 53,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_spells.lst",
+    "record_key": "Hostile Juxtaposition",
+    "sha256": "b3621f212f8bdde1d0e9a8861c43f7587bb493909a46c372ca0616b37f0706a0"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "derived:range_keyword"
+  ]
+}

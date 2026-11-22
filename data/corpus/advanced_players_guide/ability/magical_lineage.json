@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Trait ~ Magical Lineage",
+    "name": "Magical Lineage",
+    "description": "One of your parents was a gifted spellcaster who not only used metamagic often, but developed many magical items and perhaps even a new spell or two--and you have inherited a fragment of this greatness. When you apply metamagic feats to %1, treat its actual level as 1 lower for determining the spell's final adjusted level.|%LIST",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Trait ~ Magical Lineage"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Trait.BasicTrait.MagicTrait"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Trait ~ Magical Lineage],[PREVAREQ:BypassTraitRestriction,1],[!PREABILITY:1,CATEGORY=Special Ability,TYPE.MagicTrait]"
+      },
+      {
+        "key": "DESC",
+        "value": "One of your parents was a gifted spellcaster who not only used metamagic often, but developed many magical items and perhaps even a new spell or two--and you have inherited a fragment of this greatness. When you apply metamagic feats to %1, treat its actual level as 1 lower for determining the spell's final adjusted level.|%LIST"
+      },
+      {
+        "key": "STACK",
+        "value": "NO"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "NUMCHOICES=1|SPELLS|SPELLTYPE=Arcane|SPELLTYPE=Divine"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Magical Lineage ~ Metamagic"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.329"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities.lst",
+    "sha256": "cd6801105b5c58cc069a49da65453b388503754e3b3731fac1cab813d0fc97a0",
+    "line": 48,
+    "record_key": "Trait ~ Magical Lineage"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

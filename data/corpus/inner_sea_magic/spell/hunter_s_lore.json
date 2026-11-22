@@ -1,0 +1,25 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:46:05Z",
+  "data": {
+    "key": "Hunter's Lore",
+    "school": "Divination",
+    "level": 2,
+    "description": "Inquisitors and rangers alike learned long ago that knowledge of an enemy grants power over that enemy. This spell was created so that almost any enemy could have its vulnerabilities known and exploited. &nl;For the duration of this spell you may spend a full-round action to take 20 on any Knowledge skill checks made to identify a foe's weaknesses, provided the foe in question is within line of sight and provided that you have at least one rank in that particular Knowledge skill. This spell allows you to make untrained Knowledge checks to determine a monster's weaknesses as if you had ranks in that skill, but you cannot take 20 on these checks."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_spells.lst",
+    "sha256": "e1e7d1aab79b5fe0bb7d8ae8f77ac908fbb327e81c81a9482c0da6b673892661",
+    "line": 23,
+    "record_key": "Hunter's Lore"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

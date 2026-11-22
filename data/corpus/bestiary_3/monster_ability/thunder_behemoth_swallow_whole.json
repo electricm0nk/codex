@@ -1,0 +1,55 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Thunder Behemoth ~ Swallow Whole",
+    "delivery": "Extraordinary",
+    "description": "A thunder behemoth has five stomachs and can shunt a swallowed victim into any one of them (usually choosing an empty stomach).",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:thunder_behemoth_swallow_whole",
+    "name": "Swallow Whole",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A thunder behemoth has five stomachs and can shunt a swallowed victim into any one of them (usually choosing an empty stomach)."
+      },
+      {
+        "key": "KEY",
+        "value": "Thunder Behemoth ~ Swallow Whole"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.39"
+      },
+      {
+        "key": "TYPE",
+        "value": "ThunderBehemothRacialAbility.SpecialQuality.Extraordinary"
+      }
+    ],
+    "source_page": "p.39",
+    "traits": [
+      "ThunderBehemothRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T14:09:11Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 494,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Thunder Behemoth ~ Swallow Whole",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

@@ -1,0 +1,9 @@
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.05s
+     Running unittests src/lib.rs (/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/codex-ce0bccb9212d3fe1)
+
+running 1 test
+test rules_core::character_input::spell_selection_rule_id_tests::a_rule_id_spell_selection_keeps_its_whole_id ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 2826 filtered out; finished in 0.00s
+
+exit=0

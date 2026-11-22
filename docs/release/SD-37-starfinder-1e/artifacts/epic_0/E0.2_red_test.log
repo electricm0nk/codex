@@ -1,0 +1,125 @@
+   Compiling version_check v0.9.5
+   Compiling proc-macro2 v1.0.106
+   Compiling unicode-ident v1.0.24
+   Compiling typenum v1.20.1
+   Compiling quote v1.0.46
+   Compiling serde_core v1.0.228
+   Compiling zmij v1.0.23
+   Compiling serde_json v1.0.150
+   Compiling serde v1.0.228
+   Compiling itoa v1.0.18
+   Compiling memchr v2.8.3
+   Compiling generic-array v0.14.7
+   Compiling cfg-if v1.0.4
+   Compiling cpufeatures v0.2.17
+   Compiling syn v2.0.119
+   Compiling block-buffer v0.10.4
+   Compiling crypto-common v0.1.7
+   Compiling digest v0.10.7
+   Compiling sha2 v0.10.9
+   Compiling serde_derive v1.0.228
+   Compiling codex v0.1.0 (/home/ubuntu/workspace/worktrees/codex-sd37-e0-2)
+error[E0425]: cannot find value `SF_PI_TERMS` in this scope
+   --> src/rules_core/pi_screening.rs:969:20
+    |
+969 |         assert_eq!(SF_PI_TERMS.len(), 41);
+    |                    ^^^^^^^^^^^ not found in this scope
+
+error[E0425]: cannot find value `SF_PI_TERMS` in this scope
+   --> src/rules_core/pi_screening.rs:970:21
+    |
+970 |         for term in SF_PI_TERMS {
+    |                     ^^^^^^^^^^^ not found in this scope
+
+error[E0425]: cannot find function `classify_field_sf` in this scope
+   --> src/rules_core/pi_screening.rs:934:54
+    |
+107 | pub fn classify_field(field_name: &str, value: &str) -> (License, Option<String>, Option<String>, String) {
+    | --------------------------------------------------------------------------------------------------------- similarly named function `classify_field` defined here
+...
+934 |         let (license, pi_field, pi_marker, stored) = classify_field_sf("name", text);
+    |                                                      ^^^^^^^^^^^^^^^^^
+    |
+help: a function with a similar name exists
+    |
+934 -         let (license, pi_field, pi_marker, stored) = classify_field_sf("name", text);
+934 +         let (license, pi_field, pi_marker, stored) = classify_field("name", text);
+    |
+
+error[E0425]: cannot find function `classify_field_sf` in this scope
+   --> src/rules_core/pi_screening.rs:946:20
+    |
+107 | pub fn classify_field(field_name: &str, value: &str) -> (License, Option<String>, Option<String>, String) {
+    | --------------------------------------------------------------------------------------------------------- similarly named function `classify_field` defined here
+...
+946 |         assert_eq!(classify_field_sf("name", "Skyfire sword (tactical)").0, License::PiRedacted);
+    |                    ^^^^^^^^^^^^^^^^^
+    |
+help: a function with a similar name exists
+    |
+946 -         assert_eq!(classify_field_sf("name", "Skyfire sword (tactical)").0, License::PiRedacted);
+946 +         assert_eq!(classify_field("name", "Skyfire sword (tactical)").0, License::PiRedacted);
+    |
+
+error[E0425]: cannot find function `classify_field_sf` in this scope
+   --> src/rules_core/pi_screening.rs:947:20
+    |
+107 | pub fn classify_field(field_name: &str, value: &str) -> (License, Option<String>, Option<String>, String) {
+    | --------------------------------------------------------------------------------------------------------- similarly named function `classify_field` defined here
+...
+947 |         assert_eq!(classify_field_sf("description", "via Drift travel").0, License::PiRedacted);
+    |                    ^^^^^^^^^^^^^^^^^
+    |
+help: a function with a similar name exists
+    |
+947 -         assert_eq!(classify_field_sf("description", "via Drift travel").0, License::PiRedacted);
+947 +         assert_eq!(classify_field("description", "via Drift travel").0, License::PiRedacted);
+    |
+
+error[E0425]: cannot find function `classify_field_sf` in this scope
+   --> src/rules_core/pi_screening.rs:955:13
+    |
+107 | pub fn classify_field(field_name: &str, value: &str) -> (License, Option<String>, Option<String>, String) {
+    | --------------------------------------------------------------------------------------------------------- similarly named function `classify_field` defined here
+...
+955 |             classify_field_sf("description", "You travel through hyperspace. EAC +1, KAC +2.");
+    |             ^^^^^^^^^^^^^^^^^
+    |
+help: a function with a similar name exists
+    |
+955 -             classify_field_sf("description", "You travel through hyperspace. EAC +1, KAC +2.");
+955 +             classify_field("description", "You travel through hyperspace. EAC +1, KAC +2.");
+    |
+
+error[E0425]: cannot find function `classify_field_sf` in this scope
+   --> src/rules_core/pi_screening.rs:964:20
+    |
+107 | pub fn classify_field(field_name: &str, value: &str) -> (License, Option<String>, Option<String>, String) {
+    | --------------------------------------------------------------------------------------------------------- similarly named function `classify_field` defined here
+...
+964 |         assert_eq!(classify_field_sf("description", "docked at Absalom Station").0, License::PiRedacted);
+    |                    ^^^^^^^^^^^^^^^^^
+    |
+help: a function with a similar name exists
+    |
+964 -         assert_eq!(classify_field_sf("description", "docked at Absalom Station").0, License::PiRedacted);
+964 +         assert_eq!(classify_field("description", "docked at Absalom Station").0, License::PiRedacted);
+    |
+
+error[E0425]: cannot find function `classify_field_sf` in this scope
+   --> src/rules_core/pi_screening.rs:979:39
+    |
+107 | pub fn classify_field(field_name: &str, value: &str) -> (License, Option<String>, Option<String>, String) {
+    | --------------------------------------------------------------------------------------------------------- similarly named function `classify_field` defined here
+...
+979 |         let (license, pi_field, ..) = classify_field_sf("description", REDACTED_PI_MARKER);
+    |                                       ^^^^^^^^^^^^^^^^^
+    |
+help: a function with a similar name exists
+    |
+979 -         let (license, pi_field, ..) = classify_field_sf("description", REDACTED_PI_MARKER);
+979 +         let (license, pi_field, ..) = classify_field("description", REDACTED_PI_MARKER);
+    |
+
+For more information about this error, try `rustc --explain E0425`.
+error: could not compile `codex` (lib test) due to 8 previous errors

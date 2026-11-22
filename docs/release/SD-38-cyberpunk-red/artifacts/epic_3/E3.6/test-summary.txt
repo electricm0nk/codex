@@ -1,0 +1,6 @@
+root_full awk: suites 300 passed 6694 failed 0 ignored 27 FAILED-lines 0
+root_full python: suites 300 passed 6694 failed 0 ignored 27
+desktop_full awk: suites 2 passed 852 failed 0 ignored 2 FAILED-lines 0
+desktop_full python: suites 2 passed 852 failed 0 ignored 2
+170/170 test files passed.
+Wrote /home/ubuntu/workspace/repos/codex/.worktrees/sd38-e3/docs/testing/ui-smoke-inventory.md (108 rows, 18 screens).

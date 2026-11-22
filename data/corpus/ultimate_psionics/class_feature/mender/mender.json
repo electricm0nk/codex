@@ -1,0 +1,77 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Mender Vitalist Method",
+    "name": "Mender",
+    "class": null,
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mender Vitalist Method"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "VitalistClassFeatures.VitalistMethod"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Vitalist Class Feature|AUTOMATIC|Mender's Touch|PREMULT:2,[PREVARGT:MethodLVL,1],[!PREABILITY:1,CATEGORY=Archetype,TYPE.VitalistTransferWounds]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Vitalist Class Feature|AUTOMATIC|Mender's Pulse|PREVARGT:MethodLVL,5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Vitalist Class Feature|AUTOMATIC|Mender ~ Swift Aid|PREMULT:2,[PREVARGT:MethodLVL,7],[!PREABILITY:1,CATEGORY=Archetype,TYPE.VitalistSwiftAid]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Vitalist Class Feature|AUTOMATIC|Mender's Expertise|PREVARGT:MethodLVL,10"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Vitalist Class Feature|AUTOMATIC|Master Mender|PREVARGT:MethodLVL,19"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Mender Knack|1|!PREABILITY:1,CATEGORY=Archetype,TYPE.VitalistKnacks"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.74"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Vitalist=1|Natural Healing"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Vitalist Method Power|CASTERLEVEL=Vitalist|Natural Healing"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 969,
+    "record_key": "Mender Vitalist Method"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:spells"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

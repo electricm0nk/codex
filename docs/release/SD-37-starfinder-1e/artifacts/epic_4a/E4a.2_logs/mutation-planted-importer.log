@@ -1,0 +1,6 @@
+test rules_core::rules_catalog::control_tests::the_catalog_reaches_the_compiled_module_only_through_re_exports ... ok
+test rules_core::rules_catalog::control_tests::no_compiled_table_view_or_reader_is_re_exported_from_the_compiled_module ... ok
+test rules_core::rules_catalog::control_tests::no_importer_names_the_compiled_tables ... FAILED
+thread 'rules_core::rules_catalog::control_tests::no_importer_names_the_compiled_tables' (4142332) panicked at src/rules_core/rules_catalog/control_tests.rs:143:5:
+    "tests/zz_tmp_importer.rs",
+test result: FAILED. 2 passed; 1 failed; 0 ignored; 0 measured; 2849 filtered out; finished in 0.44s

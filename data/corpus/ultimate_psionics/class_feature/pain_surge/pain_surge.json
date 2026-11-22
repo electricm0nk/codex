@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Pain Surge",
+    "name": "Pain Surge",
+    "class": null,
+    "description": "You must have suffered hit point damage within a number of rounds equal to the number of points in your wild surge in order to wild surge.  Penalties for making a concentration check for being injured while manifesting a power are lessened.  Psychic enervation: sickened until the end of your next turn and lose %1 pp.|PainPPLoss",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "WilderClassFeatures.SpecialQuality.SurgeType"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PainPPLoss|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You must have suffered hit point damage within a number of rounds equal to the number of points in your wild surge in order to wild surge.  Penalties for making a concentration check for being injured while manifesting a power are lessened.  Psychic enervation: sickened until the end of your next turn and lose %1 pp.|PainPPLoss"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Wilder Class Feature|AUTOMATIC|Pain Surge ~ Precise Harm|!PREABILITY:1,CATEGORY=Archetype,TYPE.WilderSurgeBond|PREABILITY:1,CATEGORY=Special Ability,Pain Surge"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Pain Surge Bond Bonus Feats|PREABILITY:1,CATEGORY=Internal,Wilder ~ Improved Surge Bond"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PainPPLoss|SurgeLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.79"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1053,
+    "record_key": "Pain Surge"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

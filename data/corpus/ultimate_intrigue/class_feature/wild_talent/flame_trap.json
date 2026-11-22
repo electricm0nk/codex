@@ -1,0 +1,53 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Wild Talent ~ Flame Trap",
+    "name": "Flame Trap",
+    "class": "Kineticist",
+    "description": "Element fire; Type utility (Sp); Level 2; Burn 0 - You lay a fiery trap on a container, ensuring the destruction of sensitive documents while punishing those who would steal your secrets. In order to weave the trap, you must spend 10 minutes in contact with the container you wish to trap. At the end of that time, the container is trapped until the next time you use this wild talent or until it triggers. Any creature other than you who opens the container takes damage as from your fire blast (or blue flame blast, if you have it). The damage affects the creature automatically if it is touching the container, but if it opens the container from within 30 feet, it can attempt a Reflex save to negate the damage, and if it opens the container from farther still, it takes no damage. Whether or not the creature that opened the container takes damage, your kinetic blast damage also affects any items within the container that you choose, as well as the container, if you wish it, and leaves all other items undamaged. This counts as a magical trap with a Perception and Disable Device DC of %1. You can accept 1 point of burn when using flame trap to make a new trap without dismissing any previous traps. If you do, the trap lasts until the next time you recover burn.|10+KineticistLVL/2+DEX",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wild Talent ~ Flame Trap"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Wild Talent.Utility Wild Talent"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "KineticistLVL_Fire,2"
+      },
+      {
+        "key": "DESC",
+        "value": "Element fire; Type utility (Sp); Level 2; Burn 0 - You lay a fiery trap on a container, ensuring the destruction of sensitive documents while punishing those who would steal your secrets. In order to weave the trap, you must spend 10 minutes in contact with the container you wish to trap. At the end of that time, the container is trapped until the next time you use this wild talent or until it triggers. Any creature other than you who opens the container takes damage as from your fire blast (or blue flame blast, if you have it). The damage affects the creature automatically if it is touching the container, but if it opens the container from within 30 feet, it can attempt a Reflex save to negate the damage, and if it opens the container from farther still, it takes no damage. Whether or not the creature that opened the container takes damage, your kinetic blast damage also affects any items within the container that you choose, as well as the container, if you wish it, and leaves all other items undamaged. This counts as a magical trap with a Perception and Disable Device DC of %1. You can accept 1 point of burn when using flame trap to make a new trap without dismissing any previous traps. If you do, the trap lasts until the next time you recover burn.|10+KineticistLVL/2+DEX"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.66"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/support/ui_abilities_class_oa.lst",
+    "sha256": "123f008e9a2f31828861df9025f48f5c2f7c78a648553f22dba96a8d8a2e24dc",
+    "line": 35,
+    "record_key": "Wild Talent ~ Flame Trap"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

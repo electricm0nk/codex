@@ -1,0 +1,32 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-03T19:41:45Z",
+  "data": {
+    "key": "Defiant Luck",
+    "category": "general",
+    "name": "Defiant Luck",
+    "description": "You can sometimes defiantly shrug off spells and attacks that would kill a lesser creature.",
+    "effect": [
+      [
+        "VAR",
+        "DefiantLuckTimes",
+        "1"
+      ]
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_feats.lst",
+    "sha256": "420384054e43adeb60135c7e379a4645e5817ea1f2e78a8de8c7c687fc510fec",
+    "line": 104,
+    "record_key": "Defiant Luck"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

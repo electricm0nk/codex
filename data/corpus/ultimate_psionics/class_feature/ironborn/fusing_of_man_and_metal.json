@@ -1,0 +1,61 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Ironborn ~ Fusing of Man and Metal",
+    "name": "Fusing of Man and Metal",
+    "class": "Ironborn",
+    "description": "As long as you are wearing medium or heavy armor, the armor bonus to AC is increased by %1.|FusingManMetalACBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ironborn ~ Fusing of Man and Metal"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "FighterClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FusingManMetalACBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "As long as you are wearing medium or heavy armor, the armor bonus to AC is increased by %1.|FusingManMetalACBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|AC|FusingManMetalACBonus|PREVARGTEQ:var(\"COUNT[EQTYPE.ARMOR.EQUIPPED.IS.MEDIUM]\")+var(\"COUNT[EQTYPE.ARMOR.EQUIPPED.IS.HEAVY]\"),1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FusingManMetalACBonus|floor((FighterLVL-4)/4)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.325"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2508,
+    "record_key": "Ironborn ~ Fusing of Man and Metal"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

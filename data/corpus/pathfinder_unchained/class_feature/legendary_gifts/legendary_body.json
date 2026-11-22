@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Legendary Gifts ~ Legendary Body",
+    "name": "Legendary Body",
+    "class": "Legendary Gifts",
+    "description": "Increase your bonuses from physical prowess to +6/+6/+4. This counts as two legendary gifts.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Legendary Gifts ~ Legendary Body"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ABP Legendary Gifts.Automatic Bonus Progression"
+      },
+      {
+        "key": "DESC",
+        "value": "Increase your bonuses from physical prowess to +6/+6/+4. This counts as two legendary gifts."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Pool_ABPPhysicalProwess|1"
+      },
+      {
+        "key": "COST",
+        "value": "2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.156"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Legendary Gifts"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst",
+    "sha256": "2becbb0524bd4c367cc1273434c20bcd8e42e3e08abd372f99b005e69e8c4725",
+    "line": 86,
+    "record_key": "Legendary Gifts ~ Legendary Body"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

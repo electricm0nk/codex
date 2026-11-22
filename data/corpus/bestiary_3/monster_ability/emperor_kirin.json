@@ -1,0 +1,51 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Emperor Kirin",
+    "delivery": null,
+    "description": "[Bonuses not implemented] The wisest and most powerful kirin are known as emperor kirin, having earned this title through the respect of their peers and the strength of their powers. They resemble standard kirin, except their hooves give off sparks as they gallop through the air. Emperor kirin have the advanced creature simple template and additional racial Hit Dice. When advancing a kirin's Hit Dice to create an emperor kirin, make the following additional changes. . CR: Increase by 1 + the number of additional HD. . Breath Weapon: Damage increases by 1d6 for every 2 additional HD. . Spellcasting: Increase sorcerer level (for the purpose of spells known and spells per day) by 1 per additional HD. . Spell-Like Abilities: Increase caster level by +1 per additional HD. . Spell Resistance: Increase by +1 per additional HD.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:emperor_kirin",
+    "name": "Emperor Kirin",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "[Bonuses not implemented] The wisest and most powerful kirin are known as emperor kirin, having earned this title through the respect of their peers and the strength of their powers. They resemble standard kirin, except their hooves give off sparks as they gallop through the air. Emperor kirin have the advanced creature simple template and additional racial Hit Dice. When advancing a kirin's Hit Dice to create an emperor kirin, make the following additional changes. . CR: Increase by 1 + the number of additional HD. . Breath Weapon: Damage increases by 1d6 for every 2 additional HD. . Spellcasting: Increase sorcerer level (for the purpose of spells known and spells per day) by 1 per additional HD. . Spell-Like Abilities: Increase caster level by +1 per additional HD. . Spell Resistance: Increase by +1 per additional HD."
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "Advanced Creature"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.KirinSelection"
+      }
+    ],
+    "source_page": null,
+    "traits": [
+      "KirinSelection"
+    ]
+  },
+  "ingested_at": "2026-08-23T14:09:11Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1150,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Emperor Kirin",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

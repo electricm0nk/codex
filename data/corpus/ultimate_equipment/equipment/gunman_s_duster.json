@@ -1,0 +1,78 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "MagicItems",
+    "cost_gp": 36000.0,
+    "description": "+1 to bonus granted by Gunslinger's Dodge deed; Wearer may use Gunslinger's Dodge deed once per day.",
+    "key": "Gunman's Duster",
+    "name": "Gunman's Duster",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "COMBAT",
+          "AC",
+          "2",
+          "TYPE=Armor"
+        ]
+      },
+      {
+        "qualifiers": [
+          "COMBAT",
+          "AC",
+          "2+Global_LuckBonus",
+          "TYPE=Luck"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "GritPoints",
+          "1"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.LesserMajor.Robe"
+      },
+      {
+        "key": "COST",
+        "value": "36000"
+      },
+      {
+        "key": "WT",
+        "value": "5"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.215"
+      },
+      {
+        "key": "SPROP",
+        "value": "+1 to bonus granted by Gunslinger's Dodge deed|PREVARGTEQ:GunslingerLVL,1"
+      },
+      {
+        "key": "SPROP",
+        "value": "Wearer may use Gunslinger's Dodge deed once per day.|PREVARLT:GunslingerLVL,1"
+      }
+    ],
+    "weight_lbs": 5.0
+  },
+  "ingested_at": "2026-08-16T01:34:54Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 502,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_equipment/ue_equip_magic_items.lst",
+    "record_key": "Gunman's Duster",
+    "sha256": "c0d9b21e5e0969b0a22a5ca50f3ea3a8705765aa1a3f5a89ebd91aee4580e291"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

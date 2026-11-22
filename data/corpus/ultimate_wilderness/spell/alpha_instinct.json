@@ -1,0 +1,79 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "Animals perceive you as a social superior. The starting attitude of animals you interact with improves by one step, and you gain a +2 morale bonus on Handle Animal checks. Helpful animals provide simple assistance (such as using the aid another action on skill checks they understand) as long as the spell lasts, but they flee from attacks and do not support you in combat. At one point during the spell's duration, you can issue a nonverbal command to helpful animals within 60 feet to forage for you; the animal or animals immediately head out into the wilderness to do just that. After 1 hour, the animals return to the location where you issued the command to make you an offering of edible food sufficient for one meal for you and (CASTERLEVEL) others.",
+    "key": "Alpha Instinct",
+    "level": 2,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "10 minutes"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Druid,Medium,Ranger,Shaman=2|Bard,Mesmerist=3"
+      },
+      {
+        "key": "COMPS",
+        "value": "V,S,M"
+      },
+      {
+        "key": "DESC",
+        "value": "Animals perceive you as a social superior. The starting attitude of animals you interact with improves by one step, and you gain a +2 morale bonus on Handle Animal checks. Helpful animals provide simple assistance (such as using the aid another action on skill checks they understand) as long as the spell lasts, but they flee from attacks and do not support you in combat. At one point during the spell's duration, you can issue a nonverbal command to helpful animals within 60 feet to forage for you; the animal or animals immediately head out into the wilderness to do just that. After 1 hour, the animals return to the location where you issued the command to make you an offering of edible food sufficient for one meal for you and (CASTERLEVEL) others.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "Gain bonuses when you're interacting with animals.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESCRIPTOR",
+        "value": "Mind-Affecting"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) hours [D]"
+      },
+      {
+        "key": "RANGE",
+        "value": "Personal"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Enchantment"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.227"
+      },
+      {
+        "key": "SUBSCHOOL",
+        "value": "Charm"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "You"
+      },
+      {
+        "key": "TYPE",
+        "value": "Arcane.Divine.Psychic"
+      }
+    ],
+    "school": "Enchantment"
+  },
+  "ingested_at": "2026-08-20T01:55:37Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 10,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_spells.lst",
+    "record_key": "Alpha Instinct",
+    "sha256": "0ebcaef0aa5ab9967a06e53a5179bcaca436c5a2bfeeb8926821eb38391978a4"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr"
+  ]
+}

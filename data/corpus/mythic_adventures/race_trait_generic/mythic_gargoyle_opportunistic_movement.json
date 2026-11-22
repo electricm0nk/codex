@@ -1,0 +1,46 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Mythic Gargoyle ~ Opportunistic Movement",
+    "name": "Opportunistic Movement",
+    "description": "A mythic gargoyle can rapidly move to take advantage of an opponent's weakened defenses. When an opponent within 30 feet takes an action that provokes an attack of opportunity, as an immediate action the mythic gargoyle can expend one use of mythic power to move up to 40 feet, ending its movement next to the creature that provoked the attack of opportunity and making an attack of opportunity against that creature. The gargoyle's movement from this ability doesn't provoke attacks of opportunity.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Gargoyle ~ Opportunistic Movement"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Gargoyle Trait.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A mythic gargoyle can rapidly move to take advantage of an opponent's weakened defenses. When an opponent within 30 feet takes an action that provokes an attack of opportunity, as an immediate action the mythic gargoyle can expend one use of mythic power to move up to 40 feet, ending its movement next to the creature that provoked the attack of opportunity and making an attack of opportunity against that creature. The gargoyle's movement from this ability doesn't provoke attacks of opportunity."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities_race.lst",
+    "sha256": "9dc17c2fc1ba84d040fb04d6175b48b6ff52cc30ad113933d5dff3d75ea2652a",
+    "line": 162,
+    "record_key": "Mythic Gargoyle ~ Opportunistic Movement"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

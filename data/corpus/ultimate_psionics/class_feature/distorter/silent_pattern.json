@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Distorter ~ Silent Pattern",
+    "name": "Silent Pattern",
+    "class": "Distorter",
+    "description": "You have learned to alter the pattern of an area to disrupt sound within it.  The area is treated as if under the effect of silence until you choose to end the effect (a free action).  You may only have one silent pattern active at a time, the area affected is a %1 ft. radius, and you can select an area within %2 ft. of your current location when you use this ability.|SilentPatternRadius|SilentPatternRange",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Distorter ~ Silent Pattern"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "CrypticClassFeatures.SpecialQuality.PsiLike"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SilentPatternRadius|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SilentPatternRange|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You have learned to alter the pattern of an area to disrupt sound within it.  The area is treated as if under the effect of silence until you choose to end the effect (a free action).  You may only have one silent pattern active at a time, the area affected is a %1 ft. radius, and you can select an area within %2 ft. of your current location when you use this ability.|SilentPatternRadius|SilentPatternRange"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SilentPatternRadius|10"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SilentPatternRange|30"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.265"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1818,
+    "record_key": "Distorter ~ Silent Pattern"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

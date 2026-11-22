@@ -1,0 +1,67 @@
+{
+  "completeness": "full",
+  "data": {
+    "key": "Leaf Armor",
+    "name": "Leaf Armor",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "COMBAT",
+          "AC",
+          "3",
+          "TYPE=Armor"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "PROFICIENCY",
+        "value": "ARMOR|Leaf Armor"
+      },
+      {
+        "key": "TYPE",
+        "value": "Armor.Light.ArmorProfLight.Suit.Standard.Nonmetal"
+      },
+      {
+        "key": "COST",
+        "value": "350"
+      },
+      {
+        "key": "WT",
+        "value": "20"
+      },
+      {
+        "key": "ACCHECK",
+        "value": "0"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Material ~ Leaf"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Quality ~ Masterwork ~ Armor"
+      },
+      {
+        "key": "MAXDEX",
+        "value": "5"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.291"
+      },
+      {
+        "key": "SPELLFAILURE",
+        "value": "15"
+      }
+    ]
+  },
+  "license": "OGL",
+  "population": "in_scope",
+  "source": {
+    "kind": "desktop_ui_fixture",
+    "line": 1,
+    "path": "apps/desktop/src-tauri/fixtures_src/equip_leaf_armor.txt",
+    "record_key": "Leaf Armor"
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "data": {
+    "category": "Variant Ability",
+    "key": "Shirren ~ Scout Variant",
+    "name": "Scout",
+    "type": "Variant Ability.Shirren Variant Ability"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 14,
+    "path": "starfinder/paizo/character_operations_manual/scom_abilities_race.lst",
+    "record_key": "Shirren ~ Scout Variant",
+    "sha256": "5588ba8c160a61a39435129e567d203bdb6ddb9799c66096192888dee5dac741"
+  },
+  "unit_id": "character_operations_manual:ability:shirren_scout_variant"
+}

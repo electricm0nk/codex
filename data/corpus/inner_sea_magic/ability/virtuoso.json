@@ -1,0 +1,64 @@
+{
+  "codex_generated_name": false,
+  "completeness": "full",
+  "data": {
+    "description": "You have become a diva, idol, or star performer, or otherwise achieved a level of fame that even your fellow performers are jealous of. Your self confidence gives you a permanent +2 morale bonus on all Will saving throws against mind-affecting effects.",
+    "key": "Virtuoso ~ Guild",
+    "name": "Virtuoso",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Virtuoso ~ Guild"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.KintargoOperaHouseReward"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Kintargo Opera House ~ Guild"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "KintargoOperaHouseFame,20"
+      },
+      {
+        "key": "DESC",
+        "value": "You have become a diva, idol, or star performer, or otherwise achieved a level of fame that even your fellow performers are jealous of. Your self confidence gives you a permanent +2 morale bonus on all Will saving throws against mind-affecting effects."
+      },
+      {
+        "key": "COST",
+        "value": "10"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.23"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SaveBonus|+2 morale on Will saves vs. mind-affecting"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 111,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_abilities_other.lst",
+    "record_key": "Virtuoso ~ Guild",
+    "sha256": "6ea35a2432c9b609f27926d9492f1d85c599eb18e81adf36154ae594b89072db"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

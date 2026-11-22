@@ -1,0 +1,84 @@
+{
+  "completeness": "full",
+  "data": {
+    "codex_generated_name": false,
+    "corpus_key": "Permanency Spell / Magic Fang",
+    "delivery": null,
+    "description": "(2,500GP), Caster Level %1. Magic fang gives one natural weapon of the subject a +1 enhancement bonus on attack and damage rolls. The spell can affect a slam attack, fist, bite, or other natural weapon. [The spell does not change an unarmed strike's damage from nonlethal damage to lethal damage.]",
+    "description_variables": [
+      "%LIST"
+    ],
+    "facet": "SpecialQuality",
+    "key": "beastiary:monster_ability:permanency_spell_magic_fang",
+    "name": "Permanency Spell / Magic Fang",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "BONUS",
+        "value": "VAR|PermanecyMagicFangLVL|%LIST"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPON|TOHIT,DAMAGE|1|TYPE=Enhancement"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "NUMCHOICES=1|STRING|09|10|11|12|13|14|15|16|17|18|19|20"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PermanecyMagicFangLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "(2,500GP), Caster Level %1.|%LIST"
+      },
+      {
+        "key": "DESC",
+        "value": "Magic fang gives one natural weapon of the subject a +1 enhancement bonus on attack and damage rolls. The spell can affect a slam attack, fist, bite, or other natural weapon. [The spell does not change an unarmed strike's damage from nonlethal damage to lethal damage.]"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Permanency Spell|TIMES=ATWILL|CASTERLEVEL=PermanecyMagicFangLVL|Magic Fang"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.PermanencySpell"
+      }
+    ],
+    "rename": null,
+    "source_page": null,
+    "traits": [
+      "PermanencySpell"
+    ]
+  },
+  "ingested_at": "2026-08-23T22:58:47Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1612,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "record_key": "Permanency Spell / Magic Fang",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice",
+    "derived:spells"
+  ]
+}

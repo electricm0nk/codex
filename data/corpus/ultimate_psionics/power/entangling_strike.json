@@ -1,0 +1,81 @@
+{
+  "completeness": "full",
+  "data": {
+    "key": "Entangling Strike",
+    "name": "Entangling Strike",
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Psionic"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Psychic Warrior=2"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Metacreativity"
+      },
+      {
+        "key": "SUBSCHOOL",
+        "value": "Creation"
+      },
+      {
+        "key": "DESCRIPTOR",
+        "value": "Trigger"
+      },
+      {
+        "key": "COMPS",
+        "value": "Au, Ma"
+      },
+      {
+        "key": "CASTTIME",
+        "value": "1 swift action"
+      },
+      {
+        "key": "RANGE",
+        "value": "Melee"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "One creature"
+      },
+      {
+        "key": "DURATION",
+        "value": "One round; see text"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "None"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "No"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.199"
+      },
+      {
+        "key": "DESC",
+        "value": "Next creature struck is entangled; expend focus to deal damage if creature tries to concentrate."
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T12:11:35Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 201,
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_powers.lst",
+    "record_key": "Entangling Strike",
+    "sha256": "81fdd7a4262066f630c0db104e743f5f78388b2df76409d50ba2a13c7a233f3a"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

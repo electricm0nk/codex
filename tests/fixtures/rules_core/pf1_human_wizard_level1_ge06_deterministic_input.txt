@@ -1,0 +1,44 @@
+# v0.6 alpha swarm pilot-case fixture: the real fixed loadout
+# `compose_character_input` produces for a freshly created Human Wizard
+# level 1 (apps/desktop/src-tauri/src/pf1_adapter.rs), expressed as a
+# rules_core CharacterInput fixture. Mirrors
+# pf1_human_fighter_level1_ge06_deterministic_input.txt's ability scores,
+# feats, skill allocations, and equipment exactly (all class-agnostic in
+# compose_character_input) and adds the Wizard-specific additions: the
+# canonical Evocation specialization with opposed Necromancy/Transmutation,
+# and the seeded starter spell (Light) recorded as both Known and Prepared.
+# Pairs with the real, PCGen-verified
+# programs/codex/requirements/GE-05-oracle-validation-and-parity-harness/artifacts/pf1-crb-human-wizard-level1-v06-alpha-swarm.pcg
+# fixture (same CHARACTERNAME as this fixture's case_id, same ability
+# scores/feats/skills/equipment/subclass/spellbook, backend-authored and
+# BUILD-SUCCESSFUL-verified against the real PCGen engine twice).
+case_id=pf1-crb-human-wizard-level1
+source_package_id=pf1.core_rulebook
+race_id=race:human
+class_level=class:wizard:1
+ability=strength:16
+ability=dexterity:14
+ability=constitution:14
+ability=intelligence:10
+ability=wisdom:12
+ability=charisma:8
+feat=feat:power_attack
+feat=feat:dodge
+feat=feat:weapon_focus
+skill=skill:climb:1
+skill=skill:intimidate:1
+skill=skill:swim:1
+equipment=item:chain_shirt:equipped_worn_active
+equipment=item:longsword:equipped_primary_active
+equipment=item:shield:absent
+equipment=power_attack:selected_inactive
+spell=Light:class:wizard:known
+spell=Light:class:wizard:prepared
+choice=choice:level_1_character_feat:feat:power_attack
+choice=choice:human_bonus_feat:feat:dodge
+choice=choice:fighter_bonus_feat:feat:weapon_focus:weapon:longsword
+choice=choice:human_ability_bonus:ability:strength
+choice=choice:wizard_school_specialization:school:evocation
+choice=choice:wizard_opposed_schools:school:necromancy
+choice=choice:wizard_opposed_schools:school:transmutation
+provenance=v0.6 alpha release swarm, QA/backend joint cycle: real Wizard PCGen .pcg pilot case comparator adoption

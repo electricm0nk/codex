@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T10:26:11Z",
+  "data": {
+    "corpus_key": "Ahmuuth ~ Animated Shield",
+    "delivery": "Supernatural",
+    "description": "An ahmuuth's gravestones defend the it in a manner similar to an animated shield but without a limited duration. If the stones leave the psychopomp's square or the ahmuuth is slain, they become inert stone.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "inner_sea_gods:monster_ability:ahmuuth_animated_shield",
+    "name": "Animated Shield",
+    "owners": [
+      "inner_sea_gods:monster:psychopomp_ahmuuth"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/support/isg_abilities_races_b4.lst",
+    "sha256": "f66eccddcddfe51b19ba3723366fc2458ce67888f4c501f8088f6d4101e8bd50",
+    "line": 32,
+    "record_key": "Ahmuuth ~ Animated Shield"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

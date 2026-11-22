@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Trait ~ Sense Dissonance",
+    "name": "Sense Dissonance",
+    "description": "+2 to Sense Motive to sense enchantment and to get a hunch.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Trait ~ Sense Dissonance"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Trait.RaceTrait.DuergarTrait"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Trait ~ Sense Dissonance],[PREVAREQ:BypassTraitRestriction,1],[!PREABILITY:1,CATEGORY=Special Ability,TYPE.RaceTrait]"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PRERACE:1,Duergar,RACESUBTYPE=Duergar],[PREABILITY:1,CATEGORY=Special Ability,Adoptive Race ~ Duergar]"
+      },
+      {
+        "key": "DESC",
+        "value": "+2 to Sense Motive to sense enchantment and to get a hunch."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.300"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_apg.lst",
+    "sha256": "d4ac8a9a33149811222e6affeba9ba1553ced3ba7f6beb6be722e89ddfc9a51f",
+    "line": 181,
+    "record_key": "Trait ~ Sense Dissonance"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

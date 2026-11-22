@@ -1,0 +1,21 @@
+
+running 1 test
+test character_hub::tests::market_buy_sell_attaches_to_the_new_copy_not_an_older_plain_one ... FAILED
+
+failures:
+
+---- character_hub::tests::market_buy_sell_attaches_to_the_new_copy_not_an_older_plain_one stdout ----
+
+thread 'character_hub::tests::market_buy_sell_attaches_to_the_new_copy_not_an_older_plain_one' (3517576) panicked at src/character_hub.rs:9450:13:
+assertion `left == right` failed: SelectedInactive
+  left: ["Special Ability ~ +1 ~ Armor"]
+ right: []
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    character_hub::tests::market_buy_sell_attaches_to_the_new_copy_not_an_older_plain_one
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 945 filtered out; finished in 55.64s
+
+error: test failed, to rerun pass `--bin codex-desktop`

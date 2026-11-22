@@ -1,0 +1,73 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Gifted Blade Power Points",
+    "name": "Gifted Blade Power Points",
+    "class": "Gifted Blade",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "DEFINE",
+        "value": "GiftedBladePPStat|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "GiftedBladePPL|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|GiftedBladePPStat|GiftedBladePrimeStat"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|GiftedBladePPL|GiftedBladeML+2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BasePowerPoints|GiftedBladePPL-3|PREVARGTEQ:GiftedBladePPL,4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BasePowerPoints|GiftedBladePPL-6|PREVARGTEQ:GiftedBladePPL,7"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BasePowerPoints|GiftedBladePPL-10|PREVARGTEQ:GiftedBladePPL,11"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BasePowerPoints|GiftedBladePPL-13|PREVARGTEQ:GiftedBladePPL,14"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BasePowerPoints|GiftedBladePPL-16|PREVARGTEQ:GiftedBladePPL,17"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BonusPowerPoints|(GiftedBladePPStat*(GiftedBladePPL-2))/2|TYPE=GiftedBladeBonusPP|PREVARGTEQ:GiftedBladePPL,3"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2184,
+    "record_key": "Gifted Blade Power Points"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

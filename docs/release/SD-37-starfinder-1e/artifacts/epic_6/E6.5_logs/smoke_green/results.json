@@ -1,0 +1,52 @@
+[
+  {
+    "id": "level-up-starfinder-soldier-preview",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/33627023-04e6-4757-9afa-d5c1463408f3/scratchpad/e65/smoke_green/level-up-starfinder-soldier-preview.png",
+    "rendered_excerpt": "⚙\nSF Smoke Level Alpha\nStarfinder · Human\nLevel up\nOpen\nClose\nLevel up\n\nCharacter level now: 1\n\nSoldier 2 — character level 2\nSkill ranks per level: 4\nSkill ranks this level\nRanks in one skill: at most the character level, 2 (SRD Acquiring Skills (https://www.aonsrd.com/Rules.aspx?ID=77))\n-1 rank Acrobatics\n+1 rank Acrobatics\n0\n-1 rank Athletics\n+1 rank Athletics\n1 (+1)\n-1 rank Bluff\n+1 rank Bluff",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd37-e6-5-green-SoWh3e/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [
+        "de080c10-868d-4030-8a50-9fd9e9c3b6e6"
+      ],
+      "deleted": [
+        "de080c10-868d-4030-8a50-9fd9e9c3b6e6"
+      ],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "level-up-starfinder-soldier-accept",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/33627023-04e6-4757-9afa-d5c1463408f3/scratchpad/e65/smoke_green/level-up-starfinder-soldier-accept.png",
+    "rendered_excerpt": "⚙\nSF Smoke Level Bravo\nStarfinder · Human\nLevel up\nOpen\nClose\nLeveled up: Soldier 2 — character level 2\n\nCLASS\n\nSoldier\t2\nABILITY SCORES\n\nScore\tModifier\nStrength\t16\t+3\nDexterity\t14\t+2\nConstitution\t12\t+1\nIntelligence\t11\t+0\nWisdom\t10\t+0\nCharisma\t10\t+0\nSTAMINA, HIT POINTS AND RESOLVE\n\nStamina Points\t16\nHit Points\t18\nResolve Points\t4\nARMOR CLASS\n\nEnergy Armor Class (EAC)\t12\nKinetic Armor Class (KAC)\t1",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd37-e6-5-green-SoWh3e/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [
+        "a079f065-4001-4851-8470-3f14f450467b"
+      ],
+      "deleted": [
+        "a079f065-4001-4851-8470-3f14f450467b"
+      ],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "landing-select-pathfinder",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/33627023-04e6-4757-9afa-d5c1463408f3/scratchpad/e65/smoke_green/landing-select-pathfinder.png",
+    "rendered_excerpt": "⚙\n\nP1\nPathfinder 1e\nFantasy d20\n\nSA\nSolarus Arcanum\nComing soon\n\nTM\nTraveller MGT 2e\nComing soon\n\nCR\nCyberpunk Red\nComing soon\n\nS1\nStarfinder 1e\nSci-fi fantasy\n\nWOD\nWorld of Darkness\nComing soon\n\nNEW CHARACTER\n\nLOAD CHARACTER\n\nCAMPAIGN MANAGER\nChoose a local Drive-synced folder under ⚙ Settings → Google Drive to enable the Campaign Manager.\n\nDM TOOLKIT\nBrowse Equipment Catalog\nBrowse Spell Catalog",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd37-e6-5-green-SoWh3e/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  }
+]

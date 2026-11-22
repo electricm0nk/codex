@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-24T03:51:47Z",
+  "data": {
+    "key": "Bardic Performance ~ Suggestion",
+    "name": "Suggestion",
+    "class": "Bardic Performance",
+    "description": "You use your performance to make a Suggestion (as per the spell) to a creature you have already fascinated. Using this ability does not disrupt the Fascinate effect, but it does require a standard action to activate (in addition to the free action to continue the Fascinate effect). You can use this ability more than once against an individual creature during an individual performance. Making a Suggestion does not count against your daily use of Bardic Performance. A Will saving throw (DC %1) negates the effect. This ability affects only a single creature. Suggestion is an enchantment (compulsion), mind affecting, language-dependent ability and relies on audible components.|SuggestionDC",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bardic Performance ~ Suggestion"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "BardClassFeatures.SpecialAttack.SpellLike.BardicPerformance.Bardic Performance"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SuggestionDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You use your performance to make a Suggestion (as per the spell) to a creature you have already fascinated. Using this ability does not disrupt the Fascinate effect, but it does require a standard action to activate (in addition to the free action to continue the Fascinate effect). You can use this ability more than once against an individual creature during an individual performance. Making a Suggestion does not count against your daily use of Bardic Performance. A Will saving throw (DC %1) negates the effect. This ability affects only a single creature. Suggestion is an enchantment (compulsion), mind affecting, language-dependent ability and relies on audible components.|SuggestionDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SuggestionDC|10+(BardicPerformanceLVL/2)+CHA"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.37"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Bardic Performance"
+      },
+      {
+        "key": "DESC",
+        "value": "You influence the actions of the target creature by suggesting a course of activity [limited to a sentence or two]. The suggestion must be worded in such a manner as to make the activity sound reasonable. Asking the creature to do some obviously harmful act automatically negates the effect of the spell. The suggested course of activity can continue for the entire duration. If the suggested activity can be completed in a shorter time, the spell ends when the subject finishes what it was asked to do. You can instead specify conditions that will trigger a special activity during the duration. If the condition is not met before the spell duration expires, the activity is not performed. A very reasonable suggestion causes the save to be made with a penalty [such as -1 or -2].|PRERULE:1,DisplayFullSpell"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 526,
+    "record_key": "Bardic Performance ~ Suggestion"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

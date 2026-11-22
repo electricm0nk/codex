@@ -1,0 +1,43 @@
+# SD18 deterministic Human Druid level 13 progression fixture.
+# Widens the accepted SD18 deterministic PF1 Core Rulebook Human Druid
+# level-1..level-12 prepared divine spell-bearing baseline
+# (tests/fixtures/rules_core/pf1_human_druid_level12_sd18_widening_deterministic_input.txt)
+# to level 13 as chosen input only. It names selections; it does not contain
+# derived, computed, or parity values. It preserves the accepted Human
+# race-choice seam (ability-bonus and bonus-feat), the deterministic
+# ability/feat posture from the level-1 through level-12 fixtures, and the
+# same canonical nature-bond selection (animal companion), adding only the
+# level bump this bounded slice needs.
+#
+# It deliberately avoids every later Druid burden surface: no animal
+# companion stat block/advancement/link-share-spells, no Wild Shape
+# execution (form list, duration tracking), no spellbook, no spells
+# prepared, no spell slots, no spell DCs, no bonus spells, and no
+# level-14+ progression. Base attack bonus STAYS +9 (13 * 3 / 4 = 9, an
+# integer-division coincidence with level 12) and all three base saves STAY
+# +8/+4/+8 (Fortitude/Reflex/Will: 13/2+2=8, 13/3=4), checked rather than
+# assumed. Wild Empathy genuinely rises to 14 (13 + Charisma modifier 1).
+# The PF1 CRB Druid class table's level-13 "Special" column reads "A
+# thousand faces" (verified independently against d20pfsrd, Archives of
+# Nethys aonprd.com, and cross-checked against legacy.aonprd.com): unlike
+# Wild Shape, this PF1 (not 3.5) version of the ability grants the druid the
+# power to change her own apparent appearance at will as if using disguise
+# self, but only in her normal (unshifted) form — a permission grant with
+# no numeric magnitude, no size/ability-score change, and no duration
+# tracking, so it is grounded as a flat +0 identity/recognition record,
+# mirroring exactly how Venom Immunity was grounded at level 9.
+case_id=pf1-crb-human-druid-level13
+source_package_id=pf1.core_rulebook
+race_id=race:human
+class_level=class:druid:13
+ability=strength:10
+ability=dexterity:14
+ability=constitution:13
+ability=intelligence:8
+ability=wisdom:17
+ability=charisma:12
+feat=feat:dodge
+choice=choice:druid_nature_bond:bond:animal_companion
+choice=choice:human_bonus_feat:feat:dodge
+choice=choice:human_ability_bonus:ability:wisdom
+provenance=programs/codex/requirements/SD-18-core-rules-breadth/scope-draft.md

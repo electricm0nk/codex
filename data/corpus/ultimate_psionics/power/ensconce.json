@@ -1,0 +1,69 @@
+{
+  "completeness": "full",
+  "data": {
+    "key": "Ensconce",
+    "name": "Ensconce",
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Psionic"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Psion,Wilder=7"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Clairsentience"
+      },
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "RANGE",
+        "value": "Touch"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "One willing creature or one object (up to a (2*CASTERLEVEL)-ft. cube) touched"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) days [D]"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "None or Will negates (object)"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "No or Yes (object)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.198"
+      },
+      {
+        "key": "DESC",
+        "value": "Subject invisible to sight and remote viewing; renders subject comatose."
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T12:11:35Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 197,
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_powers.lst",
+    "record_key": "Ensconce",
+    "sha256": "81fdd7a4262066f630c0db104e743f5f78388b2df76409d50ba2a13c7a233f3a"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr"
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Snapping Flank",
+    "category": "Combat",
+    "name": "Snapping Flank",
+    "description": "You can make a swift bite attack against a flanked foe. Whenever you are flanking with an ally who also has this feat, as a swift action you can make a bite attack against the opponent you and your ally are flanking.",
+    "prerequisites": [
+      "PRETOTALAB:9",
+      "PREWEAPONPROF:1,Bite"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/monster_codex/mc_feats.lst",
+    "sha256": "c4261bd4df0271759c3cf8949dcdfd7112b51560c14cf91a3b3937bdf0db98e7",
+    "line": 30,
+    "record_key": "Snapping Flank"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

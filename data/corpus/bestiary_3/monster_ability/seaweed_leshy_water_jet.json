@@ -1,0 +1,74 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Seaweed Leshy ~ Water Jet",
+    "delivery": "Extraordinary",
+    "description": "A seaweed leshy can expel a high-pressure jet of water from its mouth to a range of 30 feet. It must make a ranged touch attack to strike a target-if it hits, the blast deals 1 point of bludgeoning damage (this damage is not modified by Strength). In addition, the creature hit must make a DC %%1 Fortitude save or be blinded by the water for 1 round. The save DC is Dexterity-based.",
+    "description_variables": [
+      "WaterJetDC"
+    ],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:seaweed_leshy_water_jet",
+    "name": "Water Jet",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Water Jet"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WaterJetDC|10+(TL/2)+DEX"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WaterJetDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Water Jet)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WaterJetDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A seaweed leshy can expel a high-pressure jet of water from its mouth to a range of 30 feet. It must make a ranged touch attack to strike a target-if it hits, the blast deals 1 point of bludgeoning damage (this damage is not modified by Strength). In addition, the creature hit must make a DC %%1 Fortitude save or be blinded by the water for 1 round. The save DC is Dexterity-based.|WaterJetDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Seaweed Leshy ~ Water Jet"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.180"
+      },
+      {
+        "key": "TYPE",
+        "value": "SeaweedLeshyRacialAbility.SpecialQuality.Extraordinary"
+      }
+    ],
+    "source_page": "p.180",
+    "traits": [
+      "SeaweedLeshyRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T14:09:11Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1203,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Seaweed Leshy ~ Water Jet",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

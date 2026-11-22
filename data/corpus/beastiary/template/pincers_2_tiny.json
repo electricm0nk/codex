@@ -1,0 +1,39 @@
+{
+  "codex_generated_name": false,
+  "completeness": "chassis_only",
+  "data": {
+    "key": "Pincers 2 (Tiny)",
+    "name": "Pincers 2 (Tiny)",
+    "raw_tokens": [
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "PRESIZEEQ",
+        "value": "T"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Pincers,Weapon.Natural.NaturalSecondary.Weapon Group Natural.Melee.NaturalSecondary.Finesseable.Bludgeoning,*2,1d3"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T16:43:15Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 176,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_templates.lst",
+    "record_key": "Pincers 2 (Tiny)",
+    "sha256": "a62dd8a0dded1abf6f5d1a04157353247641ed4a020ba28e144caf82c29caa33"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

@@ -1,0 +1,1310 @@
+[
+  {
+    "id": "landing-render",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/6badc5b8-ae3b-4359-80c5-cd0b1598973e/scratchpad/sd36/f6/mr/smoke-full/landing-render.png",
+    "rendered_excerpt": "⚙\n\nP1\nPathfinder 1e\nFantasy d20\n\nSA\nSolarus Arcanum\nComing soon\n\nTM\nTraveller MGT 2e\nComing soon\n\nCR\nCyberpunk Red\nComing soon\n\nS1\nStarfinder 1e\nComing soon\n\nWOD\nWorld of Darkness\nComing soon\n\nNEW CHARACTER\n\nLOAD CHARACTER\n\nCAMPAIGN MANAGER\nChoose a local Drive-synced folder under ⚙ Settings → Google Drive to enable the Campaign Manager.\n\nDM TOOLKIT\nBrowse Equipment Catalog\nBrowse Spell Catalog\nBr",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-f6-mr-Z9j7UZ/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "landing-ruleset-chips",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/6badc5b8-ae3b-4359-80c5-cd0b1598973e/scratchpad/sd36/f6/mr/smoke-full/landing-ruleset-chips.png",
+    "rendered_excerpt": "⚙\n\nP1\nPathfinder 1e\nFantasy d20\n\nSA\nSolarus Arcanum\nComing soon\n\nTM\nTraveller MGT 2e\nComing soon\n\nCR\nCyberpunk Red\nComing soon\n\nS1\nStarfinder 1e\nComing soon\n\nWOD\nWorld of Darkness\nComing soon\n\nNEW CHARACTER\n\nLOAD CHARACTER\n\nCAMPAIGN MANAGER\nChoose a local Drive-synced folder under ⚙ Settings → Google Drive to enable the Campaign Manager.\n\nDM TOOLKIT\nBrowse Equipment Catalog\nBrowse Spell Catalog\nBr",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-f6-mr-Z9j7UZ/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "settings-tab-google-drive-disconnect",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/6badc5b8-ae3b-4359-80c5-cd0b1598973e/scratchpad/sd36/f6/mr/smoke-full/settings-tab-google-drive-disconnect.png",
+    "rendered_excerpt": "⚙\n\nP1\nPathfinder 1e\nFantasy d20\n\nSA\nSolarus Arcanum\nComing soon\n\nTM\nTraveller MGT 2e\nComing soon\n\nCR\nCyberpunk Red\nComing soon\n\nS1\nStarfinder 1e\nComing soon\n\nWOD\nWorld of Darkness\nComing soon\n\nNEW CHARACTER\n\nLOAD CHARACTER\n\nCAMPAIGN MANAGER\nChoose a local Drive-synced folder under ⚙ Settings → Google Drive to enable the Campaign Manager.\n\nDM TOOLKIT\nBrowse Equipment Catalog\nBrowse Spell Catalog\nBr",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-f6-mr-Z9j7UZ/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "landing-campaign-gate",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/6badc5b8-ae3b-4359-80c5-cd0b1598973e/scratchpad/sd36/f6/mr/smoke-full/landing-campaign-gate.png",
+    "rendered_excerpt": "⚙\n\nP1\nPathfinder 1e\nFantasy d20\n\nSA\nSolarus Arcanum\nComing soon\n\nTM\nTraveller MGT 2e\nComing soon\n\nCR\nCyberpunk Red\nComing soon\n\nS1\nStarfinder 1e\nComing soon\n\nWOD\nWorld of Darkness\nComing soon\n\nNEW CHARACTER\n\nLOAD CHARACTER\n\nCAMPAIGN MANAGER\nChoose a local Drive-synced folder under ⚙ Settings → Google Drive to enable the Campaign Manager.\n\nDM TOOLKIT\nBrowse Equipment Catalog\nBrowse Spell Catalog\nBr",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-f6-mr-Z9j7UZ/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "settings-open",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/6badc5b8-ae3b-4359-80c5-cd0b1598973e/scratchpad/sd36/f6/mr/smoke-full/settings-open.png",
+    "rendered_excerpt": "⚙\n\nP1\nPathfinder 1e\nFantasy d20\n\nSA\nSolarus Arcanum\nComing soon\n\nTM\nTraveller MGT 2e\nComing soon\n\nCR\nCyberpunk Red\nComing soon\n\nS1\nStarfinder 1e\nComing soon\n\nWOD\nWorld of Darkness\nComing soon\n\nNEW CHARACTER\n\nLOAD CHARACTER\n\nCAMPAIGN MANAGER\nChoose a local Drive-synced folder under ⚙ Settings → Google Drive to enable the Campaign Manager.\n\nDM TOOLKIT\nBrowse Equipment Catalog\nBrowse Spell Catalog\nBr",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-f6-mr-Z9j7UZ/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "settings-tab-appearance",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/6badc5b8-ae3b-4359-80c5-cd0b1598973e/scratchpad/sd36/f6/mr/smoke-full/settings-tab-appearance.png",
+    "rendered_excerpt": "⚙\n\nP1\nPathfinder 1e\nFantasy d20\n\nSA\nSolarus Arcanum\nComing soon\n\nTM\nTraveller MGT 2e\nComing soon\n\nCR\nCyberpunk Red\nComing soon\n\nS1\nStarfinder 1e\nComing soon\n\nWOD\nWorld of Darkness\nComing soon\n\nNEW CHARACTER\n\nLOAD CHARACTER\n\nCAMPAIGN MANAGER\nChoose a local Drive-synced folder under ⚙ Settings → Google Drive to enable the Campaign Manager.\n\nDM TOOLKIT\nBrowse Equipment Catalog\nBrowse Spell Catalog\nBr",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-f6-mr-Z9j7UZ/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "settings-theme-select-and-manage-themes-modal",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/6badc5b8-ae3b-4359-80c5-cd0b1598973e/scratchpad/sd36/f6/mr/smoke-full/settings-theme-select-and-manage-themes-modal.png",
+    "rendered_excerpt": "⚙\n\nP1\nPathfinder 1e\nFantasy d20\n\nSA\nSolarus Arcanum\nComing soon\n\nTM\nTraveller MGT 2e\nComing soon\n\nCR\nCyberpunk Red\nComing soon\n\nS1\nStarfinder 1e\nComing soon\n\nWOD\nWorld of Darkness\nComing soon\n\nNEW CHARACTER\n\nLOAD CHARACTER\n\nCAMPAIGN MANAGER\nChoose a local Drive-synced folder under ⚙ Settings → Google Drive to enable the Campaign Manager.\n\nDM TOOLKIT\nBrowse Equipment Catalog\nBrowse Spell Catalog\nBr",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-f6-mr-Z9j7UZ/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "settings-tab-google-drive",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/6badc5b8-ae3b-4359-80c5-cd0b1598973e/scratchpad/sd36/f6/mr/smoke-full/settings-tab-google-drive.png",
+    "rendered_excerpt": "⚙\n\nP1\nPathfinder 1e\nFantasy d20\n\nSA\nSolarus Arcanum\nComing soon\n\nTM\nTraveller MGT 2e\nComing soon\n\nCR\nCyberpunk Red\nComing soon\n\nS1\nStarfinder 1e\nComing soon\n\nWOD\nWorld of Darkness\nComing soon\n\nNEW CHARACTER\n\nLOAD CHARACTER\n\nCAMPAIGN MANAGER\nChoose a local Drive-synced folder under ⚙ Settings → Google Drive to enable the Campaign Manager.\n\nDM TOOLKIT\nBrowse Equipment Catalog\nBrowse Spell Catalog\nBr",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-f6-mr-Z9j7UZ/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "settings-tab-update",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/6badc5b8-ae3b-4359-80c5-cd0b1598973e/scratchpad/sd36/f6/mr/smoke-full/settings-tab-update.png",
+    "rendered_excerpt": "⚙\n\nP1\nPathfinder 1e\nFantasy d20\n\nSA\nSolarus Arcanum\nComing soon\n\nTM\nTraveller MGT 2e\nComing soon\n\nCR\nCyberpunk Red\nComing soon\n\nS1\nStarfinder 1e\nComing soon\n\nWOD\nWorld of Darkness\nComing soon\n\nNEW CHARACTER\n\nLOAD CHARACTER\n\nCAMPAIGN MANAGER\nChoose a local Drive-synced folder under ⚙ Settings → Google Drive to enable the Campaign Manager.\n\nDM TOOLKIT\nBrowse Equipment Catalog\nBrowse Spell Catalog\nBr",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-f6-mr-Z9j7UZ/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "settings-tab-bug",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/6badc5b8-ae3b-4359-80c5-cd0b1598973e/scratchpad/sd36/f6/mr/smoke-full/settings-tab-bug.png",
+    "rendered_excerpt": "⚙\n\nP1\nPathfinder 1e\nFantasy d20\n\nSA\nSolarus Arcanum\nComing soon\n\nTM\nTraveller MGT 2e\nComing soon\n\nCR\nCyberpunk Red\nComing soon\n\nS1\nStarfinder 1e\nComing soon\n\nWOD\nWorld of Darkness\nComing soon\n\nNEW CHARACTER\n\nLOAD CHARACTER\n\nCAMPAIGN MANAGER\nChoose a local Drive-synced folder under ⚙ Settings → Google Drive to enable the Campaign Manager.\n\nDM TOOLKIT\nBrowse Equipment Catalog\nBrowse Spell Catalog\nBr",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-f6-mr-Z9j7UZ/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "settings-tab-enhancement",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/6badc5b8-ae3b-4359-80c5-cd0b1598973e/scratchpad/sd36/f6/mr/smoke-full/settings-tab-enhancement.png",
+    "rendered_excerpt": "⚙\n\nP1\nPathfinder 1e\nFantasy d20\n\nSA\nSolarus Arcanum\nComing soon\n\nTM\nTraveller MGT 2e\nComing soon\n\nCR\nCyberpunk Red\nComing soon\n\nS1\nStarfinder 1e\nComing soon\n\nWOD\nWorld of Darkness\nComing soon\n\nNEW CHARACTER\n\nLOAD CHARACTER\n\nCAMPAIGN MANAGER\nChoose a local Drive-synced folder under ⚙ Settings → Google Drive to enable the Campaign Manager.\n\nDM TOOLKIT\nBrowse Equipment Catalog\nBrowse Spell Catalog\nBr",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-f6-mr-Z9j7UZ/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "settings-tab-developer",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/6badc5b8-ae3b-4359-80c5-cd0b1598973e/scratchpad/sd36/f6/mr/smoke-full/settings-tab-developer.png",
+    "rendered_excerpt": "⚙\n\nP1\nPathfinder 1e\nFantasy d20\n\nSA\nSolarus Arcanum\nComing soon\n\nTM\nTraveller MGT 2e\nComing soon\n\nCR\nCyberpunk Red\nComing soon\n\nS1\nStarfinder 1e\nComing soon\n\nWOD\nWorld of Darkness\nComing soon\n\nNEW CHARACTER\n\nLOAD CHARACTER\n\nCAMPAIGN MANAGER\nChoose a local Drive-synced folder under ⚙ Settings → Google Drive to enable the Campaign Manager.\n\nDM TOOLKIT\nBrowse Equipment Catalog\nBrowse Spell Catalog\nBr",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-f6-mr-Z9j7UZ/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "settings-close-esc",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/6badc5b8-ae3b-4359-80c5-cd0b1598973e/scratchpad/sd36/f6/mr/smoke-full/settings-close-esc.png",
+    "rendered_excerpt": "⚙\n\nP1\nPathfinder 1e\nFantasy d20\n\nSA\nSolarus Arcanum\nComing soon\n\nTM\nTraveller MGT 2e\nComing soon\n\nCR\nCyberpunk Red\nComing soon\n\nS1\nStarfinder 1e\nComing soon\n\nWOD\nWorld of Darkness\nComing soon\n\nNEW CHARACTER\n\nLOAD CHARACTER\n\nCAMPAIGN MANAGER\nChoose a local Drive-synced folder under ⚙ Settings → Google Drive to enable the Campaign Manager.\n\nDM TOOLKIT\nBrowse Equipment Catalog\nBrowse Spell Catalog\nBr",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-f6-mr-Z9j7UZ/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "settings-tab-google-drive-save",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/6badc5b8-ae3b-4359-80c5-cd0b1598973e/scratchpad/sd36/f6/mr/smoke-full/settings-tab-google-drive-save.png",
+    "rendered_excerpt": "⚙\n\nP1\nPathfinder 1e\nFantasy d20\n\nSA\nSolarus Arcanum\nComing soon\n\nTM\nTraveller MGT 2e\nComing soon\n\nCR\nCyberpunk Red\nComing soon\n\nS1\nStarfinder 1e\nComing soon\n\nWOD\nWorld of Darkness\nComing soon\n\nNEW CHARACTER\n\nLOAD CHARACTER\n\nCAMPAIGN MANAGER\n\nDM TOOLKIT\nBrowse Equipment Catalog\nBrowse Spell Catalog\nBrowse Class Progression\nBrowse Race Traits\nBrowse Monster Catalog\nBrowse Companion Catalog\nBrowse In",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-f6-mr-Z9j7UZ/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "equipment-catalog-open-and-search",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/6badc5b8-ae3b-4359-80c5-cd0b1598973e/scratchpad/sd36/f6/mr/smoke-full/equipment-catalog-open-and-search.png",
+    "rendered_excerpt": "⚙\nEquipment Catalog\nBack\nEvery real corpus record the engine knows about — 8119 items across 29 ingested books: Core Rulebook, Advanced Player's Guide, Advanced Class Guide, Bestiary 1, Advanced Race Guide, Pathfinder Unchained, AG, B2, B3, B4, BB, BOTD2, HA, ISC, ISG, ISI, ISM, ISR, ISTEM, ISWG, MC, MYTHIC, OA, UC, UE, UI, UM, UPSI and UW. Not what any one character has equipped. 2791 carry no fl",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-f6-mr-Z9j7UZ/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "equipment-catalog-chip-filter-and-back",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/6badc5b8-ae3b-4359-80c5-cd0b1598973e/scratchpad/sd36/f6/mr/smoke-full/equipment-catalog-chip-filter-and-back.png",
+    "rendered_excerpt": "⚙\n\nP1\nPathfinder 1e\nFantasy d20\n\nSA\nSolarus Arcanum\nComing soon\n\nTM\nTraveller MGT 2e\nComing soon\n\nCR\nCyberpunk Red\nComing soon\n\nS1\nStarfinder 1e\nComing soon\n\nWOD\nWorld of Darkness\nComing soon\n\nNEW CHARACTER\n\nLOAD CHARACTER\n\nCAMPAIGN MANAGER\n\nDM TOOLKIT\nBrowse Equipment Catalog\nBrowse Spell Catalog\nBrowse Class Progression\nBrowse Race Traits\nBrowse Monster Catalog\nBrowse Companion Catalog\nBrowse In",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-f6-mr-Z9j7UZ/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "spell-catalog-open-and-search",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/6badc5b8-ae3b-4359-80c5-cd0b1598973e/scratchpad/sd36/f6/mr/smoke-full/spell-catalog-open-and-search.png",
+    "rendered_excerpt": "⚙\nSpell Catalog\nBack\nEvery real corpus record the engine knows about — 2481 spells across the Core Rulebook, Advanced Player's Guide, Advanced Class Guide, Advanced Race Guide, Ultimate Intrigue, Ultimate Magic, Occult Adventures, Ultimate Combat, Inner Sea Gods and Ultimate Wilderness. Not what any one character has selected. 32 carry no school in the corpus and appear only under “All”. Level sho",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-f6-mr-Z9j7UZ/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "spell-catalog-chip-filter-and-back",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/6badc5b8-ae3b-4359-80c5-cd0b1598973e/scratchpad/sd36/f6/mr/smoke-full/spell-catalog-chip-filter-and-back.png",
+    "rendered_excerpt": "⚙\n\nP1\nPathfinder 1e\nFantasy d20\n\nSA\nSolarus Arcanum\nComing soon\n\nTM\nTraveller MGT 2e\nComing soon\n\nCR\nCyberpunk Red\nComing soon\n\nS1\nStarfinder 1e\nComing soon\n\nWOD\nWorld of Darkness\nComing soon\n\nNEW CHARACTER\n\nLOAD CHARACTER\n\nCAMPAIGN MANAGER\n\nDM TOOLKIT\nBrowse Equipment Catalog\nBrowse Spell Catalog\nBrowse Class Progression\nBrowse Race Traits\nBrowse Monster Catalog\nBrowse Companion Catalog\nBrowse In",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-f6-mr-Z9j7UZ/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "class-catalog-open-and-search",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/6badc5b8-ae3b-4359-80c5-cd0b1598973e/scratchpad/sd36/f6/mr/smoke-full/class-catalog-open-and-search.png",
+    "rendered_excerpt": "⚙\nClass Progression\nBack\nEvery real corpus-grounded level row the engine knows about — 1818 rows across 127 classes. Not what any one character has selected.\n\nAll (1818)\nBarbarian (20)\nBard (20)\nCleric (20)\nDruid (20)\nFighter (20)\nMonk (20)\nPaladin (20)\nRanger (20)\nRogue (20)\nSorcerer (20)\nWizard (20)\nUnchained Barbarian (20)\nUnchained Monk (20)\nUnchained Rogue (20)\nUnchained Summoner (20)\nAldori ",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-f6-mr-Z9j7UZ/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "class-catalog-back",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/6badc5b8-ae3b-4359-80c5-cd0b1598973e/scratchpad/sd36/f6/mr/smoke-full/class-catalog-back.png",
+    "rendered_excerpt": "⚙\n\nP1\nPathfinder 1e\nFantasy d20\n\nSA\nSolarus Arcanum\nComing soon\n\nTM\nTraveller MGT 2e\nComing soon\n\nCR\nCyberpunk Red\nComing soon\n\nS1\nStarfinder 1e\nComing soon\n\nWOD\nWorld of Darkness\nComing soon\n\nNEW CHARACTER\n\nLOAD CHARACTER\n\nCAMPAIGN MANAGER\n\nDM TOOLKIT\nBrowse Equipment Catalog\nBrowse Spell Catalog\nBrowse Class Progression\nBrowse Race Traits\nBrowse Monster Catalog\nBrowse Companion Catalog\nBrowse In",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-f6-mr-Z9j7UZ/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "race-catalog-open-and-search",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/6badc5b8-ae3b-4359-80c5-cd0b1598973e/scratchpad/sd36/f6/mr/smoke-full/race-catalog-open-and-search.png",
+    "rendered_excerpt": "⚙\nRace Traits\nBack\nStandard traits\nAlternate racial traits\nEvery real corpus-grounded racial trait the engine knows about — 373 trait rows across 39 races. Not what any one character has selected.\n\nAll (373)\nAasimar (9)\nCatfolk (9)\nChangeling (9)\nDhampir (12)\nDrow (13)\nDuergar (10)\nDwarf (12)\nElf (9)\nFetchling (11)\nGillman (9)\nGnome (12)\nGoblin (7)\nGrippli (10)\nHalf-Elf (10)\nHalf-Orc (9)\nHalfling ",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-f6-mr-Z9j7UZ/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "race-catalog-alternate-traits-tab",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/6badc5b8-ae3b-4359-80c5-cd0b1598973e/scratchpad/sd36/f6/mr/smoke-full/race-catalog-alternate-traits-tab.png",
+    "rendered_excerpt": "⚙\nRace Traits\nBack\nStandard traits\nAlternate racial traits\nAlternate racial traits from every ingested book — 415 alternate racial traits across 39 races. Choosing one replaces the standard trait it names; the engine resolves the swap, this screen only shows it.\n\nCorpus finding: 2 standard trait row(s) declare a multi-flag `!PREFACT` gate whose trailing flags the single-valued `suppressed_by_flag`",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-f6-mr-Z9j7UZ/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "race-catalog-back",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/6badc5b8-ae3b-4359-80c5-cd0b1598973e/scratchpad/sd36/f6/mr/smoke-full/race-catalog-back.png",
+    "rendered_excerpt": "⚙\n\nP1\nPathfinder 1e\nFantasy d20\n\nSA\nSolarus Arcanum\nComing soon\n\nTM\nTraveller MGT 2e\nComing soon\n\nCR\nCyberpunk Red\nComing soon\n\nS1\nStarfinder 1e\nComing soon\n\nWOD\nWorld of Darkness\nComing soon\n\nNEW CHARACTER\n\nLOAD CHARACTER\n\nCAMPAIGN MANAGER\n\nDM TOOLKIT\nBrowse Equipment Catalog\nBrowse Spell Catalog\nBrowse Class Progression\nBrowse Race Traits\nBrowse Monster Catalog\nBrowse Companion Catalog\nBrowse In",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-f6-mr-Z9j7UZ/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "monster-catalog-open-and-search",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/6badc5b8-ae3b-4359-80c5-cd0b1598973e/scratchpad/sd36/f6/mr/smoke-full/monster-catalog-open-and-search.png",
+    "rendered_excerpt": "⚙\nMonster Catalog\nBack\nEvery real stat block the engine knows about, across Bestiary 1, Bonus Bestiary, Monster Codex, Book of the Damned, Volume 1, Book of the Damned, Volume 2, Inner Sea World Guide, Bestiary 2, Bestiary 3, Bestiary 4, Inner Sea Bestiary, Inner Sea Gods, Ultimate Psionics, HA and OA — 1243 monsters. Armor Class, hit points and saves are not shown because they are not ingested: P",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-f6-mr-Z9j7UZ/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "monster-catalog-back",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/6badc5b8-ae3b-4359-80c5-cd0b1598973e/scratchpad/sd36/f6/mr/smoke-full/monster-catalog-back.png",
+    "rendered_excerpt": "⚙\n\nP1\nPathfinder 1e\nFantasy d20\n\nSA\nSolarus Arcanum\nComing soon\n\nTM\nTraveller MGT 2e\nComing soon\n\nCR\nCyberpunk Red\nComing soon\n\nS1\nStarfinder 1e\nComing soon\n\nWOD\nWorld of Darkness\nComing soon\n\nNEW CHARACTER\n\nLOAD CHARACTER\n\nCAMPAIGN MANAGER\n\nDM TOOLKIT\nBrowse Equipment Catalog\nBrowse Spell Catalog\nBrowse Class Progression\nBrowse Race Traits\nBrowse Monster Catalog\nBrowse Companion Catalog\nBrowse In",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-f6-mr-Z9j7UZ/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "companion-catalog-open-and-search",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/6badc5b8-ae3b-4359-80c5-cd0b1598973e/scratchpad/sd36/f6/mr/smoke-full/companion-catalog-open-and-search.png",
+    "rendered_excerpt": "⚙\nCompanion Catalog\nBack\nEvery companion and familiar the engine has ingested, across Inner Sea Combat, Monster Codex, Inner Sea Intrigue, Horror Adventures, Bestiary 5, Bestiary 6, Bestiary 2, Bestiary 1, Bestiary 3, Bestiary 4, Ultimate Wilderness, Core Rulebook, Ultimate Magic, Advanced Race Guide, Advanced Player's Guide and Book of the Damned, Volume 1 — 452 creatures. Hit points, Armor Class",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-f6-mr-Z9j7UZ/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "companion-catalog-back",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/6badc5b8-ae3b-4359-80c5-cd0b1598973e/scratchpad/sd36/f6/mr/smoke-full/companion-catalog-back.png",
+    "rendered_excerpt": "⚙\n\nP1\nPathfinder 1e\nFantasy d20\n\nSA\nSolarus Arcanum\nComing soon\n\nTM\nTraveller MGT 2e\nComing soon\n\nCR\nCyberpunk Red\nComing soon\n\nS1\nStarfinder 1e\nComing soon\n\nWOD\nWorld of Darkness\nComing soon\n\nNEW CHARACTER\n\nLOAD CHARACTER\n\nCAMPAIGN MANAGER\n\nDM TOOLKIT\nBrowse Equipment Catalog\nBrowse Spell Catalog\nBrowse Class Progression\nBrowse Race Traits\nBrowse Monster Catalog\nBrowse Companion Catalog\nBrowse In",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-f6-mr-Z9j7UZ/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "intelligent-item-catalog-open-and-search",
+    "status": "red",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/6badc5b8-ae3b-4359-80c5-cd0b1598973e/scratchpad/sd36/f6/mr/smoke-full/intelligent-item-catalog-open-and-search.FAILED.png",
+    "rendered_excerpt": "⚙\nIntelligent Item Components\nBack\nEvery purchasable ability score, alignment, communication, sense, power and purpose option for building an intelligent (or Mythic legendary) magic item — 0 components. An item’s total Ego score is never shown as one number here: which components a specific item carries is a choice this reference does not make for you, so each row states its own literal contributi",
+    "reason": "marker not found on screen: 'Speech'",
+    "app_data_root": "/tmp/codex-ui-smoke-f6-mr-Z9j7UZ/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "intelligent-item-catalog-back",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/6badc5b8-ae3b-4359-80c5-cd0b1598973e/scratchpad/sd36/f6/mr/smoke-full/intelligent-item-catalog-back.png",
+    "rendered_excerpt": "⚙\n\nP1\nPathfinder 1e\nFantasy d20\n\nSA\nSolarus Arcanum\nComing soon\n\nTM\nTraveller MGT 2e\nComing soon\n\nCR\nCyberpunk Red\nComing soon\n\nS1\nStarfinder 1e\nComing soon\n\nWOD\nWorld of Darkness\nComing soon\n\nNEW CHARACTER\n\nLOAD CHARACTER\n\nCAMPAIGN MANAGER\n\nDM TOOLKIT\nBrowse Equipment Catalog\nBrowse Spell Catalog\nBrowse Class Progression\nBrowse Race Traits\nBrowse Monster Catalog\nBrowse Companion Catalog\nBrowse In",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-f6-mr-Z9j7UZ/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "corpus-ingest-diagnostic",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/6badc5b8-ae3b-4359-80c5-cd0b1598973e/scratchpad/sd36/f6/mr/smoke-full/corpus-ingest-diagnostic.png",
+    "rendered_excerpt": "⚙\nCorpus Ingest Diagnostic\nBack\nReal ingested state of every rule book landed in rules_tables — not a sample. Sketch scope: 36 books.\n\nCRB\npopulated\nclasses: 11 · companions: 170 · equipment: 2977 · feats: 185 · races: 7 · spells: 664\nLast ingested: 2026-09-23T07:53:45-04:00\nAPG\npopulated\nclasses: 6 · companions: 17 · equipment: 338 · feats: 172 · spells: 297\nLast ingested: 2026-09-12T01:52:25-04:",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-f6-mr-Z9j7UZ/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "create-character-render",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/6badc5b8-ae3b-4359-80c5-cd0b1598973e/scratchpad/sd36/f6/mr/smoke-full/create-character-render.png",
+    "rendered_excerpt": "⚙\nCreate a character\nBack\nCharacter name\n\nPlayer name\n\nRace\n\nClass\n\nBarbarian is fully computed at every level offered here.\n\nBarbarian 1: BAB +1 · Fort +2 · Ref +0 · Will +0\n\nLevel\n\nHP\n15\nAlignment\n\nDeity\n\nPhysical Attributes\nSize\nMedium\nSex\n\nVision\nDarkvision 60 ft.\nHeight\n4'1\"\n🎲\nWeight\n171 lb\n🎲\nAge\n\nEyes\n\nHair\n\nRacial Traits\n+2 Constitution, +2 Wisdom, -2 Charisma · Racial trait (CRB)\nDwarves",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-f6-mr-Z9j7UZ/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "create-character-fill-and-submit",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/6badc5b8-ae3b-4359-80c5-cd0b1598973e/scratchpad/sd36/f6/mr/smoke-full/create-character-fill-and-submit.png",
+    "rendered_excerpt": "⚙\nCreate a character\nBack\nCharacter name\n\nPlayer name\n\nRace\n\nClass\n\nWizard is fully computed at every level offered here.\n\nWizard 1: BAB +0 · Fort +0 · Ref +0 · Will +2\n\nLevel\n\nHP\n7\nAlignment\n\nDeity\n\nPhysical Attributes\nSize\nMedium\nSex\n\nVision\nLow-light vision\nHeight\n5'10\"\n🎲\nWeight\n124 lb\n🎲\nAge\n\nEyes\n\nHair\n\nRacial Traits\n+2 Dexterity, +2 Intelligence, -2 Constitution · Racial trait (CRB)\nElves a",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-f6-mr-Z9j7UZ/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [
+        "8682d71a-cdb7-4953-94e0-3e683865fdbb"
+      ],
+      "deleted": [
+        "8682d71a-cdb7-4953-94e0-3e683865fdbb"
+      ],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "create-character-back",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/6badc5b8-ae3b-4359-80c5-cd0b1598973e/scratchpad/sd36/f6/mr/smoke-full/create-character-back.png",
+    "rendered_excerpt": "⚙\n\nP1\nPathfinder 1e\nFantasy d20\n\nSA\nSolarus Arcanum\nComing soon\n\nTM\nTraveller MGT 2e\nComing soon\n\nCR\nCyberpunk Red\nComing soon\n\nS1\nStarfinder 1e\nComing soon\n\nWOD\nWorld of Darkness\nComing soon\n\nNEW CHARACTER\n\nLOAD CHARACTER\n\nCAMPAIGN MANAGER\n\nDM TOOLKIT\nBrowse Equipment Catalog\nBrowse Spell Catalog\nBrowse Class Progression\nBrowse Race Traits\nBrowse Monster Catalog\nBrowse Companion Catalog\nBrowse In",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-f6-mr-Z9j7UZ/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "create-character-samurai",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/6badc5b8-ae3b-4359-80c5-cd0b1598973e/scratchpad/sd36/f6/mr/smoke-full/create-character-samurai.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nF4 Smoke Alpha — Samurai 1\nPROGRESSION\n«\n\nLevel\n1\n+\nCaster Level\n—\nRACE\nHuman\nCLASS\nSamurai 1\nLevel 1 Samurai\nSkill points: 5\nFeat\nNEXT\nLevel 2 Samurai\nSkill points: 5\nCharacter Name\nF4 Smoke Alpha\nCampaign\n—\nABILITIES\n\nSTR\n18\n+4\nDEX\n14\n+2\nCON\n14\n+2\nINT\n10\n+0\nWIS\n12\n+1\nCHA\n8\n-1\nINITIATIVE\n+2\nHIT POINTS\n12 / 12\nARMOR CLASS\n\nAC\n17\nTOUCH\n13\nFLAT-FOOTED\n14\nATTACK\n\nBAB\n+1\nMELEE\n+6\nCMB\n+5\nCMD",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-f6-mr-Z9j7UZ/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [
+        "1290a907-e3cd-498b-a8e7-08464d09fa28"
+      ],
+      "deleted": [
+        "1290a907-e3cd-498b-a8e7-08464d09fa28"
+      ],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "create-character-magus",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/6badc5b8-ae3b-4359-80c5-cd0b1598973e/scratchpad/sd36/f6/mr/smoke-full/create-character-magus.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nF4 Smoke Bravo — Magus 1\nPROGRESSION\n«\n\nLevel\n1\n+\nCaster Level\n1\nRACE\nHuman\nCLASS\nMagus 1\nLevel 1 Magus\nSkill points: 3\nFeat\nNEXT\nLevel 2 Magus\nSkill points: 3\nCharacter Name\nF4 Smoke Bravo\nCampaign\n—\nABILITIES\n\nSTR\n18\n+4\nDEX\n14\n+2\nCON\n14\n+2\nINT\n10\n+0\nWIS\n12\n+1\nCHA\n8\n-1\nINITIATIVE\n+2\nHIT POINTS\n10 / 10\nARMOR CLASS\n\nAC\n17\nTOUCH\n13\nFLAT-FOOTED\n14\nATTACK\n\nBAB\n+0\nMELEE\n+5\nCMB\n+4\nCMD\n16\nSAVI",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-f6-mr-Z9j7UZ/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [
+        "b2ec73a4-4568-4360-b33d-01ab7fc4149d"
+      ],
+      "deleted": [
+        "b2ec73a4-4568-4360-b33d-01ab7fc4149d"
+      ],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "create-character-warrior",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/6badc5b8-ae3b-4359-80c5-cd0b1598973e/scratchpad/sd36/f6/mr/smoke-full/create-character-warrior.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nF4 Smoke Charlie — Warrior 1\nPROGRESSION\n«\n\nLevel\n1\n+\nCaster Level\n—\nRACE\nHuman\nCLASS\nWarrior 1\nLevel 1 Warrior\nSkill points: 3\nFeat\nNEXT\nLevel 2 Warrior\nSkill points: 3\nCharacter Name\nF4 Smoke Charlie\nCampaign\n—\nABILITIES\n\nSTR\n18\n+4\nDEX\n14\n+2\nCON\n14\n+2\nINT\n10\n+0\nWIS\n12\n+1\nCHA\n8\n-1\nINITIATIVE\n+2\nHIT POINTS\n12 / 12\nARMOR CLASS\n\nAC\n17\nTOUCH\n13\nFLAT-FOOTED\n14\nATTACK\n\nBAB\n+1\nMELEE\n+6\nCMB\n+5",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-f6-mr-Z9j7UZ/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [
+        "71e08c56-9788-4b6a-a561-29ae5d8abf7f"
+      ],
+      "deleted": [
+        "71e08c56-9788-4b6a-a561-29ae5d8abf7f"
+      ],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "sheet-f6a-samurai-weapons",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/6badc5b8-ae3b-4359-80c5-cd0b1598973e/scratchpad/sd36/f6/mr/smoke-full/sheet-f6a-samurai-weapons.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nF4 Smoke Alpha — Samurai 1\nPROGRESSION\n«\n\nLevel\n1\n+\nCaster Level\n—\nRACE\nHuman\nCLASS\nSamurai 1\nLevel 1 Samurai\nSkill points: 5\nFeat\nNEXT\nLevel 2 Samurai\nSkill points: 5\nCharacter Name\nF4 Smoke Alpha\nCampaign\n—\nABILITIES\n\nSTR\n18\n+4\nDEX\n14\n+2\nCON\n14\n+2\nINT\n10\n+0\nWIS\n12\n+1\nCHA\n8\n-1\nINITIATIVE\n+2\nHIT POINTS\n12 / 12\nARMOR CLASS\n\nAC\n17\nTOUCH\n13\nFLAT-FOOTED\n14\nATTACK\n\nBAB\n+1\nMELEE\n+6\nCMB\n+5\nCMD",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-f6-mr-Z9j7UZ/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [
+        "a3172630-28b7-4929-b6b2-21f764e30369"
+      ],
+      "deleted": [
+        "a3172630-28b7-4929-b6b2-21f764e30369"
+      ],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "sheet-f6a-warrior-weapons",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/6badc5b8-ae3b-4359-80c5-cd0b1598973e/scratchpad/sd36/f6/mr/smoke-full/sheet-f6a-warrior-weapons.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nF4 Smoke Charlie — Warrior 1\nPROGRESSION\n«\n\nLevel\n1\n+\nCaster Level\n—\nRACE\nHuman\nCLASS\nWarrior 1\nLevel 1 Warrior\nSkill points: 3\nFeat\nNEXT\nLevel 2 Warrior\nSkill points: 3\nCharacter Name\nF4 Smoke Charlie\nCampaign\n—\nABILITIES\n\nSTR\n18\n+4\nDEX\n14\n+2\nCON\n14\n+2\nINT\n10\n+0\nWIS\n12\n+1\nCHA\n8\n-1\nINITIATIVE\n+2\nHIT POINTS\n12 / 12\nARMOR CLASS\n\nAC\n17\nTOUCH\n13\nFLAT-FOOTED\n14\nATTACK\n\nBAB\n+1\nMELEE\n+6\nCMB\n+5",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-f6-mr-Z9j7UZ/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [
+        "8e9aedc5-321b-4774-989f-6c02e55d2b60"
+      ],
+      "deleted": [
+        "8e9aedc5-321b-4774-989f-6c02e55d2b60"
+      ],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "sheet-f6a-magus-caster-level",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/6badc5b8-ae3b-4359-80c5-cd0b1598973e/scratchpad/sd36/f6/mr/smoke-full/sheet-f6a-magus-caster-level.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nF4 Smoke Bravo — Magus 1\nPROGRESSION\n«\n\nLevel\n1\n+\nCaster Level\n1\nRACE\nHuman\nCLASS\nMagus 1\nLevel 1 Magus\nSkill points: 3\nFeat\nNEXT\nLevel 2 Magus\nSkill points: 3\nCharacter Name\nF4 Smoke Bravo\nCampaign\n—\nABILITIES\n\nSTR\n18\n+4\nDEX\n14\n+2\nCON\n14\n+2\nINT\n10\n+0\nWIS\n12\n+1\nCHA\n8\n-1\nINITIATIVE\n+2\nHIT POINTS\n10 / 10\nARMOR CLASS\n\nAC\n17\nTOUCH\n13\nFLAT-FOOTED\n14\nATTACK\n\nBAB\n+0\nMELEE\n+5\nCMB\n+4\nCMD\n16\nSAVI",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-f6-mr-Z9j7UZ/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [
+        "8698d5b6-07a7-483f-b1d8-dcab3e9c3ebf"
+      ],
+      "deleted": [
+        "8698d5b6-07a7-483f-b1d8-dcab3e9c3ebf"
+      ],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "sheet-f6c-shaman-no-domain-line",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/6badc5b8-ae3b-4359-80c5-cd0b1598973e/scratchpad/sd36/f6/mr/smoke-full/sheet-f6c-shaman-no-domain-line.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nF6 Smoke India — Shaman 1\nPROGRESSION\n«\n\nLevel\n1\n+\nCaster Level\n1\nRACE\nHuman\nCLASS\nShaman 1\nLevel 1 Shaman\nSkill points: 5\nFeat\nNEXT\nLevel 2 Shaman\nSkill points: 5\nCharacter Name\nF6 Smoke India\nCampaign\n—\nABILITIES\n\nSTR\n18\n+4\nDEX\n14\n+2\nCON\n14\n+2\nINT\n10\n+0\nWIS\n12\n+1\nCHA\n8\n-1\nINITIATIVE\n+2\nHIT POINTS\n10 / 10\nARMOR CLASS\n\nAC\n17\nTOUCH\n13\nFLAT-FOOTED\n14\nATTACK\n\nBAB\n+0\nMELEE\n+1\nCMB\n+4\nCMD\n16\n",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-f6-mr-Z9j7UZ/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [
+        "1648fa3d-83d5-4959-bd3b-68bd6e7a0081"
+      ],
+      "deleted": [
+        "1648fa3d-83d5-4959-bd3b-68bd6e7a0081"
+      ],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "create-character-kineticist",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/6badc5b8-ae3b-4359-80c5-cd0b1598973e/scratchpad/sd36/f6/mr/smoke-full/create-character-kineticist.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nF4 Smoke Delta — Kineticist 1\nPROGRESSION\n«\n\nLevel\n1\n+\nCaster Level\n1\nRACE\nHuman\nCLASS\nKineticist 1\nLevel 1 Kineticist\nSkill points: 5\nFeat\nNEXT\nLevel 2 Kineticist\nSkill points: 5\nCharacter Name\nF4 Smoke Delta\nCampaign\n—\nABILITIES\n\nSTR\n18\n+4\nDEX\n14\n+2\nCON\n14\n+2\nINT\n10\n+0\nWIS\n12\n+1\nCHA\n8\n-1\nINITIATIVE\n+2\nHIT POINTS\n10 / 10\nARMOR CLASS\n\nAC\n17\nTOUCH\n13\nFLAT-FOOTED\n14\nATTACK\n\nBAB\n+0\nMELEE\n+",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-f6-mr-Z9j7UZ/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [
+        "ecb3d3c4-e69d-44ee-8319-2b035df6b80f"
+      ],
+      "deleted": [
+        "ecb3d3c4-e69d-44ee-8319-2b035df6b80f"
+      ],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "create-character-inquisitor-generic",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/6badc5b8-ae3b-4359-80c5-cd0b1598973e/scratchpad/sd36/f6/mr/smoke-full/create-character-inquisitor-generic.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nF4 Smoke Echo — Inquisitor 1\nPROGRESSION\n«\n\nLevel\n1\n+\nCaster Level\n1\nRACE\nHuman\nCLASS\nInquisitor 1\nLevel 1 Inquisitor\nSkill points: 7\nFeat\nNEXT\nLevel 2 Inquisitor\nSkill points: 7\nCharacter Name\nF4 Smoke Echo\nCampaign\n—\nABILITIES\n\nSTR\n18\n+4\nDEX\n14\n+2\nCON\n14\n+2\nINT\n10\n+0\nWIS\n12\n+1\nCHA\n8\n-1\nINITIATIVE\n+2\nHIT POINTS\n10 / 10\nARMOR CLASS\n\nAC\n17\nTOUCH\n13\nFLAT-FOOTED\n14\nATTACK\n\nBAB\n+0\nMELEE\n+1\n",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-f6-mr-Z9j7UZ/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [
+        "fbdd4b99-64e0-4117-bf2f-f0845a689c4f"
+      ],
+      "deleted": [
+        "fbdd4b99-64e0-4117-bf2f-f0845a689c4f"
+      ],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "load-character-render",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/6badc5b8-ae3b-4359-80c5-cd0b1598973e/scratchpad/sd36/f6/mr/smoke-full/load-character-render.png",
+    "rendered_excerpt": "⚙\nLoad Character\n\n\nF4 Smoke Echo\nHuman Inquisitor 1\nLast modified: Sep 27, 2026\n\nAldric Ironhand\nHuman Fighter 3\nLast modified: Dec 31, 2025\n\nElowen Ashgrave\nHuman Wizard 5\nLast modified: Dec 31, 2025\nSelect a character to preview, then press Load for the full sheet.\nLoad\nDelete\nExport\nClone\nImport\nCancel",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-f6-mr-Z9j7UZ/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "load-character-select-and-open",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/6badc5b8-ae3b-4359-80c5-cd0b1598973e/scratchpad/sd36/f6/mr/smoke-full/load-character-select-and-open.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nSmoke Test PC — Wizard 1\nPROGRESSION\n«\n\nLevel\n1\n+\nCaster Level\n1\nRACE\nElf\nCLASS\nWizard 1\nLevel 1 Wizard\nSkill points: 3\nFeat\nNEXT\nLevel 2 Wizard\nSkill points: 3\nCharacter Name\nSmoke Test PC\nCampaign\n—\nABILITIES\n\nSTR\n16\n+3\nDEX\n16\n+3\nCON\n12\n+1\nINT\n12\n+1\nWIS\n12\n+1\nCHA\n8\n-1\nINITIATIVE\n+3\nHIT POINTS\n7 / 7\nARMOR CLASS\n\nAC\n17\nTOUCH\n13\nFLAT-FOOTED\n14\nATTACK\n\nBAB\n+0\nMELEE\n+0\nCMB\n+3\nCMD\n16\nSAVING",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-f6-mr-Z9j7UZ/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [
+        "2cea283b-9714-4f8e-9c0c-0b2e973de253"
+      ],
+      "deleted": [
+        "2cea283b-9714-4f8e-9c0c-0b2e973de253"
+      ],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "load-seed-list-both",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/6badc5b8-ae3b-4359-80c5-cd0b1598973e/scratchpad/sd36/f6/mr/smoke-full/load-seed-list-both.png",
+    "rendered_excerpt": "⚙\nLoad Character\n\n\nSmoke Test PC\nElf Wizard 1\nLast modified: Sep 27, 2026\n\nAldric Ironhand\nHuman Fighter 3\nLast modified: Dec 31, 2025\n\nElowen Ashgrave\nHuman Wizard 5\nLast modified: Dec 31, 2025\nSelect a character to preview, then press Load for the full sheet.\nLoad\nDelete\nExport\nClone\nImport\nCancel",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-f6-mr-Z9j7UZ/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "load-character-delete-clone",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/6badc5b8-ae3b-4359-80c5-cd0b1598973e/scratchpad/sd36/f6/mr/smoke-full/load-character-delete-clone.png",
+    "rendered_excerpt": "⚙\nLoad Character\n\n\nSmoke Test PC\nElf Wizard 1\nLast modified: Sep 27, 2026\n\nAldric Ironhand\nHuman Fighter 3\nLast modified: Dec 31, 2025\n\nElowen Ashgrave\nHuman Wizard 5\nLast modified: Dec 31, 2025\nSelect a character to preview, then press Load for the full sheet.\nDeleted Smoke Test PC (Copy).\nLoad\nDelete\nExport\nClone\nImport\nCancel",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-f6-mr-Z9j7UZ/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [
+        "5b1ec147-26ca-4075-adb2-9efc5e2bf260"
+      ],
+      "deleted": [
+        "5b1ec147-26ca-4075-adb2-9efc5e2bf260"
+      ],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "sheet-open-for-tabs",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/6badc5b8-ae3b-4359-80c5-cd0b1598973e/scratchpad/sd36/f6/mr/smoke-full/sheet-open-for-tabs.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nSmoke Test PC — Wizard 1\nPROGRESSION\n«\n\nLevel\n1\n+\nCaster Level\n1\nRACE\nElf\nCLASS\nWizard 1\nLevel 1 Wizard\nSkill points: 3\nFeat\nNEXT\nLevel 2 Wizard\nSkill points: 3\nCharacter Name\nSmoke Test PC\nCampaign\n—\nABILITIES\n\nSTR\n16\n+3\nDEX\n16\n+3\nCON\n12\n+1\nINT\n12\n+1\nWIS\n12\n+1\nCHA\n8\n-1\nINITIATIVE\n+3\nHIT POINTS\n7 / 7\nARMOR CLASS\n\nAC\n17\nTOUCH\n13\nFLAT-FOOTED\n14\nATTACK\n\nBAB\n+0\nMELEE\n+0\nCMB\n+3\nCMD\n16\nSAVING",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-f6-mr-Z9j7UZ/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [
+        "0d04fe4a-ed9f-4536-a5b5-25d72e1215f4"
+      ],
+      "deleted": [
+        "0d04fe4a-ed9f-4536-a5b5-25d72e1215f4"
+      ],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "sheet-tab-weapons",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/6badc5b8-ae3b-4359-80c5-cd0b1598973e/scratchpad/sd36/f6/mr/smoke-full/sheet-tab-weapons.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nSmoke Test PC — Wizard 1\nPROGRESSION\n«\n\nLevel\n1\n+\nCaster Level\n1\nRACE\nElf\nCLASS\nWizard 1\nLevel 1 Wizard\nSkill points: 3\nFeat\nNEXT\nLevel 2 Wizard\nSkill points: 3\nCharacter Name\nSmoke Test PC\nCampaign\n—\nABILITIES\n\nSTR\n16\n+3\nDEX\n16\n+3\nCON\n12\n+1\nINT\n12\n+1\nWIS\n12\n+1\nCHA\n8\n-1\nINITIATIVE\n+3\nHIT POINTS\n7 / 7\nARMOR CLASS\n\nAC\n17\nTOUCH\n13\nFLAT-FOOTED\n14\nATTACK\n\nBAB\n+0\nMELEE\n+0\nCMB\n+3\nCMD\n16\nSAVING",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-f6-mr-Z9j7UZ/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [
+        "26718e8a-4055-465e-aa9b-ea366c6ab0bd"
+      ],
+      "deleted": [
+        "26718e8a-4055-465e-aa9b-ea366c6ab0bd"
+      ],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "sheet-tab-defense",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/6badc5b8-ae3b-4359-80c5-cd0b1598973e/scratchpad/sd36/f6/mr/smoke-full/sheet-tab-defense.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nSmoke Test PC — Wizard 1\nPROGRESSION\n«\n\nLevel\n1\n+\nCaster Level\n1\nRACE\nElf\nCLASS\nWizard 1\nLevel 1 Wizard\nSkill points: 3\nFeat\nNEXT\nLevel 2 Wizard\nSkill points: 3\nCharacter Name\nSmoke Test PC\nCampaign\n—\nABILITIES\n\nSTR\n16\n+3\nDEX\n16\n+3\nCON\n12\n+1\nINT\n12\n+1\nWIS\n12\n+1\nCHA\n8\n-1\nINITIATIVE\n+3\nHIT POINTS\n7 / 7\nARMOR CLASS\n\nAC\n17\nTOUCH\n13\nFLAT-FOOTED\n14\nATTACK\n\nBAB\n+0\nMELEE\n+0\nCMB\n+3\nCMD\n16\nSAVING",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-f6-mr-Z9j7UZ/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [
+        "9ff1f465-227b-4827-a206-7af46b774684"
+      ],
+      "deleted": [
+        "9ff1f465-227b-4827-a206-7af46b774684"
+      ],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "sheet-tab-gear",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/6badc5b8-ae3b-4359-80c5-cd0b1598973e/scratchpad/sd36/f6/mr/smoke-full/sheet-tab-gear.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nSmoke Test PC — Wizard 1\nPROGRESSION\n«\n\nLevel\n1\n+\nCaster Level\n1\nRACE\nElf\nCLASS\nWizard 1\nLevel 1 Wizard\nSkill points: 3\nFeat\nNEXT\nLevel 2 Wizard\nSkill points: 3\nCharacter Name\nSmoke Test PC\nCampaign\n—\nABILITIES\n\nSTR\n16\n+3\nDEX\n16\n+3\nCON\n12\n+1\nINT\n12\n+1\nWIS\n12\n+1\nCHA\n8\n-1\nINITIATIVE\n+3\nHIT POINTS\n7 / 7\nARMOR CLASS\n\nAC\n17\nTOUCH\n13\nFLAT-FOOTED\n14\nATTACK\n\nBAB\n+0\nMELEE\n+0\nCMB\n+3\nCMD\n16\nSAVING",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-f6-mr-Z9j7UZ/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [
+        "571a412d-3e3c-40c7-af06-0cce52a39afa"
+      ],
+      "deleted": [
+        "571a412d-3e3c-40c7-af06-0cce52a39afa"
+      ],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "sheet-tab-spells",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/6badc5b8-ae3b-4359-80c5-cd0b1598973e/scratchpad/sd36/f6/mr/smoke-full/sheet-tab-spells.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nSmoke Test PC — Wizard 1\nPROGRESSION\n«\n\nLevel\n1\n+\nCaster Level\n1\nRACE\nElf\nCLASS\nWizard 1\nLevel 1 Wizard\nSkill points: 3\nFeat\nNEXT\nLevel 2 Wizard\nSkill points: 3\nCharacter Name\nSmoke Test PC\nCampaign\n—\nABILITIES\n\nSTR\n16\n+3\nDEX\n16\n+3\nCON\n12\n+1\nINT\n12\n+1\nWIS\n12\n+1\nCHA\n8\n-1\nINITIATIVE\n+3\nHIT POINTS\n7 / 7\nARMOR CLASS\n\nAC\n17\nTOUCH\n13\nFLAT-FOOTED\n14\nATTACK\n\nBAB\n+0\nMELEE\n+0\nCMB\n+3\nCMD\n16\nSAVING",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-f6-mr-Z9j7UZ/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [
+        "58911518-0078-44dd-a117-daac03d4664c"
+      ],
+      "deleted": [
+        "58911518-0078-44dd-a117-daac03d4664c"
+      ],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "sheet-tab-pets",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/6badc5b8-ae3b-4359-80c5-cd0b1598973e/scratchpad/sd36/f6/mr/smoke-full/sheet-tab-pets.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nSmoke Test PC — Wizard 1\nPROGRESSION\n«\n\nLevel\n1\n+\nCaster Level\n1\nRACE\nElf\nCLASS\nWizard 1\nLevel 1 Wizard\nSkill points: 3\nFeat\nNEXT\nLevel 2 Wizard\nSkill points: 3\nCharacter Name\nSmoke Test PC\nCampaign\n—\nABILITIES\n\nSTR\n16\n+3\nDEX\n16\n+3\nCON\n12\n+1\nINT\n12\n+1\nWIS\n12\n+1\nCHA\n8\n-1\nINITIATIVE\n+3\nHIT POINTS\n7 / 7\nARMOR CLASS\n\nAC\n17\nTOUCH\n13\nFLAT-FOOTED\n14\nATTACK\n\nBAB\n+0\nMELEE\n+0\nCMB\n+3\nCMD\n16\nSAVING",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-f6-mr-Z9j7UZ/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [
+        "acadec75-5a97-4cef-a440-a6e74d1e27da"
+      ],
+      "deleted": [
+        "acadec75-5a97-4cef-a440-a6e74d1e27da"
+      ],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "sheet-tab-feats",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/6badc5b8-ae3b-4359-80c5-cd0b1598973e/scratchpad/sd36/f6/mr/smoke-full/sheet-tab-feats.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nSmoke Test PC — Wizard 1\nPROGRESSION\n«\n\nLevel\n1\n+\nCaster Level\n1\nRACE\nElf\nCLASS\nWizard 1\nLevel 1 Wizard\nSkill points: 3\nFeat\nNEXT\nLevel 2 Wizard\nSkill points: 3\nCharacter Name\nSmoke Test PC\nCampaign\n—\nABILITIES\n\nSTR\n16\n+3\nDEX\n16\n+3\nCON\n12\n+1\nINT\n12\n+1\nWIS\n12\n+1\nCHA\n8\n-1\nINITIATIVE\n+3\nHIT POINTS\n7 / 7\nARMOR CLASS\n\nAC\n17\nTOUCH\n13\nFLAT-FOOTED\n14\nATTACK\n\nBAB\n+0\nMELEE\n+0\nCMB\n+3\nCMD\n16\nSAVING",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-f6-mr-Z9j7UZ/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [
+        "e0324821-8ca3-4730-940c-cd6f52b73f8b"
+      ],
+      "deleted": [
+        "e0324821-8ca3-4730-940c-cd6f52b73f8b"
+      ],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "sheet-tab-actions",
+    "status": "red",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/6badc5b8-ae3b-4359-80c5-cd0b1598973e/scratchpad/sd36/f6/mr/smoke-full/sheet-tab-actions.FAILED.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nSmoke Test PC — Wizard 1\nPROGRESSION\n«\n\nLevel\n1\n+\nCaster Level\n1\nRACE\nElf\nCLASS\nWizard 1\nLevel 1 Wizard\nSkill points: 3\nFeat\nNEXT\nLevel 2 Wizard\nSkill points: 3\nCharacter Name\nSmoke Test PC\nCampaign\n—\nABILITIES\n\nSTR\n16\n+3\nDEX\n16\n+3\nCON\n12\n+1\nINT\n12\n+1\nWIS\n12\n+1\nCHA\n8\n-1\nINITIATIVE\n+3\nHIT POINTS\n7 / 7\nARMOR CLASS\n\nAC\n17\nTOUCH\n13\nFLAT-FOOTED\n14\nATTACK\n\nBAB\n+0\nMELEE\n+0\nCMB\n+3\nCMD\n16\nSAVING",
+    "reason": "forbidden string present: 'failure'",
+    "app_data_root": "/tmp/codex-ui-smoke-f6-mr-Z9j7UZ/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [
+        "9133e11c-71b1-4bd6-8e4a-53a5fca71d4a"
+      ],
+      "deleted": [
+        "9133e11c-71b1-4bd6-8e4a-53a5fca71d4a"
+      ],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "sheet-action-add-armor-gear-picker",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/6badc5b8-ae3b-4359-80c5-cd0b1598973e/scratchpad/sd36/f6/mr/smoke-full/sheet-action-add-armor-gear-picker.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nSmoke Test PC — Wizard 1\nPROGRESSION\n«\n\nLevel\n1\n+\nCaster Level\n1\nRACE\nElf\nCLASS\nWizard 1\nLevel 1 Wizard\nSkill points: 3\nFeat\nNEXT\nLevel 2 Wizard\nSkill points: 3\nCharacter Name\nSmoke Test PC\nCampaign\n—\nABILITIES\n\nSTR\n16\n+3\nDEX\n16\n+3\nCON\n12\n+1\nINT\n12\n+1\nWIS\n12\n+1\nCHA\n8\n-1\nINITIATIVE\n+3\nHIT POINTS\n7 / 7\nARMOR CLASS\n\nAC\n17\nTOUCH\n13\nFLAT-FOOTED\n14\nATTACK\n\nBAB\n+0\nMELEE\n+0\nCMB\n+3\nCMD\n16\nSAVING",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-f6-mr-Z9j7UZ/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [
+        "8f2aeb9c-b154-411e-b6b2-078dce53ea21"
+      ],
+      "deleted": [
+        "8f2aeb9c-b154-411e-b6b2-078dce53ea21"
+      ],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "sheet-action-add-feat",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/6badc5b8-ae3b-4359-80c5-cd0b1598973e/scratchpad/sd36/f6/mr/smoke-full/sheet-action-add-feat.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nSmoke Test PC — Wizard 1\nPROGRESSION\n«\n\nLevel\n1\n+\nCaster Level\n1\nRACE\nElf\nCLASS\nWizard 1\nLevel 1 Wizard\nSkill points: 3\nFeat\nNEXT\nLevel 2 Wizard\nSkill points: 3\nCharacter Name\nSmoke Test PC\nCampaign\n—\nABILITIES\n\nSTR\n16\n+3\nDEX\n16\n+3\nCON\n12\n+1\nINT\n12\n+1\nWIS\n12\n+1\nCHA\n8\n-1\nINITIATIVE\n+3\nHIT POINTS\n7 / 7\nARMOR CLASS\n\nAC\n17\nTOUCH\n13\nFLAT-FOOTED\n14\nATTACK\n\nBAB\n+0\nMELEE\n+0\nCMB\n+3\nCMD\n16\nSAVING",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-f6-mr-Z9j7UZ/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [
+        "9dca8e7e-c0d6-447b-bdc0-0076719072ce"
+      ],
+      "deleted": [
+        "9dca8e7e-c0d6-447b-bdc0-0076719072ce"
+      ],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "sheet-action-add-spell",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/6badc5b8-ae3b-4359-80c5-cd0b1598973e/scratchpad/sd36/f6/mr/smoke-full/sheet-action-add-spell.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nSmoke Test PC — Wizard 1\nPROGRESSION\n«\n\nLevel\n1\n+\nCaster Level\n1\nRACE\nElf\nCLASS\nWizard 1\nLevel 1 Wizard\nSkill points: 3\nFeat\nNEXT\nLevel 2 Wizard\nSkill points: 3\nCharacter Name\nSmoke Test PC\nCampaign\n—\nABILITIES\n\nSTR\n16\n+3\nDEX\n16\n+3\nCON\n12\n+1\nINT\n12\n+1\nWIS\n12\n+1\nCHA\n8\n-1\nINITIATIVE\n+3\nHIT POINTS\n7 / 7\nARMOR CLASS\n\nAC\n17\nTOUCH\n13\nFLAT-FOOTED\n14\nATTACK\n\nBAB\n+0\nMELEE\n+0\nCMB\n+3\nCMD\n16\nSAVING",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-f6-mr-Z9j7UZ/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [
+        "d90f9c6f-991a-4f87-8bda-40e65652b328"
+      ],
+      "deleted": [
+        "d90f9c6f-991a-4f87-8bda-40e65652b328"
+      ],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "sheet-action-level-up-dialog",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/6badc5b8-ae3b-4359-80c5-cd0b1598973e/scratchpad/sd36/f6/mr/smoke-full/sheet-action-level-up-dialog.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nSmoke Test PC — Wizard 1\nPROGRESSION\n«\n\nLevel\n1\n+\nCaster Level\n1\nRACE\nElf\nCLASS\nWizard 1\nLevel 1 Wizard\nSkill points: 3\nFeat\nNEXT\nLevel 2 Wizard\nSkill points: 3\nCharacter Name\nSmoke Test PC\nCampaign\n—\nABILITIES\n\nSTR\n16\n+3\nDEX\n16\n+3\nCON\n12\n+1\nINT\n12\n+1\nWIS\n12\n+1\nCHA\n8\n-1\nINITIATIVE\n+3\nHIT POINTS\n7 / 7\nARMOR CLASS\n\nAC\n17\nTOUCH\n13\nFLAT-FOOTED\n14\nATTACK\n\nBAB\n+0\nMELEE\n+0\nCMB\n+3\nCMD\n16\nSAVING",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-f6-mr-Z9j7UZ/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [
+        "0ead4250-f4f0-41f1-8a62-f6869ea00933"
+      ],
+      "deleted": [
+        "0ead4250-f4f0-41f1-8a62-f6869ea00933"
+      ],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "level-up-fighter6-into-arcane-archer",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/6badc5b8-ae3b-4359-80c5-cd0b1598973e/scratchpad/sd36/f6/mr/smoke-full/level-up-fighter6-into-arcane-archer.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nF4 Smoke Foxtrot — Fighter 6\nPROGRESSION\n«\n\nLevel\n6\n+\nCaster Level\n—\nRACE\nHuman\nCLASS\nFighter 6\nLevel 1 Fighter\nSkill points: 3\nFeat\nLevel 2 Fighter\nSkill points: 3\nLevel 3 Fighter\nSkill points: 3\nFeat\nLevel 4 Fighter\nSkill points: 3\nAbility score increase\nLevel 5 Fighter\nSkill points: 3\nFeat\nLevel 6 Fighter\nSkill points: 3\nNEXT\nLevel 7 Fighter\nSkill points: 3\nFeat\nCharacter Name\nF4 Smo",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-f6-mr-Z9j7UZ/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [
+        "2953dd3c-8004-4e2e-83e2-5b09daef045d"
+      ],
+      "deleted": [
+        "2953dd3c-8004-4e2e-83e2-5b09daef045d"
+      ],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "level-up-fighter6-into-arcane-archer-accept",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/6badc5b8-ae3b-4359-80c5-cd0b1598973e/scratchpad/sd36/f6/mr/smoke-full/level-up-fighter6-into-arcane-archer-accept.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nF4 Smoke Golf — Fighter 6 / Arcane Archer 1\nPROGRESSION\n«\n\nLevel\n7\n+\nCaster Level\n—\nRACE\nHuman\nCLASS\nFighter 6 / Arcane Archer 1\nLevel 1 Fighter\nSkill points: 3\nFeat\nLevel 2 Fighter\nSkill points: 3\nLevel 3 Fighter\nSkill points: 3\nFeat\nLevel 4 Fighter\nSkill points: 3\nAbility score increase\nLevel 5 Fighter\nSkill points: 3\nFeat\nLevel 6 Fighter\nSkill points: 3\nLevel 1 Arcane Archer\nSkill po",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-f6-mr-Z9j7UZ/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [
+        "22e8be9c-1211-45e8-8642-4563f4c61016"
+      ],
+      "deleted": [
+        "22e8be9c-1211-45e8-8642-4563f4c61016"
+      ],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "level-up-fighter6-blockers-and-labels",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/6badc5b8-ae3b-4359-80c5-cd0b1598973e/scratchpad/sd36/f6/mr/smoke-full/level-up-fighter6-blockers-and-labels.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nF6 Smoke Hotel — Fighter 6\nPROGRESSION\n«\n\nLevel\n6\n+\nCaster Level\n—\nRACE\nHuman\nCLASS\nFighter 6\nLevel 1 Fighter\nSkill points: 3\nFeat\nLevel 2 Fighter\nSkill points: 3\nLevel 3 Fighter\nSkill points: 3\nFeat\nLevel 4 Fighter\nSkill points: 3\nAbility score increase\nLevel 5 Fighter\nSkill points: 3\nFeat\nLevel 6 Fighter\nSkill points: 3\nNEXT\nLevel 7 Fighter\nSkill points: 3\nFeat\nCharacter Name\nF6 Smoke",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-f6-mr-Z9j7UZ/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [
+        "515cb123-fbee-4110-8db4-cbf072a704fb"
+      ],
+      "deleted": [
+        "515cb123-fbee-4110-8db4-cbf072a704fb"
+      ],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "sheet-action-skill-allocation-dialog",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/6badc5b8-ae3b-4359-80c5-cd0b1598973e/scratchpad/sd36/f6/mr/smoke-full/sheet-action-skill-allocation-dialog.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nSmoke Test PC — Wizard 1\nPROGRESSION\n«\n\nLevel\n1\n+\nCaster Level\n1\nRACE\nElf\nCLASS\nWizard 1\nLevel 1 Wizard\nSkill points: 3\nFeat\nNEXT\nLevel 2 Wizard\nSkill points: 3\nCharacter Name\nSmoke Test PC\nCampaign\n—\nABILITIES\n\nSTR\n16\n+3\nDEX\n16\n+3\nCON\n12\n+1\nINT\n12\n+1\nWIS\n12\n+1\nCHA\n8\n-1\nINITIATIVE\n+3\nHIT POINTS\n7 / 7\nARMOR CLASS\n\nAC\n17\nTOUCH\n13\nFLAT-FOOTED\n14\nATTACK\n\nBAB\n+0\nMELEE\n+0\nCMB\n+3\nCMD\n16\nSAVING",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-f6-mr-Z9j7UZ/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [
+        "3f86d42e-3178-410f-83dd-ba4a1908d375"
+      ],
+      "deleted": [
+        "3f86d42e-3178-410f-83dd-ba4a1908d375"
+      ],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "sheet-action-hp-adjust",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/6badc5b8-ae3b-4359-80c5-cd0b1598973e/scratchpad/sd36/f6/mr/smoke-full/sheet-action-hp-adjust.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nSmoke Test PC — Wizard 1\nPROGRESSION\n«\n\nLevel\n1\n+\nCaster Level\n1\nRACE\nElf\nCLASS\nWizard 1\nLevel 1 Wizard\nSkill points: 3\nFeat\nNEXT\nLevel 2 Wizard\nSkill points: 3\nCharacter Name\nSmoke Test PC\nCampaign\n—\nABILITIES\n\nSTR\n16\n+3\nDEX\n16\n+3\nCON\n12\n+1\nINT\n12\n+1\nWIS\n12\n+1\nCHA\n8\n-1\nINITIATIVE\n+3\nHIT POINTS\n7 / 7\nARMOR CLASS\n\nAC\n17\nTOUCH\n13\nFLAT-FOOTED\n14\nATTACK\n\nBAB\n+0\nMELEE\n+0\nCMB\n+3\nCMD\n16\nSAVING",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-f6-mr-Z9j7UZ/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [
+        "ab455df5-fb20-45f0-9f8b-f7234fba4d36"
+      ],
+      "deleted": [
+        "ab455df5-fb20-45f0-9f8b-f7234fba4d36"
+      ],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "sheet-action-money-adjust",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/6badc5b8-ae3b-4359-80c5-cd0b1598973e/scratchpad/sd36/f6/mr/smoke-full/sheet-action-money-adjust.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nSmoke Test PC — Wizard 1\nPROGRESSION\n«\n\nLevel\n1\n+\nCaster Level\n1\nRACE\nElf\nCLASS\nWizard 1\nLevel 1 Wizard\nSkill points: 3\nFeat\nNEXT\nLevel 2 Wizard\nSkill points: 3\nCharacter Name\nSmoke Test PC\nCampaign\n—\nABILITIES\n\nSTR\n16\n+3\nDEX\n16\n+3\nCON\n12\n+1\nINT\n12\n+1\nWIS\n12\n+1\nCHA\n8\n-1\nINITIATIVE\n+3\nHIT POINTS\n7 / 7\nARMOR CLASS\n\nAC\n17\nTOUCH\n13\nFLAT-FOOTED\n14\nATTACK\n\nBAB\n+0\nMELEE\n+0\nCMB\n+3\nCMD\n16\nSAVING",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-f6-mr-Z9j7UZ/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [
+        "da1d6eb7-ebcc-4885-bdd4-b22209ec41ae"
+      ],
+      "deleted": [
+        "da1d6eb7-ebcc-4885-bdd4-b22209ec41ae"
+      ],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "sheet-action-trait-add",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/6badc5b8-ae3b-4359-80c5-cd0b1598973e/scratchpad/sd36/f6/mr/smoke-full/sheet-action-trait-add.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nSmoke Test PC — Wizard 1\nPROGRESSION\n«\n\nLevel\n1\n+\nCaster Level\n1\nRACE\nElf\nCLASS\nWizard 1\nLevel 1 Wizard\nSkill points: 3\nFeat\nNEXT\nLevel 2 Wizard\nSkill points: 3\nCharacter Name\nSmoke Test PC\nCampaign\n—\nABILITIES\n\nSTR\n16\n+3\nDEX\n16\n+3\nCON\n12\n+1\nINT\n12\n+1\nWIS\n12\n+1\nCHA\n8\n-1\nINITIATIVE\n+3\nHIT POINTS\n7 / 7\nARMOR CLASS\n\nAC\n17\nTOUCH\n13\nFLAT-FOOTED\n14\nATTACK\n\nBAB\n+0\nMELEE\n+0\nCMB\n+3\nCMD\n16\nSAVING",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-f6-mr-Z9j7UZ/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [
+        "919afd33-8663-40b6-823b-28014191bd6f"
+      ],
+      "deleted": [
+        "919afd33-8663-40b6-823b-28014191bd6f"
+      ],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "sheet-menu-recompute",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/6badc5b8-ae3b-4359-80c5-cd0b1598973e/scratchpad/sd36/f6/mr/smoke-full/sheet-menu-recompute.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nSmoke Test PC — Wizard 1\nPROGRESSION\n«\n\nLevel\n1\n+\nCaster Level\n1\nRecomputed derived stats from the current on-disk build.\n\nRACE\nElf\nCLASS\nWizard 1\nLevel 1 Wizard\nSkill points: 3\nFeat\nNEXT\nLevel 2 Wizard\nSkill points: 3\nCharacter Name\nSmoke Test PC\nCampaign\n—\nABILITIES\n\nSTR\n16\n+3\nDEX\n16\n+3\nCON\n12\n+1\nINT\n12\n+1\nWIS\n12\n+1\nCHA\n8\n-1\nINITIATIVE\n+3\nHIT POINTS\n7 / 7\nARMOR CLASS\n\nAC\n17\nTOUCH\n13\nF",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-f6-mr-Z9j7UZ/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [
+        "c27e96dc-1113-4840-9c70-9dd0ea28ffd3"
+      ],
+      "deleted": [
+        "c27e96dc-1113-4840-9c70-9dd0ea28ffd3"
+      ],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "sheet-menu-clone",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/6badc5b8-ae3b-4359-80c5-cd0b1598973e/scratchpad/sd36/f6/mr/smoke-full/sheet-menu-clone.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nSmoke Test PC — Wizard 1\nPROGRESSION\n«\n\nLevel\n1\n+\nCaster Level\n1\nCloned as \"Smoke Test PC (Copy)\".\n\nRACE\nElf\nCLASS\nWizard 1\nLevel 1 Wizard\nSkill points: 3\nFeat\nNEXT\nLevel 2 Wizard\nSkill points: 3\nCharacter Name\nSmoke Test PC\nCampaign\n—\nABILITIES\n\nSTR\n16\n+3\nDEX\n16\n+3\nCON\n12\n+1\nINT\n12\n+1\nWIS\n12\n+1\nCHA\n8\n-1\nINITIATIVE\n+3\nHIT POINTS\n7 / 7\nARMOR CLASS\n\nAC\n17\nTOUCH\n13\nFLAT-FOOTED\n14\nATTACK\n\nB",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-f6-mr-Z9j7UZ/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [
+        "1aa107ae-008d-4c57-879c-ec83e76a815f",
+        "bdf12d00-ebb2-4a45-b99b-25a27b2b5323"
+      ],
+      "deleted": [
+        "1aa107ae-008d-4c57-879c-ec83e76a815f",
+        "bdf12d00-ebb2-4a45-b99b-25a27b2b5323"
+      ],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "sheet-menu-export",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/6badc5b8-ae3b-4359-80c5-cd0b1598973e/scratchpad/sd36/f6/mr/smoke-full/sheet-menu-export.png",
+    "rendered_excerpt": "⚙\n☰ Menu\nOpen\nRecompute\nClone\nExport\nPrint\n✕\nSmoke Test PC — Wizard 1\nPROGRESSION\n«\n\nLevel\n1\n+\nCaster Level\n1\nRACE\nElf\nCLASS\nWizard 1\nLevel 1 Wizard\nSkill points: 3\nFeat\nNEXT\nLevel 2 Wizard\nSkill points: 3\nCharacter Name\nSmoke Test PC\nCampaign\n—\nABILITIES\n\nSTR\n16\n+3\nDEX\n16\n+3\nCON\n12\n+1\nINT\n12\n+1\nWIS\n12\n+1\nCHA\n8\n-1\nINITIATIVE\n+3\nHIT POINTS\n7 / 7\nARMOR CLASS\n\nAC\n17\nTOUCH\n13\nFLAT-FOOTED\n14\nATTACK\n\nBA",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-f6-mr-Z9j7UZ/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [
+        "1b104aee-ee44-48ea-9ff5-6d1393104bfa"
+      ],
+      "deleted": [
+        "1b104aee-ee44-48ea-9ff5-6d1393104bfa"
+      ],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "sheet-close",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/6badc5b8-ae3b-4359-80c5-cd0b1598973e/scratchpad/sd36/f6/mr/smoke-full/sheet-close.png",
+    "rendered_excerpt": "⚙\nLoad Character\n\n\nSmoke Test PC\nElf Wizard 1\nLast modified: Sep 27, 2026\n\nAldric Ironhand\nHuman Fighter 3\nLast modified: Dec 31, 2025\n\nElowen Ashgrave\nHuman Wizard 5\nLast modified: Dec 31, 2025\nSelect a character to preview, then press Load for the full sheet.\nLoad\nDelete\nExport\nClone\nImport\nCancel",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-f6-mr-Z9j7UZ/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [
+        "8c7a9942-2cb1-4a4e-b071-1c44058e817a"
+      ],
+      "deleted": [
+        "8c7a9942-2cb1-4a4e-b071-1c44058e817a"
+      ],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "dm-toolkit-open-and-kind-tabs",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/6badc5b8-ae3b-4359-80c5-cd0b1598973e/scratchpad/sd36/f6/mr/smoke-full/dm-toolkit-open-and-kind-tabs.png",
+    "rendered_excerpt": "⚙\nDMCAMPAIGN CONSOLE\nWorld\nTimeline\nPlaces\nPeople\nClues\nScenes\nRules\nSmoke Campaign\nExport GM copy\nExport player handout\nEncounter builder\nBack\nWORLD\n0 WORLD NOTES\n+ New world note\n\nNo world notes yet.\n\nNo world notes yet.",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-f6-mr-Z9j7UZ/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "dm-toolkit-create-record",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/6badc5b8-ae3b-4359-80c5-cd0b1598973e/scratchpad/sd36/f6/mr/smoke-full/dm-toolkit-create-record.png",
+    "rendered_excerpt": "⚙\nDMCAMPAIGN CONSOLE\nWorld\nTimeline\nPlaces\nPeople\nClues\nScenes\nRules\n\nExport GM copy\nExport player handout\nEncounter builder\nBack\nWORLD\n1 WORLD NOTES\n+ New world note\n\n\nWORLD NOTE\nGM ONLY\nSmoke Test World Record\nWORLD NOTE\nGM ONLY\nEdit\nDelete\nSmoke Test World Record\nLINKS\n\nNo links yet.\n\nCreate another record to link to.",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-f6-mr-Z9j7UZ/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "dm-toolkit-edit-record",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/6badc5b8-ae3b-4359-80c5-cd0b1598973e/scratchpad/sd36/f6/mr/smoke-full/dm-toolkit-edit-record.png",
+    "rendered_excerpt": "⚙\nDMCAMPAIGN CONSOLE\nWorld\nTimeline\nPlaces\nPeople\nClues\nScenes\nRules\n\nExport GM copy\nExport player handout\nEncounter builder\nBack\nWORLD\n2 WORLD NOTES\n+ New world note\n\n\nWORLD NOTE\nGM ONLY\nSmoke Test World Record Edited\n\nWORLD NOTE\nGM ONLY\nSmoke Test World Record\nWORLD NOTE\nGM ONLY\nEdit\nDelete\nSmoke Test World Record Edited\nLINKS\n\nNo links yet.\n\n\n\nAdd link",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-f6-mr-Z9j7UZ/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "dm-toolkit-delete-record",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/6badc5b8-ae3b-4359-80c5-cd0b1598973e/scratchpad/sd36/f6/mr/smoke-full/dm-toolkit-delete-record.png",
+    "rendered_excerpt": "⚙\nDMCAMPAIGN CONSOLE\nWorld\nTimeline\nPlaces\nPeople\nClues\nScenes\nRules\n\nExport GM copy\nExport player handout\nEncounter builder\nBack\nWORLD\n2 WORLD NOTES\n+ New world note\n\n\nWORLD NOTE\nGM ONLY\nSmoke Test World Record Edited\n\nWORLD NOTE\nGM ONLY\nSmoke Test World Record\nWORLD NOTE\nGM ONLY\nEdit\nDelete\nSmoke Test World Record Edited\nLINKS\n\nNo links yet.\n\n\n\nAdd link",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-f6-mr-Z9j7UZ/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "dm-toolkit-export",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/6badc5b8-ae3b-4359-80c5-cd0b1598973e/scratchpad/sd36/f6/mr/smoke-full/dm-toolkit-export.png",
+    "rendered_excerpt": "⚙\nDMCAMPAIGN CONSOLE\nWorld\nTimeline\nPlaces\nPeople\nClues\nScenes\nRules\n\nExport GM copy\nExport player handout\nEncounter builder\nBack\nWORLD\n2 WORLD NOTES\n+ New world note\n\n\nWORLD NOTE\nGM ONLY\nSmoke Test World Record Edited\n\nWORLD NOTE\nGM ONLY\nSmoke Test World Record\nSelect a record on the left.",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-f6-mr-Z9j7UZ/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "encounter-builder-add-monster-and-rating",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/6badc5b8-ae3b-4359-80c5-cd0b1598973e/scratchpad/sd36/f6/mr/smoke-full/encounter-builder-add-monster-and-rating.png",
+    "rendered_excerpt": "⚙\nDM\nEncounter builder\nstrawman — party-strength rating only; no XP budget, treasure or saving yet\nBack to console\nPARTY\n\nSmoke Test PC\nLevel 1 — read from the saved build by the engine\n×\nADD A SAVED CHARACTER\n\nAldric Ironhand\nElowen Ashgrave\nSmoke Test PC\nADD A TYPED LEVEL\n\nAdd\nMONSTERS\n\n\nAnkheg\nCR 3\n×\n\nAnkheg\nCR 3\nRATING\n\nHard (rulebook Challenging or Hard — merged)\nEvery creature is inside the ",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-f6-mr-Z9j7UZ/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [
+        "8e199a2b-ee80-451d-a5ab-d1290a371a48"
+      ],
+      "deleted": [
+        "8e199a2b-ee80-451d-a5ab-d1290a371a48"
+      ],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "campaign-manager-list",
+    "status": "blocked",
+    "screenshot": null,
+    "rendered_excerpt": null,
+    "reason": "could not reach the landing screen within 6 reset attempts",
+    "app_data_root": "/tmp/codex-ui-smoke-f6-mr-Z9j7UZ/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "campaign-create",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/6badc5b8-ae3b-4359-80c5-cd0b1598973e/scratchpad/sd36/f6/mr/smoke-full/campaign-create.png",
+    "rendered_excerpt": "⚙\nEdit campaign\nBack\nCampaign name\n\nCampaign rule set\n\nCampaign description\n\nCampaign members\n×\n+ Add member\nSave\nParty (0)\nCharacters from your saved list — Drive-synced character sync and format validation aren't wired yet, so this uses the same characters Load Character does.\n\nAldric Ironhand\nHuman Fighter 3\nAdd\nElowen Ashgrave\nHuman Wizard 5\nAdd",
+    "reason": "auto-relaunch",
+    "app_data_root": "/tmp/codex-ui-smoke-f6-mr-Z9j7UZ/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "campaign-edit",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/6badc5b8-ae3b-4359-80c5-cd0b1598973e/scratchpad/sd36/f6/mr/smoke-full/campaign-edit.png",
+    "rendered_excerpt": "⚙\nCampaign Manager\n\n\nSmoke Campaign\nPathfinder 1e · 0 in party\nUpdated Sep 27, 2026\n\nSmoke Campaign\nPathfinder 1e · 0 in party\nUpdated Sep 27, 2026\n\nSmoke Campaign\nPathfinder 1e · 0 in party\nUpdated Sep 27, 2026\n\nSmoke Campaign\nPathfinder 1e · 0 in party\nUpdated Sep 27, 2026\n\nSmoke Campaign\nPathfinder 1e · 0 in party\nUpdated Sep 27, 2026\n\nSmoke Campaign\nPathfinder 1e · 0 in party\nUpdated Sep 27, 2",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-f6-mr-Z9j7UZ/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "campaign-sheet-tabs",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/6badc5b8-ae3b-4359-80c5-cd0b1598973e/scratchpad/sd36/f6/mr/smoke-full/campaign-sheet-tabs.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nSmoke Campaign — Pathfinder 1e\nPARTY (0)\n\nNo party members yet — add some from Edit Campaign.\n\nParty Resources\nAdventure Log\nMaps\nWiki\n+\nNothing here yet.\n\nSelect an entry on the left, or add a new one.\n\nEntries are saved locally for now; syncing them as markdown files to the campaign's Drive folder is not yet wired.",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-f6-mr-Z9j7UZ/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "manual-character-import",
+    "status": "manual",
+    "screenshot": null,
+    "rendered_excerpt": null,
+    "reason": "handleImport opens a native OS file-open dialog (Tauri's dialog plugin) -- xdotool has no DOM to drive inside it.",
+    "app_data_root": "/tmp/codex-ui-smoke-f6-mr-Z9j7UZ/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "manual-character-export",
+    "status": "manual",
+    "screenshot": null,
+    "rendered_excerpt": null,
+    "reason": "handleExport / the sheet menu's 'Export' item open a native OS file-save dialog.",
+    "app_data_root": "/tmp/codex-ui-smoke-f6-mr-Z9j7UZ/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "manual-portrait-upload",
+    "status": "manual",
+    "screenshot": null,
+    "rendered_excerpt": null,
+    "reason": "PortraitUpload opens a native OS file-open dialog for the image file.",
+    "app_data_root": "/tmp/codex-ui-smoke-f6-mr-Z9j7UZ/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "load-seed-wizard-fireball",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/6badc5b8-ae3b-4359-80c5-cd0b1598973e/scratchpad/sd36/f6/mr/smoke-full/load-seed-wizard-fireball.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nElowen Ashgrave — Wizard 5\nPROGRESSION\n«\n\nLevel\n5\n+\nCaster Level\n5\nRACE\nHuman\nCLASS\nWizard 5\nLevel 1 Wizard\nSkill points: 7\nFeat\nLevel 2 Wizard\nSkill points: 7\nLevel 3 Wizard\nSkill points: 7\nFeat\nLevel 4 Wizard\nSkill points: 7\nAbility score increase\nLevel 5 Wizard\nSkill points: 7\nFeat\nNEXT\nLevel 6 Wizard\nSkill points: 7\nCharacter Name\nElowen Ashgrave\nCampaign\n—\nABILITIES\n\nSTR\n8\n-1\nDEX\n1",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-f6-mr-Z9j7UZ/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  }
+]

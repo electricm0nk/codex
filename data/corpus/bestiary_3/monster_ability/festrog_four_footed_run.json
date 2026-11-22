@@ -1,0 +1,57 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Festrog ~ Four-Footed Run",
+    "delivery": "Extraordinary",
+    "description": "A festrog can run on all fours at speed of 50 feet if it doesn't hold or carry anything in its hands. When running on all fours, it is treated as if it had the Run feat.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:festrog_four_footed_run",
+    "name": "Four-Footed Run",
+    "owners": [
+      "bestiary_3:monster:festrog"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A festrog can run on all fours at speed of 50 feet if it doesn't hold or carry anything in its hands. When running on all fours, it is treated as if it had the Run feat."
+      },
+      {
+        "key": "KEY",
+        "value": "Festrog ~ Four-Footed Run"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.115"
+      },
+      {
+        "key": "TYPE",
+        "value": "FestrogRacialAbility.SpecialQuality.Extraordinary"
+      }
+    ],
+    "source_page": "p.115",
+    "traits": [
+      "FestrogRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T10:26:03Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 841,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Festrog ~ Four-Footed Run",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

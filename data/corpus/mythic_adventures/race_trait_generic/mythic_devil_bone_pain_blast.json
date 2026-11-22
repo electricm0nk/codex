@@ -1,0 +1,46 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Mythic Devil (Bone) ~ Pain Blast",
+    "name": "Pain Blast",
+    "description": "Once per round as a free action, a bone devil can stimulate extreme pain in one creature within its reach. The creature takes a -4 penalty on attack rolls, skill checks, and ability checks until the start of the devil's next turn or until it moves at least 60 feet away from the devil.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Devil (Bone) ~ Pain Blast"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Devil (Bone) Trait.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "Once per round as a free action, a bone devil can stimulate extreme pain in one creature within its reach. The creature takes a -4 penalty on attack rolls, skill checks, and ability checks until the start of the devil's next turn or until it moves at least 60 feet away from the devil."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities_race.lst",
+    "sha256": "9dc17c2fc1ba84d040fb04d6175b48b6ff52cc30ad113933d5dff3d75ea2652a",
+    "line": 107,
+    "record_key": "Mythic Devil (Bone) ~ Pain Blast"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

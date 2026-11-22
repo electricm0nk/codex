@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Psychic ~ Deflecting Mind",
+    "name": "Deflecting Mind",
+    "class": "Sorcerer",
+    "description": "You gain a +%1 bonus to your saves against enchantment spells and effects, and a +%2 deflection bonus to AC while maintaining psionic focus.|DeflectingMindSaveBonus|DeflectingMndACBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Psychic ~ Deflecting Mind"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Sorcerer Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DeflectingMindSaveBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DeflectingMndACBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a +%1 bonus to your saves against enchantment spells and effects, and a +%2 deflection bonus to AC while maintaining psionic focus.|DeflectingMindSaveBonus|DeflectingMndACBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|AC|DeflectingMndACBonus*PsionicFocusActive|TYPE=Deflection"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DeflectingMindSaveBonus|floor((BloodlineLVL+5)/4)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DeflectingMndACBonus|floor((BloodlineLVL+1)/4)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.295"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1110,
+    "record_key": "Psychic ~ Deflecting Mind"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

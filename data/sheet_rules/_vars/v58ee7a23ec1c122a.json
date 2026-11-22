@@ -1,0 +1,1 @@
+{"var":"v58ee7a23ec1c122a","label":"Rake Size","declared_by":["bestiary:monster_ability:rake"],"contributions":[{"rule_id":"bestiary:monster_ability:rake","expr":{"Var":"v1d4b8fa6c6670ddc"},"when":"Always"}],"provenance":{"outside_corpus_rows":["pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst:318"]}}

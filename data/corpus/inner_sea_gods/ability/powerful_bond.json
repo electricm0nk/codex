@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Domain Power ~ Powerful Bond",
+    "name": "Powerful Bond",
+    "description": "As a free action, you can open a link to communicate telepathically with a single ally within 60 feet. The telepathic link is two-way and lasts for 1 minute. Unlike normal telepathy, this ability requires a shared language. You can use this ability %1 times per day.|DomainGoodTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Domain Power ~ Powerful Bond"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.DomainPower"
+      },
+      {
+        "key": "DESC",
+        "value": "As a free action, you can open a link to communicate telepathically with a single ally within 60 feet. The telepathic link is two-way and lasts for 1 minute. Unlike normal telepathy, this ability requires a shared language. You can use this ability %1 times per day.|DomainGoodTimes"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.225"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|DomainGoodTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per Day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities.lst",
+    "sha256": "e31ff7fb4fed812ae719cb19526442b9b9c9575efc25c169c06690f7a236fafd",
+    "line": 270,
+    "record_key": "Domain Power ~ Powerful Bond"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

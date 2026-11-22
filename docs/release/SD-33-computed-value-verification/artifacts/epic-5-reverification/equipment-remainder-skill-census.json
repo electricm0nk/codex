@@ -1,0 +1,941 @@
+{
+  "items": [
+    {
+      "unit_id": "book_of_the_damned_volume_2:equipment:demon_senses",
+      "book": "book_of_the_damned_volume_2",
+      "key": "Demon Senses",
+      "skill": "Perception",
+      "bonus": 8,
+      "corpus_path": "data/corpus/book_of_the_damned_volume_2/equipment/demon_senses.json"
+    },
+    {
+      "unit_id": "inner_sea_gods:equipment:besmara_s_bicorne",
+      "book": "inner_sea_gods",
+      "key": "Besmara's Bicorne",
+      "skill": "Acrobatics,Climb",
+      "bonus": 2,
+      "corpus_path": "data/corpus/inner_sea_gods/equipment/besmara_s_bicorne.json"
+    },
+    {
+      "unit_id": "core_rulebook:equipment:robe_of_eyes",
+      "book": "core_rulebook",
+      "key": "Robe of Eyes",
+      "skill": "Perception",
+      "bonus": 10,
+      "corpus_path": "data/corpus/core_rulebook/equipment/magic_items/robe_of_eyes.json"
+    },
+    {
+      "unit_id": "core_rulebook:equipment:lens_of_detection",
+      "book": "core_rulebook",
+      "key": "Lens of Detection",
+      "skill": "Perception",
+      "bonus": 5,
+      "corpus_path": "data/corpus/core_rulebook/equipment/magic_items/lens_of_detection.json"
+    },
+    {
+      "unit_id": "inner_sea_gods:equipment:ring_of_unquenchable_passions",
+      "book": "inner_sea_gods",
+      "key": "Ring Of Unquenchable Passions",
+      "skill": "Acrobatics",
+      "bonus": 5,
+      "corpus_path": "data/corpus/inner_sea_gods/equipment/ring_of_unquenchable_passions.json"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:rod_sapling",
+      "book": "ultimate_equipment",
+      "key": "Rod (Sapling)",
+      "skill": "Survival",
+      "bonus": 5,
+      "corpus_path": "data/corpus/ultimate_equipment/equipment/rod_sapling.json"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:robe_of_vermin",
+      "book": "ultimate_equipment",
+      "key": "Robe of Vermin",
+      "skill": "ALL",
+      "bonus": -2,
+      "corpus_path": "data/corpus/ultimate_equipment/equipment/robe_of_vermin.json"
+    },
+    {
+      "unit_id": "core_rulebook:equipment:eyes_of_the_eagle",
+      "book": "core_rulebook",
+      "key": "Eyes of the Eagle",
+      "skill": "Perception",
+      "bonus": 5,
+      "corpus_path": "data/corpus/core_rulebook/equipment/magic_items/eyes_of_the_eagle.json"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:horsemaster_s_saddle_mount",
+      "book": "ultimate_equipment",
+      "key": "Horsemaster's Saddle (Mount)",
+      "skill": "Acrobatics",
+      "bonus": 5,
+      "corpus_path": "data/corpus/ultimate_equipment/equipment/horsemaster_s_saddle_mount.json"
+    },
+    {
+      "unit_id": "advanced_race_guide:equipment:halfling_jugglesticks",
+      "book": "advanced_race_guide",
+      "key": "Halfling Jugglesticks",
+      "skill": "Perform (Comedy)",
+      "bonus": 2,
+      "corpus_path": "data/corpus/advanced_race_guide/equipment/general/halfling_jugglesticks.json"
+    },
+    {
+      "unit_id": "ultimate_psionics:equipment:leather_of_confined_spaces",
+      "book": "ultimate_psionics",
+      "key": "Leather of Confined Spaces",
+      "skill": "Escape Artist",
+      "bonus": 5,
+      "corpus_path": "data/corpus/ultimate_psionics/equipment/leather_of_confined_spaces.json"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:ring_of_the_sea_strider",
+      "book": "ultimate_equipment",
+      "key": "Ring of the Sea Strider",
+      "skill": "Swim",
+      "bonus": 8,
+      "corpus_path": "data/corpus/ultimate_equipment/equipment/ring_of_the_sea_strider.json"
+    },
+    {
+      "unit_id": "core_rulebook:equipment:ring_of_swimming",
+      "book": "core_rulebook",
+      "key": "Ring of Swimming",
+      "skill": "Swim",
+      "bonus": 5,
+      "corpus_path": "data/corpus/core_rulebook/equipment/magic_items/ring_of_swimming.json"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:crown_of_conquest",
+      "book": "ultimate_equipment",
+      "key": "Crown of Conquest",
+      "skill": "Intimidate",
+      "bonus": 4,
+      "corpus_path": "data/corpus/ultimate_equipment/equipment/crown_of_conquest.json"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:rod_trap_stealer_s",
+      "book": "ultimate_equipment",
+      "key": "Rod (Trap-Stealer's)",
+      "skill": "Disable Device",
+      "bonus": 4,
+      "corpus_path": "data/corpus/ultimate_equipment/equipment/rod_trap_stealer_s.json"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:suzerain_scepter",
+      "book": "ultimate_equipment",
+      "key": "Suzerain Scepter",
+      "skill": "Knowledge (Nobility),Diplomacy",
+      "bonus": 5,
+      "corpus_path": "data/corpus/ultimate_equipment/equipment/suzerain_scepter.json"
+    },
+    {
+      "unit_id": "core_rulebook:equipment:gloves_of_swimming_and_climbing",
+      "book": "core_rulebook",
+      "key": "Gloves of Swimming and Climbing",
+      "skill": "Swim,Climb",
+      "bonus": 5,
+      "corpus_path": "data/corpus/core_rulebook/equipment/magic_items/gloves_of_swimming_and_climbing.json"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:unlucky_figurine",
+      "book": "ultimate_equipment",
+      "key": "Unlucky Figurine",
+      "skill": "ALL",
+      "bonus": -2,
+      "corpus_path": "data/corpus/ultimate_equipment/equipment/unlucky_figurine.json"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:ring_of_maniacal_devices",
+      "book": "ultimate_equipment",
+      "key": "Ring of Maniacal Devices",
+      "skill": "Craft (Traps),Disable Device",
+      "bonus": 5,
+      "corpus_path": "data/corpus/ultimate_equipment/equipment/ring_of_maniacal_devices.json"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:heritage_book",
+      "book": "ultimate_equipment",
+      "key": "Heritage Book",
+      "skill": "Knowledge (Nobility)",
+      "bonus": 2,
+      "corpus_path": "data/corpus/ultimate_equipment/equipment/heritage_book.json"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:lenses_of_detection",
+      "book": "ultimate_equipment",
+      "key": "Lenses of Detection",
+      "skill": "Perception",
+      "bonus": 5,
+      "corpus_path": "data/corpus/ultimate_equipment/equipment/lenses_of_detection.json"
+    },
+    {
+      "unit_id": "advanced_players_guide:equipment:alchemist_s_lab_portable",
+      "book": "advanced_players_guide",
+      "key": "Alchemist's Lab (Portable)",
+      "skill": "Craft (Alchemy)",
+      "bonus": 2,
+      "corpus_path": "data/corpus/advanced_players_guide/equipment/alchemist_s_lab_portable.json"
+    },
+    {
+      "unit_id": "core_rulebook:equipment:boots_of_elvenkind",
+      "book": "core_rulebook",
+      "key": "Boots of Elvenkind",
+      "skill": "Acrobatics",
+      "bonus": 5,
+      "corpus_path": "data/corpus/core_rulebook/equipment/magic_items/boots_of_elvenkind.json"
+    },
+    {
+      "unit_id": "inner_sea_gods:equipment:deadeye_s_spotter_ring",
+      "book": "inner_sea_gods",
+      "key": "Deadeye's Spotter Ring",
+      "skill": "Perception,Survival",
+      "bonus": 2,
+      "corpus_path": "data/corpus/inner_sea_gods/equipment/deadeye_s_spotter_ring.json"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:stalker_s_mask",
+      "book": "ultimate_equipment",
+      "key": "Stalker's Mask",
+      "skill": "Stealth",
+      "bonus": 5,
+      "corpus_path": "data/corpus/ultimate_equipment/equipment/stalker_s_mask.json"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:musical_staff",
+      "book": "ultimate_equipment",
+      "key": "Musical Staff",
+      "skill": "Perform (String Instruments),Perform (Wind Instruments)",
+      "bonus": 5,
+      "corpus_path": "data/corpus/ultimate_equipment/equipment/musical_staff.json"
+    },
+    {
+      "unit_id": "core_rulebook:equipment:alchemist_s_lab",
+      "book": "core_rulebook",
+      "key": "Alchemist's Lab",
+      "skill": "Craft (Alchemy)",
+      "bonus": 2,
+      "corpus_path": "data/corpus/core_rulebook/equipment/general/alchemist_s_lab.json"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:seducer_s_bane",
+      "book": "ultimate_equipment",
+      "key": "Seducer's Bane",
+      "skill": "Sense Motive",
+      "bonus": 5,
+      "corpus_path": "data/corpus/ultimate_equipment/equipment/seducer_s_bane.json"
+    },
+    {
+      "unit_id": "ultimate_psionics:equipment:eyes_of_expanded_vision",
+      "book": "ultimate_psionics",
+      "key": "Eyes of Expanded Vision",
+      "skill": "Perception",
+      "bonus": 1,
+      "corpus_path": "data/corpus/ultimate_psionics/equipment/eyes_of_expanded_vision.json"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:xorn_robe",
+      "book": "ultimate_equipment",
+      "key": "Xorn Robe",
+      "skill": "Perception",
+      "bonus": 5,
+      "corpus_path": "data/corpus/ultimate_equipment/equipment/xorn_robe.json"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:mask_of_a_thousand_tomes",
+      "book": "ultimate_equipment",
+      "key": "Mask of a Thousand Tomes",
+      "skill": "TYPE=Knowledge",
+      "bonus": 10,
+      "corpus_path": "data/corpus/ultimate_equipment/equipment/mask_of_a_thousand_tomes.json"
+    },
+    {
+      "unit_id": "core_rulebook:equipment:ioun_stone_pale_green_prism",
+      "book": "core_rulebook",
+      "key": "Ioun Stone (Pale green Prism)",
+      "skill": "TYPE.Base",
+      "bonus": 1,
+      "corpus_path": "data/corpus/core_rulebook/equipment/magic_items/ioun_stone_pale_green_prism.json"
+    },
+    {
+      "unit_id": "core_rulebook:equipment:healer_s_kit",
+      "book": "core_rulebook",
+      "key": "Healer's Kit",
+      "skill": "Heal",
+      "bonus": 2,
+      "corpus_path": "data/corpus/core_rulebook/equipment/general/healer_s_kit.json"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:pliant_gloves",
+      "book": "ultimate_equipment",
+      "key": "Pliant Gloves",
+      "skill": "Escape Artist,Acrobatics",
+      "bonus": 5,
+      "corpus_path": "data/corpus/ultimate_equipment/equipment/pliant_gloves.json"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:horsemaster_s_saddle",
+      "book": "ultimate_equipment",
+      "key": "Horsemaster's Saddle",
+      "skill": "Ride",
+      "bonus": 5,
+      "corpus_path": "data/corpus/ultimate_equipment/equipment/horsemaster_s_saddle.json"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:boots_of_the_mastodon",
+      "book": "ultimate_equipment",
+      "key": "Boots of the Mastodon",
+      "skill": "Stealth",
+      "bonus": -2,
+      "corpus_path": "data/corpus/ultimate_equipment/equipment/boots_of_the_mastodon.json"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:trapspringer_s_gloves",
+      "book": "ultimate_equipment",
+      "key": "Trapspringer's Gloves",
+      "skill": "Disable Device",
+      "bonus": 5,
+      "corpus_path": "data/corpus/ultimate_equipment/equipment/trapspringer_s_gloves.json"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:healer_s_gloves",
+      "book": "ultimate_equipment",
+      "key": "Healer's Gloves",
+      "skill": "Heal",
+      "bonus": 5,
+      "corpus_path": "data/corpus/ultimate_equipment/equipment/healer_s_gloves.json"
+    },
+    {
+      "unit_id": "advanced_players_guide:equipment:ring_of_maniacal_devices",
+      "book": "advanced_players_guide",
+      "key": "Ring of Maniacal Devices",
+      "skill": "Craft (Traps),Disable Device",
+      "bonus": 5,
+      "corpus_path": "data/corpus/advanced_players_guide/equipment/ring_of_maniacal_devices.json"
+    },
+    {
+      "unit_id": "inner_sea_gods:equipment:silent_blade_vest",
+      "book": "inner_sea_gods",
+      "key": "Silent Blade Vest",
+      "skill": "Sleight of Hand",
+      "bonus": 5,
+      "corpus_path": "data/corpus/inner_sea_gods/equipment/silent_blade_vest.json"
+    },
+    {
+      "unit_id": "advanced_class_guide:equipment:hunter_s_sight",
+      "book": "advanced_class_guide",
+      "key": "Hunter's Sight",
+      "skill": "Perception",
+      "bonus": -2,
+      "corpus_path": "data/corpus/advanced_class_guide/equipment/hunter_s_sight.json"
+    },
+    {
+      "unit_id": "ultimate_psionics:equipment:crystal_mask_discernment",
+      "book": "ultimate_psionics",
+      "key": "Crystal Mask (Discernment)",
+      "skill": "Sense Motive",
+      "bonus": 10,
+      "corpus_path": "data/corpus/ultimate_psionics/equipment/crystal_mask_discernment.json"
+    },
+    {
+      "unit_id": "core_rulebook:equipment:cloak_of_the_bat",
+      "book": "core_rulebook",
+      "key": "Cloak of the Bat",
+      "skill": "Stealth",
+      "bonus": 5,
+      "corpus_path": "data/corpus/core_rulebook/equipment/magic_items/cloak_of_the_bat.json"
+    },
+    {
+      "unit_id": "ultimate_psionics:equipment:crystal_mask_detection",
+      "book": "ultimate_psionics",
+      "key": "Crystal Mask (Detection)",
+      "skill": "Perception",
+      "bonus": 10,
+      "corpus_path": "data/corpus/ultimate_psionics/equipment/crystal_mask_detection.json"
+    },
+    {
+      "unit_id": "core_rulebook:equipment:vest_of_escape",
+      "book": "core_rulebook",
+      "key": "Vest of Escape",
+      "skill": "Disable Device",
+      "bonus": 4,
+      "corpus_path": "data/corpus/core_rulebook/equipment/magic_items/vest_of_escape.json"
+    },
+    {
+      "unit_id": "core_rulebook:equipment:disguise_kit",
+      "book": "core_rulebook",
+      "key": "Disguise Kit",
+      "skill": "Disguise",
+      "bonus": 2,
+      "corpus_path": "data/corpus/core_rulebook/equipment/general/disguise_kit.json"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:pirate_s_eye_patch",
+      "book": "ultimate_equipment",
+      "key": "Pirate's Eye Patch",
+      "skill": "Swim,Climb",
+      "bonus": 2,
+      "corpus_path": "data/corpus/ultimate_equipment/equipment/pirate_s_eye_patch.json"
+    },
+    {
+      "unit_id": "ultimate_psionics:equipment:psychoactive_skin_chameleon",
+      "book": "ultimate_psionics",
+      "key": "Psychoactive Skin (Chameleon)",
+      "skill": "Stealth",
+      "bonus": 10,
+      "corpus_path": "data/corpus/ultimate_psionics/equipment/psychoactive_skin_chameleon.json"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:headband_of_stupidity",
+      "book": "ultimate_equipment",
+      "key": "Headband of Stupidity",
+      "skill": "TYPE.Knowledge",
+      "bonus": -2,
+      "corpus_path": "data/corpus/ultimate_equipment/equipment/headband_of_stupidity.json"
+    },
+    {
+      "unit_id": "advanced_class_guide:equipment:ring_of_eloquence",
+      "book": "advanced_class_guide",
+      "key": "Ring of Eloquence",
+      "skill": "Bluff,Diplomacy,Intimidate,Perform (Oratory)",
+      "bonus": 2,
+      "corpus_path": "data/corpus/advanced_class_guide/equipment/ring_of_eloquence.json"
+    },
+    {
+      "unit_id": "advanced_players_guide:equipment:cauldron_of_brewing",
+      "book": "advanced_players_guide",
+      "key": "Cauldron of Brewing",
+      "skill": "Craft (Alchemy)",
+      "bonus": 5,
+      "corpus_path": "data/corpus/advanced_players_guide/equipment/cauldron_of_brewing.json"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:headband_of_counterspelling",
+      "book": "ultimate_equipment",
+      "key": "Headband of Counterspelling",
+      "skill": "Spellcraft",
+      "bonus": 5,
+      "corpus_path": "data/corpus/ultimate_equipment/equipment/headband_of_counterspelling.json"
+    },
+    {
+      "unit_id": "ultimate_psionics:equipment:crystal_mask_dread",
+      "book": "ultimate_psionics",
+      "key": "Crystal Mask (Dread)",
+      "skill": "Intimidate",
+      "bonus": 10,
+      "corpus_path": "data/corpus/ultimate_psionics/equipment/crystal_mask_dread.json"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:prestidigitator_s_cloak",
+      "book": "ultimate_equipment",
+      "key": "Prestidigitator's Cloak",
+      "skill": "Sleight of Hand",
+      "bonus": 8,
+      "corpus_path": "data/corpus/ultimate_equipment/equipment/prestidigitator_s_cloak.json"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:gloves_of_larceny",
+      "book": "ultimate_equipment",
+      "key": "Gloves of Larceny",
+      "skill": "Sleight of Hand",
+      "bonus": 5,
+      "corpus_path": "data/corpus/ultimate_equipment/equipment/gloves_of_larceny.json"
+    },
+    {
+      "unit_id": "advanced_race_guide:equipment:cloak_of_the_diplomat",
+      "book": "advanced_race_guide",
+      "key": "Cloak of the Diplomat",
+      "skill": "Diplomacy,Sense Motive",
+      "bonus": 5,
+      "corpus_path": "data/corpus/advanced_race_guide/equipment/magic_items/cloak_of_the_diplomat.json"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:mask_of_ugliness",
+      "book": "ultimate_equipment",
+      "key": "Mask of Ugliness",
+      "skill": "Bluff,Diplomacy",
+      "bonus": -4,
+      "corpus_path": "data/corpus/ultimate_equipment/equipment/mask_of_ugliness.json"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:ring_of_tactical_precision",
+      "book": "ultimate_equipment",
+      "key": "Ring of Tactical Precision",
+      "skill": "Profession (Soldier)",
+      "bonus": 5,
+      "corpus_path": "data/corpus/ultimate_equipment/equipment/ring_of_tactical_precision.json"
+    },
+    {
+      "unit_id": "ultimate_psionics:equipment:meld_stone_alchemist",
+      "book": "ultimate_psionics",
+      "key": "Meld Stone (Alchemist)",
+      "skill": "Craft (Alchemy)",
+      "bonus": 8,
+      "corpus_path": "data/corpus/ultimate_psionics/equipment/meld_stone_alchemist.json"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:judge_s_wig",
+      "book": "ultimate_equipment",
+      "key": "Judge's Wig",
+      "skill": "Diplomacy,Intimidate",
+      "bonus": 4,
+      "corpus_path": "data/corpus/ultimate_equipment/equipment/judge_s_wig.json"
+    },
+    {
+      "unit_id": "advanced_race_guide:equipment:training_harness",
+      "book": "advanced_race_guide",
+      "key": "Training Harness",
+      "skill": "Handle Animal",
+      "bonus": 2,
+      "corpus_path": "data/corpus/advanced_race_guide/equipment/general/training_harness.json"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:serpent_belt",
+      "book": "ultimate_equipment",
+      "key": "Serpent Belt",
+      "skill": "Escape Artist",
+      "bonus": 2,
+      "corpus_path": "data/corpus/ultimate_equipment/equipment/serpent_belt.json"
+    },
+    {
+      "unit_id": "ultimate_psionics:equipment:ring_self_sufficiency",
+      "book": "ultimate_psionics",
+      "key": "Ring (Self Sufficiency)",
+      "skill": "Autohypnosis",
+      "bonus": 10,
+      "corpus_path": "data/corpus/ultimate_psionics/equipment/ring_self_sufficiency.json"
+    },
+    {
+      "unit_id": "core_rulebook:equipment:cloak_of_elvenkind",
+      "book": "core_rulebook",
+      "key": "Cloak of Elvenkind",
+      "skill": "Stealth",
+      "bonus": 5,
+      "corpus_path": "data/corpus/core_rulebook/equipment/magic_items/cloak_of_elvenkind.json"
+    },
+    {
+      "unit_id": "ultimate_psionics:equipment:shadow_shirt",
+      "book": "ultimate_psionics",
+      "key": "Shadow Shirt",
+      "skill": "Stealth",
+      "bonus": 5,
+      "corpus_path": "data/corpus/ultimate_psionics/equipment/shadow_shirt.json"
+    },
+    {
+      "unit_id": "core_rulebook:equipment:climber_s_kit",
+      "book": "core_rulebook",
+      "key": "Climber's Kit",
+      "skill": "Climb",
+      "bonus": 2,
+      "corpus_path": "data/corpus/core_rulebook/equipment/general/climber_s_kit.json"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:serpent_belt_greater",
+      "book": "ultimate_equipment",
+      "key": "Serpent Belt (Greater)",
+      "skill": "Escape Artist",
+      "bonus": 2,
+      "corpus_path": "data/corpus/ultimate_equipment/equipment/serpent_belt_greater.json"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:needles_of_fleshgraving",
+      "book": "ultimate_equipment",
+      "key": "Needles of Fleshgraving",
+      "skill": "Craft (Tattoos)",
+      "bonus": 5,
+      "corpus_path": "data/corpus/ultimate_equipment/equipment/needles_of_fleshgraving.json"
+    },
+    {
+      "unit_id": "inner_sea_races:equipment:scarf_of_glorious_histories",
+      "book": "inner_sea_races",
+      "key": "Scarf of Glorious Histories",
+      "skill": "Intimidate,Perform (dance)",
+      "bonus": 5,
+      "corpus_path": "data/corpus/inner_sea_races/equipment/scarf_of_glorious_histories.json"
+    },
+    {
+      "unit_id": "ultimate_wilderness:equipment:guiding_scarab",
+      "book": "ultimate_wilderness",
+      "key": "Guiding Scarab",
+      "skill": "Knowledge (geography)",
+      "bonus": 5,
+      "corpus_path": "data/corpus/ultimate_wilderness/equipment/guiding_scarab.json"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:hunter_s_band",
+      "book": "ultimate_equipment",
+      "key": "Hunter's Band",
+      "skill": "Survival",
+      "bonus": 5,
+      "corpus_path": "data/corpus/ultimate_equipment/equipment/hunter_s_band.json"
+    },
+    {
+      "unit_id": "core_rulebook:equipment:ring_of_climbing",
+      "book": "core_rulebook",
+      "key": "Ring of Climbing",
+      "skill": "Climb",
+      "bonus": 5,
+      "corpus_path": "data/corpus/core_rulebook/equipment/magic_items/ring_of_climbing.json"
+    },
+    {
+      "unit_id": "core_rulebook:equipment:circlet_of_persuasion",
+      "book": "core_rulebook",
+      "key": "Circlet of Persuasion",
+      "skill": "Bluff,Diplomacy,Disguise,Handle Animal,Intimidate,Perform (Act),Perform (Comedy),Perform (Dance),Perform (Keyboard Instruments),Perform (Oratory),Perform (Percussion Instruments),Perform (Sing),Perform (String Instruments),Perform (Wind Instruments),Perform (Untrained),Use Magic Device",
+      "bonus": 3,
+      "corpus_path": "data/corpus/core_rulebook/equipment/magic_items/circlet_of_persuasion.json"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:maw_of_the_wyrm",
+      "book": "ultimate_equipment",
+      "key": "Maw of the Wyrm",
+      "skill": "Intimidate",
+      "bonus": 4,
+      "corpus_path": "data/corpus/ultimate_equipment/equipment/maw_of_the_wyrm.json"
+    },
+    {
+      "unit_id": "ultimate_psionics:equipment:crystal_mask_psionic_craft",
+      "book": "ultimate_psionics",
+      "key": "Crystal Mask (Psionic Craft)",
+      "skill": "Spellcraft",
+      "bonus": 10,
+      "corpus_path": "data/corpus/ultimate_psionics/equipment/crystal_mask_psionic_craft.json"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:staff_of_accompaniment",
+      "book": "ultimate_equipment",
+      "key": "Staff of Accompaniment",
+      "skill": "TYPE=Perform",
+      "bonus": 2,
+      "corpus_path": "data/corpus/ultimate_equipment/equipment/staff_of_accompaniment.json"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:filter_hood",
+      "book": "ultimate_equipment",
+      "key": "Filter Hood",
+      "skill": "Perception",
+      "bonus": -2,
+      "corpus_path": "data/corpus/ultimate_equipment/equipment/filter_hood.json"
+    },
+    {
+      "unit_id": "inner_sea_gods:equipment:featherscale_cloak",
+      "book": "inner_sea_gods",
+      "key": "Featherscale Cloak",
+      "skill": "Swim",
+      "bonus": 5,
+      "corpus_path": "data/corpus/inner_sea_gods/equipment/featherscale_cloak.json"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:rod_beguiling",
+      "book": "ultimate_equipment",
+      "key": "Rod (Beguiling)",
+      "skill": "Bluff,Sleight of Hand",
+      "bonus": 5,
+      "corpus_path": "data/corpus/ultimate_equipment/equipment/rod_beguiling.json"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:ring_of_the_ecclesiarch",
+      "book": "ultimate_equipment",
+      "key": "Ring of the Ecclesiarch",
+      "skill": "Diplomacy,Knowledge (Religion)",
+      "bonus": 5,
+      "corpus_path": "data/corpus/ultimate_equipment/equipment/ring_of_the_ecclesiarch.json"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:aquatic_cummerbund",
+      "book": "ultimate_equipment",
+      "key": "Aquatic Cummerbund",
+      "skill": "Swim",
+      "bonus": 4,
+      "corpus_path": "data/corpus/ultimate_equipment/equipment/aquatic_cummerbund.json"
+    },
+    {
+      "unit_id": "advanced_race_guide:equipment:ring_of_the_sophisticate",
+      "book": "advanced_race_guide",
+      "key": "Ring of the Sophisticate",
+      "skill": "Sense Motive,Knowledge (Local)",
+      "bonus": 4,
+      "corpus_path": "data/corpus/advanced_race_guide/equipment/magic_items/ring_of_the_sophisticate.json"
+    },
+    {
+      "unit_id": "core_rulebook:equipment:ring_of_swimming_improved",
+      "book": "core_rulebook",
+      "key": "Ring of Swimming (Improved)",
+      "skill": "Swim",
+      "bonus": 10,
+      "corpus_path": "data/corpus/core_rulebook/equipment/magic_items/ring_of_swimming_improved.json"
+    },
+    {
+      "unit_id": "core_rulebook:equipment:ring_of_climbing_improved",
+      "book": "core_rulebook",
+      "key": "Ring of Climbing (Improved)",
+      "skill": "Climb",
+      "bonus": 10,
+      "corpus_path": "data/corpus/core_rulebook/equipment/magic_items/ring_of_climbing_improved.json"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:eyes_of_keen_sight",
+      "book": "ultimate_equipment",
+      "key": "Eyes of Keen Sight",
+      "skill": "Perception",
+      "bonus": 2,
+      "corpus_path": "data/corpus/ultimate_equipment/equipment/eyes_of_keen_sight.json"
+    },
+    {
+      "unit_id": "ultimate_psionics:equipment:third_eye_aware",
+      "book": "ultimate_psionics",
+      "key": "Third Eye (Aware)",
+      "skill": "Perception",
+      "bonus": 10,
+      "corpus_path": "data/corpus/ultimate_psionics/equipment/third_eye_aware.json"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:bracelet_of_bargaining",
+      "book": "ultimate_equipment",
+      "key": "Bracelet of Bargaining",
+      "skill": "Bluff,Diplomacy,Sense Motive",
+      "bonus": 5,
+      "corpus_path": "data/corpus/ultimate_equipment/equipment/bracelet_of_bargaining.json"
+    },
+    {
+      "unit_id": "ultimate_psionics:equipment:psychoactive_skin_spider",
+      "book": "ultimate_psionics",
+      "key": "Psychoactive Skin (Spider)",
+      "skill": "Climb",
+      "bonus": 20,
+      "corpus_path": "data/corpus/ultimate_psionics/equipment/psychoactive_skin_spider.json"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:veterinarian_s_kit",
+      "book": "ultimate_equipment",
+      "key": "Veterinarian's Kit",
+      "skill": "Heal",
+      "bonus": 1,
+      "corpus_path": "data/corpus/ultimate_equipment/equipment/veterinarian_s_kit.json"
+    },
+    {
+      "unit_id": "advanced_race_guide:equipment:living_garments",
+      "book": "advanced_race_guide",
+      "key": "Living Garments",
+      "skill": "Diplomacy",
+      "bonus": 5,
+      "corpus_path": "data/corpus/advanced_race_guide/equipment/magic_items/living_garments.json"
+    },
+    {
+      "unit_id": "ultimate_psionics:equipment:companion_stone_diplomacy",
+      "book": "ultimate_psionics",
+      "key": "Companion Stone (Diplomacy)",
+      "skill": "Diplomacy",
+      "bonus": 4,
+      "corpus_path": "data/corpus/ultimate_psionics/equipment/companion_stone_diplomacy.json"
+    },
+    {
+      "unit_id": "inner_sea_gods:equipment:ring_of_serene_contortions",
+      "book": "inner_sea_gods",
+      "key": "Ring Of Serene Contortions",
+      "skill": "Escape Artist",
+      "bonus": 2,
+      "corpus_path": "data/corpus/inner_sea_gods/equipment/ring_of_serene_contortions.json"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:gambler_s_kit_cheating",
+      "book": "ultimate_equipment",
+      "key": "Gambler's Kit (Cheating)",
+      "skill": "Profession (Gambler)",
+      "bonus": 4,
+      "corpus_path": "data/corpus/ultimate_equipment/equipment/gambler_s_kit_cheating.json"
+    },
+    {
+      "unit_id": "advanced_players_guide:equipment:fork_of_the_forgotten_one",
+      "book": "advanced_players_guide",
+      "key": "Fork of the Forgotten One",
+      "skill": "Diplomacy,Intimidate",
+      "bonus": 10,
+      "corpus_path": "data/corpus/advanced_players_guide/equipment/fork_of_the_forgotten_one.json"
+    },
+    {
+      "unit_id": "ultimate_psionics:equipment:meld_stone_inflitrator",
+      "book": "ultimate_psionics",
+      "key": "Meld Stone (Inflitrator)",
+      "skill": "Bluff",
+      "bonus": 8,
+      "corpus_path": "data/corpus/ultimate_psionics/equipment/meld_stone_inflitrator.json"
+    },
+    {
+      "unit_id": "inner_sea_gods:equipment:besmara_s_tricorne",
+      "book": "inner_sea_gods",
+      "key": "Besmara's Tricorne",
+      "skill": "Profession (Sailor),Swim",
+      "bonus": 2,
+      "corpus_path": "data/corpus/inner_sea_gods/equipment/besmara_s_tricorne.json"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:claws_of_the_ice_bear",
+      "book": "ultimate_equipment",
+      "key": "Claws of the Ice Bear",
+      "skill": "Climb",
+      "bonus": 2,
+      "corpus_path": "data/corpus/ultimate_equipment/equipment/claws_of_the_ice_bear.json"
+    },
+    {
+      "unit_id": "ultimate_psionics:equipment:crystal_mask_insightful_detection",
+      "book": "ultimate_psionics",
+      "key": "Crystal Mask (Insightful Detection)",
+      "skill": "Perception",
+      "bonus": 9,
+      "corpus_path": "data/corpus/ultimate_psionics/equipment/crystal_mask_insightful_detection.json"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:bell_net",
+      "book": "ultimate_equipment",
+      "key": "Bell Net",
+      "skill": "Stealth",
+      "bonus": -2,
+      "corpus_path": "data/corpus/ultimate_equipment/equipment/bell_net.json"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:scholar_s_ring",
+      "book": "ultimate_equipment",
+      "key": "Scholar's Ring",
+      "skill": "Knowledge (History)",
+      "bonus": 5,
+      "corpus_path": "data/corpus/ultimate_equipment/equipment/scholar_s_ring.json"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:ring_of_the_sophisticate",
+      "book": "ultimate_equipment",
+      "key": "Ring of the Sophisticate",
+      "skill": "Sense Motive,Knowledge (Local)",
+      "bonus": 4,
+      "corpus_path": "data/corpus/ultimate_equipment/equipment/ring_of_the_sophisticate.json"
+    },
+    {
+      "unit_id": "ultimate_psionics:equipment:psychoactive_skin_nimbleness",
+      "book": "ultimate_psionics",
+      "key": "Psychoactive Skin (Nimbleness)",
+      "skill": "Acrobatics",
+      "bonus": 10,
+      "corpus_path": "data/corpus/ultimate_psionics/equipment/psychoactive_skin_nimbleness.json"
+    },
+    {
+      "unit_id": "inner_sea_gods:equipment:robe_of_the_master_of_masters",
+      "book": "inner_sea_gods",
+      "key": "Robe Of The Master Of Masters",
+      "skill": "Perform (Dance)",
+      "bonus": 2,
+      "corpus_path": "data/corpus/inner_sea_gods/equipment/robe_of_the_master_of_masters.json"
+    },
+    {
+      "unit_id": "ultimate_psionics:equipment:meld_stone_nimble_trickster",
+      "book": "ultimate_psionics",
+      "key": "Meld Stone (Nimble Trickster)",
+      "skill": "Escape Artist,Stealth",
+      "bonus": 6,
+      "corpus_path": "data/corpus/ultimate_psionics/equipment/meld_stone_nimble_trickster.json"
+    },
+    {
+      "unit_id": "inner_sea_gods:equipment:great_barghest_hero_cloak",
+      "book": "inner_sea_gods",
+      "key": "Great Barghest Hero Cloak",
+      "skill": "Intimidate",
+      "bonus": 2,
+      "corpus_path": "data/corpus/inner_sea_gods/equipment/great_barghest_hero_cloak.json"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:juggler_s_kit",
+      "book": "ultimate_equipment",
+      "key": "Juggler's Kit",
+      "skill": "Perform (Act),Perform (Comedy)",
+      "bonus": 1,
+      "corpus_path": "data/corpus/ultimate_equipment/equipment/juggler_s_kit.json"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:lion_cloak",
+      "book": "ultimate_equipment",
+      "key": "Lion Cloak",
+      "skill": "Intimidate",
+      "bonus": 2,
+      "corpus_path": "data/corpus/ultimate_equipment/equipment/lion_cloak.json"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:dead_man_s_headband",
+      "book": "ultimate_equipment",
+      "key": "Dead Man's Headband",
+      "skill": "Intimidate",
+      "bonus": 2,
+      "corpus_path": "data/corpus/ultimate_equipment/equipment/dead_man_s_headband.json"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:bracers_of_the_glib_entertainer",
+      "book": "ultimate_equipment",
+      "key": "Bracers of the Glib Entertainer",
+      "skill": "TYPE.Perform",
+      "bonus": 5,
+      "corpus_path": "data/corpus/ultimate_equipment/equipment/bracers_of_the_glib_entertainer.json"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:inquisitor_s_monocle",
+      "book": "ultimate_equipment",
+      "key": "Inquisitor's Monocle",
+      "skill": "Sense Motive",
+      "bonus": 5,
+      "corpus_path": "data/corpus/ultimate_equipment/equipment/inquisitor_s_monocle.json"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:cloak_of_the_diplomat",
+      "book": "ultimate_equipment",
+      "key": "Cloak of the Diplomat",
+      "skill": "Diplomacy,Sense Motive",
+      "bonus": 5,
+      "corpus_path": "data/corpus/ultimate_equipment/equipment/cloak_of_the_diplomat.json"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:rod_escape",
+      "book": "ultimate_equipment",
+      "key": "Rod (Escape)",
+      "skill": "Escape Artist",
+      "bonus": 5,
+      "corpus_path": "data/corpus/ultimate_equipment/equipment/rod_escape.json"
+    },
+    {
+      "unit_id": "occult_adventures:equipment:caduceus_rod",
+      "book": "occult_adventures",
+      "key": "Caduceus Rod",
+      "skill": "Craft (alchemy)",
+      "bonus": 5,
+      "corpus_path": "data/corpus/occult_adventures/equipment/caduceus_rod.json"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:cackling_hag_s_blouse",
+      "book": "ultimate_equipment",
+      "key": "Cackling Hag's Blouse",
+      "skill": "Intimidate",
+      "bonus": 2,
+      "corpus_path": "data/corpus/ultimate_equipment/equipment/cackling_hag_s_blouse.json"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:survival_kit_masterwork",
+      "book": "ultimate_equipment",
+      "key": "Survival Kit (Masterwork)",
+      "skill": "Survival",
+      "bonus": 2,
+      "corpus_path": "data/corpus/ultimate_equipment/equipment/survival_kit_masterwork.json"
+    },
+    {
+      "unit_id": "inner_sea_gods:equipment:wayfinder_of_zephyrs",
+      "book": "inner_sea_gods",
+      "key": "Wayfinder Of Zephyrs",
+      "skill": "Profession (Sailor)",
+      "bonus": 5,
+      "corpus_path": "data/corpus/inner_sea_gods/equipment/wayfinder_of_zephyrs.json"
+    },
+    {
+      "unit_id": "core_rulebook:equipment:goggles_of_minute_seeing",
+      "book": "core_rulebook",
+      "key": "Goggles of Minute Seeing",
+      "skill": "Disable Device",
+      "bonus": 5,
+      "corpus_path": "data/corpus/core_rulebook/equipment/magic_items/goggles_of_minute_seeing.json"
+    }
+  ],
+  "missing_corpus_file": []
+}

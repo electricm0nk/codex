@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-24T03:51:47Z",
+  "data": {
+    "key": "Sorcerer Bonus Spell L5 ~ Overland Flight",
+    "name": "Overland Flight",
+    "class": "Sorcerer",
+    "description": "This spell functions like a fly spell, except you can fly at a speed of 40 feet [30 feet if wearing medium or heavy armor, or if carrying a medium or heavy load] with a bonus on Fly skill checks equal to half your caster level. When using this spell for long-distance movement, you can hustle without taking nonlethal damage [a forced march still requires Constitution checks]. This means you can cover 64 miles in an 8-hour period of flight [or 48 miles at a speed of 30 feet].|PRERULE:1,DisplayFullSpell",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sorcerer Bonus Spell L5 ~ Overland Flight"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "TYPE",
+        "value": "Sorcerer Bloodline Bonus Spell"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Sorcerer_BonusSpell_OverlandFlight_L5,1"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "BloodlineCasterLVL,11"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Sorcerer=5|Overland Flight"
+      },
+      {
+        "key": "DESC",
+        "value": "This spell functions like a fly spell, except you can fly at a speed of 40 feet [30 feet if wearing medium or heavy armor, or if carrying a medium or heavy load] with a bonus on Fly skill checks equal to half your caster level. When using this spell for long-distance movement, you can hustle without taking nonlethal damage [a forced march still requires Constitution checks]. This means you can cover 64 miles in an 8-hour period of flight [or 48 miles at a speed of 30 feet].|PRERULE:1,DisplayFullSpell"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 2221,
+    "record_key": "Sorcerer Bonus Spell L5 ~ Overland Flight"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

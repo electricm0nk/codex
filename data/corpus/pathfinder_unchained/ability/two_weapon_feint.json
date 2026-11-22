@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Combat Trick ~ Two-Weapon Feint",
+    "name": "Two-Weapon Feint",
+    "description": "You can select this feat even if you don't meet the ability score prerequisite (Intelligence 13). You gain the benefits of this feat only as long as you have at least 1 stamina point in your stamina pool. When using Two-Weapon Fighting to make a melee attack, you can spend 5 stamina points to forgo any one of your melee attacks (not just your first primary-hand attack) to attempt a Bluff check to feint an opponent. This feint attempt occurs before all of your attacks, even if you give up a later attack.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Combat Trick ~ Two-Weapon Feint"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Combat Trick"
+      },
+      {
+        "key": "DESC",
+        "value": "You can select this feat even if you don't meet the ability score prerequisite (Intelligence 13). You gain the benefits of this feat only as long as you have at least 1 stamina point in your stamina pool. When using Two-Weapon Fighting to make a melee attack, you can spend 5 stamina points to forgo any one of your melee attacks (not just your first primary-hand attack) to attempt a Bluff check to feint an opponent. This feint attempt occurs before all of your attacks, even if you give up a later attack."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "135"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SourceBook|UC"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/support/ability_uc.lst",
+    "sha256": "11fe5af3a23ebdf6b90f238bb433207cc58d2f76a5ad62759e2be4ef6b712f14",
+    "line": 180,
+    "record_key": "Combat Trick ~ Two-Weapon Feint"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

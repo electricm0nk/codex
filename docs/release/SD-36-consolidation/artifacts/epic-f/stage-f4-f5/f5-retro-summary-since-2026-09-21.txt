@@ -1,0 +1,78 @@
+codex retrospective — event log summary
+window: 2026-09-21  (since 2026-09-21T00:00:00+00:00)
+
+EVENTS  47 total
+     27  correction
+     12  verification
+      6  note
+      1  deferral
+      1  rework
+  origin: agent=29, derived=18
+
+CORRECTIONS  27
+  who was wrong:
+       3  converter   <-- repeated
+       2  sheet_rule evaluate_tests kind pin   <-- repeated
+       1  F3c4 brief expected prestige mix figure
+       1  F3c5 brief (FS-19)
+       1  F3c5 brief (Fact shape)
+       1  b068fa596c census baseline (F1-reader step 3)
+       1  class_census census_id_set_matches_the_published_partition pin
+       1  class_census f3c_carriers_named_through_at_least_any_and_not_reach_the_engine dragon_disciple pin
+       1  class_census::census_id_set_matches_the_published_partition (non-prestige Computed pin)
+       1  epic-f-class-completion.md §2 (review finding 14 evidence)
+       1  epic-f-class-completion.md §4 F2.1 ceiling
+       1  epic-f-class-completion.md §4 F2.3 / class_census pins
+       1  f3b3-receipt / class_census pin
+       1  f3c-remainder / carrier chooser pin
+       1  f3c2-receipt / class_census pin
+       1  pool_groups generic pass pins (celestial, abyssal, bloodrager undead, bloodrager arcane)
+       1  sd13_sorcerer_level1_spell_baseline sorcerer_level1_with_non_arcane_bloodline_choice_stays_bloodline_agnostic
+       1  sd36-epic-f1c
+       1  src/bin/class_census.rs run_json / scripts/gen_class_status_table.py
+       1  src/rules_core/class_census.rs f3c_carriers_named_through_at_least_any_and_not_reach_the_engine
+       1  src/rules_core/pilot_compute/pool_groups.rs::cleric_generic_domain_pass_grounds_a_never_hand_modelled_domain
+       1  src/rules_core/pilot_compute/pool_groups.rs::cleric_generic_domain_pass_grounds_animal_via_the_class_record_merge
+       1  tests/sd36_bloodline_pick_option.rs a_draconic_pick_reaches_its_lines_at_the_levels_the_book_states
+       1  tests/sd36_multiclass_any_class.rs a_class_with_no_proficiency_answer_cannot_undo_another_class_s_grant
+  who caught it:
+       5  sd36-f3c5-executor
+       4  sd36-epic-f1c
+       4  sd36-f3c4-executor
+       2  sd31-transcribe
+       2  sd36-f2a-executor
+       2  sd36-f3c2-executor
+       2  sd36-f3c3-executor
+       2  sd36-f4pre-executor
+       2  sub-agent-f0-check-fix
+       1  sd36-f3b3-executor
+       1  sd36-f3c4b-executor
+  8 had already propagated when caught
+    - 2026-09-25T05:38:26Z  pool_groups generic pass pins (celestial, abyssal, bloodrager undead, bloodrager arcane) claimed the SD-32 generic pool-group pass grounds >0 member values for a linked bloodline selection; actual 0: a selection linked to a held pick option yields to the held-set path, which prints the members from the record at the levels it states (the pass printed Breath Weapon DC 14 at Draconic 5, Arcane Apotheosis -1 at Arcane 5)
+    - 2026-09-25T05:38:26Z  F3c4 brief expected prestige mix figure claimed prestige mixes 67 -> 68 of 74 (dragon_disciple Computed); actual 67 of 74: dragon_disciple keeps one named blocker, combat.baseline_weapon_proficiency_unknown (Internal|Bite outside the inventory, mechanism N, FS-20), which no engine change can decide
+    - 2026-09-25T05:56:10Z  sd13_sorcerer_level1_spell_baseline sorcerer_level1_with_non_arcane_bloodline_choice_stays_bloodline_agnostic claimed a Draconic sorcerer 1 is Blocked on arcane_bond_and_bloodline_progression.unsupported (bloodline-agnostic message); actual a Draconic pick links to its converted option and yields to the record (no blocker; recognition record names the Draconic option); the agnostic blocker is pinned on an unlinkable bloodline instead
+    - 2026-09-25T09:16:15Z  src/rules_core/class_census.rs f3c_carriers_named_through_at_least_any_and_not_reach_the_engine claimed dragon_disciple's sorcerer 5 mix is Blocked on 1 line, combat.baseline_weapon_proficiency_unknown (Internal|Bite); actual Computed at 10 of 10 levels, no blocker: Internal|Bite converts as Fact::NaturalAttack(Bite) on Dragon Bite, the closure is attested, the reader answers Known(empty) (CRB p.380)
+    - 2026-09-25T09:16:16Z  tests/sd36_bloodline_pick_option.rs a_draconic_pick_reaches_its_lines_at_the_levels_the_book_states claimed Draconic Claws is held only from sorcerer 7 (CONV-02 single-line principal, FS-18); actual held from sorcerer 1 as CRB p.75 states: the record now carries its Internal|Claw fact, so its claw-size line moves (gate >= 7 intact) to a #weapon0 sibling
+    - 2026-09-25T09:16:16Z  tests/sd36_multiclass_any_class.rs a_class_with_no_proficiency_answer_cannot_undo_another_class_s_grant claimed Dragon Disciple is a class with no proficiency answer; actual Dragon Disciple answers Known(empty) since F3c5; Diabolist (G-U, Hunter's Bond ~ Companion declared nowhere) serves as the no-answer class
+    - 2026-09-25T09:16:16Z  F3c5 brief (FS-19) claimed the Imperious/Kobold race gate is decidable, so the options simply stay ungranted for a human, which is correct; actual decidable and correctly converted, but NOT correct: Imperious is human-only, and neither a human nor a kobold holds template:is<race> because racial_traits_<race> is filed from its .MOD row and its closure omits the base row carrying TEMPLATE:Race ~ <Race> (mechanism M, FS-22)
+    - 2026-09-25T09:16:16Z  F3c5 brief (Fact shape) claimed the converter already emits natural-attack facts from NATURALATTACKS; reuse that Fact shape; actual NATURALATTACKS converts to #natural<n> Dice lines (convert.rs NATURALATTACKS arm), no Fact; a Fact::NaturalAttack(String) variant was added (sheet_rule.rs), never a Proficiency
+    - 2026-09-26T03:09:10Z  src/rules_core/pilot_compute/pool_groups.rs::cleric_generic_domain_pass_grounds_a_never_hand_modelled_domain claimed a cleric 5 with domain:plant prints generic pool-pass member values (count > 0); actual domain:plant links to core_rulebook:domain:plant through the F4pre domain choice (core_rulebook:class:cleric#bonus1 offers Domains); the pass yields (count 0) and the held set prints the domain's own powers at the book's levels
+    - 2026-09-26T03:09:10Z  src/rules_core/pilot_compute/pool_groups.rs::cleric_generic_domain_pass_grounds_animal_via_the_class_record_merge claimed a cleric 5 with domain:animal prints generic pool-pass member values (count > 0); actual domain:animal links to core_rulebook:domain:animal through the F4pre domain choice (core_rulebook:class:cleric#bonus1 offers Domains); the pass yields (count 0) and the held set prints the domain's own powers at the book's levels
+
+INCIDENTS  0  (0 produced plausible wrong results)
+
+NEAR MISSES  0  (0 escaped and were fixed after the fact)
+
+DEFERRALS  1 total, 1 open, 0 resolved
+    - Consolidate corpus_loader::live_sheet_rules() (Option-returning, no named reason) with the new rules_core::sheet_rule_package::package() (Result-returning, named Err per §3.4a's contract) into one process-wide package handle — F1.9 (§3.4a, review finding 5) required a Result<&'static SheetRulePackage,String> handle reachable from rules_core pure functions / the class_census bin with a NAMED reason on failure; corpus_loader::live_sheet_rules() already existed as a similar but weaker (Option-returning, no reason) OnceLock and is already used by class_census.rs's own prestige-carrier gate lookup. Consolidating the two was outside this step's owned files (src/rules_core/class_census.rs, src/bin/class_census.rs, the new package-handle module) and would have expanded scope into an existing, working call site with no test coverage for the change in hand.  [revisit: Whenever a future step touches corpus_loader.rs or wires build_pilot_headless_receipt/compute_pilot_base_chassis to the package handle directly (the rest of F1.9's own acceptance row, not scoped to this step)]
+
+REWORK  1
+       1  assumed Rust source text's braces are all structural without accounting for braces inside string literals
+
+VERIFICATION  12 runs, 2 with a failing stage
+       2  token-coverage
+
+GIT (same window)  89 commits by 1 authors
+    0.5281 events per commit
+
+LOG  13 shards at /home/ubuntu/workspace/repos/codex/docs/retro/events

@@ -1,0 +1,86 @@
+{
+  "completeness": "full",
+  "data": {
+    "key": "Energy Current",
+    "name": "Energy Current",
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Psionic"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Kineticist=5"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Psychokinesis"
+      },
+      {
+        "key": "DESCRIPTOR",
+        "value": "see text"
+      },
+      {
+        "key": "VARIANTS",
+        "value": "Cold|Electricity|Fire|Sonic"
+      },
+      {
+        "key": "COMPS",
+        "value": "Vi"
+      },
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "RANGE",
+        "value": "Close"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "Any two creatures no more than 15 ft. apart"
+      },
+      {
+        "key": "DURATION",
+        "value": "Concentration, up to (CASTERLEVEL) rounds"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Reflex half or Fortitude half; see text"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.195"
+      },
+      {
+        "key": "DESC",
+        "value": "Deal 9d6 damage to up to two foes as long as you concentrate."
+      },
+      {
+        "key": "FACT",
+        "value": "CompMaterial|see text"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T12:11:35Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 188,
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_powers.lst",
+    "record_key": "Energy Current",
+    "sha256": "81fdd7a4262066f630c0db104e743f5f78388b2df76409d50ba2a13c7a233f3a"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "derived:range_keyword"
+  ]
+}

@@ -1,0 +1,49 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Blighted Defiler ~ Steal Power",
+    "name": "Steal Power",
+    "class": "Kineticist",
+    "description": "%1 times per day, a blighted defiler can draw energy from the surrounding land to gather power, gaining one of the three following benefits. She can increase the burn reduction from gather power by 1 for a blast wild talent. Alternatively, she can use gather power to reduce the cost of a defense, infusion, or utility wild talent by 1, regardless of whether she gathers power for longer or has abilities that increase the burn reduction from gather power. Finally, she can siphon the energy into healing herself, recovering %2 hit points. When a blighted defiler uses steal power, she afflicts the area within a radius of %3 feet by stunting plants as the stunt growth option from diminish plants, weakening and killing minor wildlife (creatures too small or insignificant to themselves have statistics), and reducing the rate of live birth among the other surviving creatures in the area. If a blighted defiler uses steal power in an area that overlaps a previous use of her steal power within the same month, she expends a daily use and the remaining area is still blighted as above, but she doesn't gain any benefits. Steal power doesn't work in barren landscapes, the void of space, or other places without enough life to steal. This alters gather power.|STR|2*KineticistLVL|250*(min(20,KineticistLVL))",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Blighted Defiler ~ Steal Power"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Kineticist Class Features.BlightedDefilerClassFeatures.SpecialAttack.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "%1 times per day, a blighted defiler can draw energy from the surrounding land to gather power, gaining one of the three following benefits. She can increase the burn reduction from gather power by 1 for a blast wild talent. Alternatively, she can use gather power to reduce the cost of a defense, infusion, or utility wild talent by 1, regardless of whether she gathers power for longer or has abilities that increase the burn reduction from gather power. Finally, she can siphon the energy into healing herself, recovering %2 hit points. When a blighted defiler uses steal power, she afflicts the area within a radius of %3 feet by stunting plants as the stunt growth option from diminish plants, weakening and killing minor wildlife (creatures too small or insignificant to themselves have statistics), and reducing the rate of live birth among the other surviving creatures in the area. If a blighted defiler uses steal power in an area that overlaps a previous use of her steal power within the same month, she expends a daily use and the remaining area is still blighted as above, but she doesn't gain any benefits. Steal power doesn't work in barren landscapes, the void of space, or other places without enough life to steal. This alters gather power.|STR|2*KineticistLVL|250*(min(20,KineticistLVL))"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.62"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/support/uw_abilities_class_oa.lst",
+    "sha256": "26a03f73c3534cd6bae0bcda9581b3a89fa28ce5f78f854e009fc8110c477568",
+    "line": 15,
+    "record_key": "Blighted Defiler ~ Steal Power"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

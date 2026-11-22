@@ -1,0 +1,15 @@
+{
+  "completeness": "full",
+  "data": {
+    "key": "Tail Attachment (Long Lash)",
+    "name": "Tail Attachment (Long Lash)"
+  },
+  "license": "OGL",
+  "population": "in_scope",
+  "source": {
+    "kind": "desktop_ui_fixture",
+    "line": 1,
+    "path": "apps/desktop/src-tauri/fixtures_src/equip_tail_attachment_long_lash.txt",
+    "record_key": "Tail Attachment (Long Lash)"
+  }
+}

@@ -1,0 +1,29 @@
+   Compiling codex-desktop v0.18.0 (/home/ubuntu/workspace/repos/codex/.worktrees/sd38-e3/apps/desktop/src-tauri)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 39.53s
+     Running unittests src/main.rs (/home/ubuntu/cargo-target/sd38-e3/debug/deps/codex_desktop-9b89aecaf12b93dc)
+
+running 21 tests
+test cpr_creation::tests::an_unknown_role_and_an_out_of_range_template_roll_are_refused ... ok
+test cpr_creation::tests::complete_package_refuses_a_missing_or_unknown_stat ... ok
+test cpr_creation::tests::create_saves_every_allocated_skill_and_the_loaded_character_has_them ... ok
+test cpr_creation::tests::complete_package_accepts_62_and_refuses_61_63_a_9_and_a_1 ... ok
+test cpr_creation::tests::branch_tables_can_be_skipped_and_bad_picks_are_refused ... ok
+test cpr_creation::tests::create_with_the_previews_seed_saves_the_previewed_stats ... ok
+test cpr_creation::tests::create_refuses_an_empty_name_and_an_existing_character ... ok
+test cpr_creation::tests::lifepath_rolls_are_seeded_and_a_pick_changes_only_its_table ... ok
+test cpr_creation::tests::complete_package_skills_are_any_of_66_capped_at_6_with_basic_at_2 ... ok
+test cpr_creation::tests::edgerunner_skills_are_the_roles_20_from_2_to_6_within_86_points ... ok
+test cpr_creation::tests::streetrat_skills_are_the_roles_printed_list_at_86_points ... ok
+test cpr_creation::tests::the_p078_edgerunner_example_reads_each_stat_from_its_own_column ... ok
+test cpr_creation::tests::seeded_edgerunner_rolls_reproduce ... ok
+test cpr_creation::tests::the_roller_is_a_fair_d10_and_seed_stable ... ok
+test cpr_creation::tests::the_preview_carries_the_engines_stat_and_derived_rows ... ok
+test cpr_creation::tests::the_lifepath_answers_every_general_table_and_the_roles_tables ... ok
+test cpr_creation::tests::a_rolled_streetrat_row_is_one_d10_and_that_whole_row ... ok
+test cpr_creation::tests::the_cultural_origin_language_becomes_a_language_skill_at_4 ... ok
+test cpr_creation::tests::count_tables_roll_1d10_minus_7_and_answer_each_entry ... ok
+test cpr_creation::tests::range_rows_and_the_d9_exec_corp_table_roll_their_whole_range ... ok
+test cpr_creation::tests::every_template_row_round_trips_through_preview_create_and_load ... ok
+
+test result: ok. 21 passed; 0 failed; 0 ignored; 0 measured; 822 filtered out; finished in 15.38s
+

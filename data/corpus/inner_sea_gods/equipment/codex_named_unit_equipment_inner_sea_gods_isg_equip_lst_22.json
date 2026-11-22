@@ -1,0 +1,32 @@
+{
+  "codex_generated_name": true,
+  "completeness": "full",
+  "data": {
+    "category": "General",
+    "cost_gp": 8000.0,
+    "description": "[redacted PI]",
+    "key": "Codex-Named Unit (equipment_inner_sea_gods_isg_equip_lst_22)",
+    "name": "Codex-Named Unit (equipment_inner_sea_gods_isg_equip_lst_22)",
+    "weight_lbs": 150.0
+  },
+  "ingested_at": "2026-08-23T18:26:33Z",
+  "license": "PI-REDACTED",
+  "pi_field": "name,description",
+  "pi_marker": "redacted",
+  "population": "in_scope",
+  "rename": {
+    "coordinate": "inner_sea_gods:isg_equip.lst:22",
+    "reason": "name_pi_blocked"
+  },
+  "source": {
+    "kind": "lst_token",
+    "line": 22,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_equip.lst",
+    "record_key": "Codex-Named Unit (equipment_inner_sea_gods_isg_equip_lst_22)",
+    "sha256": "cde6e3e0acd33edb906c404430e39a375d0721c6e136c5faf0cde575c7c27c74"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

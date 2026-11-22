@@ -1,0 +1,60 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Universal Monster Rule ~ All-Around Vision",
+    "delivery": "Extraordinary",
+    "description": "The creature sees in all directions at once. It cannot be flanked.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_2:monster_ability:universal_monster_rule_all_around_vision",
+    "name": "All-Around Vision",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "UMR_AllAroundVision_SpecificDesc|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The creature sees in all directions at once. It cannot be flanked.|PREVAREQ:UMR_AllAroundVision_SpecificDesc,0"
+      },
+      {
+        "key": "KEY",
+        "value": "Universal Monster Rule ~ All-Around Vision"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.294"
+      },
+      {
+        "key": "TYPE",
+        "value": "Universal Monster Rule.SpecialQuality.Extraordinary.Defensive"
+      }
+    ],
+    "source_page": "p.294",
+    "traits": [
+      "Universal Monster Rule",
+      "Defensive"
+    ]
+  },
+  "ingested_at": "2026-08-23T14:07:19Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 2410,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "record_key": "Universal Monster Rule ~ All-Around Vision",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

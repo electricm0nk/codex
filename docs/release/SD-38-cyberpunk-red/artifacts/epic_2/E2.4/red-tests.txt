@@ -1,0 +1,252 @@
+   Compiling codex v0.1.0 (/home/ubuntu/workspace/repos/codex/.worktrees/sd38-a)
+error[E0425]: cannot find type `CprCriticalLocation` in this scope
+  --> src/rules_core/cpr/critical.rs:15:37
+   |
+15 |     const CRITICAL_INJURIES_P222: [(CprCriticalLocation, u8, &str, bool); 22] = [
+   |                                     ^^^^^^^^^^^^^^^^^^^ not found in this scope
+
+error[E0425]: cannot find type `CprCriticalCatalog` in this scope
+  --> src/rules_core/cpr/critical.rs:40:21
+   |
+40 |     fn catalog() -> CprCriticalCatalog {
+   |                     ^^^^^^^^^^^^^^^^^^ not found in this scope
+
+error[E0425]: cannot find type `CprCriticalLocation` in this scope
+  --> src/rules_core/cpr/critical.rs:45:23
+   |
+45 |     fn crit(location: CprCriticalLocation, name: &str) -> CprRecordedCritical {
+   |                       ^^^^^^^^^^^^^^^^^^^ not found in this scope
+
+error[E0425]: cannot find type `CprRecordedCritical` in this scope
+  --> src/rules_core/cpr/critical.rs:45:59
+   |
+45 |     fn crit(location: CprCriticalLocation, name: &str) -> CprRecordedCritical {
+   |                                                           ^^^^^^^^^^^^^^^^^^^ not found in this scope
+
+error[E0422]: cannot find struct, variant or union type `CprRecordedCritical` in this scope
+  --> src/rules_core/cpr/critical.rs:46:9
+   |
+46 |         CprRecordedCritical { location, name: name.to_string() }
+   |         ^^^^^^^^^^^^^^^^^^^ not found in this scope
+
+error[E0425]: cannot find type `CprRecordedCritical` in this scope
+  --> src/rules_core/cpr/critical.rs:99:22
+   |
+99 |         let all: Vec<CprRecordedCritical> = CRITICAL_INJURIES_P222.iter().map(|(l, _, n, _)| crit(*l, n)).collect();
+   |                      ^^^^^^^^^^^^^^^^^^^ not found in this scope
+   |
+help: you might be missing a type parameter
+   |
+93 |     fn each_of_the_22_injuries_counts_its_own_flag_toward_the_base_death_save_penalty<CprRecordedCritical>() {
+   |                                                                                      +++++++++++++++++++++
+
+warning: unused import: `super::*`
+ --> src/rules_core/cpr/critical.rs:5:9
+  |
+5 |     use super::*;
+  |         ^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+error[E0433]: cannot find type `CprCriticalLocation` in this scope
+  --> src/rules_core/cpr/critical.rs:16:10
+   |
+16 |         (CprCriticalLocation::Body, 2, "Dismembered Arm", true),
+   |          ^^^^^^^^^^^^^^^^^^^ use of undeclared type `CprCriticalLocation`
+
+error[E0433]: cannot find type `CprCriticalLocation` in this scope
+  --> src/rules_core/cpr/critical.rs:17:10
+   |
+17 |         (CprCriticalLocation::Body, 3, "Dismembered Hand", true),
+   |          ^^^^^^^^^^^^^^^^^^^ use of undeclared type `CprCriticalLocation`
+
+error[E0433]: cannot find type `CprCriticalLocation` in this scope
+  --> src/rules_core/cpr/critical.rs:18:10
+   |
+18 |         (CprCriticalLocation::Body, 4, "Collapsed Lung", true),
+   |          ^^^^^^^^^^^^^^^^^^^ use of undeclared type `CprCriticalLocation`
+
+error[E0433]: cannot find type `CprCriticalLocation` in this scope
+  --> src/rules_core/cpr/critical.rs:19:10
+   |
+19 |         (CprCriticalLocation::Body, 5, "Broken Ribs", false),
+   |          ^^^^^^^^^^^^^^^^^^^ use of undeclared type `CprCriticalLocation`
+
+error[E0433]: cannot find type `CprCriticalLocation` in this scope
+  --> src/rules_core/cpr/critical.rs:20:10
+   |
+20 |         (CprCriticalLocation::Body, 6, "Broken Arm", false),
+   |          ^^^^^^^^^^^^^^^^^^^ use of undeclared type `CprCriticalLocation`
+
+error[E0433]: cannot find type `CprCriticalLocation` in this scope
+  --> src/rules_core/cpr/critical.rs:21:10
+   |
+21 |         (CprCriticalLocation::Body, 7, "Foreign Object", false),
+   |          ^^^^^^^^^^^^^^^^^^^ use of undeclared type `CprCriticalLocation`
+
+error[E0433]: cannot find type `CprCriticalLocation` in this scope
+  --> src/rules_core/cpr/critical.rs:22:10
+   |
+22 |         (CprCriticalLocation::Body, 8, "Broken Leg", false),
+   |          ^^^^^^^^^^^^^^^^^^^ use of undeclared type `CprCriticalLocation`
+
+error[E0433]: cannot find type `CprCriticalLocation` in this scope
+  --> src/rules_core/cpr/critical.rs:23:10
+   |
+23 |         (CprCriticalLocation::Body, 9, "Torn Muscle", false),
+   |          ^^^^^^^^^^^^^^^^^^^ use of undeclared type `CprCriticalLocation`
+
+error[E0433]: cannot find type `CprCriticalLocation` in this scope
+  --> src/rules_core/cpr/critical.rs:24:10
+   |
+24 |         (CprCriticalLocation::Body, 10, "Spinal Injury", true),
+   |          ^^^^^^^^^^^^^^^^^^^ use of undeclared type `CprCriticalLocation`
+
+error[E0433]: cannot find type `CprCriticalLocation` in this scope
+  --> src/rules_core/cpr/critical.rs:25:10
+   |
+25 |         (CprCriticalLocation::Body, 11, "Crushed Fingers", false),
+   |          ^^^^^^^^^^^^^^^^^^^ use of undeclared type `CprCriticalLocation`
+
+error[E0433]: cannot find type `CprCriticalLocation` in this scope
+  --> src/rules_core/cpr/critical.rs:26:10
+   |
+26 |         (CprCriticalLocation::Body, 12, "Dismembered Leg", true),
+   |          ^^^^^^^^^^^^^^^^^^^ use of undeclared type `CprCriticalLocation`
+
+error[E0433]: cannot find type `CprCriticalLocation` in this scope
+  --> src/rules_core/cpr/critical.rs:27:10
+   |
+27 |         (CprCriticalLocation::Head, 2, "Lost Eye", true),
+   |          ^^^^^^^^^^^^^^^^^^^ use of undeclared type `CprCriticalLocation`
+
+error[E0433]: cannot find type `CprCriticalLocation` in this scope
+  --> src/rules_core/cpr/critical.rs:28:10
+   |
+28 |         (CprCriticalLocation::Head, 3, "Brain Injury", true),
+   |          ^^^^^^^^^^^^^^^^^^^ use of undeclared type `CprCriticalLocation`
+
+error[E0433]: cannot find type `CprCriticalLocation` in this scope
+  --> src/rules_core/cpr/critical.rs:29:10
+   |
+29 |         (CprCriticalLocation::Head, 4, "Damaged Eye", false),
+   |          ^^^^^^^^^^^^^^^^^^^ use of undeclared type `CprCriticalLocation`
+
+error[E0433]: cannot find type `CprCriticalLocation` in this scope
+  --> src/rules_core/cpr/critical.rs:30:10
+   |
+30 |         (CprCriticalLocation::Head, 5, "Concussion", false),
+   |          ^^^^^^^^^^^^^^^^^^^ use of undeclared type `CprCriticalLocation`
+
+error[E0433]: cannot find type `CprCriticalLocation` in this scope
+  --> src/rules_core/cpr/critical.rs:31:10
+   |
+31 |         (CprCriticalLocation::Head, 6, "Broken Jaw", false),
+   |          ^^^^^^^^^^^^^^^^^^^ use of undeclared type `CprCriticalLocation`
+
+error[E0433]: cannot find type `CprCriticalLocation` in this scope
+  --> src/rules_core/cpr/critical.rs:32:10
+   |
+32 |         (CprCriticalLocation::Head, 7, "Foreign Object", false),
+   |          ^^^^^^^^^^^^^^^^^^^ use of undeclared type `CprCriticalLocation`
+
+error[E0433]: cannot find type `CprCriticalLocation` in this scope
+  --> src/rules_core/cpr/critical.rs:33:10
+   |
+33 |         (CprCriticalLocation::Head, 8, "Whiplash", true),
+   |          ^^^^^^^^^^^^^^^^^^^ use of undeclared type `CprCriticalLocation`
+
+error[E0433]: cannot find type `CprCriticalLocation` in this scope
+  --> src/rules_core/cpr/critical.rs:34:10
+   |
+34 |         (CprCriticalLocation::Head, 9, "Cracked Skull", true),
+   |          ^^^^^^^^^^^^^^^^^^^ use of undeclared type `CprCriticalLocation`
+
+error[E0433]: cannot find type `CprCriticalLocation` in this scope
+  --> src/rules_core/cpr/critical.rs:35:10
+   |
+35 |         (CprCriticalLocation::Head, 10, "Damaged Ear", false),
+   |          ^^^^^^^^^^^^^^^^^^^ use of undeclared type `CprCriticalLocation`
+
+error[E0433]: cannot find type `CprCriticalLocation` in this scope
+  --> src/rules_core/cpr/critical.rs:36:10
+   |
+36 |         (CprCriticalLocation::Head, 11, "Crushed Windpipe", true),
+   |          ^^^^^^^^^^^^^^^^^^^ use of undeclared type `CprCriticalLocation`
+
+error[E0433]: cannot find type `CprCriticalLocation` in this scope
+  --> src/rules_core/cpr/critical.rs:37:10
+   |
+37 |         (CprCriticalLocation::Head, 12, "Lost Ear", true),
+   |          ^^^^^^^^^^^^^^^^^^^ use of undeclared type `CprCriticalLocation`
+
+error[E0433]: cannot find type `CprCriticalCatalog` in this scope
+  --> src/rules_core/cpr/critical.rs:42:9
+   |
+42 |         CprCriticalCatalog::load(&dir).expect("the CPR wound-state and critical-injury corpus loads")
+   |         ^^^^^^^^^^^^^^^^^^ use of undeclared type `CprCriticalCatalog`
+
+error[E0433]: cannot find type `CprCriticalLocation` in this scope
+   --> src/rules_core/cpr/critical.rs:107:18
+    |
+107 |             crit(CprCriticalLocation::Body, "Dismembered Arm"),
+    |                  ^^^^^^^^^^^^^^^^^^^ use of undeclared type `CprCriticalLocation`
+
+error[E0433]: cannot find type `CprCriticalLocation` in this scope
+   --> src/rules_core/cpr/critical.rs:108:18
+    |
+108 |             crit(CprCriticalLocation::Head, "Whiplash"),
+    |                  ^^^^^^^^^^^^^^^^^^^ use of undeclared type `CprCriticalLocation`
+
+error[E0433]: cannot find type `CprCriticalLocation` in this scope
+   --> src/rules_core/cpr/critical.rs:109:18
+    |
+109 |             crit(CprCriticalLocation::Body, "Broken Ribs"),
+    |                  ^^^^^^^^^^^^^^^^^^^ use of undeclared type `CprCriticalLocation`
+
+error[E0433]: cannot find type `CprCriticalLocation` in this scope
+   --> src/rules_core/cpr/critical.rs:121:35
+    |
+121 |         let body = catalog.injury(CprCriticalLocation::Body, "Foreign Object").unwrap();
+    |                                   ^^^^^^^^^^^^^^^^^^^ use of undeclared type `CprCriticalLocation`
+
+error[E0433]: cannot find type `CprCriticalLocation` in this scope
+   --> src/rules_core/cpr/critical.rs:122:35
+    |
+122 |         let head = catalog.injury(CprCriticalLocation::Head, "Foreign Object").unwrap();
+    |                                   ^^^^^^^^^^^^^^^^^^^ use of undeclared type `CprCriticalLocation`
+
+error[E0433]: cannot find type `CprCriticalLocation` in this scope
+   --> src/rules_core/cpr/critical.rs:124:26
+    |
+124 |         let both = [crit(CprCriticalLocation::Body, "Foreign Object"), crit(CprCriticalLocation::Head, "Foreign Object")];
+    |                          ^^^^^^^^^^^^^^^^^^^ use of undeclared type `CprCriticalLocation`
+
+error[E0433]: cannot find type `CprCriticalLocation` in this scope
+   --> src/rules_core/cpr/critical.rs:124:77
+    |
+124 |         let both = [crit(CprCriticalLocation::Body, "Foreign Object"), crit(CprCriticalLocation::Head, "Foreign Object")];
+    |                                                                             ^^^^^^^^^^^^^^^^^^^ use of undeclared type `CprCriticalLocation`
+
+error[E0433]: cannot find type `CprCriticalLocation` in this scope
+   --> src/rules_core/cpr/critical.rs:131:27
+    |
+131 |         let twice = [crit(CprCriticalLocation::Head, "Lost Eye"), crit(CprCriticalLocation::Head, "Lost Eye")];
+    |                           ^^^^^^^^^^^^^^^^^^^ use of undeclared type `CprCriticalLocation`
+
+error[E0433]: cannot find type `CprCriticalLocation` in this scope
+   --> src/rules_core/cpr/critical.rs:131:72
+    |
+131 |         let twice = [crit(CprCriticalLocation::Head, "Lost Eye"), crit(CprCriticalLocation::Head, "Lost Eye")];
+    |                                                                        ^^^^^^^^^^^^^^^^^^^ use of undeclared type `CprCriticalLocation`
+
+error[E0433]: cannot find type `CprCriticalLocation` in this scope
+   --> src/rules_core/cpr/critical.rs:133:29
+    |
+133 |         let unknown = [crit(CprCriticalLocation::Body, "Lost Eye")];
+    |                             ^^^^^^^^^^^^^^^^^^^ use of undeclared type `CprCriticalLocation`
+
+Some errors have detailed explanations: E0422, E0425, E0433.
+For more information about an error, try `rustc --explain E0422`.
+warning: `codex` (lib test) generated 1 warning
+error: could not compile `codex` (lib test) due to 39 previous errors; 1 warning emitted

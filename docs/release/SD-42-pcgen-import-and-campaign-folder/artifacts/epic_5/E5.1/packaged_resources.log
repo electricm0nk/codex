@@ -1,0 +1,8 @@
+
+running 2 tests
+test the_sidecar_and_the_print_assets_reach_every_installer ... ok
+test the_packaged_bundle_carries_everything_the_rules_engine_reads has been running for over 60 seconds
+test the_packaged_bundle_carries_everything_the_rules_engine_reads ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 128.54s
+

@@ -1,0 +1,4 @@
+awk: root suites=300 passed=6706 failed=0 ignored=27
+python: suites 300 passed 6706 failed 0 ignored 27
+rules_core::cpr tests ok 132
+FAILED lines 0

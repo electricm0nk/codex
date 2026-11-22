@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Hate-Monger Spell ~ Foster Hatred",
+    "name": "Foster Hatred",
+    "class": "Hate-Monger Spell",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Hate-Monger Spell ~ Foster Hatred"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "BonusHateMongerSpell"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Mesmerist=13"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Mesmerist=5|Foster Hatred"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/support/ha_abilities_class_oa.lst",
+    "sha256": "9c111f652f8442433ea215fa11e67258c7e6c15c75d1c1753fa6fef34827f46c",
+    "line": 216,
+    "record_key": "Hate-Monger Spell ~ Foster Hatred"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

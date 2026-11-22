@@ -1,0 +1,67 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "General",
+    "cost_gp": 6800.0,
+    "description": "+1 luck bonus on saving throws. Once per day, she can invoke the lucky horseshoe's power to gain a +4 luck bonus on a single saving throw",
+    "key": "Lucky Horseshoe",
+    "name": "Lucky Horseshoe",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "SAVE",
+          "ALL",
+          "1+Global_LuckBonus",
+          "TYPE=Luck"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Lucky Horseshoe"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.GreaterMinor"
+      },
+      {
+        "key": "COST",
+        "value": "6800"
+      },
+      {
+        "key": "WT",
+        "value": "2"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Ability ~ Uses per Day / 1|CHARGES[1]"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.260"
+      },
+      {
+        "key": "SPROP",
+        "value": "+1 luck bonus on saving throws. Once per day, she can invoke the lucky horseshoe's power to gain a +4 luck bonus on a single saving throw"
+      }
+    ],
+    "weight_lbs": 2.0
+  },
+  "ingested_at": "2026-08-17T08:18:39Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 93,
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_equip.lst",
+    "record_key": "Lucky Horseshoe",
+    "sha256": "48877b9621bd36c3812d91cc603838c92eda6199fd2bd116d16d47523cbc1cbc"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

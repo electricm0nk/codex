@@ -1,0 +1,42 @@
+# SD18 deterministic Human Monk level 12 widening fixture.
+# Widens the accepted SD18 deterministic PF1 Core Rulebook Human Monk
+# level-1..level-11 martial chassis baseline (tests/sd18_monk_level11_diamond_body.rs)
+# to level 12 as chosen input only. It names selections; it does not contain
+# derived, computed, or parity values. It preserves the accepted Human
+# race-choice seam (ability-bonus and bonus-feat) and the deterministic
+# ability/feat/skill/equipment posture from the level-1 through level-11
+# fixtures, adding only the level bump this slice needs.
+#
+# The PF1 CRB Monk class table's level-12 "Special" column reads "Abundant
+# step, slow fall 60 ft." (verified independently against both d20pfsrd and
+# the Archives of Nethys aonprd.com mirror). Slow Fall's own reach magnitude
+# genuinely rises from 50 ft to 60 ft via the same grant-only identity
+# record already grounded at levels 4/6/8/10. Abundant Step is checked and
+# confirmed NOT flat this slice (it requires both a ki-point-spending
+# action-economy engine and a dimension-door-equivalent
+# teleportation-resolution engine, neither of which exists anywhere in this
+# codebase — mirroring the Wholeness of Body / High Jump precedent), so it
+# is deliberately left named-but-unproven, not fabricated. It deliberately
+# avoids every later Monk burden surface: no execution of what the
+# recognized bonus feat actually does, no repeat bonus-feat grant
+# recognition, no ki-power execution, no ki-strike
+# damage-reduction-bypass resolution, no fall-damage engine, no High Jump,
+# no Wholeness of Body execution, no Abundant Step execution, and no
+# level-13+ progression.
+case_id=pf1-crb-human-monk-level12
+source_package_id=pf1.core_rulebook
+race_id=race:human
+class_level=class:monk:12
+ability=strength:13
+ability=dexterity:16
+ability=constitution:13
+ability=intelligence:8
+ability=wisdom:17
+ability=charisma:10
+feat=feat:stunning_fist
+skill=skill:acrobatics:1
+equipment=item:shield:absent
+choice=choice:monk_bonus_feat:feat:deflect_arrows
+choice=choice:human_bonus_feat:feat:dodge
+choice=choice:human_ability_bonus:ability:wisdom
+provenance=programs/codex/requirements/SD-13-core-class-race-roster-and-level-10-progression-matrix/artifacts/core-roster-and-support-state-matrix.md

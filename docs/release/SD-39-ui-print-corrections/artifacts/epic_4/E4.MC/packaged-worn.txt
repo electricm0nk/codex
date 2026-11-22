@@ -1,0 +1,2 @@
+test result: ok. 24 passed; 0 failed; 0 ignored; 0 measured; 1036 filtered out; finished in 97.97s
+PACKAGED_EXIT 0

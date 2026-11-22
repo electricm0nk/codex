@@ -1,0 +1,53 @@
+{
+  "codex_generated_name": false,
+  "completeness": "chassis_only",
+  "data": {
+    "key": "Combat Expertise trade off",
+    "name": "Combat Expertise trade off",
+    "raw_tokens": [
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "X"
+      },
+      {
+        "key": "TEMPDESC",
+        "value": "When you use the attack action or the full attack action in melee, you can take a penalty of as much as -5 on your attack roll and add the same number (+5 or less) as a dodge bonus to your Armor Class."
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|COMBAT|AC|min(%CHOICE,BAB)|TYPE=Temporary"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|COMBAT|TOHIT|max((-1*%CHOICE),(-1*BAB))|TYPE=Temporary"
+      },
+      {
+        "key": "TEMPVALUE",
+        "value": "MIN=1|MAX=5|TITLE=Combat Expertise trade off"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T16:43:17Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 376,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_templates.lst",
+    "record_key": "Combat Expertise trade off",
+    "sha256": "5de512bab3d46192a6bd1342579c61ca8376d2e6e8f25a8bb8a47665c657a11b"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice",
+    "computed:tempbonus",
+    "derived:tempbonus"
+  ]
+}

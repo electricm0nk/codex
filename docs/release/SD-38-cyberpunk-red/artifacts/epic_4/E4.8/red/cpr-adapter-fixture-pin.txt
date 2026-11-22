@@ -1,0 +1,29 @@
+   Compiling codex-desktop v0.18.0 (/home/ubuntu/workspace/repos/codex/.worktrees/sd38-e4/apps/desktop/src-tauri)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 35.18s
+     Running unittests src/main.rs (/home/ubuntu/cargo-target/sd38-e4/debug/deps/codex_desktop-13c7f51f8d3e23dd)
+
+running 8 tests
+test cpr_adapter::tests::save_character_advances_the_revision_and_refuses_a_stale_one ... ok
+test cpr_adapter::tests::pathfinder_shaped_methods_refuse_with_their_reason ... ok
+test cpr_adapter::tests::a_saved_character_the_engine_refuses_fails_to_load_with_the_reason ... ok
+test cpr_adapter::tests::a_cyberpunk_red_character_saves_lists_and_loads_with_its_ten_stat_rows ... ok
+test cpr_adapter::tests::saved_lifepath_answers_load_as_printed_lines ... ok
+test cpr_adapter::tests::a_saved_character_loads_with_every_row_of_its_composed_sheet ... ok
+test cpr_adapter::tests::the_frontend_cyberpunk_sheet_fixtures_are_the_adapters_load_responses ... FAILED
+test cpr_adapter::tests::ticking_a_critical_injury_saves_it_and_moves_the_base_death_save_penalty ... ok
+
+failures:
+
+---- cpr_adapter::tests::the_frontend_cyberpunk_sheet_fixtures_are_the_adapters_load_responses stdout ----
+
+thread 'cpr_adapter::tests::the_frontend_cyberpunk_sheet_fixtures_are_the_adapters_load_responses' (3657180) panicked at src/cpr_adapter.rs:776:9:
+stale or missing Cyberpunk RED sheet fixtures ["/home/ubuntu/workspace/repos/codex/.worktrees/sd38-e4/apps/desktop/src-tauri/../src/characterHub/__tests__/cyberpunkSheetFixtures/cpr-solo-ledger.json"]; regenerate with CPR_SHEET_FIXTURES_WRITE=1 cargo test --bin codex-desktop the_frontend_cyberpunk_sheet_fixtures_are_the_adapters_load_responses
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    cpr_adapter::tests::the_frontend_cyberpunk_sheet_fixtures_are_the_adapters_load_responses
+
+test result: FAILED. 7 passed; 1 failed; 0 ignored; 0 measured; 885 filtered out; finished in 0.22s
+
+error: test failed, to rerun pass `--bin codex-desktop`

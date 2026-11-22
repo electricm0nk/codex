@@ -1,0 +1,57 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Bandersnatch ~ Pain",
+    "delivery": "Extraordinary",
+    "description": "Whenever a creature takes damage from a bandersnatch's tail slap attack, quills, or quill defense, that creature must make a DC 28 Reflex save or a quill lodges in its flesh, causing the creature to become sickened until the quill is removed. Removing one quill requires a DC 20 Heal check made as a full-round action. For every 5 by which the check exceeds the DC, one additional quill can be removed. On a failed check, a quill is still removed, but the process deals 1d10+6 points of damage to the victim. The save DC is Dexterity-based.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:bandersnatch_pain",
+    "name": "Pain",
+    "owners": [
+      "bestiary_3:monster:bandersnatch"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Whenever a creature takes damage from a bandersnatch's tail slap attack, quills, or quill defense, that creature must make a DC 28 Reflex save or a quill lodges in its flesh, causing the creature to become sickened until the quill is removed. Removing one quill requires a DC 20 Heal check made as a full-round action. For every 5 by which the check exceeds the DC, one additional quill can be removed. On a failed check, a quill is still removed, but the process deals 1d10+6 points of damage to the victim. The save DC is Dexterity-based."
+      },
+      {
+        "key": "KEY",
+        "value": "Bandersnatch ~ Pain"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.32"
+      },
+      {
+        "key": "TYPE",
+        "value": "BandersnatchRacialAbility.SpecialQuality.Extraordinary"
+      }
+    ],
+    "source_page": "p.32",
+    "traits": [
+      "BandersnatchRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T10:26:03Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 448,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Bandersnatch ~ Pain",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

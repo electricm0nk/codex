@@ -1,0 +1,19 @@
+{
+  "data": {
+    "key": "Gyrojet rifle (elite)",
+    "name": "Gyrojet rifle (elite)",
+    "type": "LONGARMS"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 184,
+    "path": "starfinder/paizo/core/scr_profs_weapon.lst",
+    "record_key": "Gyrojet rifle (elite)",
+    "sha256": "82f827be51f88e0b47cced07677ec1715678b3805ceec139fdeeebbc3c088690"
+  },
+  "unit_id": "core:proficiency:gyrojet_rifle_elite"
+}

@@ -1,0 +1,257 @@
+[
+  {
+    "key": "Elder Mythos Scholar ~ Arcane Bond",
+    "class": "Wizard",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+      "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+      "line": 297
+    }
+  },
+  {
+    "key": "Elder Mythos Scholar ~ Eldritch Grimoire",
+    "class": "Wizard",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+      "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+      "line": 297
+    }
+  },
+  {
+    "key": "Elder Mythos Scholar ~ Eldritch Infusion",
+    "class": "Wizard",
+    "level": 8,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+      "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+      "line": 297
+    }
+  },
+  {
+    "key": "Elder Mythos Scholar ~ Eldritch Knowledge",
+    "class": "Wizard",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+      "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+      "line": 297
+    }
+  },
+  {
+    "key": "Elder Mythos Scholar ~ Talisman",
+    "class": "Wizard",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+      "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+      "line": 297
+    }
+  },
+  {
+    "key": "Hallowed Necromancer ~ Arcane School",
+    "class": "Wizard",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+      "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+      "line": 298
+    }
+  },
+  {
+    "key": "Hallowed Necromancer ~ Deathbane",
+    "class": "Wizard",
+    "level": 5,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+      "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+      "line": 298
+    }
+  },
+  {
+    "key": "Hallowed Necromancer ~ Ghostbane",
+    "class": "Wizard",
+    "level": 10,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+      "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+      "line": 298
+    }
+  },
+  {
+    "key": "Hallowed Necromancer ~ Guarded Life",
+    "class": "Wizard",
+    "level": 15,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+      "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+      "line": 298
+    }
+  },
+  {
+    "key": "Hallowed Necromancer ~ Positive Touch",
+    "class": "Wizard",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+      "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+      "line": 298
+    }
+  },
+  {
+    "key": "Hallowed Necromancer ~ Turn Undead",
+    "class": "Wizard",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+      "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+      "line": 298
+    }
+  },
+  {
+    "key": "Undead Master ~ Command Undead",
+    "class": "Wizard",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+      "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+      "line": 299
+    }
+  },
+  {
+    "key": "Undead Master ~ Corpse Bond",
+    "class": "Wizard",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+      "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+      "line": 299
+    }
+  },
+  {
+    "key": "Undead Master ~ Lich-Loved",
+    "class": "Wizard",
+    "level": 20,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+      "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+      "line": 299
+    }
+  },
+  {
+    "key": "Undead Master ~ Necromantic Focus",
+    "class": "Wizard",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+      "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+      "line": 299
+    }
+  },
+  {
+    "key": "Undead Master ~ Necropolitan",
+    "class": "Wizard",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+      "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+      "line": 299
+    }
+  },
+  {
+    "key": "Undead Master ~ Reanimator",
+    "class": "Wizard",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+      "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+      "line": 299
+    }
+  }
+]

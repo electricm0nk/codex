@@ -1,0 +1,87 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "magic_items",
+    "cost_gp": 40000.0,
+    "description": "This belt has a large steel buckle, usually depicting the image of a giant. The belt grants the wearer an enhancement bonus to two physical ability scores (Strength, Dexterity, or Constitution) of +2, +4, or +6. Treat this as a temporary ability bonus for the first 24 hours the belt is worn. These bonuses are chosen when the belt is created and cannot be changed.",
+    "key": "Belt of Physical Might (STR/CON) +4",
+    "name": "Belt of Physical Might +4 (Str, Con)",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "STAT",
+          "STR,CON",
+          "4",
+          "TYPE=Enhancement"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Belt of Physical Might (STR/CON) +4"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Belt of Physical Might +4 (Str, Con)"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.Belt"
+      },
+      {
+        "key": "COST",
+        "value": "40000"
+      },
+      {
+        "key": "WT",
+        "value": "1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.502"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Aura|strong transmutation"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Caster Level|12th"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Slot|belt"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Cost|20,000 gp"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Requirements|Craft Wondrous Item, bear's endurance, bull's strength"
+      },
+      {
+        "key": "DESC",
+        "value": "This belt has a large steel buckle, usually depicting the image of a giant. The belt grants the wearer an enhancement bonus to two physical ability scores (Strength, Dexterity, or Constitution) of +2, +4, or +6. Treat this as a temporary ability bonus for the first 24 hours the belt is worn. These bonuses are chosen when the belt is created and cannot be changed."
+      }
+    ],
+    "weight_lbs": 1.0
+  },
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 51,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "record_key": "Belt of Physical Might (STR/CON) +4",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

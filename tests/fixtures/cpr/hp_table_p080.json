@@ -1,0 +1,15 @@
+{
+  "source": "Cyberpunk RED core rulebook, printed p. 79 (pages/p080.txt, PDF page 80): Hit Points table; rows WILL 2-10, columns BODY 2-15. Transcribed from the page text and checked cell by cell against the 150 dpi page image; not built from data/cyberpunk-red/corpus/.",
+  "body_columns": [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
+  "rows": [
+    {"will": 2, "hit_points": [20, 25, 25, 30, 30, 35, 35, 40, 40, 45, 45, 50, 50, 55]},
+    {"will": 3, "hit_points": [25, 25, 30, 30, 35, 35, 40, 40, 45, 45, 50, 50, 55, 55]},
+    {"will": 4, "hit_points": [25, 30, 30, 35, 35, 40, 40, 45, 45, 50, 50, 55, 55, 60]},
+    {"will": 5, "hit_points": [30, 30, 35, 35, 40, 40, 45, 45, 50, 50, 55, 55, 60, 60]},
+    {"will": 6, "hit_points": [30, 35, 35, 40, 40, 45, 45, 50, 50, 55, 55, 60, 60, 65]},
+    {"will": 7, "hit_points": [35, 35, 40, 40, 45, 45, 50, 50, 55, 55, 60, 60, 65, 65]},
+    {"will": 8, "hit_points": [35, 40, 40, 45, 45, 50, 50, 55, 55, 60, 60, 65, 65, 70]},
+    {"will": 9, "hit_points": [40, 40, 45, 45, 50, 50, 55, 55, 60, 60, 65, 65, 70, 70]},
+    {"will": 10, "hit_points": [40, 45, 45, 50, 50, 55, 55, 60, 60, 65, 65, 70, 70, 75]}
+  ]
+}

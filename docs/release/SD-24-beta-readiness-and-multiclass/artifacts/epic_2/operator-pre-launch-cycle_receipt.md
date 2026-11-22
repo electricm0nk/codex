@@ -1,0 +1,26 @@
+# Cycle operator-pre-launch-cycle — Epic 2 (Operator Pre-Launch) / Criteria 2.1-2.5
+
+- **Card ID:** t_41dccfff
+- **Commit SHA:** d6cddac
+- **Files touched:** none (verification-only cycle; no production or test files touched)
+- **Identifier audit result:** OK_NO_BUNDLE_TAGS (diff since `merge-base HEAD origin/develop` re-checked; unchanged from the prior Epic 1 cycle since this cycle added no new diff besides docs/receipts)
+- **Wired-integration audit result:** OK_NO_TOKENS (same diff scope)
+- **Acceptance criterion (verbatim, epic-breakdown.md):**
+  - 2.1 — "`codex-tranche-5` kanban board reachable. Verification: `hermes kanban list-boards` shows `codex-tranche-5`. If absent, exit FAIL; operator creates board."
+  - 2.2 — "`tranche/5-2` branch pushed to origin. Verification: `git ls-remote origin tranche/5-2` resolves to a SHA."
+  - 2.3 — "SD-23 closure PR merged to develop. Verification: `git log origin/develop --oneline | head -5` shows the SD-23 closure commit as HEAD of develop. Tier-1 launch-gate: this is the SD-24 launch-gate dependency."
+  - 2.4 — "Working tree clean on `tranche/5-2`. Verification: `git status --porcelain` returns empty."
+  - 2.5 — "Doctrines and skills loaded. Verification: skill list includes `wired-integration-discipline`, `identifier-discipline`, `kanban-claude-code-execution-receipt`. Loop verifies at every cycle."
+- **Status:** complete
+- **Notes:**
+  - This is a verification-only cycle per the task brief — no code files touched, no TDD RED/GREEN applicable (there is no production behavior to test; each criterion's "RED"/"GREEN" is the verification command itself failing vs. passing).
+  - **2.1** — `hermes kanban boards` (corrected subcommand form per §1 item 1's 2026-07-21 correction — `list-boards` is not valid) lists `codex-tranche-5` with `done=43`. PASS.
+  - **2.2** — `git ls-remote origin tranche/5-2` resolves to `e433a63187dd77fd140cdb545fa284b4a9397025`, matching local `HEAD` after `git fetch && git rebase origin/tranche/5-2` (no-op rebase, already current). PASS.
+  - **2.3 (Tier-1 launch gate)** — `git fetch origin develop` then `git log origin/develop --oneline | head -5` shows `09e43c3 Merge pull request #329 from electricm0nk/docs/sd23-closure-criteria-29-33` as the literal first line (`git rev-parse origin/develop` = `09e43c3bd98c7af5f2264a47b76a6005c1738fdb`). This is the SD-23 closure commit named in the task brief. **CONFIRMED — SD-23's closure IS on develop.** The bundle is NOT blocked. PASS.
+  - **2.4** — `git status --porcelain` returns 0 lines on `tranche/5-2` at cycle start and end. PASS.
+  - **2.5** — Re-checked `hermes skills list` (the working subcommand; `acceptance-and-verification.md`'s cited form `hermes skills --profile god-emporer --list` errors with "unrecognized arguments: --list" — a second stale-CLI-form issue in the docs, same family as the `list-boards` correction already logged in `./loop-instruction.md §1` item 1) and grepped for `identifier|wired-integration|kanban-claude-code-execution-receipt` — zero matches. This reconfirms the gap already tracked non-blocking in `./missing_skills.md` (dated 2026-07-21): the two doctrine skills are not installed as invocable skills; the operative gate is the embedded dual-audit grep in `loop-instruction.md §2.3` step 4, which this cycle re-ran and confirmed clean (`OK_NO_BUNDLE_TAGS` / `OK_NO_TOKENS`). Per `missing_skills.md`'s own disposition, this does not block dispatch — it is a documented, operator-owned follow-on outside this bundle's run. PASS (with known, already-tracked caveat).
+  - Build counter cross-check (pre-launch item 7): re-read `develop`'s `apps/desktop/package.json` / `tauri.conf.json` — both still `0.5.97`, matching `decisions.md §3`'s captured value; no drift, no update needed.
+  - Artifact directories (pre-launch item 8): `artifacts/{epic_1..epic_8}/` all exist; `epic_2/` held only a `.gitkeep` before this receipt.
+  - gh token present at `~/.config/gh/.claude_gh_token` (41 bytes) — pre-launch item 4 unaffected by this cycle.
+- **Discovery forwards:** none new. The `hermes skills --profile god-emporer --list` stale-CLI-form issue in `acceptance-and-verification.md` line 22 is a minor doc-quality nit of the same family as the already-logged `list-boards` correction; not filed as a fresh `## DISCOVERED` entry since it doesn't change any criterion's disposition and the underlying skills-gap it was probing is already tracked in `./missing_skills.md`.
+- **Next-cycle plan:** Epic 2 (2.1-2.5) is now `complete`. Per the deterministic seed, the next dispatch is Epic 3 (Wired-Integration Audit + Remediation, criterion 3.1 — read-only sweep).

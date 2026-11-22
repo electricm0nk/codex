@@ -1,0 +1,53 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "Add your Strength modifier to Intimidate skill checks in addition to your Charisma modifier.",
+    "key": "Animal Companion Feat ~ Intimidating Prowess",
+    "name": "Intimidating Prowess",
+    "origin": "declared",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Animal Companion Feat ~ Intimidating Prowess"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "AnimalCompanionFeat"
+      },
+      {
+        "key": "DESC",
+        "value": "Add your Strength modifier to Intimidate skill checks in addition to your Charisma modifier."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Intimidating Prowess"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.128"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T12:25:21Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 244,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_companion.lst",
+    "record_key": "Animal Companion Feat ~ Intimidating Prowess",
+    "sha256": "87c87e87120de7a272cecce07a89c4d0d5ad1e43ecc8cd89d530640966b1d495"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_ability_scaling",
+    "display:no_magnitude_token"
+  ]
+}

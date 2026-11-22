@@ -1,0 +1,2 @@
+# Fixture for desktop Market +N (AC and attack rows), source: ue_equip_arms_armor.lst, KEY: Urumi
+Urumi																					PROFICIENCY:WEAPON|Urumi								TYPE:Weapon.Resizable.EasternWeapon.Eastern.Melee.OneHanded.Exotic.Slashing.Distracting.Sword																														COST:30	WT:6										CRITMULT:x2	CRITRANGE:3							DAMAGE:1d8					EQMOD:Material ~ Steel																																									WIELD:OneHanded							SIZE:M	SOURCEPAGE:p.40

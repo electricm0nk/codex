@@ -1,0 +1,59 @@
+{
+  "codex_generated_name": false,
+  "completeness": "chassis_only",
+  "data": {
+    "key": "Angel of Eiseth",
+    "name": "Angel of Eiseth",
+    "raw_tokens": [
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Outsider"
+      },
+      {
+        "key": "RACESUBTYPE",
+        "value": "Evil|Extraplanar|Lawful"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FireResistanceBonus|30"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Universal Monster Rule ~ See in Darkness|Telepathy"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TelepathyRange|50"
+      },
+      {
+        "key": "MOVE",
+        "value": "Fly,50"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Maneuverability|4"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T16:43:13Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 1,
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_templates.lst",
+    "record_key": "Angel of Eiseth",
+    "sha256": "5e9d10789d33dce65c644f7bf256c66287fbc40be2c91a3bf7c4983dbaf7026b"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

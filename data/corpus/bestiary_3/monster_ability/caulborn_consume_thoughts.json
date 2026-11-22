@@ -1,0 +1,57 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Caulborn ~ Consume Thoughts",
+    "delivery": "Extraordinary",
+    "description": "A caulborn can consume the thoughts of a willing, helpless, or fascinated creature with a touch attack. If the target fails a DC 18 Will save, the caulborn can alter the victim's memory as if using modify memory. This process deals 1d4 points of Intelligence and Wisdom damage to the target. The save DC is Charisma-based.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:caulborn_consume_thoughts",
+    "name": "Consume Thoughts",
+    "owners": [
+      "bestiary_3:monster:caulborn"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A caulborn can consume the thoughts of a willing, helpless, or fascinated creature with a touch attack. If the target fails a DC 18 Will save, the caulborn can alter the victim's memory as if using modify memory. This process deals 1d4 points of Intelligence and Wisdom damage to the target. The save DC is Charisma-based."
+      },
+      {
+        "key": "KEY",
+        "value": "Caulborn ~ Consume Thoughts"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.48"
+      },
+      {
+        "key": "TYPE",
+        "value": "CaulbornRacialAbility.SpecialQuality.Extraordinary"
+      }
+    ],
+    "source_page": "p.48",
+    "traits": [
+      "CaulbornRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T10:26:03Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 538,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Caulborn ~ Consume Thoughts",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

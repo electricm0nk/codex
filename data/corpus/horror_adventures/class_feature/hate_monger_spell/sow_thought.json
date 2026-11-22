@@ -1,0 +1,44 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Hate-Monger Spell ~ Sow Thought",
+    "name": "Sow Thought",
+    "class": "Hate-Monger Spell",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Hate-Monger Spell ~ Sow Thought"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "BonusHateMongerSpell"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Mesmerist=1|Sow Thought"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/support/ha_abilities_class_oa_arg.lst",
+    "sha256": "93b27d54ca5fdb5bd499659e32e643e827b22fff336ed38d8880c11cbea5f2ba",
+    "line": 7,
+    "record_key": "Hate-Monger Spell ~ Sow Thought"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

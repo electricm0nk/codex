@@ -1,0 +1,326 @@
+MCP p2 market weapons 480
+MCP p2 (Base) 77
+MCP p2 race:half-elf  wizard: same 71 mismatch 0 norow 6 blocked 0
+  mismatch []
+  norow ["Arrow (Base)", "Bolt (Base)", "Repeating Bolt (Base)", "Sling Bullet (Base)", "Blowgun Dart (Base)", "Net (Base)"]
+  blocked []
+MCP p1 ok 442 bad 0 []
+MCP p1 off-table 22 ["achaekek=Sawtooth Sabre", "achaekek=Sawtooth Sabre", "ajids=War Razor", "apsu=Bite", "apsu=Bite", "ashava=Bladed Scarf", "chadali=Net", "cixyron=Musket", "dahak=Bite", "dahak=Bite", "eaqueo=Net", "folca=Net", "mahathallah=Net", "mazmezz=Net", "mazmezz=Net", "roqorolos=Net", "sifkesh=War Razor", "sifkesh=War Razor", "sivanah=Bladed Scarf", "sivanah=Bladed Scarf", "zarongel=Dogslicer", "zarongel=Dogslicer"]
+MCP p1 deity slugs with 2+ weapons [("apsu", ["Bite", "Bite", "Quarterstaff", "Quarterstaff"]), ("asmodeus", ["Mace (Heavy)", "Mace (Heavy)", "Mace (Light)", "Mace (Light)"]), ("bolka", ["Mace (Heavy)", "Mace (Light)"]), ("dahak", ["Bite", "Bite", "Whip", "Whip"]), ("ketephys", ["Longbow", "Shortbow"]), ("uaransaph", ["Crossbow (Repeating Heavy)", "Crossbow (Repeating Light)"])]
+MCP p5 files 65
+MCP p4 levelup Ok(true)
+MCP p3 aldric []: snap=true tile=Some(7)
+   melee=Some((7, "Baseline melee attack bonus with no weapon in hand: Fighter base attack bonus (+3) + Strength modifier (+4) + Medium size modifier (+0, PF1 Table 8-1 -- attack rolls take"))
+   rows=[]
+MCP p4 ledger mentions deity: false 
+MCP p4 ledger.json deity: false :: {
+MCP p3 aldric ["Heavy Steel Shield (Base)"]: snap=true tile=Some(7)
+   melee=Some((7, "combat.baseline_melee_attack_bonus = 7, computed by the corpus-aware combat baseline (pilot_compute_corpus::compute_combat_baseline_from_corpus) for this character's actu"))
+   rows=[("combat.weapon_attack_bonus.heavysteelshield", 3)]
+MCP p4 load json has deity false , diag []
+MCP p6 classes 137
+MCP p6 class:adaptive_warrior: create not saved Ok(Blocked { diagnostics: [DiagnosticDto { id: "prestige_class.requires_base_class_levels", message: "A prestige class cannot be a character's first class. Add 
+MCP p5 arrow_alone.pcg: SAVED deity=None bio="" first_melee=4 load_melee=Some(4) snapshot_on_load=true addedLongsword=0 diag=[]
+MCP p3 aldric ["Heavy Wooden Shield (Base)", "Longsword (Base)"]: snap=true tile=Some(8)
+   melee=Some((8, "combat.baseline_melee_attack_bonus = 8, computed by the corpus-aware combat baseline (pilot_compute_corpus::compute_combat_baseline_from_corpus) for this character's actu"))
+   rows=[("combat.weapon_attack_bonus.heavywoodenshield", 3), ("combat.weapon_attack_bonus.longsword", 8)]
+MCP p3 aldric ["Longsword (Base)", "Heavy Steel Shield (Base)"]: snap=true tile=Some(8)
+   melee=Some((8, "combat.baseline_melee_attack_bonus = 8, computed by the corpus-aware combat baseline (pilot_compute_corpus::compute_combat_baseline_from_corpus) for this character's actu"))
+   rows=[("combat.weapon_attack_bonus.longsword", 8), ("combat.weapon_attack_bonus.heavysteelshield", 3)]
+MCP p3 aldric ["Longbow (Base)"]: snap=true tile=Some(7)
+   melee=Some((7, "Baseline melee attack bonus with no weapon in hand: Fighter base attack bonus (+3) + Strength modifier (+4) + Medium size modifier (+0, PF1 Table 8-1 -- attack rolls take"))
+   rows=[("combat.weapon_attack_bonus.longbow", 7)]
+MCP p3 aldric ["Longbow (Base)", "Dagger (Base)"]: snap=true tile=Some(7)
+   melee=Some((7, "Baseline melee attack bonus for the Dagger: Fighter base attack bonus (+3) + Strength modifier (+4) + Medium size modifier (+0, PF1 Table 8-1 -- attack rolls take the sam"))
+   rows=[("combat.weapon_attack_bonus.longbow", 7), ("combat.weapon_attack_bonus.dagger", 7)]
+MCP p3 aldric ["Armor Spikes (Base)"]: snap=true tile=Some(7)
+   melee=Some((7, "Baseline melee attack bonus for the Armor Spikes: Fighter base attack bonus (+3) + Strength modifier (+4) + Medium size modifier (+0, PF1 Table 8-1 -- attack rolls take t"))
+   rows=[("combat.weapon_attack_bonus.armorspikes", 7)]
+MCP p3 aldric ["Gauntlet (Base)"]: snap=true tile=Some(7)
+   melee=Some((7, "Baseline melee attack bonus for the Gauntlet: Fighter base attack bonus (+3) + Strength modifier (+4) + Medium size modifier (+0, PF1 Table 8-1 -- attack rolls take the s"))
+   rows=[("combat.weapon_attack_bonus.gauntlet", 7)]
+MCP p3 aldric ["Greatsword (Base)"]: snap=true tile=Some(7)
+   melee=Some((7, "Baseline melee attack bonus for the Greatsword: Fighter base attack bonus (+3) + Strength modifier (+4) + Medium size modifier (+0, PF1 Table 8-1 -- attack rolls take the"))
+   rows=[("combat.weapon_attack_bonus.greatsword", 7)]
+MCP p5 arrow_alone_apg.pcg: SAVED deity=None bio="" first_melee=4 load_melee=Some(4) snapshot_on_load=true addedLongsword=0 diag=[]
+MCP p3 aldric ["Dagger (Base)", "Dagger (Base)"]: snap=true tile=Some(7)
+   melee=Some((7, "Baseline melee attack bonus for the Dagger: Fighter base attack bonus (+3) + Strength modifier (+4) + Medium size modifier (+0, PF1 Table 8-1 -- attack rolls take the sam"))
+   rows=[("combat.weapon_attack_bonus.dagger", 7)]
+MCP p3 aldric ["Rapier (Base)"]: snap=true tile=Some(7)
+   melee=Some((7, "Baseline melee attack bonus for the Rapier: Fighter base attack bonus (+3) + Strength modifier (+4) + Medium size modifier (+0, PF1 Table 8-1 -- attack rolls take the sam"))
+   rows=[("combat.weapon_attack_bonus.rapier", 7)]
+MCP p3 aldric ["Arrow (Base)"]: snap=true tile=Some(7)
+   melee=Some((7, "combat.baseline_melee_attack_bonus = 7, computed by the corpus-aware combat baseline (pilot_compute_corpus::compute_combat_baseline_from_corpus) for this character's actu"))
+   rows=[]
+MCP p3 aldric ["Sling (Base)"]: snap=true tile=Some(7)
+   melee=Some((7, "Baseline melee attack bonus with no weapon in hand: Fighter base attack bonus (+3) + Strength modifier (+4) + Medium size modifier (+0, PF1 Table 8-1 -- attack rolls take"))
+   rows=[("combat.weapon_attack_bonus.sling", 7)]
+MCP p3 aldric ["Javelin (Base)"]: snap=true tile=Some(7)
+   melee=Some((7, "Baseline melee attack bonus with no weapon in hand: Fighter base attack bonus (+3) + Strength modifier (+4) + Medium size modifier (+0, PF1 Table 8-1 -- attack rolls take"))
+   rows=[("combat.weapon_attack_bonus.javelin", 7)]
+MCP p3 aldric ["Unarmed Strike (Base)"]: snap=true tile=Some(7)
+   melee=Some((7, "Baseline melee attack bonus for the Unarmed Strike: Fighter base attack bonus (+3) + Strength modifier (+4) + Medium size modifier (+0, PF1 Table 8-1 -- attack rolls take"))
+   rows=[("combat.weapon_attack_bonus.unarmedstrike", 7)]
+MCP p5 bow_arrow.pcg: SAVED deity=None bio="" first_melee=4 load_melee=Some(4) snapshot_on_load=true addedLongsword=0 diag=[]
+MCP p2 market weapons 480
+MCP p2 (Base) 77
+MCP p6 class:aldori_swordlord: create not saved Ok(Blocked { diagnostics: [DiagnosticDto { id: "prestige_class.requires_base_class_levels", message: "A prestige class cannot be a character's first class. Add 
+MCP p3 elowen []: snap=true tile=Some(1)
+   melee=Some((1, "Baseline melee attack bonus with no weapon in hand: Wizard base attack bonus (+2) + Strength modifier (+-1) + Medium size modifier (+0, PF1 Table 8-1 -- attack rolls take"))
+   rows=[]
+MCP p3 elowen ["Heavy Steel Shield (Base)"]: snap=true tile=Some(1)
+   melee=Some((1, "combat.baseline_melee_attack_bonus = 1, computed by the corpus-aware combat baseline (pilot_compute_corpus::compute_combat_baseline_from_corpus) for this character's actu"))
+   rows=[("combat.weapon_attack_bonus.heavysteelshield", -3)]
+MCP p5 leather_baseline.pcg: SAVED deity=None bio="" first_melee=4 load_melee=Some(4) snapshot_on_load=true addedLongsword=0 diag=[]
+MCP p3 elowen ["Heavy Wooden Shield (Base)", "Longsword (Base)"]: snap=true tile=Some(-2)
+   melee=Some((-2, "combat.baseline_melee_attack_bonus = -2, computed by the corpus-aware combat baseline (pilot_compute_corpus::compute_combat_baseline_from_corpus) for this character's act"))
+   rows=[("combat.weapon_attack_bonus.heavywoodenshield", -3), ("combat.weapon_attack_bonus.longsword", -2)]
+MCP p3 elowen ["Longsword (Base)", "Heavy Steel Shield (Base)"]: snap=true tile=Some(-2)
+   melee=Some((-2, "combat.baseline_melee_attack_bonus = -2, computed by the corpus-aware combat baseline (pilot_compute_corpus::compute_combat_baseline_from_corpus) for this character's act"))
+   rows=[("combat.weapon_attack_bonus.longsword", -2), ("combat.weapon_attack_bonus.heavysteelshield", -3)]
+MCP p3 elowen ["Longbow (Base)"]: snap=true tile=Some(1)
+   melee=Some((1, "Baseline melee attack bonus with no weapon in hand: Wizard base attack bonus (+2) + Strength modifier (+-1) + Medium size modifier (+0, PF1 Table 8-1 -- attack rolls take"))
+   rows=[("combat.weapon_attack_bonus.longbow", -3)]
+MCP p3 elowen ["Longbow (Base)", "Dagger (Base)"]: snap=true tile=Some(1)
+   melee=Some((1, "Baseline melee attack bonus for the Dagger: Wizard base attack bonus (+2) + Strength modifier (+-1) + Medium size modifier (+0, PF1 Table 8-1 -- attack rolls take the sam"))
+   rows=[("combat.weapon_attack_bonus.longbow", -3), ("combat.weapon_attack_bonus.dagger", 1)]
+MCP p5 leather_draco.pcg: SAVED deity=None bio="" first_melee=4 load_melee=Some(4) snapshot_on_load=true addedLongsword=0 diag=[]
+MCP p3 elowen ["Armor Spikes (Base)"]: snap=true tile=Some(-3)
+   melee=Some((-3, "Baseline melee attack bonus for the Armor Spikes: Wizard base attack bonus (+2) + Strength modifier (+-1) + Medium size modifier (+0, PF1 Table 8-1 -- attack rolls take t"))
+   rows=[("combat.weapon_attack_bonus.armorspikes", -3)]
+MCP p6 class:arcane_archer: create not saved Ok(Blocked { diagnostics: [DiagnosticDto { id: "prestige_class.requires_base_class_levels", message: "A prestige class cannot be a character's first class. Add 
+MCP p6 class:arcane_trickster: create not saved Ok(Blocked { diagnostics: [DiagnosticDto { id: "prestige_class.requires_base_class_levels", message: "A prestige class cannot be a character's first class. Add 
+MCP p3 elowen ["Gauntlet (Base)"]: snap=true tile=Some(-3)
+   melee=Some((-3, "Baseline melee attack bonus for the Gauntlet: Wizard base attack bonus (+2) + Strength modifier (+-1) + Medium size modifier (+0, PF1 Table 8-1 -- attack rolls take the s"))
+   rows=[("combat.weapon_attack_bonus.gauntlet", -3)]
+MCP p3 elowen ["Greatsword (Base)"]: snap=true tile=Some(-3)
+   melee=Some((-3, "Baseline melee attack bonus for the Greatsword: Wizard base attack bonus (+2) + Strength modifier (+-1) + Medium size modifier (+0, PF1 Table 8-1 -- attack rolls take the"))
+   rows=[("combat.weapon_attack_bonus.greatsword", -3)]
+MCP p3 elowen ["Dagger (Base)", "Dagger (Base)"]: snap=true tile=Some(1)
+   melee=Some((1, "Baseline melee attack bonus for the Dagger: Wizard base attack bonus (+2) + Strength modifier (+-1) + Medium size modifier (+0, PF1 Table 8-1 -- attack rolls take the sam"))
+   rows=[("combat.weapon_attack_bonus.dagger", 1)]
+MCP p6 class:argent_dramaturge: create not saved Ok(Blocked { diagnostics: [DiagnosticDto { id: "prestige_class.requires_base_class_levels", message: "A prestige class cannot be a character's first class. Add 
+MCP p3 elowen ["Rapier (Base)"]: snap=true tile=Some(-3)
+   melee=Some((-3, "Baseline melee attack bonus for the Rapier: Wizard base attack bonus (+2) + Strength modifier (+-1) + Medium size modifier (+0, PF1 Table 8-1 -- attack rolls take the sam"))
+   rows=[("combat.weapon_attack_bonus.rapier", -3)]
+MCP p5 leather_dragonhide.pcg: SAVED deity=None bio="" first_melee=4 load_melee=Some(4) snapshot_on_load=true addedLongsword=0 diag=[]
+MCP p3 elowen ["Arrow (Base)"]: snap=true tile=Some(1)
+   melee=Some((1, "combat.baseline_melee_attack_bonus = 1, computed by the corpus-aware combat baseline (pilot_compute_corpus::compute_combat_baseline_from_corpus) for this character's actu"))
+   rows=[]
+MCP p6 class:asavir: create not saved Ok(Blocked { diagnostics: [DiagnosticDto { id: "prestige_class.requires_base_class_levels", message: "A prestige class cannot be a character's first class. Add 
+MCP p6 class:aspis_agent: create not saved Ok(Blocked { diagnostics: [DiagnosticDto { id: "prestige_class.requires_base_class_levels", message: "A prestige class cannot be a character's first class. Add 
+MCP p3 elowen ["Sling (Base)"]: snap=true tile=Some(1)
+   melee=Some((1, "Baseline melee attack bonus with no weapon in hand: Wizard base attack bonus (+2) + Strength modifier (+-1) + Medium size modifier (+0, PF1 Table 8-1 -- attack rolls take"))
+   rows=[("combat.weapon_attack_bonus.sling", -3)]
+MCP p6 class:assassin: create not saved Ok(Blocked { diagnostics: [DiagnosticDto { id: "prestige_class.requires_base_class_levels", message: "A prestige class cannot be a character's first class. Add 
+MCP p3 elowen ["Javelin (Base)"]: snap=true tile=Some(1)
+   melee=Some((1, "Baseline melee attack bonus with no weapon in hand: Wizard base attack bonus (+2) + Strength modifier (+-1) + Medium size modifier (+0, PF1 Table 8-1 -- attack rolls take"))
+   rows=[("combat.weapon_attack_bonus.javelin", -3)]
+MCP p3 elowen ["Unarmed Strike (Base)"]: snap=true tile=Some(1)
+   melee=Some((1, "Baseline melee attack bonus for the Unarmed Strike: Wizard base attack bonus (+2) + Strength modifier (+-1) + Medium size modifier (+0, PF1 Table 8-1 -- attack rolls take"))
+   rows=[("combat.weapon_attack_bonus.unarmedstrike", 1)]
+MCP p5 leather_matdragonhide.pcg: SAVED deity=None bio="" first_melee=4 load_melee=Some(4) snapshot_on_load=true addedLongsword=0 diag=[]
+MCP p5 outfit_baseline.pcg: SAVED deity=None bio="" first_melee=4 load_melee=Some(4) snapshot_on_load=true addedLongsword=0 diag=[]
+MCP p5 outfit_darkleaf.pcg: SAVED deity=None bio="" first_melee=4 load_melee=Some(4) snapshot_on_load=true addedLongsword=0 diag=[]
+MCP p6 class:battle_herald: create not saved Ok(Blocked { diagnostics: [DiagnosticDto { id: "prestige_class.requires_base_class_levels", message: "A prestige class cannot be a character's first class. Add 
+MCP p6 class:bellflower_tiller: create not saved Ok(Blocked { diagnostics: [DiagnosticDto { id: "prestige_class.requires_base_class_levels", message: "A prestige class cannot be a character's first class. Add 
+MCP p5 sd33r6_eqm_combo.pcg: SAVED deity=None bio="" first_melee=4 load_melee=Some(4) snapshot_on_load=true addedLongsword=0 diag=[]
+MCP p5 shield_baseline.pcg: SAVED deity=None bio="" first_melee=4 load_melee=Some(4) snapshot_on_load=true addedLongsword=0 diag=[]
+MCP p6 class:body_snatcher: create not saved Ok(Blocked { diagnostics: [DiagnosticDto { id: "prestige_class.requires_base_class_levels", message: "A prestige class cannot be a character's first class. Add 
+MCP p5 shield_spikesb.pcg: SAVED deity=None bio="" first_melee=4 load_melee=Some(4) snapshot_on_load=true addedLongsword=0 diag=[]
+MCP p5 shield_spikesqshieldbash.pcg: SAVED deity=None bio="" first_melee=4 load_melee=Some(4) snapshot_on_load=true addedLongsword=0 diag=[]
+MCP p6 class:cerebremancer: create not saved Ok(Blocked { diagnostics: [DiagnosticDto { id: "prestige_class.requires_base_class_levels", message: "A prestige class cannot be a character's first class. Add 
+MCP p5 CodeMonkey.pcg: SAVED deity=Some("DEITY:None|DEITYDOMAINS:[DOMAIN:Air|DOMA") bio="None" first_melee=4 load_melee=Some(4) snapshot_on_load=true addedLongsword=0 diag=[]
+MCP p6 class:cyphermage: create not saved Ok(Blocked { diagnostics: [DiagnosticDto { id: "prestige_class.requires_base_class_levels", message: "A prestige class cannot be a character's first class. Add 
+MCP p6 class:dark_tempest: create not saved Ok(Blocked { diagnostics: [DiagnosticDto { id: "prestige_class.requires_base_class_levels", message: "A prestige class cannot be a character's first class. Add 
+MCP p6 class:death_slayer: create not saved Ok(Blocked { diagnostics: [DiagnosticDto { id: "prestige_class.requires_base_class_levels", message: "A prestige class cannot be a character's first class. Add 
+MCP p6 class:demoniac: create not saved Ok(Blocked { diagnostics: [DiagnosticDto { id: "prestige_class.requires_base_class_levels", message: "A prestige class cannot be a character's first class. Add 
+MCP p6 class:diabolist: create not saved Ok(Blocked { diagnostics: [DiagnosticDto { id: "prestige_class.requires_base_class_levels", message: "A prestige class cannot be a character's first class. Add 
+MCP p6 class:divine_scion: create not saved Ok(Blocked { diagnostics: [DiagnosticDto { id: "prestige_class.requires_base_class_levels", message: "A prestige class cannot be a character's first class. Add 
+MCP p6 class:dragon_disciple: create not saved Ok(Blocked { diagnostics: [DiagnosticDto { id: "prestige_class.requires_base_class_levels", message: "A prestige class cannot be a character's first class. Add 
+MCP p5 Everything.pcg: SAVED deity=Some("DEITY:None|DEITYDOMAINS:[DOMAIN:Air|DOMA") bio="None" first_melee=7 load_melee=Some(7) snapshot_on_load=true addedLongsword=0 diag=[]
+MCP p6 class:duelist: create not saved Ok(Blocked { diagnostics: [DiagnosticDto { id: "prestige_class.requires_base_class_levels", message: "A prestige class cannot be a character's first class. Add 
+MCP p6 class:eldritch_knight: create not saved Ok(Blocked { diagnostics: [DiagnosticDto { id: "prestige_class.requires_base_class_levels", message: "A prestige class cannot be a character's first class. Add 
+MCP p6 class:elocater: create not saved Ok(Blocked { diagnostics: [DiagnosticDto { id: "prestige_class.requires_base_class_levels", message: "A prestige class cannot be a character's first class. Add 
+MCP p6 class:enchanting_courtesan: create not saved Ok(Blocked { diagnostics: [DiagnosticDto { id: "prestige_class.requires_base_class_levels", message: "A prestige class cannot be a character's first class. Add 
+MCP p6 class:evangelist: create not saved Ok(Blocked { diagnostics: [DiagnosticDto { id: "prestige_class.requires_base_class_levels", message: "A prestige class cannot be a character's first class. Add 
+MCP p5 Sorcerer.pcg: SAVED deity=None bio="" first_melee=2 load_melee=Some(2) snapshot_on_load=true addedLongsword=0 diag=[]
+MCP p6 class:exalted: create not saved Ok(Blocked { diagnostics: [DiagnosticDto { id: "prestige_class.requires_base_class_levels", message: "A prestige class cannot be a character's first class. Add 
+MCP p5 SpecialWizard.pcg: SAVED deity=None bio="" first_melee=4 load_melee=Some(4) snapshot_on_load=true addedLongsword=0 diag=[]
+MCP p6 class:golden_legionnaire: create not saved Ok(Blocked { diagnostics: [DiagnosticDto { id: "prestige_class.requires_base_class_levels", message: "A prestige class cannot be a character's first class. Add 
+MCP p6 class:gray_corsair: create not saved Ok(Blocked { diagnostics: [DiagnosticDto { id: "prestige_class.requires_base_class_levels", message: "A prestige class cannot be a character's first class. Add 
+MCP p2 race:human  wizard: same 71 mismatch 0 norow 6 blocked 0
+  mismatch []
+  norow ["Arrow (Base)", "Bolt (Base)", "Repeating Bolt (Base)", "Sling Bullet (Base)", "Blowgun Dart (Base)", "Net (Base)"]
+  blocked []
+MCP p6 class:harrower: create not saved Ok(Blocked { diagnostics: [DiagnosticDto { id: "prestige_class.requires_base_class_levels", message: "A prestige class cannot be a character's first class. Add 
+MCP p6 class:hellknight: create not saved Ok(Blocked { diagnostics: [DiagnosticDto { id: "prestige_class.requires_base_class_levels", message: "A prestige class cannot be a character's first class. Add 
+MCP p6 class:hellknight_signifer: create not saved Ok(Blocked { diagnostics: [DiagnosticDto { id: "prestige_class.requires_base_class_levels", message: "A prestige class cannot be a character's first class. Add 
+MCP p6 class:holy_vindicator: create not saved Ok(Blocked { diagnostics: [DiagnosticDto { id: "prestige_class.requires_base_class_levels", message: "A prestige class cannot be a character's first class. Add 
+MCP p6 class:horizon_walker: create not saved Ok(Blocked { diagnostics: [DiagnosticDto { id: "prestige_class.requires_base_class_levels", message: "A prestige class cannot be a character's first class. Add 
+MCP p5 CodeMonkey.pcg: SAVED deity=Some("DEITY:None|DEITYDOMAINS:[DOMAIN:Air|DOMA") bio="None" first_melee=4 load_melee=Some(4) snapshot_on_load=true addedLongsword=0 diag=[]
+MCP p5 Everything.pcg: SAVED deity=Some("DEITY:None|DEITYDOMAINS:[DOMAIN:Air|DOMA") bio="None" first_melee=7 load_melee=Some(7) snapshot_on_load=true addedLongsword=0 diag=[]
+MCP p6 class:lantern_bearer: create not saved Ok(Blocked { diagnostics: [DiagnosticDto { id: "prestige_class.requires_base_class_levels", message: "A prestige class cannot be a character's first class. Add 
+MCP p6 class:lion_blade: create not saved Ok(Blocked { diagnostics: [DiagnosticDto { id: "prestige_class.requires_base_class_levels", message: "A prestige class cannot be a character's first class. Add 
+MCP p6 class:loremaster: create not saved Ok(Blocked { diagnostics: [DiagnosticDto { id: "prestige_class.requires_base_class_levels", message: "A prestige class cannot be a character's first class. Add 
+MCP p6 class:low_templar: create not saved Ok(Blocked { diagnostics: [DiagnosticDto { id: "prestige_class.requires_base_class_levels", message: "A prestige class cannot be a character's first class. Add 
+MCP p6 class:magaambyan_arcanist: create not saved Ok(Blocked { diagnostics: [DiagnosticDto { id: "prestige_class.requires_base_class_levels", message: "A prestige class cannot be a character's first class. Add 
+MCP p6 class:mammoth_rider: create not saved Ok(Blocked { diagnostics: [DiagnosticDto { id: "prestige_class.requires_base_class_levels", message: "A prestige class cannot be a character's first class. Add 
+MCP p5 Sorcerer.pcg: SAVED deity=None bio="" first_melee=2 load_melee=Some(2) snapshot_on_load=true addedLongsword=0 diag=[]
+MCP p6 class:master_chymist: create not saved Ok(Blocked { diagnostics: [DiagnosticDto { id: "prestige_class.requires_base_class_levels", message: "A prestige class cannot be a character's first class. Add 
+MCP p6 class:master_spy: create not saved Ok(Blocked { diagnostics: [DiagnosticDto { id: "prestige_class.requires_base_class_levels", message: "A prestige class cannot be a character's first class. Add 
+MCP p5 SpecialWizard.pcg: SAVED deity=None bio="" first_melee=4 load_melee=Some(4) snapshot_on_load=true addedLongsword=0 diag=[]
+MCP p5 35e_Alice.pcg: BLOCKED deity=Some("DEITY:Test Deity|DEITYDOMAINS:[DOMAIN:Ba") ["class_chassis.unsupported", "combat.baseline_unsupported", "defense.size_modifier.unknown_race"] rootexists=false
+MCP p5 35e_Bard.pcg: SAVED deity=None bio="" first_melee=3 load_melee=Some(3) snapshot_on_load=true addedLongsword=0 diag=[]
+MCP p5 35e_Bob.pcg: BLOCKED deity=Some("DEITY:Test Deity|DEITYDOMAINS:[DOMAIN:Ba") ["class_chassis.unsupported", "combat.baseline_unsupported", "defense.size_modifier.unknown_race"] rootexists=false
+MCP p5 35e_Bob_Companion.pcg: BLOCKED deity=None ["class_chassis.unsupported", "combat.baseline_unsupported", "defense.size_modifier.unknown_race"] rootexists=false
+MCP p5 35e_Charlie.pcg: BLOCKED deity=None ["class_chassis.unsupported", "combat.baseline_unsupported", "defense.size_modifier.unknown_race"] rootexists=false
+MCP p5 35e_CloudGiantHalfDragon.pcg: BLOCKED deity=None ["class_chassis.unsupported", "combat.baseline_unsupported", "defense.size_modifier.unknown_race"] rootexists=false
+MCP p5 35e_Dave.pcg: BLOCKED deity=None ["class_chassis.unsupported", "combat.baseline_unsupported", "defense.total_save.unsupported"] rootexists=false
+MCP p5 35e_Eve.pcg: BLOCKED deity=None ["class_chassis.unsupported", "combat.baseline_unsupported", "defense.total_save.unsupported"] rootexists=false
+MCP p5 35e_Fran.pcg: BLOCKED deity=None ["class_chassis.unsupported", "combat.baseline_unsupported", "defense.size_modifier.unknown_race"] rootexists=false
+MCP p5 35e_Gordon.pcg: BLOCKED deity=None ["class_chassis.unsupported", "combat.baseline_unsupported", "defense.total_save.unsupported"] rootexists=false
+MCP p5 35e_Harold.pcg: BLOCKED deity=None ["class_chassis.unsupported", "combat.baseline_unsupported", "defense.total_save.unsupported"] rootexists=false
+MCP p6 class:metaforge: create not saved Ok(Blocked { diagnostics: [DiagnosticDto { id: "prestige_class.requires_base_class_levels", message: "A prestige class cannot be a character's first class. Add 
+MCP p6 class:metamind: create not saved Ok(Blocked { diagnostics: [DiagnosticDto { id: "prestige_class.requires_base_class_levels", message: "A prestige class cannot be a character's first class. Add 
+MCP p6 class:metamorph: create not saved Ok(Blocked { diagnostics: [DiagnosticDto { id: "prestige_class.requires_base_class_levels", message: "A prestige class cannot be a character's first class. Add 
+MCP p5 35e_Ivan.pcg: SAVED deity=None bio="" first_melee=0 load_melee=Some(0) snapshot_on_load=true addedLongsword=0 diag=[]
+MCP p6 class:mystic_archer: create not saved Ok(Blocked { diagnostics: [DiagnosticDto { id: "prestige_class.requires_base_class_levels", message: "A prestige class cannot be a character's first class. Add 
+MCP p5 35e_Jango.pcg: BLOCKED deity=None ["class_chassis.unsupported", "combat.baseline_unsupported", "defense.total_save.unsupported"] rootexists=false
+MCP p6 class:mystic_theurge: create not saved Ok(Blocked { diagnostics: [DiagnosticDto { id: "prestige_class.requires_base_class_levels", message: "A prestige class cannot be a character's first class. Add 
+MCP p6 class:nature_warden: create not saved Ok(Blocked { diagnostics: [DiagnosticDto { id: "prestige_class.requires_base_class_levels", message: "A prestige class cannot be a character's first class. Add 
+MCP p5 35e_JimDop.pcg: BLOCKED deity=None ["combat.baseline_unsupported", "defense.size_modifier.unknown_race", "skill.selected_modifier.unsupported"] rootexists=false
+MCP p5 35e_L10(fighter-human).pcg: SAVED deity=Some("DEITY:Tempus|DEITYDOMAINS:[DOMAIN:Chaos|") bio="Tempus" first_melee=22 load_melee=Some(22) snapshot_on_load=true addedLongsword=0 diag=[]
+MCP p6 class:pathfinder_chronicler: create not saved Ok(Blocked { diagnostics: [DiagnosticDto { id: "prestige_class.requires_base_class_levels", message: "A prestige class cannot be a character's first class. Add 
+MCP p6 class:pathfinder_delver: create not saved Ok(Blocked { diagnostics: [DiagnosticDto { id: "prestige_class.requires_base_class_levels", message: "A prestige class cannot be a character's first class. Add 
+MCP p6 class:pathfinder_savant: create not saved Ok(Blocked { diagnostics: [DiagnosticDto { id: "prestige_class.requires_base_class_levels", message: "A prestige class cannot be a character's first class. Add 
+MCP p6 class:phrenic_slayer: create not saved Ok(Blocked { diagnostics: [DiagnosticDto { id: "prestige_class.requires_base_class_levels", message: "A prestige class cannot be a character's first class. Add 
+MCP p6 class:psicrystal_imprinter: create not saved Ok(Blocked { diagnostics: [DiagnosticDto { id: "prestige_class.requires_base_class_levels", message: "A prestige class cannot be a character's first class. Add 
+MCP p6 class:psion_uncarnate: create not saved Ok(Blocked { diagnostics: [DiagnosticDto { id: "prestige_class.requires_base_class_levels", message: "A prestige class cannot be a character's first class. Add 
+MCP p2 race:elf  wizard: same 71 mismatch 0 norow 6 blocked 0
+  mismatch []
+  norow ["Arrow (Base)", "Bolt (Base)", "Repeating Bolt (Base)", "Sling Bullet (Base)", "Blowgun Dart (Base)", "Net (Base)"]
+  blocked []
+MCP p5 35e_L7-3(fighter-cleric-dwarf).pcg: SAVED deity=Some("DEITY:Haela Brightaxe|DEITYDOMAINS:[DOMA") bio="Haela Brightaxe" first_melee=14 load_melee=Some(14) snapshot_on_load=true addedLongsword=0 diag=[]
+MCP p5 35e_Lauren.pcg: BLOCKED deity=None ["class_chassis.unsupported", "combat.baseline_unsupported", "defense.size_modifier.unknown_race"] rootexists=false
+MCP p6 class:psychic_fist: create not saved Ok(Blocked { diagnostics: [DiagnosticDto { id: "prestige_class.requires_base_class_levels", message: "A prestige class cannot be a character's first class. Add 
+MCP p6 class:pure_legion_enforcer: create not saved Ok(Blocked { diagnostics: [DiagnosticDto { id: "prestige_class.requires_base_class_levels", message: "A prestige class cannot be a character's first class. Add 
+MCP p6 class:pyrokineticist: create not saved Ok(Blocked { diagnostics: [DiagnosticDto { id: "prestige_class.requires_base_class_levels", message: "A prestige class cannot be a character's first class. Add 
+MCP p6 class:rage_prophet: create not saved Ok(Blocked { diagnostics: [DiagnosticDto { id: "prestige_class.requires_base_class_levels", message: "A prestige class cannot be a character's first class. Add 
+MCP p6 class:red_mantis_assassin: create not saved Ok(Blocked { diagnostics: [DiagnosticDto { id: "prestige_class.requires_base_class_levels", message: "A prestige class cannot be a character's first class. Add 
+MCP p6 class:rivethun_emissary: create not saved Ok(Blocked { diagnostics: [DiagnosticDto { id: "prestige_class.requires_base_class_levels", message: "A prestige class cannot be a character's first class. Add 
+MCP p5 35e_Mallory.pcg: SAVED deity=None bio="" first_melee=4 load_melee=Some(4) snapshot_on_load=true addedLongsword=0 diag=[]
+MCP p5 35e_Q-PsiCrystal.pcg: BLOCKED deity=None ["class_chassis.unsupported", "combat.baseline_unsupported", "defense.size_modifier.unknown_race"] rootexists=false
+MCP p5 35e_Quasvin.pcg: BLOCKED deity=None ["combat.baseline_unsupported", "defense.size_modifier.unknown_race", "skill.selected_modifier.unsupported"] rootexists=false
+MCP p5 35e_UT~Gordon.pcg: BLOCKED deity=None ["class_chassis.unsupported", "combat.baseline_unsupported", "defense.total_save.unsupported"] rootexists=false
+MCP p5 35e_UT~Harold.pcg: BLOCKED deity=None ["class_chassis.unsupported", "combat.baseline_unsupported", "defense.total_save.unsupported"] rootexists=false
+MCP p5 35e_UT~Ivan.pcg: BLOCKED deity=None ["class_chassis.unsupported", "combat.baseline_unsupported", "defense.total_save.unsupported"] rootexists=false
+MCP p6 class:sanguine_angel: create not saved Ok(Blocked { diagnostics: [DiagnosticDto { id: "prestige_class.requires_base_class_levels", message: "A prestige class cannot be a character's first class. Add 
+MCP p6 class:sentinel: create not saved Ok(Blocked { diagnostics: [DiagnosticDto { id: "prestige_class.requires_base_class_levels", message: "A prestige class cannot be a character's first class. Add 
+MCP p6 class:shadowdancer: create not saved Ok(Blocked { diagnostics: [DiagnosticDto { id: "prestige_class.requires_base_class_levels", message: "A prestige class cannot be a character's first class. Add 
+MCP p5 3e_BarJack.pcg: SAVED deity=Some("DEITY:None|DEITYDOMAINS:[DOMAIN:Air|DOMA") bio="None" first_melee=7 load_melee=Some(7) snapshot_on_load=true addedLongsword=0 diag=[]
+MCP p6 class:sighted_seeker: create not saved Ok(Blocked { diagnostics: [DiagnosticDto { id: "prestige_class.requires_base_class_levels", message: "A prestige class cannot be a character's first class. Add 
+MCP p5 3e_BrdJoe.pcg: SAVED deity=None bio="" first_melee=1 load_melee=Some(1) snapshot_on_load=true addedLongsword=0 diag=[]
+MCP p5 3e_CleElf.pcg: SAVED deity=Some("DEITY:None|DEITYDOMAINS:[DOMAIN:Air|DOMA") bio="None" first_melee=1 load_melee=Some(1) snapshot_on_load=true addedLongsword=0 diag=[]
+MCP p5 3e_FigFae.pcg: SAVED deity=None bio="" first_melee=6 load_melee=Some(6) snapshot_on_load=true addedLongsword=0 diag=[]
+MCP p6 class:soul_archer: create not saved Ok(Blocked { diagnostics: [DiagnosticDto { id: "prestige_class.requires_base_class_levels", message: "A prestige class cannot be a character's first class. Add 
+MCP p5 3e_MonKee.pcg: SAVED deity=None bio="" first_melee=7 load_melee=Some(7) snapshot_on_load=true addedLongsword=0 diag=[]
+MCP p6 class:stalwart_defender: create not saved Ok(Blocked { diagnostics: [DiagnosticDto { id: "prestige_class.requires_base_class_levels", message: "A prestige class cannot be a character's first class. Add 
+MCP p6 class:steel_falcon: create not saved Ok(Blocked { diagnostics: [DiagnosticDto { id: "prestige_class.requires_base_class_levels", message: "A prestige class cannot be a character's first class. Add 
+MCP p6 class:storm_kindler: create not saved Ok(Blocked { diagnostics: [DiagnosticDto { id: "prestige_class.requires_base_class_levels", message: "A prestige class cannot be a character's first class. Add 
+MCP p6 class:student_of_perfection: create not saved Ok(Blocked { diagnostics: [DiagnosticDto { id: "prestige_class.requires_base_class_levels", message: "A prestige class cannot be a character's first class. Add 
+MCP p6 class:student_of_war: create not saved Ok(Blocked { diagnostics: [DiagnosticDto { id: "prestige_class.requires_base_class_levels", message: "A prestige class cannot be a character's first class. Add 
+MCP p5 3e_SWizSam.pcg: SAVED deity=Some("DEITY:None|DEITYDOMAINS:[DOMAIN:Air|DOMA") bio="None" first_melee=1 load_melee=Some(1) snapshot_on_load=true addedLongsword=0 diag=[]
+MCP p5 3e_WizShar.pcg: SAVED deity=None bio="" first_melee=2 load_melee=Some(2) snapshot_on_load=true addedLongsword=0 diag=[]
+MCP p5 Zen_Nancy.pcg: BLOCKED deity=Some("DEITY:Elf Deity|DEITYDOMAINS:[]|ALIGNALL") ["class_chassis.unsupported", "combat.baseline_unsupported", "defense.total_save.unsupported"] rootexists=false
+MCP p5 msrd_Elwood.pcg: BLOCKED deity=None ["class_chassis.unsupported", "combat.baseline_unsupported", "defense.total_save.unsupported"] rootexists=false
+MCP p5 msrd_Ilyana.pcg: BLOCKED deity=None ["class_chassis.unsupported", "combat.baseline_unsupported", "defense.total_save.unsupported"] rootexists=false
+MCP p5 none_PdfBuster.pcg: REFUSED The PCGen import tool (pcg_import) refused the file: none_PdfBuster.pcg is not a PCGen 6 character: it has no PCGVERSION
+MCP p5 none_derth.pcg: REFUSED The PCGen import tool (pcg_import) refused the file: none_derth.pcg is not a PCGen 6 character: it has no PCGVERSION or 
+MCP p5 pf_Cleric.pcg: SAVED deity=Some("DEITY:Sarenrae|DEITYDOMAINS:[DOMAIN:Fire") bio="Sarenrae" first_melee=-2 load_melee=Some(-2) snapshot_on_load=true addedLongsword=0 diag=[]
+MCP p2 race:dwarf  wizard: same 71 mismatch 0 norow 6 blocked 0
+  mismatch []
+  norow ["Arrow (Base)", "Bolt (Base)", "Repeating Bolt (Base)", "Sling Bullet (Base)", "Blowgun Dart (Base)", "Net (Base)"]
+  blocked []
+MCP p5 pf_Paladin.pcg: SAVED deity=Some("DEITY:Abadar|DEITYDOMAINS:[DOMAIN:Earth|") bio="Abadar" first_melee=11 load_melee=Some(11) snapshot_on_load=true addedLongsword=0 diag=[]
+MCP p6 class:telekinetic_weaponmaster: create not saved Ok(Blocked { diagnostics: [DiagnosticDto { id: "prestige_class.requires_base_class_levels", message: "A prestige class cannot be a character's first class. Add 
+MCP p6 class:thrallherd: create not saved Ok(Blocked { diagnostics: [DiagnosticDto { id: "prestige_class.requires_base_class_levels", message: "A prestige class cannot be a character's first class. Add 
+MCP p6 class:twilight_talon: create not saved Ok(Blocked { diagnostics: [DiagnosticDto { id: "prestige_class.requires_base_class_levels", message: "A prestige class cannot be a character's first class. Add 
+MCP p6 class:ulfen_guard: create not saved Ok(Blocked { diagnostics: [DiagnosticDto { id: "prestige_class.requires_base_class_levels", message: "A prestige class cannot be a character's first class. Add 
+MCP p5 pf_Rogue.pcg: SAVED deity=Some("DEITY:Cayden Cailean|DEITYDOMAINS:[DOMAI") bio="Cayden Cailean" first_melee=17 load_melee=Some(17) snapshot_on_load=true addedLongsword=0 diag=[]
+MCP p5 pf_goldielocks.pcg: BLOCKED deity=Some("DEITY:Torag|DEITYDOMAINS:[DOMAIN:Artific") ["class_chassis.unsupported", "combat.baseline_unsupported", "defense.size_modifier.unknown_race"] rootexists=false
+MCP p5 sf_mechanic.pcg: BLOCKED deity=Some("DEITY:The Green Faith|DEITYDOMAINS:[]|AL") ["class_chassis.unsupported", "combat.baseline_unsupported", "defense.size_modifier.unknown_race"] rootexists=false
+MCP p5 sf_mechanic_drone.pcg: BLOCKED deity=None ["class_chassis.unsupported", "combat.baseline_unsupported", "defense.size_modifier.unknown_race"] rootexists=false
+MCP p5 sf_soldier.pcg: BLOCKED deity=Some("DEITY:The Song of Silence|DEITYDOMAINS:[") ["class_chassis.unsupported", "combat.baseline_unsupported", "defense.size_modifier.unknown_race"] rootexists=false
+MCP p5 DrakelingSorc.pcg: SAVED deity=None bio="" first_melee=4 load_melee=Some(4) snapshot_on_load=true addedLongsword=0 diag=[]
+MCP p5 Dex3.pcg: BLOCKED deity=None ["class_chassis.unsupported", "combat.baseline_unsupported", "defense.total_save.unsupported"] rootexists=false
+MCP p5 totals saved 37 blocked 26 refused 2 saved-not-loading 0
+MCP p6 class:war_mind: create not saved Ok(Blocked { diagnostics: [DiagnosticDto { id: "prestige_class.requires_base_class_levels", message: "A prestige class cannot be a character's first class. Add 
+MCP p6 class:westcrown_devil: create not saved Ok(Blocked { diagnostics: [DiagnosticDto { id: "prestige_class.requires_base_class_levels", message: "A prestige class cannot be a character's first class. Add 
+MCP p6 totals created 63 stowed 63 left 63 none 63 greatsword 63
+MCP p2 race:gnome  wizard: same 71 mismatch 0 norow 6 blocked 0
+  mismatch []
+  norow ["Arrow (Base)", "Bolt (Base)", "Repeating Bolt (Base)", "Sling Bullet (Base)", "Blowgun Dart (Base)", "Net (Base)"]
+  blocked []
+MCQ p8 class:cleric created true
+MCQ p9 level up Ok(true)
+MCQ p9 buy Ok(Purchased { summary: CharacterSummaryDto { character_id: "00000000-0000-0000-0000-000000000001", display_label: "Aldric Ironhand", game_system: "pf1", schema
+MCQ p8 class:cleric "" Scimitar (Base): snap=true gap=Weapon row=Some((0, true, "nonproficiency penalty (-4) + size modifier (+0) = 0. No Weapon Focus or Greater Weapon Fo"))
+MCQ p8 class:cleric "Sarenrae" Scimitar (Base): snap=true gap=None row=Some((4, false, "The character is proficient with this weapon (the favored weapon of the character's deity)"))
+MCQ p9 rows [("combat.weapon_attack_bonus.greatsword", 8)] snap true
+MCQ p9 import Ok(true)
+MCQ p8 class:cleric "Sarenrae" Morningstar (Base): snap=true gap=None row=Some((4, false, "The character is proficient with this weapon (class grant or a Simple/Martial/Exotic Weapo"))
+MCQ p8 class:cleric "Desna" Starknife (Base): snap=true gap=None row=Some((4, false, "The character is proficient with this weapon (the favored weapon of the character's deity)"))
+MCQ p7 combat.weapon_attack_bonus.morningstar = 2 :: Attack bonus with the equipped Morningstar: base attack bonus (+2) + governing ability modifier (+0) + weapon feats (+0) + nonproficiency penalty (0) + size modifier (+0) = 2. No Weapon Focus or Greater Weapon Focus names this weapon, so no feat bonus applies to the attack roll. The character is proficient with this weapon (class grant or a Simple/Martial/Exotic Weapon Proficiency feat naming it), so no nonproficiency penalty applies. Only the
+MCQ p7 combat.baseline_melee_attack_bonus = -2 :: combat.baseline_melee_attack_bonus = -2, computed by the corpus-aware combat baseline (pilot_compute_corpus::compute_combat_baseline_from_corpus) for this character's actual resolved equipment loadout
+MCQ p7 combat.weapon_attack_bonus.shieldlightsteel = -2 :: Attack bonus with the equipped Shield (Light/Steel): base attack bonus (+2) + governing ability modifier (+0) + weapon feats (+0) + nonproficiency penalty (-4) + size modifier (+0) = -2.
+MCQ p8 class:cleric "Asmodeus" Heavy Mace (Base): snap=true gap=None row=Some((4, false, "The character is proficient with this weapon (class grant or a Simple/Martial/Exotic Weapo"))
+MCQ p8 class:cleric "Norgorber" Short Sword (Base): snap=true gap=None row=Some((4, false, "The character is proficient with this weapon (the favored weapon of the character's deity)"))
+MCQ p8 class:cleric "Zon-Kuthon" Spiked Chain (Base): snap=true gap=None row=Some((4, false, "The character is proficient with this weapon (the favored weapon of the character's deity)"))
+MCQ p8 class:cleric "Calistria" Whip (Base): snap=true gap=None row=Some((4, false, "The character is proficient with this weapon (the favored weapon of the character's deity)"))
+MCQ p8 class:cleric "Irori" Unarmed Strike (Base): snap=true gap=None row=Some((4, false, "The character is proficient with this weapon (the favored weapon of the character's deity)"))
+MCQ p8 class:cleric "Abadar" Light Crossbow (Base): snap=true gap=None row=Some((4, false, "The character is proficient with this weapon (class grant or a Simple/Martial/Exotic Weapo"))
+MCQ p8 class:inquisitor created true
+MCQ p8 class:inquisitor "" Scimitar (Base): snap=true gap=Weapon row=Some((0, true, "nonproficiency penalty (-4) + size modifier (+0) = 0. No Weapon Focus or Greater Weapon Fo"))
+MCQ p8 class:inquisitor "Sarenrae" Scimitar (Base): snap=true gap=None row=Some((4, false, "The character is proficient with this weapon (the favored weapon of the character's deity)"))
+MCQ p8 class:inquisitor "Sarenrae" Morningstar (Base): snap=true gap=None row=Some((4, false, "The character is proficient with this weapon (class grant or a Simple/Martial/Exotic Weapo"))
+MCQ p8 class:inquisitor "Desna" Starknife (Base): snap=true gap=None row=Some((4, false, "The character is proficient with this weapon (the favored weapon of the character's deity)"))
+MCQ p8 class:inquisitor "Asmodeus" Heavy Mace (Base): snap=true gap=None row=Some((4, false, "The character is proficient with this weapon (class grant or a Simple/Martial/Exotic Weapo"))
+MCQ p8 class:inquisitor "Norgorber" Short Sword (Base): snap=true gap=None row=Some((4, false, "The character is proficient with this weapon (the favored weapon of the character's deity)"))
+MCQ p8 class:inquisitor "Zon-Kuthon" Spiked Chain (Base): snap=true gap=None row=Some((4, false, "The character is proficient with this weapon (the favored weapon of the character's deity)"))
+MCQ p8 class:inquisitor "Calistria" Whip (Base): snap=true gap=None row=Some((4, false, "The character is proficient with this weapon (the favored weapon of the character's deity)"))
+MCQ p8 class:inquisitor "Irori" Unarmed Strike (Base): snap=true gap=None row=Some((4, false, "The character is proficient with this weapon (the favored weapon of the character's deity)"))
+MCQ p8 class:inquisitor "Abadar" Light Crossbow (Base): snap=true gap=None row=Some((4, false, "The character is proficient with this weapon (class grant or a Simple/Martial/Exotic Weapo"))
+MCQ p8 class:warpriest created true
+MCQ p8 class:warpriest "" Scimitar (Base): snap=true gap=None row=Some((4, false, "The character is proficient with this weapon (class grant or a Simple/Martial/Exotic Weapo"))
+MCQ p8 class:warpriest "Sarenrae" Scimitar (Base): snap=true gap=None row=Some((4, false, "The character is proficient with this weapon (class grant or a Simple/Martial/Exotic Weapo"))
+MCQ p8 class:warpriest "Sarenrae" Morningstar (Base): snap=true gap=None row=Some((4, false, "The character is proficient with this weapon (class grant or a Simple/Martial/Exotic Weapo"))
+MCQ p8 class:warpriest "Desna" Starknife (Base): snap=true gap=None row=Some((4, false, "The character is proficient with this weapon (class grant or a Simple/Martial/Exotic Weapo"))
+MCQ p8 class:warpriest "Asmodeus" Heavy Mace (Base): snap=true gap=None row=Some((4, false, "The character is proficient with this weapon (class grant or a Simple/Martial/Exotic Weapo"))
+MCQ p8 class:warpriest "Norgorber" Short Sword (Base): snap=true gap=None row=Some((4, false, "The character is proficient with this weapon (class grant or a Simple/Martial/Exotic Weapo"))
+MCQ p8 class:warpriest "Zon-Kuthon" Spiked Chain (Base): snap=true gap=None row=Some((4, false, "The character is proficient with this weapon (the favored weapon of the character's deity)"))
+MCQ p8 class:warpriest "Calistria" Whip (Base): snap=true gap=None row=Some((4, false, "The character is proficient with this weapon (the favored weapon of the character's deity)"))
+MCQ p8 class:warpriest "Irori" Unarmed Strike (Base): snap=true gap=None row=Some((4, false, "The character is proficient with this weapon (the favored weapon of the character's deity)"))
+MCQ p8 class:warpriest "Abadar" Light Crossbow (Base): snap=true gap=None row=Some((4, false, "The character is proficient with this weapon (class grant or a Simple/Martial/Exotic Weapo"))
+MCQ p8 class:oracle created true
+MCQ p8 class:oracle "" Scimitar (Base): snap=true gap=Weapon row=Some((0, true, "nonproficiency penalty (-4) + size modifier (+0) = 0. No Weapon Focus or Greater Weapon Fo"))
+MCQ p8 class:oracle "Sarenrae" Scimitar (Base): snap=true gap=Weapon row=Some((0, true, "nonproficiency penalty (-4) + size modifier (+0) = 0. No Weapon Focus or Greater Weapon Fo"))
+MCQ p8 class:oracle "Sarenrae" Morningstar (Base): snap=true gap=None row=Some((4, false, "The character is proficient with this weapon (class grant or a Simple/Martial/Exotic Weapo"))
+MCQ p8 class:oracle "Desna" Starknife (Base): snap=true gap=Weapon row=Some((0, true, "nonproficiency penalty (-4) + size modifier (+0) = 0. No Weapon Focus or Greater Weapon Fo"))
+MCQ p8 class:oracle "Asmodeus" Heavy Mace (Base): snap=true gap=None row=Some((4, false, "The character is proficient with this weapon (class grant or a Simple/Martial/Exotic Weapo"))
+MCQ p8 class:oracle "Norgorber" Short Sword (Base): snap=true gap=Weapon row=Some((0, true, "nonproficiency penalty (-4) + size modifier (+0) = 0. No Weapon Focus or Greater Weapon Fo"))
+MCQ p8 class:oracle "Zon-Kuthon" Spiked Chain (Base): snap=true gap=Weapon row=Some((0, true, "nonproficiency penalty (-4) + size modifier (+0) = 0. No Weapon Focus or Greater Weapon Fo"))
+MCQ p8 class:oracle "Calistria" Whip (Base): snap=true gap=Weapon row=Some((0, true, "nonproficiency penalty (-4) + size modifier (+0) = 0. No Weapon Focus or Greater Weapon Fo"))
+MCQ p8 class:oracle "Irori" Unarmed Strike (Base): snap=true gap=None row=Some((4, false, "The character is proficient with this weapon (Weapon Prof ~ Auto), so no nonproficiency pe"))
+MCQ p8 class:oracle "Abadar" Light Crossbow (Base): snap=true gap=None row=Some((4, false, "The character is proficient with this weapon (class grant or a Simple/Martial/Exotic Weapo"))
+MCQ p8 class:paladin created true
+MCQ p8 class:paladin "" Scimitar (Base): snap=true gap=None row=Some((5, false, "The character is proficient with this weapon (class grant or a Simple/Martial/Exotic Weapo"))
+MCQ p8 class:paladin "Sarenrae" Scimitar (Base): snap=true gap=None row=Some((5, false, "The character is proficient with this weapon (class grant or a Simple/Martial/Exotic Weapo"))
+MCQ p8 class:paladin "Sarenrae" Morningstar (Base): snap=true gap=None row=Some((5, false, "The character is proficient with this weapon (class grant or a Simple/Martial/Exotic Weapo"))
+MCQ p8 class:paladin "Desna" Starknife (Base): snap=true gap=None row=Some((5, false, "The character is proficient with this weapon (class grant or a Simple/Martial/Exotic Weapo"))
+MCQ p8 class:paladin "Asmodeus" Heavy Mace (Base): snap=true gap=None row=Some((5, false, "The character is proficient with this weapon (class grant or a Simple/Martial/Exotic Weapo"))
+MCQ p8 class:paladin "Norgorber" Short Sword (Base): snap=true gap=None row=Some((5, false, "The character is proficient with this weapon (class grant or a Simple/Martial/Exotic Weapo"))
+MCQ p8 class:paladin "Zon-Kuthon" Spiked Chain (Base): snap=true gap=Weapon row=Some((1, true, "nonproficiency penalty (-4) + size modifier (+0) = 1. No Weapon Focus or Greater Weapon Fo"))
+MCQ p8 class:paladin "Calistria" Whip (Base): snap=true gap=Weapon row=Some((1, true, "nonproficiency penalty (-4) + size modifier (+0) = 1. No Weapon Focus or Greater Weapon Fo"))
+MCQ p8 class:paladin "Irori" Unarmed Strike (Base): snap=true gap=None row=Some((5, false, "The character is proficient with this weapon (Weapon Prof ~ Auto), so no nonproficiency pe"))
+MCQ p8 class:paladin "Abadar" Light Crossbow (Base): snap=true gap=None row=Some((5, false, "The character is proficient with this weapon (class grant or a Simple/Martial/Exotic Weapo"))

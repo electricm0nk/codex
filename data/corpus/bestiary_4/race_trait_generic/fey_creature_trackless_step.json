@@ -1,0 +1,46 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Fey Creature ~ Trackless Step",
+    "name": "Trackless Step",
+    "description": "A fey creature does not leave a trail in natural surroundings and cannot be tracked. It can choose to leave a trail, if it so desires.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Fey Creature ~ Trackless Step"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Extraordinary"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "A fey creature does not leave a trail in natural surroundings and cannot be tracked. It can choose to leave a trail, if it so desires."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 1346,
+    "record_key": "Fey Creature ~ Trackless Step"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

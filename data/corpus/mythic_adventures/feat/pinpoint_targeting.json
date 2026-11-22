@@ -1,0 +1,30 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Pinpoint Targeting",
+    "category": "Mythic",
+    "name": "Pinpoint Targeting (Mythic)",
+    "description": "Your attacks can home in on your opponent's weak spot and ignore many defenses. You can use this feat even if you move this round, but only if the distance you move is equal to or less than feet.",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=FEAT,Pinpoint Targeting",
+      "PREVARGTEQ:MythicTierLevel,1"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_feats.lst",
+    "sha256": "50bdb91b88676e1559dbeab699dad66fa13d45b53ee2233b7370daf019eece1b",
+    "line": 136,
+    "record_key": "Pinpoint Targeting"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

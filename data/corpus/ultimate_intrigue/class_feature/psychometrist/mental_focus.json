@@ -1,0 +1,49 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Psychometrist ~ Mental Focus",
+    "name": "Mental Focus",
+    "class": "Occultist",
+    "description": "Like an occultist, a psychometrist has mental focus he can invest into his implements each day to allow him to utilize abilities tied to them. A psychometrist has %1 points of mental focus.|VigilanteLVL/2+INT",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Psychometrist ~ Mental Focus"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Occultist Class Features.PsychometristClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "Like an occultist, a psychometrist has mental focus he can invest into his implements each day to allow him to utilize abilities tied to them. A psychometrist has %1 points of mental focus.|VigilanteLVL/2+INT"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.60"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/support/ui_abilities_class_oa.lst",
+    "sha256": "123f008e9a2f31828861df9025f48f5c2f7c78a648553f22dba96a8d8a2e24dc",
+    "line": 153,
+    "record_key": "Psychometrist ~ Mental Focus"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

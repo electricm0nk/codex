@@ -1,0 +1,100 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Mesmerist Archetype ~ Vizier",
+    "name": "Vizier",
+    "class": "Mesmerist",
+    "description": "While many mesmerists focus on beguiling their foes or taking overt control of others with their mental powers, viziers carve out a subtler niche for themselves as advisors. An adventuring vizier is delighted that enemies focus on the raging barbarian or spell-slinging wizard first, not realizing the threat posed by the vizier until it's too late.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mesmerist Archetype ~ Vizier"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.MesmeristArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Mesmerist=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Mesmerist Archetype ~ Vizier],[!PREFACT:1,ABILITIES,Mesmerist_Archetype_ConsummateLiar=True,Mesmerist_Archetype_BoldStare3=True,Mesmerist_Archetype_ToweringEgo=True,Mesmerist_Archetype_MentalPotency=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "While many mesmerists focus on beguiling their foes or taking overt control of others with their mental powers, viziers carve out a subtler niche for themselves as advisors. An adventuring vizier is delighted that enemies focus on the raging barbarian or spell-slinging wizard first, not realizing the threat posed by the vizier until it's too late."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Vizier ~ Insidious Influence|PRECLASS:1,Mesmerist=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Vizier ~ Power Behind the Throne|PRECLASS:1,Mesmerist=2"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.38"
+      },
+      {
+        "key": "FACT",
+        "value": "Mesmerist_Archetype_ConsummateLiar|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Mesmerist_Archetype_BoldStare3|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Mesmerist_Archetype_ToweringEgo|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Mesmerist_Archetype_MentalPotency|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Mesmerist_CF_ConsummateLiar|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Mesmerist_CF_BoldStare3|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Mesmerist_CF_ToweringEgo|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Mesmerist_CF_MentalPotency|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/support/ui_abilities_class_oa.lst",
+    "sha256": "123f008e9a2f31828861df9025f48f5c2f7c78a648553f22dba96a8d8a2e24dc",
+    "line": 48,
+    "record_key": "Mesmerist Archetype ~ Vizier"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

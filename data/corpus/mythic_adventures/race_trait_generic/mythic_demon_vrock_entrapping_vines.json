@@ -1,0 +1,46 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Mythic Demon (Vrock) ~ Entrapping Vines",
+    "name": "Entrapping Vines",
+    "description": "A mythic vrock can expend one use of mythic power as a swift action to release a cloud of spores from its body, affecting all adjacent non-demons. The spores deal 2d8 points of damage on the first round as they grow into ugly vines; for the next 10 rounds, they deal 1d6 points of damage and entrap the affected creatures (DC 21, 10 rounds, hardness 5, hp 10). The vines can be destroyed by casting bless on the creatures or by sprinkling them with holy water. This is a disease effect. The save DC is Constitution-based.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Demon (Vrock) ~ Entrapping Vines"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Demon (Vrock) Trait.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A mythic vrock can expend one use of mythic power as a swift action to release a cloud of spores from its body, affecting all adjacent non-demons. The spores deal 2d8 points of damage on the first round as they grow into ugly vines; for the next 10 rounds, they deal 1d6 points of damage and entrap the affected creatures (DC 21, 10 rounds, hardness 5, hp 10). The vines can be destroyed by casting bless on the creatures or by sprinkling them with holy water. This is a disease effect. The save DC is Constitution-based."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities_race.lst",
+    "sha256": "9dc17c2fc1ba84d040fb04d6175b48b6ff52cc30ad113933d5dff3d75ea2652a",
+    "line": 101,
+    "record_key": "Mythic Demon (Vrock) ~ Entrapping Vines"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,80 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T23:30:38Z",
+  "data": {
+    "key": "Vanara ~ Vision",
+    "name": "Low-Light Vision",
+    "race_key": "Vanara",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Vanara Racial Trait",
+      "Vanara Racial Default",
+      "SpecialQuality",
+      "Racial Vision"
+    ],
+    "is_racial_default": true,
+    "suppressed_by_flag": "Vanara_ReplaceVision",
+    "sets_replace_flags": [],
+    "description": "A vanara can see twice as far as a human in dim light.",
+    "source_page": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Vanara ~ Vision"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Vanara Racial Trait.Vanara Racial Default.SpecialQuality.Racial Vision"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      },
+      {
+        "key": "!PREFACT",
+        "value": "1,ABILITIES,Vanara_ReplaceVision=True"
+      },
+      {
+        "key": "DESC",
+        "value": "A vanara can see twice as far as a human in dim light."
+      },
+      {
+        "key": "VISION",
+        "value": "Low-Light Vision"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.xx"
+      }
+    ],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "VAR",
+          "HasRacialVision",
+          "1"
+        ]
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/vanara/vanara_abilities_race.lst",
+    "sha256": "38a5594d666b86af43216a07d358e640360ecf15e28b3351849680be07ba96b3",
+    "line": 18,
+    "record_key": "Vanara ~ Vision"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

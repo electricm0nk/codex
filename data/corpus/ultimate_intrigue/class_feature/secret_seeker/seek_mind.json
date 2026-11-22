@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Secret Seeker ~ Seek Mind",
+    "name": "Seek Mind",
+    "class": "Inquisitor",
+    "description": "A secret seeker can use her detect mind ability to seek out people with particular anxieties, desires, or thoughts. This functions as per seek thoughts except that it works with any of the three types of mental output the secret seeker can detect with detect mind.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Secret Seeker ~ Seek Mind"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Inquisitor Class Features.SecretSeekerClassFeatures.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "DESC",
+        "value": "A secret seeker can use her detect mind ability to seek out people with particular anxieties, desires, or thoughts. This functions as per seek thoughts except that it works with any of the three types of mental output the secret seeker can detect with detect mind."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.29"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/support/ui_abilities_class_oa.lst",
+    "sha256": "123f008e9a2f31828861df9025f48f5c2f7c78a648553f22dba96a8d8a2e24dc",
+    "line": 15,
+    "record_key": "Secret Seeker ~ Seek Mind"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

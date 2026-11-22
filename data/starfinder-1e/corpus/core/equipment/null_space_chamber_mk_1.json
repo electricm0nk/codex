@@ -1,0 +1,19 @@
+{
+  "data": {
+    "key": "Null-Space Chamber Mk 1",
+    "name": "Null-Space Chamber Mk 1",
+    "type": "Magic.Hybrid.Container"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 51,
+    "path": "starfinder/paizo/core/scr_equip_magic.lst",
+    "record_key": "Null-Space Chamber Mk 1",
+    "sha256": "5ce18c4f0c33fcaa19153e691d69a715051aad2b554d71e05ebf023e34dcb487"
+  },
+  "unit_id": "core:equipment:null_space_chamber_mk_1"
+}

@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Flood Walker ~ Alignment",
+    "name": "Alignment",
+    "class": "Witch",
+    "description": "Flood walkers exult in the final gasp for air of a drowning victim and must be evil in alignment. A flood walker who becomes nonevil loses access to all abilities granted by this archetype but does not regain any abilities this archetype replaced.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Flood Walker ~ Alignment"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Witch Class Feature.FloodWalkerClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "Flood walkers exult in the final gasp for air of a drowning victim and must be evil in alignment. A flood walker who becomes nonevil loses access to all abilities granted by this archetype but does not regain any abilities this archetype replaced."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.89"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/support/uw_abilities_class_arg.lst",
+    "sha256": "54f3a2c057555c56328ef47ef1d86dfb30eeebc9b377516682828d26ea076021",
+    "line": 15,
+    "record_key": "Flood Walker ~ Alignment"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

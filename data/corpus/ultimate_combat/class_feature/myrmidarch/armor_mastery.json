@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Myrmidarch ~ Armor Mastery",
+    "name": "Armor Mastery",
+    "class": "Myrmidarch",
+    "description": "At 20th level, a myrmidarch gains DR 5/- when wearing armor. This ability replaces true magus.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Myrmidarch ~ Armor Mastery"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MagusClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 20th level, a myrmidarch gains DR 5/- when wearing armor. This ability replaces true magus."
+      },
+      {
+        "key": "DR",
+        "value": "5/-|PREEQUIP:1,TYPE=Armor"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.56"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/support/uc_abilities_class_um.lst",
+    "sha256": "b8cff28b7be84f4f3c6b650c3e375a3027ff13bf4226233a514d34385bdfb67a",
+    "line": 42,
+    "record_key": "Myrmidarch ~ Armor Mastery"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

@@ -1,0 +1,49 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Fungal Creature ~ Create Spawn",
+    "delivery": "Extraordinary",
+    "description": "A creature killed by Constitution damage from a fungal creature's poison spore cloud transforms into a fungal spawn over a period of 24 hours. A plant growth spell halves the transformation time, and a diminish plants spell doubles it. A blight spell destroys the fungal spores and prevents the corpse's transformation, but spells that remove disease are ineffective against the growing spores. Once a creature fully transforms into a fungal spawn, the corpse from which it grew is destroyed. A fungal spawn gains the fungal creature template, but it loses all class levels and memories of the base creature from which it was spawned. If the base creature has 1 or fewer racial Hit Dice and normally has class levels, use a 1st-level warrior version of it as the base creature. The fungal spawn awakens as a free-willed being that knows all it needs to know (including language) in order to use its abilities and survive. Although it bears no allegiance to the fungal creature that created it, the new fungal creature immediately recognizes other fungal creatures as its own kind.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:fungal_creature_create_spawn",
+    "name": "Create Spawn",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A creature killed by Constitution damage from a fungal creature's poison spore cloud transforms into a fungal spawn over a period of 24 hours. A plant growth spell halves the transformation time, and a diminish plants spell doubles it. A blight spell destroys the fungal spores and prevents the corpse's transformation, but spells that remove disease are ineffective against the growing spores. Once a creature fully transforms into a fungal spawn, the corpse from which it grew is destroyed. A fungal spawn gains the fungal creature template, but it loses all class levels and memories of the base creature from which it was spawned. If the base creature has 1 or fewer racial Hit Dice and normally has class levels, use a 1st-level warrior version of it as the base creature. The fungal spawn awakens as a free-willed being that knows all it needs to know (including language) in order to use its abilities and survive. Although it bears no allegiance to the fungal creature that created it, the new fungal creature immediately recognizes other fungal creatures as its own kind."
+      },
+      {
+        "key": "KEY",
+        "value": "Fungal Creature ~ Create Spawn"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary"
+      }
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T14:10:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 721,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "record_key": "Fungal Creature ~ Create Spawn",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

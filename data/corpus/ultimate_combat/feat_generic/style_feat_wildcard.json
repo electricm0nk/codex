@@ -1,0 +1,81 @@
+{
+  "codex_generated_name": false,
+  "completeness": "full",
+  "data": {
+    "description": "This wildcard slot can be used to take on feats in a style feat path as long as the prerequisites are met. This wildcard can be changed every time the master of many styles changes styles.",
+    "key": "Style Feat Wildcard",
+    "name": "Style Feat Wildcard",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "FEAT"
+      },
+      {
+        "key": "TYPE",
+        "value": "Style"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "EXPORT"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Monk=6"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Archetype,Monk Archetype ~ Master Of Many Styles"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MonkWildcardSlot|0"
+      },
+      {
+        "key": "DESC",
+        "value": "This wildcard slot can be used to take on feats in a style feat path as long as the prerequisites are met. This wildcard can be changed every time the master of many styles changes styles."
+      },
+      {
+        "key": "STACK",
+        "value": "YES"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "NOCHOICE"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.59"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkWildcardSlot|1"
+      },
+      {
+        "key": "BENEFIT",
+        "value": " The master of many monks currently has %1 wildcard slots available|MonkWildcardSlot"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T14:16:16Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 391,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_feats.lst",
+    "record_key": "Style Feat Wildcard",
+    "sha256": "220f72d5a7e8a60077c981fcf7e0bfc086ddc05f3fd460f37a619eb6795ee58f"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice",
+    "computed:pre_guard"
+  ]
+}

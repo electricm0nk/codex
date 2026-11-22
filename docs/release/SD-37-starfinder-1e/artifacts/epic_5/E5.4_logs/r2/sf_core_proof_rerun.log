@@ -1,0 +1,20 @@
+   Compiling codex-ingest v0.1.0 (/home/ubuntu/workspace/worktrees/codex-sd37/crates/codex-ingest)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1.69s
+     Running tests/sf_core_proof.rs (/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/sf_core_proof-4e9dcbaa34dab5f7)
+
+running 11 tests
+test the_converted_books_are_every_registered_book_and_never_an_excluded_book ... ok
+test the_package_report_counts_every_inventory_unit_and_names_every_refusal ... ok
+test the_starfinder_tree_reads_exactly_the_converted_books_includes ... ok
+test the_corpus_holds_one_screened_record_per_unit ... ok
+test the_starfinder_population_is_the_inventory_units_of_the_converted_books ... ok
+test armor_class_bonuses_split_into_eac_and_kac ... ok
+test the_package_prints_no_product_identity_term ... ok
+test class_hit_point_pools_route_by_the_sf_mapping_table ... ok
+test a_hit_point_token_no_table_term_claims_is_a_named_degradation ... ok
+test glued_tokens_split_and_product_identity_names_never_print ... ok
+test the_wide_books_prerequisites_and_race_body_rows_convert_without_degrading ... ok
+
+test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 36.15s
+
+exit=0

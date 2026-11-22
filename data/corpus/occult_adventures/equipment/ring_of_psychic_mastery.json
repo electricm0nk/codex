@@ -1,0 +1,46 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "General",
+    "cost_gp": 50000.0,
+    "description": "A ring of psychic mastery grants the caster 1 additional psychic spell per day for each spell level from 1st to 4th that she is capable of casting.",
+    "key": "Ring of Psychic Mastery",
+    "name": "Ring of Psychic Mastery",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Ring"
+      },
+      {
+        "key": "COST",
+        "value": "50000"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.252"
+      },
+      {
+        "key": "SPROP",
+        "value": "A ring of psychic mastery grants the caster 1 additional psychic spell per day for each spell level from 1st to 4th that she is capable of casting."
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-17T08:18:39Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 45,
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_equip.lst",
+    "record_key": "Ring of Psychic Mastery",
+    "sha256": "48877b9621bd36c3812d91cc603838c92eda6199fd2bd116d16d47523cbc1cbc"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

@@ -1,0 +1,160 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Vigilante Archetype ~ Hangman",
+    "name": "Hangman",
+    "class": "Vigilante",
+    "description": "Wherever the guilty walk free, the hangman brings judgment.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Vigilante Archetype ~ Hangman"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.VigilanteArchetype"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.70"
+      },
+      {
+        "key": "DESC",
+        "value": "Wherever the guilty walk free, the hangman brings judgment."
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Vigilante=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Vigilante Archetype ~ Hangman],[!PREFACT:1,ABILITIES,Vigilante_Archetype_WeaponProficiencies=True,Vigilante_Archetype_ArmorProficiencies=True,Vigilante_Archetype_VigilanteSpecialization=True,Vigilante_Archetype_VigilanteTalent2=True,Vigilante_Archetype_VigilanteTalent4=True,Vigilante_Archetype_Unshakable=True,Vigilante_Archetype_StartlingAppearance=True,Vigilante_Archetype_FrighteningAppearance=True,Vigilante_Archetype_StunningAppearance=True]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Hangman ~ Proficiencies|PRECLASS:1,Vigilante=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Hangman ~ Vigilante Specialization|PRECLASS:1,Vigilante=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Hangman ~ Hangman's Noose|PRECLASS:1,Vigilante=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Hangman ~ Bound to Truth|PRECLASS:1,Vigilante=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Hangman ~ Twisted Rope|PRECLASS:1,Vigilante=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Hangman ~ Chokehold|PRECLASS:1,Vigilante=5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Hangman ~ Tighten the Noose|PRECLASS:1,Vigilante=11"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Hangman ~ Suffocation|PRECLASS:1,Vigilante=17"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_Archetype_WeaponProficiencies|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_Archetype_ArmorProficiencies|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_Archetype_VigilanteSpecialization|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_Archetype_VigilanteTalent2|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_Archetype_VigilanteTalent4|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_Archetype_Unshakable|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_Archetype_StartlingAppearance|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_Archetype_FrighteningAppearance|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_Archetype_StunningAppearance|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_CF_ShieldProficiency|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_CF_Avenger|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_CF_VigilanteTalent2|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_CF_VigilanteTalent4|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_CF_Unshakable|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_CF_StartlingAppearance|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_CF_FrighteningAppearance|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_CF_StunningAppearance|true"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/support/ha_abilities_class_ui.lst",
+    "sha256": "ef4d4c665ec9e9551c7b5e968fae9f10ad358ac8fdcf2addf3b9bb647cb3801b",
+    "line": 8,
+    "record_key": "Vigilante Archetype ~ Hangman"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

@@ -1,0 +1,55 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Jyoti ~ Divine Aversion",
+    "delivery": "Supernatural",
+    "description": "Jyoti dislike deities and are never divine spellcasters.  Jyoti gain a +2 racial bonus on saves against divine magical effects.",
+    "description_variables": [],
+    "facet": "Defensive",
+    "key": "bestiary_2:monster_ability:jyoti_divine_aversion",
+    "name": "Divine Aversion",
+    "owners": [
+      "bestiary_2:monster:jyoti"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Jyoti dislike deities and are never divine spellcasters.  Jyoti gain a +2 racial bonus on saves against divine magical effects."
+      },
+      {
+        "key": "KEY",
+        "value": "Jyoti ~ Divine Aversion"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.171"
+      },
+      {
+        "key": "TYPE",
+        "value": "Defensive.Supernatural"
+      }
+    ],
+    "source_page": "p.171",
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T10:25:56Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 740,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Jyoti ~ Divine Aversion",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

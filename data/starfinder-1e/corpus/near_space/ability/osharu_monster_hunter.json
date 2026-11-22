@@ -1,0 +1,20 @@
+{
+  "data": {
+    "category": "Racial Trait",
+    "key": "Osharu ~ Monster Hunter",
+    "name": "Monster Hunter",
+    "type": "Racial Trait.Osharu Racial Trait"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 52,
+    "path": "starfinder/paizo/near_space/sns_abilities_race.lst",
+    "record_key": "Osharu ~ Monster Hunter",
+    "sha256": "b32cfe1c3448efc35fc96a3d77b04e9d9739757baa3fc0e892e229c1ca6a72b3"
+  },
+  "unit_id": "near_space:ability:osharu_monster_hunter"
+}

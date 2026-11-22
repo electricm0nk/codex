@@ -1,0 +1,80 @@
+[
+  {
+    "id": "load-character-import-pcgen",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/a7402d70-3d8d-427c-820e-a54d598e3dda/scratchpad/smoke/load-character-import-pcgen.png",
+    "rendered_excerpt": "⚙\nLoad Character\n\n\nE5R6 eqm combo\nHuman Fighter 1\nLast modified: Nov 5, 2026\n\nAldric Ironhand\nHuman Fighter 3\nLast modified: Dec 31, 2025\n\nElowen Ashgrave\nHuman Wizard 5\nLast modified: Dec 31, 2025\n\nBrother Tomas Vane\nHuman Cleric 3 / Fighter 2\nLast modified: Dec 31, 2025\nE5R6 eqm combo\nFighter 1\nHuman\nPathfinder 1st Edition\nLast modified: Nov 5, 2026\nPress Load to compute and view the full sheet.",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd39-e7mc-AIUISS/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [
+        "f0e0dc22-70c8-4809-a767-5b0354ddacf8"
+      ],
+      "deleted": [
+        "f0e0dc22-70c8-4809-a767-5b0354ddacf8"
+      ],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "load-character-import-pcgen-opens",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/a7402d70-3d8d-427c-820e-a54d598e3dda/scratchpad/smoke/load-character-import-pcgen-opens.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nE5R6 eqm combo — Fighter 1\nCHARACTER DETAILS\n«\n\nLevel\n1\n+\nCaster Level\n—\nRACE\nHuman\nCLASS\nFighter 1\nCHARACTER DETAILS\n\nALIGNMENT\n\nDEITY\n\nSEX\n\nAGE\n\nHEIGHT\n\nWEIGHT\n\nHAIR\n\nEYES\n\nVISION\nNormal\nSIZE\nMedium\nVision and Size are calculated from race and aren't editable — a race this build has no profile for reads \"Unknown\" rather than a guessed value. The other fields save automatically when yo",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd39-e7mc-AIUISS/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [
+        "6996fb76-9599-4b93-871e-3b5c2475e35a"
+      ],
+      "deleted": [
+        "6996fb76-9599-4b93-871e-3b5c2475e35a"
+      ],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "sheet-equipment-equip",
+    "status": "red",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/a7402d70-3d8d-427c-820e-a54d598e3dda/scratchpad/smoke/sheet-equipment-equip.FAILED.png",
+    "rendered_excerpt": "",
+    "reason": "target not found: 'Equip Helm of Brilliance (no element named 'Equip Helm of Brilliance')' at row step 7/8 (click \"Equip Helm of Brilliance\")",
+    "app_data_root": "/tmp/codex-ui-smoke-sd39-e7mc-AIUISS/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "sheet-equipment-left-behind",
+    "status": "red",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/a7402d70-3d8d-427c-820e-a54d598e3dda/scratchpad/smoke/sheet-equipment-left-behind.FAILED.png",
+    "rendered_excerpt": "",
+    "reason": "target not found: 'Leave Hat of Disguise behind (no element named 'Leave Hat of Disguise behind')' at row step 7/8 (click \"Leave Hat of Disguise behind\")",
+    "app_data_root": "/tmp/codex-ui-smoke-sd39-e7mc-AIUISS/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "sheet-bio-deity-moves-melee",
+    "status": "red",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/a7402d70-3d8d-427c-820e-a54d598e3dda/scratchpad/smoke/sheet-bio-deity-moves-melee.FAILED.png",
+    "rendered_excerpt": "",
+    "reason": "target not found: 'Deity Smoke Cleric (no element named 'Deity Smoke Cleric')' at row step 11/17 (click \"Deity Smoke Cleric\")",
+    "app_data_root": "/tmp/codex-ui-smoke-sd39-e7mc-AIUISS/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  }
+]

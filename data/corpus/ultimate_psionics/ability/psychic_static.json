@@ -1,0 +1,56 @@
+{
+  "codex_generated_name": false,
+  "completeness": "full",
+  "data": {
+    "description": "Spin chain to cause a -%1 penalty on concentration checks to all psionic creatures within %2 feet.|DissonanceEnhancementBonusMain|DissonancePsychicStaticRange",
+    "key": "Dissonance ~ Psychic Static",
+    "name": "Psychic Static",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Dissonance ~ Psychic Static"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DissonancePsychicStaticRange|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Spin chain to cause a -%1 penalty on concentration checks to all psionic creatures within %2 feet.|DissonanceEnhancementBonusMain|DissonancePsychicStaticRange"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DissonancePsychicStaticRange|15"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.435"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 194,
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities.lst",
+    "record_key": "Dissonance ~ Psychic Static",
+    "sha256": "ecfd0b8c0786d65416067452f4b648e30acff9d0e8c9c70fb4e4fc6dc0f9723d"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

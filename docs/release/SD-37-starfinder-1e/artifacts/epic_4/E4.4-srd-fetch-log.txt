@@ -1,0 +1,6 @@
+# E4.4 SRD fetch log (curl -sS, 2026-10-04T05:27Z)
+https://www.aonsrd.com/Rules.aspx?ID=106 bytes=30550 sha256=fce2e6c3599327c7e33963e281dbea845ce68e08cfb4a0c3355cd453aaff264c
+https://www.aonsrd.com/FeatDisplay.aspx?ItemName=Spell%20Focus bytes=20409 sha256=31b4a9a1f17147fcec6d5b85d8007cb7cf22eba129aa694cf3d0a46934e70d91
+https://www.aonsrd.com/Classes.aspx?ItemName=Mystic bytes=60890 sha256=7b5eb93968fa2ad8f268058c9457e36cc2225ad563aa90fb91c27bb3056a3863
+https://www.aonsrd.com/Classes.aspx?ItemName=Technomancer bytes=69225 sha256=f0249f45d4e38ba3a1b93b93f8c5eaef862573fe33d37b85f98266771343435f
+https://www.aonsrd.com/Themes.aspx?ItemName=Priest bytes=25944 sha256=65598f304d196028c2695d7de2e469760c806d0c7fb239335d965b20544cc352

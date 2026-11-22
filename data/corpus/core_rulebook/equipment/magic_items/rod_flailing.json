@@ -1,0 +1,135 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "magic_items",
+    "cost_gp": 50000.0,
+    "description": "Upon the command of its possessor, the rod activates, changing from a normal-seeming rod to a +3/+3 dire flail. The dire flail is a double weapon, which means that each of the weapon's heads can be used to attack. The wielder can gain an extra attack (with the second head) at the cost of making all attacks at a -2 penalty (as if she had the Two-Weapon Fighting feat).\nOnce per day, the wielder can use a free action to cause the rod to grant her a +4 deflection bonus to Armor Class and a +4 resistance bonus on saving throws for 10 minutes. The rod need not be in weapon form to grant this benefit.\nTransforming it into a weapon or back into a rod is a move action.",
+    "key": "Rod (Flailing)",
+    "name": "Rod",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "WEAPON",
+          "DAMAGE,TOHIT",
+          "3",
+          "TYPE=Enhancement"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Rod (Flailing)"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Rod of Flailing"
+      },
+      {
+        "key": "PROFICIENCY",
+        "value": "WEAPON|Flail (Dire)"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Rod.Weapon.Resizable.Melee.Exotic.OneHanded.Double.Bludgeoning.Flail.Weapon Group Double.Weapon Group Flails"
+      },
+      {
+        "key": "ALTTYPE",
+        "value": "Weapon.Resizable.Melee.Bludgeoning"
+      },
+      {
+        "key": "COST",
+        "value": "50000"
+      },
+      {
+        "key": "WT",
+        "value": "5"
+      },
+      {
+        "key": "CRITMULT",
+        "value": "x2"
+      },
+      {
+        "key": "CRITRANGE",
+        "value": "1"
+      },
+      {
+        "key": "ALTCRITMULT",
+        "value": "x2"
+      },
+      {
+        "key": "ALTCRITRANGE",
+        "value": "1"
+      },
+      {
+        "key": "DAMAGE",
+        "value": "1d8"
+      },
+      {
+        "key": "ALTDAMAGE",
+        "value": "1d8"
+      },
+      {
+        "key": "WIELD",
+        "value": "OneHanded"
+      },
+      {
+        "key": "MODS",
+        "value": "NO"
+      },
+      {
+        "key": "SIZE",
+        "value": "M"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.486"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Two-Weapon Fighting"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Aura|moderate enchantment"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Caster Level|9th"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Slot|none"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Cost|25,000 gp"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Requirements|Craft Rod, Craft Magic Arms and Armor, bless"
+      },
+      {
+        "key": "DESC",
+        "value": "Upon the command of its possessor, the rod activates, changing from a normal-seeming rod to a +3/+3 dire flail. The dire flail is a double weapon, which means that each of the weapon's heads can be used to attack. The wielder can gain an extra attack (with the second head) at the cost of making all attacks at a -2 penalty (as if she had the Two-Weapon Fighting feat).&nl;Once per day, the wielder can use a free action to cause the rod to grant her a +4 deflection bonus to Armor Class and a +4 resistance bonus on saving throws for 10 minutes. The rod need not be in weapon form to grant this benefit.&nl;Transforming it into a weapon or back into a rod is a move action."
+      }
+    ],
+    "weight_lbs": 5.0
+  },
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 453,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "record_key": "Rod (Flailing)",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

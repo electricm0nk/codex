@@ -1,0 +1,49 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Kyton ~ Unnerving Gaze",
+    "delivery": "Supernatural",
+    "description": "All kytons have a gaze attack that manipulates the perceptions of those who look upon them. An unnerving gaze has a range of 30 feet, and can be negated by a Will save-the exact effects caused by a particular kyton's unnerving gaze depend on the type of kyton. All kytons are immune to the unnerving gazes of other kytons. Unnerving gaze is always a mind-affecting fear effect. The save DC is Charisma-based.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:kyton_unnerving_gaze",
+    "name": "Unnerving Gaze",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "All kytons have a gaze attack that manipulates the perceptions of those who look upon them. An unnerving gaze has a range of 30 feet, and can be negated by a Will save-the exact effects caused by a particular kyton's unnerving gaze depend on the type of kyton. All kytons are immune to the unnerving gazes of other kytons. Unnerving gaze is always a mind-affecting fear effect. The save DC is Charisma-based."
+      },
+      {
+        "key": "KEY",
+        "value": "Kyton ~ Unnerving Gaze"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      }
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T14:09:34Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 2333,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "record_key": "Kyton ~ Unnerving Gaze",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

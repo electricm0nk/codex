@@ -1,0 +1,58 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "You can use Magic Circle against Evil, as per the spell, as a constant ability.|!PRERULE:1,DisplayFullAbility",
+    "key": "Magic Circle against Evil ~ Constant",
+    "name": "Magic Circle against Evil",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Magic Circle against Evil ~ Constant"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Aura.ModifyAC.SpellLike"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SLA_CL|0"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=ATWILL|TIMEUNIT=Constant|CASTERLEVEL=SLA_CL|Magic Circle against Evil"
+      },
+      {
+        "key": "DESC",
+        "value": "You can use Magic Circle against Evil, as per the spell, as a constant ability.|!PRERULE:1,DisplayFullAbility"
+      },
+      {
+        "key": "DESC",
+        "value": "You can use Magic Circle against Evil, as per the spell, as a constant ability. Constant spell-like abilities function at all times but can be dispelled. Constant spell-like abilities can be reactivated as a swift action.|PRERULE:1,DisplayFullAbility"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ModifyAC|(+2 deflection vs. evil)"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 2246,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "record_key": "Magic Circle against Evil ~ Constant",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:spells"
+  ]
+}

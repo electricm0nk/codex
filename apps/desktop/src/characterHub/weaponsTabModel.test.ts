@@ -1,0 +1,205 @@
+import { ABSENT, AMMUNITION_BOXES, buildWeaponsTabSurface } from './weaponsTabModel';
+import { assert, assertEqual } from '../testSupport/asserts';
+import type { WeaponDamageDto } from '../boundary/loadSavedCharacterDetail';
+import type { CorpusDerivedDto } from '../boundary/loadCreateCharacter';
+
+/** The engine's real output for the bundled `Longsword (Base)` fixture. */
+function longsword(overrides: Partial<WeaponDamageDto> = {}): WeaponDamageDto {
+  return {
+    weaponItemId: 'item:longsword',
+    weaponRecordKey: 'Longsword (Base)',
+    baseDice: { count: 1, dieSize: 8 },
+    strDamageModifier: 4,
+    wieldCategory: 'OneHanded',
+    enhancementAttackBonus: null,
+    enhancementDamageBonus: null,
+    criticalThreatRange: [19, 20],
+    criticalMultiplier: 2,
+    featEffects: [],
+    inHand: true,
+    unarmed: false,
+    nonlethal: false,
+    usesAmmunition: false,
+    ammunitionCarried: 0,
+    ...overrides,
+  };
+}
+
+const CORPUS_DERIVED = {
+  equippedItems: [
+    {
+      itemId: 'item:longsword',
+      equipmentRecordName: 'Longsword',
+      equipmentRecordKey: 'Longsword (Base)',
+      grounded: true,
+      appliedModifiers: [],
+    },
+  ],
+} as unknown as CorpusDerivedDto;
+
+function verifiesAnEquippedLongswordProducesAPopulatedRow() {
+  const surface = buildWeaponsTabSurface([longsword()], CORPUS_DERIVED);
+
+  assertEqual(surface.isEmpty, false, 'an equipped weapon is not an empty state');
+  assertEqual(surface.rows.length, 1, 'exactly one weapon row');
+  const row = surface.rows[0];
+  assertEqual(row.itemId, 'item:longsword', 'keyed by the real selection id');
+  assertEqual(row.name, 'Longsword', 'named from the resolved corpus record');
+  assertEqual(row.baseDice, '1d8', 'the corpus DAMAGE: token');
+  assertEqual(row.strDamage, '+4', 'the STR contribution alone');
+  assertEqual(row.critical, '19-20/x2', 'CRITRANGE:2 plus CRITMULT:x2');
+  assertEqual(row.wield, 'One Handed', 'the corpus WIELD: token, spaced');
+  assertEqual(row.enhancementDamage, ABSENT, 'no enhancement on a plain longsword');
+}
+
+function verifiesTheFacetsAreNeverSummedIntoADamageTotal() {
+  const row = buildWeaponsTabSurface(
+    [
+      longsword({
+        enhancementDamageBonus: 1,
+        featEffects: [{ featKey: 'Weapon Specialization', damageBonus: 2 }],
+      }),
+    ],
+    CORPUS_DERIVED
+  ).rows[0];
+
+  // 1d8 + 4 + 1 + 2 is NOT computed anywhere: the wield multiplier that
+  // would make such a total honest is unknown to the engine, and
+  // `contract.rs`'s "no fabricated damage total" boundary note stands.
+  const rendered = [row.baseDice, row.strDamage, row.enhancementDamage, ...row.featEffects].join(' ');
+  assert(!rendered.includes('1d8+7'), 'no summed total is produced');
+  assertEqual(row.baseDice, '1d8', 'base dice stay their own column');
+  assertEqual(row.strDamage, '+4', 'STR stays its own column');
+  assertEqual(row.enhancementDamage, '+1', 'enhancement stays its own column');
+  assertEqual(
+    row.featEffects.join(' | '),
+    'Weapon Specialization +2',
+    'feat effects stay their own column, named'
+  );
+}
+
+function verifiesAnUngroundedFacetRendersAsAbsentNotZero() {
+  const row = buildWeaponsTabSurface(
+    [longsword({ strDamageModifier: null, criticalMultiplier: null })],
+    CORPUS_DERIVED
+  ).rows[0];
+
+  assertEqual(row.strDamage, ABSENT, 'a null STR modifier is absent, not +0');
+  assertEqual(
+    row.critical,
+    '19-20',
+    'a grounded threat range with no multiplier omits the multiplier rather than defaulting it to x2'
+  );
+}
+
+function verifiesAGenuinelyComputedZeroStillRendersAsZero() {
+  const row = buildWeaponsTabSurface([longsword({ strDamageModifier: 0 })], CORPUS_DERIVED).rows[0];
+
+  assertEqual(row.strDamage, '+0', 'a real zero is a real value, distinct from absence');
+}
+
+function verifiesANegativeStrengthPenaltyKeepsItsSign() {
+  const row = buildWeaponsTabSurface([longsword({ strDamageModifier: -1 })], CORPUS_DERIVED).rows[0];
+
+  assertEqual(row.strDamage, '-1', 'a penalty is not shown as a bonus');
+}
+
+function verifiesASingleNumberThreatRangeCollapses() {
+  const row = buildWeaponsTabSurface(
+    [longsword({ criticalThreatRange: [20, 20] })],
+    CORPUS_DERIVED
+  ).rows[0];
+
+  assertEqual(row.critical, '20/x2', 'a width-1 threat range reads as 20, not 20-20');
+}
+
+function verifiesTheDisplayNameFallsBackRatherThanBeingInvented() {
+  const noCorpus = buildWeaponsTabSurface([longsword()], null).rows[0];
+  assertEqual(noCorpus.name, 'Longsword (Base)', 'falls back to the engine record key');
+
+  const unresolved = buildWeaponsTabSurface([longsword({ weaponRecordKey: null })], null).rows[0];
+  assertEqual(unresolved.name, 'item:longsword', 'falls back to the raw id, never a guessed name');
+}
+
+/** SD-42 E4.21 (`decisions.md §6`): a copy's own name, or an alias's base name, as the engine names the row. */
+function verifiesAWeaponPrintsUnderTheNameTheEngineGivesIt() {
+  const flail = longsword({ weaponItemId: 'Flail (Heavy)', weaponRecordKey: 'Heavy Flail (Base)', name: 'Flail +1 (Heavy)' });
+  const corpus = {
+    equippedItems: [{ itemId: 'Flail (Heavy)', equipmentRecordName: 'Heavy Flail (Base)', equipmentRecordKey: 'Flail (Heavy)', grounded: true, appliedModifiers: [] }],
+  } as unknown as CorpusDerivedDto;
+  assertEqual(buildWeaponsTabSurface([flail], corpus).rows[0].name, 'Flail +1 (Heavy)', "the row's name wins over the record's");
+  assertEqual(buildWeaponsTabSurface([longsword()], CORPUS_DERIVED).rows[0].name, 'Longsword', 'no name: the record name, as before');
+}
+
+function verifiesAnHonestEmptyStateWhenNothingEquippedIsAWeapon() {
+  const surface = buildWeaponsTabSurface([], CORPUS_DERIVED);
+
+  assertEqual(surface.isEmpty, true, 'no weapons equipped is a real, distinct state');
+  assertEqual(surface.rows.length, 0, 'and produces no placeholder rows');
+}
+
+/** SD-41 E2.4 (`decisions.md §9, §22`): in hand, then carried, then Unarmed, whatever order the wire holds. */
+function verifiesInHandThenCarriedThenUnarmedLast() {
+  const unarmed = longsword({ weaponItemId: 'item:unarmed_strike', weaponRecordKey: 'Unarmed Strike', unarmed: true, nonlethal: true });
+  const dagger = longsword({ weaponItemId: 'item:dagger', weaponRecordKey: 'Dagger (Base)', inHand: false });
+  const rows = buildWeaponsTabSurface([unarmed, dagger, longsword()], null).rows;
+  assertEqual(rows.map((row) => row.group).join(','), 'inHand,carried,unarmed', 'in hand, carried, Unarmed last');
+  assertEqual(rows.map((row) => row.mark ?? '').join(','), ',(carried),(nonlethal)', 'carried and nonlethal are marked');
+  assertEqual(rows[2].name, 'Unarmed Strike', 'the Unarmed row keeps the engine name');
+}
+
+/** `decisions.md §23`: 20 boxes under a weapon that fires ammunition, the engine's count beside; none under a sword. */
+function verifiesAmmunitionBoxesOnlyUnderAmmunitionWeapons() {
+  const bow = (carried: number) =>
+    longsword({ weaponItemId: 'item:longbow', weaponRecordKey: 'Longbow (Base)', usesAmmunition: true, ammunitionCarried: carried, ammunitionFamily: 'Arrow' });
+  const [withArrows, sword] = buildWeaponsTabSurface([bow(20), longsword()], null).rows;
+  assertEqual(withArrows.ammunition?.boxes, AMMUNITION_BOXES, 'twenty tick boxes');
+  assertEqual(AMMUNITION_BOXES, 20, 'the operator\'s twenty');
+  assertEqual(withArrows.ammunition?.carried, 'Arrow: 20 carried', 'the engine count, the record family word');
+  assertEqual(sword.ammunition, null, 'a sword has no ammunition');
+  const empty = buildWeaponsTabSurface([bow(0)], null).rows[0];
+  assertEqual(empty.ammunition?.carried, null, 'no count line when the engine counts none');
+  assertEqual(empty.ammunition?.boxes, AMMUNITION_BOXES, 'the boxes stay');
+}
+
+/** `decisions.md §27`: Drop moves the row's own copy to Not Carried (never a sale); the Unarmed row has none. */
+function verifiesDropNamesTheRowsOwnCopyAndMovesItToNotCarried() {
+  const carriedPlusOne = longsword({ weaponItemId: 'item:dagger', inHand: false, enhancementAttackBonus: 1, enhancementDamageBonus: 1 });
+  const masterwork = longsword({ enhancementAttackBonus: 1, enhancementDamageBonus: null });
+  const unarmed = longsword({ weaponItemId: 'item:unarmed_strike', unarmed: true, nonlethal: true });
+  const [inHand, carried, last] = buildWeaponsTabSurface([unarmed, carriedPlusOne, masterwork], null).rows;
+  assertEqual(JSON.stringify(inHand.drop), JSON.stringify({ itemId: 'item:longsword', bonus: 0, fromState: 'EquippedActive', activeState: 'Absent' }), 'in hand: a masterwork attack bonus is not a +N');
+  assertEqual(JSON.stringify(carried.drop), JSON.stringify({ itemId: 'item:dagger', bonus: 1, fromState: 'SelectedInactive', activeState: 'Absent' }), 'carried: the +1 copy that is carried');
+  assertEqual(last.drop, null, 'nothing to drop on the Unarmed row');
+}
+
+/** SD-42 E4.2: a copy's own die is the engine's `baseDice` (shown as is); one that is not plain dice shows as written; its properties ride under the row. */
+function verifiesACopysOwnDieAndPropertiesShowAsWritten() {
+  const own = buildWeaponsTabSurface([longsword({ baseDice: { count: 2, dieSize: 4 }, damageOverride: '2d4', properties: ['Keen edge', 'Glows faintly'] })], CORPUS_DERIVED).rows[0];
+  assertEqual(own.baseDice, '2d4', 'the engine already rolled the copy\'s die');
+  assertEqual(own.properties.join(' | '), 'Keen edge | Glows faintly', 'the properties, as written');
+  const words = buildWeaponsTabSurface([longsword({ baseDice: null, damageOverride: '1d6 fire' })], CORPUS_DERIVED).rows[0];
+  assertEqual(words.baseDice, '1d6 fire', 'a die the engine cannot read shows as written, never the record\'s');
+  assertEqual(buildWeaponsTabSurface([longsword()], CORPUS_DERIVED).rows[0].properties.length, 0, 'none when the copy has none');
+}
+
+async function main() {
+  verifiesACopysOwnDieAndPropertiesShowAsWritten();
+  verifiesDropNamesTheRowsOwnCopyAndMovesItToNotCarried();
+  verifiesInHandThenCarriedThenUnarmedLast();
+  verifiesAmmunitionBoxesOnlyUnderAmmunitionWeapons();
+  verifiesAnEquippedLongswordProducesAPopulatedRow();
+  verifiesTheFacetsAreNeverSummedIntoADamageTotal();
+  verifiesAnUngroundedFacetRendersAsAbsentNotZero();
+  verifiesAGenuinelyComputedZeroStillRendersAsZero();
+  verifiesANegativeStrengthPenaltyKeepsItsSign();
+  verifiesASingleNumberThreatRangeCollapses();
+  verifiesTheDisplayNameFallsBackRatherThanBeingInvented();
+  verifiesAnHonestEmptyStateWhenNothingEquippedIsAWeapon();
+  verifiesAWeaponPrintsUnderTheNameTheEngineGivesIt();
+}
+
+main().catch((error: unknown) => {
+  console.error(error);
+  throw error;
+});

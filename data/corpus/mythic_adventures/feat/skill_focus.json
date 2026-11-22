@@ -1,0 +1,29 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Skill Focus",
+    "category": "Mythic",
+    "name": "Skill Focus (Mythic)",
+    "description": "You mastery with this skill is unmatched, even in difficult situations. You can always take 10 or 20 on checks with your choice of skill for Skill Focus, even when you are rushed or threatened.",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=FEAT,Skill Focus",
+      "PREVARGTEQ:MythicTierLevel,1"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_feats.lst",
+    "sha256": "50bdb91b88676e1559dbeab699dad66fa13d45b53ee2233b7370daf019eece1b",
+    "line": 157,
+    "record_key": "Skill Focus"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

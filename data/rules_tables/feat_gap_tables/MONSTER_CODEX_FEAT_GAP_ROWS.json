@@ -1,0 +1,205 @@
+{
+  "format": "codex.rules_tables/1",
+  "table": "feat_gap_tables/MONSTER_CODEX_FEAT_GAP_ROWS",
+  "licence": {
+    "license": "OGL",
+    "book": "feat_gap_tables",
+    "screen": "pi_screening::classify_field",
+    "pi_hits": [],
+    "redacted": []
+  },
+  "rows": [
+    {
+      "key": "Angelbane Strike",
+      "category": "General",
+      "name": "Angelbane Strike",
+      "description": "You channel the power of your Abyssal patron through your weapon to punish the righteous. When you use Channel Smite against a living creature with a good alignment, you treat all is on the channel smite damage dice as 2s. If your target is either a good outsider or a divine caster who serves a good deity, you are considered 2 levels higher when determining how many channel energy damage dice you roll when using Channel Smite."
+    },
+    {
+      "key": "Aquatic Adaption",
+      "category": "General",
+      "name": "Aquatic Adaption",
+      "description": "You've developed a strange but useful quirk for your race-you can breathe underwater. You can breathe water as well as air."
+    },
+    {
+      "key": "Aquatic Advantage",
+      "category": "General",
+      "name": "Aquatic Advantage",
+      "description": "Foes without a swim speed provoke attacks of opportunity from you underwater. A creature that lacks a swim speed provokes an attack of opportunity from you when it attacks you underwater. You don't get an attack of opportunity if the attacker is under the effects of freedom of movement."
+    },
+    {
+      "key": "Awesome Charge",
+      "category": "Combat",
+      "name": "Awesome Charge",
+      "description": "When you charge, you can send your opponent flying. When you hit your opponent with a charge attack, you can attempt an awesome blow combat maneuver against that opponent as a free action."
+    },
+    {
+      "key": "Bushwhack",
+      "category": "Combat",
+      "name": "Bushwhack",
+      "description": "You can subdue an unsuspecting foe quickly. When a flat-footed creature is unaware of your presence and you successfully grapple it, you can attempt a second grapple combat maneuver check to pin the creature as a free action. If you have the Chokehold feat (Ultimate Combat 92), you can instead use this second combat maneuver check to initiate a chokehold."
+    },
+    {
+      "key": "Chain Challenge",
+      "category": "General",
+      "name": "Chain Challenge",
+      "description": "You feed off the rush of victory over your enemies, and channel that fervor into battle. When the target of your challenge ability is killed or knocked unconscious, you can declare a new challenge target within 30 feet as an immediate action. This action must be taken immediately upon your initial challenge target's defeat, and you can't take it later if you are unable to act at the time. If you declare a new challenge using this feat, it doesn't count against your total daily uses of challenge. You can chain together challenges beyond the first."
+    },
+    {
+      "key": "Cleaving Sweep",
+      "category": "Combat",
+      "name": "Cleaving Sweep",
+      "description": "You can sweep multiple foes to the ground with a single blow of your axe. When using a full-attack action with a two-handed weapon, you can give up your regular attacks and instead attempt a trip combat maneuver at your highest base attack bonus against each opponent within reach. You must attempt a separate combat maneuver check against each opponent."
+    },
+    {
+      "key": "Coordinated Reposition",
+      "category": "Teamwork",
+      "name": "Coordinated Reposition",
+      "description": "You are skilled in coordinating combat positioning with your allies. Whenever an ally with this feat who is threatening a creature you are threatening takes a 5-foot step, you can move 5 feet as an immediate action. This movement does not provoke attacks of opportunity."
+    },
+    {
+      "key": "Disarm Partner",
+      "category": "Combat",
+      "name": "Disarm Partner",
+      "description": "When your ally fails to disarm an opponent within your reach, you can try to disarm that same foe. When an ally with this feat fails a disarm combat maneuver check made on his turn against an opponent within your melee reach, as an immediate action you can attempt a disarm combat maneuver check against that foe."
+    },
+    {
+      "key": "Draconic Magic",
+      "category": "General",
+      "name": "Draconic Magic",
+      "description": "Your draconic aspect manifests as magical might. You gain a group of spell-like abilities based on the color of your dragon aspect."
+    },
+    {
+      "key": "Gnawer",
+      "category": "General",
+      "name": "Gnawer",
+      "description": "Thanks to your teeth's strength and quick growth, you are able to chew through nearly any obstacle given sufficient time. Damage dealt by your bite attack ignores points of hardness. You can spend a full-round action to deal double your bite damage to an unattended, inanimate object."
+    },
+    {
+      "key": "Horn Rider",
+      "category": "Combat",
+      "name": "Horn Rider",
+      "description": "You can defend yourself using the horn or tusk of a creature you're lashed to. You gain a +1 shield bonus to AC when lashed into a horn harness. [Special] A creature with this feat can take the Mounted Archery feat without possessing 1 rank in the Ride skill or the Mounted Combat feat."
+    },
+    {
+      "key": "Horn Riders Charge",
+      "category": "Combat",
+      "name": "Horn Riders Charge",
+      "description": "When the animal you're lashed to charges, you use its momentum in your own attack. Whenever you're lashed into a horn harness and you ready an action to make a melee attack against the target of a charge made by the creature you're lashed to, you gain the attack bonus for charging and your attack deals double damage (or triple damage with a lance). This benefit does not stack with the benefit of Spirited Charge."
+    },
+    {
+      "key": "Hurtful",
+      "category": "Combat",
+      "name": "Hurtful",
+      "description": "You know how to add injury to insult. When you successfully demoralize an opponent within your melee reach with an Intimidate check, you can make a single melee attack against that creature as a swift action. If your attack fails to damage the target, its shaken condition from being demoralized immediately ends."
+    },
+    {
+      "key": "Improved Disarm Partner",
+      "category": "Combat",
+      "name": "Improved Disarm Partner",
+      "description": "You are ever the opportunist. When an ally with this feat fails a disarm combat maneuver check made on his turn against a foe that's within your melee reach, you can make an attack of opportunity against that foe. If that attack of opportunity hits the foe, you can also attempt a disarm combat maneuver check against that opponent as part of that attack of opportunity."
+    },
+    {
+      "key": "Motivated March",
+      "category": "General",
+      "name": "Motivated March",
+      "description": "Years of forcing your slaves and soldiers to march far beyond the limits of their endurance have made you an excellent taskmaster. When traveling overland, you and a number of allies equal to 10 times your character level reduce the amount of nonlethal damage taken as a result of a forced march by half. Creatures benefiting from this feat can delay the fatigued effect of a forced march for hours. A creature that delays this effect becomes exhausted instead of fatigued when the condition takes effect."
+    },
+    {
+      "key": "Mutual Hatred",
+      "category": "Combat",
+      "name": "Mutual Hatred",
+      "description": "Others hate you, and their hatred feeds your own. You gain a +1 bonus on attack rolls and damage rolls against creatures whose hatred racial trait or favored enemy class feature applies to you. For instance, an orc would gain this bonus against all dwarves and against rangers who chose humanoid (ore) as a favored enemy."
+    },
+    {
+      "key": "Pack Rat",
+      "category": "General",
+      "name": "Pack Rat",
+      "description": "You collect all sorts of things, and frequently lose and refind things you acquired. Once per day, when confronted with a situation that calls for a particular mundane item, you happen to have such an item on your person. The item must cost no more than gp, and you must pay its cost when you \"find\" it (in other words, the money you thought you had on your person was actually the item). The item must be something you can easily carry-for example, if you are on foot and have only a backpack, you could not have a large iron cauldron. You can't find magical items using this feat, nor can you have specific items, such as the key to a particular door. If you are stripped of your equipment or possessions, you lose the benefits of this feat until you have at least a day to resupply and acquire new items."
+    },
+    {
+      "key": "Pile On",
+      "category": "Combat",
+      "name": "Pile On",
+      "description": "You can keep a foe shuddering in fear. Once per round when you damage a creature that is shaken, frightened, or panicked, you can choose to deal half your normal damage in order to extend the duration of its fear condition by 1 round."
+    },
+    {
+      "key": "Scarred Legion",
+      "category": "Teamwork",
+      "name": "Scarred Legion",
+      "description": "Your ritual scars make you more fearsome, and allies with similar scars grow bolder when they're near you. You gain a +2 bonus on Intimidate checks. You also gain a +2 morale bonus on Will saving throws while adjacent to an ally with this feat. When you charge, if you started the charge adjacent to an ally with this feat, you retain the bonus on Will saves until the start of your next turn."
+    },
+    {
+      "key": "Shadow Shroud",
+      "category": "General",
+      "name": "Shadow Shroud",
+      "description": "Using a portion of your innate magic, you cloak your body in darkness to evade attacks. As an immediate action, you can create a shifting haze of darkness around yourself, granting you concealment against one attack. The haze dissipates after the attack is resolved. You can use this ability times per day."
+    },
+    {
+      "key": "Shared Stash",
+      "category": "Teamwork",
+      "name": "Shared Stash",
+      "description": "You are adept at borrowing from your allies even in the middle of combat. While you are in the same square as a willing ally who also has this feat, you can draw a weapon from that creature as a free action or draw a hidden weapon or any other object as a move action. You can also take a held object from a willing ally in the same square as you as a free action. Drawing or taking an object (but not a weapon) in this way provokes an attack of opportunity."
+    },
+    {
+      "key": "Sharptooth",
+      "category": "General",
+      "name": "Sharptooth",
+      "description": "Your teeth are especially sharp and sturdy. You gain a bite attack. This is a primary natural attack that deals 1d3 points of damage."
+    },
+    {
+      "key": "Shocking Bellow",
+      "category": "Combat",
+      "name": "Shocking Bellow",
+      "description": "You can demoralize a foe with a sudden ferocious scream. If you act in the surprise round of a combat, as a free action you can attempt a single Intimidate check to demoralize a creature within 30 feet that can clearly see or hear you."
+    },
+    {
+      "key": "Slurk Rider",
+      "category": "Combat",
+      "name": "Slurk Rider",
+      "description": "You are skilled at riding slurks into battle. You are able to control, guide, and communicate with slurks (Pathfinder RPG Bestiary 2 251), as if they understood Draconic. You can also spend a standard action to manipulate the nodules on the slurk's back to activate its slime ability. Both you and the slurk can activate this ability during the same round."
+    },
+    {
+      "key": "Snapping Flank",
+      "category": "Combat",
+      "name": "Snapping Flank",
+      "description": "You can make a swift bite attack against a flanked foe. Whenever you are flanking with an ally who also has this feat, as a swift action you can make a bite attack against the opponent you and your ally are flanking."
+    },
+    {
+      "key": "Snipers Lantern",
+      "category": "General",
+      "name": "Snipers Lantern",
+      "description": "You use your innate magic powers to target enemies and spot their weaknesses. You can use your dancing lights racial spell-like ability to create one orb of penetrating light. This light grants you a +2 insight bonus on all ranged attacks made against targets within 5 feet of the light's location. You can direct this light to a new location anywhere within the spell's range as a move action, otherwise the effect functions exactly like dancing lights. You can use this ability times per day."
+    },
+    {
+      "key": "Spirit of the Corps",
+      "category": "Combat",
+      "name": "Spirit of the Corps",
+      "description": "You find inspiration in your fellow soldiers, trusting that your shared training and dedication will bring you victory on the battlefield. Whenever you are within 10 feet of an ally benefiting from a spell or effect that grants a morale bonus on a particular type of roll, once during that effect's duration, you can apply that morale bonus on a roll you make of that type. For instance, if an ally with this feat is benefiting from heroism, once during the duration of the spell you could gain a +2 morale bonus on one saving throw, attack roll, or skill check. You can use this feat only once per round, and only once per spell or effect."
+    },
+    {
+      "key": "Staggering Blow",
+      "category": "Combat",
+      "name": "Staggering Blow",
+      "description": "You know just where to strike to temporarily stagger a foe. When you attack a foe using Vital Strike, you can choose to take a-2 penalty on your attack roll to also make the attack a staggering strike. You must make this choice before making the attack roll. If your attack roll is successful, your target must succeed at a Fortitude saving throw (DC ) or be staggered until the start of your next turn. Once a creature that failed its save recovers from the effects of your staggering blow, it is immune to the effects of this feat for 24 hours. Constructs, oozes, plants, undead, incorporeal creatures, and creatures that are immune to critical hits are immune to this effect."
+    },
+    {
+      "key": "Strangler",
+      "category": "General",
+      "name": "Strangler",
+      "description": "You can choke foes with a lasso. When you successfully entangle a creature with a lasso (Advanced Player's Guide 178) and beat the target's CMD by 5 or more, the target cannot speak above a whisper and must succeed at a concentration check (DC = 20 +your CMB +the spell level) to cast a spell with a verbal component, use a command word item, or use any magic requiring speech. Additionally, the DC of an Escape Artist check to slip free of a lasso you are using equals 15 or your CMD, whichever is higher."
+    },
+    {
+      "key": "Vampiric Companion",
+      "category": "General",
+      "name": "Vampiric Companion",
+      "description": "Just as your undead existence mocks nature, so too are you granted a twisted companion that reflects the vile nature of vampirism. [NOT IMPLEMENTED}Your animal companion or familiar's type changes to \"undead.\" The creature gains your vampire or dhampir weaknesses and fast healing 5."
+    },
+    {
+      "key": "Visceral Threat",
+      "category": "Combat",
+      "name": "Visceral Threat",
+      "description": "Your ability to threaten foes is great enough to make them hesitate. You may use Intimidate, rather than Bluff, to attempt a feint against a creature within your melee reach."
+    }
+  ]
+}

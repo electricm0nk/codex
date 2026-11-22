@@ -1,0 +1,46 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Mythic Mummy ~ Desert Mastery",
+    "name": "Desert Mastery",
+    "description": "A mythic mummy can command earth and sand within 100 feet to create a variety of spell-like effects. As a standard action, a mummy can reduce rock to sand (as transmute rock to mud) or create lifelike shapes made from sand (as major image, though these shapes collapse if disbelieved or attacked). The mummy can expend one use of mythic power to summon a giant advanced sandman (Bestiary 2 236). The mummy's caster level equals its Hit Dice for these effects.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Mummy ~ Desert Mastery"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Mummy Trait.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "A mythic mummy can command earth and sand within 100 feet to create a variety of spell-like effects. As a standard action, a mummy can reduce rock to sand (as transmute rock to mud) or create lifelike shapes made from sand (as major image, though these shapes collapse if disbelieved or attacked). The mummy can expend one use of mythic power to summon a giant advanced sandman (Bestiary 2 236). The mummy's caster level equals its Hit Dice for these effects."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities_race.lst",
+    "sha256": "9dc17c2fc1ba84d040fb04d6175b48b6ff52cc30ad113933d5dff3d75ea2652a",
+    "line": 218,
+    "record_key": "Mythic Mummy ~ Desert Mastery"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,99 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "You create a small, finite demiplane. You must be on the Astral or Ethereal Plane or on a plane that has access to one of those planes (such as the Material Plane) to cast this spell. When you cast the spell, you decide whether the demiplane is within the Astral or the Ethereal Plane. It is filled with air or water (decided by you). The plane is generally flat and featureless, such as an earth, stone, water, or wood floor. The \"walls\" and \"ceiling\" of the plane may appear like solid earth, stone, wood, or water, or they may end in mist, a featureless void, or a similar unreal-looking border. The plane's environmental conditions are those of a temperate spring day on the Material Plane. You determine the plane's light level (bright, normal, dim, or darkness), which affects the entire plane. There are no native creatures or plants on this plane, though you may bring some there (if the plane's light is bright or normal, it counts as sunlight for growing plants). The environment of the plane counts as normal terrain for the purpose of effects that target earth, stone, wood, and so on. For example, you could use move earth to create a hill or wall of stone to create a barricade. When you finish casting this spell, you may bring yourself and up to seven other creatures to the plane automatically by joining hands in a circle. The demiplane is another plane of existence, and therefore is outside the range of any spell or ability that cannot affect or reach other planes. Creatures can only enter the plane by the use of planar travel magic such as astral projection, etherealness, or plane shift. You are considered \"very familiar\" with your entire demiplane. As a standard action, you may eject a creature from your demiplane. The creature may resist with a Will saving throw. An ejected creature goes to the closest plane to your demiplane (usually the Astral Plane or the Ethereal Plane, but if you cast this spell on the Material Plane, the creature is sent to the Material Plane). When the spell ends, the plane dissolves, and all creatures in the plane are ejected in this manner with no saving throw. The plane cannot be dispelled, but a creature on the plane can destroy it by using limited wish, mage's disjunction, miracle, or wish and making a successful dispel check. If you are within the demiplane, you can add to its area by casting the spell again. Alternatively, you may cast this spell again to reset the duration of an existing area to that of your latest casting. If the duration on one area of the demiplane ends and other parts remain, creatures in the expiring area are shunted to remaining areas. If a collapsing portion of the demiplane would leave one section cut off from other sections of the demiplane (for example, if there were three areas connected in a straight line and the center part expired), the stranded sections count as separate demiplanes under your control. You may reconnect these stranded sections by casting the spell again to create a linked area between the two. You can make this spell permanent with the permanency spell, at a cost of 17,500 gp. If you have cast create lesser demiplane multiple times to enlarge the demiplane, each casting's area requires its own permanency spell.",
+    "key": "Create Demiplane (Lesser)",
+    "level": 7,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "2 hours"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Cleric,Sorcerer,Witch,Wizard=7"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, F"
+      },
+      {
+        "key": "DESC",
+        "value": "Create your own demiplane.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "You create a small, finite demiplane. You must be on the Astral or Ethereal Plane or on a plane that has access to one of those planes (such as the Material Plane) to cast this spell. When you cast the spell, you decide whether the demiplane is within the Astral or the Ethereal Plane. It is filled with air or water (decided by you). The plane is generally flat and featureless, such as an earth, stone, water, or wood floor. The \"walls\" and \"ceiling\" of the plane may appear like solid earth, stone, wood, or water, or they may end in mist, a featureless void, or a similar unreal-looking border. The plane's environmental conditions are those of a temperate spring day on the Material Plane. You determine the plane's light level (bright, normal, dim, or darkness), which affects the entire plane. There are no native creatures or plants on this plane, though you may bring some there (if the plane's light is bright or normal, it counts as sunlight for growing plants). The environment of the plane counts as normal terrain for the purpose of effects that target earth, stone, wood, and so on. For example, you could use move earth to create a hill or wall of stone to create a barricade. When you finish casting this spell, you may bring yourself and up to seven other creatures to the plane automatically by joining hands in a circle. The demiplane is another plane of existence, and therefore is outside the range of any spell or ability that cannot affect or reach other planes. Creatures can only enter the plane by the use of planar travel magic such as astral projection, etherealness, or plane shift. You are considered \"very familiar\" with your entire demiplane. As a standard action, you may eject a creature from your demiplane. The creature may resist with a Will saving throw. An ejected creature goes to the closest plane to your demiplane (usually the Astral Plane or the Ethereal Plane, but if you cast this spell on the Material Plane, the creature is sent to the Material Plane). When the spell ends, the plane dissolves, and all creatures in the plane are ejected in this manner with no saving throw. The plane cannot be dispelled, but a creature on the plane can destroy it by using limited wish, mage's disjunction, miracle, or wish and making a successful dispel check. If you are within the demiplane, you can add to its area by casting the spell again. Alternatively, you may cast this spell again to reset the duration of an existing area to that of your latest casting. If the duration on one area of the demiplane ends and other parts remain, creatures in the expiring area are shunted to remaining areas. If a collapsing portion of the demiplane would leave one section cut off from other sections of the demiplane (for example, if there were three areas connected in a straight line and the center part expired), the stranded sections count as separate demiplanes under your control. You may reconnect these stranded sections by casting the spell again to create a linked area between the two. You can make this spell permanent with the permanency spell, at a cost of 17,500 gp. If you have cast create lesser demiplane multiple times to enlarge the demiplane, each casting's area requires its own permanency spell.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) days"
+      },
+      {
+        "key": "FACT",
+        "value": "CompMaterial|(500 gp forked metal rod)"
+      },
+      {
+        "key": "ITEM",
+        "value": "Potion"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "Create Demiplane, Lesser"
+      },
+      {
+        "key": "RANGE",
+        "value": "0 ft."
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "None"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Conjuration"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/ultimateMagic/spells/createDemiplane.html#_create-demiplane,-lesser"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.214"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "No"
+      },
+      {
+        "key": "SUBSCHOOL",
+        "value": "Creation"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "Extradimensional demiplane, up to (CASTERLEVEL*3) 10-ft. cubes [S]"
+      },
+      {
+        "key": "TYPE",
+        "value": "Arcane.Divine"
+      }
+    ],
+    "school": "Conjuration"
+  },
+  "ingested_at": "2026-08-16T12:10:17Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 59,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_spells.lst",
+    "record_key": "Create Demiplane (Lesser)",
+    "sha256": "277484651533d6e3f350fd62db33c91294a4768ab5519886d6ad77c2516f83fa"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr"
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Drunken God's Blessings",
+    "category": "General",
+    "name": "Drunken God's Blessings",
+    "description": "[redacted PI]",
+    "prerequisites": [
+      "PREDEITY:[redacted PI]"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_taverns/istav_feats.lst",
+    "sha256": "7906f2a2b36a01031788d3270949a8f4e83b1eed239a50ba2a6790be72898e63",
+    "line": 4,
+    "record_key": "Drunken God's Blessings"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_ability_scaling",
+    "display:no_magnitude_token"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted"
+}

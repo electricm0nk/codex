@@ -1,0 +1,213 @@
+{
+  "format": "codex.rules_tables/1",
+  "table": "equipment_gap_tables/ULTIMATE_COMBAT_GAP_ROWS",
+  "licence": {
+    "license": "OGL",
+    "book": "equipment_gap_tables",
+    "screen": "pi_screening::classify_field",
+    "pi_hits": [],
+    "redacted": []
+  },
+  "rows": [
+    {
+      "book": "UC",
+      "key": "THROWN",
+      "name": "THROWN",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Weapon can be thrown",
+      "name_pi_citation": null
+    },
+    {
+      "book": "UC",
+      "key": "REACH",
+      "name": "REACH",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "UC",
+      "key": "FIREARM_SCATTER",
+      "name": "FIREARM_SCATTER",
+      "category": "Equipmods",
+      "cost_gp": 0.0,
+      "weight_lbs": null,
+      "description": "scatter",
+      "name_pi_citation": null
+    },
+    {
+      "book": "UC",
+      "key": "DRYLOAD_PFUC",
+      "name": "DRYLOAD_PFUC",
+      "category": "Equipmods",
+      "cost_gp": 30.0,
+      "weight_lbs": null,
+      "description": "This special ability can only be applied to alchemical or metal firearm cartridges. Dry load cartridges can be used to load guns underwater or in other airless environments, such as a vacuum. This ability protects the cartridge's contents as it is being loaded and creates a residual bubble of air that surrounds the firearm, further protecting the ammunition and allowing the firearm with this ammunition to be fired in an airless environment. After the cartridge is loaded, the bubble of air lasts for 3 minutes, or until the firearm is fired, whichever occurs first. A firearm loaded with this ammunition still takes the -2 penalty on attack rolls when fired underwater for every 5 feet of water the bullet passes through, in addition to the normal penalties to range. When firing a dry load cartridge underwater or in an airless environment, a misfire that results in a firearm explosion occurs normally.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "UC",
+      "key": "FIREARM_LUCKY",
+      "name": "FIREARM_LUCKY",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "A lucky firearm has its own magical reservoir of grit (see page 9). Usually this grit is stored within the marks of an engraving or in a trinket that hangs from the firearm. Often these marks take the form of holy symbols or fetishes, but such a reservoir can take just about any form. This reservoir holds 1 grit point, which is refreshed at the start of each day. Whether or not the wielder of a lucky firearm has any deeds (see page 10), she can always spend 1 grit point from the lucky firearm to reroll an attack from it that would result in a misfire. When the wielder does so, she must take the second result, even if that attack roll also results in a misfire.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "UC",
+      "key": "FIREARM_LUCKY_GRT",
+      "name": "FIREARM_LUCKY_GRT",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "A greater lucky firearm has its own magical reservoir of grit (see page 9). Usually this grit is stored within the marks of an engraving or in a trinket that hangs from the firearm. Often these marks take the form of holy symbols or fetishes, but such a reservoir can take just about any form. This reservoir holds 3 grit points, which is refreshed at the start of each day. Whether or not the wielder of a lucky firearm has any deeds (see page 10), she can always spend 1 grit point from the lucky firearm to reroll an attack from it that would result in a misfire. When the wielder does so, she must take the second result, even if that attack roll also results in a misfire.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "UC",
+      "key": "FIREARM_RELIABLE",
+      "name": "FIREARM_RELIABLE",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "A reliable firearm is enchanted so that it is less likely to jam than other firearms. This enchantment reduces the misfire value of the affected firearm by 1 (minimum 0). This reduction occurs after any increases are calculated for firing with the broken condition, or for any other effect that might increase the misfire value of a firearm.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "UC",
+      "key": "FIREARM_RELIABLE_GRT",
+      "name": "FIREARM_RELIABLE_GRT",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "A greater reliable firearm is enchanted so as to be less likely to jam than other firearms. It reduces the misfire value of the affected firearm by 4 (minimum 0). This reduction occurs after any increases are calculated for firing with the broken condition, or for any other effect that might increase the misfire value of a firearm. A firearm with greater reliable cannot have the reliable special ability.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "UC",
+      "key": "BLOCKING",
+      "name": "BLOCKING",
+      "category": "Equipmods",
+      "cost_gp": 0.0,
+      "weight_lbs": null,
+      "description": "blocking",
+      "name_pi_citation": null
+    },
+    {
+      "book": "UC",
+      "key": "DEADLY",
+      "name": "DEADLY",
+      "category": "Equipmods",
+      "cost_gp": 0.0,
+      "weight_lbs": null,
+      "description": "deadly",
+      "name_pi_citation": null
+    },
+    {
+      "book": "UC",
+      "key": "DISTRACTING",
+      "name": "DISTRACTING",
+      "category": "Equipmods",
+      "cost_gp": 0.0,
+      "weight_lbs": null,
+      "description": "distracting",
+      "name_pi_citation": null
+    },
+    {
+      "book": "UC",
+      "key": "GRAPPLE",
+      "name": "GRAPPLE",
+      "category": "Equipmods",
+      "cost_gp": 0.0,
+      "weight_lbs": null,
+      "description": "grapple",
+      "name_pi_citation": null
+    },
+    {
+      "book": "UC",
+      "key": "FRAGILE",
+      "name": "FRAGILE",
+      "category": "Equipmods",
+      "cost_gp": 0.0,
+      "weight_lbs": null,
+      "description": "fragile",
+      "name_pi_citation": null
+    },
+    {
+      "book": "UC",
+      "key": "PERFORMANCE",
+      "name": "PERFORMANCE",
+      "category": "Equipmods",
+      "cost_gp": 0.0,
+      "weight_lbs": null,
+      "description": "performance",
+      "name_pi_citation": null
+    },
+    {
+      "book": "UC",
+      "key": "BONE",
+      "name": "BONE",
+      "category": "Equipmods",
+      "cost_gp": 0.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "UC",
+      "key": "BRONZE",
+      "name": "BRONZE",
+      "category": "Equipmods",
+      "cost_gp": 0.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "UC",
+      "key": "GOLD",
+      "name": "GOLD",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "UC",
+      "key": "STONE",
+      "name": "STONE",
+      "category": "Equipmods",
+      "cost_gp": 0.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "UC",
+      "key": "OBSIDIAN",
+      "name": "OBSIDIAN",
+      "category": "Equipmods",
+      "cost_gp": 0.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "UC",
+      "key": "THRW_SHLD",
+      "name": "THRW_SHLD",
+      "category": "Equipmods",
+      "cost_gp": 50.0,
+      "weight_lbs": null,
+      "description": "small 1d4 damage; medium 1d6 damage; range 20 ft., deals bludgeoning damage.",
+      "name_pi_citation": null
+    }
+  ]
+}

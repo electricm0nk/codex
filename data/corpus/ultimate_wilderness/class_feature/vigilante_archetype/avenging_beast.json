@@ -1,0 +1,172 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Vigilante Archetype ~ Avenging Beast",
+    "name": "Avenging Beast",
+    "class": "Vigilante",
+    "description": "Some vigilantes turn to natural traditions and supernatural forces to transform into beasts, unleashing a primal fury on their foes before returning to an ordinary guise.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Vigilante Archetype ~ Avenging Beast"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.VigilanteArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Vigilante=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Vigilante Archetype ~ Avenging Beast],[!PREFACT:1,ABILITIES,Vigilante_Archetype_ClassSkills=True,Vigilante_Archetype_SkillRanks=True,Vigilante_Archetype_DualIdentity=True,Vigilante_Archetype_VigilanteTalent4=True,Vigilante_Archetype_VigilanteTalent8=True,Vigilante_Archetype_VigilanteTalent10=True,Vigilante_Archetype_VigilanteTalent14=True,Vigilante_Archetype_VigilanteTalent16=True,Vigilante_Archetype_VigilanteSpecialization=True,Vigilante_Archetype_StartlingAppearance=True,Vigilante_Archetype_FrighteningAppearance=True,Vigilante_Archetype_StunningAppearance=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Some vigilantes turn to natural traditions and supernatural forces to transform into beasts, unleashing a primal fury on their foes before returning to an ordinary guise."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Avenging Beast ~ Class Skills|PRECLASS:1,Vigilante=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Avenging Beast ~ Skill Ranks per Level|PRECLASS:1,Vigilante=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Avenging Beast ~ Animal Mask|PRECLASS:1,Vigilante=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Avenging Beast ~ Spellcasting|PRECLASS:1,Vigilante=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Avenging Beast ~ Patron Spells|PRECLASS:1,Vigilante=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Avenging Beast ~ Wild Shape|PRECLASS:1,Vigilante=5"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.96"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_Archetype_ClassSkills|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_Archetype_SkillRanks|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_Archetype_DualIdentity|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_Archetype_VigilanteTalent4|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_Archetype_VigilanteTalent8|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_Archetype_VigilanteTalent10|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_Archetype_VigilanteTalent14|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_Archetype_VigilanteTalent16|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_Archetype_VigilanteSpecialization|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_Archetype_StartlingAppearance|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_Archetype_FrighteningAppearance|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_Archetype_StunningAppearance|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_CF_ClassSkills|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_CF_VigilanteTalent4|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_CF_VigilanteTalent8|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_CF_VigilanteTalent10|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_CF_VigilanteTalent14|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_CF_VigilanteTalent16|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_CF_VigilanteSpecialization|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_CF_StartlingAppearance|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_CF_FrighteningAppearance|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_CF_StunningAppearance|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/support/uw_abilities_class_ui.lst",
+    "sha256": "82bfd1c734f1fc071a7e3de22959a711631bdcab7e0e9a921b109e9ee49fe46d",
+    "line": 9,
+    "record_key": "Vigilante Archetype ~ Avenging Beast"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

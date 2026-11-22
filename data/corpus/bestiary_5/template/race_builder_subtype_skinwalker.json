@@ -1,0 +1,43 @@
+{
+  "codex_generated_name": false,
+  "completeness": "chassis_only",
+  "data": {
+    "key": "Race Builder Subtype ~ Skinwalker",
+    "name": "Skinwalker",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Race Builder Subtype ~ Skinwalker"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "RACESUBTYPE",
+        "value": "Skinwalker"
+      },
+      {
+        "key": "TYPE",
+        "value": "Race Builder Subtype"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T16:43:17Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 21,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/skinwalker/skinwalker_templates.lst",
+    "record_key": "Race Builder Subtype ~ Skinwalker",
+    "sha256": "77bc06d05e9480f38d1600ac4d39062668cfe09ebdacbbcafb71a4420c3dd15e"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

@@ -1,0 +1,55 @@
+{
+  "completeness": "full",
+  "data": {
+    "key": "Klar (as Shield)",
+    "name": "Klar (as Shield)",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "COMBAT",
+          "AC",
+          "1",
+          "TYPE=Shield"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "PROFICIENCY",
+        "value": "SHIELD|Shield (Light)"
+      },
+      {
+        "key": "TYPE",
+        "value": "Shield.Light.Standard"
+      },
+      {
+        "key": "COST",
+        "value": "12"
+      },
+      {
+        "key": "WT",
+        "value": "6"
+      },
+      {
+        "key": "ACCHECK",
+        "value": "-1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.290"
+      },
+      {
+        "key": "SPELLFAILURE",
+        "value": "5"
+      }
+    ]
+  },
+  "license": "OGL",
+  "population": "in_scope",
+  "source": {
+    "kind": "desktop_ui_fixture",
+    "line": 1,
+    "path": "apps/desktop/src-tauri/fixtures_src/equip_klar_as_shield.txt",
+    "record_key": "Klar (as Shield)"
+  }
+}

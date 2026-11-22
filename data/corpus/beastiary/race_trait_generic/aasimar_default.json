@@ -1,0 +1,74 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Aasimar ~ Default",
+    "name": "Aasimar",
+    "description": "Most aasimars do not know exactly where their celestial powers came from, and the similar qualities of many such celestially touched beings hint at a relatively indistinct or all-encompassing heavenly force in their lineage.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Aasimar ~ Default"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "1"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Aasimar Subrace"
+      },
+      {
+        "key": "DESC",
+        "value": "Most aasimars do not know exactly where their celestial powers came from, and the similar qualities of many such celestially touched beings hint at a relatively indistinct or all-encompassing heavenly force in their lineage."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "xx"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Alternate Ability Modifiers|+2 Wis, +2 Cha"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Skill Modifiers|Diplomacy, Perception"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Spell-Like Ability|Aasimars gain daylight as a spell-like ability."
+      },
+      {
+        "key": "INFO",
+        "value": "Alternate Ability Modifiers|+2 Wis, +2 Cha"
+      },
+      {
+        "key": "INFO",
+        "value": "Skill Modifiers|Diplomacy, Perception"
+      },
+      {
+        "key": "INFO",
+        "value": "Spell-Like Ability|Aasimars gain daylight as a spell-like ability."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/aasimar/aasimar_abilities_race.lst",
+    "sha256": "81f71066c67433e4b6734fc591aaa6b8df7eb833af1a08a2e86117432e778ae0",
+    "line": 12,
+    "record_key": "Aasimar ~ Default"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

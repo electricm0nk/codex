@@ -1,0 +1,26 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:34:12Z",
+  "data": {
+    "key": "Scale Spikes (Greater)",
+    "school": "Transmutation",
+    "level": 3,
+    "description": "This spell functions like scale spikes, except that the spikes growing out of the scales have an enhancement bonus on attack and damage rolls of +(min(5,CASTERLEVEL/4)). This bonus does not allow the spikes to bypass damage reduction aside from magic."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/monster_codex/mc_spells.lst",
+    "sha256": "fb504808c5c3b320b1c082f4cdb66fbf22297ae9929f2486aab2684f7a361787",
+    "line": 23,
+    "record_key": "Scale Spikes (Greater)"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "derived:range_keyword"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

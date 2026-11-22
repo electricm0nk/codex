@@ -1,0 +1,73 @@
+{
+  "codex_generated_name": false,
+  "completeness": "full",
+  "data": {
+    "description": "Your discovered bloodline power reaches its zenith.",
+    "key": "Greater Eldritch Heritage",
+    "name": "Greater Eldritch Heritage",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "FEAT"
+      },
+      {
+        "key": "TYPE",
+        "value": "General"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "2,CATEGORY=FEAT,Eldritch Heritage,Improved Eldritch Heritage"
+      },
+      {
+        "key": "PRELEVEL",
+        "value": "MIN=17"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "CHASCORE,GreaterEldritchHeritageCharismaPrerequisite"
+      },
+      {
+        "key": "DESC",
+        "value": "Your discovered bloodline power reaches its zenith."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Eldritch Heritage Selection|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EldritchHeritageBloodlineLVL|2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.152"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "You gain an additional power from the bloodline you selected with the Eldritch Heritage feat. You gain a 15th-level (or lower) sorcerer bloodline power that you do not already have. For purposes of using that power, treat your character level as your sorcerer level for all your sorcerer bloodline powers granted by this feat, Eldritch Heritage, and Improved Eldritch Heritage."
+      },
+      {
+        "key": "INFO",
+        "value": "Prerequisite|Cha 17, Eldritch Heritage, Improved Eldritch Heritage, character level 17th."
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T14:16:16Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 65,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_feats.lst",
+    "record_key": "Greater Eldritch Heritage",
+    "sha256": "cd702f7234f0139f4683a207be036b57ba9b5bc3c6878b50e308abc661fa26e1"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "computed:pre_guard"
+  ]
+}

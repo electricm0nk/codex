@@ -1,0 +1,88 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-24T03:51:47Z",
+  "data": {
+    "key": "Domain Base ~ Darkness",
+    "name": "Darkness",
+    "class": "Domain Base",
+    "description": "This spell causes an object to radiate darkness out to a 20- foot radius. This darkness causes the illumination level in the area to drop one step, from bright light to normal light, from normal light to dim light, or from dim light to darkness. This spell has no effect in an area that is already dark. Creatures with light vulnerability or sensitivity take no penalties in normal light. All creatures gain concealment [20%% miss chance] in dim light. All creatures gain total concealment [50%% miss chance] in darkness. Creatures with darkvision can see in an area of dim light or darkness without penalty. Nonmagical sources of light, such as torches and lanterns, do not increase the light level in an area of darkness. Magical light sources only increase the light level in an area if they are of a higher spell level than darkness. If darkness is cast on a small object that is then placed inside or under a lightproof covering, the spell's effect is blocked until the covering is removed. This spell does not stack with itself. Darkness can be used to counter or dispel any light spell of equal or lower spell level.|PRERULE:1,DisplayFullSpell",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Domain Base ~ Darkness"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DarknessDomain|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainDarknessLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainDarknessDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainDarknessTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainDarknessAbilityTriggerLVL|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DarknessDomain|1|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainTaken|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainDarknessLVL|DomainLVL|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainDarknessDC|10+(DomainDarknessLVL/2)+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainDarknessTimes|DomainPowerTimes|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainDarknessAbilityTriggerLVL|DomainAbilityTriggerLVL|TYPE=Domain"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREDOMAIN:1,Darkness],[PREVARLT:DarknessDomain,1]"
+      },
+      {
+        "key": "DESC",
+        "value": "This spell causes an object to radiate darkness out to a 20- foot radius. This darkness causes the illumination level in the area to drop one step, from bright light to normal light, from normal light to dim light, or from dim light to darkness. This spell has no effect in an area that is already dark. Creatures with light vulnerability or sensitivity take no penalties in normal light. All creatures gain concealment [20%% miss chance] in dim light. All creatures gain total concealment [50%% miss chance] in darkness. Creatures with darkvision can see in an area of dim light or darkness without penalty. Nonmagical sources of light, such as torches and lanterns, do not increase the light level in an area of darkness. Magical light sources only increase the light level in an area if they are of a higher spell level than darkness. If darkness is cast on a small object that is then placed inside or under a lightproof covering, the spell's effect is blocked until the covering is removed. This spell does not stack with itself. Darkness can be used to counter or dispel any light spell of equal or lower spell level.|PRERULE:1,DisplayFullSpell"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 621,
+    "record_key": "Domain Base ~ Darkness"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

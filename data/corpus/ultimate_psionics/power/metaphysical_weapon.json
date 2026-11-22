@@ -1,0 +1,87 @@
+{
+  "completeness": "full",
+  "data": {
+    "key": "Metaphysical Weapon",
+    "name": "Metaphysical Weapon",
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Psionic"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Gifted Blade,Marksman,Psychic Warrior=1"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Metacreativity"
+      },
+      {
+        "key": "COMPS",
+        "value": "Au"
+      },
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "RANGE",
+        "value": "Touch"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "Weapon touched"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) minutes"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Will negates (harmless, object)"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes (harmless, object)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.221"
+      },
+      {
+        "key": "DESC",
+        "value": "Weapon gains +1 bonus."
+      },
+      {
+        "key": "TEMPDESC",
+        "value": "Grants bonus to weapon based on power points spent"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "EQ|Simple;Martial;Exotic|WEAPON|DAMAGE,TOHIT|%CHOICE|TYPE=Enhancement"
+      },
+      {
+        "key": "TEMPVALUE",
+        "value": "MIN=1|MAX=7|TITLE=Choose weapon enhancement bonus"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T12:11:35Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 307,
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_powers.lst",
+    "record_key": "Metaphysical Weapon",
+    "sha256": "81fdd7a4262066f630c0db104e743f5f78388b2df76409d50ba2a13c7a233f3a"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice",
+    "computed:tempbonus",
+    "derived:prose_expr"
+  ]
+}

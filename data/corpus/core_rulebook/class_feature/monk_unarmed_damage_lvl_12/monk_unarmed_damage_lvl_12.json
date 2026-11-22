@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Monk Unarmed Damage LVL 12",
+    "name": "Monk Unarmed Damage LVL 12",
+    "class": "Monk",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Monk Unarmed Damage LVL 12 (Fine)|PREVARLTEQ:UDAMAttackSize,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Monk Unarmed Damage LVL 12 (Diminutive)|PREVAREQ:UDAMAttackSize,2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Monk Unarmed Damage LVL 12 (Tiny)|PREVAREQ:UDAMAttackSize,3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Monk Unarmed Damage LVL 12 (Small)|PREVAREQ:UDAMAttackSize,4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Monk Unarmed Damage LVL 12 (Medium)|PREVAREQ:UDAMAttackSize,5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Monk Unarmed Damage LVL 12 (Large)|PREVAREQ:UDAMAttackSize,6"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Monk Unarmed Damage LVL 12 (Huge)|PREVAREQ:UDAMAttackSize,7"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Monk Unarmed Damage LVL 12 (Gargantuan)|PREVAREQ:UDAMAttackSize,8"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Monk Unarmed Damage LVL 12 (Colossal)|PREVARGTEQ:UDAMAttackSize,9"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 1287,
+    "record_key": "Monk Unarmed Damage LVL 12"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

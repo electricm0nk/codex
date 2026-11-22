@@ -1,0 +1,33 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "key": "Sorcerer/Cleric (Arcane)",
+    "name": "Sorcerer/Cleric (Arcane)",
+    "raw_tokens": [
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "FACT",
+        "value": "SpellType|Arcane"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T12:36:05Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 135,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_classes_race.lst",
+    "record_key": "Sorcerer/Cleric (Arcane)",
+    "sha256": "7cbdd1a75023e03b29669a66ac49ea3369fcbdbd27eaa17cd8465f24864e4f18"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Psychic Mage ~ Psionic Infusion",
+    "name": "Psionic Infusion",
+    "class": "Psychic",
+    "description": "You choose two opposition schools, but you gain no additional spell slots.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Psychic Mage ~ Psionic Infusion"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "WizardClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "You choose two opposition schools, but you gain no additional spell slots."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Wild Talent"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OppositionalSchool|2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.295"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2629,
+    "record_key": "Psychic Mage ~ Psionic Infusion"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

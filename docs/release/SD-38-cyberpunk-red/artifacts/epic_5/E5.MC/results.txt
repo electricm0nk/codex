@@ -1,0 +1,10 @@
+cpr_improve exit=0
+pf_seed exit=0
+sf_seed exit=0
+ui_green exit=0
+p1_cargo exit=101
+p1_ui exit=1
+p2a_cargo exit=101
+p2b_cargo exit=101
+p2b_ui exit=1
+src_clean exit=0

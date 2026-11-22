@@ -1,0 +1,58 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "arms_armor",
+    "cost_gp": 52620.0,
+    "description": "The wielder is immune to the create spawn ability of undead, and once per day as an immediate action can negate a single energy drain, ability drain, or ability damage attack by an undead creature. In addition, once per day as a standard action, the wielder can release a wave of positive energy that panics undead, as the Turn Undead feat (DC 20 Will negates).",
+    "key": "Elysian Shield",
+    "name": "Elysian Shield",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "PROFICIENCY",
+        "value": "SHIELD|Tower Shield"
+      },
+      {
+        "key": "TYPE",
+        "value": "Shield.Tower.Specific"
+      },
+      {
+        "key": "COST",
+        "value": "52620"
+      },
+      {
+        "key": "WT",
+        "value": "45"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Ability ~ Ghost Touch ~ Armor.Special Ability ~ +2 ~ Shield"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.89"
+      },
+      {
+        "key": "SPROP",
+        "value": "The wielder is immune to the create spawn ability of undead, and once per day as an immediate action can negate a single energy drain, ability drain, or ability damage attack by an undead creature. In addition, once per day as a standard action, the wielder can release a wave of positive energy that panics undead, as the Turn Undead feat (DC 20 Will negates)."
+      }
+    ],
+    "weight_lbs": 45.0
+  },
+  "ingested_at": "2026-08-03T19:41:45Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 23,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equip_arms_armor.lst",
+    "record_key": "Elysian Shield",
+    "sha256": "34bf37d241bf277200170432a33c322930b10cd1c8a96b6b2a41cc08667ed566"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

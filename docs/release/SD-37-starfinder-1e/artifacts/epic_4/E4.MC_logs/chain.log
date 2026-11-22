@@ -1,0 +1,143 @@
+## link 0: 46f0acb5b4 (E4 start) -> 419501b49a (E4.1)
+race_files=77 race_hp_added=76 values={2: 13, 3: 3, 4: 31, 5: 2, 6: 26, 8: 1} other_moves=0
+exit=0
+## gap 419501b49a -> 22e9eb74e4
+diff_exit=0
+## link E4.2: 22e9eb74e4 -> c9a31b35bf
+differing_files=864 bookkeeping=6 hop_granted_by=432 pool_offers_linked=25 pool_option_added=244 pool_option_ref=14 var_contrib_added=15 var_declared=69 var_table_added=59 other_moves=0
+hop granters=76 hop edges=432
+  granter alien_archive:ability:barathu: 5
+  granter alien_archive:ability:contemplative: 5
+  granter alien_archive:ability:draelik: 5
+  granter alien_archive:ability:dragonkin: 6
+  granter alien_archive:ability:drow: 6
+  granter alien_archive:ability:formian: 5
+  granter alien_archive:ability:gray: 4
+  granter alien_archive:ability:haan: 4
+  granter alien_archive:ability:ikeshti: 5
+  granter alien_archive:ability:kalo: 5
+  granter alien_archive:ability:maraquoi: 6
+  granter alien_archive:ability:nuar: 6
+  granter alien_archive:ability:reptoid: 5
+  granter alien_archive:ability:ryphorian: 5
+  granter alien_archive:ability:sarcesian: 4
+  granter alien_archive:ability:shobhad: 6
+  granter alien_archive:ability:skittermander: 5
+  granter alien_archive:ability:space_goblin: 5
+  granter alien_archive:ability:urog: 8
+  granter alien_archive:ability:verthani: 5
+  granter alien_archive:ability:witchwyrd: 6
+  granter alien_archive:ability:wrikreechee: 7
+  granter alien_archive_2:ability:aasimar: 5
+  granter alien_archive_2:ability:bolida: 8
+  granter alien_archive_2:ability:damai: 4
+  granter alien_archive_2:ability:embri: 5
+  granter alien_archive_2:ability:ghoran: 5
+  granter alien_archive_2:ability:hobgoblin: 5
+  granter alien_archive_2:ability:oni: 4
+  granter alien_archive_2:ability:orc: 6
+  granter alien_archive_2:ability:osharu: 7
+  granter alien_archive_2:ability:pahtra: 5
+  granter alien_archive_2:ability:phentomite: 5
+  granter alien_archive_2:ability:quorlu: 10
+  granter alien_archive_2:ability:tiefling: 5
+  granter alien_archive_2:ability:trox: 10
+  granter alien_archive_2:ability:uplifted_bear: 9
+  granter alien_archive_2:ability:vlaka: 7
+  granter alien_archive_3:ability:brenneri: 6
+  granter alien_archive_3:ability:cephalume: 8
+  granter alien_archive_3:ability:dessamar: 4
+  granter alien_archive_3:ability:dirindi: 4
+  granter alien_archive_3:ability:dromada: 6
+  granter alien_archive_3:ability:espraksa: 6
+  granter alien_archive_3:ability:hanakan: 5
+  granter alien_archive_3:ability:hortus: 6
+  granter alien_archive_3:ability:ijtikri: 5
+  granter alien_archive_3:ability:izalguun: 4
+  granter alien_archive_3:ability:morlamaw: 6
+  granter alien_archive_3:ability:raxilite: 6
+  granter alien_archive_3:ability:sazaron: 7
+  granter alien_archive_3:ability:shakalta: 10
+  granter alien_archive_3:ability:shatori: 5
+  granter alien_archive_3:ability:shimreen: 5
+  granter alien_archive_3:ability:spathinae: 7
+  granter alien_archive_3:ability:telia: 6
+  granter alien_archive_3:ability:varculak: 8
+  granter core:ability:android: 5
+  granter core:ability:dwarf: 6
+  granter core:ability:elf: 5
+  granter core:ability:gnome: 6
+  granter core:ability:half_elf: 5
+  granter core:ability:half_orc: 5
+  granter core:ability:halfling: 5
+  granter core:ability:human: 3
+  granter core:ability:kasatha: 5
+  granter core:ability:lashunta: 5
+  granter core:ability:shirren: 5
+  granter core:ability:vesk: 5
+  granter core:ability:ysoki: 5
+  granter pact_worlds:ability:astrazoan: 6
+  granter pact_worlds:ability:bantrid: 6
+  granter pact_worlds:ability:borai: 6
+  granter pact_worlds:ability:khizar: 6
+  granter pact_worlds:ability:sro: 5
+  granter pact_worlds:ability:strix: 6
+picks now offering an Internal pool: 30
+  offers character_operations_manual:ability:athlete_theme_benefit_theme_knowledge
+  offers character_operations_manual:ability:athlete_theme_benefit_theme_knowledge#bonus1
+  offers character_operations_manual:ability:guard_theme_benefit_theme_knowledge
+  offers character_operations_manual:ability:noble_scion_theme_benefit_theme_knowledge
+  offers core:ability:hit_and_run_fighting_style_opening_volley
+  offers core:ability:mechanic_class_feature_control_net
+  offers core:ability:priest_theme_benefit_divine_boon#bonus1
+  offers core:ability:scholar_theme_benefit_theme_knowledge
+  offers core:ability:solarian_class_feature_skill_adept
+  offers core:ability:solarian_class_feature_solar_manifestation#bonus1
+  offers core:ability:themeless_theme_benefit_general_knowledge
+  offers core:ability:themeless_theme_benefit_general_knowledge#bonus1
+  offers core:equipment:ring_of_resistance_mk_1
+  offers core:equipment:ring_of_resistance_mk_2
+  offers core:equipment:ring_of_resistance_mk_3
+  offers core:equipment:ring_of_resistance_mk_4
+  offers core:equipment:ring_of_resistance_mk_5
+  offers core:feat:connection_inkling
+  offers core:feat:connection_inkling#bonus1
+  offers core:feat:enhanced_resistance
+  offers core:feat:improved_combat_maneuver
+  offers core:feat:major_psychic_power
+  offers core:feat:minor_psychic_power
+  offers core:feat:psychic_power
+  offers core:feat:skill_synergy
+  offers core:feat:technomantic_dabbler
+  offers core:feat:technomantic_dabbler#bonus1
+  offers core:template:class_soldier
+  offers near_space:ability:bureaucrat_theme_benefit_theme_knowledge
+  offers near_space:ability:bureaucrat_theme_benefit_theme_knowledge#bonus1
+  defects _defects/editorial-marker-in-prose.json: 91 -> 92
+  defects _defects/pool-option-id-collision.json: 0 -> 1
+  defects _defects/pool-option-pair-shared.json: 0 -> 85
+  defects _defects/prose-line-out-of-inventory.json: 6 -> 1
+  defects _defects/unresolved-references.json: 483 -> 341
+exit=0
+## gap c9a31b35bf -> 9e6b2cdbfb
+diff_exit=0
+## link E4.4: 9e6b2cdbfb -> 989353a2eb
+differing_files=20 bookkeeping=3 cl_is_character_level=2 class_spell_progression=3 connection_spell_hop=11 var_table_added=1 other_moves=0
+rules added: class_spell_progression=39 connection_spell_hop=230
+baseline records whose only degradation was FORMULA:CL-no-owner: 3 ['core:feat:amplified_glitch', 'core:feat:spell_focus', 'core:feat:weapon_specialization']
+  var table added _vars/vb7db0c3b5928152b.json: Mystic Highest Castable Connection LVL
+  core/feat/amplified_glitch.json core:feat:amplified_glitch: null "Text" -> null "Text"
+  core/feat/spell_focus.json core:feat:spell_focus: null "Text" -> {"SpellDc": "All"} {"Number": {"Sum": [{"Const": 1}, {"Min": [{"Const": 1}, {"Max": [{"Const": 0}, {"Sum": ["Level", {"Const": -11}, {"Const": 1}]}]}]}, {"Min": [{"Const": 1}, {"M
+  defects _defects/unresolved-references.json: 341 -> 275
+exit=0
+## gap 989353a2eb -> 00bd1332ba
+diff_exit=0
+## link E4.5: 00bd1332ba -> 5a59355425
+differing_files=2586 price_row_added=2586 other_moves=0
+equipment_principals=2634 oracle_cost_rows=2586 package_price_rows=2586 price_mismatches=0
+verdict=PASS
+exit=0
+## gap 5a59355425 -> HEAD
+diff_exit=0
+## PF package across E4
+0 lines of diffstat

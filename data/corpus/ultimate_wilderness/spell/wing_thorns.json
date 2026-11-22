@@ -1,0 +1,77 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "Your wings sprout poisonous thorns each the size of a dagger. You can use these thorns like armor spikes. In addition, you can make two wing attacks as primary natural weapons. If you are Small, the wings deal 1d3 points of bludgeoning and piercing damage plus your Strength modifier (unless you also attack with a weapon, in which case they are treated as a secondary natural weapon). A creature damaged by your wing thorns experiences intense itching, gaining the sickened condition while the spell lasts unless it succeeds at a Fortitude saving throw.",
+    "key": "Wing Thorns",
+    "level": 3,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Alchemist,Antipaladin,Bloodrager,Druid,Shaman,Witch=3|Magus=4"
+      },
+      {
+        "key": "COMPS",
+        "value": "V,S"
+      },
+      {
+        "key": "DESC",
+        "value": "Your wings sprout poisonous thorns each the size of a dagger. You can use these thorns like armor spikes. In addition, you can make two wing attacks as primary natural weapons. If you are Small, the wings deal 1d3 points of bludgeoning and piercing damage plus your Strength modifier (unless you also attack with a weapon, in which case they are treated as a secondary natural weapon). A creature damaged by your wing thorns experiences intense itching, gaining the sickened condition while the spell lasts unless it succeeds at a Fortitude saving throw."
+      },
+      {
+        "key": "DESCRIPTOR",
+        "value": "Poison"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) rounds"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREVAREQ:BypassAdvancedRaceSpellRestriction,1],[PREFACT:1,TEMPLATES,IsGathlain=true]"
+      },
+      {
+        "key": "RANGE",
+        "value": "Personal"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Transmutation"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.14"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "You"
+      },
+      {
+        "key": "TYPE",
+        "value": "Arcane.Divine"
+      }
+    ],
+    "school": "Transmutation"
+  },
+  "ingested_at": "2026-08-20T01:55:37Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 124,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_spells.lst",
+    "record_key": "Wing Thorns",
+    "sha256": "0ebcaef0aa5ab9967a06e53a5179bcaca436c5a2bfeeb8926821eb38391978a4"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "ambiguous:prose_ability_scaling",
+    "computed:pre_guard",
+    "derived:prose_expr"
+  ]
+}

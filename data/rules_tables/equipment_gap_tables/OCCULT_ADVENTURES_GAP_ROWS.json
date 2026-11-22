@@ -1,0 +1,1203 @@
+{
+  "format": "codex.rules_tables/1",
+  "table": "equipment_gap_tables/OCCULT_ADVENTURES_GAP_ROWS",
+  "licence": {
+    "license": "OGL",
+    "book": "equipment_gap_tables",
+    "screen": "pi_screening::classify_field",
+    "pi_hits": [],
+    "redacted": []
+  },
+  "rows": [
+    {
+      "book": "OA",
+      "key": "Artist's Poster",
+      "name": "Artist's Poster",
+      "category": "General",
+      "cost_gp": 15.0,
+      "weight_lbs": 0.0,
+      "description": "Placing a poster within a settlement grants creatures a +1 circumstance bonus on Diplomacy checks to gather information regarding the subject of the poster.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "OA",
+      "key": "Aura Goggles",
+      "name": "Aura Goggles",
+      "category": "General",
+      "cost_gp": 15.0,
+      "weight_lbs": 1.0,
+      "description": "To provide any benefit, the goggles must be continuously worn for 1 hour, during which time the wearer takes a -2 penalty on all sight-based Perception checks. After this 1-hour period, the user can remove the goggles to gain a +2 circumstance bonus on Perception checks for the read aura occult skill unlock. This benefit fades after 1 hour.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "OA",
+      "key": "Automatic Writing Planchette",
+      "name": "Automatic Writing Planchette",
+      "category": "General",
+      "cost_gp": 25.0,
+      "weight_lbs": 0.0,
+      "description": "the device scribbles out mysterious messages when employed by a creature using the automatic writing occult skill unlock, and provides a +2 circumstance bonus on the Linguistics check.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "OA",
+      "key": "Censer",
+      "name": "Censer",
+      "category": "General",
+      "cost_gp": 5.0,
+      "weight_lbs": 0.5,
+      "description": "a censer can hold up to 10 pieces of incense, and burns 1 piece per hour when lit.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "OA",
+      "key": "Dowsing Rod",
+      "name": "Dowsing Rod",
+      "category": "General",
+      "cost_gp": 10.0,
+      "weight_lbs": 1.0,
+      "description": "provide a +2 circumstance bonus on Survival checks for the dowsing occult skill unlock.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "OA",
+      "key": "Fraudulent Medium's Kit",
+      "name": "Fraudulent Medium's Kit",
+      "category": "General",
+      "cost_gp": 50.0,
+      "weight_lbs": 10.0,
+      "description": "provides a +2 circumstance bonus on Bluff, Escape Artist, and Sleight of Hand checks to imitate seances, spirit writing, or other occult practice",
+      "name_pi_citation": null
+    },
+    {
+      "book": "OA",
+      "key": "Hoodwink Cowl",
+      "name": "Hoodwink Cowl",
+      "category": "General",
+      "cost_gp": 75.0,
+      "weight_lbs": 3.0,
+      "description": "A creature wearing a hoodwink cowl is blinded and deafened, and it takes a -10 penalty on all other Perception checks.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "OA",
+      "key": "Hypnotist's Locket (Locket)",
+      "name": "Hypnotist's Locket (Locket)",
+      "category": "General",
+      "cost_gp": 15.0,
+      "weight_lbs": 1.0,
+      "description": "a hypnotist's locket grants a +2 circumstance bonus on Diplomacy checks for the hypnotism occult skill unlock.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "OA",
+      "key": "Hypnotist's Locket (Pocket Watch)",
+      "name": "Hypnotist's Locket (Pocket Watch)",
+      "category": "General",
+      "cost_gp": 250.0,
+      "weight_lbs": 1.0,
+      "description": "a hypnotist's locket grants a +2 circumstance bonus on Diplomacy checks for the hypnotism occult skill unlock.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "OA",
+      "key": "Incense (10 sticks)",
+      "name": "Incense (10 sticks)",
+      "category": "General",
+      "cost_gp": 0.7,
+      "weight_lbs": 0.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "OA",
+      "key": "Kineticist's Kit",
+      "name": "Kineticist's Kit",
+      "category": "General",
+      "cost_gp": 8.0,
+      "weight_lbs": 22.0,
+      "description": "This kit includes a backpack, a belt pouch, a blanket, torches (10), trail rations (5 days), and a waterskin.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "OA",
+      "key": "Medium's Kit",
+      "name": "Medium's Kit",
+      "category": "General",
+      "cost_gp": 40.0,
+      "weight_lbs": 14.0,
+      "description": "includes an automatic writing planchette, candles (10), candlesticks UE (10), holly and mistletoe, incense(10 sticks), a scholar's outfit, a spell component pouch, and a wooden holy symbol.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "OA",
+      "key": "Mesmerist's Kit",
+      "name": "Mesmerist's Kit",
+      "category": "General",
+      "cost_gp": 35.0,
+      "weight_lbs": 26.5,
+      "description": "includes a backpack, a bedroll, a belt pouch, an entertainer's outfit, flint and steel, a hypnotist's locket, ink (1 ounce), an inkpen, an iron pot, stationery UE , torches (10), trail rations (5 days), and a waterskin.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "OA",
+      "key": "Occult Reference Material",
+      "name": "Occult Reference Material",
+      "category": "General",
+      "cost_gp": 80.0,
+      "weight_lbs": 1.0,
+      "description": "When used as a reference (an action that typically requires 1d4 minutes of searching the text), occult reference material grants a +2 circumstance bonus on Knowledge checks related to the occult topic covered by that manual.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "OA",
+      "key": "Occultist's Implement",
+      "name": "Occultist's Implement",
+      "category": "General",
+      "cost_gp": 10.0,
+      "weight_lbs": 0.5,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "OA",
+      "key": "Occultist's Kit",
+      "name": "Occultist's Kit",
+      "category": "General",
+      "cost_gp": 45.0,
+      "weight_lbs": 32.5,
+      "description": "ncludes a backpack, a bedroll, a belt pouch, chalk (10 pieces), flint and steel, ink (1 ounce), an inkpen, an iron pot, a journal UE , occultist's implements (2), torches (10), trail rations (5 days), and a waterskin.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "OA",
+      "key": "Performer's Token",
+      "name": "Performer's Token",
+      "category": "General",
+      "cost_gp": 0.2,
+      "weight_lbs": 0.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "OA",
+      "key": "Phrenologist's Kit",
+      "name": "Phrenologist's Kit",
+      "category": "General",
+      "cost_gp": 50.0,
+      "weight_lbs": 5.0,
+      "description": "The kit provides a +2 circumstance bonus on Knowledge (arcana) checks for the phrenology occult skill unlock.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "OA",
+      "key": "Portable Solarium",
+      "name": "Portable Solarium",
+      "category": "General",
+      "cost_gp": 800.0,
+      "weight_lbs": 35.0,
+      "description": "Subjects who bask in the filtered light for an 8-hour rest period recover 1 additional hit point per level or 1 additional ability score point if their caregivers succeed at the required Heal check",
+      "name_pi_citation": null
+    },
+    {
+      "book": "OA",
+      "key": "Portable Sweat Lodge",
+      "name": "Portable Sweat Lodge",
+      "category": "General",
+      "cost_gp": 25.0,
+      "weight_lbs": 25.0,
+      "description": "provides a +2 circumstance bonus on Heal checks for the faith healing occult skill unlock",
+      "name_pi_citation": null
+    },
+    {
+      "book": "OA",
+      "key": "Prismatic Crystal",
+      "name": "Prismatic Crystal",
+      "category": "General",
+      "cost_gp": 30.0,
+      "weight_lbs": 0.5,
+      "description": "A prismatic crystal can be used as a focus for the read aura occult skill unlock to reduce the time needed to read an aura from 10 minutes to 5 minutes",
+      "name_pi_citation": null
+    },
+    {
+      "book": "OA",
+      "key": "Prognostication Manual",
+      "name": "Prognostication Manual",
+      "category": "General",
+      "cost_gp": 30.0,
+      "weight_lbs": 3.0,
+      "description": "Using such a book while reading a creature's fortune reduces the time needed to read that fortune by 2 minutes. When used as part of a Sense Motive check for the prognostication occult skill unlock, this book grants a +2 circumstance bonus",
+      "name_pi_citation": null
+    },
+    {
+      "book": "OA",
+      "key": "Psychic's Kit",
+      "name": "Psychic's Kit",
+      "category": "General",
+      "cost_gp": 35.0,
+      "weight_lbs": 27.0,
+      "description": "includes a backpack, a bedroll, a belt pouch, flint and steel, a prismatic crystal, torches (10), trail rations (5 days), and a waterskin.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "OA",
+      "key": "Psychometrist's Gloves",
+      "name": "Psychometrist's Gloves",
+      "category": "General",
+      "cost_gp": 10.0,
+      "weight_lbs": 5.0,
+      "description": "After an 8-hour period, the user can remove the gloves to gain a +2 circumstance bonus on Appraise checks for the psychometry occult skill unlock. This benefit fades after 1 hour.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "OA",
+      "key": "Ritual Bell",
+      "name": "Ritual Bell",
+      "category": "General",
+      "cost_gp": 2.0,
+      "weight_lbs": 1.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "OA",
+      "key": "Spirit Trumpet",
+      "name": "Spirit Trumpet",
+      "category": "General",
+      "cost_gp": 25.0,
+      "weight_lbs": 1.0,
+      "description": "When used to channel a haunt capable of communication (see page 230), a spirit trumpet doubles the rate of communication with the haunt, and grants the user a +4 circumstance bonus on Linguistics checks to decipher the cryptic messages.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "OA",
+      "key": "Spiritualist's Kit",
+      "name": "Spiritualist's Kit",
+      "category": "General",
+      "cost_gp": 50.0,
+      "weight_lbs": 34.0,
+      "description": "includes a backpack, a bedroll, a belt pouch, a censer, a flask of ectoplasmic residue, flint and steel, incense (10 sticks), an iron pot, magnetized paper, torches (10), trail rations (5 days), and a waterskin.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "OA",
+      "key": "Straitjacket (Common)",
+      "name": "Straitjacket (Common)",
+      "category": "General",
+      "cost_gp": 5.0,
+      "weight_lbs": 1.0,
+      "description": "A creature wearing a straitjacket gains the grappled condition, except it is able to move. Escaping from the straitjacket requires a successful DC 28 Escape Artist check.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "OA",
+      "key": "Straitjacket (Masterwork)",
+      "name": "Straitjacket (Masterwork)",
+      "category": "General",
+      "cost_gp": 50.0,
+      "weight_lbs": 1.0,
+      "description": "A creature wearing a straitjacket gains the grappled condition, except it is able to move. Escaping from the straitjacket requires a successful DC 30 Escape Artist check.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "OA",
+      "key": "Talking Board",
+      "name": "Talking Board",
+      "category": "General",
+      "cost_gp": 15.0,
+      "weight_lbs": 2.0,
+      "description": "A talking board can be used in place of a pencil and paper or a writing planchette when attempting a Linguistics check with the automatic writing occult skill unlock, and provides a +2 circumstance bonus on such checks",
+      "name_pi_citation": null
+    },
+    {
+      "book": "OA",
+      "key": "Ventriloquist's Dummy",
+      "name": "Ventriloquist's Dummy",
+      "category": "General",
+      "cost_gp": 100.0,
+      "weight_lbs": 7.0,
+      "description": "When used as part of a routine, a ventriloquist's dummy adds a +2 circumstance bonus on Perform (comedy) checks.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "OA",
+      "key": "Wind Chime",
+      "name": "Wind Chime",
+      "category": "General",
+      "cost_gp": 1.0,
+      "weight_lbs": 1.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "OA",
+      "key": "Ectoplasmic Residue",
+      "name": "Ectoplasmic Residue",
+      "category": "General",
+      "cost_gp": 20.0,
+      "weight_lbs": 2.0,
+      "description": "ranged touch attack DC13 Will, shaken 1d4 rounds, splash 1 round",
+      "name_pi_citation": null
+    },
+    {
+      "book": "OA",
+      "key": "Magnetized Paper",
+      "name": "Magnetized Paper",
+      "category": "General",
+      "cost_gp": 11.0,
+      "weight_lbs": 1.0,
+      "description": "these sheets add a 5% bonus to the chance of creating meaningful writing for the automatic writing occult skill unlock. 7 Sheets per pack.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "OA",
+      "key": "Snake Oil",
+      "name": "Snake Oil",
+      "category": "General",
+      "cost_gp": 20.0,
+      "weight_lbs": 0.0,
+      "description": "This mildly toxic liniment numbs flesh and can soothe injuries.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "OA",
+      "key": "Ring of Psychic Mastery",
+      "name": "Ring of Psychic Mastery",
+      "category": "General",
+      "cost_gp": 50000.0,
+      "weight_lbs": null,
+      "description": "A ring of psychic mastery grants the caster 1 additional psychic spell per day for each spell level from 1st to 4th that she is capable of casting.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "OA",
+      "key": "Ring of the Hidden Psyche",
+      "name": "Ring of the Hidden Psyche",
+      "category": "General",
+      "cost_gp": 160000.0,
+      "weight_lbs": null,
+      "description": "The wearer's soul instantly enters the ring upon the wearer's death, even if her body is utterly destroyed.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "OA",
+      "key": "Furious Metamagic Rod (Lesser)",
+      "name": "Furious Metamagic Rod, Lesser",
+      "category": "General",
+      "cost_gp": 3000.0,
+      "weight_lbs": 1.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "OA",
+      "key": "Logical Metamagic Rod (Lesser)",
+      "name": "Logical Metamagic rod, Lesser",
+      "category": "General",
+      "cost_gp": 3000.0,
+      "weight_lbs": 1.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "OA",
+      "key": "Scarring Metamagic Rod (Lesser)",
+      "name": "Scarring Metamagic Rod, Lesser",
+      "category": "General",
+      "cost_gp": 3000.0,
+      "weight_lbs": 1.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "OA",
+      "key": "Refocusing Rod",
+      "name": "Refocusing Rod",
+      "category": "General",
+      "cost_gp": 5000.0,
+      "weight_lbs": 1.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "OA",
+      "key": "Fearsome Metamagic Rod (Lesser)",
+      "name": "Fearsome Metamagic Rod, Lesser",
+      "category": "General",
+      "cost_gp": 9000.0,
+      "weight_lbs": 1.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "OA",
+      "key": "Traumatic Metamagic Rod (Lesser)",
+      "name": "Traumatic Metamagic Rod, Lesser",
+      "category": "General",
+      "cost_gp": 9000.0,
+      "weight_lbs": 1.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "OA",
+      "key": "Furious Metamagic Rod",
+      "name": "Furious Metamagic Rod",
+      "category": "General",
+      "cost_gp": 11000.0,
+      "weight_lbs": 1.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "OA",
+      "key": "Logical Metamagic Rod",
+      "name": "Logical Metamagic Rod",
+      "category": "General",
+      "cost_gp": 11000.0,
+      "weight_lbs": 1.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "OA",
+      "key": "Scarring Metamagic Rod",
+      "name": "Scarring Metamagic Rod",
+      "category": "General",
+      "cost_gp": 11000.0,
+      "weight_lbs": 1.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "OA",
+      "key": "Furious Metamagic Rod (Greater)",
+      "name": "Furious Metamagic Rod, Greater",
+      "category": "General",
+      "cost_gp": 24500.0,
+      "weight_lbs": 1.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "OA",
+      "key": "Logical Metamagic Rod (Greater)",
+      "name": "Logical Metamagic Rod, Greater",
+      "category": "General",
+      "cost_gp": 24500.0,
+      "weight_lbs": 1.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "OA",
+      "key": "Scarring Metamagic Rod (Greater)",
+      "name": "Scarring Metamagic Rod, Greater",
+      "category": "General",
+      "cost_gp": 24500.0,
+      "weight_lbs": 1.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "OA",
+      "key": "Overflowing Rod",
+      "name": "Overflowing Rod",
+      "category": "General",
+      "cost_gp": 25000.0,
+      "weight_lbs": 1.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "OA",
+      "key": "Witching Rod",
+      "name": "Witching Rod",
+      "category": "General",
+      "cost_gp": 31000.0,
+      "weight_lbs": 1.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "OA",
+      "key": "Fearsome Metamagic Rod",
+      "name": "Fearsome Metamagic Rod",
+      "category": "General",
+      "cost_gp": 32500.0,
+      "weight_lbs": 1.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "OA",
+      "key": "Traumatic Metamagic Rod",
+      "name": "Traumatic Metamagic Rod",
+      "category": "General",
+      "cost_gp": 32500.0,
+      "weight_lbs": 1.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "OA",
+      "key": "Fearsome Metamagic Rod (Greater)",
+      "name": "Fearsome Metamagic Rod, Greater",
+      "category": "General",
+      "cost_gp": 73000.0,
+      "weight_lbs": 1.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "OA",
+      "key": "Traumatic Metamagic Rod (Greater)",
+      "name": "Traumatic Metamagic Rod, Greater",
+      "category": "General",
+      "cost_gp": 73000.0,
+      "weight_lbs": 1.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "OA",
+      "key": "Hollow Rod",
+      "name": "Hollow Rod",
+      "category": "General",
+      "cost_gp": 121500.0,
+      "weight_lbs": 1.0,
+      "description": "Three times per day, a kineticist can utilize the hollow rod in conjunction with a blast wild talent or the kinetic healer wild talent to augment that talent's destructive or healing capabilities, treating the wild talent as maximized",
+      "name_pi_citation": null
+    },
+    {
+      "book": "OA",
+      "key": "Caduceus Rod",
+      "name": "Caduceus Rod",
+      "category": "General",
+      "cost_gp": 142000.0,
+      "weight_lbs": 1.0,
+      "description": "+5 insight bonus on Craft (alchemy) checks and a +1 insight bonus on attack and damage rolls with alchemical items, including alchemists' bombs. When it's held in hand, the caduceus rod powers can be invoked five times per day",
+      "name_pi_citation": null
+    },
+    {
+      "book": "OA",
+      "key": "Vril Staff",
+      "name": "Vril Staff",
+      "category": "General",
+      "cost_gp": 200000.0,
+      "weight_lbs": null,
+      "description": "Mage hand (1 charge)  *  Cure light wounds (1 charge)  *  Cure moderate wounds (2 charges)  *  Telekinesis (2 charges)  *  Repulsion (3 charges) If the wielder of a vril staff is a spellcaster, as a standard action, she can expend 1 charge and sacrifice a prepared spell or unused spell slot of 1st level or higher to channel the power through the staff as a blast of raw magical energy known as vril. This ray resolves as a ranged touch attack with a range of 30 feet, and the wielder chooses whether it deals damage or heals. The amount of damage dealt or healed by the ray is equal to 1d6 points per level of the spell sacrificed + 1 point per caster level of the wielder. In the hands of a kineticist, the staff functions differently. By spending 1 charge from the staff as part of her kinetic blast, the kineticist can use a new basic energy blast called a vril blast. This blast deals untyped damage. A vril blast works only with form and substance infusions that specify that they work on any blast. If the kineticist instead spends 3 charges, her vril blast's intensity increases and it ignores spell resistance. A kineticist can use a vril staff without attempting a Use Magic Device check. A spellcaster can recharge a vril staff normally. A kineticist can restore a single charge to a vril staff by accepting 3 points of burn.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "OA",
+      "key": "Animal Divining Pot",
+      "name": "Animal Divining Pot",
+      "category": "General",
+      "cost_gp": 1400.0,
+      "weight_lbs": 5.0,
+      "description": "the user can communicate with the animal through whispers, as speak with animals. This ability functions three times per day",
+      "name_pi_citation": null
+    },
+    {
+      "book": "OA",
+      "key": "Candle of Spirit Protection",
+      "name": "Candle of Spirit Protection",
+      "category": "General",
+      "cost_gp": 1500.0,
+      "weight_lbs": 1.0,
+      "description": "When it's lit, fine lines of smoke coil out, creating a circular line of smoke in a 10-foot radius around the candle. This area is protected against intrusion by astrally projected creatures, ethereal creatures, haunts, incorporeal creatures, mediums channeling a spirit, and phantoms.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "OA",
+      "key": "Dreamcatcher",
+      "name": "Dreamcatcher",
+      "category": "General",
+      "cost_gp": 2800.0,
+      "weight_lbs": 2.0,
+      "description": "The owner gains a +2 sacred bonus on saving throws while asleep. Further, any ability damage or ability drain he takes during this time is reduced by 1 point (to a minimum of 0 points).",
+      "name_pi_citation": null
+    },
+    {
+      "book": "OA",
+      "key": "False Coin",
+      "name": "False Coin",
+      "category": "General",
+      "cost_gp": 375.0,
+      "weight_lbs": 0.0,
+      "description": "gives the activator a +2 insight bonus on Bluff, Diplomacy, Intimidate, and Sense Motive checks against the coin's current possessor. In addition, the possessor takes a -1 penalty on saving throws against spells with the emotion, fear, or scrying descriptors cast by the coin's activator.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "OA",
+      "key": "Flying Skiff",
+      "name": "Flying Skiff",
+      "category": "General",
+      "cost_gp": 180000.0,
+      "weight_lbs": 2500.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "OA",
+      "key": "Flying Sled",
+      "name": "Flying Sled",
+      "category": "General",
+      "cost_gp": 80000.0,
+      "weight_lbs": 100.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "OA",
+      "key": "Four-leaf Clover",
+      "name": "Four-leaf Clover",
+      "category": "General",
+      "cost_gp": 3750.0,
+      "weight_lbs": 0.0,
+      "description": "before attempting a single ability check, saving throw, or skill check. She gains a +2 luck bonus on that check. This ability functions three times per day, and requires a free action that the owner can perform even when it's not her turn.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "OA",
+      "key": "Ganji Doll",
+      "name": "Ganji Doll",
+      "category": "General",
+      "cost_gp": 16000.0,
+      "weight_lbs": 0.5,
+      "description": "Affects bound target (-2 save) with Blind, Damage, Touch Spell.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "OA",
+      "key": "Ganji Doll (Greater)",
+      "name": "Ganji Doll, Greater",
+      "category": "General",
+      "cost_gp": 36000.0,
+      "weight_lbs": 0.5,
+      "description": "Affects bound target (-2 save) with Damage, Locate Creature, Suggestion.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "OA",
+      "key": "Ghost Powder",
+      "name": "Ghost Powder",
+      "category": "General",
+      "cost_gp": 1400.0,
+      "weight_lbs": 0.5,
+      "description": "ethereal and incorporeal creatures are blocked as though the line were a wall of force",
+      "name_pi_citation": null
+    },
+    {
+      "book": "OA",
+      "key": "Incense of corporeality",
+      "name": "Incense of corporeality",
+      "category": "General",
+      "cost_gp": 1400.0,
+      "weight_lbs": 0.5,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "OA",
+      "key": "Incense of Open Thoughts",
+      "name": "Incense of Open Thoughts",
+      "category": "General",
+      "cost_gp": 2800.0,
+      "weight_lbs": 1.0,
+      "description": "creatures inhaling its fumes become unusually receptive to thought, +5 insight bonus on Diplomacy and Sense Motive checks and imposes a -5 penalty on Bluff and Intimidate checks and a -2 penalty on saving throws against mind-affecting effects.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "OA",
+      "key": "Indomitable Jewel",
+      "name": "Indomitable Jewel",
+      "category": "General",
+      "cost_gp": 12000.0,
+      "weight_lbs": 1.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "OA",
+      "key": "Kineticist's Diadem",
+      "name": "Kineticist's Diadem",
+      "category": "General",
+      "cost_gp": 50000.0,
+      "weight_lbs": 0.0,
+      "description": "increases the damage dealt by the kineticist's simple and composite blasts by 2d6 points",
+      "name_pi_citation": null
+    },
+    {
+      "book": "OA",
+      "key": "Kineticist's Diadem (Greater)",
+      "name": "Kineticist's Diadem, Greater",
+      "category": "General",
+      "cost_gp": 98000.0,
+      "weight_lbs": 0.0,
+      "description": "increases the damage dealt by the kineticist's simple and composite blasts by 3d6 points",
+      "name_pi_citation": null
+    },
+    {
+      "book": "OA",
+      "key": "Kineticist's Diadem (Lesser)",
+      "name": "Kineticist's Diadem, Lesser",
+      "category": "General",
+      "cost_gp": 18000.0,
+      "weight_lbs": 0.0,
+      "description": "increases the damage dealt by the kineticist's simple and composite blasts by 1d6 points",
+      "name_pi_citation": null
+    },
+    {
+      "book": "OA",
+      "key": "Lithomancy Stones",
+      "name": "Lithomancy Stones",
+      "category": "General",
+      "cost_gp": 12000.0,
+      "weight_lbs": 2.0,
+      "description": "Once per day, the possessor can frame a question in her mind, cast the stones upon the ground, and attempt a reading with a Knowledge (planes) check to find the answer to her question.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "OA",
+      "key": "Lucky Horseshoe",
+      "name": "Lucky Horseshoe",
+      "category": "General",
+      "cost_gp": 6800.0,
+      "weight_lbs": 2.0,
+      "description": "+1 luck bonus on saving throws. Once per day, she can invoke the lucky horseshoe's power to gain a +4 luck bonus on a single saving throw",
+      "name_pi_citation": null
+    },
+    {
+      "book": "OA",
+      "key": "Lucky Horseshoe (Communal)",
+      "name": "Lucky Horseshoe, Communal",
+      "category": "General",
+      "cost_gp": 15000.0,
+      "weight_lbs": 2.0,
+      "description": "spend at least 8 consecutive hours within the building to gain effect of Lucky Horseshoe",
+      "name_pi_citation": null
+    },
+    {
+      "book": "OA",
+      "key": "Magic Talking Board",
+      "name": "Magic Talking Board",
+      "category": "General",
+      "cost_gp": 20000.0,
+      "weight_lbs": 2.0,
+      "description": "When used for the automatic writing skill unlock in place of a mundane talking board, a magic talking board provides a +5 circumstance bonus on the Linguistics check.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "OA",
+      "key": "Mask of the Mesmerist",
+      "name": "Mask of the Mesmerist",
+      "category": "General",
+      "cost_gp": 25000.0,
+      "weight_lbs": 4.0,
+      "description": "A mesmerist wearing this mask increases the range of his hypnotic stare ability by 10 feet as the mask allows him to better focus on his targets. Creatures under the effects of the wearer's hypnotic stare take a -2 penalty on all attack rolls against the wearer.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "OA",
+      "key": "Orgone Accumulator",
+      "name": "Orgone Accumulator",
+      "category": "General",
+      "cost_gp": 48000.0,
+      "weight_lbs": 150.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "OA",
+      "key": "Sensory Deprivation Hood",
+      "name": "Sensory Deprivation Hood",
+      "category": "General",
+      "cost_gp": 27500.0,
+      "weight_lbs": 5.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "OA",
+      "key": "Shrunken Head",
+      "name": "Shrunken Head",
+      "category": "General",
+      "cost_gp": 90000.0,
+      "weight_lbs": 1.0,
+      "description": "Once per day as an immediate action, the owner can make the head absorb a mind-affecting spell of up to 5th level that was targeting the owner. As a standard action, the wielder can unleash this energy as enervation, with the ray imposing 1 negative level per level of spell absorbed. used as an additional focus component for a spell with the fear subtype, increases any save DC associated with the spell by 1.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "OA",
+      "key": "Soultheft Glass",
+      "name": "Soultheft Glass",
+      "category": "General",
+      "cost_gp": 33000.0,
+      "weight_lbs": 1.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "OA",
+      "key": "Spirit Mirror",
+      "name": "Spirit Mirror",
+      "category": "General",
+      "cost_gp": 18900.0,
+      "weight_lbs": 4.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "OA",
+      "key": "Spirit Revivification Incense",
+      "name": "Spirit Revivification Incense",
+      "category": "General",
+      "cost_gp": 800.0,
+      "weight_lbs": 0.0,
+      "description": "A spiritualist can burn the incense as part of her ritual to manifest her phantom, in which case the manifested phantom returns with its maximum number of hit points, regardless of previous damage incurred.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "OA",
+      "key": "Spirit Slate",
+      "name": "Spirit Slate",
+      "category": "General",
+      "cost_gp": 12000.0,
+      "weight_lbs": 2.0,
+      "description": "this can obtain answers to specific questions regarding a dead creature if the user has access to at least a fragment of bone from the deceased's body. The device can be used up to 3 times per day.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "OA",
+      "key": "Talisman of Arrow Protection (Greater)",
+      "name": "Talisman of Arrow Protection, Greater",
+      "category": "General",
+      "cost_gp": 6000.0,
+      "weight_lbs": 1.0,
+      "description": "The first time that the wearer is hit by two or more ranged attacks in a single round, he is immediately affected by protection from arrows",
+      "name_pi_citation": null
+    },
+    {
+      "book": "OA",
+      "key": "Talisman of Arrow Protection (Lesser)",
+      "name": "Talisman of Arrow Protection, Lesser",
+      "category": "General",
+      "cost_gp": 600.0,
+      "weight_lbs": 1.0,
+      "description": "The first time that the wearer is hit by two or more ranged attacks in a single round, he is immediately affected by protection from arrows",
+      "name_pi_citation": null
+    },
+    {
+      "book": "OA",
+      "key": "Talisman of Beneficial Winds (Greater)",
+      "name": "Talisman of Beneficial Winds, Greater",
+      "category": "General",
+      "cost_gp": 500.0,
+      "weight_lbs": 1.0,
+      "description": "The first time that the wearer falls at least 5 feet, he is automatically affected by feather fall.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "OA",
+      "key": "Talisman of Beneficial Winds (Lesser)",
+      "name": "Talisman of Beneficial Winds, Lesser",
+      "category": "General",
+      "cost_gp": 50.0,
+      "weight_lbs": 1.0,
+      "description": "The first time that the wearer falls at least 5 feet, he is automatically affected by feather fall.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "OA",
+      "key": "Talisman of Danger Sense (Greater)",
+      "name": "Talisman of Danger Sense, Greater",
+      "category": "General",
+      "cost_gp": 7500.0,
+      "weight_lbs": 1.0,
+      "description": ". The first time the wearer rolls initiative, she is immediately affected by anticipate peril.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "OA",
+      "key": "Talisman of Danger Sense (Lesser)",
+      "name": "Talisman of Danger Sense, Lesser",
+      "category": "General",
+      "cost_gp": 750.0,
+      "weight_lbs": 1.0,
+      "description": ". The first time the wearer rolls initiative, she is immediately affected by anticipate peril.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "OA",
+      "key": "Talisman of Freedom (Greater)",
+      "name": "Talisman of Freedom, Greater",
+      "category": "General",
+      "cost_gp": 9000.0,
+      "weight_lbs": 1.0,
+      "description": "The first time that the wearer becomes grappled, entangled, or paralyzed, he is automatically affected by freedom of movement for 3 rounds.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "OA",
+      "key": "Talisman of Freedom (Lesser)",
+      "name": "Talisman of Freedom, Lesser",
+      "category": "General",
+      "cost_gp": 900.0,
+      "weight_lbs": 1.0,
+      "description": "The first time that the wearer becomes grappled, entangled, or paralyzed, he is automatically affected by freedom of movement for 3 rounds.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "OA",
+      "key": "Talisman of Good Fortune (Greater)",
+      "name": "Talisman of Good Fortune, greater",
+      "category": "General",
+      "cost_gp": 16800.0,
+      "weight_lbs": 1.0,
+      "description": "The first time that the wearer rolls a natural 1 on a d20 roll (such as on an ability check, attack roll, saving throw, or skill check), he can immediately roll again and take the new result instead",
+      "name_pi_citation": null
+    },
+    {
+      "book": "OA",
+      "key": "Talisman of Good Fortune (Lesser)",
+      "name": "Talisman of Good Fortune, lesser",
+      "category": "General",
+      "cost_gp": 1680.0,
+      "weight_lbs": 1.0,
+      "description": "The first time that the wearer rolls a natural 1 on a d20 roll (such as on an ability check, attack roll, saving throw, or skill check), he can immediately roll again and take the new result instead",
+      "name_pi_citation": null
+    },
+    {
+      "book": "OA",
+      "key": "Talisman of Healing Power (Greater)",
+      "name": "Talisman of Healing Power, Greater",
+      "category": "General",
+      "cost_gp": 24000.0,
+      "weight_lbs": 1.0,
+      "description": "The first time that the wearer is reduced to fewer than 1/2 his maximum hit points, he automatically heals 4d8+7 hit points",
+      "name_pi_citation": null
+    },
+    {
+      "book": "OA",
+      "key": "Talisman of Healing Power (Lesser)",
+      "name": "Talisman of Healing Power, Lesser",
+      "category": "General",
+      "cost_gp": 2400.0,
+      "weight_lbs": 1.0,
+      "description": "The first time that the wearer is reduced to fewer than 1/2 his maximum hit points, he automatically heals 4d8+7 hit points",
+      "name_pi_citation": null
+    },
+    {
+      "book": "OA",
+      "key": "Talisman of Life's Breath (Greater)",
+      "name": "Talisman of Life's Breath, greater",
+      "category": "General",
+      "cost_gp": 35000.0,
+      "weight_lbs": 1.0,
+      "description": "The first time that the wearer dies, he is automatically affected by breath of life.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "OA",
+      "key": "Talisman of life's Breath (Lesser)",
+      "name": "Talisman of Life's Breath, lesser",
+      "category": "General",
+      "cost_gp": 3500.0,
+      "weight_lbs": 1.0,
+      "description": "The first time that the wearer dies, he is automatically affected by breath of life.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "OA",
+      "key": "Talisman of Protection from Flames (Greater)",
+      "name": "Talisman of Protection from Flames, Greater",
+      "category": "General",
+      "cost_gp": 12500.0,
+      "weight_lbs": 1.0,
+      "description": "The first time that the wearer takes 5 or more points of fire damage in a single round, he is automatically affected by protection from energy .",
+      "name_pi_citation": null
+    },
+    {
+      "book": "OA",
+      "key": "Talisman of Protection from Flames (Lesser)",
+      "name": "Talisman of Protection from Flames, Lesser",
+      "category": "General",
+      "cost_gp": 1250.0,
+      "weight_lbs": 1.0,
+      "description": "The first time that the wearer takes 5 or more points of fire damage in a single round, he is automatically affected by protection from energy.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "OA",
+      "key": "Talisman of Sealed Summons (Greater)",
+      "name": "Talisman of Sealed Summons, Greater",
+      "category": "General",
+      "cost_gp": 4500.0,
+      "weight_lbs": 1.0,
+      "description": "The first time that the wearer is hit by a natural attack from an evil summoned creature, the wearer is automatically affected by protection from evil.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "OA",
+      "key": "Talisman of Sealed Summons (Lesser)",
+      "name": "Talisman of Sealed Summons, Lesser",
+      "category": "General",
+      "cost_gp": 450.0,
+      "weight_lbs": 1.0,
+      "description": "The first time that the wearer is hit by a natural attack from an evil summoned creature, the wearer is automatically affected by protection from evil.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "OA",
+      "key": "Talisman of Warrior's Courage (Greater)",
+      "name": "Talisman of Warrior's Courage, Greater",
+      "category": "General",
+      "cost_gp": 4500.0,
+      "weight_lbs": 1.0,
+      "description": "The first time that the wearer would gain the frightened or panicked condition, he gains the shaken condition instead.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "OA",
+      "key": "Talisman of Warrior's Courage (Lesser)",
+      "name": "Talisman of Warrior's Courage, Lesser",
+      "category": "General",
+      "cost_gp": 450.0,
+      "weight_lbs": 1.0,
+      "description": "The first time that the wearer would gain the frightened or panicked condition, he gains the shaken condition instead.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "OA",
+      "key": "Thaumaturgic powder",
+      "name": "Thaumaturgic Powder",
+      "category": "General",
+      "cost_gp": 4000.0,
+      "weight_lbs": 0.0,
+      "description": "The scribed circle acts as the perfectly scribed special diagram of a magic circle against chaos, evil, good, or law and bars extradimensional movement as if the user had attached dimensional anchor to the magic circle.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "OA",
+      "key": "Tin cap",
+      "name": "Tin Cap",
+      "category": "General",
+      "cost_gp": 15000.0,
+      "weight_lbs": 2.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "OA",
+      "key": "Tome of Origami Animals",
+      "name": "Tome of Origami Animals",
+      "category": "General",
+      "cost_gp": 13500.0,
+      "weight_lbs": 15.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "OA",
+      "key": "Waxen image",
+      "name": "Waxen Image",
+      "category": "General",
+      "cost_gp": 500.0,
+      "weight_lbs": 0.5,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "OA",
+      "key": "Haunted Doll",
+      "name": "Haunted Doll",
+      "category": "General",
+      "cost_gp": null,
+      "weight_lbs": 1.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "OA",
+      "key": "Maniac Hand",
+      "name": "Maniac Hand",
+      "category": "General",
+      "cost_gp": null,
+      "weight_lbs": 2.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "OA",
+      "key": "Mirror of Soul Snaring",
+      "name": "Mirror of Soul Snaring",
+      "category": "General",
+      "cost_gp": null,
+      "weight_lbs": 45.0,
+      "description": "A mirror of soul snaring has 15 extradimensional compartments within it. Any creature coming within 30 feet of the device and looking at its own reflection must succeed at a DC 23 Will save or have its soul sucked into one of the compartments.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "OA",
+      "key": "Monkey's Paw",
+      "name": "Monkey's Paw",
+      "category": "General",
+      "cost_gp": null,
+      "weight_lbs": 0.5,
+      "description": "This mummified monkey's hand bears the power to grant three wishes, but at a terrible cost. The paw can grant any request within the power of a wish spell, but the paw's curse twists the results to bring about despair.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "OA",
+      "key": "Portal Network",
+      "name": "Portal Network",
+      "category": "General",
+      "cost_gp": null,
+      "weight_lbs": 64000.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "OA",
+      "key": "Primordial Symbol",
+      "name": "Primordial Symbol",
+      "category": "General",
+      "cost_gp": null,
+      "weight_lbs": 1.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "OA",
+      "key": "Soul Portrait",
+      "name": "Soul Portrait",
+      "category": "General",
+      "cost_gp": null,
+      "weight_lbs": 25.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "OA",
+      "key": "Stannum Crown",
+      "name": "Stannum Crown",
+      "category": "General",
+      "cost_gp": null,
+      "weight_lbs": 2.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "OA",
+      "key": "Thought Record",
+      "name": "Thought Record",
+      "category": "General",
+      "cost_gp": null,
+      "weight_lbs": 2.0,
+      "description": null,
+      "name_pi_citation": null
+    }
+  ]
+}

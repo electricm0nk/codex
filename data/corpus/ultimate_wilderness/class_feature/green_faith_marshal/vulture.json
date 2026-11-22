@@ -1,0 +1,85 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Green Faith Marshal ~ Panther Domain ~ Vulture",
+    "name": "Vulture",
+    "class": "Green Faith Marshal",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Green Faith Marshal ~ Panther Domain"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "GreenFaithMarshalDomainSelection.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainVultureLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainVultureDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainVultureTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainVultureAbilityTriggerLVL|0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Vulture Domain ~ Death's Companion|PREVARGTEQ:DomainVultureAbilityTriggerLVL,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Vulture Domain ~ Agent of Rebirth|PREVARGTEQ:DomainVultureAbilityTriggerLVL,8"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainVultureLVL|DomainLVL|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainVultureDC|10+(DomainVultureLVL/2)+WIS|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainVultureTimes|DomainPowerTimes|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainVultureAbilityTriggerLVL|DomainAbilityTriggerLVL|TYPE=Domain"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "CLASS|Inquisitor=1|Deathwatch|Inquisitor=2|Glide|Inquisitor=3|Death Knell|Inquisitor=4|Death Ward|Inquisitor=5|Breath of Life|Inquisitor=6|Circle of Death"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/support/uw_abilities_class_fap.lst",
+    "sha256": "7c3db2030157f04d08ce9d813c1f22162bfaeaea7227bd40419a8d5fe75d566b",
+    "line": 9,
+    "record_key": "Green Faith Marshal ~ Panther Domain ~ Vulture"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

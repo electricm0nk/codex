@@ -1,0 +1,50 @@
+   Compiling codex v0.1.0 (/home/ubuntu/workspace/worktrees/codex-sd37)
+warning: function `rows_schema` is never used
+   --> src/rules_core/rules_data_package.rs:733:4
+    |
+733 | fn rows_schema<T: schemars::JsonSchema>(generator: &mut schemars::r#gen::SchemaGenerator, _rows: &[T]) -> schemars::schema::Schema {
+    |    ^^^^^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: function `package_schema` is never used
+   --> src/rules_core/rules_data_package.rs:769:15
+    |
+769 | pub(crate) fn package_schema() -> Value {
+    |               ^^^^^^^^^^^^^^
+
+warning: function `all_rows_schemas` is never used
+    --> src/rules_core/rules_data_package.rs:758:12
+     |
+ 758 |           fn all_rows_schemas(generator: &mut schemars::r#gen::SchemaGenerator) -> Vec<(&'static str, schemars::schema::Schema)> {
+     |              ^^^^^^^^^^^^^^^^
+...
+ 801 | / rules_tables_registry! {
+ 802 | |     "companion_chassis/GRANT_TOKEN_ONLY_DISPATCH_ROWS" => rt::companion_chassis::GRANT_TOKEN_ONLY_DISPATCH_ROWS;
+ 803 | |     "equipment_gap_tables/CORE_RULEBOOK_GAP_ROWS" => rt::equipment_gap_tables::CORE_RULEBOOK_GAP_ROWS;
+ 804 | |     "equipment_gap_tables/BESTIARY_GAP_ROWS" => rt::equipment_gap_tables::BESTIARY_GAP_ROWS;
+...    |
+1080 | |     "companion_chassis/COMPANION_BOOKS" => companion_book_index_rows();
+1081 | | }
+     | |_- in this macro invocation
+     |
+     = note: this warning originates in the macro `rules_tables_registry` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: `codex` (lib test) generated 3 warnings
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1m 35s
+     Running unittests src/lib.rs (/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/codex-ce0bccb9212d3fe1)
+
+running 9 tests
+test rules_core::rules_data_package::tests::an_edited_row_or_a_wrong_table_id_is_refused ... FAILED
+test rules_core::rules_data_package::tests::the_desktop_bundles_the_package ... FAILED
+test rules_core::rules_data_package::tests::the_loader_returns_the_compiled_rows_typed ... FAILED
+test rules_core::rules_data_package::tests::table_ids_are_unique_and_the_package_holds_exactly_them ... FAILED
+test rules_core::rules_data_package::tests::the_stamp_records_every_pi_hit_and_says_pi ... ok
+test rules_core::rules_data_package::tests::every_file_level_array_is_a_package_table ... ok
+test rules_core::rules_data_package::tests::every_collection_function_is_a_table_or_a_named_view ... FAILED
+test rules_core::rules_data_package::tests::every_table_round_trips_through_the_loader has been running for over 60 seconds
+test rules_core::rules_data_package::tests::registry_rows_name_registered_tables has been running for over 60 seconds
+error: test failed, to rerun pass `--lib`
+
+Caused by:
+  process didn't exit successfully: `/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/codex-ce0bccb9212d3fe1 rules_data_package --test-threads=8` (signal: 15, SIGTERM: termination signal)

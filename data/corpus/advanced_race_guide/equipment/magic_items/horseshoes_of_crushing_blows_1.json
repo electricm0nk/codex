@@ -1,0 +1,60 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "magic_items",
+    "cost_gp": 4000.0,
+    "description": "Grant an enhancement bonus to hoof attacks.",
+    "key": "Horseshoes of Crushing Blows +1",
+    "name": "Horseshoes of Crushing Blows +1",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "WEAPONPROF=Hoof",
+          "DAMAGE,TOHIT",
+          "1",
+          "TYPE=Enhancement",
+          "PREWEAPONPROF:1,Hoof"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.Mount.Feet"
+      },
+      {
+        "key": "COST",
+        "value": "4000"
+      },
+      {
+        "key": "WT",
+        "value": "4"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.125"
+      },
+      {
+        "key": "SPROP",
+        "value": "Grant an enhancement bonus to hoof attacks."
+      }
+    ],
+    "weight_lbs": 4.0
+  },
+  "ingested_at": "2026-08-03T19:41:45Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 50,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equip_magic_items.lst",
+    "record_key": "Horseshoes of Crushing Blows +1",
+    "sha256": "894fe0503949ab48c527aa3d9423a8a475d2b251b6e7eaddd5f53889b4d5cc17"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

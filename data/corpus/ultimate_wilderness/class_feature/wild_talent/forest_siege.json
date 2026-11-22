@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Wild Talent ~ Forest Siege",
+    "name": "Forest Siege",
+    "class": "Kineticist",
+    "description": "Element wood; Type utility (Sp); Level 9; Burn 0",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wild Talent ~ Forest Siege"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Wild Talent.Utility Wild Talent.Utility Wild Talent Wood"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "KineticistLVL_Wood,9"
+      },
+      {
+        "key": "DESC",
+        "value": "Element wood; Type utility (Sp); Level 9; Burn 0"
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;You can transform available plant life into a besieging army. This functions as greater siege of trees (UC), except you need to concentrate or the effect ends, and you can change targets as a free action. If you accept 1 point of burn, you can prolong the effect without the need for concentration until the next time you recover burn, but you need to spend a standard action to change targets."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.58"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/support/uw_abilities_class_oa.lst",
+    "sha256": "26a03f73c3534cd6bae0bcda9581b3a89fa28ce5f78f854e009fc8110c477568",
+    "line": 71,
+    "record_key": "Wild Talent ~ Forest Siege"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

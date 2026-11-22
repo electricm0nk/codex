@@ -1,0 +1,55 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Cursed Lord ~ Trapped",
+    "delivery": "Extraordinary",
+    "description": "A cursed lord is unable to leave its domain by any means, and effects such as plane shift, shadow walk, teleport, and even wish fail. If its domain is bordered by dread fog (see page 161), the mists inevitably guide the cursed lord back to its domain after 1 hour.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "horror_adventures:monster_ability:cursed_lord_trapped",
+    "name": "Trapped",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A cursed lord is unable to leave its domain by any means, and effects such as plane shift, shadow walk, teleport, and even wish fail. If its domain is bordered by dread fog (see page 161), the mists inevitably guide the cursed lord back to its domain after 1 hour."
+      },
+      {
+        "key": "KEY",
+        "value": "Cursed Lord ~ Trapped"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.235"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary.CursedLord"
+      }
+    ],
+    "source_page": "p.235",
+    "traits": [
+      "CursedLord"
+    ]
+  },
+  "ingested_at": "2026-08-23T14:10:27Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 254,
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_race.lst",
+    "record_key": "Cursed Lord ~ Trapped",
+    "sha256": "63d4d7024f3fea15adb5b626c17f3f1dc4c40e4fc4bef4616a1d36be77a9fe00"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Myrmidarch ~ Ranged Spellstrike",
+    "name": "Ranged Spellstrike",
+    "class": "Myrmidarch",
+    "description": "At 4th level, a myrmidarch can use spellstrike to cast a single-target touch attack ranged spell and deliver it through a ranged weapon attack. Even if the spell can normally affect multiple targets, only a single missile, ray, or effect accompanies the attack. At 11th level, a myrmidarch can spend a full-round actionto cast a spell that includes multiple ranged touch attacksand deliver more than one using ranged attacks. Thespell must have a casting time of 1 full-round action orless. This functions similarly to the base ability of rangedspellstrike, but the myrmidarch can deliver a number ofmissiles, rays, or effect up to the number of attacks hecould make with a full attack. Attacks beyond the firsttake penalties as if the myrmidarch were making a fullattack. Any effects not used in the round the spell is castare lost, as are any additional ranged touch attacks thespell would allow beyond the myrmidarch's maximumnumber of attacks. This ability replaces spell recall andimproved spell recall.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Myrmidarch ~ Ranged Spellstrike"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MagusClassFeatures.Supernatural.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 4th level, a myrmidarch can use spellstrike to cast a single-target touch attack ranged spell and deliver it through a ranged weapon attack. Even if the spell can normally affect multiple targets, only a single missile, ray, or effect accompanies the attack. At 11th level, a myrmidarch can spend a full-round actionto cast a spell that includes multiple ranged touch attacksand deliver more than one using ranged attacks. Thespell must have a casting time of 1 full-round action orless. This functions similarly to the base ability of rangedspellstrike, but the myrmidarch can deliver a number ofmissiles, rays, or effect up to the number of attacks hecould make with a full attack. Attacks beyond the firsttake penalties as if the myrmidarch were making a fullattack. Any effects not used in the round the spell is castare lost, as are any additional ranged touch attacks thespell would allow beyond the myrmidarch's maximumnumber of attacks. This ability replaces spell recall andimproved spell recall."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.56"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/support/uc_abilities_class_um.lst",
+    "sha256": "b8cff28b7be84f4f3c6b650c3e375a3027ff13bf4226233a514d34385bdfb67a",
+    "line": 38,
+    "record_key": "Myrmidarch ~ Ranged Spellstrike"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

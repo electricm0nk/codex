@@ -1,0 +1,73 @@
+{
+  "completeness": "full",
+  "data": {
+    "codex_generated_name": false,
+    "corpus_key": "Traits Output ~ Demon Lord",
+    "delivery": "Extraordinary",
+    "description": "A demon lord who is slain can be instantly ressurected in his home realm once each year. &nl; A demon lord can activate his frightful presence as a free action. &nl; A demon lord grants spells to its followers and has a favored weapon as if it were a deity. &nl; A demon lord's natural weapons, as well as any weapons it wields, are treated as chaotic, epic, and evil for the purpose of overcoming damage reduction. &nl; Only epic and good damage, or damage from a creature of equal or greater power interrupts a demon lord's regeneration. &nl; Three times per day, a demon lord can summon any demon or combination of demons whose total combined CR is 20 or lower.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:traits_output_demon_lord",
+    "name": "Demon Lord Traits",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "&nl; A demon lord can activate his frightful presence as a free action."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl; A demon lord grants spells to its followers and has a favored weapon as if it were a deity."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl; A demon lord's natural weapons, as well as any weapons it wields, are treated as chaotic, epic, and evil for the purpose of overcoming damage reduction."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl; Only epic and good damage, or damage from a creature of equal or greater power interrupts a demon lord's regeneration."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl; Three times per day, a demon lord can summon any demon or combination of demons whose total combined CR is 20 or lower."
+      },
+      {
+        "key": "DESC",
+        "value": "A demon lord who is slain can be instantly ressurected in his home realm once each year."
+      },
+      {
+        "key": "KEY",
+        "value": "Traits Output ~ Demon Lord"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary.Supernatural"
+      }
+    ],
+    "rename": null,
+    "source_page": null,
+    "traits": [
+      "Supernatural"
+    ]
+  },
+  "ingested_at": "2026-08-23T22:59:04Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 99,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_races_ce.lst",
+    "record_key": "Traits Output ~ Demon Lord",
+    "sha256": "a9af292735dbd8cbd424d6dabeb2ecbef7180374304194180b8bc4b0f66a7b8b"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

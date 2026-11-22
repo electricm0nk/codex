@@ -1,0 +1,2 @@
+# Fixture for desktop Market +N (AC and attack rows), source: ue_equip_arms_armor.lst, KEY: Lamellar Cuirass
+Lamellar Cuirass		PROFICIENCY:ARMOR|Lamellar Cuirass		TYPE:Armor.Light.ArmorProfLight.Suit.Standard	COST:15	WT:8					EQMOD:Material ~ Leather			MAXDEX:4		SPELLFAILURE:5		BONUS:COMBAT|AC|2|TYPE=Armor|PREVAREQ:DisableArmorBonus,0

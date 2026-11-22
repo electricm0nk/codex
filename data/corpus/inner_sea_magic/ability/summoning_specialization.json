@@ -1,0 +1,69 @@
+{
+  "codex_generated_name": false,
+  "completeness": "full",
+  "data": {
+    "description": "Add a new creature to the list of options available to any summon monster spell you know. The new creature must be of a comparable CR to the other creatures available for that spell to summon, and you must have GM approval for the creature you add to your list.",
+    "key": "Summoning Specialization ~ Academy",
+    "name": "Summoning Specialization",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Summoning Specialization ~ Academy"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.AcadamaeReward"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Acadamae ~ Academy"
+      },
+      {
+        "key": "DESC",
+        "value": "Add a new creature to the list of options available to any summon monster spell you know. The new creature must be of a comparable CR to the other creatures available for that spell to summon, and you must have GM approval for the creature you add to your list."
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "USERINPUT|TITLE=Add a new creature to any summon monster spell you know."
+      },
+      {
+        "key": "SELECT",
+        "value": "1"
+      },
+      {
+        "key": "COST",
+        "value": "3"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.20"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 91,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_abilities_other.lst",
+    "record_key": "Summoning Specialization ~ Academy",
+    "sha256": "6ea35a2432c9b609f27926d9492f1d85c599eb18e81adf36154ae594b89072db"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice",
+    "computed:pre_guard"
+  ]
+}

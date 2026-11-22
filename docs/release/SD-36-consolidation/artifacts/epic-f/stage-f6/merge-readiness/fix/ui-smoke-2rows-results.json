@@ -1,0 +1,34 @@
+[
+  {
+    "id": "sheet-tab-actions",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/6badc5b8-ae3b-4359-80c5-cd0b1598973e/scratchpad/sd36/f6/uismoke-out/sheet-tab-actions.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nSmoke Test PC — Wizard 1\nPROGRESSION\n«\n\nLevel\n1\n+\nCaster Level\n1\nRACE\nElf\nCLASS\nWizard 1\nLevel 1 Wizard\nSkill points: 3\nFeat\nNEXT\nLevel 2 Wizard\nSkill points: 3\nCharacter Name\nSmoke Test PC\nCampaign\n—\nABILITIES\n\nSTR\n16\n+3\nDEX\n16\n+3\nCON\n12\n+1\nINT\n12\n+1\nWIS\n12\n+1\nCHA\n8\n-1\nINITIATIVE\n+3\nHIT POINTS\n7 / 7\nARMOR CLASS\n\nAC\n17\nTOUCH\n13\nFLAT-FOOTED\n14\nATTACK\n\nBAB\n+0\nMELEE\n+0\nCMB\n+3\nCMD\n16\nSAVING",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-f6-mr-blockers-SrLBzb/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [
+        "966b4fd4-1abc-46a8-b418-aa86579028ed"
+      ],
+      "deleted": [
+        "966b4fd4-1abc-46a8-b418-aa86579028ed"
+      ],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "intelligent-item-catalog-open-and-search",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/6badc5b8-ae3b-4359-80c5-cd0b1598973e/scratchpad/sd36/f6/uismoke-out/intelligent-item-catalog-open-and-search.png",
+    "rendered_excerpt": "⚙\nIntelligent Item Components\nBack\nEvery purchasable ability score, alignment, communication, sense, power and purpose option for building an intelligent (or Mythic legendary) magic item — 152 components. An item’s total Ego score is never shown as one number here: which components a specific item carries is a choice this reference does not make for you, so each row states its own literal contribu",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-f6-mr-blockers-SrLBzb/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  }
+]

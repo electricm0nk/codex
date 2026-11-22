@@ -1,0 +1,48 @@
+{
+  "codex_generated_name": false,
+  "completeness": "chassis_only",
+  "data": {
+    "description": null,
+    "key": "Arcane Trickster",
+    "name": "Arcane Trickster",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Aligned Class"
+      },
+      {
+        "key": "TYPE",
+        "value": "Aligned Class"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Class,Arcane Trickster"
+      },
+      {
+        "key": "BONUS",
+        "value": "PCLEVEL|Arcane Trickster|EvangelistLVL-1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ArcaneTrickster_CFP_Level,ArcaneTricksterLVL|EvangelistLVL-1"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 39,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities.lst",
+    "record_key": "Arcane Trickster",
+    "sha256": "e31ff7fb4fed812ae719cb19526442b9b9c9575efc25c169c06690f7a236fafd"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

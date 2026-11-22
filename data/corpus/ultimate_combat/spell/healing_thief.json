@@ -1,0 +1,88 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "With this spell you can steal the healing of the target creature. You must succeed at a melee touch attack to strike the target. If you do, until the effect ends, whenever your target is subject to a healing spell or a supernatural effect that heals hit points, the target only receives half the healing (rounded down) and you receive the other half (also rounded down). You must remain within 25 feet (plus 5 feet per two caster levels) of the target to gain this benefit. If you move outside that range, the spell is discharged. Once you steal 5 hit points per your caster level (maximum 50 hit points) of healing from this spell's effect, the spell is discharged.",
+    "key": "Healing Thief",
+    "level": 3,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Sorcerer,Witch,Wizard=3"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, M"
+      },
+      {
+        "key": "DESC",
+        "value": "With this spell you can steal the healing of the target creature. You must succeed at a melee touch attack to strike the target. If you do, until the effect ends, whenever your target is subject to a healing spell or a supernatural effect that heals hit points, the target only receives half the healing (rounded down) and you receive the other half (also rounded down). You must remain within 25 feet (plus 5 feet per two caster levels) of the target to gain this benefit. If you move outside that range, the spell is discharged. Once you steal 5 hit points per your caster level (maximum 50 hit points) of healing from this spell's effect, the spell is discharged.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "You siphon half of all magical healing that the targeted creature receives.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) rounds or until discharged"
+      },
+      {
+        "key": "FACT",
+        "value": "CompMaterial|(a bit of sponge, damp with tears)"
+      },
+      {
+        "key": "ITEM",
+        "value": "POTION"
+      },
+      {
+        "key": "RANGE",
+        "value": "Touch"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "None"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Necromancy"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/ultimateCombat/spells/healingThief.html#_healing-thief"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.231"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "creature touched"
+      }
+    ],
+    "school": "Necromancy"
+  },
+  "ingested_at": "2026-08-16T12:10:17Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 51,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_spells.lst",
+    "record_key": "Healing Thief",
+    "sha256": "b3621f212f8bdde1d0e9a8861c43f7587bb493909a46c372ca0616b37f0706a0"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "derived:prose_expr"
+  ]
+}

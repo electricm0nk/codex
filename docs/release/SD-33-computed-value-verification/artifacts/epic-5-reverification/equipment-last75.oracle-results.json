@@ -1,0 +1,59 @@
+{
+  "results": [
+    {
+      "unit_id": "advanced_class_guide:equipment:hunter_s_sight",
+      "ours": -2,
+      "oracle": -2,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "book_of_the_damned_volume_2:equipment:demon_senses",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "reason": "no_probe_surface: corpus TYPE facet is Magic.Wondrous.Implant, and the pinned PCGen Pathfinder gamemode's own equipmentslots.lst (system/gameModes/Pathfinder/equipmentslots.lst) has no EQSLOT entry containing 'Implant' -- confirmed by direct grep against the pinned checkout. The item cannot be placed into any equipped body slot via the standard EQUIPSET mechanism, so no live BONUS application can be captured this way. Live-tested this cycle via the direct-java runner (not just gradlew): campaign loads without error (unlike the pre-existing 'Could not find campaign' failure class), the corpus BONUS:SKILL|Perception|8|TYPE=Racial chain carries no PRE-gate, yet SKILL.Perception.MISC exports 0 -- consistent with the item never actually equipping. Matches and re-confirms AT-33-E5-002's own prior 'Implant slot' finding for this exact unit; root cause is the missing EQSLOT mapping, not a fixable fixture typo."
+    },
+    {
+      "unit_id": "advanced_class_guide:equipment:ring_of_eloquence",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "reason": "no_probe_surface: BONUS:SKILL|Bluff,Diplomacy,Intimidate,Perform (Oratory)|2|TYPE=Competence names four distinct skills in one comma-joined chain. compute_general_effect (src/rules_core/equipment_effects/general.rs) stores the qualifier verbatim, unsplit -- no single PCGen SKILL.<name>.MISC export token exists to compare a multi-skill list against (same gap class already named for skill_type_qualifier_no_literal_skill_name and for compute_var_effect's own multi-name VAR chains)."
+    },
+    {
+      "unit_id": "inner_sea_races:equipment:scarf_of_glorious_histories",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "reason": "no_probe_surface: BONUS:SKILL|Intimidate,Perform (dance)|5|TYPE=Competence names two distinct skills in one comma-joined chain -- same multi-skill-no-single-token gap as advanced_class_guide:equipment:ring_of_eloquence."
+    },
+    {
+      "unit_id": "ultimate_psionics:equipment:meld_stone_nimble_trickster",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "reason": "no_probe_surface: this record's first BONUS:SKILL chain (the one compute_general_effect actually reads; two earlier BONUS:SITUATION chains are skipped since qualifiers[0]!=\"SKILL\") is BONUS:SKILL|Escape Artist,Stealth|6|TYPE=Competence -- a comma-joined two-skill name, same multi-skill-no-single-token gap as ring_of_eloquence/scarf_of_glorious_histories. (This unit is also inside the separately-named ultimate_psionics equipment-bonus-registration harness gap; the multi-skill gap is reported here as the more fundamental of the two since it would block a clean comparison even if that harness gap were fixed.)"
+    },
+    {
+      "unit_id": "core_rulebook:equipment_modifier:special_quality_wield_size_1_step_greater",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "reason": "no_probe_surface: sole chain is BONUS:WEAPON|WIELDCATEGORY|-1 -- this shifts a weapon's effective wield-size category (e.g. two-handed becomes one-handed for a creature one size larger), not a scalar to-hit/damage/skill/save magnitude. No PCGen export token represents 'wield category' as a single comparable number; the record carries no other bonus chain."
+    },
+    {
+      "unit_id": "core_rulebook:equipment_modifier:special_quality_wield_size_2_steps_greater",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "reason": "no_probe_surface: sole chain is BONUS:WEAPON|WIELDCATEGORY|-2 -- same wield-size-category-shift shape as special_quality_wield_size_1_step_greater, not a scalar magnitude."
+    },
+    {
+      "unit_id": "core_rulebook:equipment_modifier:special_quality_wield_size_3_steps_greater",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "reason": "no_probe_surface: sole chain is BONUS:WEAPON|WIELDCATEGORY|-3 -- same wield-size-category-shift shape as special_quality_wield_size_1_step_greater, not a scalar magnitude."
+    }
+  ]
+}

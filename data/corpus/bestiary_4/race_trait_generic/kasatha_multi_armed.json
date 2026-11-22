@@ -1,0 +1,50 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Kasatha ~ Multi-Armed",
+    "name": "Multi-Armed",
+    "description": "A kasatha has four arms. One hand is considered its primary hand; all others are considered off hands. It can use any of its hands for other purposes that require free hands.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Kasatha ~ Multi-Armed"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Kasatha Racial Trait.Kasatha Racial Default.SpecialQuality.Special Quality.Special Ability.Extraordinary"
+      },
+      {
+        "key": "!PREFACT",
+        "value": "1,ABILITIES,Kasatha_ReplaceMultiArmed=True"
+      },
+      {
+        "key": "DESC",
+        "value": "A kasatha has four arms. One hand is considered its primary hand; all others are considered off hands. It can use any of its hands for other purposes that require free hands."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.xx"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/kasatha/kasatha_abilities_race.lst",
+    "sha256": "53b266361b5a459401cf5e5e62de82ba990116851b84abeee70bf96e907c6971",
+    "line": 22,
+    "record_key": "Kasatha ~ Multi-Armed"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

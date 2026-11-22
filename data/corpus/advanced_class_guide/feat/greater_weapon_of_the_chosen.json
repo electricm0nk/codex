@@ -1,0 +1,28 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:38:17Z",
+  "data": {
+    "key": "Greater Weapon of the Chosen",
+    "category": "Combat",
+    "name": "Greater Weapon of the Chosen",
+    "description": "When you use your deity's favored weapon to attempt a single attack with the attack action, you roll two dice for your attack roll and take the higher result. You do not need to use your Weapon of the Chosen feat to gain this feat's benefit.  As usual, the reroll does not apply to any confirmation rolls.",
+    "prerequisites": [
+      "PREABILITY:3,CATEGORY=FEAT,Improved Weapon of the Chosen,Weapon of the Chosen,Weapon Focus"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_feats.lst",
+    "sha256": "a71dc625f64f057c38365b3c3a2c6b58b75170fb8ffeb5eb23d3b29c74b7edc3",
+    "line": 84,
+    "record_key": "Greater Weapon of the Chosen"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

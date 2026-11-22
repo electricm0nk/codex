@@ -1,0 +1,19 @@
+{
+  "data": {
+    "key": "Weapon (ENTANGLING)",
+    "name": "ENTANGLING",
+    "type": "Weapon"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 57,
+    "path": "starfinder/paizo/core/scr_equipmods.lst",
+    "record_key": "Weapon (ENTANGLING)",
+    "sha256": "f3f834dcfe0b160855fbe9bdeac4ff6e6ea8a71ca1ea9afbfb556c0dc89d9930"
+  },
+  "unit_id": "core:equipment_modifier:weapon_entangling"
+}

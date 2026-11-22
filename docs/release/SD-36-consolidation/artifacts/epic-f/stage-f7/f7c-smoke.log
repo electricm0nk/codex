@@ -1,0 +1,15 @@
+App data root: /tmp/codex-ui-smoke-f7c-smoke-CsXhEt/data/io.electricm0nk.codex (isolated; the real store /home/ubuntu/.local/share/io.electricm0nk.codex is never opened)
+Launching app for agent 'f7c-smoke'...
+PASS  sheet-f7c-expert-skills-default-picks
+PASS  sheet-f7c-samurai-skills-only-skills
+PASS  level-up-f7c-prestige-skill-labels
+PASS  sheet-f6a-samurai-weapons
+PASS  sheet-action-skill-allocation-dialog
+PASS  sheet-action-level-up-dialog
+PASS  level-up-fighter6-blockers-and-labels
+
+7/7 green, 0 red, 0 blocked, 0 manual, 0 not-run (M = 7 rows)
+Cleanup: 7 character(s) created across 7 row(s) with a cleanup record, 7 deleted, 0 leftover; store /tmp/codex-ui-smoke-f7c-smoke-CsXhEt/data/io.electricm0nk.codex now holds: 00000000-0000-0000-0000-000000000001, 00000000-0000-0000-0000-000000000002
+Evidence: docs/release/SD-36-consolidation/artifacts/ui-smoke/f7/f7c
+Removed isolated app-data root /tmp/codex-ui-smoke-f7c-smoke-CsXhEt (it held 2 character(s) at the end: 00000000-0000-0000-0000-000000000001, 00000000-0000-0000-0000-000000000002).
+EXIT=0

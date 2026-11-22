@@ -1,0 +1,60 @@
+{
+  "codex_generated_name": false,
+  "completeness": "full",
+  "data": {
+    "description": "You gain a +%1 bonus on Perception checks.|HuntersSightBonus",
+    "key": "Shadow Hunter ~ Hunter's Sight",
+    "name": "Hunter's Sight",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shadow Hunter ~ Hunter's Sight"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "InquisitorClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "HuntersSightBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a +%1 bonus on Perception checks.|HuntersSightBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Perception|HuntersSightBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HuntersSightBonus|max(1,InquisitorLVL/2)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.335"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 59,
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_apg.lst",
+    "record_key": "Shadow Hunter ~ Hunter's Sight",
+    "sha256": "d4ac8a9a33149811222e6affeba9ba1553ced3ba7f6beb6be722e89ddfc9a51f"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

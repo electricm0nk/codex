@@ -1,0 +1,53 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Steam Mephit ~ Boiling Rain",
+    "delivery": "Supernatural",
+    "description": "Once per day a steam mephit can create a rainstorm of boiling water in a 20-foot-square area. Living creatures within the area take 2d6 points of fire damage (Fortitude DC 14 half; caster level 6th). This ability is the equivalent of a 2nd-level spell.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:steam_mephit_boiling_rain",
+    "name": "Boiling Rain",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Once per day a steam mephit can create a rainstorm of boiling water in a 20-foot-square area. Living creatures within the area take 2d6 points of fire damage (Fortitude DC 14 half; caster level 6th). This ability is the equivalent of a 2nd-level spell."
+      },
+      {
+        "key": "KEY",
+        "value": "Steam Mephit ~ Boiling Rain"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.203"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
+    "source_page": "p.203",
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T12:58:07Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 887,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "record_key": "Steam Mephit ~ Boiling Rain",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

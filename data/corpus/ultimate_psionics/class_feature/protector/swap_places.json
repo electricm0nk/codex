@@ -1,0 +1,61 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Protector ~ Swap Places",
+    "name": "Swap Places",
+    "class": "Protector",
+    "description": "As an immediate action and by expending your psionic focus, you can swap places with an adjacent ally who is about to get attacked.  Neither activating this ability nor the movement of you or your ally from this ability provoke attacks of opportunity.  This occurs before the attack and the attacker must resolve the attack against the protector instead of the original target.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Protector ~ Swap Places"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "PsychicWarriorClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SwapPlacesACBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "As an immediate action and by expending your psionic focus, you can swap places with an adjacent ally who is about to get attacked.  Neither activating this ability nor the movement of you or your ally from this ability provoke attacks of opportunity.  This occurs before the attack and the attacker must resolve the attack against the protector instead of the original target."
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a +%1 Dodge bonus to your AC against this attack.|SwapPlacesACBonus|PRECLASS:1,Psychic Warrior=9"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SwapPlacesACBonus|floor((PsychicWarriorLVL-5)/4)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.277"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2101,
+    "record_key": "Protector ~ Swap Places"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

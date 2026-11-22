@@ -1,0 +1,46 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "category": "MagicItems",
+    "cost_gp": 32500.0,
+    "description": null,
+    "key": "Blackmarrow Altar",
+    "name": "Blackmarrow Altar",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.Altar"
+      },
+      {
+        "key": "COST",
+        "value": "32500"
+      },
+      {
+        "key": "WT",
+        "value": "24"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.218"
+      }
+    ],
+    "weight_lbs": 24.0
+  },
+  "ingested_at": "2026-08-17T08:18:39Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 8,
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_equip_magic_items.lst",
+    "record_key": "Blackmarrow Altar",
+    "sha256": "500c71ebdeab1408dd9550ead46f2fe0298a9874b4bf47743641ab05a6e932b8"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

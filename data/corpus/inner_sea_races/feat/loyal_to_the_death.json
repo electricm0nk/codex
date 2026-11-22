@@ -1,0 +1,29 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Loyal to the Death",
+    "category": "Teamwork",
+    "name": "Loyal to the Death",
+    "description": "You're so loyal to your family or friends that you're willing to suffer for them. Whenever an opponent makes a melee or ranged attack against one of your allies who is adjacent to you and who also has this feat, you can spend an immediate action to shield the ally with your own body. You become the target of the attack, and the opponent gains a +4 bonus on her attack roll. For the purpose of determining distance, cover and concealment, you count as being in your ally's square when the attack is resolved. If the attack misses you due to concealment, blink, or a similar effect, it instead targets your ally as if you had not used this feat's ability.",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=Background,Tian",
+      "PRETEXT:Human (Tian)."
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_feats.lst",
+    "sha256": "082b55d0a2908a9c20bc977758f596c73e29a512f7a1407f62b977793587b649",
+    "line": 44,
+    "record_key": "Loyal to the Death"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

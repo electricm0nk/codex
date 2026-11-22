@@ -1,0 +1,58 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "key": "Ride",
+    "name": "Ride",
+    "raw_tokens": [
+      {
+        "key": "KEYSTAT",
+        "value": "DEX"
+      },
+      {
+        "key": "ACHECK",
+        "value": "YES"
+      },
+      {
+        "key": "TYPE",
+        "value": "Dexterity.ACHECK.Base"
+      },
+      {
+        "key": "PREVARLT",
+        "value": "AnimalCompanionSkill,1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.103"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Ride|3|TYPE=ClassSkill|PRECSKILL:1,Ride|PRESKILL:1,Ride=1"
+      },
+      {
+        "key": "TEMPDESC",
+        "value": "If you are riding bareback, or attempt to ride a creature that is ill suited as a mount, you take a -5 penalty on Ride checks."
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "ANYPC|SKILL|Ride|-5|TYPE=Circumstance|!PREITEM:1,TYPE=Saddle"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T12:11:34Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 96,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_skills.lst",
+    "record_key": "Ride",
+    "sha256": "4cb379aac1fcb20677623cecf3842a30eef88d79d4fe4fe00fbc0f49f856c9ea"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "computed:tempbonus"
+  ]
+}

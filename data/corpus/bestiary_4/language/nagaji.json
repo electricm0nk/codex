@@ -1,0 +1,31 @@
+{
+  "codex_generated_name": false,
+  "completeness": "chassis_only",
+  "data": {
+    "key": "Nagaji",
+    "name": "Nagaji",
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Spoken.Written.Read"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T15:18:09Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 6,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/nagaji/nagaji_languages.lst",
+    "record_key": "Nagaji",
+    "sha256": "ed1666d2f2966f44f75e3ec46958b0d4a7035a1d5d736bf25446dc9ac54dfa04"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Gaean ~ Strength of Gaea",
+    "name": "Strength of Gaea",
+    "class": "Gaean",
+    "description": "While you are in physical contact with nature, %1/day you can augment your spells in one of the following ways. 1 power point and expend focus: double duration; 1 power point and expend focus: double range; 1 power point and expend focus: no verbal component; 2 power points and expend focus: no somatic component; 2 power points and expend focus: empower spell|StrengthOfGaeaTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Gaean ~ Strength of Gaea"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "DruidClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "StrengthOfGaeaTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "While you are in physical contact with nature, %1/day you can augment your spells in one of the following ways. 1 power point and expend focus: double duration; 1 power point and expend focus: double range; 1 power point and expend focus: no verbal component; 2 power points and expend focus: no somatic component; 2 power points and expend focus: empower spell|StrengthOfGaeaTimes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|StrengthOfGaeaTimes|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.292"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|StrengthOfGaeaTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2463,
+    "record_key": "Gaean ~ Strength of Gaea"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

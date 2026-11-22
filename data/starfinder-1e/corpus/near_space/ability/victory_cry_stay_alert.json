@@ -1,0 +1,20 @@
+{
+  "data": {
+    "category": "Class Feature",
+    "key": "Victory Cry ~ Stay Alert",
+    "name": "Stay Alert",
+    "type": "Class Feature.Battle Leader Victory Cry"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 117,
+    "path": "starfinder/paizo/near_space/sns_abilities_class.lst",
+    "record_key": "Victory Cry ~ Stay Alert",
+    "sha256": "2f32621f4dc9d20fca4ca38995e6fd3816fa054a0c440949a71ac11e92124b9b"
+  },
+  "unit_id": "near_space:ability:victory_cry_stay_alert"
+}

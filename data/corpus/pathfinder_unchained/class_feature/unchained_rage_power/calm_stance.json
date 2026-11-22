@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Unchained Rage Power ~ Calm Stance",
+    "name": "Calm Stance",
+    "class": "Unchained Barbarian",
+    "description": "You can enter a state of calm. While in this stance, you don't gain any benefits from rage other than the temporary hit points, but you don't take any of the penalties from rage (including the penalty to AC and the restriction on actions you can take). Rounds spent in a calm stance still count against your total number of rounds of rage per day. This is a stance rage power.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Unchained Rage Power ~ Calm Stance"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Unchained Rage Power.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "You can enter a state of calm. While in this stance, you don't gain any benefits from rage other than the temporary hit points, but you don't take any of the penalties from rage (including the penalty to AC and the restriction on actions you can take). Rounds spent in a calm stance still count against your total number of rounds of rage per day. This is a stance rage power."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.9"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Rage"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst",
+    "sha256": "2becbb0524bd4c367cc1273434c20bcd8e42e3e08abd372f99b005e69e8c4725",
+    "line": 345,
+    "record_key": "Unchained Rage Power ~ Calm Stance"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

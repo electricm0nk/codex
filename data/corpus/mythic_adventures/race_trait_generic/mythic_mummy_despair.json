@@ -1,0 +1,46 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Mythic Mummy ~ Despair",
+    "name": "Despair",
+    "description": "All creatures within a 30-foot radius that see a mummy must succeed at a DC 18 Will save or be paralyzed by fear for 1d4 rounds. A creature only has to attempt this save against a particular mummy's despair ability once every 24 hours. This is a paralysis and mind-affecting fear effect. The save DC is Charisma-based and includes a +2 racial bonus.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Mummy ~ Despair"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Mummy Trait.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "All creatures within a 30-foot radius that see a mummy must succeed at a DC 18 Will save or be paralyzed by fear for 1d4 rounds. A creature only has to attempt this save against a particular mummy's despair ability once every 24 hours. This is a paralysis and mind-affecting fear effect. The save DC is Charisma-based and includes a +2 racial bonus."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities_race.lst",
+    "sha256": "9dc17c2fc1ba84d040fb04d6175b48b6ff52cc30ad113933d5dff3d75ea2652a",
+    "line": 219,
+    "record_key": "Mythic Mummy ~ Despair"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

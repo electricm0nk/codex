@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:22:49Z",
+  "data": {
+    "key": "Trait ~ Beguiling Nature",
+    "name": "Beguiling Nature",
+    "description": "+1 to all Charisma-based checks against creatures affected by one of your Telepathy powers.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Trait ~ Beguiling Nature"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Trait.RaceTrait.OphiduanTrait"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Trait ~ Beguiling Nature],[PREVAREQ:BypassTraitRestriction,1],[!PREABILITY:1,CATEGORY=Special Ability,TYPE.RaceTrait]"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PRERACE:1,Ophiduan,RACESUBTYPE=Ophiduan],[PREABILITY:1,CATEGORY=Special Ability,Adoptive Race ~ Ophiduan]"
+      },
+      {
+        "key": "DESC",
+        "value": "+1 to all Charisma-based checks against creatures affected by one of your Telepathy powers."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.300"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_apg.lst",
+    "sha256": "d4ac8a9a33149811222e6affeba9ba1553ced3ba7f6beb6be722e89ddfc9a51f",
+    "line": 196,
+    "record_key": "Trait ~ Beguiling Nature"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

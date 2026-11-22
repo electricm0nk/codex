@@ -1,0 +1,41 @@
+# SD13-E5 Ranger level 3 hybrid chassis baseline fixture.
+# Represents a deterministic PF1 Core Rulebook Human Ranger level 3 identity as chosen
+# input only. It names selections; it does not contain derived, computed, or parity
+# values. It preserves the accepted Human race-choice seam (ability-bonus and
+# bonus-feat) and stays a single-class, level-3 hybrid baseline, mirroring the
+# level-2 fixture's shape with the class level swapped.
+#
+# Level 3 adds one new deterministic choice selection: Favored Terrain
+# (choice:ranger_favored_terrain -> terrain:forest), the PF1 Core Rulebook's other
+# 3rd-level Ranger "Special" entry alongside Endurance. Endurance itself is an
+# automatic bonus-feat grant with no player choice involved, so it needs no
+# choice-slot. Favored Terrain is a genuine player choice of terrain type, drawn from
+# Table: Ranger Favored Terrains (Cold, Desert, Forest, Jungle, Mountain, Plains,
+# Planes, Swamp, Underground, Urban, Water); Forest is an arbitrary but deterministic
+# pick among those eleven legal options. This fixture carries forward the same
+# combat-style selections (Archery, Point-Blank Shot) from the level-2 fixture
+# unchanged, since combat-style's own bonus feat is a one-time 2nd-level grant, not
+# re-granted at 3rd level.
+case_id=pf1-crb-human-ranger-level3
+source_package_id=pf1.core_rulebook
+race_id=race:human
+class_level=class:ranger:3
+ability=strength:16
+ability=dexterity:14
+ability=constitution:14
+ability=intelligence:10
+ability=wisdom:12
+ability=charisma:8
+feat=feat:power_attack
+skill=skill:survival:1
+equipment=item:chain_shirt:equipped_worn_active
+equipment=item:longsword:equipped_primary_active
+equipment=item:shield:absent
+choice=choice:level_1_character_feat:feat:power_attack
+choice=choice:human_bonus_feat:feat:dodge
+choice=choice:human_ability_bonus:ability:strength
+choice=choice:ranger_favored_enemy:enemy:humanoid_orc
+choice=choice:ranger_combat_style:style:archery
+choice=choice:ranger_combat_style_bonus_feat:feat:point_blank_shot
+choice=choice:ranger_favored_terrain:terrain:forest
+provenance=programs/codex/requirements/SD-13-core-class-race-roster-and-level-10-progression-matrix/artifacts/sd13-e3-r5-paladin-and-ranger-hybrid-chassis-baseline-execution-handoff-2026-07-01.md

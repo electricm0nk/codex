@@ -1,0 +1,30 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Extra Word",
+    "category": "General",
+    "name": "Extra Word",
+    "description": "Learn an additional effect word, or two lower-level words.",
+    "prerequisites": [
+      "PREMULT:1,[PRECLASS:1,SPELLCASTER=1],[PREVARGTEQ:CasterLevel_Highest,1]",
+      "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,TYPE.WordsOfPower],[PREABILITY:1,CATEGORY=FEAT,Experimental Spellcaster]"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_feats_wordsofpower.lst",
+    "sha256": "d6dc75cfcc2068c29ba20caa6a2a7bfc57738726d4989053117c474af1ddfab1",
+    "line": 17,
+    "record_key": "Extra Word"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice",
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

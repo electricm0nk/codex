@@ -1,0 +1,49 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Mummified Creature ~ Dust Stroke",
+    "delivery": "Supernatural",
+    "description": "A creature killed by a mummified creature's natural attack or slam attack is disintegrated into a cloud of dust and ash, completely destroying the victim's body (as disintegrate).",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:mummified_creature_dust_stroke",
+    "name": "Dust Stroke",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A creature killed by a mummified creature's natural attack or slam attack is disintegrated into a cloud of dust and ash, completely destroying the victim's body (as disintegrate)."
+      },
+      {
+        "key": "KEY",
+        "value": "Mummified Creature ~ Dust Stroke"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      }
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T14:10:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1097,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "record_key": "Mummified Creature ~ Dust Stroke",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

@@ -1,0 +1,60 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "MagicItems",
+    "cost_gp": 8000.0,
+    "description": "once per round, when attacking with an off-handed weapon, the wearer can reduce any penalties on attack rolls made with that weapon by 2",
+    "key": "Duelist's Vambraces",
+    "name": "Duelist's Vambraces",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "COMBAT",
+          "AC",
+          "1",
+          "TYPE=Deflection",
+          "PREMULT:1,[PREEQUIP:1,TYPE=Weapon.Double],[PREEQUIPTWOWEAPON:2,TYPE=Melee]"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.Bracer.LesserMedium"
+      },
+      {
+        "key": "COST",
+        "value": "8000"
+      },
+      {
+        "key": "WT",
+        "value": "2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.273"
+      },
+      {
+        "key": "SPROP",
+        "value": "once per round, when attacking with an off-handed weapon, the wearer can reduce any penalties on attack rolls made with that weapon by 2"
+      }
+    ],
+    "weight_lbs": 2.0
+  },
+  "ingested_at": "2026-08-16T01:34:54Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 936,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_equipment/ue_equip_magic_items.lst",
+    "record_key": "Duelist's Vambraces",
+    "sha256": "c0d9b21e5e0969b0a22a5ca50f3ea3a8705765aa1a3f5a89ebd91aee4580e291"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

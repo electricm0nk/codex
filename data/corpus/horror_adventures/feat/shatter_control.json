@@ -1,0 +1,30 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Shatter Control",
+    "category": "Combat",
+    "name": "Shatter Control",
+    "description": "You can infuse your attacks with divine power capable of harming the undead and shattering the bond between the undead and its controller. As a special full-round action, you can make a single melee attack against an undead creature or a single ranged attack against an undead creature within 30 feet. If the attack is successful, you deal your normal damage with the melee or ranged attack to your undead target. If the target undead creature is being controlled by another, by way of spell, because the target undead creature is an unintelligent undead controlled by that creature, or is under command of another undead creature, and if the controlling creature is within 120 feet of you when you make the attack, the controlling creature must succeed at a Will save (DC ) or immediately lose control of the targeted undead for 10 minutes. While under this effect, the targeted undead is immediately compelled to seek out and attack its former controller until the control is regained.",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=Special Ability,TYPE.Channel Positive Energy",
+      "PRETEXT:Channel positive energy 4d6."
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_feats.lst",
+    "sha256": "b8183ddca5eece895bf40f7765744bb470970418a8baca58aee907487f0140e6",
+    "line": 50,
+    "record_key": "Shatter Control"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,20 @@
+{
+  "data": {
+    "category": "Weapon",
+    "key": "Rail cannon (elite)",
+    "name": "Rail cannon (elite)",
+    "type": "Weapon Proficiency"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 808,
+    "path": "starfinder/paizo/armory/sa_abilities.lst",
+    "record_key": "Rail cannon (elite)",
+    "sha256": "85bf67c2e2d4c7b4659de4d7f872b334d0f9e4332154d7229c1d10afec1f2c8a"
+  },
+  "unit_id": "armory:ability:rail_cannon_elite"
+}

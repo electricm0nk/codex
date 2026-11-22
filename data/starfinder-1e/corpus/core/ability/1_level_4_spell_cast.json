@@ -1,0 +1,20 @@
+{
+  "data": {
+    "category": "Class Feature",
+    "key": "+1 Level 4 Spell Cast",
+    "name": "+1 Level 4 Spell Cast",
+    "type": "Class Feature.SpecialQuality.GM Bonus Spell Cast"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 2433,
+    "path": "starfinder/paizo/core/scr_abilities.lst",
+    "record_key": "+1 Level 4 Spell Cast",
+    "sha256": "dfd415e1ab4cbef3c0417edecd59e13a7a116cad2086fcf2773dbafcb78711f5"
+  },
+  "unit_id": "core:ability:1_level_4_spell_cast"
+}

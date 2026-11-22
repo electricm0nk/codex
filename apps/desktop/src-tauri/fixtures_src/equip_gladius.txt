@@ -1,0 +1,2 @@
+# Fixture for desktop Market +N (AC and attack rows), source: ue_equip_arms_armor.lst, KEY: Gladius
+Gladius																				PROFICIENCY:WEAPON|Gladius								TYPE:Weapon.Resizable.Melee.Light.Finesseable.Martial.Piercing.Slashing.Sword																																	COST:15	WT:3										CRITMULT:x2	CRITRANGE:2							DAMAGE:1d6					EQMOD:Material ~ Steel																																									WIELD:Light								SIZE:M	SOURCEPAGE:p.28

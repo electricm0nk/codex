@@ -1,0 +1,19 @@
+{
+  "data": {
+    "key": "Armor (Telepathic dampener)",
+    "name": "Telepathic dampener",
+    "type": "Armor"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 21,
+    "path": "starfinder/paizo/near_space/sns_equipmods.lst",
+    "record_key": "Armor (Telepathic dampener)",
+    "sha256": "396c4986ff4ec72ca058ecd64f428114458c89c35c5191b9434ecdfe0efcc8be"
+  },
+  "unit_id": "near_space:equipment_modifier:armor_telepathic_dampener"
+}

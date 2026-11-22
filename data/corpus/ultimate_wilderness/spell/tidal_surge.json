@@ -1,0 +1,87 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "If you cast tidal surge on land, you create an onrushing surge of water 10 feet high in a 30-foot cone that deals (min(10,CASTERLEVEL/2))d6 points of bludgeoning damage and extinguishes all nonmagical fires in the area. Magical fire effects in the area of a tidal surge are affected as if you had cast dispel magic. In addition to taking damage, creatures that fail their Reflex saves are pushed 1d4x5 feet away from you, and Medium or smaller creatures are also knocked prone. If you cast this spell in or on a body of water at least 30 feet across, you can shape the spell either as the cone described above or as a 60-foot line. In either shape, the water deals 1d10 points of bludgeoning damage for every 2 caster levels you have in addition to pushing away creatures that fail their Reflex saves.",
+    "key": "Tidal Surge",
+    "level": 5,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Druid,Shaman=5"
+      },
+      {
+        "key": "COMPS",
+        "value": "V,S"
+      },
+      {
+        "key": "DESC",
+        "value": "Create a surge of water to bludgeon foes and extinguish fires.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "If you cast tidal surge on land, you create an onrushing surge of water 10 feet high in a 30-foot cone that deals (min(10,CASTERLEVEL/2))d6 points of bludgeoning damage and extinguishes all nonmagical fires in the area. Magical fire effects in the area of a tidal surge are affected as if you had cast dispel magic. In addition to taking damage, creatures that fail their Reflex saves are pushed 1d4x5 feet away from you, and Medium or smaller creatures are also knocked prone. If you cast this spell in or on a body of water at least 30 feet across, you can shape the spell either as the cone described above or as a 60-foot line. In either shape, the water deals 1d10 points of bludgeoning damage for every 2 caster levels you have in addition to pushing away creatures that fail their Reflex saves.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESCRIPTOR",
+        "value": "Water"
+      },
+      {
+        "key": "DURATION",
+        "value": "Instantaneous"
+      },
+      {
+        "key": "RANGE",
+        "value": "30 ft. or 60 ft.; see text"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Reflex half"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Conjuration"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.237"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "No"
+      },
+      {
+        "key": "SUBSCHOOL",
+        "value": "Creation"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "Cone-shaped burst or line; see text"
+      },
+      {
+        "key": "TYPE",
+        "value": "Divine"
+      }
+    ],
+    "school": "Conjuration"
+  },
+  "ingested_at": "2026-08-20T01:55:37Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 53,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_spells.lst",
+    "record_key": "Tidal Surge",
+    "sha256": "0ebcaef0aa5ab9967a06e53a5179bcaca436c5a2bfeeb8926821eb38391978a4"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr"
+  ]
+}

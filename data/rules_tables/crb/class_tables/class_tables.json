@@ -1,0 +1,1773 @@
+{
+  "format": "codex.rules_tables/1",
+  "table": "crb/class_tables/class_tables",
+  "licence": {
+    "license": "OGL",
+    "book": "crb",
+    "screen": "pi_screening::classify_field",
+    "pi_hits": [],
+    "redacted": []
+  },
+  "rows": [
+    {
+      "class_id": "Barbarian",
+      "level": 1,
+      "base_attack_bonus": 1,
+      "fort_save": 2,
+      "ref_save": 0,
+      "will_save": 0
+    },
+    {
+      "class_id": "Barbarian",
+      "level": 2,
+      "base_attack_bonus": 2,
+      "fort_save": 3,
+      "ref_save": 0,
+      "will_save": 0
+    },
+    {
+      "class_id": "Barbarian",
+      "level": 3,
+      "base_attack_bonus": 3,
+      "fort_save": 3,
+      "ref_save": 1,
+      "will_save": 1
+    },
+    {
+      "class_id": "Barbarian",
+      "level": 4,
+      "base_attack_bonus": 4,
+      "fort_save": 4,
+      "ref_save": 1,
+      "will_save": 1
+    },
+    {
+      "class_id": "Barbarian",
+      "level": 5,
+      "base_attack_bonus": 5,
+      "fort_save": 4,
+      "ref_save": 1,
+      "will_save": 1
+    },
+    {
+      "class_id": "Barbarian",
+      "level": 6,
+      "base_attack_bonus": 6,
+      "fort_save": 5,
+      "ref_save": 2,
+      "will_save": 2
+    },
+    {
+      "class_id": "Barbarian",
+      "level": 7,
+      "base_attack_bonus": 7,
+      "fort_save": 5,
+      "ref_save": 2,
+      "will_save": 2
+    },
+    {
+      "class_id": "Barbarian",
+      "level": 8,
+      "base_attack_bonus": 8,
+      "fort_save": 6,
+      "ref_save": 2,
+      "will_save": 2
+    },
+    {
+      "class_id": "Barbarian",
+      "level": 9,
+      "base_attack_bonus": 9,
+      "fort_save": 6,
+      "ref_save": 3,
+      "will_save": 3
+    },
+    {
+      "class_id": "Barbarian",
+      "level": 10,
+      "base_attack_bonus": 10,
+      "fort_save": 7,
+      "ref_save": 3,
+      "will_save": 3
+    },
+    {
+      "class_id": "Barbarian",
+      "level": 11,
+      "base_attack_bonus": 11,
+      "fort_save": 7,
+      "ref_save": 3,
+      "will_save": 3
+    },
+    {
+      "class_id": "Barbarian",
+      "level": 12,
+      "base_attack_bonus": 12,
+      "fort_save": 8,
+      "ref_save": 4,
+      "will_save": 4
+    },
+    {
+      "class_id": "Barbarian",
+      "level": 13,
+      "base_attack_bonus": 13,
+      "fort_save": 8,
+      "ref_save": 4,
+      "will_save": 4
+    },
+    {
+      "class_id": "Barbarian",
+      "level": 14,
+      "base_attack_bonus": 14,
+      "fort_save": 9,
+      "ref_save": 4,
+      "will_save": 4
+    },
+    {
+      "class_id": "Barbarian",
+      "level": 15,
+      "base_attack_bonus": 15,
+      "fort_save": 9,
+      "ref_save": 5,
+      "will_save": 5
+    },
+    {
+      "class_id": "Barbarian",
+      "level": 16,
+      "base_attack_bonus": 16,
+      "fort_save": 10,
+      "ref_save": 5,
+      "will_save": 5
+    },
+    {
+      "class_id": "Barbarian",
+      "level": 17,
+      "base_attack_bonus": 17,
+      "fort_save": 10,
+      "ref_save": 5,
+      "will_save": 5
+    },
+    {
+      "class_id": "Barbarian",
+      "level": 18,
+      "base_attack_bonus": 18,
+      "fort_save": 11,
+      "ref_save": 6,
+      "will_save": 6
+    },
+    {
+      "class_id": "Barbarian",
+      "level": 19,
+      "base_attack_bonus": 19,
+      "fort_save": 11,
+      "ref_save": 6,
+      "will_save": 6
+    },
+    {
+      "class_id": "Barbarian",
+      "level": 20,
+      "base_attack_bonus": 20,
+      "fort_save": 12,
+      "ref_save": 6,
+      "will_save": 6
+    },
+    {
+      "class_id": "Bard",
+      "level": 1,
+      "base_attack_bonus": 0,
+      "fort_save": 0,
+      "ref_save": 2,
+      "will_save": 2
+    },
+    {
+      "class_id": "Bard",
+      "level": 2,
+      "base_attack_bonus": 1,
+      "fort_save": 0,
+      "ref_save": 3,
+      "will_save": 3
+    },
+    {
+      "class_id": "Bard",
+      "level": 3,
+      "base_attack_bonus": 2,
+      "fort_save": 1,
+      "ref_save": 3,
+      "will_save": 3
+    },
+    {
+      "class_id": "Bard",
+      "level": 4,
+      "base_attack_bonus": 3,
+      "fort_save": 1,
+      "ref_save": 4,
+      "will_save": 4
+    },
+    {
+      "class_id": "Bard",
+      "level": 5,
+      "base_attack_bonus": 3,
+      "fort_save": 1,
+      "ref_save": 4,
+      "will_save": 4
+    },
+    {
+      "class_id": "Bard",
+      "level": 6,
+      "base_attack_bonus": 4,
+      "fort_save": 2,
+      "ref_save": 5,
+      "will_save": 5
+    },
+    {
+      "class_id": "Bard",
+      "level": 7,
+      "base_attack_bonus": 5,
+      "fort_save": 2,
+      "ref_save": 5,
+      "will_save": 5
+    },
+    {
+      "class_id": "Bard",
+      "level": 8,
+      "base_attack_bonus": 6,
+      "fort_save": 2,
+      "ref_save": 6,
+      "will_save": 6
+    },
+    {
+      "class_id": "Bard",
+      "level": 9,
+      "base_attack_bonus": 6,
+      "fort_save": 3,
+      "ref_save": 6,
+      "will_save": 6
+    },
+    {
+      "class_id": "Bard",
+      "level": 10,
+      "base_attack_bonus": 7,
+      "fort_save": 3,
+      "ref_save": 7,
+      "will_save": 7
+    },
+    {
+      "class_id": "Bard",
+      "level": 11,
+      "base_attack_bonus": 8,
+      "fort_save": 3,
+      "ref_save": 7,
+      "will_save": 7
+    },
+    {
+      "class_id": "Bard",
+      "level": 12,
+      "base_attack_bonus": 9,
+      "fort_save": 4,
+      "ref_save": 8,
+      "will_save": 8
+    },
+    {
+      "class_id": "Bard",
+      "level": 13,
+      "base_attack_bonus": 9,
+      "fort_save": 4,
+      "ref_save": 8,
+      "will_save": 8
+    },
+    {
+      "class_id": "Bard",
+      "level": 14,
+      "base_attack_bonus": 10,
+      "fort_save": 4,
+      "ref_save": 9,
+      "will_save": 9
+    },
+    {
+      "class_id": "Bard",
+      "level": 15,
+      "base_attack_bonus": 11,
+      "fort_save": 5,
+      "ref_save": 9,
+      "will_save": 9
+    },
+    {
+      "class_id": "Bard",
+      "level": 16,
+      "base_attack_bonus": 12,
+      "fort_save": 5,
+      "ref_save": 10,
+      "will_save": 10
+    },
+    {
+      "class_id": "Bard",
+      "level": 17,
+      "base_attack_bonus": 12,
+      "fort_save": 5,
+      "ref_save": 10,
+      "will_save": 10
+    },
+    {
+      "class_id": "Bard",
+      "level": 18,
+      "base_attack_bonus": 13,
+      "fort_save": 6,
+      "ref_save": 11,
+      "will_save": 11
+    },
+    {
+      "class_id": "Bard",
+      "level": 19,
+      "base_attack_bonus": 14,
+      "fort_save": 6,
+      "ref_save": 11,
+      "will_save": 11
+    },
+    {
+      "class_id": "Bard",
+      "level": 20,
+      "base_attack_bonus": 15,
+      "fort_save": 6,
+      "ref_save": 12,
+      "will_save": 12
+    },
+    {
+      "class_id": "Cleric",
+      "level": 1,
+      "base_attack_bonus": 0,
+      "fort_save": 2,
+      "ref_save": 0,
+      "will_save": 2
+    },
+    {
+      "class_id": "Cleric",
+      "level": 2,
+      "base_attack_bonus": 1,
+      "fort_save": 3,
+      "ref_save": 0,
+      "will_save": 3
+    },
+    {
+      "class_id": "Cleric",
+      "level": 3,
+      "base_attack_bonus": 2,
+      "fort_save": 3,
+      "ref_save": 1,
+      "will_save": 3
+    },
+    {
+      "class_id": "Cleric",
+      "level": 4,
+      "base_attack_bonus": 3,
+      "fort_save": 4,
+      "ref_save": 1,
+      "will_save": 4
+    },
+    {
+      "class_id": "Cleric",
+      "level": 5,
+      "base_attack_bonus": 3,
+      "fort_save": 4,
+      "ref_save": 1,
+      "will_save": 4
+    },
+    {
+      "class_id": "Cleric",
+      "level": 6,
+      "base_attack_bonus": 4,
+      "fort_save": 5,
+      "ref_save": 2,
+      "will_save": 5
+    },
+    {
+      "class_id": "Cleric",
+      "level": 7,
+      "base_attack_bonus": 5,
+      "fort_save": 5,
+      "ref_save": 2,
+      "will_save": 5
+    },
+    {
+      "class_id": "Cleric",
+      "level": 8,
+      "base_attack_bonus": 6,
+      "fort_save": 6,
+      "ref_save": 2,
+      "will_save": 6
+    },
+    {
+      "class_id": "Cleric",
+      "level": 9,
+      "base_attack_bonus": 6,
+      "fort_save": 6,
+      "ref_save": 3,
+      "will_save": 6
+    },
+    {
+      "class_id": "Cleric",
+      "level": 10,
+      "base_attack_bonus": 7,
+      "fort_save": 7,
+      "ref_save": 3,
+      "will_save": 7
+    },
+    {
+      "class_id": "Cleric",
+      "level": 11,
+      "base_attack_bonus": 8,
+      "fort_save": 7,
+      "ref_save": 3,
+      "will_save": 7
+    },
+    {
+      "class_id": "Cleric",
+      "level": 12,
+      "base_attack_bonus": 9,
+      "fort_save": 8,
+      "ref_save": 4,
+      "will_save": 8
+    },
+    {
+      "class_id": "Cleric",
+      "level": 13,
+      "base_attack_bonus": 9,
+      "fort_save": 8,
+      "ref_save": 4,
+      "will_save": 8
+    },
+    {
+      "class_id": "Cleric",
+      "level": 14,
+      "base_attack_bonus": 10,
+      "fort_save": 9,
+      "ref_save": 4,
+      "will_save": 9
+    },
+    {
+      "class_id": "Cleric",
+      "level": 15,
+      "base_attack_bonus": 11,
+      "fort_save": 9,
+      "ref_save": 5,
+      "will_save": 9
+    },
+    {
+      "class_id": "Cleric",
+      "level": 16,
+      "base_attack_bonus": 12,
+      "fort_save": 10,
+      "ref_save": 5,
+      "will_save": 10
+    },
+    {
+      "class_id": "Cleric",
+      "level": 17,
+      "base_attack_bonus": 12,
+      "fort_save": 10,
+      "ref_save": 5,
+      "will_save": 10
+    },
+    {
+      "class_id": "Cleric",
+      "level": 18,
+      "base_attack_bonus": 13,
+      "fort_save": 11,
+      "ref_save": 6,
+      "will_save": 11
+    },
+    {
+      "class_id": "Cleric",
+      "level": 19,
+      "base_attack_bonus": 14,
+      "fort_save": 11,
+      "ref_save": 6,
+      "will_save": 11
+    },
+    {
+      "class_id": "Cleric",
+      "level": 20,
+      "base_attack_bonus": 15,
+      "fort_save": 12,
+      "ref_save": 6,
+      "will_save": 12
+    },
+    {
+      "class_id": "Druid",
+      "level": 1,
+      "base_attack_bonus": 0,
+      "fort_save": 2,
+      "ref_save": 0,
+      "will_save": 2
+    },
+    {
+      "class_id": "Druid",
+      "level": 2,
+      "base_attack_bonus": 1,
+      "fort_save": 3,
+      "ref_save": 0,
+      "will_save": 3
+    },
+    {
+      "class_id": "Druid",
+      "level": 3,
+      "base_attack_bonus": 2,
+      "fort_save": 3,
+      "ref_save": 1,
+      "will_save": 3
+    },
+    {
+      "class_id": "Druid",
+      "level": 4,
+      "base_attack_bonus": 3,
+      "fort_save": 4,
+      "ref_save": 1,
+      "will_save": 4
+    },
+    {
+      "class_id": "Druid",
+      "level": 5,
+      "base_attack_bonus": 3,
+      "fort_save": 4,
+      "ref_save": 1,
+      "will_save": 4
+    },
+    {
+      "class_id": "Druid",
+      "level": 6,
+      "base_attack_bonus": 4,
+      "fort_save": 5,
+      "ref_save": 2,
+      "will_save": 5
+    },
+    {
+      "class_id": "Druid",
+      "level": 7,
+      "base_attack_bonus": 5,
+      "fort_save": 5,
+      "ref_save": 2,
+      "will_save": 5
+    },
+    {
+      "class_id": "Druid",
+      "level": 8,
+      "base_attack_bonus": 6,
+      "fort_save": 6,
+      "ref_save": 2,
+      "will_save": 6
+    },
+    {
+      "class_id": "Druid",
+      "level": 9,
+      "base_attack_bonus": 6,
+      "fort_save": 6,
+      "ref_save": 3,
+      "will_save": 6
+    },
+    {
+      "class_id": "Druid",
+      "level": 10,
+      "base_attack_bonus": 7,
+      "fort_save": 7,
+      "ref_save": 3,
+      "will_save": 7
+    },
+    {
+      "class_id": "Druid",
+      "level": 11,
+      "base_attack_bonus": 8,
+      "fort_save": 7,
+      "ref_save": 3,
+      "will_save": 7
+    },
+    {
+      "class_id": "Druid",
+      "level": 12,
+      "base_attack_bonus": 9,
+      "fort_save": 8,
+      "ref_save": 4,
+      "will_save": 8
+    },
+    {
+      "class_id": "Druid",
+      "level": 13,
+      "base_attack_bonus": 9,
+      "fort_save": 8,
+      "ref_save": 4,
+      "will_save": 8
+    },
+    {
+      "class_id": "Druid",
+      "level": 14,
+      "base_attack_bonus": 10,
+      "fort_save": 9,
+      "ref_save": 4,
+      "will_save": 9
+    },
+    {
+      "class_id": "Druid",
+      "level": 15,
+      "base_attack_bonus": 11,
+      "fort_save": 9,
+      "ref_save": 5,
+      "will_save": 9
+    },
+    {
+      "class_id": "Druid",
+      "level": 16,
+      "base_attack_bonus": 12,
+      "fort_save": 10,
+      "ref_save": 5,
+      "will_save": 10
+    },
+    {
+      "class_id": "Druid",
+      "level": 17,
+      "base_attack_bonus": 12,
+      "fort_save": 10,
+      "ref_save": 5,
+      "will_save": 10
+    },
+    {
+      "class_id": "Druid",
+      "level": 18,
+      "base_attack_bonus": 13,
+      "fort_save": 11,
+      "ref_save": 6,
+      "will_save": 11
+    },
+    {
+      "class_id": "Druid",
+      "level": 19,
+      "base_attack_bonus": 14,
+      "fort_save": 11,
+      "ref_save": 6,
+      "will_save": 11
+    },
+    {
+      "class_id": "Druid",
+      "level": 20,
+      "base_attack_bonus": 15,
+      "fort_save": 12,
+      "ref_save": 6,
+      "will_save": 12
+    },
+    {
+      "class_id": "Fighter",
+      "level": 1,
+      "base_attack_bonus": 1,
+      "fort_save": 2,
+      "ref_save": 0,
+      "will_save": 0
+    },
+    {
+      "class_id": "Fighter",
+      "level": 2,
+      "base_attack_bonus": 2,
+      "fort_save": 3,
+      "ref_save": 0,
+      "will_save": 0
+    },
+    {
+      "class_id": "Fighter",
+      "level": 3,
+      "base_attack_bonus": 3,
+      "fort_save": 3,
+      "ref_save": 1,
+      "will_save": 1
+    },
+    {
+      "class_id": "Fighter",
+      "level": 4,
+      "base_attack_bonus": 4,
+      "fort_save": 4,
+      "ref_save": 1,
+      "will_save": 1
+    },
+    {
+      "class_id": "Fighter",
+      "level": 5,
+      "base_attack_bonus": 5,
+      "fort_save": 4,
+      "ref_save": 1,
+      "will_save": 1
+    },
+    {
+      "class_id": "Fighter",
+      "level": 6,
+      "base_attack_bonus": 6,
+      "fort_save": 5,
+      "ref_save": 2,
+      "will_save": 2
+    },
+    {
+      "class_id": "Fighter",
+      "level": 7,
+      "base_attack_bonus": 7,
+      "fort_save": 5,
+      "ref_save": 2,
+      "will_save": 2
+    },
+    {
+      "class_id": "Fighter",
+      "level": 8,
+      "base_attack_bonus": 8,
+      "fort_save": 6,
+      "ref_save": 2,
+      "will_save": 2
+    },
+    {
+      "class_id": "Fighter",
+      "level": 9,
+      "base_attack_bonus": 9,
+      "fort_save": 6,
+      "ref_save": 3,
+      "will_save": 3
+    },
+    {
+      "class_id": "Fighter",
+      "level": 10,
+      "base_attack_bonus": 10,
+      "fort_save": 7,
+      "ref_save": 3,
+      "will_save": 3
+    },
+    {
+      "class_id": "Fighter",
+      "level": 11,
+      "base_attack_bonus": 11,
+      "fort_save": 7,
+      "ref_save": 3,
+      "will_save": 3
+    },
+    {
+      "class_id": "Fighter",
+      "level": 12,
+      "base_attack_bonus": 12,
+      "fort_save": 8,
+      "ref_save": 4,
+      "will_save": 4
+    },
+    {
+      "class_id": "Fighter",
+      "level": 13,
+      "base_attack_bonus": 13,
+      "fort_save": 8,
+      "ref_save": 4,
+      "will_save": 4
+    },
+    {
+      "class_id": "Fighter",
+      "level": 14,
+      "base_attack_bonus": 14,
+      "fort_save": 9,
+      "ref_save": 4,
+      "will_save": 4
+    },
+    {
+      "class_id": "Fighter",
+      "level": 15,
+      "base_attack_bonus": 15,
+      "fort_save": 9,
+      "ref_save": 5,
+      "will_save": 5
+    },
+    {
+      "class_id": "Fighter",
+      "level": 16,
+      "base_attack_bonus": 16,
+      "fort_save": 10,
+      "ref_save": 5,
+      "will_save": 5
+    },
+    {
+      "class_id": "Fighter",
+      "level": 17,
+      "base_attack_bonus": 17,
+      "fort_save": 10,
+      "ref_save": 5,
+      "will_save": 5
+    },
+    {
+      "class_id": "Fighter",
+      "level": 18,
+      "base_attack_bonus": 18,
+      "fort_save": 11,
+      "ref_save": 6,
+      "will_save": 6
+    },
+    {
+      "class_id": "Fighter",
+      "level": 19,
+      "base_attack_bonus": 19,
+      "fort_save": 11,
+      "ref_save": 6,
+      "will_save": 6
+    },
+    {
+      "class_id": "Fighter",
+      "level": 20,
+      "base_attack_bonus": 20,
+      "fort_save": 12,
+      "ref_save": 6,
+      "will_save": 6
+    },
+    {
+      "class_id": "Monk",
+      "level": 1,
+      "base_attack_bonus": 0,
+      "fort_save": 2,
+      "ref_save": 2,
+      "will_save": 2
+    },
+    {
+      "class_id": "Monk",
+      "level": 2,
+      "base_attack_bonus": 1,
+      "fort_save": 3,
+      "ref_save": 3,
+      "will_save": 3
+    },
+    {
+      "class_id": "Monk",
+      "level": 3,
+      "base_attack_bonus": 2,
+      "fort_save": 3,
+      "ref_save": 3,
+      "will_save": 3
+    },
+    {
+      "class_id": "Monk",
+      "level": 4,
+      "base_attack_bonus": 3,
+      "fort_save": 4,
+      "ref_save": 4,
+      "will_save": 4
+    },
+    {
+      "class_id": "Monk",
+      "level": 5,
+      "base_attack_bonus": 3,
+      "fort_save": 4,
+      "ref_save": 4,
+      "will_save": 4
+    },
+    {
+      "class_id": "Monk",
+      "level": 6,
+      "base_attack_bonus": 4,
+      "fort_save": 5,
+      "ref_save": 5,
+      "will_save": 5
+    },
+    {
+      "class_id": "Monk",
+      "level": 7,
+      "base_attack_bonus": 5,
+      "fort_save": 5,
+      "ref_save": 5,
+      "will_save": 5
+    },
+    {
+      "class_id": "Monk",
+      "level": 8,
+      "base_attack_bonus": 6,
+      "fort_save": 6,
+      "ref_save": 6,
+      "will_save": 6
+    },
+    {
+      "class_id": "Monk",
+      "level": 9,
+      "base_attack_bonus": 6,
+      "fort_save": 6,
+      "ref_save": 6,
+      "will_save": 6
+    },
+    {
+      "class_id": "Monk",
+      "level": 10,
+      "base_attack_bonus": 7,
+      "fort_save": 7,
+      "ref_save": 7,
+      "will_save": 7
+    },
+    {
+      "class_id": "Monk",
+      "level": 11,
+      "base_attack_bonus": 8,
+      "fort_save": 7,
+      "ref_save": 7,
+      "will_save": 7
+    },
+    {
+      "class_id": "Monk",
+      "level": 12,
+      "base_attack_bonus": 9,
+      "fort_save": 8,
+      "ref_save": 8,
+      "will_save": 8
+    },
+    {
+      "class_id": "Monk",
+      "level": 13,
+      "base_attack_bonus": 9,
+      "fort_save": 8,
+      "ref_save": 8,
+      "will_save": 8
+    },
+    {
+      "class_id": "Monk",
+      "level": 14,
+      "base_attack_bonus": 10,
+      "fort_save": 9,
+      "ref_save": 9,
+      "will_save": 9
+    },
+    {
+      "class_id": "Monk",
+      "level": 15,
+      "base_attack_bonus": 11,
+      "fort_save": 9,
+      "ref_save": 9,
+      "will_save": 9
+    },
+    {
+      "class_id": "Monk",
+      "level": 16,
+      "base_attack_bonus": 12,
+      "fort_save": 10,
+      "ref_save": 10,
+      "will_save": 10
+    },
+    {
+      "class_id": "Monk",
+      "level": 17,
+      "base_attack_bonus": 12,
+      "fort_save": 10,
+      "ref_save": 10,
+      "will_save": 10
+    },
+    {
+      "class_id": "Monk",
+      "level": 18,
+      "base_attack_bonus": 13,
+      "fort_save": 11,
+      "ref_save": 11,
+      "will_save": 11
+    },
+    {
+      "class_id": "Monk",
+      "level": 19,
+      "base_attack_bonus": 14,
+      "fort_save": 11,
+      "ref_save": 11,
+      "will_save": 11
+    },
+    {
+      "class_id": "Monk",
+      "level": 20,
+      "base_attack_bonus": 15,
+      "fort_save": 12,
+      "ref_save": 12,
+      "will_save": 12
+    },
+    {
+      "class_id": "Paladin",
+      "level": 1,
+      "base_attack_bonus": 1,
+      "fort_save": 2,
+      "ref_save": 0,
+      "will_save": 2
+    },
+    {
+      "class_id": "Paladin",
+      "level": 2,
+      "base_attack_bonus": 2,
+      "fort_save": 3,
+      "ref_save": 0,
+      "will_save": 3
+    },
+    {
+      "class_id": "Paladin",
+      "level": 3,
+      "base_attack_bonus": 3,
+      "fort_save": 3,
+      "ref_save": 1,
+      "will_save": 3
+    },
+    {
+      "class_id": "Paladin",
+      "level": 4,
+      "base_attack_bonus": 4,
+      "fort_save": 4,
+      "ref_save": 1,
+      "will_save": 4
+    },
+    {
+      "class_id": "Paladin",
+      "level": 5,
+      "base_attack_bonus": 5,
+      "fort_save": 4,
+      "ref_save": 1,
+      "will_save": 4
+    },
+    {
+      "class_id": "Paladin",
+      "level": 6,
+      "base_attack_bonus": 6,
+      "fort_save": 5,
+      "ref_save": 2,
+      "will_save": 5
+    },
+    {
+      "class_id": "Paladin",
+      "level": 7,
+      "base_attack_bonus": 7,
+      "fort_save": 5,
+      "ref_save": 2,
+      "will_save": 5
+    },
+    {
+      "class_id": "Paladin",
+      "level": 8,
+      "base_attack_bonus": 8,
+      "fort_save": 6,
+      "ref_save": 2,
+      "will_save": 6
+    },
+    {
+      "class_id": "Paladin",
+      "level": 9,
+      "base_attack_bonus": 9,
+      "fort_save": 6,
+      "ref_save": 3,
+      "will_save": 6
+    },
+    {
+      "class_id": "Paladin",
+      "level": 10,
+      "base_attack_bonus": 10,
+      "fort_save": 7,
+      "ref_save": 3,
+      "will_save": 7
+    },
+    {
+      "class_id": "Paladin",
+      "level": 11,
+      "base_attack_bonus": 11,
+      "fort_save": 7,
+      "ref_save": 3,
+      "will_save": 7
+    },
+    {
+      "class_id": "Paladin",
+      "level": 12,
+      "base_attack_bonus": 12,
+      "fort_save": 8,
+      "ref_save": 4,
+      "will_save": 8
+    },
+    {
+      "class_id": "Paladin",
+      "level": 13,
+      "base_attack_bonus": 13,
+      "fort_save": 8,
+      "ref_save": 4,
+      "will_save": 8
+    },
+    {
+      "class_id": "Paladin",
+      "level": 14,
+      "base_attack_bonus": 14,
+      "fort_save": 9,
+      "ref_save": 4,
+      "will_save": 9
+    },
+    {
+      "class_id": "Paladin",
+      "level": 15,
+      "base_attack_bonus": 15,
+      "fort_save": 9,
+      "ref_save": 5,
+      "will_save": 9
+    },
+    {
+      "class_id": "Paladin",
+      "level": 16,
+      "base_attack_bonus": 16,
+      "fort_save": 10,
+      "ref_save": 5,
+      "will_save": 10
+    },
+    {
+      "class_id": "Paladin",
+      "level": 17,
+      "base_attack_bonus": 17,
+      "fort_save": 10,
+      "ref_save": 5,
+      "will_save": 10
+    },
+    {
+      "class_id": "Paladin",
+      "level": 18,
+      "base_attack_bonus": 18,
+      "fort_save": 11,
+      "ref_save": 6,
+      "will_save": 11
+    },
+    {
+      "class_id": "Paladin",
+      "level": 19,
+      "base_attack_bonus": 19,
+      "fort_save": 11,
+      "ref_save": 6,
+      "will_save": 11
+    },
+    {
+      "class_id": "Paladin",
+      "level": 20,
+      "base_attack_bonus": 20,
+      "fort_save": 12,
+      "ref_save": 6,
+      "will_save": 12
+    },
+    {
+      "class_id": "Ranger",
+      "level": 1,
+      "base_attack_bonus": 1,
+      "fort_save": 2,
+      "ref_save": 2,
+      "will_save": 0
+    },
+    {
+      "class_id": "Ranger",
+      "level": 2,
+      "base_attack_bonus": 2,
+      "fort_save": 3,
+      "ref_save": 3,
+      "will_save": 0
+    },
+    {
+      "class_id": "Ranger",
+      "level": 3,
+      "base_attack_bonus": 3,
+      "fort_save": 3,
+      "ref_save": 3,
+      "will_save": 1
+    },
+    {
+      "class_id": "Ranger",
+      "level": 4,
+      "base_attack_bonus": 4,
+      "fort_save": 4,
+      "ref_save": 4,
+      "will_save": 1
+    },
+    {
+      "class_id": "Ranger",
+      "level": 5,
+      "base_attack_bonus": 5,
+      "fort_save": 4,
+      "ref_save": 4,
+      "will_save": 1
+    },
+    {
+      "class_id": "Ranger",
+      "level": 6,
+      "base_attack_bonus": 6,
+      "fort_save": 5,
+      "ref_save": 5,
+      "will_save": 2
+    },
+    {
+      "class_id": "Ranger",
+      "level": 7,
+      "base_attack_bonus": 7,
+      "fort_save": 5,
+      "ref_save": 5,
+      "will_save": 2
+    },
+    {
+      "class_id": "Ranger",
+      "level": 8,
+      "base_attack_bonus": 8,
+      "fort_save": 6,
+      "ref_save": 6,
+      "will_save": 2
+    },
+    {
+      "class_id": "Ranger",
+      "level": 9,
+      "base_attack_bonus": 9,
+      "fort_save": 6,
+      "ref_save": 6,
+      "will_save": 3
+    },
+    {
+      "class_id": "Ranger",
+      "level": 10,
+      "base_attack_bonus": 10,
+      "fort_save": 7,
+      "ref_save": 7,
+      "will_save": 3
+    },
+    {
+      "class_id": "Ranger",
+      "level": 11,
+      "base_attack_bonus": 11,
+      "fort_save": 7,
+      "ref_save": 7,
+      "will_save": 3
+    },
+    {
+      "class_id": "Ranger",
+      "level": 12,
+      "base_attack_bonus": 12,
+      "fort_save": 8,
+      "ref_save": 8,
+      "will_save": 4
+    },
+    {
+      "class_id": "Ranger",
+      "level": 13,
+      "base_attack_bonus": 13,
+      "fort_save": 8,
+      "ref_save": 8,
+      "will_save": 4
+    },
+    {
+      "class_id": "Ranger",
+      "level": 14,
+      "base_attack_bonus": 14,
+      "fort_save": 9,
+      "ref_save": 9,
+      "will_save": 4
+    },
+    {
+      "class_id": "Ranger",
+      "level": 15,
+      "base_attack_bonus": 15,
+      "fort_save": 9,
+      "ref_save": 9,
+      "will_save": 5
+    },
+    {
+      "class_id": "Ranger",
+      "level": 16,
+      "base_attack_bonus": 16,
+      "fort_save": 10,
+      "ref_save": 10,
+      "will_save": 5
+    },
+    {
+      "class_id": "Ranger",
+      "level": 17,
+      "base_attack_bonus": 17,
+      "fort_save": 10,
+      "ref_save": 10,
+      "will_save": 5
+    },
+    {
+      "class_id": "Ranger",
+      "level": 18,
+      "base_attack_bonus": 18,
+      "fort_save": 11,
+      "ref_save": 11,
+      "will_save": 6
+    },
+    {
+      "class_id": "Ranger",
+      "level": 19,
+      "base_attack_bonus": 19,
+      "fort_save": 11,
+      "ref_save": 11,
+      "will_save": 6
+    },
+    {
+      "class_id": "Ranger",
+      "level": 20,
+      "base_attack_bonus": 20,
+      "fort_save": 12,
+      "ref_save": 12,
+      "will_save": 6
+    },
+    {
+      "class_id": "Rogue",
+      "level": 1,
+      "base_attack_bonus": 0,
+      "fort_save": 0,
+      "ref_save": 2,
+      "will_save": 0
+    },
+    {
+      "class_id": "Rogue",
+      "level": 2,
+      "base_attack_bonus": 1,
+      "fort_save": 0,
+      "ref_save": 3,
+      "will_save": 0
+    },
+    {
+      "class_id": "Rogue",
+      "level": 3,
+      "base_attack_bonus": 2,
+      "fort_save": 1,
+      "ref_save": 3,
+      "will_save": 1
+    },
+    {
+      "class_id": "Rogue",
+      "level": 4,
+      "base_attack_bonus": 3,
+      "fort_save": 1,
+      "ref_save": 4,
+      "will_save": 1
+    },
+    {
+      "class_id": "Rogue",
+      "level": 5,
+      "base_attack_bonus": 3,
+      "fort_save": 1,
+      "ref_save": 4,
+      "will_save": 1
+    },
+    {
+      "class_id": "Rogue",
+      "level": 6,
+      "base_attack_bonus": 4,
+      "fort_save": 2,
+      "ref_save": 5,
+      "will_save": 2
+    },
+    {
+      "class_id": "Rogue",
+      "level": 7,
+      "base_attack_bonus": 5,
+      "fort_save": 2,
+      "ref_save": 5,
+      "will_save": 2
+    },
+    {
+      "class_id": "Rogue",
+      "level": 8,
+      "base_attack_bonus": 6,
+      "fort_save": 2,
+      "ref_save": 6,
+      "will_save": 2
+    },
+    {
+      "class_id": "Rogue",
+      "level": 9,
+      "base_attack_bonus": 6,
+      "fort_save": 3,
+      "ref_save": 6,
+      "will_save": 3
+    },
+    {
+      "class_id": "Rogue",
+      "level": 10,
+      "base_attack_bonus": 7,
+      "fort_save": 3,
+      "ref_save": 7,
+      "will_save": 3
+    },
+    {
+      "class_id": "Rogue",
+      "level": 11,
+      "base_attack_bonus": 8,
+      "fort_save": 3,
+      "ref_save": 7,
+      "will_save": 3
+    },
+    {
+      "class_id": "Rogue",
+      "level": 12,
+      "base_attack_bonus": 9,
+      "fort_save": 4,
+      "ref_save": 8,
+      "will_save": 4
+    },
+    {
+      "class_id": "Rogue",
+      "level": 13,
+      "base_attack_bonus": 9,
+      "fort_save": 4,
+      "ref_save": 8,
+      "will_save": 4
+    },
+    {
+      "class_id": "Rogue",
+      "level": 14,
+      "base_attack_bonus": 10,
+      "fort_save": 4,
+      "ref_save": 9,
+      "will_save": 4
+    },
+    {
+      "class_id": "Rogue",
+      "level": 15,
+      "base_attack_bonus": 11,
+      "fort_save": 5,
+      "ref_save": 9,
+      "will_save": 5
+    },
+    {
+      "class_id": "Rogue",
+      "level": 16,
+      "base_attack_bonus": 12,
+      "fort_save": 5,
+      "ref_save": 10,
+      "will_save": 5
+    },
+    {
+      "class_id": "Rogue",
+      "level": 17,
+      "base_attack_bonus": 12,
+      "fort_save": 5,
+      "ref_save": 10,
+      "will_save": 5
+    },
+    {
+      "class_id": "Rogue",
+      "level": 18,
+      "base_attack_bonus": 13,
+      "fort_save": 6,
+      "ref_save": 11,
+      "will_save": 6
+    },
+    {
+      "class_id": "Rogue",
+      "level": 19,
+      "base_attack_bonus": 14,
+      "fort_save": 6,
+      "ref_save": 11,
+      "will_save": 6
+    },
+    {
+      "class_id": "Rogue",
+      "level": 20,
+      "base_attack_bonus": 15,
+      "fort_save": 6,
+      "ref_save": 12,
+      "will_save": 6
+    },
+    {
+      "class_id": "Sorcerer",
+      "level": 1,
+      "base_attack_bonus": 0,
+      "fort_save": 0,
+      "ref_save": 0,
+      "will_save": 2
+    },
+    {
+      "class_id": "Sorcerer",
+      "level": 2,
+      "base_attack_bonus": 1,
+      "fort_save": 0,
+      "ref_save": 0,
+      "will_save": 3
+    },
+    {
+      "class_id": "Sorcerer",
+      "level": 3,
+      "base_attack_bonus": 1,
+      "fort_save": 1,
+      "ref_save": 1,
+      "will_save": 3
+    },
+    {
+      "class_id": "Sorcerer",
+      "level": 4,
+      "base_attack_bonus": 2,
+      "fort_save": 1,
+      "ref_save": 1,
+      "will_save": 4
+    },
+    {
+      "class_id": "Sorcerer",
+      "level": 5,
+      "base_attack_bonus": 2,
+      "fort_save": 1,
+      "ref_save": 1,
+      "will_save": 4
+    },
+    {
+      "class_id": "Sorcerer",
+      "level": 6,
+      "base_attack_bonus": 3,
+      "fort_save": 2,
+      "ref_save": 2,
+      "will_save": 5
+    },
+    {
+      "class_id": "Sorcerer",
+      "level": 7,
+      "base_attack_bonus": 3,
+      "fort_save": 2,
+      "ref_save": 2,
+      "will_save": 5
+    },
+    {
+      "class_id": "Sorcerer",
+      "level": 8,
+      "base_attack_bonus": 4,
+      "fort_save": 2,
+      "ref_save": 2,
+      "will_save": 6
+    },
+    {
+      "class_id": "Sorcerer",
+      "level": 9,
+      "base_attack_bonus": 4,
+      "fort_save": 3,
+      "ref_save": 3,
+      "will_save": 6
+    },
+    {
+      "class_id": "Sorcerer",
+      "level": 10,
+      "base_attack_bonus": 5,
+      "fort_save": 3,
+      "ref_save": 3,
+      "will_save": 7
+    },
+    {
+      "class_id": "Sorcerer",
+      "level": 11,
+      "base_attack_bonus": 5,
+      "fort_save": 3,
+      "ref_save": 3,
+      "will_save": 7
+    },
+    {
+      "class_id": "Sorcerer",
+      "level": 12,
+      "base_attack_bonus": 6,
+      "fort_save": 4,
+      "ref_save": 4,
+      "will_save": 8
+    },
+    {
+      "class_id": "Sorcerer",
+      "level": 13,
+      "base_attack_bonus": 6,
+      "fort_save": 4,
+      "ref_save": 4,
+      "will_save": 8
+    },
+    {
+      "class_id": "Sorcerer",
+      "level": 14,
+      "base_attack_bonus": 7,
+      "fort_save": 4,
+      "ref_save": 4,
+      "will_save": 9
+    },
+    {
+      "class_id": "Sorcerer",
+      "level": 15,
+      "base_attack_bonus": 7,
+      "fort_save": 5,
+      "ref_save": 5,
+      "will_save": 9
+    },
+    {
+      "class_id": "Sorcerer",
+      "level": 16,
+      "base_attack_bonus": 8,
+      "fort_save": 5,
+      "ref_save": 5,
+      "will_save": 10
+    },
+    {
+      "class_id": "Sorcerer",
+      "level": 17,
+      "base_attack_bonus": 8,
+      "fort_save": 5,
+      "ref_save": 5,
+      "will_save": 10
+    },
+    {
+      "class_id": "Sorcerer",
+      "level": 18,
+      "base_attack_bonus": 9,
+      "fort_save": 6,
+      "ref_save": 6,
+      "will_save": 11
+    },
+    {
+      "class_id": "Sorcerer",
+      "level": 19,
+      "base_attack_bonus": 9,
+      "fort_save": 6,
+      "ref_save": 6,
+      "will_save": 11
+    },
+    {
+      "class_id": "Sorcerer",
+      "level": 20,
+      "base_attack_bonus": 10,
+      "fort_save": 6,
+      "ref_save": 6,
+      "will_save": 12
+    },
+    {
+      "class_id": "Wizard",
+      "level": 1,
+      "base_attack_bonus": 0,
+      "fort_save": 0,
+      "ref_save": 0,
+      "will_save": 2
+    },
+    {
+      "class_id": "Wizard",
+      "level": 2,
+      "base_attack_bonus": 1,
+      "fort_save": 0,
+      "ref_save": 0,
+      "will_save": 3
+    },
+    {
+      "class_id": "Wizard",
+      "level": 3,
+      "base_attack_bonus": 1,
+      "fort_save": 1,
+      "ref_save": 1,
+      "will_save": 3
+    },
+    {
+      "class_id": "Wizard",
+      "level": 4,
+      "base_attack_bonus": 2,
+      "fort_save": 1,
+      "ref_save": 1,
+      "will_save": 4
+    },
+    {
+      "class_id": "Wizard",
+      "level": 5,
+      "base_attack_bonus": 2,
+      "fort_save": 1,
+      "ref_save": 1,
+      "will_save": 4
+    },
+    {
+      "class_id": "Wizard",
+      "level": 6,
+      "base_attack_bonus": 3,
+      "fort_save": 2,
+      "ref_save": 2,
+      "will_save": 5
+    },
+    {
+      "class_id": "Wizard",
+      "level": 7,
+      "base_attack_bonus": 3,
+      "fort_save": 2,
+      "ref_save": 2,
+      "will_save": 5
+    },
+    {
+      "class_id": "Wizard",
+      "level": 8,
+      "base_attack_bonus": 4,
+      "fort_save": 2,
+      "ref_save": 2,
+      "will_save": 6
+    },
+    {
+      "class_id": "Wizard",
+      "level": 9,
+      "base_attack_bonus": 4,
+      "fort_save": 3,
+      "ref_save": 3,
+      "will_save": 6
+    },
+    {
+      "class_id": "Wizard",
+      "level": 10,
+      "base_attack_bonus": 5,
+      "fort_save": 3,
+      "ref_save": 3,
+      "will_save": 7
+    },
+    {
+      "class_id": "Wizard",
+      "level": 11,
+      "base_attack_bonus": 5,
+      "fort_save": 3,
+      "ref_save": 3,
+      "will_save": 7
+    },
+    {
+      "class_id": "Wizard",
+      "level": 12,
+      "base_attack_bonus": 6,
+      "fort_save": 4,
+      "ref_save": 4,
+      "will_save": 8
+    },
+    {
+      "class_id": "Wizard",
+      "level": 13,
+      "base_attack_bonus": 6,
+      "fort_save": 4,
+      "ref_save": 4,
+      "will_save": 8
+    },
+    {
+      "class_id": "Wizard",
+      "level": 14,
+      "base_attack_bonus": 7,
+      "fort_save": 4,
+      "ref_save": 4,
+      "will_save": 9
+    },
+    {
+      "class_id": "Wizard",
+      "level": 15,
+      "base_attack_bonus": 7,
+      "fort_save": 5,
+      "ref_save": 5,
+      "will_save": 9
+    },
+    {
+      "class_id": "Wizard",
+      "level": 16,
+      "base_attack_bonus": 8,
+      "fort_save": 5,
+      "ref_save": 5,
+      "will_save": 10
+    },
+    {
+      "class_id": "Wizard",
+      "level": 17,
+      "base_attack_bonus": 8,
+      "fort_save": 5,
+      "ref_save": 5,
+      "will_save": 10
+    },
+    {
+      "class_id": "Wizard",
+      "level": 18,
+      "base_attack_bonus": 9,
+      "fort_save": 6,
+      "ref_save": 6,
+      "will_save": 11
+    },
+    {
+      "class_id": "Wizard",
+      "level": 19,
+      "base_attack_bonus": 9,
+      "fort_save": 6,
+      "ref_save": 6,
+      "will_save": 11
+    },
+    {
+      "class_id": "Wizard",
+      "level": 20,
+      "base_attack_bonus": 10,
+      "fort_save": 6,
+      "ref_save": 6,
+      "will_save": 12
+    }
+  ]
+}

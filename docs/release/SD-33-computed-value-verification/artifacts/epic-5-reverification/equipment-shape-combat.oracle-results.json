@@ -1,0 +1,512 @@
+{
+  "results": [
+    {
+      "unit_id": "advanced_class_guide:equipment:full_plate_of_the_corpse",
+      "ours": 9,
+      "oracle": 10,
+      "verdict": "disagree"
+    },
+    {
+      "unit_id": "advanced_class_guide:equipment:hero_s_hauberk",
+      "ours": 4,
+      "oracle": 5,
+      "verdict": "disagree"
+    },
+    {
+      "unit_id": "advanced_class_guide:equipment:stalking_armor_cold",
+      "ours": 3,
+      "oracle": 5,
+      "verdict": "disagree"
+    },
+    {
+      "unit_id": "advanced_class_guide:equipment:stalking_armor_desert",
+      "ours": 3,
+      "oracle": 5,
+      "verdict": "disagree"
+    },
+    {
+      "unit_id": "advanced_class_guide:equipment:stalking_armor_forest",
+      "ours": 3,
+      "oracle": 5,
+      "verdict": "disagree"
+    },
+    {
+      "unit_id": "advanced_class_guide:equipment:stalking_armor_jungle",
+      "ours": 3,
+      "oracle": 5,
+      "verdict": "disagree"
+    },
+    {
+      "unit_id": "advanced_class_guide:equipment:stalking_armor_mountain",
+      "ours": 3,
+      "oracle": 5,
+      "verdict": "disagree"
+    },
+    {
+      "unit_id": "advanced_class_guide:equipment:stalking_armor_plains",
+      "ours": 3,
+      "oracle": 5,
+      "verdict": "disagree"
+    },
+    {
+      "unit_id": "advanced_class_guide:equipment:stalking_armor_swamp",
+      "ours": 3,
+      "oracle": 5,
+      "verdict": "disagree"
+    },
+    {
+      "unit_id": "advanced_class_guide:equipment:stalking_armor_underground",
+      "ours": 3,
+      "oracle": 5,
+      "verdict": "disagree"
+    },
+    {
+      "unit_id": "advanced_class_guide:equipment:stalking_armor_urban",
+      "ours": 3,
+      "oracle": 5,
+      "verdict": "disagree"
+    },
+    {
+      "unit_id": "advanced_class_guide:equipment:stalking_armor_water",
+      "ours": 3,
+      "oracle": 5,
+      "verdict": "disagree"
+    },
+    {
+      "unit_id": "advanced_class_guide:equipment:tireless_tracking_hide",
+      "ours": 4,
+      "oracle": 5,
+      "verdict": "disagree"
+    },
+    {
+      "unit_id": "advanced_race_guide:equipment:sea_knife",
+      "ours": -2,
+      "oracle": 0,
+      "verdict": "disagree"
+    },
+    {
+      "unit_id": "core_rulebook:equipment:amulet_of_natural_armor_1",
+      "ours": 1,
+      "oracle": 1,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "core_rulebook:equipment:amulet_of_natural_armor_2",
+      "ours": 2,
+      "oracle": 2,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "core_rulebook:equipment:amulet_of_natural_armor_3",
+      "ours": 3,
+      "oracle": 3,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "core_rulebook:equipment:amulet_of_natural_armor_4",
+      "ours": 4,
+      "oracle": 4,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "core_rulebook:equipment:amulet_of_natural_armor_5",
+      "ours": 5,
+      "oracle": 5,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "core_rulebook:equipment:bracers_of_armor_1",
+      "ours": 1,
+      "oracle": 1,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "core_rulebook:equipment:bracers_of_armor_2",
+      "ours": 2,
+      "oracle": 2,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "core_rulebook:equipment:bracers_of_armor_3",
+      "ours": 3,
+      "oracle": 3,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "core_rulebook:equipment:bracers_of_armor_4",
+      "ours": 4,
+      "oracle": 4,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "core_rulebook:equipment:bracers_of_armor_5",
+      "ours": 5,
+      "oracle": 5,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "core_rulebook:equipment:bracers_of_armor_6",
+      "ours": 6,
+      "oracle": 6,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "core_rulebook:equipment:bracers_of_armor_7",
+      "ours": 7,
+      "oracle": 7,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "core_rulebook:equipment:bracers_of_armor_8",
+      "ours": 8,
+      "oracle": 8,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "core_rulebook:equipment:ioun_stone_dusty_rose_prism",
+      "ours": 1,
+      "oracle": 1,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "core_rulebook:equipment:ring_of_force_shield",
+      "ours": 2,
+      "oracle": 2,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "core_rulebook:equipment:ring_of_protection_1",
+      "ours": 1,
+      "oracle": 1,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "core_rulebook:equipment:ring_of_protection_2",
+      "ours": 2,
+      "oracle": 2,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "core_rulebook:equipment:ring_of_protection_3",
+      "ours": 3,
+      "oracle": 3,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "core_rulebook:equipment:ring_of_protection_4",
+      "ours": 4,
+      "oracle": 4,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "core_rulebook:equipment:ring_of_protection_5",
+      "ours": 5,
+      "oracle": 5,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "inner_sea_gods:equipment:knight_inheritor_s_ring",
+      "ours": 1,
+      "oracle": 1,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "inner_sea_gods:equipment:profane_seal_signet",
+      "ours": 1,
+      "oracle": 1,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "inner_sea_gods:equipment:red_hound_ring",
+      "ours": 1,
+      "oracle": 1,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "inner_sea_gods:equipment:ring_of_seven_lovely_colors",
+      "ours": 1,
+      "oracle": 1,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "inner_sea_gods:equipment:ring_of_unquenchable_passions",
+      "ours": 1,
+      "oracle": 1,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "inner_sea_races:equipment:armor_of_grim_triumph",
+      "ours": 6,
+      "oracle": 7,
+      "verdict": "disagree"
+    },
+    {
+      "unit_id": "inner_sea_races:equipment:coat_of_shells",
+      "ours": 5,
+      "oracle": 7,
+      "verdict": "disagree"
+    },
+    {
+      "unit_id": "inner_sea_races:equipment:gnome_scrap_armor",
+      "ours": 3,
+      "oracle": 5,
+      "verdict": "disagree"
+    },
+    {
+      "unit_id": "inner_sea_races:equipment:goblin_plate",
+      "ours": 9,
+      "oracle": 9,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "inner_sea_races:equipment:hallowed_chain",
+      "ours": 6,
+      "oracle": 8,
+      "verdict": "disagree"
+    },
+    {
+      "unit_id": "inner_sea_races:equipment:hallowed_chain_greater",
+      "ours": 6,
+      "oracle": 9,
+      "verdict": "disagree"
+    },
+    {
+      "unit_id": "inner_sea_races:equipment:hide_of_grim_triumph",
+      "ours": 4,
+      "oracle": 5,
+      "verdict": "disagree"
+    },
+    {
+      "unit_id": "inner_sea_races:equipment:mail_of_sly_steps",
+      "ours": 4,
+      "oracle": 6,
+      "verdict": "disagree"
+    },
+    {
+      "unit_id": "inner_sea_races:equipment:panoply_of_the_fierani_knight",
+      "ours": 9,
+      "oracle": 11,
+      "verdict": "disagree"
+    },
+    {
+      "unit_id": "inner_sea_world_guide:equipment:field_plate",
+      "ours": 7,
+      "oracle": 6,
+      "verdict": "disagree"
+    },
+    {
+      "unit_id": "inner_sea_world_guide:equipment:klar_as_shield",
+      "ours": 1,
+      "oracle": 1,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "inner_sea_world_guide:equipment:leaf_armor",
+      "ours": 3,
+      "oracle": 3,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "inner_sea_world_guide:equipment:stoneplate",
+      "ours": 9,
+      "oracle": 8,
+      "verdict": "disagree"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:bracers_of_defenselessness",
+      "ours": -5,
+      "oracle": -5,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:cape_of_bravado",
+      "ours": 1,
+      "oracle": 1,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:guardian_gorget",
+      "ours": 2,
+      "oracle": 2,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:jingasa_of_the_fortunate_soldier",
+      "ours": 1,
+      "oracle": 1,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:naga_scale_bindi_dark_naga",
+      "ours": 4,
+      "oracle": 4,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:naga_scale_bindi_guardian_naga",
+      "ours": 4,
+      "oracle": 4,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:naga_scale_bindi_lunar_naga",
+      "ours": 4,
+      "oracle": 4,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:naga_scale_bindi_royal_naga",
+      "ours": 4,
+      "oracle": 4,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:naga_scale_bindi_spirit_naga",
+      "ours": 4,
+      "oracle": 4,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:naga_scale_bindi_water_naga",
+      "ours": 4,
+      "oracle": 4,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:snakeskin_tunic",
+      "ours": 1,
+      "oracle": 2,
+      "verdict": "disagree"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:vambraces_of_defense",
+      "ours": 1,
+      "oracle": 1,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "ultimate_intrigue:equipment:diviner_s_blight",
+      "ours": 2,
+      "oracle": 6,
+      "verdict": "disagree"
+    },
+    {
+      "unit_id": "ultimate_magic:equipment:scroll_shield",
+      "ours": 1,
+      "oracle": 1,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "ultimate_psionics:equipment:goggles_of_far_sight",
+      "ours": -1,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "reason": "oracle_harness_ultimate_psionics_campaign_load_failure"
+    },
+    {
+      "unit_id": "ultimate_psionics:equipment:improved_mind_armor_heavy",
+      "ours": 9,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "reason": "oracle_harness_ultimate_psionics_campaign_load_failure"
+    },
+    {
+      "unit_id": "ultimate_psionics:equipment:improved_mind_armor_light",
+      "ours": 4,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "reason": "oracle_harness_ultimate_psionics_campaign_load_failure"
+    },
+    {
+      "unit_id": "ultimate_psionics:equipment:improved_mind_armor_medium",
+      "ours": 6,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "reason": "oracle_harness_ultimate_psionics_campaign_load_failure"
+    },
+    {
+      "unit_id": "ultimate_psionics:equipment:leather_of_confined_spaces",
+      "ours": 2,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "reason": "oracle_harness_ultimate_psionics_campaign_load_failure"
+    },
+    {
+      "unit_id": "ultimate_psionics:equipment:mind_armor_heavy",
+      "ours": 7,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "reason": "oracle_harness_ultimate_psionics_campaign_load_failure"
+    },
+    {
+      "unit_id": "ultimate_psionics:equipment:mind_armor_light",
+      "ours": 4,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "reason": "oracle_harness_ultimate_psionics_campaign_load_failure"
+    },
+    {
+      "unit_id": "ultimate_psionics:equipment:mind_armor_medium",
+      "ours": 6,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "reason": "oracle_harness_ultimate_psionics_campaign_load_failure"
+    },
+    {
+      "unit_id": "ultimate_psionics:equipment:mind_shield",
+      "ours": 2,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "reason": "oracle_harness_ultimate_psionics_campaign_load_failure"
+    },
+    {
+      "unit_id": "ultimate_psionics:equipment:mind_shield_heavy",
+      "ours": 2,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "reason": "oracle_harness_ultimate_psionics_campaign_load_failure"
+    },
+    {
+      "unit_id": "ultimate_psionics:equipment:mind_shield_tower",
+      "ours": 4,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "reason": "oracle_harness_ultimate_psionics_campaign_load_failure"
+    },
+    {
+      "unit_id": "ultimate_psionics:equipment:plate_of_the_juggernaut",
+      "ours": 9,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "reason": "oracle_harness_ultimate_psionics_campaign_load_failure"
+    },
+    {
+      "unit_id": "ultimate_psionics:equipment:psychoactive_skin_defender",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "reason": "engine_id_resolve_fails_templated_variant_record"
+    },
+    {
+      "unit_id": "ultimate_psionics:equipment:psychoactive_skin_hero",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "reason": "engine_id_resolve_fails_templated_variant_record"
+    },
+    {
+      "unit_id": "ultimate_psionics:equipment:shadow_shirt",
+      "ours": 4,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "reason": "oracle_harness_ultimate_psionics_campaign_load_failure"
+    },
+    {
+      "unit_id": "ultimate_psionics:equipment:skinwalker_s_leather",
+      "ours": 3,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "reason": "oracle_harness_ultimate_psionics_campaign_load_failure"
+    }
+  ]
+}

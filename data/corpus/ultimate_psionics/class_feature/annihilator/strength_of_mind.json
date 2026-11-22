@@ -1,0 +1,53 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Annihilator ~ Strength of Mind",
+    "name": "Strength of Mind",
+    "class": "Annihilator",
+    "description": "You can spend 2 power points to gain a +2 bonus to Strength and Constitution until the end of your next turn.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Annihilator ~ Strength of Mind"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "AegisClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "You can spend 2 power points to gain a +2 bonus to Strength and Constitution until the end of your next turn."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.311"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|STAT|STR,CON|2"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1777,
+    "record_key": "Annihilator ~ Strength of Mind"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:tempbonus",
+    "derived:tempbonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

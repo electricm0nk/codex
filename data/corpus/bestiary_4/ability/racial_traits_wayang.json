@@ -1,0 +1,36 @@
+{
+  "codex_generated_name": false,
+  "completeness": "chassis_only",
+  "data": {
+    "description": null,
+    "key": "Racial Traits ~ Wayang",
+    "name": "Racial Traits ~ Wayang",
+    "raw_tokens": [
+      {
+        "key": "DEFINE",
+        "value": "Wayang_ReplaceAbilityScores|0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Wayang Racial Trait|AUTOMATIC|Wayang ~ Ability Scores|PREVAREQ:Wayang_ReplaceAbilityScores,0"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 10,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/wayang/wayang_abilities_globalvar.lst",
+    "record_key": "Racial Traits ~ Wayang",
+    "sha256": "03d2b1e46878da3eb19ef4fc9750885e8e364c6574ef64c2a2739148a2e13dcf"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

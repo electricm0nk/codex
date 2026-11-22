@@ -1,0 +1,58 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Half-Orc Racial Subtype ~ Arena-Bred",
+    "name": "Arena-Bred",
+    "description": "Many half-orcs are born and raised to fight in the arena, and in many cases have two half-orc parents or even a half-orc and a human parent. These arena-bred half-orcs lose the brutal physical appearance of their orc ancestors and look more human. They have the city-raised and skilled alternate racial traits.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Half-Orc Racial Subtype ~ Arena-Bred"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Half-Orc Racial Subtype.SpecialQuality"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Half-Orc Racial Subtype ~ Arena-Bred],[!PREFACT:1,ABILITIES,HalfOrc_ReplaceWeaponFamiliarity=true,HalfOrc_ReplaceVision=true]"
+      },
+      {
+        "key": "DESC",
+        "value": "Many half-orcs are born and raised to fight in the arena, and in many cases have two half-orc parents or even a half-orc and a human parent. These arena-bred half-orcs lose the brutal physical appearance of their orc ancestors and look more human. They have the city-raised and skilled alternate racial traits."
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "Arena-Bred"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Half-Orc Racial Trait|NORMAL|Half-Orc ~ City-raised|Half-Orc ~ Skilled"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.52"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+    "sha256": "ea475d7c207e2c4b182019997689ca48a090019620250e43bc4e85b0ff77c3a3",
+    "line": 2178,
+    "record_key": "Half-Orc Racial Subtype ~ Arena-Bred"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

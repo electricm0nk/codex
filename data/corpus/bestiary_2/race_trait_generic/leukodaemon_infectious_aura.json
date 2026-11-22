@@ -1,0 +1,50 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Leukodaemon ~ Infectious Aura",
+    "name": "Infectious Aura",
+    "description": "All creatures within 50 feet of a leukodaemon take a -4 penalty on Fortitude saves against disease effects.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Leukodaemon ~ Infectious Aura"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Aura.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "All creatures within 50 feet of a leukodaemon take a -4 penalty on Fortitude saves against disease effects."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.68"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(50 ft.)"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 302,
+    "record_key": "Leukodaemon ~ Infectious Aura"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

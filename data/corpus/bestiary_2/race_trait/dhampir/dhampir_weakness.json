@@ -1,0 +1,75 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T02:49:29Z",
+  "data": {
+    "key": "Dhampir ~ Weakness",
+    "name": "Light Sensitivity",
+    "race_key": "Dhampir",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Dhampir Racial Trait",
+      "Dhampir Racial Default"
+    ],
+    "is_racial_default": true,
+    "suppressed_by_flag": "Dhampir_ReplaceWeakness",
+    "sets_replace_flags": [],
+    "description": "Dhampirs are dazzled in areas of bright sunlight or within the radius of a daylight spell.",
+    "source_page": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Dhampir ~ Weakness"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Dhampir Racial Trait.Dhampir Racial Default"
+      },
+      {
+        "key": "!PREFACT",
+        "value": "1,ABILITIES,Dhampir_ReplaceWeakness=True"
+      },
+      {
+        "key": "DESC",
+        "value": "Dhampirs are dazzled in areas of bright sunlight or within the radius of a daylight spell."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Universal Monster Rule ~ Light Sensitivity"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.xx"
+      }
+    ],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "VAR",
+          "UMR_LightSensitivity_SpecificDesc",
+          "1",
+          "TYPE=Boolean"
+        ]
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/dhampir/dhampir_abilities_race.lst",
+    "sha256": "faeeb2800b2a75f92e1f2c7b02ee3d2c253bc3599735699d8bca0acaf00742c5",
+    "line": 20,
+    "record_key": "Dhampir ~ Weakness"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

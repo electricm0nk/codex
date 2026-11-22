@@ -1,0 +1,36 @@
+{
+  "codex_generated_name": false,
+  "completeness": "chassis_only",
+  "data": {
+    "description": null,
+    "key": "Racial Traits ~ Ghoran",
+    "name": "Racial Traits ~ Ghoran",
+    "raw_tokens": [
+      {
+        "key": "DEFINE",
+        "value": "Ghoran_ReplaceAbilityScores|0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Ghoran Racial Trait|AUTOMATIC|Ghoran ~ Ability Scores|PREVAREQ:Ghoran_ReplaceAbilityScores,0"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 10,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/ghoran/ghoran_abilities_globalvar.lst",
+    "record_key": "Racial Traits ~ Ghoran",
+    "sha256": "d4fd9d7548605436389f249362ab063b5148f376ef0167e76a7e0ddca857854e"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

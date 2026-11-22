@@ -1,0 +1,99 @@
+{
+  "codex_generated_name": false,
+  "completeness": "chassis_only",
+  "data": {
+    "description": null,
+    "key": "Cure Light Wounds",
+    "name": "Cure Light Wounds",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Spell-Like Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Innate Spell-Like Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SLA_CureLightWounds_LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SLA_CureLightWounds_SpellLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SLA_CureLightWounds_Times|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SLA_CureLightWounds_DCMod|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SLA_CureLightWounds_DC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SLA_CureLightWounds_AtWill|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SLA_CureLightWounds_Constant|0"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=SLA_CureLightWounds_Times|TIMEUNIT=Day|CASTERLEVEL=SLA_CureLightWounds_LVL|Cure Light Wounds,SLA_CureLightWounds_DC|PREVAREQ:SLA_CureLightWounds_AtWill,0|PREVAREQ:SLA_CureLightWounds_Constant,0"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=ATWILL|TIMEUNIT=Day|CASTERLEVEL=SLA_CureLightWounds_LVL|Cure Light Wounds,SLA_CureLightWounds_DC|PREVAREQ:SLA_CureLightWounds_AtWill,1|PREVAREQ:SLA_CureLightWounds_Constant,0"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=ATWILL|TIMEUNIT=Constant|CASTERLEVEL=SLA_CureLightWounds_LVL|Cure Light Wounds,SLA_CureLightWounds_DC|PREVAREQ:SLA_CureLightWounds_Constant,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SLA_CureLightWounds_LVL|SLA_Base_LVL|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SLA_CureLightWounds_SpellLVL|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SLA_CureLightWounds_Times|SLA_Base_Times|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SLA_CureLightWounds_DCMod|SLA_DC_STAT|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SLA_CureLightWounds_DC|10+SLA_CureLightWounds_SpellLVL+SLA_CureLightWounds_DCMod"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 735,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities.lst",
+    "record_key": "Cure Light Wounds",
+    "sha256": "ab77788e05536453a16a22bef8a5e74c209e536cb5b8cdcdb1130f712cc2402f"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "computed:pre_guard",
+    "derived:bonus",
+    "derived:spells"
+  ]
+}

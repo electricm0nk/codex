@@ -1,0 +1,50 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "REMOVE this when you are done to remove the reminder on the TODO.",
+    "key": "PERMANENCY SPELL / ADD THIS FIRST TO ADD NEW EFFECTS",
+    "name": "PERMANENCY SPELL / ADD THIS FIRST TO ADD NEW EFFECTS",
+    "raw_tokens": [
+      {
+        "key": "SORTKEY",
+        "value": "1"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "PermanencySpell"
+      },
+      {
+        "key": "DESC",
+        "value": "REMOVE this when you are done to remove the reminder on the TODO."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Permanency Applied Effects|1"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1601,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "record_key": "PERMANENCY SPELL / ADD THIS FIRST TO ADD NEW EFFECTS",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

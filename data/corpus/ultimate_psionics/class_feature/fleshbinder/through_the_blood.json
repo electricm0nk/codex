@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Fleshbinder ~ Through the Blood",
+    "name": "Through the Blood",
+    "class": "Fleshbinder",
+    "description": "You can manifest any psychometabolism power with a range of Personal or greater and instead target a creature you touch, leaving that power dormant inside of the touched creature. The power remains dormant until you discharge it by expending your psionic focus as a free action.  A creature can only have one such dormant power within it at any given time.  Power resistances and saves, if any, still apply against the manifested power and the creature must still be on the same plane of existence as you when the effect is triggered.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Fleshbinder ~ Through the Blood"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "PsionClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "You can manifest any psychometabolism power with a range of Personal or greater and instead target a creature you touch, leaving that power dormant inside of the touched creature. The power remains dormant until you discharge it by expending your psionic focus as a free action.  A creature can only have one such dormant power within it at any given time.  Power resistances and saves, if any, still apply against the manifested power and the creature must still be on the same plane of existence as you when the effect is triggered."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.337"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2016,
+    "record_key": "Fleshbinder ~ Through the Blood"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

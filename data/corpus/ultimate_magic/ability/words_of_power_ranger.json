@@ -1,0 +1,93 @@
+{
+  "codex_generated_name": false,
+  "completeness": "full",
+  "data": {
+    "description": "A words of power using ranger; %1 meta words/day.|RangerMetaWordsPerDay",
+    "key": "Ranger Archetype ~ Words of Power",
+    "name": "Words of Power Ranger",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ranger Archetype ~ Words of Power"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.RangerArchetype.RangerSpells.WordsOfPower"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Ranger=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Ranger Archetype ~ Words of Power],[!PREABILITY:1,CATEGORY=Archetype,TYPE.RangerSpells]"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RangerMetaWordsPerDay|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A words of power using ranger; %1 meta words/day.|RangerMetaWordsPerDay"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Words of Power Tracker"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Words of Power|AUTOMATIC|Barrier|Burst|Cone|Line|Personal|Selected"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Words of Power|AUTOMATIC|TYPE=MetaLevel0|TYPE=MetaLevel1|TYPE=Ranger1|PRECLASS:1,Ranger=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Words of Power|AUTOMATIC|TYPE=MetaLevel2|TYPE=Ranger2|PRECLASS:1,Ranger=7"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Words of Power|AUTOMATIC|TYPE=MetaLevel3|TYPE=Ranger3|PRECLASS:1,Ranger=10"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Words of Power|AUTOMATIC|TYPE=MetaLevel4|TYPE=Ranger4|PRECLASS:1,Ranger=13"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RangerMetaWordsPerDay|max(1,classlevel(\"Ranger\")/2)+BonusMetaWordsPerDay"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.162"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 28,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_wordsofpower.lst",
+    "record_key": "Ranger Archetype ~ Words of Power",
+    "sha256": "93797e9bf9f74a955946ee9b82a1981b69e73a19950f3c30210d3f85dc34cc04"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

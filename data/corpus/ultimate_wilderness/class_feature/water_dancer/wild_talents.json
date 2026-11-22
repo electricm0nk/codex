@@ -1,0 +1,77 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Water Dancer ~ Wild Talents",
+    "name": "Wild Talents",
+    "class": "Monk",
+    "description": "At 2nd level and every 4 levels thereafter, a water dancer selects a new utility wild talent from the list of options available to the kineticist class, treating his monk level -2 (minimum 1) as his kineticist level for the purpose of fulfilling prerequisites as well as for level-dependent effects of the utility talent. He can select only universal wild talents or those that match his element (see elemental focus above). At 6th, 10th, and 16th levels, he can replace one of his utility wild talents with another wild talent of the same level or lower. He can't replace a wild talent that he used to qualify for another of his wild talents.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Water Dancer ~ Wild Talents"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Monk Class Features.WaterDancerClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WildTalentsDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WildTalentDCStat|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Pool_KineticistUtilityWildTalents|0"
+      },
+      {
+        "key": "DESC",
+        "value": "At 2nd level and every 4 levels thereafter, a water dancer selects a new utility wild talent from the list of options available to the kineticist class, treating his monk level -2 (minimum 1) as his kineticist level for the purpose of fulfilling prerequisites as well as for level-dependent effects of the utility talent. He can select only universal wild talents or those that match his element (see elemental focus above). At 6th, 10th, and 16th levels, he can replace one of his utility wild talents with another wild talent of the same level or lower. He can't replace a wild talent that he used to qualify for another of his wild talents."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WildTalentsDC|10+(MonkLVL/2)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WildTalentsDC|WildTalentDCStat"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WildTalentDCStat|CON"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Pool_KineticistUtilityWildTalents|MonkLVL/2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.65"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/support/uw_abilities_class_oa.lst",
+    "sha256": "26a03f73c3534cd6bae0bcda9581b3a89fa28ce5f78f854e009fc8110c477568",
+    "line": 118,
+    "record_key": "Water Dancer ~ Wild Talents"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

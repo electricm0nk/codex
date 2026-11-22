@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Combat Trick ~ Greater Penetrating Strike",
+    "name": "Combat Trick / Greater Penetrating Strike",
+    "class": "Combat Trick",
+    "description": "When you use a weapon with which you have Weapon Focus to damage a creature that has damage reduction, you can spend 5 stamina points to allow all your allies within 30 feet to ignore 10 points of that creature's damage reduction for 1 round. This amount is reduced to 5 points for damage reduction without a type (such as DR 10/-). This effect does not stack with Greater Penetrating Strike's normal effect, but it does allow you to apply the effect to all your other weapons for the duration.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Combat Trick ~ Greater Penetrating Strike"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Combat Trick"
+      },
+      {
+        "key": "DESC",
+        "value": "When you use a weapon with which you have Weapon Focus to damage a creature that has damage reduction, you can spend 5 stamina points to allow all your allies within 30 feet to ignore 10 points of that creature's damage reduction for 1 round. This amount is reduced to 5 points for damage reduction without a type (such as DR 10/-). This effect does not stack with Greater Penetrating Strike's normal effect, but it does allow you to apply the effect to all your other weapons for the duration."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "121"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst",
+    "sha256": "2becbb0524bd4c367cc1273434c20bcd8e42e3e08abd372f99b005e69e8c4725",
+    "line": 1169,
+    "record_key": "Combat Trick ~ Greater Penetrating Strike"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

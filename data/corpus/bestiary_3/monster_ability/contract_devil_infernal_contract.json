@@ -1,0 +1,55 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Contract Devil ~ Infernal Contract",
+    "delivery": "Supernatural",
+    "description": "As a full-round action, a contract devil can produce an infernal contract for a single living mortal creature. This contract can grant a wide range of abilities and effects, as detailed on the following page. To receive any of these bonuses, however, the mortal must sign its true name to the document of its own free will. Upon doing so, that mortal's soul is sworn to the contract devil, condemning the soul to an eternity of servitude in Hell rather than whatever fate would naturally befall it upon the mortal's death. Breaking a contract with a contract devil is difficult and dangerous (see the next page); as long as the infernal contract remains in effect, the victim cannot be restored to life after death save by a miracle or a wish. If a mortal is restored to life in this way, the contract devil immediately senses the development-it not only knows which soul has been restored to life, but also gains the benefits of a discern location spell targeted on the character or creature that restored the damned soul to life.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:contract_devil_infernal_contract",
+    "name": "Infernal Contract",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "As a full-round action, a contract devil can produce an infernal contract for a single living mortal creature. This contract can grant a wide range of abilities and effects, as detailed on the following page. To receive any of these bonuses, however, the mortal must sign its true name to the document of its own free will. Upon doing so, that mortal's soul is sworn to the contract devil, condemning the soul to an eternity of servitude in Hell rather than whatever fate would naturally befall it upon the mortal's death. Breaking a contract with a contract devil is difficult and dangerous (see the next page); as long as the infernal contract remains in effect, the victim cannot be restored to life after death save by a miracle or a wish. If a mortal is restored to life in this way, the contract devil immediately senses the development-it not only knows which soul has been restored to life, but also gains the benefits of a discern location spell targeted on the character or creature that restored the damned soul to life."
+      },
+      {
+        "key": "KEY",
+        "value": "Contract Devil ~ Infernal Contract"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.76"
+      },
+      {
+        "key": "TYPE",
+        "value": "ContractDevilRacialAbility.SpecialQuality.Supernatural"
+      }
+    ],
+    "source_page": "p.76",
+    "traits": [
+      "ContractDevilRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T14:09:11Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 672,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Contract Devil ~ Infernal Contract",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "codex_generated_name": false,
+  "completeness": "chassis_only",
+  "data": {
+    "key": "Race ~ Skinwalker",
+    "name": "Skinwalker",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Race ~ Skinwalker"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "IsSkinwalker"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T16:43:17Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 4,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/skinwalker/skinwalker_templates.lst",
+    "record_key": "Race ~ Skinwalker",
+    "sha256": "77bc06d05e9480f38d1600ac4d39062668cfe09ebdacbbcafb71a4420c3dd15e"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

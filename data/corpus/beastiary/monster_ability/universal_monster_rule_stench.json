@@ -1,0 +1,153 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Universal Monster Rule ~ Stench",
+    "delivery": "Extraordinary",
+    "description": "A creature with the stench special ability secretes an oily chemical that nearly every other creature finds offensive. All living creatures (except those with the stench special ability) within %1 feet must succeed on a Fortitude save (DC %2) or be sickened. The duration of the sickened condition is given in the creature's descriptive text. Creatures that successfully save cannot be affected by the same creature's stench for 24 hours. A delay poison or neutralize poison spell removes the effect from the sickened creature. Creatures with immunity to poison are unaffected, and creatures resistant to poison receive their normal bonus on their saving throws.",
+    "description_variables": [
+      "UMR_Stench_Range",
+      "UMR_Stench_DC"
+    ],
+    "facet": "SpecialQuality",
+    "key": "beastiary:monster_ability:universal_monster_rule_stench",
+    "name": "Stench",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Stench"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(%1 ft., DC %2, %3 minutes)|UMR_Stench_Range|UMR_Stench_DC|UMR_Stench_DurationBonus|PREVARNEQ:UMR_Stench_Range,30|PREVAREQ:UMR_Stench_DurationDice,0|PREVAREQ:UMR_Stench_DurationDieSize,0|PREVARLTEQ:UMR_Stench_DurationTypeRounds,0|PREVARGTEQ:UMR_Stench_DurationTypeMinutes,1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(%1 ft., DC %2, %3 rounds)|UMR_Stench_Range|UMR_Stench_DC|UMR_Stench_DurationBonus|PREVARNEQ:UMR_Stench_Range,30|PREVAREQ:UMR_Stench_DurationDice,0|PREVAREQ:UMR_Stench_DurationDieSize,0|PREVARGTEQ:UMR_Stench_DurationTypeRounds,1|PREVARLTEQ:UMR_Stench_DurationTypeMinutes,0"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(%1 ft., DC %2, %3d%4 minutes)|UMR_Stench_Range|UMR_Stench_DC|UMR_Stench_DurationDice|UMR_Stench_DurationDieSize|PREVARNEQ:UMR_Stench_Range,30|PREVARGTEQ:UMR_Stench_DurationDice,1|PREVARGTEQ:UMR_Stench_DurationDieSize,1|PREVAREQ:UMR_Stench_DurationBonus,0|PREVARLTEQ:UMR_Stench_DurationTypeRounds,0|PREVARGTEQ:UMR_Stench_DurationTypeMinutes,1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(%1 ft., DC %2, %3d%4 rounds)|UMR_Stench_Range|UMR_Stench_DC|UMR_Stench_DurationDice|UMR_Stench_DurationDieSize|PREVARNEQ:UMR_Stench_Range,30|PREVARGTEQ:UMR_Stench_DurationDice,1|PREVARGTEQ:UMR_Stench_DurationDieSize,1|PREVAREQ:UMR_Stench_DurationBonus,0|PREVARGTEQ:UMR_Stench_DurationTypeRounds,1|PREVARLTEQ:UMR_Stench_DurationTypeMinutes,0"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(%1 ft., DC %2, %3d%4+%5 minutes)|UMR_Stench_Range|UMR_Stench_DC|UMR_Stench_DurationDice|UMR_Stench_DurationDieSize|UMR_Stench_DurationBonus|PREVARNEQ:UMR_Stench_Range,30|PREVARGTEQ:UMR_Stench_DurationDice,1|PREVARGTEQ:UMR_Stench_DurationDieSize,1|PREVARGTEQ:UMR_Stench_DurationBonus,1|PREVARLTEQ:UMR_Stench_DurationTypeRounds,0|PREVARGTEQ:UMR_Stench_DurationTypeMinutes,1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(%1 ft., DC %2, %3d%4+%5 rounds)|UMR_Stench_Range|UMR_Stench_DC|UMR_Stench_DurationDice|UMR_Stench_DurationDieSize|UMR_Stench_DurationBonus|PREVARNEQ:UMR_Stench_Range,30|PREVARGTEQ:UMR_Stench_DurationDice,1|PREVARGTEQ:UMR_Stench_DurationDieSize,1|PREVARGTEQ:UMR_Stench_DurationBonus,1|PREVARGTEQ:UMR_Stench_DurationTypeRounds,1|PREVARLTEQ:UMR_Stench_DurationTypeMinutes,0"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(DC %1, %2 minutes)|UMR_Stench_DC|UMR_Stench_DurationBonus|PREVAREQ:UMR_Stench_Range,30|PREVAREQ:UMR_Stench_DurationDice,0|PREVAREQ:UMR_Stench_DurationDieSize,0|PREVARLTEQ:UMR_Stench_DurationTypeRounds,0|PREVARGTEQ:UMR_Stench_DurationTypeMinutes,1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(DC %1, %2 rounds)|UMR_Stench_DC|UMR_Stench_DurationBonus|PREVAREQ:UMR_Stench_Range,30|PREVAREQ:UMR_Stench_DurationDice,0|PREVAREQ:UMR_Stench_DurationDieSize,0|PREVARGTEQ:UMR_Stench_DurationTypeRounds,1|PREVARLTEQ:UMR_Stench_DurationTypeMinutes,0"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(DC %1, %2d%3 minutes)|UMR_Stench_DC|UMR_Stench_DurationDice|UMR_Stench_DurationDieSize|PREVAREQ:UMR_Stench_Range,30|PREVARGTEQ:UMR_Stench_DurationDice,1|PREVARGTEQ:UMR_Stench_DurationDieSize,1|PREVAREQ:UMR_Stench_DurationBonus,0|PREVARLTEQ:UMR_Stench_DurationTypeRounds,0|PREVARGTEQ:UMR_Stench_DurationTypeMinutes,1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(DC %1, %2d%3 rounds)|UMR_Stench_DC|UMR_Stench_DurationDice|UMR_Stench_DurationDieSize|PREVAREQ:UMR_Stench_Range,30|PREVARGTEQ:UMR_Stench_DurationDice,1|PREVARGTEQ:UMR_Stench_DurationDieSize,1|PREVAREQ:UMR_Stench_DurationBonus,0|PREVARGTEQ:UMR_Stench_DurationTypeRounds,1|PREVARLTEQ:UMR_Stench_DurationTypeMinutes,0"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(DC %1, %2d%3+%4 minutes)|UMR_Stench_DC|UMR_Stench_DurationDice|UMR_Stench_DurationDieSize|UMR_Stench_DurationBonus|PREVAREQ:UMR_Stench_Range,30|PREVARGTEQ:UMR_Stench_DurationDice,1|PREVARGTEQ:UMR_Stench_DurationDieSize,1|PREVARGTEQ:UMR_Stench_DurationBonus,1|PREVARLTEQ:UMR_Stench_DurationTypeRounds,0|PREVARGTEQ:UMR_Stench_DurationTypeMinutes,1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(DC %1, %2d%3+%4 rounds)|UMR_Stench_DC|UMR_Stench_DurationDice|UMR_Stench_DurationDieSize|UMR_Stench_DurationBonus|PREVAREQ:UMR_Stench_Range,30|PREVARGTEQ:UMR_Stench_DurationDice,1|PREVARGTEQ:UMR_Stench_DurationDieSize,1|PREVARGTEQ:UMR_Stench_DurationBonus,1|PREVARGTEQ:UMR_Stench_DurationTypeRounds,1|PREVARLTEQ:UMR_Stench_DurationTypeMinutes,0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|UMR_Stench_DC|10+(HD/2)+CON"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|UMR_Stench_Range|30"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "UMR_Stench_DC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "UMR_Stench_DurationBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "UMR_Stench_DurationDice|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "UMR_Stench_DurationDieSize|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "UMR_Stench_DurationTypeMinutes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "UMR_Stench_DurationTypeRounds|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "UMR_Stench_Range|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "UMR_Stench_SpecificDesc|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A creature with the stench special ability secretes an oily chemical that nearly every other creature finds offensive. All living creatures (except those with the stench special ability) within %1 feet must succeed on a Fortitude save (DC %2) or be sickened. The duration of the sickened condition is given in the creature's descriptive text. Creatures that successfully save cannot be affected by the same creature's stench for 24 hours. A delay poison or neutralize poison spell removes the effect from the sickened creature. Creatures with immunity to poison are unaffected, and creatures resistant to poison receive their normal bonus on their saving throws.|UMR_Stench_Range|UMR_Stench_DC|PREVAREQ:UMR_Stench_SpecificDesc,0"
+      },
+      {
+        "key": "KEY",
+        "value": "Universal Monster Rule ~ Stench"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.304"
+      },
+      {
+        "key": "TYPE",
+        "value": "Universal Monster Rule.SpecialQuality.Special Quality.Extraordinary.Aura"
+      }
+    ],
+    "source_page": "p.304",
+    "traits": [
+      "Universal Monster Rule",
+      "Special Quality",
+      "Aura"
+    ]
+  },
+  "ingested_at": "2026-08-23T12:58:07Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 2381,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "record_key": "Universal Monster Rule ~ Stench",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

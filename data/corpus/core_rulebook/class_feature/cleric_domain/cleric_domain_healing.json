@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Cleric Domain ~ Healing",
+    "name": "Cleric Domain ~ Healing",
+    "class": "Cleric",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "CLASS|Cleric=1|Cure Light Wounds|Cleric=2|Cure Moderate Wounds|Cleric=3|Cure Serious Wounds|Cleric=4|Cure Critical Wounds|Cleric=5|Cure Light Wounds (Mass)|Cleric=6|Heal|Cleric=7|Regenerate|Cleric=8|Cure Critical Wounds (Mass)|Cleric=9|Heal (Mass)|PREVAREQ:HealingDomainAllowed,1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 3158,
+    "record_key": "Cleric Domain ~ Healing"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

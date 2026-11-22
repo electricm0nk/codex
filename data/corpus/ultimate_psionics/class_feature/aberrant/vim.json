@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Aberrant ~ Vim",
+    "name": "Vim",
+    "class": "Aberrant",
+    "description": "You gain vim as a psi-like ability usable at will as long as you maintain psionic focus.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Aberrant ~ Vim"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "AegisClassFeatures.SpecialQuality.Psilike"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=ATWILL|Vim|PREVARGTEQ:PsionicFocusActive,1"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain vim as a psi-like ability usable at will as long as you maintain psionic focus."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.261"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1636,
+    "record_key": "Aberrant ~ Vim"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

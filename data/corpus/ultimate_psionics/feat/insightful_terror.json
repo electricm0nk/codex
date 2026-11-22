@@ -1,0 +1,30 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:38:17Z",
+  "data": {
+    "key": "Insightful Terror",
+    "category": "Psionic",
+    "name": "Insightful Terror",
+    "description": "As a standard action you can make an Intimidate check to demoralize a single foe (within 30 ft).  If you succeed,the target is paralzed for one round.  This is a mind-affecting fear effect.",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=Special Ability,Dread ~ Fearsome Insight",
+      "PRESKILL:1,Intimidate=9",
+      "PREVARGTEQ:IsPsionic,1"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_feats.lst",
+    "sha256": "528096cb97ebe8255b9f9fe67682dd7e045f53b65e32295cd57967002eccb137",
+    "line": 178,
+    "record_key": "Insightful Terror"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

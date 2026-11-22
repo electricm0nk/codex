@@ -1,0 +1,32 @@
+reachability_audit: 49450 units (excl. )
+  grid: 5 wiring classes x 12 statuses = 60 cells evaluated
+  REACHABLE CEILING: 100.00%  (49450 / 49450)
+  per-kind reachable ceiling:
+    ability              100.00%
+    class                100.00%
+    class_feature        100.00%
+    companion            100.00%
+    deity                100.00%
+    domain               100.00%
+    equipment            100.00%
+    equipment_modifier   100.00%
+    feat                 100.00%
+    language             100.00%
+    monster              100.00%
+    monster_ability      100.00%
+    power                100.00%
+    race                 100.00%
+    race_trait           100.00%
+    skill                100.00%
+    spell                100.00%
+    template             100.00%
+    trait                100.00%
+  dead-end cells: 0
+  known populations (re-derived, not transcribed):
+    ambiguous_wiring_class_units: 545
+    unmeasurable_unknown_status_units: 0
+    unmeasurable_unknown_status_by_kind: {}
+    race_total: 95
+    race_not_done: 0
+    race_trait_total: 2561
+    race_trait_not_done: 8

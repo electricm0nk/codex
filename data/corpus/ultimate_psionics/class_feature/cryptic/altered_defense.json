@@ -1,0 +1,84 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Cryptic ~ Altered Defense",
+    "name": "Altered Defense",
+    "class": "Cryptic",
+    "description": "You learned early on to modify the patterns around you to grant yourself protection as a swift action. You choose from the options below and may only have one such effect active at any given time. You can use this ability for %1 rounds per day. You can maintain this ability as long as you want as long as you have rounds available, or dismiss it at any time as a free action.  Absorb: You gain DR %3/-.  Deflect: You gain a +%2 dodge bonus to AC.  Retaliate: You gain a +%2 bonus on your attack rolls against any opponent that successfully hit you since your last turn.|AlteredDefenseRounds|AlteredDefenseBonus|AlteredDefenseDR",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Cryptic ~ Altered Defense"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "CrypticClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AlteredDefenseRounds|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AlteredDefenseBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AlteredDefenseLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AlteredDefenseDR|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You learned early on to modify the patterns around you to grant yourself protection as a swift action. You choose from the options below and may only have one such effect active at any given time. You can use this ability for %1 rounds per day. You can maintain this ability as long as you want as long as you have rounds available, or dismiss it at any time as a free action.  Absorb: You gain DR %3/-.  Deflect: You gain a +%2 dodge bonus to AC.  Retaliate: You gain a +%2 bonus on your attack rolls against any opponent that successfully hit you since your last turn.|AlteredDefenseRounds|AlteredDefenseBonus|AlteredDefenseDR"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Altered Defense ~ Deflect"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AlteredDefenseDR|AlteredDefenseBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AlteredDefenseRounds|4+CrypticPrimeStat"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AlteredDefenseBonus|floor((AlteredDefenseLVL+3)/4)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AlteredDefenseLVL|CrypticLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.36"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 170,
+    "record_key": "Cryptic ~ Altered Defense"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

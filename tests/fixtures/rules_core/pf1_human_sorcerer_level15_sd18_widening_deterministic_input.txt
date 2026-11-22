@@ -1,0 +1,42 @@
+# SD18 deterministic Human Sorcerer level 15 widening fixture.
+# Widens the accepted SD18 deterministic PF1 Core Rulebook Human Sorcerer
+# level-1..level-14 spontaneous spell-burden baseline
+# (tests/sd18_sorcerer_level14_widening.rs) to Sorcerer level 15 as chosen
+# input only. It names selections; it does not contain derived, computed, or
+# parity values. It preserves the accepted Human race-choice seam
+# (ability-bonus and bonus-feat), the deterministic ability/feat posture from
+# the level-1..level-14 fixtures, and the same canonical bloodline and
+# bloodline class-skill selections (Arcane, Knowledge [arcana]), adding only
+# the level bump this cycle needs.
+#
+# It deliberately avoids every later Sorcerer burden surface: no Arcane Bond
+# execution, no bloodline arcana, no bloodline feat selection, no bloodline
+# bonus spell selection, no spellbook, no which-spells-known selection, no
+# spontaneous-casting execution, and no level-16+ progression. The PF1 CRB
+# Sorcerer class table's level-15 "Special" column reads "Bloodline power,
+# bloodline spell" (verified independently against d20pfsrd and
+# aonprd.com, both identical) — a further bloodline power and bloodline
+# spell grant, exactly like the level-3/5/7/9/11/13 pattern — but both
+# entries are bloodline-specific (varying per chosen bloodline) and neither
+# is flat/identity-shaped, so they stay named by the existing Arcane Bond /
+# bloodline progression blocker's language, unchanged; no new pillar is
+# grounded from the Special column at level 15 either. No genuinely new
+# spell-level column opens at level 15 (the 8th-level column stays "—");
+# only the already-grounded base-spells-per-day and spells-known arrays
+# widen within their existing 7/8-element shapes.
+case_id=pf1-crb-human-sorcerer-level15-sd18-widening
+source_package_id=pf1.core_rulebook
+race_id=race:human
+class_level=class:sorcerer:15
+ability=strength:8
+ability=dexterity:14
+ability=constitution:13
+ability=intelligence:10
+ability=wisdom:12
+ability=charisma:17
+feat=feat:dodge
+choice=choice:sorcerer_bloodline:bloodline:arcane
+choice=choice:sorcerer_bloodline_class_skill:knowledge:arcana
+choice=choice:human_bonus_feat:feat:dodge
+choice=choice:human_ability_bonus:ability:charisma
+provenance=programs/codex/requirements/SD-18-core-rules-breadth/scope-draft.md

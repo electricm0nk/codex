@@ -1,0 +1,128 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-24T03:51:47Z",
+  "data": {
+    "key": "Swashbuckler Archetype ~ Mouser",
+    "name": "Mouser",
+    "class": "Swashbuckler",
+    "description": "In the hands of a trained warrior, a well-sharpened blade is deadly regardless of size. A mouser moves in close, using her size and skill as an advantage.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Swashbuckler Archetype ~ Mouser"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.SwashbucklerArchetype.SwashbucklerBleedingWoundDeed.SwashbucklerTargetedStrikeDeed.SwashbucklerOpportuneParryDeed.SwashbucklerRiposteDeed.SwashbucklerMenacingSwordplayDeed"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Swashbuckler=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Swashbuckler Archetype ~ Mouser],[!PREABILITY:1,CATEGORY=Archetype,TYPE.SwashbucklerBleedingWoundDeed,TYPE.SwashbucklerTargetedStrikeDeed,TYPE.SwashbucklerOpportuneParryDeed,TYPE.SwashbucklerRiposteDeed,TYPE.SwashbucklerMenacingSwordplayDeed]"
+      },
+      {
+        "key": "DESC",
+        "value": "In the hands of a trained warrior, a well-sharpened blade is deadly regardless of size. A mouser moves in close, using her size and skill as an advantage."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Swashbuckler Class Feature|AUTOMATIC|Mouser ~ Deeds|PRECLASS:1,Swashbuckler=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Swashbuckler Class Feature|AUTOMATIC|Mouser ~ Underfoot Assault|PRECLASS:1,Swashbuckler=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Swashbuckler Class Feature|AUTOMATIC|Mouser ~ Quick Steal|PRECLASS:1,Swashbuckler=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Swashbuckler Class Feature|AUTOMATIC|Mouser ~ Hamstring|PRECLASS:1,Swashbuckler=7"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Swashbuckler Class Feature|AUTOMATIC|Mouser ~ Cat's Charge|PRECLASS:1,Swashbuckler=11"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.125"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Swashbuckler"
+      },
+      {
+        "key": "TYPE",
+        "value": "PFSLegal"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Swashbuckler Archetype ~ Mouser],[!PREFACT:1,ABILITIES,Swashbuckler_Archetype_BleedingWoundDeed=True,Swashbuckler_Archetype_TargetedStrikeDeed=True,Swashbuckler_Archetype_OpportuneParryandRiposteDeed=True,Swashbuckler_Archetype_RiposteDeed=True,Swashbuckler_Archetype_MenacingSwordplayDeed=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_CF_BleedingWoundDeed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_CF_TargetedStrikeDeed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_CF_OpportuneParryandRiposteDeed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_CF_MenacingSwordplayDeed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_Archetype_BleedingWoundDeed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_Archetype_RiposteDeed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_Archetype_TargetedStrikeDeed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_Archetype_OpportuneParryandRiposteDeed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_Archetype_MenacingSwordplayDeed|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3843,
+    "record_key": "Swashbuckler Archetype ~ Mouser"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

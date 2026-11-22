@@ -1,0 +1,19 @@
+{
+  "data": {
+    "key": "Xenolash (seeded)",
+    "name": "Xenolash (seeded)",
+    "type": "ADVANCED MELEE.ADVANCED MELEE WEAPONS"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 19,
+    "path": "starfinder/paizo/pact_worlds/spw_profs_weapon.lst",
+    "record_key": "Xenolash (seeded)",
+    "sha256": "099bf1ca099117f6aeb2e4fbbce85b2497d569a83a0bd0befd656fc47fb3f818"
+  },
+  "unit_id": "pact_worlds:proficiency:xenolash_seeded"
+}

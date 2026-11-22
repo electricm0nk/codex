@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Thought Eater ~ Consume Identity",
+    "name": "Consume Identity",
+    "class": "Mesmerist",
+    "description": "When the thought eater kills a target of his hypnotic stare, he can choose to entirely consume the creature's identity, mind, body, and soul as a free action. The target's corpse dissolves and as long as the thought eater lives, the target of consume identity cannot be brought back from the dead until the thought eater releases the identity (a standard action) or uses consume identity on another target. The creature's soul can also be released by a wish or miracle (which ends the effect of consume identity). When the thought eater has consumed an identity, all divination spells identify him as (and consider him to be) the creature whose identity he consumed rather than himself. This ability fools any spell short of discern location. Discern location pinpoints the thought eater's location, whenever either the thought eater or the consumed creature is the target of that spell.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Thought Eater ~ Consume Identity"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mesmerist Class Features.ThoughtEaterClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "When the thought eater kills a target of his hypnotic stare, he can choose to entirely consume the creature's identity, mind, body, and soul as a free action. The target's corpse dissolves and as long as the thought eater lives, the target of consume identity cannot be brought back from the dead until the thought eater releases the identity (a standard action) or uses consume identity on another target. The creature's soul can also be released by a wish or miracle (which ends the effect of consume identity). When the thought eater has consumed an identity, all divination spells identify him as (and consider him to be) the creature whose identity he consumed rather than himself. This ability fools any spell short of discern location. Discern location pinpoints the thought eater's location, whenever either the thought eater or the consumed creature is the target of that spell."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.38"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/support/ui_abilities_class_oa.lst",
+    "sha256": "123f008e9a2f31828861df9025f48f5c2f7c78a648553f22dba96a8d8a2e24dc",
+    "line": 81,
+    "record_key": "Thought Eater ~ Consume Identity"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

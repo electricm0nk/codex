@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_111)",
+    "name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_111)",
+    "description": "Dance in a random pattern beneath the light of the stars, trusting in the guidance of destiny. If no stars are currently visible, softly sing or chant all of the names of stars that you know as you perform your dance. Let your mind expand and turn your thoughts away from where your feet might land, allowing your steps to fall where chance wills. When the dance feels complete, cease dancing. Ponder the steps you took and the position in which you stopped, and consider what portents these subtle clues might hold for the future. Gain a +1 luck bonus on initiative checks and a +4 sacred bonus on Perception checks made to determine whether you are aware of opponents just before a surprise round.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "NAMEISPI",
+        "value": "YES"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "DESC",
+        "value": "Dance in a random pattern beneath the light of the stars, trusting in the guidance of destiny. If no stars are currently visible, softly sing or chant all of the names of stars that you know as you perform your dance. Let your mind expand and turn your thoughts away from where your feet might land, allowing your steps to fall where chance wills. When the dance feels complete, cease dancing. Ponder the steps you took and the position in which you stopped, and consider what portents these subtle clues might hold for the future. Gain a +1 luck bonus on initiative checks and a +4 sacred bonus on Perception checks made to determine whether you are aware of opponents just before a surprise round."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.44"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities_faith.lst",
+    "sha256": "55f9ffcb82ea861db396063e8801becfb46e368a510ec6d413d87c2935f3419e",
+    "line": 111,
+    "record_key": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_111)"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "name,raw_tokens",
+  "pi_marker": "redacted",
+  "codex_generated_name": true,
+  "rename": {
+    "reason": "name_pi_blocked",
+    "coordinate": "inner_sea_gods:isg_abilities_faith.lst:111"
+  }
+}

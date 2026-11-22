@@ -1,0 +1,79 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "As long as the target is at least one size category smaller than you are, it can merge harmlessly into your body while under the effect of this spell. For the duration of this spell, you and the target can separate or merge at will as a move action. While merged, your familiar or spirit animal can't be targeted or affected by most attacks and effects, though it still suffers from ongoing effects and their durations continue. It can be the recipient of effects that originate from you.",
+    "key": "Merge with Familiar",
+    "level": 2,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Shaman,Sorcerer,Witch,Wizard=2"
+      },
+      {
+        "key": "COMPS",
+        "value": "V,S"
+      },
+      {
+        "key": "DESC",
+        "value": "As long as the target is at least one size category smaller than you are, it can merge harmlessly into your body while under the effect of this spell. For the duration of this spell, you and the target can separate or merge at will as a move action. While merged, your familiar or spirit animal can't be targeted or affected by most attacks and effects, though it still suffers from ongoing effects and their durations continue. It can be the recipient of effects that originate from you.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "Merge the body of your familiar or spirit animal into your own.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) hours [D]"
+      },
+      {
+        "key": "RANGE",
+        "value": "Touch"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Fortitude negates (harmless)"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Transmutation"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.232"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes (harmless)"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "Your familiar or spirit animal; see text"
+      },
+      {
+        "key": "TYPE",
+        "value": "Arcane.Divine"
+      }
+    ],
+    "school": "Transmutation"
+  },
+  "ingested_at": "2026-08-20T01:55:37Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 31,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_spells.lst",
+    "record_key": "Merge with Familiar",
+    "sha256": "0ebcaef0aa5ab9967a06e53a5179bcaca436c5a2bfeeb8926821eb38391978a4"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr"
+  ]
+}

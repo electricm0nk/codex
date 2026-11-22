@@ -1,0 +1,76 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Aegis Archetype ~ Annihilator",
+    "name": "Annihilator",
+    "class": "Aegis",
+    "description": "You become a grandiose weapon of mass destruction.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Aegis Archetype ~ Annihilator"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.AegisArchetype.AegisAstralRepair.AegisAugmentSuit.AegisCannibalizeSuit"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Aegis=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Annihilator ~ Aegis Archetype],[!PREABILITY:1,CATEGORY=Archetype,TYPE.AegisAstralRepair,TYPE.AegisAugmentSuit,TYPE.AegisCannibalizeSuit]"
+      },
+      {
+        "key": "PRERACE",
+        "value": "1,Blue"
+      },
+      {
+        "key": "DESC",
+        "value": "You become a grandiose weapon of mass destruction."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Aegis Class Feature|AUTOMATIC|Annihilator ~ Size Matters|PRECLASS:1,Aegis=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Aegis Class Feature|AUTOMATIC|Annihilator ~ Strength of Mind|PRECLASS:1,Aegis=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Aegis Class Feature|AUTOMATIC|Annihilator ~ Absorb Critical|PRECLASS:1,Aegis=12"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.311"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1629,
+    "record_key": "Aegis Archetype ~ Annihilator"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

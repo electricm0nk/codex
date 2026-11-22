@@ -1,0 +1,29 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Extra Wild Talent",
+    "category": "General",
+    "name": "Extra Wild Talent",
+    "description": "You gain an additional wild talent. You gain a wild talent that's at least 2 levels lower than the highest-level wild talent you can currently use. You can select an infusion or a non-infusion wild talent, but not a blast or defense wild talent. If you have the expanded element class feature, you can select a wild talent from any of your elements that's at least 2 levels lower than the highest-level wild talent from your primary element that you can currently use. Special: You can take this feat multiple times. Each time, you must choose a different wild talent.",
+    "prerequisites": [
+      "PRECLASS:1,Kineticist=6"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_feats.lst",
+    "sha256": "eff885715102905735a080776def2406d112a05b5c00c518dd7d5a11964f2889",
+    "line": 30,
+    "record_key": "Extra Wild Talent"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice",
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,59 @@
+$ cargo test --locked -j 8 --no-fail-fast --test sd18_widening --test sd13_progression --test sd13_barbarian_level1_chassis_baseline --test sd13_barbarian_rage_power_slots --test sd13_bard_bonus_spells --test sd13_bard_spell_level_thresholds --test sd13_bard_spell_save_dcs --test sd13_bard_spells_known_counts --test sd13_bard_spells_per_day_counts --test sd13_bard_total_spells_per_day --test sd13_bard_versatile_performance_slots --test sd13_monk_bonus_feats_three_and_four --test sd13_monk_level1_chassis_baseline --test sd13_monk_second_bonus_feat --test sd13_paladin_bonus_spells --test sd13_paladin_mercies_two_and_three --test sd13_paladin_spell_level_thresholds --test sd13_paladin_spell_save_dcs --test sd13_paladin_spells_per_day_counts --test sd13_paladin_total_spells_per_day --test sd13_ranger_bonus_spells --test sd13_ranger_second_favored_terrain --test sd13_ranger_spell_level_thresholds --test sd13_ranger_spell_save_dcs --test sd13_ranger_spells_per_day_counts --test sd13_ranger_third_favored_enemy --test sd13_ranger_total_spells_per_day --test sd13_rogue_level1_chassis_baseline --test sd13_rogue_second_talent --test sd13_rogue_talent_choice --test sd13_rogue_talents_three_through_five --test sd13_sorcerer_bonus_spells --test sd13_sorcerer_spell_level_thresholds --test sd13_sorcerer_spell_save_dcs --test sd13_sorcerer_spells_known_counts --test sd13_sorcerer_spells_per_day_counts --test sd13_sorcerer_total_spells_per_day --test sd18_barbarian_level11_greater_rage --test sd18_monk_level11_diamond_body --test sd18_paladin_level11_aura_of_justice --test sd18_ranger_level11_quarry --test sd18_ranger_level16_improved_evasion --test sd18_ranger_level17_hide_in_plain_sight --test sd18_rogue_level11_sneak_attack --test v06_druid_level16_to_20_widening  -- --test-threads=8
+# 45 binaries: sd18_widening, sd13_progression + the 43 top-level bins of f3d-sites.tsv
+tests/sd13_barbarian_level1_chassis_baseline.rs: test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 16.13s
+tests/sd13_barbarian_rage_power_slots.rs: test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.33s
+tests/sd13_bard_bonus_spells.rs: test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.69s
+tests/sd13_bard_spell_level_thresholds.rs: test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.54s
+tests/sd13_bard_spell_save_dcs.rs: test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.45s
+tests/sd13_bard_spells_known_counts.rs: test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.44s
+tests/sd13_bard_spells_per_day_counts.rs: test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.61s
+tests/sd13_bard_total_spells_per_day.rs: test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.47s
+tests/sd13_bard_versatile_performance_slots.rs: test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.59s
+tests/sd13_monk_bonus_feats_three_and_four.rs: test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 15.55s
+tests/sd13_monk_level1_chassis_baseline.rs: test result: ok. 12 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 15.50s
+tests/sd13_monk_second_bonus_feat.rs: test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 15.17s
+tests/sd13_paladin_bonus_spells.rs: test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.43s
+tests/sd13_paladin_mercies_two_and_three.rs: test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.28s
+tests/sd13_paladin_spell_level_thresholds.rs: test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.31s
+tests/sd13_paladin_spell_save_dcs.rs: test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.30s
+tests/sd13_paladin_spells_per_day_counts.rs: test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.49s
+tests/sd13_paladin_total_spells_per_day.rs: test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.39s
+tests/sd13_progression/main.rs: test result: ok. 1136 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 21.18s
+tests/sd13_ranger_bonus_spells.rs: test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.50s
+tests/sd13_ranger_second_favored_terrain.rs: test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.48s
+tests/sd13_ranger_spell_level_thresholds.rs: test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.42s
+tests/sd13_ranger_spell_save_dcs.rs: test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.30s
+tests/sd13_ranger_spells_per_day_counts.rs: test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.69s
+tests/sd13_ranger_third_favored_enemy.rs: test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.75s
+tests/sd13_ranger_total_spells_per_day.rs: test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.49s
+tests/sd13_rogue_level1_chassis_baseline.rs: test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.52s
+tests/sd13_rogue_second_talent.rs: test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.47s
+tests/sd13_rogue_talent_choice.rs: test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.40s
+tests/sd13_rogue_talents_three_through_five.rs: test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.63s
+tests/sd13_sorcerer_bonus_spells.rs: test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 15.59s
+tests/sd13_sorcerer_spell_level_thresholds.rs: test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 17.30s
+tests/sd13_sorcerer_spell_save_dcs.rs: test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 16.19s
+tests/sd13_sorcerer_spells_known_counts.rs: test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 16.41s
+tests/sd13_sorcerer_spells_per_day_counts.rs: test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 17.02s
+tests/sd13_sorcerer_total_spells_per_day.rs: test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 15.47s
+tests/sd18_barbarian_level11_greater_rage.rs: test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.45s
+tests/sd18_monk_level11_diamond_body.rs: test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 15.34s
+tests/sd18_paladin_level11_aura_of_justice.rs: test result: ok. 12 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.50s
+tests/sd18_ranger_level11_quarry.rs: test result: ok. 12 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.87s
+tests/sd18_ranger_level16_improved_evasion.rs: test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.40s
+tests/sd18_ranger_level17_hide_in_plain_sight.rs: test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.35s
+tests/sd18_rogue_level11_sneak_attack.rs: test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.64s
+tests/sd18_widening/main.rs: test result: ok. 891 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 22.34s
+tests/v06_druid_level16_to_20_widening.rs: test result: ok. 13 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 15.37s
+TOTAL passed 2345 failed 0 ignored 0
+POPULATION (f3d-sites.tsv, 187 names): 187 ok
+EXIT=0
+
+$ cargo test --locked -j 8 --test sd18_widening -- --list   (BEFORE the change, then AFTER)
+$ cargo test --locked -j 8 --test sd13_progression -- --list
+sd18: before 891 tests sha256 cafd136527638580; after 891 tests sha256 cafd136527638580; diff: IDENTICAL
+sd13: before 1136 tests sha256 e1e21461dee9f9d6; after 1136 tests sha256 e1e21461dee9f9d6; diff: IDENTICAL
+
+$ cargo clippy --locked --tests -j 8 -- -D warnings   (root crate)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 41.52s
+EXIT=0

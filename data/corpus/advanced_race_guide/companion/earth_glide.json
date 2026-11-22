@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T19:38:48Z",
+  "data": {
+    "key": "Shaitan Binder Eidolon ~ Earth Glide",
+    "name": "Earth Glide",
+    "description": "A burrowing Shaitan Binder Eidolon can pass through dirt, gravel, or other loose or porous solid matter as easily as a fish swims through water.  It cannot use this ability to pass through a solid barrier such as a stone or brick wall.  Its burrowing leaves behind no tunnel or hole, nor does it create any ripple or other sign of its presence.  A move earth spell cast on an area containing a burrowing Eidolon flings the Eidolon back 30 feet, stunning the creature for 1 round unless it succeeds on a DC 15 Fortitude save.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shaitan Binder Eidolon ~ Earth Glide"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.ModifyMovement.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A burrowing Shaitan Binder Eidolon can pass through dirt, gravel, or other loose or porous solid matter as easily as a fish swims through water.  It cannot use this ability to pass through a solid barrier such as a stone or brick wall.  Its burrowing leaves behind no tunnel or hole, nor does it create any ripple or other sign of its presence.  A move earth spell cast on an area containing a burrowing Eidolon flings the Eidolon back 30 feet, stunning the creature for 1 round unless it succeeds on a DC 15 Fortitude save."
+      },
+      {
+        "key": "SOURCELONG",
+        "value": "Bestiary"
+      },
+      {
+        "key": "SOURCESHORT",
+        "value": "B1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.120"
+      }
+    ],
+    "origin": "declared",
+    "owners": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_companion.lst",
+    "sha256": "0970a14a15f2865ee6cc611109e45caf3cc3545d2f2ae717e7143de105b4ea83",
+    "line": 31,
+    "record_key": "Shaitan Binder Eidolon ~ Earth Glide"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

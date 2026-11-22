@@ -1,0 +1,46 @@
+# SD18-PRELOOP consumer-side composition deterministic input fixture.
+#
+# Human Fighter level 5 with mid-ability scores, Human bonus feat selected
+# (Dodge), and the deterministic Longsword / Chain Shirt / no-shield
+# posture. Used by tests/sd18_preloop_consumer_compose.rs to verify that
+# the consumer-side composer accepts a Human Fighter level 5 input and
+# produces a ComposedCharacterInput that reaches pilot_compute.rs without
+# panic. The corpus-side of the composition is constructed in the test
+# itself (a TestCorpus in /tmp) so this fixture is chosen-state only;
+# it deliberately mirrors the SD-13 level-5 Human Fighter acceptance
+# surface because that surface is what the rules engine already supports.
+#
+# Authoritative references:
+# - programs/codex/requirements/SD-18-core-rules-breadth/decisions.md (pre-loop vs. loop lane split)
+# - programs/codex/requirements/SD-18-core-rules-breadth/technical-design.md (Pre-loop section 1.1)
+# - programs/codex/requirements/SD-13-core-class-race-roster-and-level-10-progression-matrix/artifacts/core-roster-and-support-state-matrix.md
+case_id=pf1-crb-human-fighter-level5-sd18-preloop
+source_package_id=pf1.core_rulebook
+race_id=race:human
+class_level=class:fighter:5
+ability=strength:16
+ability=dexterity:14
+ability=constitution:14
+ability=intelligence:10
+ability=wisdom:12
+ability=charisma:8
+feat=feat:power_attack
+feat=feat:dodge
+feat=feat:weapon_focus
+feat=feat:toughness
+feat=feat:cleave
+skill=skill:climb:1
+skill=skill:intimidate:1
+skill=skill:swim:1
+equipment=item:chain_shirt:equipped_worn_active
+equipment=item:longsword:equipped_primary_active
+equipment=item:shield:absent
+equipment=power_attack:selected_inactive
+choice=choice:level_1_character_feat:feat:power_attack
+choice=choice:human_bonus_feat:feat:dodge
+choice=choice:fighter_bonus_feat:feat:weapon_focus:weapon:longsword
+choice=choice:fighter_bonus_feat_2:feat:toughness
+choice=choice:fighter_bonus_feat_4:feat:cleave
+choice=choice:fighter_weapon_training_group:group:heavy_blades
+choice=choice:human_ability_bonus:ability:strength
+provenance=programs/codex/requirements/SD-18-core-rules-breadth/decisions.md

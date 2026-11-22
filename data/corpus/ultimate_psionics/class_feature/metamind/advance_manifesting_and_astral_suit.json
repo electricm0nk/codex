@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Metamind ~ MaAS",
+    "name": "Advance Manifesting and Astral Suit",
+    "class": "Metamind",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Metamind ~ MaAS"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MetaforgeClassFeatures.SpecialQuality.MetamindEnhancementChoice"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Aegis ~ Form Astral Suit"
+      },
+      {
+        "key": "PRETEMPLATE",
+        "value": "1,High Psionics"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Manifesting Level Advancement|MetamindEnhancementCount"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AegisCL,AegisDRLVL|MetamindEnhancementCount"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1283,
+    "record_key": "Metamind ~ MaAS"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

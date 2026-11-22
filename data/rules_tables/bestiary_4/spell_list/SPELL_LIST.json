@@ -1,0 +1,424 @@
+{
+  "format": "codex.rules_tables/1",
+  "table": "bestiary_4/spell_list/SPELL_LIST",
+  "licence": {
+    "license": "PI-REDACTED",
+    "book": "bestiary_4",
+    "screen": "pi_screening::classify_field",
+    "pi_hits": [],
+    "redacted": [
+      {
+        "row": 46,
+        "field": "description"
+      }
+    ]
+  },
+  "rows": [
+    {
+      "key": "Bestow Curse (30 ft. range)",
+      "name_pi_line": null,
+      "school": "Necromancy",
+      "level": null,
+      "description": "You place a curse on the subject as a ranged touch attack."
+    },
+    {
+      "key": "Charm Animal (snakes only)",
+      "name_pi_line": null,
+      "school": "Enchantment",
+      "level": null,
+      "description": "This spell functions like charm person, except that it only affects snakes."
+    },
+    {
+      "key": "Charm Monster (vermin only)",
+      "name_pi_line": null,
+      "school": "Enchantment",
+      "level": null,
+      "description": "This spell functions like charm person, except that the effect is restricted to vermin."
+    },
+    {
+      "key": "Control Weather (alter storms)",
+      "name_pi_line": null,
+      "school": "Transmutation",
+      "level": null,
+      "description": "You change the weather in the local area."
+    },
+    {
+      "key": "Control Weather (windy or cold weather only)",
+      "name_pi_line": null,
+      "school": "Transmutation",
+      "level": null,
+      "description": "You change the weather in the local area."
+    },
+    {
+      "key": "Control Weather (rain only)",
+      "name_pi_line": null,
+      "school": "Transmutation",
+      "level": null,
+      "description": "You change the weather in the local area."
+    },
+    {
+      "key": "Dimension Door (within sacred site)",
+      "name_pi_line": null,
+      "school": "Conjuration",
+      "level": null,
+      "description": "You instantly transfer yourself from your current location to any other spot within the sacred site you're guarding."
+    },
+    {
+      "key": "Dominate Monster (vermin only)",
+      "name_pi_line": null,
+      "school": "Enchantment",
+      "level": null,
+      "description": "This spell functions like dominate person, except that the spell is restricted to vermin."
+    },
+    {
+      "key": "Empowered Cone of Cold",
+      "name_pi_line": null,
+      "school": "Evocation",
+      "level": null,
+      "description": "Cone of cold creates an area of extreme cold, originating at your hand and extending outward in a cone, dealing (min(15,CASTERLEVEL))d6x1.5 points of cold damage."
+    },
+    {
+      "key": "Extended Animate Objects (Warsworn)",
+      "name_pi_line": null,
+      "school": "Transmutation",
+      "level": null,
+      "description": "You imbue up to 7 medium weapons with mobility and a semblance of life."
+    },
+    {
+      "key": "Fly (self only)",
+      "name_pi_line": null,
+      "school": "Transmutation",
+      "level": null,
+      "description": "You can fly at a speed of 60 feet (or 40 feet if you wear medium or heavy armor, or if you carry a medium or heavy load)."
+    },
+    {
+      "key": "Haste (self only)",
+      "name_pi_line": null,
+      "school": "Transmutation",
+      "level": null,
+      "description": "The transmuted creatures move and act more quickly than normal."
+    },
+    {
+      "key": "Hedge Stride",
+      "name_pi_line": null,
+      "school": "Conjuration",
+      "level": null,
+      "description": "When you cast this spell, you gain the ability to step into a hedge, magically infusing yourself with the plant."
+    },
+    {
+      "key": "Hold Monster (vermin only)",
+      "name_pi_line": null,
+      "school": "Enchantment",
+      "level": null,
+      "description": "This spell functions like hold person, except that the spell is restricted to vermin."
+    },
+    {
+      "key": "Magic Jar (other formians only)",
+      "name_pi_line": null,
+      "school": "Necromancy",
+      "level": null,
+      "description": "By casting magic jar, you place your soul in a gem or large crystal (known as the magic jar), leaving your body lifeless."
+    },
+    {
+      "key": "Miracle (Divine Realm)",
+      "name_pi_line": null,
+      "school": "Evocation",
+      "level": null,
+      "description": "Caster can exercise powerful physical control of their realm."
+    },
+    {
+      "key": "Plane Shift (Nightmare Lord)",
+      "name_pi_line": null,
+      "school": "Conjuration",
+      "level": null,
+      "description": "You move yourself or other creatures between the Dimension of Dreams and the Material Plane."
+    },
+    {
+      "key": "Plane Shift (Ostiarius)",
+      "name_pi_line": null,
+      "school": "Conjuration",
+      "level": null,
+      "description": "You move yourself or other lawful evil creatures between the Plane of Shadow and the Material Plane."
+    },
+    {
+      "key": "Plane Shift (Owb)",
+      "name_pi_line": null,
+      "school": "Conjuration",
+      "level": null,
+      "description": "You move yourself between the Plane of Shadow and the Material Plane."
+    },
+    {
+      "key": "Polymorph (self only/same size)",
+      "name_pi_line": null,
+      "school": "Transmutation",
+      "level": null,
+      "description": "This spell transforms you into an animal, humanoid or elemental of your same size, but of your choosing."
+    },
+    {
+      "key": "Purify Food and Drink (water only)",
+      "name_pi_line": null,
+      "school": "Transmutation",
+      "level": null,
+      "description": "This spell makes diseased, poisonous, or otherwise contaminated water pure and suitable for drinking."
+    },
+    {
+      "key": "Quickened Charm Person",
+      "name_pi_line": null,
+      "school": "Enchantment",
+      "level": null,
+      "description": "This charm makes a humanoid creature regard you as its trusted friend and ally."
+    },
+    {
+      "key": "Quickened Cure Serious Wounds",
+      "name_pi_line": null,
+      "school": "Conjuration",
+      "level": null,
+      "description": "When laying your hand upon a living creature, you channel positive energy that cures 3d8+(min(15,CASTERLEVEL)) points of damage."
+    },
+    {
+      "key": "Quickened Dispel Magic (Greater)",
+      "name_pi_line": null,
+      "school": "Abjuration",
+      "level": null,
+      "description": "This spell functions like dispel magic, except that it can end more than one spell on a target and it can be used to target multiple creatures."
+    },
+    {
+      "key": "Quickened Dominate Person",
+      "name_pi_line": null,
+      "school": "Enchantment",
+      "level": null,
+      "description": "You can control the actions of any humanoid creature through a telepathic link that you establish with the subject's mind."
+    },
+    {
+      "key": "Quickened Feeblemind",
+      "name_pi_line": null,
+      "school": "Enchantment",
+      "level": null,
+      "description": "Target creature's Intelligence and Charisma scores each drop to 1."
+    },
+    {
+      "key": "Quickened Lightning Bolt",
+      "name_pi_line": null,
+      "school": "Evocation",
+      "level": null,
+      "description": "You release a powerful stroke of electrical energy that deals (min(10,CASTERLEVEL))d6 points of electricity damage to each creature within its area."
+    },
+    {
+      "key": "Quickened Mirror Image",
+      "name_pi_line": null,
+      "school": "Illusion",
+      "level": null,
+      "description": "This spell creates a number of illusory doubles of you that inhabit your square."
+    },
+    {
+      "key": "Quickened True Strike",
+      "name_pi_line": null,
+      "school": "Divination",
+      "level": null,
+      "description": "You gain temporary, intuitive insight into the immediate future during your next attack."
+    },
+    {
+      "key": "Sending (dryads only)",
+      "name_pi_line": null,
+      "school": "Evocation",
+      "level": null,
+      "description": "You contact nearby dryads and send a short message of 25 words or less to them."
+    },
+    {
+      "key": "Sending (to the hive queen only)",
+      "name_pi_line": null,
+      "school": "Evocation",
+      "level": null,
+      "description": "You contact your hive queen and send a short message of 25 words or less to her."
+    },
+    {
+      "key": "Share Memory (Jinmenju)",
+      "name_pi_line": null,
+      "school": "Divination",
+      "level": null,
+      "description": "Share one memory with the target."
+    },
+    {
+      "key": "Silence (self only)",
+      "name_pi_line": null,
+      "school": "Illusion",
+      "level": null,
+      "description": "Upon the casting of this spell, complete silence prevails in the affected area."
+    },
+    {
+      "key": "Speak with Animals (aquatic only)",
+      "name_pi_line": null,
+      "school": "Divination",
+      "level": null,
+      "description": "You can ask questions of and receive answers from aquatic animals, but the spell doesn't make them any more friendly than normal."
+    },
+    {
+      "key": "Speak with Animals (snakes only)",
+      "name_pi_line": null,
+      "school": "Divination",
+      "level": null,
+      "description": "You can ask questions of and receive answers from snakes, but the spell doesn't make them any more friendly than normal."
+    },
+    {
+      "key": "Speak with Animals (winged animals only)",
+      "name_pi_line": null,
+      "school": "Divination",
+      "level": null,
+      "description": "You can ask questions of and receive answers from winged animals, but the spell doesn't make them any more friendly than normal."
+    },
+    {
+      "key": "Spider Climb (self only)",
+      "name_pi_line": null,
+      "school": "Transmutation",
+      "level": null,
+      "description": "You can climb and travel on vertical surfaces or even traverse ceilings as well as a spider does."
+    },
+    {
+      "key": "Summon Monster II (Devilbound)",
+      "name_pi_line": null,
+      "school": "Conjuration",
+      "level": null,
+      "description": "This spell functions like summon monster I, except that you can only summon one lemure."
+    },
+    {
+      "key": "Summon Monster III (Magaav)",
+      "name_pi_line": null,
+      "school": "Conjuration",
+      "level": null,
+      "description": "This spell functions like summon monster I, except that you can only summon one fellow magaav, and even then, you only have a 40%% chance of success."
+    },
+    {
+      "key": "Summon Monster IV (Sarglagon)",
+      "name_pi_line": null,
+      "school": "Conjuration",
+      "level": null,
+      "description": "This spell functions like summon monster I, except that you can only summon one fellow sarglagon, and even then, you only have a 35%% chance of success."
+    },
+    {
+      "key": "Summon Monster V (Devilbound)",
+      "name_pi_line": null,
+      "school": "Conjuration",
+      "level": null,
+      "description": "This spell functions like summon monster I, except that you can only summon one barbazu."
+    },
+    {
+      "key": "Summon Monster VI (Devilbound)",
+      "name_pi_line": null,
+      "school": "Conjuration",
+      "level": null,
+      "description": "This spell functions like summon monster I, except that you can only summon one erinyes."
+    },
+    {
+      "key": "Summon Monster VII (Advodaza)",
+      "name_pi_line": null,
+      "school": "Conjuration",
+      "level": null,
+      "description": "This spell functions like summon monster I, except that you can only summon one cornugon, and even then, you only have a 60%% chance of success."
+    },
+    {
+      "key": "Summon Monster VII (Devilbound)",
+      "name_pi_line": null,
+      "school": "Conjuration",
+      "level": null,
+      "description": "This spell functions like summon monster I, except that you can only summon one osyluth."
+    },
+    {
+      "key": "Summon Monster VII (Morrigna)",
+      "name_pi_line": null,
+      "school": "Conjuration",
+      "level": null,
+      "description": "summon 1d4 giant tarantulas [Pathfinder RPG Bestiary 2 256] with a 75%% chance of success or with a 1d4 spider swarms 100%% chance of success."
+    },
+    {
+      "key": "Summon Monster VIII (Devilbound)",
+      "name_pi_line": null,
+      "school": "Conjuration",
+      "level": null,
+      "description": "This spell functions like summon monster I, except that you can only summon one hamatula."
+    },
+    {
+      "key": "Codex-Named Unit (spell_bestiary_4_b4_spells_modified_lst_52)",
+      "name_pi_line": 52,
+      "school": "Conjuration",
+      "level": null,
+      "description": "[redacted PI]"
+    },
+    {
+      "key": "Summon Monster IX (Devilbound)",
+      "name_pi_line": null,
+      "school": "Conjuration",
+      "level": null,
+      "description": "This spell functions like summon monster I, except that you can only summon one gelugon."
+    },
+    {
+      "key": "Summon Monster IX (Yamaraj)",
+      "name_pi_line": null,
+      "school": "Conjuration",
+      "level": null,
+      "description": "This spell functions like summon monster I, except that you can only summon any one CR 19 or lower psychopomp."
+    },
+    {
+      "key": "Summon Nature's Ally V (Oceanid)",
+      "name_pi_line": null,
+      "school": "Conjuration",
+      "level": null,
+      "description": "This spell functions like summon nature's ally I, except that you can summon sea creatures or water elementals only."
+    },
+    {
+      "key": "Summon Nature's Ally VI (Erlking)",
+      "name_pi_line": null,
+      "school": "Conjuration",
+      "level": null,
+      "description": "This spell functions like summon nature's ally I, except that you can summon one treant or 1d4+1 centaurs."
+    },
+    {
+      "key": "Summon Nature's Ally VII (swimming creatures only)",
+      "name_pi_line": null,
+      "school": "Conjuration",
+      "level": null,
+      "description": "This spell functions like summon nature's ally I, except that you can summon one 7th-level swimming creature, 1d3 6th-level swimming creatures of the same kind, or 1d4+1 lower-level swimming creatures of the same kind."
+    },
+    {
+      "key": "Summon Swarm (locusts only)",
+      "name_pi_line": null,
+      "school": "Conjuration",
+      "level": null,
+      "description": "You summon a swarm of locusts, which attacks all other creatures within its area."
+    },
+    {
+      "key": "Summon Swarm (rat swarm only)",
+      "name_pi_line": null,
+      "school": "Conjuration",
+      "level": null,
+      "description": "You summon a swarm of rats, which attacks all other creatures within its area."
+    },
+    {
+      "key": "Telekinesis (Warsworn)",
+      "name_pi_line": null,
+      "school": "Transmutation",
+      "level": null,
+      "description": "You move pieces of heavy armor by concentrating on them."
+    },
+    {
+      "key": "Wood Shape (10 lbs. only)",
+      "name_pi_line": null,
+      "school": "Transmutation",
+      "level": null,
+      "description": "Wood shape enables you to form one existing piece of wood into any shape that suits your purpose."
+    },
+    {
+      "key": "Summon Nature's Ally V (Oceanid)",
+      "name_pi_line": null,
+      "school": null,
+      "level": null,
+      "description": "This spell functions like summon nature's ally I, except that you can summon one treant or 1d4+1 centaurs."
+    },
+    {
+      "key": "Summon Nature's Ally VI (Erlking)",
+      "name_pi_line": null,
+      "school": null,
+      "level": null,
+      "description": "This spell functions like summon nature's ally I, except that you can summon one treant or 1d4+1 centaurs."
+    }
+  ]
+}

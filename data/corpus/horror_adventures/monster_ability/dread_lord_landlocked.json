@@ -1,0 +1,58 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Dread Lord ~ Landlocked",
+    "delivery": "Extraordinary",
+    "description": "A dread lord's power is drawn directly from its domain, which has a radius of %1 miles, centered on a fixed point of some significance to the dread lord. The dread lord loses all benefits of this template when not within its domain.",
+    "description_variables": [
+      "5*TL"
+    ],
+    "facet": "SpecialQuality",
+    "key": "horror_adventures:monster_ability:dread_lord_landlocked",
+    "name": "Landlocked",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A dread lord's power is drawn directly from its domain, which has a radius of %1 miles, centered on a fixed point of some significance to the dread lord. The dread lord loses all benefits of this template when not within its domain.|5*TL"
+      },
+      {
+        "key": "KEY",
+        "value": "Dread Lord ~ Landlocked"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.234"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary.DreadLord"
+      }
+    ],
+    "source_page": "p.234",
+    "traits": [
+      "DreadLord"
+    ]
+  },
+  "ingested_at": "2026-08-23T14:10:27Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 251,
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_race.lst",
+    "record_key": "Dread Lord ~ Landlocked",
+    "sha256": "63d4d7024f3fea15adb5b626c17f3f1dc4c40e4fc4bef4616a1d36be77a9fe00"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ]
+}

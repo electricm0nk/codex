@@ -1,0 +1,72 @@
+{
+  "format": "codex.rules_tables/1",
+  "table": "feat_gap_tables/INNER_SEA_TAVERNS_FEAT_GAP_ROWS",
+  "licence": {
+    "license": "PI-REDACTED",
+    "book": "feat_gap_tables",
+    "screen": "pi_screening::classify_field",
+    "pi_hits": [],
+    "redacted": [
+      {
+        "row": 1,
+        "field": "description"
+      }
+    ]
+  },
+  "rows": [
+    {
+      "key": "Drinking Buddy",
+      "category": "Teamwork",
+      "name": "Drinking Buddy",
+      "description": "You and your allies have almost preternatural luck when you've all had a few drinks. Once per day, if you are drunk (or worse) within 10 feet of an ally who has this feat and is also drunk (or worse), you can reroll one d20 roll as a free action. You must take the result of the second roll, even if it is worse."
+    },
+    {
+      "key": "Drunken God's Blessings",
+      "category": "General",
+      "name": "Drunken God's Blessings",
+      "description": "[redacted PI]"
+    },
+    {
+      "key": "Drunken Sing-Along",
+      "category": "General",
+      "name": "Drunken Sing-Along",
+      "description": "With a raised tankard and catchy tune, you can get large groups of people on your side. While in a tavern or other drinking establishment, you can change the attitude of the patrons from unfriendly to indifferent or from indifferent to friendly by spending 10 minutes engaging in a group sing-along. For the following 24 hours, your attempts to gather information in that tavern take only 2d6 minutes if the patrons are indifferent or 1d4 minutes if the patrons are friendly. You must be able to speak the same language as the majority of the patrons to use this feat. [Special] You can use this feat with a large crowd of people outside of a tavern if you supply at least 5 gp worth of alcohol to the group."
+    },
+    {
+      "key": "Extreme Mood Swings",
+      "category": "General",
+      "name": "Extreme Mood Swings",
+      "description": "Your emotions sometimes get the better of you. Increase each morale bonus you receive by 1. You take a −1 penalty on saves against emotion and fear effects. When you are drunk (or worse), this penalty doubles, but you increase each morale bonus you receive by 2 instead."
+    },
+    {
+      "key": "Hardy Liver",
+      "category": "General",
+      "name": "Hardy Liver",
+      "description": "You can hold your liquor and poisons better than most. You gain a +2 bonus on Fortitude saving throws against ingested poisons. You take no penalties when you are tipsy, and the penalties for being drunk or soused are halved for you."
+    },
+    {
+      "key": "Implacable",
+      "category": "Combat",
+      "name": "Implacable",
+      "description": "You aren't easily fazed, especially when you've been drinking. You gain a +2 bonus on saving throws against pain effects. When you are drunk or soused, you gain DR 5/piercing or slashing."
+    },
+    {
+      "key": "Muddled Morals",
+      "category": "General",
+      "name": "Muddled Morals",
+      "description": "Your conviction is strong... unless you've had a few drinks. You gain a +2 bonus on saving throws against effects that affect you based on your alignment. In addition, choose an alignment one step away from your true alignment; when you are drunk (or worse), spells and other effects affect you as if this alignment were your alignment."
+    },
+    {
+      "key": "Read the Room",
+      "category": "General",
+      "name": "Read the Room",
+      "description": "You can gain some insight into the mood of a crowd with just a look. Before you use the Drunken Sing-Along feat, you can attempt a DC 20 Sense Motive check as a free action to pick the exact right song for that crowd. If you are successful, you gain a +4 circumstance bonus on your next Diplomacy check to gather information in that tavern."
+    },
+    {
+      "key": "Tavern Regular",
+      "category": "General",
+      "name": "Tavern Regular",
+      "description": "You are quite popular at the pubs you frequent and the bartenders remember you. You receive a 10% discount at any tavern after you have spent a cumulative 500 gp there. In addition, if a bar fight occurs in that tavern, you gain a +2 bonus on your checks to use the redirect action. On a round in which you don't attempt the redirect action, the crowd reduces your tenacity by only 1d4 (instead of by the normal amount)."
+    }
+  ]
+}

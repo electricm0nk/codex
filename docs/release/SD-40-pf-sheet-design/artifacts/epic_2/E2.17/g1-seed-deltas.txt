@@ -1,0 +1,6 @@
+# G-1 seed deltas, E2.17 (base d6900659d4, head 5487f4f93c)
+## diff base/sha256.txt head/sha256.txt
+(empty)
+5e11269ab5c542d4584d89f4b875fd0b1083d0eafc0ffdaab9ea8bc0eac685a7  aldric.json
+c41a15c041686ddb16a7a57dfd37ac8ad5c4a3b51f5c1fd5e0e56db17f640695  elowen.json
+10362833cfbe3a4de1c167ae622cda3cc2a4e69fe2da914df4784e37c0f81422  tomas.json

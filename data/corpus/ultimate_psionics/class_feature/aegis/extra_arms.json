@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-24T03:51:47Z",
+  "data": {
+    "key": "Aegis ~ Extra Arms",
+    "name": "Extra Arms",
+    "class": "Aegis",
+    "description": "Your extra arms give you +2 to Climb and +2 against grapple for each free arm.  One of the arms can use a one-handed item at a -2 penalty.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Aegis ~ Extra Arms"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "AstralSuitCustomization.SpecialQuality"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Aegis ~ Extra Arms Lesser"
+      },
+      {
+        "key": "PREVARGT",
+        "value": "AstralSuitPrereqLVL,4"
+      },
+      {
+        "key": "DESC",
+        "value": "Your extra arms give you +2 to Climb and +2 against grapple for each free arm.  One of the arms can use a one-handed item at a -2 penalty."
+      },
+      {
+        "key": "COST",
+        "value": "2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.32"
+      },
+      {
+        "key": "TYPE",
+        "value": "AberrantCustomization"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 100,
+    "record_key": "Aegis ~ Extra Arms"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

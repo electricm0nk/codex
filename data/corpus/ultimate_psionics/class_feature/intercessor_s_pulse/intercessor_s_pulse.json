@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Intercessor's Pulse",
+    "name": "Intercessor's Pulse",
+    "class": null,
+    "description": "Spend 1 pp to grant a selected bonus to all collective members: inspire courage (+%1 bonus on saves vs. charm and fear, +%1 bonus on attack and weapon damage rolls); inspire competence (+%2 bonus on skill checks with a particular skill); sanctuary (caster level %3).|IntercessorInspireCourageBonus|IntercessorInspireCompetenceBonus|IntercessorSanctuaryCL",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "VitalistClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "IntercessorInspireCourageBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "IntercessorInspireCompetenceBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "IntercessorSanctuaryCL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Spend 1 pp to grant a selected bonus to all collective members: inspire courage (+%1 bonus on saves vs. charm and fear, +%1 bonus on attack and weapon damage rolls); inspire competence (+%2 bonus on skill checks with a particular skill); sanctuary (caster level %3).|IntercessorInspireCourageBonus|IntercessorInspireCompetenceBonus|IntercessorSanctuaryCL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|IntercessorInspireCourageBonus|min(4,1+MethodLVL/6)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|IntercessorInspireCompetenceBonus|((MethodLVL+2)/4)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|IntercessorSanctuaryCL|MethodLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.73"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 988,
+    "record_key": "Intercessor's Pulse"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

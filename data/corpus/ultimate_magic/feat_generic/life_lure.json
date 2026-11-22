@@ -1,0 +1,61 @@
+{
+  "codex_generated_name": false,
+  "completeness": "full",
+  "data": {
+    "description": "Your channeled positive energy is irresistibly sweet to nearby undead.",
+    "key": "Life Lure",
+    "name": "Life Lure",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "FEAT"
+      },
+      {
+        "key": "TYPE",
+        "value": "General"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,TYPE.Channel Positive Energy"
+      },
+      {
+        "key": "DEFINE",
+        "value": "LifeLureDuration|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Your channeled positive energy is irresistibly sweet to nearby undead."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|LifeLureDuration|max(1,CHA)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.153"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "As a standard action, you can channel positive energy to fascinate all undead within 30 feet for a %1 rounds. Undead that succeed at a Will save are unaffected. Use the same DC for this ability as the DC for channeling energy to harm undead. Channeling energy for this purpose does not heal or harm creatures.|LifeLureDuration"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T14:16:16Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 83,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_feats.lst",
+    "record_key": "Life Lure",
+    "sha256": "cd702f7234f0139f4683a207be036b57ba9b5bc3c6878b50e308abc661fa26e1"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

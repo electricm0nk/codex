@@ -1,0 +1,32 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:26:33Z",
+  "data": {
+    "key": "Codex-Named Unit (equipment_inner_sea_intrigue_isi_equip_general_lst_32)",
+    "category": "General",
+    "name": "Codex-Named Unit (equipment_inner_sea_intrigue_isi_equip_general_lst_32)",
+    "cost_gp": 200.0,
+    "weight_lbs": 0.0,
+    "description": "Ingested; Fort DC 23; Onset 1 min.; Freq 1 min (2); Effect Deathlike trance 1 min./deathlike trance 8 hrs; Cure 1 save"
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_intrigue/isi_equip_general.lst",
+    "sha256": "53ade9c3bb52da647d4c5e7578ac4487ba17f5dd3d9c1f8531f3963fe19c4d0e",
+    "line": 32,
+    "record_key": "Codex-Named Unit (equipment_inner_sea_intrigue_isi_equip_general_lst_32)"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "name",
+  "pi_marker": "redacted",
+  "codex_generated_name": true,
+  "rename": {
+    "reason": "name_pi_blocked",
+    "coordinate": "inner_sea_intrigue:isi_equip_general.lst:32"
+  }
+}

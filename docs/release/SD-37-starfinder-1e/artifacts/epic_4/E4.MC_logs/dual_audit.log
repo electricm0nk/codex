@@ -1,0 +1,9 @@
+# first run on e948ffcad9: OK_NO_BUNDLE_TAGS failed (1 hit: a doc comment naming tests/sd24_wired_integration_audit.rs); fixed by f107ff4eb9; re-run:
+$ dual audit on CARD_BASE...HEAD (45d30bf85b...f107ff4eb9)
+OK_NO_BUNDLE_TAGS
+OK_NO_TOKENS
+OK_NO_NOOP_HANDLERS
+OK_NO_MOCK_LEAKS
+OK_NO_WOULD_STRINGS
+# widened (Finding 1): the Would check over apps/desktop/src-tauri/**/*.rs too
+OK_NO_WOULD_STRINGS_DESKTOP_RS

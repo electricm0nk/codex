@@ -1,0 +1,89 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Gigantic Steed ~ Companion",
+    "name": "Gigantic Steed ~ Companion",
+    "class": "Gigantic Steed",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "DEFINE",
+        "value": "GiganticSteedStrBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "GiganticSteedConBonus|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "SIZEMOD|NUMBER|2|PRESIZEEQ:M"
+      },
+      {
+        "key": "BONUS",
+        "value": "SIZEMOD|NUMBER|1|PRESIZEEQ:L"
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|AC|-1"
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|TOHIT|-1"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|GiganticSteedStrBonus*2"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|-2"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CON|GiganticSteedConBonus*2"
+      },
+      {
+        "key": "DEFINESTAT",
+        "value": "MINVALUE|DEX|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|REACH|5"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|GiganticSteedStrBonus|((MASTERVAR(\"AnimalCompanionMasterLVL\"))+1)/2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|GiganticSteedStrBonus|1+((MASTERVAR(\"AnimalCompanionMasterLVL\"))>=5)+((MASTERVAR(\"AnimalCompanionMasterLVL\"))>=9)"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 370,
+    "record_key": "Gigantic Steed ~ Companion"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

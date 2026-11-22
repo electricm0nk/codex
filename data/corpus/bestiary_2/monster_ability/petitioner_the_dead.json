@@ -1,0 +1,63 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Petitioner ~ The Dead",
+    "delivery": null,
+    "description": null,
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_2:monster_ability:petitioner_the_dead",
+    "name": "The Dead",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Immunity to Cold"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DR",
+        "value": "10/bludgeoning"
+      },
+      {
+        "key": "KEY",
+        "value": "Petitioner ~ The Dead"
+      },
+      {
+        "key": "PREALIGN",
+        "value": "TN"
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "Petitioner Slam"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Petitioner"
+      }
+    ],
+    "source_page": null,
+    "traits": [
+      "Petitioner"
+    ]
+  },
+  "ingested_at": "2026-08-23T14:07:19Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 949,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Petitioner ~ The Dead",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

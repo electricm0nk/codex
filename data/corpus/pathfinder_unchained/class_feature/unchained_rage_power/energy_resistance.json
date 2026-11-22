@@ -1,0 +1,94 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Unchained Rage Power ~ Energy Resistance",
+    "name": "Energy Resistance",
+    "class": "Unchained Barbarian",
+    "description": "You gain resistance %1 to one energy type (acid, cold, electricity, fire, or sonic).|EnergyResistance",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Unchained Rage Power ~ Energy Resistance"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Unchained Rage Power.SpecialAttack.Extraordinary"
+      },
+      {
+        "key": "SERVESAS",
+        "value": "ABILITY=Special Ability|Rage Power ~ Energy Resistance"
+      },
+      {
+        "key": "DEFINE",
+        "value": "EnergyResistance|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "EnergyResistanceAbsorbDamage|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain resistance %1 to one energy type (acid, cold, electricity, fire, or sonic).|EnergyResistance"
+      },
+      {
+        "key": "DESC",
+        "value": "You also gain limited immunity to the same type of energy, as Protection from Energy. You can absorb %1 points of damage, and you apply your energy resistance first.|EnergyResistanceAbsorbDamage|PREVARGTEQ:RagePowersLVL,8"
+      },
+      {
+        "key": "DESC",
+        "value": "The energy type is chosen when this rage power is selected, and it can't be changed. This rage power can be selected more than once; each time, it applies to a different energy type."
+      },
+      {
+        "key": "STACK",
+        "value": "NO"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "STRING|Acid|Cold|Electricity|Fire|Sonic"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EnergyResistance|max(1,floor(RagePowersLVL/2))"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EnergyResistanceAbsorbDamage|2*RagePowersLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.11"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Rage"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst",
+    "sha256": "2becbb0524bd4c367cc1273434c20bcd8e42e3e08abd372f99b005e69e8c4725",
+    "line": 352,
+    "record_key": "Unchained Rage Power ~ Energy Resistance"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice",
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

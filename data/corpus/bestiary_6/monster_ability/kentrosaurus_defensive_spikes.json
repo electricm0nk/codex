@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:22:10Z",
+  "data": {
+    "corpus_key": "Kentrosaurus ~ Defensive Spikes",
+    "delivery": "Extraordinary",
+    "description": "At the end of its turn, a kentrosaurus can crouch down and splay its back and shoulder spikes. It cannot make attacks of opportunity when using its defensive spikes in this way, but until its next turn any creature that attacks the kentrosaurus with light or one-handed melee weapons, natural weapons, or unarmed strikes takes 1d6 points of piercing damage unless it succeeds at a DC %1 Reflex saving throw.",
+    "description_variables": [
+      "10+HD/2+DEX"
+    ],
+    "facet": "SpecialQuality",
+    "key": "bestiary_6:monster_ability:kentrosaurus_defensive_spikes",
+    "name": "Defensive Spikes",
+    "owners": [],
+    "source_page": "p.95",
+    "traits": [
+      "KentrosaurusRacialTrait"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_6/b6_abilities_race.lst",
+    "sha256": "d60128d0229b23016cc603e691bb97cc6bf568f5e504e5bd32b57f2504fdd8f0",
+    "line": 21,
+    "record_key": "Kentrosaurus ~ Defensive Spikes"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ]
+}

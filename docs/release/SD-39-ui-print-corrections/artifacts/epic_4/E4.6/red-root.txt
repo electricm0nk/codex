@@ -1,0 +1,13 @@
+test worn_item_applies_settles_each_chain_shape ... FAILED
+test worn_item_applies_the_higher_of_one_armor_class_type ... ok
+test worn_item_applies_attack_initiative_and_speed_by_type ... FAILED
+test worn_item_applies_only_what_is_worn_and_stacks_each_target ... ok
+test worn_item_applies_a_derived_record_reads_what_it_does_not_state ... ok
+thread 'worn_item_applies_settles_each_chain_shape' (556621) panicked at tests/worn_vs_carried.rs:257:5:
+  left: [("save:fortitude", None, -2), ("save:reflex", None, -2), ("save:will", None, -2)]
+ right: [("initiative", None, -5), ("attack", None, -2), ("save:fortitude", None, -2), ("save:reflex", None, -2), ("save:will", None, -2)]
+thread 'worn_item_applies_attack_initiative_and_speed_by_type' (556619) panicked at tests/worn_vs_carried.rs:231:5:
+  left: None
+ right: Some(1)
+test result: FAILED. 3 passed; 2 failed; 0 ignored; 0 measured; 5 filtered out; finished in 0.27s
+error: test failed, to rerun pass `--test worn_vs_carried`

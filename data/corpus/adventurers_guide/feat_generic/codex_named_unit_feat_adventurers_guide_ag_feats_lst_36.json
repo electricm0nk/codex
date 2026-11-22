@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:57:27Z",
+  "data": {
+    "key": "Codex-Named Unit (feat_adventurers_guide_ag_feats_lst_36)",
+    "name": "Codex-Named Unit (feat_adventurers_guide_ag_feats_lst_36)",
+    "description": "You've learned to defend yourself against spell and storm with dazzling flourishes of your weapon.",
+    "raw_tokens": [
+      {
+        "key": "NAMEISPI",
+        "value": "YES"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "FEAT"
+      },
+      {
+        "key": "TYPE",
+        "value": "Combat"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "PRETOTALAB",
+        "value": "4"
+      },
+      {
+        "key": "DESC",
+        "value": "You've learned to defend yourself against spell and storm with dazzling flourishes of your weapon."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.26"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "Whenever you use Combat Expertise, fight defensively, or take the total defense action, choose a type of saving throw. (You can choose a different type each time you take such an action.) Once per round before attempting a saving throw using the selected save, you gain a +2 bonus on that save. If you have a base attack bonus of +11 or higher, this bonus increases to +3. If you have a base attack bonus of +16 or higher, the bonus instead increases to +4."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_feats.lst",
+    "sha256": "e3c7767bc0491cf56909e0ded972ef6b70ae228bed3266f7f52ace170084756a",
+    "line": 36,
+    "record_key": "Codex-Named Unit (feat_adventurers_guide_ag_feats_lst_36)"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "raw_tokens,name",
+  "pi_marker": "redacted",
+  "codex_generated_name": true,
+  "rename": {
+    "reason": "name_pi_blocked",
+    "coordinate": "adventurers_guide:ag_feats.lst:36"
+  }
+}

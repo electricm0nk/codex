@@ -1,0 +1,73 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Aromaphile ~ Aromatic Manipulation",
+    "name": "Aromatic Manipulation",
+    "class": "Mesmerist",
+    "description": "The aromaphile can touch a creature affected by his hypnotic aroma to alter its mental state. This functions as the touch treatment class feature, except the aromaphile cannot remove the confused, cowering, or stunned conditions, and he cannot break enchantments using this ability. Instead, he adds fatigued",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Aromaphile ~ Aromatic Manipulation"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mesmerist Class Features.AromaphileClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "The aromaphile can touch a creature affected by his hypnotic aroma to alter its mental state. This functions as the touch treatment class feature, except the aromaphile cannot remove the confused, cowering, or stunned conditions, and he cannot break enchantments using this ability. Instead, he adds fatigued"
+      },
+      {
+        "key": "DESC",
+        "value": "and exhausted|PREVARGTEQ:MesmeristLVL,10"
+      },
+      {
+        "key": "DESC",
+        "value": "to his list of removable conditions. An aromaphile can also use this ability to inflict hampering conditions on a target by touching it. He can cause his target to become fascinated by his aroma."
+      },
+      {
+        "key": "DESC",
+        "value": "He can deaden the target's emotions (as per calm emotions).|PREVARGTEQ:MesmeristLVL,6"
+      },
+      {
+        "key": "DESC",
+        "value": "He can cause the target to become stunned.|PREVARGTEQ:MesmeristLVL,10"
+      },
+      {
+        "key": "DESC",
+        "value": "He can cause the target to fall asleep (as per deep slumber, except the Hit Die limit is %1).|MesmeristLVL+2|PREVARGTEQ:MesmeristLVL,14"
+      },
+      {
+        "key": "DESC",
+        "value": "The target can attempt a Will save to negate these effects (DC %1). On a failed save, the target gains the chosen condition for %2 rounds. Each round that the target is affected, it can attempt a new Will save at the same DC to end the effect early. If the target succeeds at such a save, its turn immediately ends. This alters touch treatment.|10+MesmeristLVL/2+CHA|MesmeristLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.18"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/support/uw_abilities_class_oa.lst",
+    "sha256": "26a03f73c3534cd6bae0bcda9581b3a89fa28ce5f78f854e009fc8110c477568",
+    "line": 106,
+    "record_key": "Aromaphile ~ Aromatic Manipulation"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

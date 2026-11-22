@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Kensai ~ Fighter Training",
+    "name": "Fighter Training",
+    "class": "Kensai",
+    "description": "Starting at 7th level, a kensai counts his magus level -3 as his fighter level for the purpose of qualifying for feats (if he has levels in fighter, these levels stack), but forfeits the benefit of such feats with weapons other than his favored weapon. This ability replaces knowledge pool.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Kensai ~ Fighter Training"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MagusClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FighterLevelQualify|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Starting at 7th level, a kensai counts his magus level -3 as his fighter level for the purpose of qualifying for feats (if he has levels in fighter, these levels stack), but forfeits the benefit of such feats with weapons other than his favored weapon. This ability replaces knowledge pool."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|TYPE=FighterWeaponQualify"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FighterLevelQualify|FighterWeaponQualifyLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FighterWeaponQualifyLVL|MagusLVL-3|TYPE=Base"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.55"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/support/uc_abilities_class_um.lst",
+    "sha256": "b8cff28b7be84f4f3c6b650c3e375a3027ff13bf4226233a514d34385bdfb67a",
+    "line": 21,
+    "record_key": "Kensai ~ Fighter Training"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

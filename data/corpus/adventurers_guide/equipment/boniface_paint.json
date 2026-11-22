@@ -1,0 +1,27 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T12:28:11Z",
+  "data": {
+    "key": "Boniface Paint",
+    "category": "General",
+    "name": "Boniface Paint",
+    "cost_gp": 15.0,
+    "weight_lbs": 5.0,
+    "description": null
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_equip_general.lst",
+    "sha256": "772fd7915453a284d1295d37693bda26a25db7740bba23fb1c8f368d0533f8bc",
+    "line": 3,
+    "record_key": "Boniface Paint"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

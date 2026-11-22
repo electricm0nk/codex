@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Combat Trick ~ Twinned Feint",
+    "name": "Twinned Feint",
+    "description": "After succeeding at the first feint while using this feat, you can spend 2 stamina points to attempt a second feint against any foe within your reach, even if it's not adjacent to the first foe.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Combat Trick ~ Twinned Feint"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Combat Trick"
+      },
+      {
+        "key": "DESC",
+        "value": "After succeeding at the first feint while using this feat, you can spend 2 stamina points to attempt a second feint against any foe within your reach, even if it's not adjacent to the first foe."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "134"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SourceBook|ACG"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/support/ability_acg.lst",
+    "sha256": "570d75d3124c424e2ac73115e554567a42c86aa05cf319c5d41c5135b1068c68",
+    "line": 50,
+    "record_key": "Combat Trick ~ Twinned Feint"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

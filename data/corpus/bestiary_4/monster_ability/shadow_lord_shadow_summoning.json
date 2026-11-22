@@ -1,0 +1,49 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Shadow Lord ~ Shadow Summoning",
+    "delivery": "Supernatural",
+    "description": "A creature created with shadow conjuration or greater shadow conjuration that would normally have a celestial or fiendish template (such as a bear) instead gains the shadow creature template.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:shadow_lord_shadow_summoning",
+    "name": "Shadow Summoning",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A creature created with shadow conjuration or greater shadow conjuration that would normally have a celestial or fiendish template (such as a bear) instead gains the shadow creature template."
+      },
+      {
+        "key": "KEY",
+        "value": "Shadow Lord ~ Shadow Summoning"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      }
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T14:10:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1264,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "record_key": "Shadow Lord ~ Shadow Summoning",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

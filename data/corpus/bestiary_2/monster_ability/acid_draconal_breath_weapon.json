@@ -1,0 +1,74 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Acid Draconal ~ Breath Weapon",
+    "delivery": "Supernatural",
+    "description": "This draconal has a acid breath weapon.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:acid_draconal_breath_weapon",
+    "name": "Breath Weapon",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Breath Weapon"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(120-ft. line, 20d6 acid damage, Reflex DC %1 half, usable once every 1d4 rounds)|DraconalBreathWeaponDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DraconalBreathWeaponDC|10+TL/2+CON"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DraconalBreathWeaponDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Breath Weapon)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DraconalBreathWeaponDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "This draconal has a acid breath weapon."
+      },
+      {
+        "key": "KEY",
+        "value": "Acid Draconal ~ Breath Weapon"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.18"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
+    "source_page": "p.18",
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T14:07:19Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 56,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Acid Draconal ~ Breath Weapon",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

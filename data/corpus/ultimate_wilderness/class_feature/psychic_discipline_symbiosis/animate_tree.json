@@ -1,0 +1,49 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Psychic Discipline Symbiosis ~ Animate Tree",
+    "name": "Animate Tree",
+    "class": "Psychic",
+    "description": "You can animate a tree within 180 feet as a standard action. This functions as a treant's animate trees ability, with the following exceptions. Each day, you can animate %1 trees, and you can control up to %2 trees at a time. A tree remains animated for %3 minutes, or until dismissed by you or destroyed.|3+CHA|(PsychicLVL-11)/2|10*PsychicLVL",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Psychic Discipline Symbiosis ~ Animate Tree"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "You can animate a tree within 180 feet as a standard action. This functions as a treant's animate trees ability, with the following exceptions. Each day, you can animate %1 trees, and you can control up to %2 trees at a time. A tree remains animated for %3 minutes, or until dismissed by you or destroyed.|3+CHA|(PsychicLVL-11)/2|10*PsychicLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.93"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/support/uw_abilities_class_oa.lst",
+    "sha256": "26a03f73c3534cd6bae0bcda9581b3a89fa28ce5f78f854e009fc8110c477568",
+    "line": 169,
+    "record_key": "Psychic Discipline Symbiosis ~ Animate Tree"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

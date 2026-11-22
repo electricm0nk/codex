@@ -1,0 +1,30 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:38:17Z",
+  "data": {
+    "key": "Intuitive Shot",
+    "category": "Psionic",
+    "name": "Intuitive Shot",
+    "description": "When focused, use a standard action to gain +%1 damage on a ranged weapon attack within 30 ft.|WIS",
+    "prerequisites": [
+      "PREABILITY:2,CATEGORY=FEAT,Point-Blank Shot,Psionic Shot",
+      "PRESTAT:1,WIS=13"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_feats.lst",
+    "sha256": "528096cb97ebe8255b9f9fe67682dd7e045f53b65e32295cd57967002eccb137",
+    "line": 181,
+    "record_key": "Intuitive Shot"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

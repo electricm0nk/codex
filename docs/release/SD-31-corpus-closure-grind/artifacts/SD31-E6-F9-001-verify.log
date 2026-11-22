@@ -1,0 +1,87 @@
+codex verify — mode: full, jobs: 2
+repo:  /home/ubuntu/workspace/repos/codex/.claude/worktrees/wf_d70ea313-07f-5
+logs:  /tmp/codex-verify-c9moqh
+---------------------------------------------------------------
+==> preflight-disk — disk budget check before any build starts
+    repo filesystem (/home/ubuntu/workspace/repos/codex/.claude/worktrees/wf_d70ea313-07f-5, mounted at /): 24% used, 740G available
+    scratch-log filesystem (/tmp/codex-verify-c9moqh, mounted at /): 24% used, 740G available
+    PASS  preflight-disk  (disk budget OK)
+---------------------------------------------------------------
+==> preflight-oracle — scripts/fetch-pcgen-oracle.sh --check
+    PASS  preflight-oracle  (oracle at pin 7f818006e371188e5717fd18d74d18a420747fc6)
+---------------------------------------------------------------
+==> oracle-pin-selftest — scripts/tests/test_fetch_pcgen_oracle.sh
+    PASS  oracle-pin-selftest  (11 passed, 0 failed)
+---------------------------------------------------------------
+==> producer-selftest — python3 -m unittest scripts/tests/test_pf1e_dashboard_producer.py
+    PASS  producer-selftest  (5 cases passed)
+---------------------------------------------------------------
+==> reachability-audit-selftest — python3 -m unittest scripts/tests/test_reachability_audit.py
+    PASS  reachability-audit-selftest  (11 cases passed)
+---------------------------------------------------------------
+==> reachability-audit — python3 scripts/reachability_audit.py
+    PASS  reachability-audit  (reachable ceiling 98.95%)
+---------------------------------------------------------------
+==> groundtruth-guard-selftest — python3 -m unittest scripts/tests/test_ground_truth_evidence_guard.py scripts/tests/test_sample_ground_truth_units.py
+    PASS  groundtruth-guard-selftest  (14 cases passed)
+---------------------------------------------------------------
+==> pi-sweep — Product-Identity blacklist over src/rules_core/rules_tables
+    PASS  pi-sweep  (10 hits over src/rules_core/rules_tables, 10 baseline rows)
+---------------------------------------------------------------
+==> declared-pi-audit — corpus NAMEISPI:/DESCISPI: declarations vs. what shipped
+    PASS  declared-pi-audit  (clean)
+---------------------------------------------------------------
+==> audit-selftest — scripts/tests/test_identifier_discipline_audit.sh
+    PASS  audit-selftest  (28 passed, 0 failed)
+---------------------------------------------------------------
+==> reclaim-selftest — scripts/tests/test_reclaim_orphan_targets.sh
+    PASS  reclaim-selftest  (13 passed, 0 failed)
+---------------------------------------------------------------
+==> driver-selftest — scripts/tests/test_run_desktop_driver.sh
+    PASS  driver-selftest  (7 passed, 0 failed)
+---------------------------------------------------------------
+==> corpus-sweep-selftest — scripts/tests/test_corpus_literal_sweep.sh
+    PASS  corpus-sweep-selftest  (15 passed, 0 failed)
+---------------------------------------------------------------
+==> root-lib — cargo test --locked --lib -j 2  (repo root)
+    PASS  root-lib  (1849 passed)
+---------------------------------------------------------------
+==> root-full — cargo test --locked --no-fail-fast -j 2  (repo root)
+    building ~490 test binaries; this is the slow one
+    PASS  root-full  (6556 passed across 558 suites, all 529 tests/*.rs suites executed)
+---------------------------------------------------------------
+==> desktop — cargo test --locked -j 2  (apps/desktop/src-tauri)
+    PASS  desktop  (447 passed)
+---------------------------------------------------------------
+==> reach — cargo test --locked -j 2 reach_gate  (apps/desktop/src-tauri)
+    PASS  reach  (27 passed)
+---------------------------------------------------------------
+==> corpus-sweep — cargo run --locked --bin corpus_literal_sweep  (repo root)
+    PASS  corpus-sweep  (21038 records examined of 24116 read, 177410 tokens compared (9 synthesized), 23691 digests checked, 0 findings)
+---------------------------------------------------------------
+==> frontend-install — npm ci if node_modules is absent  (apps/desktop)
+    PASS  frontend-install  (node_modules present)
+---------------------------------------------------------------
+==> frontend-test — npm test  (apps/desktop)
+    PASS  frontend-test  (99/99 files)
+---------------------------------------------------------------
+==> frontend-typecheck — npm run typecheck  (apps/desktop)
+    PASS  frontend-typecheck  (tsc --noEmit clean)
+---------------------------------------------------------------
+==> clippy — cargo clippy --locked --tests -j 2  (BOTH crates)
+    PASS  clippy  (root:47 desktop:7 warnings, 0 errors)
+---------------------------------------------------------------
+==> class-dump — cargo run --locked --bin v06_class_state_dump  (repo root)
+    PASS  class-dump  (31/31 computing)
+---------------------------------------------------------------
+SUMMARY
+  passed:  23  preflight-disk preflight-oracle oracle-pin-selftest producer-selftest reachability-audit-selftest reachability-audit groundtruth-guard-selftest pi-sweep declared-pi-audit audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest root-lib root-full desktop reach corpus-sweep frontend-install frontend-test frontend-typecheck clippy class-dump
+
+BASELINE NOTES (not failures — update deliberately):
+  - BASELINE_ROOT_FULL_TESTS baseline is stale: 6541 recorded, 6556 measured. Update /home/ubuntu/workspace/repos/codex/.claude/worktrees/wf_d70ea313-07f-5/scripts/verify-baselines.env.
+  - BASELINE_ROOT_TEST_BINARIES baseline is stale: 557 recorded, 558 measured. Update /home/ubuntu/workspace/repos/codex/.claude/worktrees/wf_d70ea313-07f-5/scripts/verify-baselines.env.
+  - BASELINE_CORPUS_LITERAL_RECORDS=21038 (was 6331)
+
+RESULT: PASS
+logs in /tmp/codex-verify-c9moqh
+VERIFY_EXIT=0 (captured from background task completion notification, exit code 0)

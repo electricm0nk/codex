@@ -1,0 +1,84 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "Humans born in rural areas are used to hard labor. They gain a bonus equal to half their character level to any one Craft or Profession skill, and once per day they may ignore an effect that would cause them to become fatigued or exhausted.",
+    "key": "Human ~ Heart of the Fields",
+    "name": "Heart of the Fields",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Human ~ Heart of the Fields"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Human Racial Trait.SpecialQuality.Special Quality"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Human ~ Heart of the Fields],[!PREFACT:1,ABILITIES,Human_ReplaceSkilled=true]"
+      },
+      {
+        "key": "DESC",
+        "value": "Humans born in rural areas are used to hard labor. They gain a bonus equal to half their character level to any one Craft or Profession skill, and once per day they may ignore an effect that would cause them to become fatigued or exhausted."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces the skilled racial trait.|!PREABILITY:1,CATEGORY=Special Ability,Human ~ Heart of the Fields"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "NUMCHOICES=1|SKILL|TYPE=Craft|TYPE=Profession"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|%LIST|TL/2"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.23"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per Day"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|1"
+      },
+      {
+        "key": "FACT",
+        "value": "Human_ReplaceSkilled|true"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 111,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_race.lst",
+    "record_key": "Human ~ Heart of the Fields",
+    "sha256": "50f01990edfb0f144b0188746acb06ff18ee798b5a699c6a0bf69d2bec4eb253"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice",
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

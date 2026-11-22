@@ -1,0 +1,133 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Dummy",
+    "name": "Dummy",
+    "class": null,
+    "description": "You know how to create a mutagen that you can imbibe in order to heighten your physical prowess at the cost of your personality. It takes 1 hour to brew a dose of mutagen, and once brewed, it remains potent until used. You can only maintain one dose of mutagen at a time - if you brews a second dose, any existing mutagen becomes inert. A mutagen that is not in your possession becomes inert until an alchemist picks it up again. When you brew a mutagen, you select one physical ability score - either Strength, Dexterity, or Constitution. It's a standard action to drink a mutagen. Upon being imbibed, the mutagen causes you to grow bulkier and more bestial, granting you a +2 natural armor bonus and a +4 alchemical bonus to the selected ability score for %1 minutes. In addition, while the mutagen is in effect, you take a -2 penalty to one of your mental ability scores. If the mutagen enhances your Strength, it applies a penalty to your Intelligence. If it enhances your Dexterity, it applies a penalty to your Wisdom. If it enhances your Constitution, it applies a penalty to your Charisma. A non-alchemist who drinks a mutagen must make a DC %2 Fortitude save or become nauseated for 1 hour - a non-alchemist can never gain the benefit of a mutagen, but an alchemist can gain the effects of another alchemist's mutagen if he drinks it. (Although if the other alchemist creates a different mutagen, the effects of the \"stolen\" mutagen immediately cease.) The effects of a mutagen do not stack. Whenever an alchemist drinks a mutagen, the effects of any previous mutagen immediately end.|AlchemistMutagenDuration|AlchemistMutagenDC",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "TYPE",
+        "value": "None"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AlchemistMutagenLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AlchemistMutagenDuration|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AlchemistMutagenDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MutagenNormal|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MutagenStatBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MutagenStatPenalty|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MutagenACBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MutagenTierLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SecondMutagenStatBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ThirdMutagenStatBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You know how to create a mutagen that you can imbibe in order to heighten your physical prowess at the cost of your personality. It takes 1 hour to brew a dose of mutagen, and once brewed, it remains potent until used. You can only maintain one dose of mutagen at a time - if you brews a second dose, any existing mutagen becomes inert. A mutagen that is not in your possession becomes inert until an alchemist picks it up again. When you brew a mutagen, you select one physical ability score - either Strength, Dexterity, or Constitution. It's a standard action to drink a mutagen. Upon being imbibed, the mutagen causes you to grow bulkier and more bestial, granting you a +2 natural armor bonus and a +4 alchemical bonus to the selected ability score for %1 minutes. In addition, while the mutagen is in effect, you take a -2 penalty to one of your mental ability scores. If the mutagen enhances your Strength, it applies a penalty to your Intelligence. If it enhances your Dexterity, it applies a penalty to your Wisdom. If it enhances your Constitution, it applies a penalty to your Charisma. A non-alchemist who drinks a mutagen must make a DC %2 Fortitude save or become nauseated for 1 hour - a non-alchemist can never gain the benefit of a mutagen, but an alchemist can gain the effects of another alchemist's mutagen if he drinks it. (Although if the other alchemist creates a different mutagen, the effects of the \"stolen\" mutagen immediately cease.) The effects of a mutagen do not stack. Whenever an alchemist drinks a mutagen, the effects of any previous mutagen immediately end.|AlchemistMutagenDuration|AlchemistMutagenDC"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Mutagen ~ Stat Selection First|PREMULT:2,[PREVARGTEQ:MutagenTierLVL,1],[PREVARLTEQ:MutagenTierLVL,3]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Mutagen ~ Stat Selection Second|PREMULT:2,[PREVARGTEQ:MutagenTierLVL,1],[PREVARLTEQ:MutagenTierLVL,3]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Mutagen ~ Stat Selection Third|PREMULT:2,[PREVARGTEQ:MutagenTierLVL,1],[PREVARLTEQ:MutagenTierLVL,3]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Mutagen ~ Stat Selection Final|PREVARGTEQ:MutagenTierLVL,4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MutagenNormal|1|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AlchemistMutagenDuration|AlchemistMutagenLVL*10"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AlchemistMutagenDC|10+(AlchemistMutagenLVL/2)+INT"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MutagenStatPenalty|-2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MutagenACBonus|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MutagenStatBonus|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MutagenTierLVL|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SecondMutagenStatBonus|MutagenStatBonus-2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ThirdMutagenStatBonus|MutagenStatBonus-4"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2312,
+    "record_key": "Dummy"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

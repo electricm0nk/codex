@@ -1,0 +1,76 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Aegis ~ Toxic",
+    "name": "Toxic",
+    "class": "Aegis",
+    "description": "You can, %1/day, envenom a weapon that you wield or one natural attack with toxic saliva.  Applying venom this way is a swift action and you are immune to this poison.  Aberrant Saliva: Injury; save Fort DC %2; frequency 1/round for 6 rounds; effect 1d2 Dex; cure 1 save.|AberrantSalivaTimes|AberrantSalivaDC",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Aegis ~ Toxic"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "AberrantCustomization.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AberrantSalivaTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AberrantSalivaDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can, %1/day, envenom a weapon that you wield or one natural attack with toxic saliva.  Applying venom this way is a swift action and you are immune to this poison.  Aberrant Saliva: Injury; save Fort DC %2; frequency 1/round for 6 rounds; effect 1d2 Dex; cure 1 save.|AberrantSalivaTimes|AberrantSalivaDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AberrantSalivaTimes|CON"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AberrantSalivaDC|10+AstralSuitLVL/2+CON"
+      },
+      {
+        "key": "COST",
+        "value": "3"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.262"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|AbberantSalivaTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1731,
+    "record_key": "Aegis ~ Toxic"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

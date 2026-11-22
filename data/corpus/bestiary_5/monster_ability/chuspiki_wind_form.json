@@ -1,0 +1,55 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Chuspiki ~ Wind Form",
+    "delivery": "Supernatural",
+    "description": "Three times per day as an immediate action, a chuspiki can become insubstantial for 1 round. It gains DR 10/magic and becomes immune to poison, sneak attacks, and critical hits. It can't attack or use any of its spell-like abilities while in wind form, with the exception of basic aerokinesis.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_5:monster_ability:chuspiki_wind_form",
+    "name": "Wind Form",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Three times per day as an immediate action, a chuspiki can become insubstantial for 1 round. It gains DR 10/magic and becomes immune to poison, sneak attacks, and critical hits. It can't attack or use any of its spell-like abilities while in wind form, with the exception of basic aerokinesis."
+      },
+      {
+        "key": "KEY",
+        "value": "Chuspiki ~ Wind Form"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.56"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.ChuspikiRacialTrait"
+      }
+    ],
+    "source_page": "p.56",
+    "traits": [
+      "ChuspikiRacialTrait"
+    ]
+  },
+  "ingested_at": "2026-08-23T15:23:07Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 18,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_5/support/b5_abilities_race_oa.lst",
+    "record_key": "Chuspiki ~ Wind Form",
+    "sha256": "15f9a4abfa03080f40ce11e5d4b72bb8cc91dbc3842745dcb37a90f996336142"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

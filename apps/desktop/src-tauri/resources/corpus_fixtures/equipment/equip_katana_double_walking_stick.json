@@ -1,0 +1,15 @@
+{
+  "completeness": "full",
+  "data": {
+    "key": "Katana (Double Walking Stick)",
+    "name": "Katana (Double Walking Stick)"
+  },
+  "license": "OGL",
+  "population": "in_scope",
+  "source": {
+    "kind": "desktop_ui_fixture",
+    "line": 1,
+    "path": "apps/desktop/src-tauri/fixtures_src/equip_katana_double_walking_stick.txt",
+    "record_key": "Katana (Double Walking Stick)"
+  }
+}

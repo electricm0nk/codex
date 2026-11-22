@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:22:49Z",
+  "data": {
+    "key": "Trait ~ Experimental Escapee",
+    "name": "Experimental Escapee",
+    "description": "You gain a +2 trait bonus on Escape Artist and Strength checks to break free of bonds, grapples, and the like.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Trait ~ Experimental Escapee"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Trait.RaceTrait.Android Race Trait"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREVAREQ:BypassTraitRestriction,1],[!PREABILITY:1,CATEGORY=Special Ability,TYPE.RaceTrait],[PREABILITY:1,CATEGORY=Special Ability,Trait ~ Experimental Escapee]"
+      },
+      {
+        "key": "PREFACT",
+        "value": "1,TEMPLATES,IsAndroid=true"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a +2 trait bonus on Escape Artist and Strength checks to break free of bonds, grapples, and the like."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.198"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities.lst",
+    "sha256": "38af17b7b20261b8279fd8411b7bc3b88b8e2d90303c89d03952d93dd3e1f1cd",
+    "line": 56,
+    "record_key": "Trait ~ Experimental Escapee"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

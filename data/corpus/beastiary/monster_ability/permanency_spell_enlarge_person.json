@@ -1,0 +1,880 @@
+{
+  "completeness": "full",
+  "data": {
+    "codex_generated_name": false,
+    "corpus_key": "Permanency Spell / Enlarge Person",
+    "delivery": null,
+    "description": "(2,500GP), Caster Level %1. This spell causes instant growth of a humanoid creature, doubling its height and multiplying its weight by 8. This increase changes the creature's size category to the next larger one. The target gains a +2 size bonus to Strength, a -2 size penalty to Dexterity [to a minimum of 1], and a -1 penalty on attack rolls and AC due to its increased size. A humanoid creature whose size increases to Large has a space of 10 feet and a natural reach of 10 feet. This spell does not change the target's speed. If insufficient room is available for the desired growth, the creature attains the maximum possible size and may make a Strength check [using its increased Strength] to burst any enclosures in the process. If it fails, it is constrained without harm by the materials enclosing it- the spell cannot be used to crush a creature by increasing its size. All equipment worn or carried by a creature is similarly enlarged by the spell. Melee and projectile weapons affected by this spell deal more damage. Other magical properties are not affected by this spell. Any enlarged item that leaves an enlarged creature's possession [including a projectile or thrown weapon] instantly returns to its normal size. This means that thrown weapons deal their normal damage, and projectiles deal damage based on the size of the weapon that fired them. Magical properties of enlarged items are not increased by this spell. Multiple magical effects that increase size do not stack,. Enlarge person counters and dispels reduce person.",
+    "description_variables": [
+      "%LIST"
+    ],
+    "facet": "SpecialQuality",
+    "key": "beastiary:monster_ability:permanency_spell_enlarge_person",
+    "name": "Permanency Spell / Enlarge Person",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "BONUS",
+        "value": "COMBAT|TOHIT.GRAPPLE|5|TYPE=Size"
+      },
+      {
+        "key": "BONUS",
+        "value": "SIZEMOD|NUMBER|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|-2|TYPE=Size"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|2|TYPE=Size"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PermanecyEnlargePersonLVL|%LIST"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SizeIncrease|-1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Aklys (Gladiator)|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Aklys|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Amentum (Javelin)|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Amentum|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Atlatl|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Axe (Orc Double)|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Axe (Throwing)|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Ballista (Gate Breaker)|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Ballista (Heavy)|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Ballista (Light)|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Battle Aspergillum|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Battleaxe|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Blowgun|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Blunderbuss|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Bo Staff|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Boar Spear|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Bolas|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Bombard (Heavy)|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Bombard (Light)|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Bombard (Standard)|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Brass Knuckles|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Broadsword (Nine Ring)|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Buckler Gun|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Butterfly Sword|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Cannon (Fiend's Mouth)|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Cannon|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Catapult (Heavy)|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Catapult (Light)|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Catapult (Standard)|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Chain (Spiked)|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Chain Spear|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Club|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Crossbow (Hand)|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Crossbow (Heavy)|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Crossbow (Light)|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Crossbow (Repeating Hand)|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Crossbow (Repeating Heavy)|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Crossbow (Repeating Light)|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Culverin|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Curve Blade (Elven)|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Dagger (Punching)|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Dagger|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Dan Bong|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Dart|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Dogslicer|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Double Chicken Saber|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Double Hackbut|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Earth Breaker|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Emei Piercer|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Falchion|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Fighting Fan|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Fire Lance|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Firearms|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Firedrake|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Firewyrm|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Flail (Dire)|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Flail (Heavy)|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Flail|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Flying Blade|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Gauntlet (Spiked)|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Gauntlet|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Gladius|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Glaive|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Great Terbutje|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Greataxe|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Greatclub|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Greatsword|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Guisarme|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Halberd|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Hammer (Gnome Hooked)|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Hammer (Light)|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Handaxe|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Harpoon|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Hooked Axe|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Hooked Lance|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Horsechopper|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Hunga Munga|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Iron Brush|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Javelin|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Jutte|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Kama (Double-Chained)|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Kama|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Katana (Double Walking Stick)|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Katana|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Kerambit|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Kestros|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Klar|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Knuckle Axe|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Kukri|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Kusarigama (Sickle and Chain)|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Kyoketsu Shoge|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Lance|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Longbow|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Longspear|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Longsword|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Lucerne Hammer|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Lungchuan Tamo|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Mace (Heavy)|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Mace (Light)|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Madu|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Mattock|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Mere Club|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Meteor Hammer|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Monk's Spade|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Morningstar|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Musket (Axe)|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Musket (Double-Barreled)|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Musket (Warhammer)|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Musket|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Naginata|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Net|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Nine-Section Whip|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Nodachi|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Nunchaku|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Ogre Hook|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Pata|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Pepperbox|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Pick (Heavy)|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Pick (Light)|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Pistol (Coat)|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Pistol (Dagger)|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Pistol (Double-Barreled)|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Pistol (Dragon)|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Pistol (Sword Cane)|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Pistol|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Poisoned Sand Tube|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Quadrens|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Quarterstaff|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Ranseur|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Rapier|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Revolver|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Rhoka Sword|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Rhomphaia|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Rifle|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Rope Dart|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Sai|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Sansetsukon|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Sap|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Sawtooth Sabre|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Scimitar|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Scizore|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Scorpion Whip|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Scythe|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Shang Gou|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Shieldbash|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Shortbow|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Shortspear|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Shotel|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Shotgun|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Shuriken|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Siangham|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Sibat|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Sica|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Sickle|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Sling Staff (Halfling)|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Sling|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Snag Net|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Spear|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Spiked Armor|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Splash Weapon|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Springal (Arrow)|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Springal (Rocket)|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Starknife|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Sword (Bastard)|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Sword (Seven-Branched)|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Sword (Short)|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Sword (Tri-Point Double-Edged)|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Sword (Two-Bladed)|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Swordbreaker (Dagger)|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Taiaha|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Tekko-Kagi (Iron Claw)|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Temple Sword|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Tepoztopilli|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Terbutje (Great)|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Terbutje|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Tetsubo|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Throwing Shield|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Tiger Fork|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Tonfa|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Trebuchet (Heavy)|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Trebuchet (Light)|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Trebuchet (Standard)|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Trident|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Tube Arrow Shooter|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Underwater Crossbow (Heavy)|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Underwater Crossbow (Light)|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Urgrosh (Dwarven)|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Urumi|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Wahaika|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Wakizashi|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Waraxe (Dwarven)|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Warhammer|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Whip|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Wushu Dart|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WIELDCATEGORY|ALL|1"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "NUMCHOICES=1|STRING|09|10|11|12|13|14|15|16|17|18|19|20"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PermanecyEnlargePersonLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "(2,500GP), Caster Level %1.|%LIST"
+      },
+      {
+        "key": "DESC",
+        "value": "This spell causes instant growth of a humanoid creature, doubling its height and multiplying its weight by 8. This increase changes the creature's size category to the next larger one. The target gains a +2 size bonus to Strength, a -2 size penalty to Dexterity [to a minimum of 1], and a -1 penalty on attack rolls and AC due to its increased size. A humanoid creature whose size increases to Large has a space of 10 feet and a natural reach of 10 feet. This spell does not change the target's speed. If insufficient room is available for the desired growth, the creature attains the maximum possible size and may make a Strength check [using its increased Strength] to burst any enclosures in the process. If it fails, it is constrained without harm by the materials enclosing it- the spell cannot be used to crush a creature by increasing its size. All equipment worn or carried by a creature is similarly enlarged by the spell. Melee and projectile weapons affected by this spell deal more damage. Other magical properties are not affected by this spell. Any enlarged item that leaves an enlarged creature's possession [including a projectile or thrown weapon] instantly returns to its normal size. This means that thrown weapons deal their normal damage, and projectiles deal damage based on the size of the weapon that fired them. Magical properties of enlarged items are not increased by this spell. Multiple magical effects that increase size do not stack,. Enlarge person counters and dispels reduce person."
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Permanency Spell|TIMES=ATWILL|CASTERLEVEL=PermanecyEnlargePersonLVL|Enlarge Person"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.PermanencySpell"
+      }
+    ],
+    "rename": null,
+    "source_page": null,
+    "traits": [
+      "PermanencySpell"
+    ]
+  },
+  "ingested_at": "2026-08-23T22:58:47Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1611,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "record_key": "Permanency Spell / Enlarge Person",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice",
+    "derived:spells"
+  ]
+}

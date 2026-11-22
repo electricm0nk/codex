@@ -1,0 +1,58 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Halfling Racial Subtype ~ Avenging",
+    "name": "Avenging",
+    "description": "Unlike most halflings, members of this subtype actively look for trouble in their quest to avenge slights and wrongdoings. Whether resisting a local bully, monster, or troops of an oppressive ruler, halfling warriors of this secret subculture don masks and strike back on behalf of their community. These halflings have the low blow, underfoot, and warslinger alternate racial traits.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Halfling Racial Subtype ~ Avenging"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Halfling Racial Subtype.SpecialQuality"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Halfling Racial Subtype ~ Avenging],[!PREFACT:1,ABILITIES,Halfling_ReplaceKeenSenses=true,Halfling_ReplaceHalflingLuck=true,Halfling_ReplaceSureFooted=true]"
+      },
+      {
+        "key": "DESC",
+        "value": "Unlike most halflings, members of this subtype actively look for trouble in their quest to avenge slights and wrongdoings. Whether resisting a local bully, monster, or troops of an oppressive ruler, halfling warriors of this secret subculture don masks and strike back on behalf of their community. These halflings have the low blow, underfoot, and warslinger alternate racial traits."
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "Avenging"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Halfling Racial Trait|NORMAL|Halfling ~ Low Blow|Halfling ~ Underfoot|Halfling ~ Warslinger"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.62"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+    "sha256": "ea475d7c207e2c4b182019997689ca48a090019620250e43bc4e85b0ff77c3a3",
+    "line": 2185,
+    "record_key": "Halfling Racial Subtype ~ Avenging"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

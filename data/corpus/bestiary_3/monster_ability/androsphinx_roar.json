@@ -1,0 +1,55 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Androsphinx ~ Roar",
+    "delivery": "Supernatural",
+    "description": "An androsphinx can roar up to three times per day as a standard action. Each progressive roar has a different effect, depending upon whether it is the first, second, or third of the androsphinx's roars for that day. All of these roars are sonic effects that fill a 60-foot-radius burst, centered on the androsphinx; the save DCs are Charisma-based. Sphinxes are immune to all of the effects of an androsphinx's roars. First Roar: Affected creatures become frightened for 2d6 rounds (DC 19 Will negates). This is a mind-affecting fear effect in addition to being a sonic effect. Second Roar: Affected creatures are paralyzed with fear and deafened for 1d4 rounds (DC 19 Will negates). This is a mindaffecting fear effect in addition to being a sonic effect. Third Roar: Affected creatures take a 2d4 penalty to Strength for 2d4 rounds and take 2d8 points of sonic damage. Creatures smaller than the androsphinx are knocked prone. A DC 19 Fortitude save negates the Strength penalty and being knocked prone.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:androsphinx_roar",
+    "name": "Roar",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "An androsphinx can roar up to three times per day as a standard action. Each progressive roar has a different effect, depending upon whether it is the first, second, or third of the androsphinx's roars for that day. All of these roars are sonic effects that fill a 60-foot-radius burst, centered on the androsphinx; the save DCs are Charisma-based. Sphinxes are immune to all of the effects of an androsphinx's roars. First Roar: Affected creatures become frightened for 2d6 rounds (DC 19 Will negates). This is a mind-affecting fear effect in addition to being a sonic effect. Second Roar: Affected creatures are paralyzed with fear and deafened for 1d4 rounds (DC 19 Will negates). This is a mindaffecting fear effect in addition to being a sonic effect. Third Roar: Affected creatures take a 2d4 penalty to Strength for 2d4 rounds and take 2d8 points of sonic damage. Creatures smaller than the androsphinx are knocked prone. A DC 19 Fortitude save negates the Strength penalty and being knocked prone."
+      },
+      {
+        "key": "KEY",
+        "value": "Androsphinx ~ Roar"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.251"
+      },
+      {
+        "key": "TYPE",
+        "value": "AndrosphinxRacialAbility.SpecialQuality.Supernatural"
+      }
+    ],
+    "source_page": "p.251",
+    "traits": [
+      "AndrosphinxRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T14:09:11Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1554,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Androsphinx ~ Roar",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

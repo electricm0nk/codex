@@ -1,0 +1,29 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:38:17Z",
+  "data": {
+    "key": "Gravitic Stability",
+    "category": "Psionic",
+    "name": "Gravitic Stability",
+    "description": "Any time your movement speed would be reduced to 10 ft. as a result of using personal gravity or scorn earth (such as from wearing heavy armor or being more than 1 ft. away from a stable surface), your speed is instead reduced to 10 ft. plus any bonuses to your movement (such as from freerunning). You do not take any penalty for attacking while using scorn earth at distances greater than 1 ft. from the ground or a stable surface. You gain a bonus to your CMD equal to your elocater class level against any bull rush or trip attempt.",
+    "prerequisites": [
+      "PRECLASS:1,Elocater=1",
+      "PREVARGTEQ:IsPsionic,1"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_feats.lst",
+    "sha256": "528096cb97ebe8255b9f9fe67682dd7e045f53b65e32295cd57967002eccb137",
+    "line": 141,
+    "record_key": "Gravitic Stability"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

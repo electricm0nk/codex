@@ -1,0 +1,97 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Codex-Named Unit (class_feature_adventurers_guide_ag_abilities_class_lst_289)",
+    "name": "Codex-Named Unit (class_feature_adventurers_guide_ag_abilities_class_lst_289)",
+    "class": "Hellknight Signifer",
+    "description": "[redacted PI]",
+    "raw_tokens": [
+      {
+        "key": "NAMEISPI",
+        "value": "YES"
+      },
+      {
+        "key": "KEY",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SigniferArmorCheckBonus1|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SigniferArmorCheckBonus2|0"
+      },
+      {
+        "key": "DESCISPI",
+        "value": "YES"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.93"
+      },
+      {
+        "key": "DESC",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "DESC",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SigniferArmorCheckBonus1|max(0,ACCHECK-1)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SigniferArmorCheckBonus2|max(0,ACCHECK-2)"
+      },
+      {
+        "key": "BONUS",
+        "value": "MISC|ACCHECK|SigniferArmorCheckBonus1|PREARMORTYPE:1,TYPE.HellknightArmor"
+      },
+      {
+        "key": "BONUS",
+        "value": "MISC|ACCHECK|SigniferArmorCheckBonus2|PREARMORTYPE:1,TYPE.HellknightArmor|PREVARGTEQ:HellknightSigniferLVL,8"
+      },
+      {
+        "key": "BONUS",
+        "value": "MISC|SPELLFAILURE|-5|PREARMORTYPE:1,TYPE.HellknightArmor"
+      },
+      {
+        "key": "BONUS",
+        "value": "MISC|SPELLFAILURE|-5|PREARMORTYPE:1,TYPE.HellknightArmor|PREVARGTEQ:HellknightSigniferLVL,8"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 289,
+    "record_key": "Codex-Named Unit (class_feature_adventurers_guide_ag_abilities_class_lst_289)"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "description,name,raw_tokens",
+  "pi_marker": "redacted",
+  "codex_generated_name": true,
+  "rename": {
+    "reason": "name_pi_blocked",
+    "coordinate": "adventurers_guide:ag_abilities_class.lst:289"
+  }
+}

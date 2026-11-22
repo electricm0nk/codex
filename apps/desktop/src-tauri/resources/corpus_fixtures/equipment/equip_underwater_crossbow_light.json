@@ -1,0 +1,15 @@
+{
+  "completeness": "full",
+  "data": {
+    "key": "Underwater Crossbow (Light)",
+    "name": "Underwater Crossbow (Light)"
+  },
+  "license": "OGL",
+  "population": "in_scope",
+  "source": {
+    "kind": "desktop_ui_fixture",
+    "line": 1,
+    "path": "apps/desktop/src-tauri/fixtures_src/equip_underwater_crossbow_light.txt",
+    "record_key": "Underwater Crossbow (Light)"
+  }
+}

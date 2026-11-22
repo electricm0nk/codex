@@ -1,0 +1,66 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "Gathlains have a base speed of 20 feet and a fly speed of 30 feet (clumsy maneuverability).",
+    "key": "Tree-Born ~ Gathlain ~ Speed",
+    "name": "Slow Speed",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Tree-Born ~ Gathlain ~ Speed"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Gathlain Racial Trait.SpecialQuality.Racial Speed"
+      },
+      {
+        "key": "PREFACT",
+        "value": "1,ABILITIES,Gathlain_ReplaceSpeed=True"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MOVEBASE|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Gathlains have a base speed of 20 feet and a fly speed of 30 feet (clumsy maneuverability)."
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,20,Fly,30"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MOVEBASE|20"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Maneuverability|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.10"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 62,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_race.lst",
+    "record_key": "Tree-Born ~ Gathlain ~ Speed",
+    "sha256": "0c4ae15128009d48586ea7794a6aeae96d492e10d49f8200529fca2dbb801284"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Umbral Dragon ~ Create Shadows",
+    "delivery": "Supernatural",
+    "description": "Any creature slain by an ancient or older umbral dragon rises as a shadow (if 8 HD or less) or greater shadow (if above 8 HD) under the umbral dragon's control 1d4 rounds later.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:umbral_dragon_create_shadows",
+    "name": "Create Shadows",
+    "owners": [
+      "bestiary_2:monster:dragon_umbral"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Any creature slain by an ancient or older umbral dragon rises as a shadow (if 8 HD or less) or greater shadow (if above 8 HD) under the umbral dragon's control 1d4 rounds later."
+      },
+      {
+        "key": "KEY",
+        "value": "Umbral Dragon ~ Create Shadows"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.102"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
+    "source_page": "p.102",
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T10:25:56Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 502,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Umbral Dragon ~ Create Shadows",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "display:no_magnitude_token"
+  ]
+}

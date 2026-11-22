@@ -1,0 +1,133 @@
+import { createElement } from 'react';
+import { renderToStaticMarkup } from 'react-dom/server';
+import { UpdateUi, UPDATE_UI_ID } from './Ui';
+import { RESTORE_OFFER_ID } from './restoreOffer';
+import { buildUnwiredUpdateDeps } from './updateModel';
+import { InstallOutcomePanel } from './InstallControl';
+import { assert } from '../testSupport/asserts';
+
+function assertContains(actual: string, needle: string, message: string) {
+  if (!actual.includes(needle)) {
+    throw new Error(`${message}: expected markup to contain "${needle}"`);
+  }
+}
+
+function assertNotContains(actual: string, needle: string, message: string) {
+  if (actual.includes(needle)) {
+    throw new Error(`${message}: expected markup NOT to contain "${needle}"`);
+  }
+}
+
+function render(props: Parameters<typeof UpdateUi>[0]): string {
+  return renderToStaticMarkup(createElement(UpdateUi, props));
+}
+
+function testMountsWithCanonicalIdAndAllSubPanels() {
+  const html = render({ initialDeps: buildUnwiredUpdateDeps() });
+  assertContains(html, `id="${UPDATE_UI_ID}"`, 'page must render with the canonical UpdateUi id');
+  assertContains(html, 'id="check-panel"', 'check panel must be mounted');
+  assertContains(html, 'id="install-panel"', 'install panel must be mounted');
+  assertContains(html, 'id="installed-panel"', 'installed panel must be mounted');
+  assertContains(html, 'id="pending-rollback-panel"', 'pending/rollback panel must be mounted');
+}
+
+function testNoRestoreOfferRenderedWhenNotSupplied() {
+  const html = render({ initialDeps: buildUnwiredUpdateDeps() });
+  assertNotContains(html, `id="${RESTORE_OFFER_ID}"`, 'restore offer must not render unless supplied');
+}
+
+function testRestoreOfferAndButtonRenderWhenAvailable() {
+  const html = render({
+    initialDeps: buildUnwiredUpdateDeps(),
+    restoreOffer: {
+      priorVersion: 'unknown',
+      restoreAvailable: true,
+      onRestore: async () => {},
+    },
+  });
+  assertContains(html, `id="${RESTORE_OFFER_ID}"`, 'restore offer must render when supplied');
+  assertContains(
+    html,
+    'id="restore-previous-button"',
+    'an actionable restore button must render when restoreAvailable is true',
+  );
+}
+
+function testRestoreOfferWithoutButtonWhenUnavailable() {
+  const html = render({
+    initialDeps: buildUnwiredUpdateDeps(),
+    restoreOffer: {
+      priorVersion: 'unknown',
+      restoreAvailable: false,
+      onRestore: async () => {},
+    },
+  });
+  assertContains(html, `id="${RESTORE_OFFER_ID}"`, 'restore offer must still render its notice');
+  assertNotContains(
+    html,
+    'id="restore-previous-button"',
+    'no actionable button when restoreAvailable is false',
+  );
+}
+
+function testInstallOutcomeRendersNothingBeforeAnyInstall() {
+  const html = renderToStaticMarkup(createElement(InstallOutcomePanel, { outcome: null }));
+  assertNotContains(html, 'install-outcome', 'no outcome block before an install has been attempted');
+}
+
+function testInstallOutcomeSaysToRestartAfterSuccess() {
+  const html = renderToStaticMarkup(
+    createElement(InstallOutcomePanel, {
+      outcome: { kind: 'installed', fromVersion: '0.16.140', toVersion: '0.16.141' },
+    }),
+  );
+  assertContains(html, 'id="install-outcome"', 'success must render the outcome block');
+  assertContains(html, '0.16.141', 'success names the installed version');
+  assertContains(html, 'Restart Codex', 'success tells the user how to finish');
+}
+
+function testInstallOutcomeOnWindowsSaysCodexClosesAndReopens() {
+  const html = renderToStaticMarkup(
+    createElement(InstallOutcomePanel, {
+      outcome: { kind: 'installed', fromVersion: '0.16.140', toVersion: '0.16.141', closesToFinish: true },
+    }),
+  );
+  assertContains(html, 'Close Codex', 'the Windows updater runs after Codex closes');
+  assertContains(html, 'reopen', 'and says it comes back');
+  assert(!html.includes('Restart Codex'), 'it must not ask for a manual restart that would race the installer');
+}
+
+function testInstallOutcomeShowsTheFailureReason() {
+  const html = renderToStaticMarkup(
+    createElement(InstallOutcomePanel, {
+      outcome: { kind: 'failed', message: 'installation was cancelled at the authorization prompt' },
+    }),
+  );
+  assertContains(html, 'data-outcome="failed"', 'failure is marked as such');
+  assertContains(html, 'cancelled at the authorization prompt', 'the real reason is shown, not a generic one');
+}
+
+function testUnwiredMountSelectsStable() {
+  const html = render({});
+  assertContains(html, '<option value="stable" selected="">', 'the selector opens on stable');
+  assertContains(html, 'data-testid="check-channel">stable<', 'the check panel names stable');
+  for (const channel of ['alpha', 'beta', 'stable']) {
+    assertContains(html, `<option value="${channel}"`, `the selector still offers ${channel}`);
+  }
+}
+
+function main() {
+  testUnwiredMountSelectsStable();
+  testInstallOutcomeRendersNothingBeforeAnyInstall();
+  testInstallOutcomeOnWindowsSaysCodexClosesAndReopens();
+  testInstallOutcomeSaysToRestartAfterSuccess();
+  testInstallOutcomeShowsTheFailureReason();
+  testMountsWithCanonicalIdAndAllSubPanels();
+  testNoRestoreOfferRenderedWhenNotSupplied();
+  testRestoreOfferAndButtonRenderWhenAvailable();
+  testRestoreOfferWithoutButtonWhenUnavailable();
+  assert(true, 'all Ui.tsx mount assertions passed');
+  console.log('Ui.test.ts: all assertions passed');
+}
+
+main();

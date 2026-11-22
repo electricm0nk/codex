@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Nightmare Constructor ~ Horrific Infusion",
+    "name": "Horrific Infusion",
+    "description": "You can merge with your horror as a standard action. You wear the horror like translucent and undulating armor. The horror mimics all of your movements, and you perceive through the horror's senses and speak through its voice, as the two are now one creature. You direct all of the horror's actions while merged. While merged with your horror, you use the horror's Strength, Dexterity, and Constitution, but retain your own Intelligence, Wisdom, and Charisma. You gain the horror's hit points as temporary hit points. When these hit points reach 0, the horror is killed and sent back to its home plane. You use the horror's base attack bonus, and gain the horror's armor and natural armor bonuses and modifiers to ability scores. You also gain access to the horror's special abilities and the horror's evolutions. You are still limited to the horror's maximum number of natural attacks. The horror has no skills or feats of its own. The horror must be at least the same size as you. The horror must have limbs for you to cast spells with somatic components (should you have spellcasting ability). While fused, you lose the benefits of your armor. You count both as your original type and as a construct for any effect related to type, whichever is worse for you. Powers such as dismiss ectoplasm work on the horror, but you are unaffected. Neither you nor your horror can be targeted separately, as you are fused into one creature. You and your horror cannot take separate actions. While fused with your horror, you can use all of your own abilities and gear, except for your armor. In all other cases, this ability functions as the normal horror ability.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Nightmare Constructor ~ Horrific Infusion"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "DreadClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "You can merge with your horror as a standard action. You wear the horror like translucent and undulating armor. The horror mimics all of your movements, and you perceive through the horror's senses and speak through its voice, as the two are now one creature. You direct all of the horror's actions while merged. While merged with your horror, you use the horror's Strength, Dexterity, and Constitution, but retain your own Intelligence, Wisdom, and Charisma. You gain the horror's hit points as temporary hit points. When these hit points reach 0, the horror is killed and sent back to its home plane. You use the horror's base attack bonus, and gain the horror's armor and natural armor bonuses and modifiers to ability scores. You also gain access to the horror's special abilities and the horror's evolutions. You are still limited to the horror's maximum number of natural attacks. The horror has no skills or feats of its own. The horror must be at least the same size as you. The horror must have limbs for you to cast spells with somatic components (should you have spellcasting ability). While fused, you lose the benefits of your armor. You count both as your original type and as a construct for any effect related to type, whichever is worse for you. Powers such as dismiss ectoplasm work on the horror, but you are unaffected. Neither you nor your horror can be targeted separately, as you are fused into one creature. You and your horror cannot take separate actions. While fused with your horror, you can use all of your own abilities and gear, except for your armor. In all other cases, this ability functions as the normal horror ability."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.268"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_apg.lst",
+    "sha256": "d4ac8a9a33149811222e6affeba9ba1553ced3ba7f6beb6be722e89ddfc9a51f",
+    "line": 18,
+    "record_key": "Nightmare Constructor ~ Horrific Infusion"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

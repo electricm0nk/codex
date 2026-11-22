@@ -1,0 +1,19 @@
+{
+  "data": {
+    "key": "Zero pistol (avalanche-class)",
+    "name": "Zero pistol (avalanche-class)",
+    "type": "SMALL ARMS"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 115,
+    "path": "starfinder/paizo/core/scr_profs_weapon.lst",
+    "record_key": "Zero pistol (avalanche-class)",
+    "sha256": "82f827be51f88e0b47cced07677ec1715678b3805ceec139fdeeebbc3c088690"
+  },
+  "unit_id": "core:proficiency:zero_pistol_avalanche_class"
+}

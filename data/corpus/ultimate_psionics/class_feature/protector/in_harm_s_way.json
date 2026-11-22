@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Protector ~ In Harm's Way",
+    "name": "In Harm's Way",
+    "class": "Protector",
+    "description": "You can empathically absorb effects that would affect an ally within your reach.  You may expend your psionic focus as an immediate action to take the effect of an area effect that would have hit your ally, although you are affected as normal if you are also in the area of effect.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Protector ~ In Harm's Way"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "PsychicWarriorClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "You can empathically absorb effects that would affect an ally within your reach.  You may expend your psionic focus as an immediate action to take the effect of an area effect that would have hit your ally, although you are affected as normal if you are also in the area of effect."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.277"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2103,
+    "record_key": "Protector ~ In Harm's Way"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

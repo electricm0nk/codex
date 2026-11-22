@@ -1,0 +1,2 @@
+# Fixture for §2.5 equipmods, source: cr_equip files, KEY: Material ~ Cloth
+Cloth			KEY:Material ~ Cloth	NAMEOPT:NOTHING	TYPE:BaseMaterial.Mundane.Ammunition.Armor.Shield.Weapon.Instruments.Tools.Goods	COST:0	VISIBLE:QUALIFY	ITYPE:Cloth		PREMULT:1,[PRETYPE:1,EQMOD=Material ~ Cloth],[!PRETYPE:1,EQMODTYPE=Mundane]	!PRETYPE:1,Metal,Wooden	!PRETYPE:1,Artisan,Spell Component

@@ -1,0 +1,20 @@
+[
+  {
+    "id": "open-starfinder-soldier",
+    "status": "red",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/33627023-04e6-4757-9afa-d5c1463408f3/scratchpad/e6mc/smoke_plant/open-starfinder-soldier.FAILED.png",
+    "rendered_excerpt": "⚙\nSF Seed Soldier\nStarfinder · Human\nLevel up\nFeats, spells and gear\nOpen\nClose\nCLASS\n\nSoldier\t3\nABILITY SCORES\n\nScore\tModifier\nStrength\t16\t+3\nDexterity\t14\t+2\nConstitution\t12\t+1\nIntelligence\t11\t+0\nWisdom\t10\t+0\nCharisma\t10\t+0\nSTAMINA, HIT POINTS AND RESOLVE\n\nStamina Points\t24\nHit Points\t25\nResolve Points\t4\nARMOR CLASS\n\nEnergy Armor Class (EAC)\t19\nKinetic Armor Class (KAC)\t19\nInitiative\t+2\nSAVING TH",
+    "reason": "expected string missing: 'Energy Armor Class (EAC)\t16'",
+    "app_data_root": "/tmp/codex-ui-smoke-sd37-e6-mc-plant-jK70jY/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [
+        "2a5ab7a5-1963-4fde-8114-e55100207705"
+      ],
+      "deleted": [
+        "2a5ab7a5-1963-4fde-8114-e55100207705"
+      ],
+      "leftover": [],
+      "errors": {}
+    }
+  }
+]

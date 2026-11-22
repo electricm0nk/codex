@@ -1,0 +1,54 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "General",
+    "cost_gp": 375.0,
+    "description": "gives the activator a +2 insight bonus on Bluff, Diplomacy, Intimidate, and Sense Motive checks against the coin's current possessor. In addition, the possessor takes a -1 penalty on saving throws against spells with the emotion, fear, or scrying descriptors cast by the coin's activator.",
+    "key": "False Coin",
+    "name": "False Coin",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "False Coin"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.LesserMinor"
+      },
+      {
+        "key": "COST",
+        "value": "375"
+      },
+      {
+        "key": "WT",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.257"
+      },
+      {
+        "key": "SPROP",
+        "value": "gives the activator a +2 insight bonus on Bluff, Diplomacy, Intimidate, and Sense Motive checks against the coin's current possessor. In addition, the possessor takes a -1 penalty on saving throws against spells with the emotion, fear, or scrying descriptors cast by the coin's activator."
+      }
+    ],
+    "weight_lbs": 0.0
+  },
+  "ingested_at": "2026-08-17T08:18:39Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 79,
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_equip.lst",
+    "record_key": "False Coin",
+    "sha256": "48877b9621bd36c3812d91cc603838c92eda6199fd2bd116d16d47523cbc1cbc"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

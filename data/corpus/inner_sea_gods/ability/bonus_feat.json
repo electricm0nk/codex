@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Sentinel ~ Bonus Feat",
+    "name": "Bonus Feat",
+    "description": "At 2nd level and again at 7th level, the sentinel gains a bonus feat in addition to those gained from normal advancement. These bonus feats must be selected from those listed as combat feats. Sentinel levels stack with fighter levels for the purpose of qualifying for feats with a fighter level prerequisite. If the bonus feat selected requires the sentinel to select a specific weapon for the feat to apply to (such as Greater Weapon Focus), the sentinel must select his deity's favored weapon.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sentinel ~ Bonus Feat"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Sentinel Class Feature.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 2nd level and again at 7th level, the sentinel gains a bonus feat in addition to those gained from normal advancement. These bonus feats must be selected from those listed as combat feats. Sentinel levels stack with fighter levels for the purpose of qualifying for feats with a fighter level prerequisite. If the bonus feat selected requires the sentinel to select a specific weapon for the feat to apply to (such as Greater Weapon Focus), the sentinel must select his deity's favored weapon."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.202"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities.lst",
+    "sha256": "e31ff7fb4fed812ae719cb19526442b9b9c9575efc25c169c06690f7a236fafd",
+    "line": 112,
+    "record_key": "Sentinel ~ Bonus Feat"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

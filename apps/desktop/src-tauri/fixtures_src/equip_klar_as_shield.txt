@@ -1,0 +1,2 @@
+# Fixture for desktop Market +N (AC and attack rows), source: iswg_equip_arms_armor.lst, KEY: Klar (as Shield)
+Klar (as Shield)																							PROFICIENCY:SHIELD|Shield (Light)	TYPE:Shield.Light.Standard																			COST:12	WT:6				ACCHECK:-1																																																				SOURCEPAGE:p.290	SPELLFAILURE:5																							BONUS:COMBAT|AC|1|TYPE=Shield

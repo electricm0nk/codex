@@ -1,0 +1,76 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "ABP Mental Prowess",
+    "name": "Mental Prowess",
+    "class": null,
+    "description": "Choose one mental ability score (Intelligence, Wisdom, or Charisma) to gain a permanent",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "ABP Mental Prowess"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Special Quality.Automatic Bonus Progression.Applied Bonus"
+      },
+      {
+        "key": "DESC",
+        "value": "Choose one mental ability score (Intelligence, Wisdom, or Charisma) to gain a permanent"
+      },
+      {
+        "key": "DESC",
+        "value": "+2 enhancement bonus.|PREVARGTEQ:ABP_MentalLVL,6|PREVARLT:ABP_MentalLVL,11"
+      },
+      {
+        "key": "DESC",
+        "value": "+4 enhancement bonus.|PREVARGTEQ:ABP_MentalLVL,11"
+      },
+      {
+        "key": "DESC",
+        "value": "Choose a second mental ability score to gain a permanent +2 enhancement bonus.|PREVARGTEQ:ABP_MentalLVL,13"
+      },
+      {
+        "key": "DESC",
+        "value": "Increase one of these enhancement bonuses by 2.|PREVARGTEQ:ABP_MentalLVL,15"
+      },
+      {
+        "key": "DESC",
+        "value": "Choose a third mental ability score to gain a permanent +2 enhancement bonus.|PREVARGTEQ:ABP_MentalLVL,17"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.157"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Automatic Progression Bonus"
+      },
+      {
+        "key": "ASPECT",
+        "value": "MasterAbility|Mental Prowess"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst",
+    "sha256": "2becbb0524bd4c367cc1273434c20bcd8e42e3e08abd372f99b005e69e8c4725",
+    "line": 47,
+    "record_key": "ABP Mental Prowess"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

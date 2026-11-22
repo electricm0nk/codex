@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Unchained Ki Power ~ Ki Mount",
+    "name": "Ki Mount",
+    "class": "Unchained Ki Power",
+    "description": "A monk with this ability can spend 1 ki point as a standard action to grant 2 temporary hit points per monk level he possesses to his mount for 1 hour per monk level. As long as the monk and his mount are adjacent or the monk is mounted, the mount shares the benefits of whichever of the AC bonus, evasion, high jump, improved evasion, ki strike, perfect self, and still mind abilities the monk possesses. A monk must be at least 6th level before selecting this ki power.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Unchained Ki Power ~ Ki Mount"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Unchained Ki Power.SpecialQuality.Supernatural.Ki Mount"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "KiPowerLVL,6"
+      },
+      {
+        "key": "DESC",
+        "value": "A monk with this ability can spend 1 ki point as a standard action to grant 2 temporary hit points per monk level he possesses to his mount for 1 hour per monk level. As long as the monk and his mount are adjacent or the monk is mounted, the mount shares the benefits of whichever of the AC bonus, evasion, high jump, improved evasion, ki strike, perfect self, and still mind abilities the monk possesses. A monk must be at least 6th level before selecting this ki power."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.17"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst",
+    "sha256": "2becbb0524bd4c367cc1273434c20bcd8e42e3e08abd372f99b005e69e8c4725",
+    "line": 546,
+    "record_key": "Unchained Ki Power ~ Ki Mount"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

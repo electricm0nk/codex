@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Wilder ~ Surge Blast",
+    "name": "Surge Blast",
+    "class": "Wilder",
+    "description": "Expend focus to make %1-ft. ranged force attack dealing %2d6 damage.|SurgeBlastRange|WildSurge",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wilder ~ Surge Blast"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "WilderClassFeatures.SpecialAttack.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SurgeBlastRange|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Expend focus to make %1-ft. ranged force attack dealing %2d6 damage.|SurgeBlastRange|WildSurge"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SurgeBlastRange|30"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.77"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1039,
+    "record_key": "Wilder ~ Surge Blast"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

@@ -1,0 +1,28 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:38:17Z",
+  "data": {
+    "key": "Improved Duck and Cover",
+    "category": "Teamwork",
+    "name": "Improved Duck and Cover",
+    "description": "Whenever you use Duck and Cover, your ally has evasion or improved evasion, and your ally's saving throw roll succeeds, half of the damage you would have taken is transferred to your ally. (This damage is not reduced by the ally's evasion or improved evasion.)",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=FEAT,Duck and Cover"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_feats.lst",
+    "sha256": "a71dc625f64f057c38365b3c3a2c6b58b75170fb8ffeb5eb23d3b29c74b7edc3",
+    "line": 88,
+    "record_key": "Improved Duck and Cover"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

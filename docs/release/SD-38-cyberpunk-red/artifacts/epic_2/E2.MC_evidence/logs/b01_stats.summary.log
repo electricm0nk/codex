@@ -1,0 +1,6 @@
+test rules_core::cpr::stats::tests::seriously_wounded_is_half_hp_rounded_up ... ok
+test rules_core::cpr::stats::tests::current_emp_lowers_with_the_tens_place_of_humanity_and_stops_at_zero ... ok
+test rules_core::cpr::stats::tests::humanity_max_is_ten_per_emp_point_as_the_p081_table_prints ... ok
+test rules_core::cpr::stats::tests::all_126_cells_of_the_p080_hp_table_equal_the_formula ... ok
+test rules_core::cpr::stats::tests::derived_rows_are_cpr_rows_with_the_book_values ... ok
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 2982 filtered out; finished in 0.00s

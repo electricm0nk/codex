@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Mythic Path Ability ~ Distracted Assailant",
+    "name": "Distracting Assailant",
+    "description": "You make a barrage of attacks and quick feints that are so distracting your opponent loses focus against all other assailants. Whenever you successfully strike a foe with a melee weapon or natural attack, you can expend one use of mythic power as a swift action. For 1 round, that opponent loses its Dexterity bonus to AC on all attacks against it other than yours. While this ability is in effect, any allies who flank that foe gain a +4 bonus on attack rolls against it, instead of the normal +2. While the opponent is affected by this ability, each time you hit it, the duration increases by 1 round. This effect automatically ends if your turn ends and the target is not within your melee reach.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Path Ability ~ Distracted Assailant"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Path Ability.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Mythic Path ~ Marshal"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "MythicTierLevel,1"
+      },
+      {
+        "key": "DESC",
+        "value": "You make a barrage of attacks and quick feints that are so distracting your opponent loses focus against all other assailants. Whenever you successfully strike a foe with a melee weapon or natural attack, you can expend one use of mythic power as a swift action. For 1 round, that opponent loses its Dexterity bonus to AC on all attacks against it other than yours. While this ability is in effect, any allies who flank that foe gain a +4 bonus on attack rolls against it, instead of the normal +2. While the opponent is affected by this ability, each time you hit it, the duration increases by 1 round. This effect automatically ends if your turn ends and the target is not within your melee reach."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.39"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
+    "line": 155,
+    "record_key": "Mythic Path Ability ~ Distracted Assailant"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

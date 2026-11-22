@@ -1,0 +1,30 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Psychic Disciple",
+    "category": "General",
+    "name": "Psychic Disciple",
+    "description": "You have opened your mind to the more advanced disciplines of basic psychic magic. You gain the ability to cast a 1st-level psychic spell from the psychic class's spell list. You can cast this spell twice per day as a spell-like ability. The caster level for this ability is equal to your character level, and the save DC is equal to 11 + your Intelligence modifier. Special: You can take this feat multiple times, choosing a different spell each time.",
+    "prerequisites": [
+      "PREABILITY:2,CATEGORY=FEAT,Psychic Adept,Psychic Sensitivity",
+      "PRESTAT:1,INT=13"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_feats.lst",
+    "sha256": "eff885715102905735a080776def2406d112a05b5c00c518dd7d5a11964f2889",
+    "line": 55,
+    "record_key": "Psychic Disciple"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

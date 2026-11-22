@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Shadow Caller ~ Shadow Caster",
+    "name": "Shadow Caster",
+    "class": "Spiritualist",
+    "description": "When the shadow caller reaches 12th level, her shade gains the ability to cast either shadow conjuration or shadow evocation once per day. It uses its Hit Dice as its caster level, and the DC for these spells equals 10 + 1/2 the shade's Hit Dice + its Charisma modifier. Instead of the normal spell level and percentage of reality for the two spells, the maximum spell level of the duplicated spell is 4th level, and the effects are 40%% real. When the shadow caller reaches 18th level, the maximum spell level improves to 6th level and effects are 60%% real.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shadow Caller ~ Shadow Caster"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Emotional Focus 2c"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Spiritualist Class Features.ShadowCallerClassFeatures.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "DESC",
+        "value": "When the shadow caller reaches 12th level, her shade gains the ability to cast either shadow conjuration or shadow evocation once per day. It uses its Hit Dice as its caster level, and the DC for these spells equals 10 + 1/2 the shade's Hit Dice + its Charisma modifier. Instead of the normal spell level and percentage of reality for the two spells, the maximum spell level of the duplicated spell is 4th level, and the effects are 40%% real. When the shadow caller reaches 18th level, the maximum spell level improves to 6th level and effects are 60%% real."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.50"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/support/ui_abilities_class_oa.lst",
+    "sha256": "123f008e9a2f31828861df9025f48f5c2f7c78a648553f22dba96a8d8a2e24dc",
+    "line": 136,
+    "record_key": "Shadow Caller ~ Shadow Caster"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

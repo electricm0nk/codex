@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-24T03:51:47Z",
+  "data": {
+    "key": "Blade Skill ~ Evasion",
+    "name": "Evasion",
+    "class": "Blade Skill",
+    "description": "You can avoid even magical and unusual attacks with great agility.  If you make a successful Reflex saving throw against an attack that normally deals half damage on a successful save, you instead take no damage.  Evasion can only be used if you are wearing light armor, medium armor, or no armor.  If you are helpless, you do not gain the benefit of evasion.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Blade Skill ~ Evasion"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "BladeSkill.SpecialQuality"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Cutthroat ~ Covert Training],[PREABILITY:1,CATEGORY=Archetype,Feral Heart ~ Soulknife Archetype]"
+      },
+      {
+        "key": "DESC",
+        "value": "You can avoid even magical and unusual attacks with great agility.  If you make a successful Reflex saving throw against an attack that normally deals half damage on a successful save, you instead take no damage.  Evasion can only be used if you are wearing light armor, medium armor, or no armor.  If you are helpless, you do not gain the benefit of evasion."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.278"
+      },
+      {
+        "key": "TYPE",
+        "value": "FeralHeartBladeSkill"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 813,
+    "record_key": "Blade Skill ~ Evasion"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

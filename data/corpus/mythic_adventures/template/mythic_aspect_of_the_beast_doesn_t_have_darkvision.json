@@ -1,0 +1,47 @@
+{
+  "codex_generated_name": false,
+  "completeness": "chassis_only",
+  "data": {
+    "key": "Mythic Aspect of the Beast ~ Doesn't Have Darkvision",
+    "name": "Doesn't Have Darkvision",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Aspect of the Beast ~ Doesn't Have Darkvision"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "PREVARLTEQ",
+        "value": "DarkvisionRange,0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DarkvisionRange|30|TYPE=Base|PREVARLT:HasLowlightVision,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DarkvisionRange|60|TYPE=Base|PREVARGTEQ:HasLowlightVision,1"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T16:43:18Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 23,
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_templates.lst",
+    "record_key": "Mythic Aspect of the Beast ~ Doesn't Have Darkvision",
+    "sha256": "b8f0ee3a056b2302251f27bda2494492e59da70b3ee28c82c23082bca9cc1e9f"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

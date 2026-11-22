@@ -1,0 +1,20 @@
+{
+  "data": {
+    "category": "Variant Ability",
+    "key": "Skittermander ~ Bookish Variant",
+    "name": "Bookish",
+    "type": "Variant Ability.Skittermander Variant Ability"
+  },
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted",
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 16,
+    "path": "starfinder/paizo/near_space/sns_abilities_race.lst",
+    "record_key": "Skittermander ~ Bookish Variant",
+    "sha256": "b32cfe1c3448efc35fc96a3d77b04e9d9739757baa3fc0e892e229c1ca6a72b3"
+  },
+  "unit_id": "near_space:ability:skittermander_bookish_variant"
+}

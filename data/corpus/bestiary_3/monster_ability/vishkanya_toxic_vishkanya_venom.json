@@ -1,0 +1,83 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Vishkanya ~ Toxic ~ Vishkanya Venom",
+    "delivery": null,
+    "description": "Weapon--injury; save Fort DC %1 (10 + 1/2 the vishkanya's Hit Dice + the vishkanya's Constitution modifier); frequency 1/round for 6 rounds; effect 1d2 Dex; cure 1 save.",
+    "description_variables": [
+      "Vishkanya_Toxic_PoisonDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_3:monster_ability:vishkanya_toxic_vishkanya_venom",
+    "name": "Vishkanya Venom",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Toxic"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Vishkanya Toxic"
+      },
+      {
+        "key": "ASPECT",
+        "value": "StatBlockName|Poison (DC %1)|Vishkanya_Toxic_PoisonDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Vishkanya_Toxic_PoisonDC|10+TL/2+CON"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Vishkanya_Toxic_PoisonDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Toxic)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Vishkanya_Toxic_PoisonDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Weapon--injury; save Fort DC %1 (10 + 1/2 the vishkanya's Hit Dice + the vishkanya's Constitution modifier); frequency 1/round for 6 rounds; effect 1d2 Dex; cure 1 save.|Vishkanya_Toxic_PoisonDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Vishkanya ~ Toxic ~ Vishkanya Venom"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.xx"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Special Attack.Special Ability"
+      }
+    ],
+    "source_page": "p.xx",
+    "traits": [
+      "Special Attack",
+      "Special Ability"
+    ]
+  },
+  "ingested_at": "2026-08-23T14:09:11Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 29,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/vishkanya/vishkanya_abilities_race.lst",
+    "record_key": "Vishkanya ~ Toxic ~ Vishkanya Venom",
+    "sha256": "74752a1ca741cd19edf363315cf87e576e5d1cf2f7cfbc3f030d977541ccf627"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

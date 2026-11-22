@@ -1,0 +1,72 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "The eidolon grows a long, powerful tail. This grants it a +2 racial bonus on Acrobatics checks made to balance on a surface.",
+    "key": "Evolution ~ Tail",
+    "name": "Tail",
+    "origin": "declared",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Evolution ~ Tail"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "EvolutionChoice.Extraordinary.EvolutionSerpentine"
+      },
+      {
+        "key": "DEFINE",
+        "value": "EidTails|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "EidTailsUsed|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The eidolon grows a long, powerful tail. This grants it a +2 racial bonus on Acrobatics checks made to balance on a surface."
+      },
+      {
+        "key": "STACK",
+        "value": "YES"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "NOCHOICE"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Acrobatics|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EidTails|1"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T15:20:31Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 104,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_companion.lst",
+    "record_key": "Evolution ~ Tail",
+    "sha256": "61a70768a48385f4e43881fe0d28d51abb4eedcd0e3ab1f504660ead793d08b4"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice"
+  ]
+}

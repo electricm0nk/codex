@@ -1,0 +1,52 @@
+{
+  "codex_generated_name": false,
+  "completeness": "full",
+  "data": {
+    "description": "You take an additional -2 penalty to your Constitution score and are affected by spells and abilities (including bane and favored enemy) as if your creature type were undead. This doesn't grant you the immunities of undead creatures, nor does it make you immune to effects that target living creatures or change how negative and positive energy affect you.",
+    "key": "Lich Corruption ~ Greater Cadaver Countenance Stain",
+    "name": "Greater Cadaver's Countenance Stain",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Lich Corruption ~ Greater Cadaver Countenance Stain"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.LichGreaterCadaversCountenanceStain"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.27"
+      },
+      {
+        "key": "DESC",
+        "value": "You take an additional -2 penalty to your Constitution score and are affected by spells and abilities (including bane and favored enemy) as if your creature type were undead. This doesn't grant you the immunities of undead creatures, nor does it make you immune to effects that target living creatures or change how negative and positive energy affect you."
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CON|-2"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 511,
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
+    "record_key": "Lich Corruption ~ Greater Cadaver Countenance Stain",
+    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

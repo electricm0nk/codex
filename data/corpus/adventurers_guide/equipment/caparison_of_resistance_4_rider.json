@@ -1,0 +1,27 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T12:28:11Z",
+  "data": {
+    "key": "Caparison of Resistance +4 (Rider)",
+    "category": "MagicItems",
+    "name": "Caparison of Resistance +4 (Rider)",
+    "cost_gp": 43200.0,
+    "weight_lbs": null,
+    "description": null
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_equip_magic_items.lst",
+    "sha256": "792741b27d5309e252c6f35e597f507e4eb2c0756fae9b087406d5c34cc51611",
+    "line": 11,
+    "record_key": "Caparison of Resistance +4 (Rider)"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

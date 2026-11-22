@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Brutal Disruptor ~ Channeled Disruption",
+    "name": "Channeled Disruption",
+    "class": "Brutal Disruptor",
+    "description": "You have learned to channel your disrupt pattern ability into your melee attacks.  You may use your disrupt pattern ability as part of any or all melee attacks you make.  This is an exception to the rule that disrupt pattern may only be used once per round.  You cannot use your disrupt pattern ability as a ranged attack in the same round that you have used it as part of a melee attack.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Brutal Disruptor ~ Channeled Disruption"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "CrypticClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "You have learned to channel your disrupt pattern ability into your melee attacks.  You may use your disrupt pattern ability as part of any or all melee attacks you make.  This is an exception to the rule that disrupt pattern may only be used once per round.  You cannot use your disrupt pattern ability as a ranged attack in the same round that you have used it as part of a melee attack."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.264"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1812,
+    "record_key": "Brutal Disruptor ~ Channeled Disruption"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

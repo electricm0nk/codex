@@ -1,0 +1,13 @@
+# base = 2a726046d6 (E6.MC's close), built in its own tree and target, removed; head = c8ba870af8
+## PF sha256 base
+5899256d25977ecb5619f6a344d87ff8714be7dc2b85de082ee5805177c2735f  aldric.json
+4a8499271eb99ec138fdf648794b2eb305ff44e4475799fd1161652fa4e1bde6  elowen.json
+f05cb10df5310aa3c8f16a42c0780f574024f81a918006fb7c7273f886a1468f  tomas.json
+## PF sha256 head
+95c670bf10506a9b2aa10cc9a92c1da1789bd7cb8f48c4be9673e9e53deee36d  aldric.json
+f7fb77d0097c29173199427d166886229d941d993d303cb3eb502194fa083674  elowen.json
+92acb517b98829601d03f5165620a7ca7ce685c7acca4ea8c869cfc858e00e3e  tomas.json
+## paths changed: aldric 1, elowen 1, tomas 1: /explanations/17/detail, combat.weapon_attack_bonus.longsword, the words after 'grounded separately.'
+- Separate from combat.baseline_melee_attack_bonus, which stays a Longsword-specific GE-06 fixture total until task #80 generalises it
++ Separate from combat.baseline_melee_attack_bonus, which is the Melee number for the first melee weapon in hand.
+## SF x4: diff -r empty (4 files); CPR x5: diff -r empty (5 files)

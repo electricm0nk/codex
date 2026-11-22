@@ -1,0 +1,147 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "ability_keys": [
+      "beastiary:monster_ability:medusa_petrifying_gaze",
+      "beastiary:monster_ability:medusa_poison"
+    ],
+    "challenge_rating": "7",
+    "corpus_key": "Medusa",
+    "external_ability_refs": [
+      "All-Around Vision"
+    ],
+    "key": "beastiary:monster:medusa",
+    "monster_class": "Monstrous Humanoid:8",
+    "name": "Medusa",
+    "natural_attacks": [
+      {
+        "damage_dice": "1d4",
+        "name": "Snake Bite"
+      }
+    ],
+    "race_subtype": null,
+    "race_type": "Monstrous Humanoid",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Racial Traits ~ Medusa"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|All-Around Vision|Medusa ~ Petrifying Gaze|Medusa ~ Poison"
+      },
+      {
+        "key": "AUTO",
+        "value": "LANG|Common"
+      },
+      {
+        "key": "AUTO",
+        "value": "WEAPONPROF|Dagger|Longbow"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Perception|4|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CON|8"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX,CHA|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT,WIS|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|3|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Snake Bite|DAMAGE|-ceil(STR/2)"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Snake Bite|TOHIT|-5"
+      },
+      {
+        "key": "CR",
+        "value": "7"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|M"
+      },
+      {
+        "key": "HANDS",
+        "value": "2"
+      },
+      {
+        "key": "LEGS",
+        "value": "2"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Monstrous Humanoid:8"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,30"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Snake Bite,Weapon.Natural.Weapon Group Natural.Melee.Finesseable.Bludgeoning.Piercing.Poison,*1,1d4"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Monstrous Humanoid"
+      },
+      {
+        "key": "REACH",
+        "value": "5"
+      },
+      {
+        "key": "ROLE",
+        "value": "Combat"
+      },
+      {
+        "key": "SIZE",
+        "value": "M"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.201"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      }
+    ],
+    "size": "M",
+    "source_page": "p.201",
+    "speeds": [
+      {
+        "feet": 30,
+        "mode": "Walk"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-15T01:24:18Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 282,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
+    "record_key": "Medusa",
+    "sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

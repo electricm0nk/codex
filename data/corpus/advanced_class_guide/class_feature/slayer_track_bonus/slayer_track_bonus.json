@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Slayer Track Bonus",
+    "name": "Slayer Track Bonus",
+    "class": "Slayer",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "TYPE",
+        "value": "Internal"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SlayerTrackLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SlayerTrackBonus|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "SITUATION|Survival=Follow or identify tracks|SlayerTrackBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SlayerTrackBonus|max(SlayerTrackLVL/2,1)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SlayerTrackLVL|SlayerLVL"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1804,
+    "record_key": "Slayer Track Bonus"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

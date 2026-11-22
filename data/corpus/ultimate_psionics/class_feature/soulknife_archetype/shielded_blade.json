@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Soulknife Archetype ~ Shielded Blade",
+    "name": "Shielded Blade",
+    "class": "Soulknife",
+    "description": "Some soulknives choose to focus on both offense and defense, splitting the energy of their mind blade into a sword and a shield.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Soulknife Archetype ~ Shielded Blade"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.SoulknifeArchetype.SoulknifeBonusFeat.SoulknifeBladeSkill2"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Soulknife=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Soulknife Archetype ~ Shielded Blade],[!PREABILITY:1,CATEGORY=Archetype,TYPE.SoulknifeBonusFeat,TYPE.SoulknifeBladeSkill2]"
+      },
+      {
+        "key": "DESC",
+        "value": "Some soulknives choose to focus on both offense and defense, splitting the energy of their mind blade into a sword and a shield."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Soulknife Class Feature|AUTOMATIC|Shielded Blade ~ Form Mind Shield|PRECLASS:1,Soulknife=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Soulknife Class Feature|AUTOMATIC|Shielded Blade ~ Improved Shield|PRECLASS:1,Soulknife=2"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.283"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2139,
+    "record_key": "Soulknife Archetype ~ Shielded Blade"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

@@ -1,0 +1,77 @@
+{
+  "codex_generated_name": false,
+  "completeness": "full",
+  "data": {
+    "description": "Choose a Craft, Perform, or Profession skill. You gain a +2 trait bonus on checks with that skill, and it is always a class skill for you.",
+    "key": "Trait ~ Tattooed Focus",
+    "name": "Tattooed Focus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Trait ~ Tattooed Focus"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREVAREQ:BypassTraitRestriction,1],[!PREABILITY:1,CATEGORY=Special Ability,TYPE.RaceTrait],[PREABILITY:1,CATEGORY=Special Ability,Trait ~ Tattooed Focus]"
+      },
+      {
+        "key": "DESC",
+        "value": "Choose a Craft, Perform, or Profession skill. You gain a +2 trait bonus on checks with that skill, and it is always a class skill for you."
+      },
+      {
+        "key": "STACK",
+        "value": "NO"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "NUMCHOICES=1|SKILL|TYPE.Craft|TYPE.Profession|TYPE.Perform"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|LIST|1|TYPE=Trait"
+      },
+      {
+        "key": "CSKILL",
+        "value": "LIST"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.196"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T18:22:49Z",
+  "license": "PI-REDACTED",
+  "pi_field": "raw_tokens",
+  "pi_marker": "redacted",
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 114,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities.lst",
+    "record_key": "Trait ~ Tattooed Focus",
+    "sha256": "38af17b7b20261b8279fd8411b7bc3b88b8e2d90303c89d03952d93dd3e1f1cd"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice",
+    "computed:pre_guard"
+  ]
+}

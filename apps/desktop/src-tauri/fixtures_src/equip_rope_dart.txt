@@ -1,0 +1,2 @@
+# Fixture for desktop Market +N (AC and attack rows), source: ue_equip_arms_armor.lst, KEY: Rope Dart
+Rope Dart																				PROFICIENCY:WEAPON|Rope Dart								TYPE:Weapon.Resizable.EasternWeapon.Eastern.Ranged.Thrown.Exotic.Piercing.Blocking.Distracting.Monk.BladeLight																											COST:1	WT:0.7									CRITMULT:x2	CRITRANGE:1							DAMAGE:1d4					EQMOD:Material ~ Steel																																													RANGE:20						SOURCEPAGE:p.35

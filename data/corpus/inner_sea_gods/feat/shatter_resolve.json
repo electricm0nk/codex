@@ -1,0 +1,30 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Shatter Resolve",
+    "category": "General",
+    "name": "Shatter Resolve",
+    "description": "Your negative energy causes despair in those you harm. When you damage a creature by channeling negative energy, you fill your foe with fear. A creature that fails its Will save against your channeled energy also becomes shaken for a number of rounds equal to the number of dice you roll for your channel energy ability.",
+    "prerequisites": [
+      "PREDEITY:[redacted PI]",
+      "PREMULT:1,[PREVARGTEQ:ClericChannelPositiveEnergyDice,1],[PREVARGTEQ:ClericChannelNegativeEnergyDice,1],[PREVARGTEQ:OracleChannelDice,1]",
+      "PRETEXT:[redacted PI]"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities_feat.lst",
+    "sha256": "91f53f0051455ec8e7daca4e0286799e397009fe7fdae555ebe342f40085256e",
+    "line": 79,
+    "record_key": "Shatter Resolve"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

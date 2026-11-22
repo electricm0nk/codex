@@ -1,0 +1,73 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Dark Elementalist ~ Soul Power",
+    "name": "Soul Power",
+    "class": "Kineticist",
+    "description": "A dark elementalist uses the souls of others to protect herself from the dangers of burn. She can't choose to accept burn if doing so would raise her total number of points of burn above 3. However, %1 times per day, as a full-round action she can gather up the soul of a sentient creature with a CR equal to or higher than her character level, as long as that creature died in the past minute. When she does, some of her existing burn is unloaded into the departing soul, racking it with unspeakable torment, but reducing her current burn total by 1 point. A soul used in this way cannot be brought back to life as if it died of a death effect. Using a soul like this doesn't heal the nonlethal damage from that point of burn immediately, but does enable the dark elementalist to heal the nonlethal damage from that point of burn normally.|INT",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Dark Elementalist ~ Soul Power"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Kineticist Class Feature.DarkElementalistClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.56"
+      },
+      {
+        "key": "DESC",
+        "value": "A dark elementalist uses the souls of others to protect herself from the dangers of burn. She can't choose to accept burn if doing so would raise her total number of points of burn above 3. However, %1 times per day, as a full-round action she can gather up the soul of a sentient creature with a CR equal to or higher than her character level, as long as that creature died in the past minute. When she does, some of her existing burn is unloaded into the departing soul, racking it with unspeakable torment, but reducing her current burn total by 1 point. A soul used in this way cannot be brought back to life as if it died of a death effect. Using a soul like this doesn't heal the nonlethal damage from that point of burn immediately, but does enable the dark elementalist to heal the nonlethal damage from that point of burn normally.|INT"
+      },
+      {
+        "key": "DESC",
+        "value": "Racking a soul in this way forces anyone trying to bring the creature back to life to succeed at a caster level check (DC %1) or the attempt fails.|10+KineticistLVL|PRECLASS:1,Kineticist=6|!PRECLASS:1,Kineticist=16"
+      },
+      {
+        "key": "DESC",
+        "value": "Even if the creature returns from the dead, its soul is so damaged by the agony that it takes|PRECLASS:1,Kineticist=11|!PRECLASS:1,Kineticist=16"
+      },
+      {
+        "key": "DESC",
+        "value": "2d6 points of Wisdom damage.|PRECLASS:1,Kineticist=11|!PRECLASS:1,Kineticist=16|!PREABILITY:1,CATEGORY=Internal,Rules ~ Use Sanity"
+      },
+      {
+        "key": "DESC",
+        "value": "3d10 points of sanity damage.|PRECLASS:1,Kineticist=11|!PRECLASS:1,Kineticist=16|PREABILITY:1,CATEGORY=Internal,Rules ~ Use Sanity"
+      },
+      {
+        "key": "DESC",
+        "value": "The soul is destroyed in the process, and the creature can be restored only by a miracle or wish.|PRECLASS:1,Kineticist=16"
+      },
+      {
+        "key": "DESC",
+        "value": " &nl;A dark elementalist gains attack and damage bonuses from elemental overflow based on how many times that day she has used soul power to rack a soul, rather than based on her current burn total. For instance, a 9th-level dark elementalist who used soul power to rack three or more souls during the course of the day would add a +3 bonus on attack rolls and a +6 bonus on damage rolls. A dark elementalist does not gain size bonuses to physical ability scores or a chance to ignore critical hits and sneak attacks from elemental overflow. This ability alters burn and elemental overflow."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/support/ha_abilities_class_oa.lst",
+    "sha256": "9c111f652f8442433ea215fa11e67258c7e6c15c75d1c1753fa6fef34827f46c",
+    "line": 71,
+    "record_key": "Dark Elementalist ~ Soul Power"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

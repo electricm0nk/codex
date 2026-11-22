@@ -1,0 +1,5 @@
+SF-Soldier-3: package class lines Hp 6*L=18, Stamina 7*L=21; armour equipment/defiance_series_squad.json EAC +5 KAC +8 maxDex 1 -> HP 25 SP 24 EAC 16 KAC 19; E3.3 (25, 24, 16, 19) OK
+SF-Mystic-5: package class lines Hp 5*L=25, Stamina 6*L=30; armour equipment/lashunta_tempweave_basic.json EAC +4 KAC +4 maxDex 5 -> HP 34 SP 25 EAC 16 KAC 16; E3.3 (34, 25, 16, 16) OK
+SF-Technomancer-5: package class lines Hp 4*L=20, Stamina 5*L=25; armour equipment/d_suit_i.json EAC +5 KAC +6 maxDex 5 -> HP 29 SP 35 EAC 18 KAC 19; E3.3 (29, 35, 18, 19) OK
+SF-Envoy-3: package class lines Hp 5*L=15, Stamina 6*L=18; armour equipment/carbon_skin_graphite.json EAC +3 KAC +4 maxDex 4 -> HP 20 SP 21 EAC 14 KAC 15; E3.3 (20, 21, 14, 15) OK
+seeds=4 agree=4 disagree=0

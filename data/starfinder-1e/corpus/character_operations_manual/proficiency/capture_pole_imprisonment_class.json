@@ -1,0 +1,19 @@
+{
+  "data": {
+    "key": "Capture pole (imprisonment-class)",
+    "name": "Capture pole (imprisonment-class)",
+    "type": "ADVANCED MELEE.ADVANCED MELEE WEAPONS"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 32,
+    "path": "starfinder/paizo/character_operations_manual/scom_profs_weapon.lst",
+    "record_key": "Capture pole (imprisonment-class)",
+    "sha256": "b474b5e71bbd390cba184ec8fa9c4879a30a49136a3af6b236a76a9620b7c7a0"
+  },
+  "unit_id": "character_operations_manual:proficiency:capture_pole_imprisonment_class"
+}

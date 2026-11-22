@@ -1,0 +1,15 @@
+{
+  "completeness": "full",
+  "data": {
+    "key": "Bec de Corbin",
+    "name": "Bec de Corbin"
+  },
+  "license": "OGL",
+  "population": "in_scope",
+  "source": {
+    "kind": "desktop_ui_fixture",
+    "line": 1,
+    "path": "apps/desktop/src-tauri/fixtures_src/equip_bec_de_corbin.txt",
+    "record_key": "Bec de Corbin"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "completeness": "full",
+  "data": {
+    "key": "Special Ability ~ +3 ~ Armor",
+    "name": "+3 (Enhancement to Armor)"
+  },
+  "license": "OGL",
+  "population": "in_scope",
+  "source": {
+    "kind": "desktop_ui_fixture",
+    "line": 1,
+    "path": "apps/desktop/src-tauri/fixtures_src/equip_special_ability_3_armor.txt",
+    "record_key": "Special Ability ~ +3 ~ Armor"
+  }
+}

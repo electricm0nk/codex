@@ -1,0 +1,31 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:38:17Z",
+  "data": {
+    "key": "Deadly Throw",
+    "category": "Psionic",
+    "name": "Deadly Throw",
+    "description": "You can replace power with finesse for thrown weapons.",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=FEAT,Point-Blank Shot",
+      "PREMULT:1,[PRETOTALAB:3],[PREVARGTEQ:PrereqBAB,3]",
+      "PRESTAT:1,DEX=15"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_feats.lst",
+    "sha256": "528096cb97ebe8255b9f9fe67682dd7e045f53b65e32295cd57967002eccb137",
+    "line": 68,
+    "record_key": "Deadly Throw"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

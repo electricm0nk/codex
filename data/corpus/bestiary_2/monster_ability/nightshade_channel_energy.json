@@ -1,0 +1,69 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Nightshade ~ Channel Energy",
+    "delivery": "Supernatural",
+    "description": "A nightshade can chanel negative energy as a cleric of a level equal to its base CR.  It can use this ability a number of times equal to 3 + its Charisma modifier.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:nightshade_channel_energy",
+    "name": "Channel Energy",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Cleric ~ Channel Negative Energy"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ClericChannelEnergyTimes|3+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ClericChannelNegativeEnergyLVL|CR"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ClericChannelEnergyTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A nightshade can chanel negative energy as a cleric of a level equal to its base CR.  It can use this ability a number of times equal to 3 + its Charisma modifier."
+      },
+      {
+        "key": "KEY",
+        "value": "Nightshade ~ Channel Energy"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.308"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
+    "source_page": "p.308",
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T14:07:19Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1972,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "record_key": "Nightshade ~ Channel Energy",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

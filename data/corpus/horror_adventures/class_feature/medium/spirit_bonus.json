@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Medium ~ Deceiver Spirit Bonus",
+    "name": "Spirit Bonus",
+    "class": "Medium",
+    "description": "When you channel the Deceiver, you gain a +%1 bonus applies to Charisma checks, Charisma-based skill checks, and Will saves against compulsions and divinations.|SpiritBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Medium ~ Deceiver Spirit Bonus"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MediumClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.58"
+      },
+      {
+        "key": "DESC",
+        "value": "When you channel the Deceiver, you gain a +%1 bonus applies to Charisma checks, Charisma-based skill checks, and Will saves against compulsions and divinations.|SpiritBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|TYPE=Charisma|SpiritBonus"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SaveBonus|+%1 on Will saves vs. compulsions and divinations.|SpiritBonus"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/support/ha_abilities_class_oa.lst",
+    "sha256": "9c111f652f8442433ea215fa11e67258c7e6c15c75d1c1753fa6fef34827f46c",
+    "line": 98,
+    "record_key": "Medium ~ Deceiver Spirit Bonus"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Terror ~ Consuming Nightmare",
+    "name": "Consuming Nightmare",
+    "class": "Terror",
+    "description": "Target of your next attack must make a Will save (DC %1) or die.  If the save succeeds, the target becomes immune to this terror for 24 hours.  This is a mind-affecting fear death effect.|ConsumingNightmareDC",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Terror ~ Consuming Nightmare"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural.DreadTerror"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "TerrorsPrereqLVL,16"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ConsumingNightmareDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Target of your next attack must make a Will save (DC %1) or die.  If the save succeeds, the target becomes immune to this terror for 24 hours.  This is a mind-affecting fear death effect.|ConsumingNightmareDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ConsumingNightmareDC|TerrorDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ConsumingNightmareDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Consuming Nightmare)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.41"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 284,
+    "record_key": "Terror ~ Consuming Nightmare"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}
