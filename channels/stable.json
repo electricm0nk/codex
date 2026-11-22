@@ -1,0 +1,11 @@
+{
+  "channel": "stable",
+  "manifest_url": "https://raw.githubusercontent.com/electricm0nk/codex/update-index/manifests/stable/v0.22.168-fc689c01/update-manifest.json",
+  "publication_timestamp": "2026-11-22T05:06:10Z",
+  "release_url": "https://github.com/electricm0nk/codex/releases/tag/stable-v0.22.168-fc689c01",
+  "schema_version": "1.0.0",
+  "signature": null,
+  "tag": "stable/v0.22.168-fc689c01",
+  "tranche_id": "STC-CODEX-SD-16",
+  "version": "0.22.168"
+}
