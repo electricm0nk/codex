@@ -90,3 +90,4 @@ final-acceptance scan (E7.2), and only the operator may move blocked scope anywh
 (`../../governance/blocker-closure-doctrine.md`).
 
 (none)
+| 2026-11-22 | C1 | r1 | `python3 tools/release/resolve_release_notes.py --repo-root .` | 2 | `FAIL: docs/release/current-release.json is for tranche 22 but apps/desktop/package.json is 0.43.0; bump both together at closure` | `git grep -n "current-release.json\|resolve_release_notes\|SD-43 INTERIM NOTES" -- . ":!docs/release/SD-43*"` (workflows: check-release-manifest.yml:54, publish-tester-release.yml:348/913/990, release-tooling-tests.yml:49; docs: release-pipeline.md:170/226/263; no existing SD-43 release-notes.md) |
