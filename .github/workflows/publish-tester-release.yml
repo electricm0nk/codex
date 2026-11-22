@@ -115,14 +115,18 @@ jobs:
       # tranche/18: 0.17 -> 0.18 for the SD-38 bundle cut; the repo version
       # files moved to 0.22.0 at the cut.
       #
-      # Only the tranche prefix is written here. The build number is always
+      # SD-43 (operator, 2026-11-22): the minor version is now the SD number, and the
+      # branch is tranche-43. 0.22 -> 0.43; the repo version files moved to 0.43.0 in
+      # the same commit, keeping this stamp in lockstep.
+      #
+      # Only the minor prefix is written here. The build number is always
       # ${GITHUB_RUN_NUMBER} — never hardcode one.
       - name: Stamp build version
         id: stamp_version
         working-directory: apps/desktop
         run: |
           set -euo pipefail
-          VERSION="0.22.${GITHUB_RUN_NUMBER}"
+          VERSION="0.43.${GITHUB_RUN_NUMBER}"
           node - "$VERSION" <<'EOF'
           const fs = require('fs');
           const version = process.argv[2];
