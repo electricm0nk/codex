@@ -1,0 +1,54 @@
+{
+  "channel": "alpha",
+  "eligibility": {
+    "appimage_install": true,
+    "deb_install": true,
+    "min_supported_version": "0.0.0",
+    "required_install_kind": "any",
+    "windows_install": true
+  },
+  "linux_appimage": {
+    "name": "Codex_0.22.164_amd64.AppImage",
+    "sha256": "2f504d219ccfc899cb22bbfdcc5f48e6977a73e05bd7c8fe38eb6b0046d03072",
+    "size_bytes": 121895416,
+    "url": "https://github.com/electricm0nk/codex/releases/download/alpha-v0.22.164-11043044/Codex_0.22.164_amd64.AppImage"
+  },
+  "linux_deb": {
+    "name": "Codex_0.22.164_amd64.deb",
+    "sha256": "b0963dd6b685339de6a3eb2dd1a33a38a0da481c99022cfdd2807c39779a18fc",
+    "size_bytes": 52660264,
+    "url": "https://github.com/electricm0nk/codex/releases/download/alpha-v0.22.164-11043044/Codex_0.22.164_amd64.deb"
+  },
+  "macos_dmg": {
+    "name": "Codex_0.22.164_aarch64.dmg",
+    "sha256": "0027afe4486e9dbeb8fac63ba526a5c68b923f9de858a30bc4742ff32eea12e8",
+    "size_bytes": 50966748,
+    "url": "https://github.com/electricm0nk/codex/releases/download/alpha-v0.22.164-11043044/Codex_0.22.164_aarch64.dmg"
+  },
+  "promotion_lineage": {
+    "promoted_at": "2026-11-22T04:03:56Z",
+    "source_branch": "develop",
+    "source_commit": "1104304490361ee547bc62096828a4971f8fcc8b"
+  },
+  "release_notes_hash": "5adefcfec8e18f8c518b296edacd75fcacdced5eb340a3c8908791e86d1e7664",
+  "release_notes_path": "docs/release/SD-42-pcgen-import-and-campaign-folder/release-notes.md",
+  "release_notes_url": "https://raw.githubusercontent.com/electricm0nk/codex/1104304490361ee547bc62096828a4971f8fcc8b/docs/release/SD-42-pcgen-import-and-campaign-folder/release-notes.md",
+  "schema_version": "1.3.0",
+  "signature": null,
+  "source_branch": "develop",
+  "source_commit": "1104304490361ee547bc62096828a4971f8fcc8b",
+  "tag": "alpha/v0.22.164-11043044",
+  "tranche_id": "STC-CODEX-SD-16",
+  "version": "0.22.164",
+  "windows_nsis": {
+    "name": "Codex_0.22.164_x64-setup.exe",
+    "sha256": "e0a3620d7e0d57e55aeba8aea26f1eb64ae6a52c7ad57999a424519652989aa1",
+    "size_bytes": 30359432,
+    "url": "https://github.com/electricm0nk/codex/releases/download/alpha-v0.22.164-11043044/Codex_0.22.164_x64-setup.exe"
+  },
+  "workflow_provenance": {
+    "run_attempt": 1,
+    "run_id": "44977470252",
+    "workflow": ".github/workflows/publish-tester-release.yml"
+  }
+}
