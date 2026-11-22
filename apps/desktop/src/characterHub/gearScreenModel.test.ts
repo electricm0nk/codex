@@ -276,7 +276,7 @@ const NEST_LOADS: ContainerLoadDto[] = [
 const nest = gearScreenModel(NEST, { perItem: [], containerLoads: NEST_LOADS });
 const tables = containerTables(nest);
 assertEqual(tables.length, 3, 'tables: backpack + the filled pouch + the stack of three');
-assertEqual(tables.map((table) => table.title).join(' | '), 'Backpack | Pouch, Belt #1 | Pouch, Belt #2', 'tables: titled as Move to titles them');
+assertEqual(tables.map((table) => table.title).join(' | '), 'Backpack | Pouch, Belt | Pouch, Belt ×3', 'tables: titled as the right panel names them, no #N (SD-43 E1.1)');
 assertEqual(tables.map((table) => table.rows.length).join(','), '3,1,0', 'tables: direct contents per row');
 assertEqual(tables[0].rows.map((candidate) => candidate.label).join(', '), 'Pouch, Belt, Pouch, Belt ×3, Chalk', 'tables: the backpack holds the filled pouch, the pouch stack and the chalk');
 assertEqual(tables[1].rows[0].label, 'Whetstone', 'tables: pouch #1 holds the whetstone');
@@ -310,7 +310,7 @@ assertEqual(nestHtml.split('<table').length - 1, 3, 'view: one table per contain
 assertEqual(nestHtml.split('data-testid="gear-container-customize-').length - 1, 3, 'view: a Customize button on every container table title (E4.9)');
 assert(nestHtml.includes('data-testid="gear-container-customize-item:pouch_belt-0-1"'), 'view: the table title customizes its own copy (E4.9)');
 const pouchTable = nestHtml.slice(nestHtml.indexOf('data-testid="gear-container-item:pouch_belt-0-0"'), nestHtml.indexOf('data-testid="gear-container-item:pouch_belt-0-1"'));
-assert(pouchTable.includes('Pouch, Belt #1 · 1 lb, no limit'), 'view: the caption reads title · load');
+assert(pouchTable.includes('Pouch, Belt · 1 lb, no limit'), 'view: the caption reads title · load');
 assert(pouchTable.includes('Whetstone') && pouchTable.includes('data-testid="gear-discard"') && pouchTable.includes('data-testid="gear-sell"') && pouchTable.includes('data-testid="gear-move-to"'), 'view: a content row keeps its buttons inside the table');
 assert(nestHtml.includes('>Empty<'), 'view: an empty container reads Empty');
 const topLevel = nestHtml.slice(0, nestHtml.indexOf('data-testid="gear-container-'));
@@ -343,9 +343,9 @@ const fourSacks = gearScreenModel([held('Sack', { kind: 'carried' }, { copies: S
 const fourSackNodes = fourSacks.tree.find((candidate) => candidate.id === 'carried')!.items;
 assertEqual(names(fourSackNodes), 'Sack ×4, Dagger', 'stacks: a container stack is one tree node');
 assertEqual(copyId(fourSackNodes[0].copy), 'item:sack-0-0', 'stacks: the node stands for the stack\'s first copy');
-assertEqual(containerTables(fourSacks).map((table) => `${table.title} ${copyId(table.copy)}`).join(' | '), 'Sack item:sack-0-0', 'stacks: one container table titled Sack');
+assertEqual(containerTables(fourSacks).map((table) => `${table.title} ${copyId(table.copy)}`).join(' | '), 'Sack ×4 item:sack-0-0', 'stacks: one container table titled Sack ×4');
 const daggerInto = moveTargets(fourSacks, fourSacks.rows.find((candidate) => candidate.held.name === 'Dagger')!).filter((target) => target.id.startsWith('inside-'));
-assertEqual(daggerInto.map((target) => `${target.id} ${target.label}`).join(' | '), 'inside-item:sack-0-0 Into Sack', 'stacks: one Into target for identical empty containers');
+assertEqual(daggerInto.map((target) => `${target.id} ${target.label}`).join(' | '), 'inside-item:sack-0-0 Into Sack ×4', 'stacks: one Into target for identical empty containers');
 const oneFilled = gearScreenModel(
   [held('Sack', { kind: 'carried' }, { copies: [SACKS[0]] }), held('Sack', { kind: 'carried' }, { copies: SACKS.slice(1) }), held('Dagger', { kind: 'inside', container: SACKS[0] })],
   { perItem: [], containerLoads: sackLoads(0) },
@@ -353,6 +353,40 @@ const oneFilled = gearScreenModel(
 const filledNodes = oneFilled.tree.find((candidate) => candidate.id === 'carried')!.items;
 assertEqual(names(filledNodes), 'Sack, Sack ×3', 'stacks: a filled copy is its own node');
 assertEqual(names(filledNodes[0].children), 'Dagger', 'stacks: the filled node holds the dagger');
-assertEqual(containerTables(oneFilled).map((table) => table.title).join(' | '), 'Sack #1 | Sack #2', 'stacks: two container rows of one name are told apart');
+assertEqual(containerTables(oneFilled).map((table) => table.title).join(' | '), 'Sack | Sack ×3', 'stacks: two container rows of one name are told apart by count, not #N');
 
-console.log('gearScreenModel.test.ts: 20 cases passed');
+// 21. Container truth (SD-43 E1.1, E0.4 gear-repro.md 5.N, 5.R, Q-5.1): no `#N`; a renamed copy keeps its name;
+// tables and Into targets bind to the copy that holds items; an item put into the stack is a new single row.
+const BEDROLL = held('Bedroll', { kind: 'inside', container: SACKS[0] });
+const BLANKET = held('Blanket', { kind: 'inside', container: SACKS[0] });
+const holding = gearScreenModel(
+  [held('Sack', { kind: 'carried' }, { copies: [SACKS[0]] }), held('Sack', { kind: 'carried' }, { copies: SACKS.slice(1) }), BEDROLL, BLANKET, held('Dagger', { kind: 'carried' })],
+  { perItem: [], containerLoads: sackLoads(0) },
+);
+const holdingTables = containerTables(holding);
+assertEqual(holdingTables.map((table) => `${table.title} ${copyId(table.copy)}`).join(' | '), 'Sack item:sack-0-0 | Sack ×3 item:sack-0-1', 'container truth: Sack and Sack ×3, each bound to its own copy');
+assertEqual(names(holding.tree.find((candidate) => candidate.id === 'carried')!.items), 'Sack, Sack ×3, Dagger', 'container truth: the right panel names them the same');
+const holdingInto = moveTargets(holding, holding.rows.find((candidate) => candidate.held.name === 'Dagger')!).filter((target) => target.id.startsWith('inside-'));
+assertEqual(holdingInto.map((target) => target.label).join(' | '), 'Into Sack | Into Sack ×3', 'container truth: Move to names them as the tables do');
+assert(![...holdingTables.map((table) => table.title), ...holdingInto.map((target) => target.label)].some((label) => label.includes('#')), 'container truth: no #N anywhere');
+// A renamed copy (`copies: {"Sack|0|1": {"name": "Custom Sack Name"}}`, E0.4 E9): its own name on the table, the tree and Move to.
+const renamed = gearScreenModel(
+  [{ ...held('Custom Sack Name', { kind: 'carried' }, { itemId: 'item:sack', copies: [SACKS[1]] }), baseName: 'Sack' }, held('Sack', { kind: 'carried' }, { copies: [SACKS[0], SACKS[2], SACKS[3]] }), held('Dagger', { kind: 'carried' })],
+  { perItem: [], containerLoads: sackLoads(null) },
+);
+assertEqual(containerTables(renamed).map((table) => table.title).join(' | '), 'Custom Sack Name | Sack ×3', 'container truth: a renamed copy titles its table by its own name');
+assertEqual(names(renamed.tree.find((candidate) => candidate.id === 'carried')!.items), 'Custom Sack Name, Sack ×3, Dagger', 'container truth: and the right panel');
+assertEqual(moveTargets(renamed, renamed.rows.find((candidate) => candidate.held.name === 'Dagger')!).filter((target) => target.id.startsWith('inside-')).map((target) => target.label).join(' | '), 'Into Custom Sack Name | Into Sack ×3', 'container truth: and Move to');
+// Bound to the copy holding items, not `copies[0]`: a row whose third copy holds the dagger reads that copy.
+const misbound = gearScreenModel([held('Sack', { kind: 'carried' }, { copies: SACKS }), held('Dagger', { kind: 'inside', container: SACKS[2] })], { perItem: [], containerLoads: sackLoads(2) });
+assertEqual(containerTables(misbound).map((table) => `${copyId(table.copy)} ${table.loadLabel}: ${table.rows.map((candidate) => candidate.label).join(', ')}`).join(' | '), 'item:sack-0-2 1 of 30 lb: Dagger', 'container truth: the table binds to the copy holding the dagger');
+assertEqual(copyId(misbound.tree.find((candidate) => candidate.id === 'carried')!.items[0].copy), 'item:sack-0-2', 'container truth: the tree node binds to it too');
+// Into the stack (Q-5.1): before, Sack ×4 is one Into target; after the write the engine lists the filled copy as its own row.
+const beforePut = moveTargets(fourSacks, fourSacks.rows.find((candidate) => candidate.held.name === 'Dagger')!).find((target) => target.id.startsWith('inside-'))!;
+const afterPut = gearScreenModel(
+  [held('Sack', { kind: 'carried' }, { copies: [SACKS[0]] }), held('Sack', { kind: 'carried' }, { copies: SACKS.slice(1) }), held('Dagger', { kind: 'inside', container: beforePut.location.kind === 'inside' ? beforePut.location.container : SACKS[3] })],
+  { perItem: [], containerLoads: sackLoads(0) },
+);
+assertEqual(containerTables(afterPut).map((table) => `${table.title}: ${table.rows.map((candidate) => candidate.label).join(', ') || 'Empty'}`).join(' | '), 'Sack: Dagger | Sack ×3: Empty', 'container truth: an item put into the stack is a new single row holding it');
+
+console.log('gearScreenModel.test.ts: 21 cases passed');
