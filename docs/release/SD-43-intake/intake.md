@@ -298,3 +298,177 @@ Run in this order, after SD-42 is merged:
 - **Open questions for the operator:** (1) replace the browser handoff, or keep both? (2) how the key
   gets into release builds, and what dev builds do without it (my pick: the Send button is disabled
   with a stated reason, not a fake success); (3) attach diagnostics, and which.
+
+## 14. ENHANCEMENT: Update menu layout — channel selector inside the top block, more padding in the text blocks
+
+- **Reported:** 2026-11-22 (operator).
+- **Ask 1:** the channel selector is a drop-down that sits above the body of the Update menu. Move it
+  into the body of the top block, right next to the `Channel:` label.
+- **Ask 2:** the text blocks have a large margin at the top and on both sides. Release notes wrap in odd
+  places because of it. Give the text more room (reduce the margin, widen the text area).
+- **Code to start from (read from the file list, not yet traced):** `apps/desktop/src/update/ChannelSelector.tsx`,
+  `CheckPanel.tsx`, `installedPanel.tsx`, `lastCheckPanel.tsx`, `Ui.tsx`.
+- **Check before building:** the release-notes text is the test case. Look at a long note at the app's
+  narrowest window and confirm lines wrap at word boundaries.
+
+## 15. ENHANCEMENT: bug report and enhancement screens — direct GitHub stays preferred, an Anonymous selector chooses the API path
+
+- **Reported:** 2026-11-22 (operator). Answers item 13's open question (1): keep both paths.
+- **Ask:**
+  - Direct submit to GitHub stays the preferred channel.
+  - Add a selector on the bug report and enhancement screens: **Anonymous**.
+  - Anonymous off: submit directly to GitHub (today's browser handoff).
+  - Anonymous on: submit through the codex-web report API from item 13. The user needs no GitHub account.
+  - Anonymous on also shows a **Handle** field. Handle is optional, never required. It lets a reporter say who we can thank.
+- **Code to start from (not yet traced):** `apps/desktop/src/feedback/` (`submissionState.ts`, `controlledDefectPayload.ts`).
+- **Rulings (operator, 2026-11-22):**
+  - Screens: the bug report and enhancement screens.
+  - Handle goes in the report `body` as the first line. No API change.
+  - GitHub unavailable: show a message. The user turns Anonymous on themselves. No silent fallback.
+
+## 16. CLEANUP + DECISION: the Options → Developer screen
+
+- **Reported:** 2026-11-22 (operator).
+- **Ask 1:** clear out the **Notes** section. It is old history. Today it shows one line from the backend:
+  `"Real GE-08 authoring workbench snapshot from headless substrate."` (`authoring_workbench.rs:480`,
+  shown at `apps/desktop/src/App.tsx` ~1033, fed by `loadTesterWorkbenchSurface.ts` `notes:`).
+- **Ask 2 (question):** is the screen still worth having?
+- **What I found (read, not run):**
+  - The tab is `developer` in `SettingsModal.tsx`. Its body is inline in `App.tsx` (~893–1045).
+  - It shows: Build, Platform, Backend version + commit, Feature check, Data source, Backend feature
+    check, Diagnostics, Blocked calculations, Explanations, Sources, Update & platform support,
+    Feedback evidence, Notes.
+  - The same `surface` object feeds the **bug** and **enhancement** composers. Those need it. The
+    loader must stay even if the screen goes.
+  - Most of the rest of the screen is GE-08 era workbench output. A player cannot act on it.
+  - Backend version + commit is the one part that is useful in a bug report.
+- **Options:**
+  1. Remove Notes only. Smallest change.
+  2. Slim the screen to build, platform, backend version + commit, update status, and the evidence
+     panel. Remove the GE-08 sections. **My pick.** Keeps what a bug report needs.
+  3. Remove the Developer tab. Show the version + commit line inside the bug and enhancement screens.
+- **Check before building:** grep `surface.notes` and each removed section for other readers; check
+  `FeedbackEvidencePanel` does not depend on a section that goes.
+- **Ruling (operator, 2026-11-22): option 2.** Slim the screen. Keep: build, platform, backend version +
+  commit, update status, and the Feedback evidence panel. Remove: Feature check, Data source,
+  Backend feature check, Diagnostics, Blocked calculations, Explanations, Sources, fallback notice,
+  Notes. The loader stays because the bug and enhancement composers use it.
+
+## 17. ENHANCEMENT: character screen — the top bar stays fixed while the page scrolls
+
+- **Reported:** 2026-11-22 (operator).
+- **Ask:** on the character screen, the top bar holds the menu, the close button, and the character name
+  and class, then a line under it. Keep that bar floating at the top. Scrolling moves only what is
+  below the line.
+- **Addition (operator, 2026-11-22):** the left rail (Character Details) and the right column (abilities
+  and skills) also stay fixed. Only the central pane scrolls. The page itself does not scroll.
+- **Ruling (operator, 2026-11-22):** same behavior on the Starfinder and Cyberpunk sheets. The top bar
+  and the layout stay static on every game system.
+- **Code to start from (read, not run):** `apps/desktop/src/characterHub/CharacterSheet.tsx` ~4553. The bar
+  is a plain `div` with `borderBottom: 2px solid var(--color-accent)`. The sheet wrapper uses
+  `marginTop: -3rem` and `width: 100vw` to escape the page padding. That wrapper may break a plain
+  `position: sticky`, and the bar needs an opaque background so content does not show through.
+- **Check before building:**
+  - The other sheets have their own bars: `StarfinderCharacterSheet.tsx`, `CyberpunkCharacterSheet.tsx`.
+    Prefer one shared layout piece over three copies.
+  - The side columns can be taller than a short window (the skills list is long). Decide whether each
+    side column scrolls on its own when it does not fit. My pick: yes, each side scrolls inside its own
+    column, so nothing is cut off.
+  - The App's own ☰ menu is `fixed` at the top right on screens without a menu (`App.tsx`). Confirm it
+    does not overlap the sticky bar.
+  - Dialogs and the progression drawer sit above the bar (z-index).
+
+## 18. BUG + CORRECTION: the character sheet's "Open <campaign>" button errors, and the big banner went on the wrong screen
+
+- **Reported:** 2026-11-22 (operator).
+- **Ask 1 (correction):** the button to enlarge is the **Open <campaign name>** button on the character
+  screen (under Skills). It should fill that space. SD-42 put the large gradient banner on the Campaign
+  Manager screen instead (`CampaignManagerScreen.tsx` `OpenCampaignBanner`, commit `cd33e7d82d`).
+  Whether the Manager keeps its banner is an open question (below).
+- **Ask 2 (bug):** clicking that button shows
+  `Failed opening a campaign folder: 234b13c1-d676-4731-ac8c-b93c7a8161fe is not an absolute folder path`.
+- **Cause (read from the code, not yet run):**
+  - `CharacterSheet.tsx` ~4425 calls `props.onOpenCampaign(membership.campaignId)`. That value is the
+    campaign's UUID.
+  - The handler in `CharacterHubPage.tsx` ~310 names its argument `campaignDir`, and the backend
+    `open_campaign_folder` (`campaign_folder.rs` `require_absolute`) accepts only an absolute path.
+  - Since SD-42 a campaign is its folder, so the id-to-path step is missing. The membership record
+    probably holds the path (`campaignDir`, seen in `CampaignMembershipDialog.tsx`).
+- **Why tests missed it (state in the plan):** check whether a test clicks this button end to end. A test
+  that passes a fake path to the handler would not catch an id passed in.
+- **Fix shape:** pass the folder path (or resolve id to path in one place), add a failing test first
+  that clicks the button with a real membership row, and enlarge the button to fill its space using the
+  same `ActionBanner` look.
+- **Rulings (operator, 2026-11-22):**
+  - The Campaign Manager screen keeps its banner, but smaller. It does not need to be so large.
+  - A character in several campaigns gets one full-width button per campaign, stacked.
+
+## 19. CLEANUP: move "Corpus Ingest Diagnostic" off the main screen and into Options → Developer
+
+- **Reported:** 2026-11-22 (operator).
+- **Ask:** the main (landing) screen carries a **Corpus Ingest Diagnostic** entry. It is a developer
+  tool. Move it to the Developer tab (item 16).
+- **Code to start from (read, not run):**
+  - Entry point: `LandingScreen.tsx` prop `onCorpusIngestDiagnostic`; wired in `CharacterHubPage.tsx`
+    ~136 (`setMode('corpusIngestDiagnostic')`), screen at ~181.
+  - Panel: `characterHub/CorpusIngestDiagnosticPanel.tsx` (117 lines). It takes `onClose` and runs as a
+    full screen today.
+  - Developer tab: inline in `App.tsx` ~893 (`SettingsModal` panel `developer`).
+- **Check before building:**
+  - The panel is a full screen with its own Close. Inside the Options dialog it should render as a
+    section with no Close button. Decide: embed it in the Developer tab, or keep the screen and put a
+    button on the tab that opens it. My pick: embed it as a section.
+  - Remove the landing-screen entry and the `corpusIngestDiagnostic` mode in `CharacterHubPage.tsx`,
+    with no dead code left behind. Grep for other callers and tests first.
+  - The panel states its data is the real ingested corpus status (not fixture data). Keep that true.
+- **Depends on:** item 16 (the slimmed Developer tab). Build them in the same cycle so the tab is only
+  reshaped once.
+
+## 20. BUG: Market names show an unfilled `[NAME]` placeholder — every item needs a proper name
+
+- **Reported:** 2026-11-22 (operator). Example: the Market lists `[NAME] Giant-hide`; only the description
+  says it is the Hill Giant-hide.
+- **Cause (read from the data):** the PCGen source name carries a `[NAME]` placeholder that PCGen fills
+  in per variant. The record's `data.name` keeps the raw text (`OUTPUTNAME` token: `[NAME] Giant-hide`).
+  The variant is in `data.key` (`Giant Hide (Hill)`).
+- **Scan done (2026-11-22):** `data/corpus/*/equipment/*.json`, field `data.name`, pattern
+  `[`, `]`, `%` or the word `NAME`. Re-derive with:
+  `python3 - <<'PY'` loop over `glob('data/corpus/*/equipment/*.json')`, load, read `d['data']['name']`,
+  match `re.search(r'[\[\]%]|\bNAME\b', name)`.
+  - **3,805** equipment records scanned. **111** have a placeholder name. **18** distinct patterns.
+  - By book: Advanced Player's Guide 60, Ultimate Psionics 50, Ultimate Combat 1. Same loop, counted by `f.split('/')[2]`.
+  - Other patterns: `Skin of the [NAME]`, `Psionatrix of [NAME]`, `Setting Stone of [NAME]`,
+    `Companion Stone of [NAME]`, `Greater/Lesser/True Psicrown of [the] [NAME]`, `Psionic Restraint,
+    [NAME]`, `Meld Stone of the [NAME]`, `Ioun Stone, [NAME]`.
+- **What this scan does NOT cover:** other record kinds (spells, feats, class features), the `label` and
+  `OUTPUTNAME` fields, the `_settled` and `rules_tables` copies, the desktop bundle copy
+  (`apps/desktop/src-tauri/resources/corpus_bundle/`), and names with other placeholder shapes. A clean
+  result on this one pattern does not prove every name is proper.
+- **Ask:** scan for these, and give every item a proper name. The Market (and the Inventory panel, item
+  12) must show `Hill Giant-hide`, not `[NAME] Giant-hide`.
+- **Fix shape (to decide at planning):** derive the display name from the variant (`key`) in one place
+  that every screen reads, rather than editing 111 generated records by hand. Corpus files are
+  generated, and a regeneration would undo hand edits. Add a test that fails on any equipment display
+  name still containing `[`, `]`, or `NAME`, so a new book cannot reintroduce it.
+- **Ruling (operator, 2026-11-22), question 1:** I propose names from the book text; the operator
+  approves the list before it ships. Read from a one-word reply ("1"): confirm if that was not the intent.
+- **Open question for the operator:** does the "no placeholder in a display name" test cover all item
+  kinds, or only equipment? My pick: all kinds, one test.
+
+## 21. BUG: "Show Progression" is cut off at the bottom of the character screen on a shorter display
+
+- **Reported:** 2026-11-22 (operator). On the operator's screen the button is slightly cut off by the
+  bottom edge (the OS dock bar). The full-screen window has a few fewer pixel rows than the layout
+  assumes.
+- **Ask:** the layout must fit the real window height, not an assumed one. The button shows in full.
+- **Code to start from (read, not run):** the button is in `apps/desktop/src/characterHub/CharacterSheet.tsx`
+  ~4370 (`progressionButtonRef`), inside a panel `div` that sits in normal page flow. The window size is
+  set by the Tauri window config (`apps/desktop/src-tauri/tauri.conf.json`, not yet read).
+- **Link to item 17:** item 17 fixes the side columns in place. That change must size the columns to the
+  real viewport height, with the bottom padding the button needs. Do 17 and 21 in one cycle, so the
+  layout is built once. Fixing 21 alone would be undone by 17.
+- **Check before building:**
+  - Reproduce at a short window height (about 40 px less than the current full-screen). Do not guess the
+    dock bar's height. Use the viewport (`100dvh`), not a fixed pixel number.
+  - Look for other bottom-edge controls on the same screen with the same fault.
+  - Test with the window at the smallest size the app allows.
