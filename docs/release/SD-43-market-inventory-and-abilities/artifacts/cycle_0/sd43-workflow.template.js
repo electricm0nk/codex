@@ -26,7 +26,8 @@ const LANES = __LANES__
 const PKG = 'docs/release/SD-43-market-inventory-and-abilities'
 const ROOT = '/home/ubuntu/workspace/repos/codex'
 const byId = Object.fromEntries(CARDS.map(c => [c.id, c]))
-const REPAIR = A.repair || {}   // {cardId: 'what the verify step found'} — re-dispatch to fix only that
+const REPAIR = Object.assign({}, A.repair || {})
+const SKIP = A.skip || {}       // {cardId: 'why'} — awaiting an operator ruling; not dispatched   // {cardId: 'what the verify step found'} — re-dispatch to fix only that
 // run 2: a title regex marked census cards as screen cards; the card section says whether it looks at a screen
 const isScreen = (c) => /MC$/.test(c.id) || /screenshot|Looked at|\.tsx|pdftotext|Printout|print block/.test(c.section)
 
@@ -50,7 +51,7 @@ const RED_SCHEMA = { type: 'object', required: ['exitCode', 'command', 'failingL
     secondCallSites: { type: 'string' }, diskFreeGb: { type: 'number' }, logged: { type: 'boolean' }, note: { type: 'string' } } }
 const IMPL_SCHEMA = { type: 'object', required: ['status', 'sha', 'receipt', 'report'],
   properties: { status: { type: 'string', enum: ['complete', 'partial', 'blocked-escalated', 'declined'] },
-    sha: { type: 'string' }, receipt: { type: 'string' }, report: { type: 'string' }, discoveredCards: { type: 'array', items: { type: 'string' } } } }
+    sha: { type: 'string' }, receipt: { type: 'string' }, report: { type: 'string' }, lookedAt: { type: 'array', items: { type: 'string' } }, discoveredCards: { type: 'array', items: { type: 'string' } } } }
 const VERIFY_SCHEMA = { type: 'object', required: ['ok', 'problems'],
   properties: { ok: { type: 'boolean' }, problems: { type: 'array', items: { type: 'string' } } } }
 
@@ -98,7 +99,11 @@ ${c.id === 'E3.1' ? '\nOPERATOR RULING Q-22.3 (2026-11-22): the Feats tab is ren
 RECEIPT AND BOARD (checked by a separate verify step; a miss fails the card):
 - The receipt has rows literally named "closure check", "RED", "Does not cover"${isScreen(c) ? ', and "Looked at" naming every image path you Read and what you saw in it' : ''} (receipts.md §2).
 - Your kanban.md row's last column holds the receipt path and the literal 40-hex SHA of your work commit (not a command).
-- Work in your lane tree as the prefix says; this agent has no isolated worktree.
+- Work in your lane tree as the prefix says; this agent has no isolated worktree.${isScreen(c) ? `
+- SCREEN CARD: §6 step 6 is not optional. Launch the app (run-desktop / ui-smoke --keep), save PNGs under
+  ${PKG}/artifacts/epic_<n>/${c.id}/, Read each one, and return their repo paths in lookedAt. If an interaction cannot be
+  driven (e.g. drag), screenshot the changed screen at rest and say in the receipt what the image cannot show.
+  A complete with an empty lookedAt is failed by the script (runs 2-3: E1.2, E1.3, E1.8 skipped this step).` : ''}
 
 Return: status (complete only if the card's Definition of Done is fully met, kanban row set to complete with receipt
 path and SHA, and pushed to origin/tranche-43), the pushed SHA, the receipt path, and your §6 step 9 report text.`
@@ -135,14 +140,35 @@ verify step failed it for this reason only:
   ${REPAIR[c.id]}
 Fix exactly that, nothing else (no new feature work). If it needs a fresh look at the app, follow §6 step 6 (run-desktop,
 isolated XDG_DATA_HOME, Read every PNG, keep images under ${PKG}/artifacts/epic_<n>/${c.id}/). Update the receipt; keep the
-kanban row complete with the literal 40-hex SHA of your repair commit; push via §5. Return complete only when fixed and pushed.
+kanban row complete with the literal 40-hex SHA of your repair commit; push via §5. Return complete only when fixed and pushed.${isScreen(c) ? ' Screen card: return every image path you Read in lookedAt.' : ''}
 
 ${cardBlock(c)}`
+
+// verify a claimed complete; on a miss, one automatic repair agent, then verify again (runs 2-3 needed a manual restart per miss)
+async function checkResult(c, r, attempt) {
+  let problems = []
+  if (isScreen(c) && !(r.lookedAt && r.lookedAt.length)) problems.push('screen card returned no lookedAt image paths (§6 step 6 skipped)')
+  else {
+    const v = await agent(verifyPrompt(c, r), { model: 'haiku', label: `verify:${c.id}`, phase: c.phase, schema: VERIFY_SCHEMA })
+    if (v && v.ok) return { id: c.id, status: 'complete', sha: r.sha, receipt: r.receipt }
+    problems = v ? v.problems : ['verify agent died']
+  }
+  if (attempt >= 1) return { id: c.id, status: 'unverified', sha: r.sha, why: problems.join('; ') }
+  log(`${c.id}: verify miss, auto-repair — ${problems.join('; ').slice(0, 200)}`)
+  REPAIR[c.id] = problems.join('; ')
+  return await repairAndVerify(c, 1)
+}
+async function repairAndVerify(c, attempt) {
+  const r = await agent(repairPrompt(c), { model: c.tier, label: `repair:${c.id}`, phase: c.phase, schema: IMPL_SCHEMA })
+  if (!r || r.status !== 'complete') return { id: c.id, status: r ? r.status : 'agent-died', report: r && r.report }
+  return await checkResult(c, r, attempt)
+}
 
 const notDispatched = (id, why) => ({ id, status: 'not-dispatched', why })
 
 async function runCard(c) {
   if (DONE.has(c.id)) return { id: c.id, status: 'complete', cached: true }
+  if (SKIP[c.id]) return notDispatched(c.id, `awaiting operator ruling: ${SKIP[c.id]}`)
   if (c.tier === 'lead') return notDispatched(c.id, 'lead card: the lead marks it complete and passes it in args.done')
   const deps = await Promise.all(c.deps.map(d => done[d].p))
   const bad = deps.filter(r => r.status !== 'complete').map(r => r.id)
@@ -157,13 +183,7 @@ async function runCard(c) {
   try {
     if (c.cargo) rel.push(await sem.acquire())
     if (c.hub) rel.push(await hub.acquire())
-    if (REPAIR[c.id]) {
-      const r = await agent(repairPrompt(c), { model: c.tier, label: `repair:${c.id}`, phase: c.phase, schema: IMPL_SCHEMA })
-      if (!r || r.status !== 'complete') return { id: c.id, status: r ? r.status : 'agent-died', report: r && r.report }
-      const v = await agent(verifyPrompt(c, r), { model: 'haiku', label: `verify:${c.id}`, phase: c.phase, schema: VERIFY_SCHEMA })
-      if (!v || !v.ok) return { id: c.id, status: 'unverified', sha: r.sha, why: v ? v.problems.join('; ') : 'verify agent died' }
-      return { id: c.id, status: 'complete', sha: r.sha, receipt: r.receipt }
-    }
+    if (REPAIR[c.id]) return await repairAndVerify(c, 1)
     const red = await agent(redPrompt(c), { model: 'sonnet', label: `red:${c.id}`, phase: c.phase, schema: RED_SCHEMA })
     if (!red) return { id: c.id, status: 'red-failed', why: 'RED agent returned nothing' }
     if (red.diskFreeGb < 24) return { id: c.id, status: 'stopped-disk', why: `${red.diskFreeGb} GB free < 24 GB` }
@@ -173,9 +193,8 @@ async function runCard(c) {
     const r = await agent(implPrompt(c, red), { model: c.tier, label: c.id, phase: c.phase, schema: IMPL_SCHEMA })  // no isolation: run 1 showed worktree isolation blocks the lane tree
     if (!r) return { id: c.id, status: 'agent-died' }
     if (r.status !== 'complete') return { id: c.id, status: r.status, sha: r.sha, report: r.report }
-    const v = await agent(verifyPrompt(c, r), { model: 'haiku', label: `verify:${c.id}`, phase: c.phase, schema: VERIFY_SCHEMA })
-    if (!v || !v.ok) return { id: c.id, status: 'unverified', sha: r.sha, why: v ? v.problems.join('; ') : 'verify agent died' }
-    return { id: c.id, status: 'complete', sha: r.sha, receipt: r.receipt, discovered: r.discoveredCards || [] }
+    const out = await checkResult(c, r, 0)
+    return out.status === 'complete' ? { ...out, discovered: r.discoveredCards || [] } : out
   } finally { rel.reverse().forEach(f => f()) }
 }
 
