@@ -7,6 +7,7 @@ import { GearPanels } from './GearScreen';
 import {
   copyId,
   DRAG_FORMAT,
+  boxZoneId,
   dropTarget,
   filterGearRows,
   gearScreenModel,
@@ -260,6 +261,16 @@ assertEqual(dropTarget(dragging('item:dagger-0-0'), 'slot-wield_main', model), n
 assertEqual(dropTarget(dragging('item:backpack-0-0'), 'inside-item:dagger-0-0', model), null, 'drop: null onto a non-container');
 assertEqual(dropTarget(dragging('item:dagger-0-0'), 'carried', model), null, 'drop: null onto its own place');
 assertEqual(dropTarget(dragging(''), 'carried', model), null, 'drop: null without a gear row in the drag');
+
+// 13b. A child row of a container box targets that container (nearest when nested); the box's own zone is the container's.
+assertEqual(boxZoneId(model, 'item:trail_rations-0-0'), 'inside-item:belt_pouch-0-0', 'child row: a row in a pouch in the backpack targets the pouch, the nearest');
+assertEqual(boxZoneId(model, 'item:belt_pouch-0-0'), 'inside-item:belt_pouch-0-0', 'child row: a nested container row is its own box');
+assertEqual(boxZoneId(model, 'item:backpack-0-0'), 'inside-item:backpack-0-0', 'child row: a container row targets itself');
+assertEqual(boxZoneId(model, 'item:arrows-0-0'), 'inside-item:backpack-0-0', 'child row: a leaf row targets its container');
+assertEqual(boxZoneId(model, 'item:dagger-0-0'), null, 'child row: a loose row has no box');
+assertEqual(JSON.stringify(dropTarget(dragging('item:dagger-0-0'), boxZoneId(model, 'item:arrows-0-0')!, model)), JSON.stringify({ kind: 'inside', container: BACKPACK }), 'child row: a drop on a child row moves into its container');
+assertEqual(dropTarget(dragging('item:arrows-0-0'), boxZoneId(model, 'item:arrows-0-0')!, model), null, 'child row: a same-container drop is a no-op');
+assertEqual(dropTarget(dragging('item:backpack-0-0'), boxZoneId(model, 'item:trail_rations-0-0')!, model), null, 'child row: a container onto its own descendant over the widened area is refused');
 
 // 14. "Ignore body slot limits" on (`decisions.md §14`, SD-39 E6.2): Move to and drag offer a full slot too.
 const overridden = gearScreenModel(HELD, { perItem: PER_ITEM, containerLoads: LOADS, ignoreSlotLimits: true });

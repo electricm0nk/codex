@@ -13,6 +13,7 @@ import {
   copyId,
   DRAG_FORMAT,
   dropTarget,
+  insideZoneId,
   filterGearRows,
   gearScreenModel,
   menuKeyStep,
@@ -360,12 +361,15 @@ export function GearPanels(props: GearPanelsProps) {
       dragging.current = '';
     },
   });
-  const dropZone = (targetId: string, at: string): HTMLAttributes<HTMLDivElement> => ({
+  // A container box (`swallow`) swallows every drop over it, so a refused or same-container drop never falls through to an outer box or section.
+  const dropZone = (targetId: string, at: string, swallow = false): HTMLAttributes<HTMLDivElement> => ({
     onDragOver: (event: DragEvent<HTMLDivElement>) => {
       if (dropTarget({ getData: (format) => (format === DRAG_FORMAT ? dragging.current : '') }, targetId, model)) {
         event.preventDefault();
         event.stopPropagation();
         event.dataTransfer.dropEffect = 'move';
+      } else if (swallow) {
+        event.stopPropagation();
       }
     },
     onDrop: (event: DragEvent<HTMLDivElement>) => {
@@ -395,7 +399,7 @@ export function GearPanels(props: GearPanelsProps) {
   const gearRow = (item: GearTreeItem, at: string) => {
     const row = item.row;
     return (
-      <div {...dragSource(row)} {...(row.isContainer ? dropZone(`inside-${copyId(item.copy)}`, at) : {})} style={rowStyle}>
+      <div {...dragSource(row)} style={rowStyle}>
         <span>
           {row.label}
           {tag(row)}
@@ -443,7 +447,7 @@ export function GearPanels(props: GearPanelsProps) {
       return <div key={at}>{line}</div>;
     }
     return (
-      <div key={at} data-testid={`gear-container-${copyId(item.copy)}`} style={box}>
+      <div key={at} data-testid={`gear-container-${copyId(item.copy)}`} {...dropZone(insideZoneId(item.copy), at, true)} style={box}>
         {line}
         <div style={{ paddingLeft: '1rem' }}>{item.children.length === 0 ? <p style={{ ...quiet, margin: '0.2rem 0' }}>Empty</p> : item.children.map(gearItem)}</div>
       </div>

@@ -329,9 +329,41 @@ export function moveTargets(model: GearModel, row: GearRow): MoveTarget[] {
     if (candidate.held.copies.some((held) => inside.has(copyId(held))) || here) {
       continue;
     }
-    targets.push({ id: `inside-${copyId(copy)}`, label: `Into ${candidate.label}`, location: { kind: 'inside', container: copy } });
+    targets.push({ id: insideZoneId(copy), label: `Into ${candidate.label}`, location: { kind: 'inside', container: copy } });
   }
   return targets;
+}
+
+/** The drop zone of a container box: the Move to target `inside-<copy>` of the container's row. */
+export function insideZoneId(copy: CopyKeyDto): string {
+  return `inside-${copyId(copy)}`;
+}
+
+/**
+ * The zone a drop on row `rowId` targets: the nearest container box around it (the row's own when it is
+ * a container), or null for a loose row with no box. A child row inherits its container's zone.
+ */
+export function boxZoneId(model: GearModel, rowId: string): string | null {
+  const find = (items: GearTreeItem[], zone: string | null): string | null => {
+    for (const item of items) {
+      const own = item.row.isContainer ? insideZoneId(item.copy) : zone;
+      if (item.row.id === rowId) {
+        return own;
+      }
+      const found = find(item.children, own);
+      if (found !== null) {
+        return found;
+      }
+    }
+    return null;
+  };
+  for (const section of model.tree) {
+    const found = find(section.items, null);
+    if (found !== null) {
+      return found;
+    }
+  }
+  return null;
 }
 
 /** The drag data's format: the dragged row's id (`GearRow.id`). */
