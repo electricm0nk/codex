@@ -48,7 +48,7 @@ awk -F'|' '$2 ~ /^ (C|E)[0-9]/ {print $5}' kanban.md | sort | uniq -c   # 56 tod
 | E1.1 | Container truth: no `#N`, custom names, filled container never stacked, split on put-into-stack | opus | complete | E0.4 | gear | yes (desktop) | hub | receipt `artifacts/epic_1/E1.1_cycle_receipt.md`; SHA `210eeccc3e6f39c5772488ba9c0235d8b95ede62` |
 | E1.2 | One-column gear list: order, natural sort, nested boxes, Not Carried section | opus | complete | E1.1 | gear | no | no | receipt `artifacts/epic_1/E1.2_cycle_receipt.md`; SHA `adebea8a631b8b9ef47e011107acdf5c9488c7a0` (r3 receipt repair; work `56e28e711f78ba190ebdc5390a7b167c374d48b0`) |
 | E1.3 | Whole container box is a drop target (nearest container) | sonnet | complete | E1.2 | gear | no | no | receipt `artifacts/epic_1/E1.3_cycle_receipt.md`; SHA `1a72bf730baad31aad1b8a5d4d3d3af4dc774b88`; repair SHA `f1090131dfea7c3af48c2346682bcc864219cfe9` |
-| E1.4 | Double-click / Enter: first free slot, else swap; to Carried; one piece | opus | todo | E1.3 | gear | no | no | |
+| E1.4 | Double-click / Enter: first free slot, else swap; to Carried; one piece | opus | complete | E1.3 | gear | no | no | receipt `artifacts/epic_1/E1.4_cycle_receipt.md`; SHA `e761ee7072a94a26dc50766c7872d1adf20ea207` |
 | E1.5 | Selling a container moves its direct contents to Carried | opus | todo | E1.4 | gear | yes (desktop) | hub | |
 | E1.6 | Sell window: Market Rate / Build / Negotiate | opus | todo | E1.5 | gear | no | no | |
 | E1.7 | One `MarketButton` on every panel (PF, SF, CPR); Print and pricing control leave the panels | sonnet | todo | E1.6 | sheet | no | hub | |
