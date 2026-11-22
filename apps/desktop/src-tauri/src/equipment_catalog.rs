@@ -706,7 +706,7 @@ const AMMUNITION_TAGS: &[&str] = &["Ammunition", "Ammo", "Stack"];
 /// is on one list. A shield outranks a weapon (a shield with a bash stays a shield), as in
 /// [`codex::rules_core::body_slots`]. A row whose tags name no kind, including an arms row with no
 /// tags at all, is `Gear`: it stays buyable and never lands in a list it may not belong in.
-fn market_category_of(entry: &EquipmentCatalogEntryDto) -> Option<MarketCategory> {
+pub(crate) fn market_category_of(entry: &EquipmentCatalogEntryDto) -> Option<MarketCategory> {
     if entry.category == "Equipmods" {
         return None;
     }
@@ -831,7 +831,7 @@ fn market_from_catalog(catalog: &EquipmentCatalogResponse, filter: &MarketFilter
 
 /// The catalog, built once: a Market dialog asks again on every tab and every search, the build
 /// reads every converted record, and nothing it reads changes while the app runs.
-fn built_catalog() -> &'static EquipmentCatalogResponse {
+pub(crate) fn built_catalog() -> &'static EquipmentCatalogResponse {
     static BUILT: std::sync::OnceLock<EquipmentCatalogResponse> = std::sync::OnceLock::new();
     BUILT.get_or_init(build_equipment_catalog)
 }
