@@ -610,6 +610,23 @@ its own set of selectable options:
     character, on the printout), and SD-44 is a feedback round, not unfinished scope. Where the engine
     does not yet hold a sub-tab's data, SD-43 still ships the tab with that gap shown on screen, and the
     gap is listed in the plan. A gap is never hidden and never faked. No stub shipped as done.
+- **Ruling (operator, 2026-11-22): grants and qualification are enforced, as feats are today.** Every
+  sub-tab must:
+  - track **what is granted at each level** (how many picks the character has earned, from which source:
+    class level, race, archetype, background);
+  - **refuse a pick the character has not been granted** (no picks left in that pool at this level);
+  - **refuse a pick the character does not qualify for** (prerequisites not met), and say why;
+  - show the remaining picks per pool, so the player sees what can still be chosen.
+  - **Model to copy (read, not run):** feats. `FeatsTab` takes the engine's `feats.budget.*` rows (the
+    badge and the Add control follow them) and an `admitted` list for what the character holds under an
+    override. The same shape applies to every sub-tab: the engine owns the budget and the
+    prerequisite check, the UI renders them. The UI never re-derives a grant or a prerequisite.
+  - **Override:** feats allow an override, shown with flags. Whether other sub-tabs get the same
+    override path is a question for planning. My pick: yes, same mechanism, so the player can always
+    record what their GM allowed.
+  - **Not yet checked (needs a command, not a guess):** which of the seven sub-tabs already have an
+    engine budget and a prerequisite check, and which need engine work first. Engine gaps are SD-43
+    work, not a reason to ship an unchecked picker.
   - (2) A screenshot of the PCGen tab, saved in the repo's intake folder, would remove guessing about
     Misc and the layout. Optional.
 
