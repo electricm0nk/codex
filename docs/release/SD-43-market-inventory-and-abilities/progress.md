@@ -78,6 +78,7 @@ line, the `git grep` used for second call sites. A RED that exited 0 is not disp
 | Date | Card | Status | SHA | Receipt | Notes |
 |---|---|---|---|---|---|
 | 2026-11-22 | C1 | complete | this commit (`git log -1 --format=%H -- docs/release/current-release.json`) | `artifacts/cycle_0/C1_cycle_receipt.md` | Pointer → tranche 43 + interim `release-notes.md`; resolver exit 0; pytest `tools/release` 62 passed, 2 subtests passed |
+| 2026-11-22 | E0.1 | complete | `d9c84afeaf037a84a04700c640447e1a1f935c14` | `artifacts/epic_0/E0.1_cycle_receipt.md` | census `--check` exit 0; 7 sub-tabs non-null; 1,913/16,348 reproduced; 1,329 class-granted choice sites, impl A = impl B; Q-22.2 settled (DISPLAYLOCATION); 34 data gaps, 30 ingest → discovered E3.12 (count 56 → 57); `fetch-pcgen-oracle.sh --print-env` does not exist (retro correction) |
 
 ## Epic reports
 

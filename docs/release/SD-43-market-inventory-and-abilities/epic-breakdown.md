@@ -68,6 +68,7 @@ warning). A card that only *adds registration lines* to `main.rs` still holds `h
 | E3.9 | Background and Misc sub-tabs per E0.1's mapping; engine budget/prereq where records exist; data-gap notice where none | sheet | E3.8 | opus | yes (root + desktop) | hub |
 | E3.10 | Overrides on the six new sub-tabs: two flags, admitted flags shown | sheet | E3.9 | sonnet | yes (desktop) | hub |
 | E3.11 | Printout: chosen abilities per sub-tab and the favored class bonus, as text | sheet | E3.10 | opus | yes (desktop) | no |
+| E3.12 | DISCOVERED (E0.1): ingest `.MOD TYPE:` member typing for the 30 ingest-gap pools; `Ninja ~ Ninja Trick` grant row; 7 unresolved pool names | sheet | E0.1 | opus | yes (root) | no |
 | E3.MC | E3 merge check + epic report: every sub-tab on three seeds; notice count = E0.1's data-gap list | sheet | E3.11 | opus | yes (base build) | no |
 | E4.1 | One display-name derivation for every item kind; the all-kinds test; proposed names list from book text | sheet | E0.3, E3.MC | opus | yes (root + desktop) | no |
 | E4.G | **Operator wait:** the operator approves the proposed names list (and confirms the reading of "1") | lead | E4.1 | operator | no | no |
@@ -89,7 +90,7 @@ warning). A card that only *adds registration lines* to `main.rs` still holds `h
 | E7.4 | Graphify LAST → PR `tranche-43 → develop` LAST → merge when green → watch the develop publish | main | E7.3 | sonnet | no | no |
 
 Card count: `awk -F'|' '$2 ~ /^ (C|E)[0-9]/' docs/release/SD-43-market-inventory-and-abilities/epic-breakdown.md | awk 'END{print NR}'`
-→ 56 (this table only; the per-card headings below use `###`).
+→ 57 (this table only; 56 at authoring + E3.12 discovered by E0.1; the per-card headings below use `###`).
 
 **Lanes and their files.** `gear`: `ui/characterHub/GearScreen.tsx`, `gearScreenModel.ts`, `GearDetail.tsx`,
 the sell/move paths of `desktop/character_hub.rs` (under `hub`). `market`: `ui/characterHub/MarketDialog.tsx`,
