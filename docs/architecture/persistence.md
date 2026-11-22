@@ -201,9 +201,10 @@ command reads or writes outside the folder.
   Wiki/{NPCs,Places,Factions,Items}/...       # free folders; one page per .md
   Characters/<slug>-<id>/  # the members' character backups, each with master.json (above)
   Attachments/             # images dropped into the editor (save_attachment)
+  Custom Items/<name>.json # custom item exchange files (export_custom_items / import_custom_items)
 ```
 
-`folder::create_layout` makes every directory in `LAYOUT_DIRS` (10) and writes `campaign.json`;
+`folder::create_layout` makes every directory in `LAYOUT_DIRS` (11) and writes `campaign.json`;
 `folder::open` reads it with its nonce. `CampaignFolderSnapshot` (`CAMPAIGN_FOLDER_SCHEMA_VERSION = 2`)
 holds no assets and no party: the files are the assets and `Characters/` is the party. Members are
 `FolderMember { name, added_at }` — no email, no invite, no role; the creator is member #1. The other

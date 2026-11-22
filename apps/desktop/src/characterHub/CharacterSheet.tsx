@@ -45,6 +45,7 @@ import { PrintDialog } from './PrintDialog';
 import { PROGRESSION_DRAWER_CLOSED, ProgressionDrawer, ProgressionLedger, progressionDrawerReducer } from './ProgressionDrawer';
 import { CustomDialog } from './CustomDialog';
 import { CustomTab } from './CustomTab';
+import { CustomItemsExchangeDialog } from './CustomItemsExchangeDialog';
 import { EMPTY_CUSTOM, customIsEmpty, customOverrides, savedIntelligenceModifier, withCustomSkillPoints, sheetHitPoints, sheetLandSpeed, sheetSwimSpeed, sheetFlySpeed, withOverride, type CharacterCustom, type CustomOverrides } from './customModel';
 import { loadCharacterCustom, saveCharacterCustom } from '../boundary/characterCustom';
 import { DEFAULT_PRICE_MODE, type PriceMode } from './priceMode';
@@ -2849,6 +2850,7 @@ export function CharacterSheet(props: {
   const [customLoading, setCustomLoading] = useState(true);
   const [customError, setCustomError] = useState<string | null>(null);
   const [customDialogOpen, setCustomDialogOpen] = useState(false);
+  const [exchangeOpen, setExchangeOpen] = useState(false);
   // SD-41 E3.5: the character's campaigns (from the load response, then the dialog's save) and the
   // campaign copies the latest write could not make. A refresh without them keeps what the sheet has.
   const [campaignDialogOpen, setCampaignDialogOpen] = useState(false);
@@ -4533,7 +4535,7 @@ export function CharacterSheet(props: {
                 ) : name === 'Notes' ? (
                   <FreeTextTab label="Notes" hint="Notes to yourself: plans, reminders, rulings from the table." value={bio.notes} onChange={(notes) => updateBio({ notes })} onBlur={() => void handleBioBlur()} />
                 ) : name === 'Custom' ? (
-                  <CustomTab custom={custom} loading={customLoading} error={customError} onEdit={() => setCustomDialogOpen(true)} onOverrideChange={(key, on) => void handleOverrideChange(key, on)} admittedLevels={classLevelsAdmitted(engineRecords.admittedUnderOverride, heldClasses)} />
+                  <CustomTab custom={custom} loading={customLoading} error={customError} onEdit={() => setCustomDialogOpen(true)} onExchange={() => setExchangeOpen(true)} onOverrideChange={(key, on) => void handleOverrideChange(key, on)} admittedLevels={classLevelsAdmitted(engineRecords.admittedUnderOverride, heldClasses)} />
                 ) : (
                   <ActionsTab
                     levelEntries={currentBenefits}
@@ -4685,6 +4687,20 @@ export function CharacterSheet(props: {
         <PrintDialog characterId={props.row.characterId} displayLabel={props.row.displayLabel} onClose={() => setPrintOpen(false)} />
       ) : null}
 
+      {exchangeOpen ? (
+        <CustomItemsExchangeDialog
+          characterId={props.row.characterId}
+          displayLabel={props.row.displayLabel}
+          items={custom.equipment}
+          memberships={campaignMemberships}
+          onImported={(next) => {
+            setCustom(next);
+            // An edited item may be worn: every number follows the engine, as a dialog save does.
+            republishFromDisk().catch((cause: unknown) => setMutationError(`The items were imported, but the sheet could not be refreshed: ${cause instanceof Error ? cause.message : String(cause)}`));
+          }}
+          onClose={() => setExchangeOpen(false)}
+        />
+      ) : null}
       <CustomDialog
         open={customDialogOpen}
         value={custom}

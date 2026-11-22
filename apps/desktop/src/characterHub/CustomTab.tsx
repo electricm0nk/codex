@@ -25,6 +25,8 @@ function itemFacts(record: CustomRecord): string {
   return parts.join(' · ');
 }
 
+const tabButtonStyle = { background: 'var(--color-surface-2)', border: '1px solid var(--color-border)', borderRadius: 6, color: 'var(--color-text)', cursor: 'pointer', fontSize: '0.85rem', fontWeight: 600, padding: '0.35rem 0.9rem' } as const;
+
 /**
  * The sheet's Custom tab: the GM's grants (each with the reason it was given) and the custom feats,
  * equipment, spells and magic devices, with their stat lines and descriptions. Printed with the sheet
@@ -35,6 +37,8 @@ export function CustomTab(props: {
   loading: boolean;
   error: string | null;
   onEdit: () => void;
+  /** Opens the custom item export/import dialog. */
+  onExchange: () => void;
   onOverrideChange: (key: keyof CustomOverrides, on: boolean) => void;
   /** Class levels an override let in; no other tab lists a level. */
   admittedLevels: ReadonlyArray<{ label: string; levels: number; flag: OverrideFlagDto }>;
@@ -47,13 +51,14 @@ export function CustomTab(props: {
         <p style={{ color: 'var(--color-text-muted)', fontSize: '0.85rem', margin: 0 }}>
           GM grants and house rules for this character.
         </p>
-        <button
-          type="button"
-          onClick={props.onEdit}
-          style={{ background: 'var(--color-surface-2)', border: '1px solid var(--color-border)', borderRadius: 6, color: 'var(--color-text)', cursor: 'pointer', fontSize: '0.85rem', fontWeight: 600, padding: '0.35rem 0.9rem' }}
-        >
-          Edit Custom…
-        </button>
+        <div style={{ display: 'flex', gap: '0.5rem' }}>
+          <button type="button" onClick={props.onExchange} style={tabButtonStyle}>
+            Export / import items…
+          </button>
+          <button type="button" onClick={props.onEdit} style={tabButtonStyle}>
+            Edit Custom…
+          </button>
+        </div>
       </div>
       {props.error !== null ? <p role="alert" style={{ color: 'var(--color-error)', margin: 0 }}>{props.error}</p> : null}
       {props.loading ? null : (

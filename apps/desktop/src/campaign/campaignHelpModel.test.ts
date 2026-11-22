@@ -63,6 +63,7 @@ const cases: [string, () => void][] = [
         '  Items/',
         'Characters/',
         'Attachments/',
+        'Custom Items/',
       ]) {
         assert(lines.includes(expected), `template line "${expected}" in ${JSON.stringify(lines)}`);
       }

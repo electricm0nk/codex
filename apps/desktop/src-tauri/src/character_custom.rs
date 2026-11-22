@@ -856,6 +856,108 @@ pub fn create_custom_item(app: tauri::AppHandle, request: CreateCustomItemReques
     create_custom_item_at_root(&root, &request)
 }
 
+/// SD-43 `decisions.md §21`: one exchange file, many custom equipment records, the game system named.
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct CustomItemsFileDto {
+    pub game_system: String,
+    pub items: Vec<CustomRecordDto>,
+}
+
+/// What an import did: `custom` as saved, and how many items it added and how many same-name items it edited.
+#[derive(Debug, Clone, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct ImportedCustomItemsDto {
+    pub custom: Box<CharacterCustomDto>,
+    pub added: usize,
+    pub edited: usize,
+}
+
+/// The character's game system as an exchange file names it (`GameSystem::id`), routed the way
+/// `load_saved_character_via_envelope` routes the envelope: Pathfinder's `pf1` and the legacy
+/// values are Pathfinder.
+fn character_game_system(root: &Path) -> Result<&'static str, String> {
+    use codex::rules_core::game_system::GameSystem;
+    let envelope = codex::saved_character::local_store::peek_game_system(root).map_err(|err| err.message)?;
+    Ok(GameSystem::from_id(&envelope).unwrap_or(GameSystem::Pathfinder1e).id())
+}
+
+/// Writes the custom equipment `item_ids` names to `path` (its folder made if missing), as carried:
+/// where the item is on this character is not part of the item. Returns how many were written.
+pub(crate) fn export_custom_items_at_root(root: &Path, item_ids: &[String], path: &Path) -> Result<usize, String> {
+    let game_system = character_game_system(root)?.to_owned();
+    let custom = load_character_custom_at_root(root)?;
+    let mut items = Vec::new();
+    for id in item_ids {
+        let record = custom.equipment.iter().find(|record| &record.id == id).ok_or_else(|| format!("'{CUSTOM_ITEM_PREFIX}{id}' cannot be exported: this character does not carry it"))?;
+        items.push(CustomRecordDto { worn: false, left_behind: false, ..record.clone() });
+    }
+    if items.is_empty() {
+        return Err("pick at least one custom item to export".to_owned());
+    }
+    if let Some(parent) = path.parent() {
+        std::fs::create_dir_all(parent).map_err(|err| format!("{}: {err}", parent.display()))?;
+    }
+    let json = serde_json::to_string_pretty(&CustomItemsFileDto { game_system, items: items.clone() }).map_err(|err| format!("failed to serialize custom items: {err}"))?;
+    std::fs::write(path, json).map_err(|err| format!("{}: {err}", path.display()))?;
+    Ok(items.len())
+}
+
+/// Adds the file's items to this character's custom equipment, through the save every custom edit
+/// takes. An item whose name (trimmed, any case) this character already has edits that item, which
+/// keeps its id and where it is; any other is added carried, with a new id, and costs nothing (an
+/// exchange copies an item, it is not a purchase). A file from another game system is refused.
+pub(crate) fn import_custom_items_at_root(root: &Path, path: &Path, saved_at: &str) -> Result<ImportedCustomItemsDto, String> {
+    let text = std::fs::read_to_string(path).map_err(|err| format!("{}: {err}", path.display()))?;
+    let file: CustomItemsFileDto = serde_json::from_str(&text).map_err(|err| format!("{} is not a custom items file: {err}", path.display()))?;
+    let game_system = character_game_system(root)?;
+    if file.game_system != game_system {
+        return Err(format!("{} holds {} custom items; this is a {game_system} character, so nothing was imported", path.display(), file.game_system));
+    }
+    let mut custom = load_character_custom_at_root(root)?;
+    let (mut added, mut edited) = (0, 0);
+    for item in file.items {
+        let same_name = |record: &&mut CustomRecordDto| record.name.trim().eq_ignore_ascii_case(item.name.trim());
+        if let Some(record) = custom.equipment.iter_mut().find(same_name) {
+            *record = CustomRecordDto { id: record.id.clone(), worn: record.worn, left_behind: record.left_behind, ..item };
+            edited += 1;
+        } else {
+            custom.equipment.push(CustomRecordDto { id: uuid::Uuid::new_v4().to_string(), worn: false, left_behind: false, ..item });
+            added += 1;
+        }
+    }
+    save_character_custom_at_root(root, &custom, saved_at)?;
+    Ok(ImportedCustomItemsDto { custom: Box::new(custom), added, edited })
+}
+
+#[derive(Debug, Clone, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct ExportCustomItemsRequest {
+    pub character_id: String,
+    pub item_ids: Vec<String>,
+    pub path: String,
+}
+
+#[derive(Debug, Clone, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct ImportCustomItemsRequest {
+    pub character_id: String,
+    pub path: String,
+    pub saved_at: String,
+}
+
+#[tauri::command]
+pub fn export_custom_items(app: tauri::AppHandle, request: ExportCustomItemsRequest) -> Result<usize, String> {
+    let root = crate::character_hub::resolve_character_root(&app, &request.character_id)?;
+    export_custom_items_at_root(&root, &request.item_ids, Path::new(&request.path))
+}
+
+#[tauri::command]
+pub fn import_custom_items(app: tauri::AppHandle, request: ImportCustomItemsRequest) -> Result<ImportedCustomItemsDto, String> {
+    let root = crate::character_hub::resolve_character_root(&app, &request.character_id)?;
+    import_custom_items_at_root(&root, Path::new(&request.path), &request.saved_at)
+}
+
 #[derive(Debug, Clone, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct CharacterCustomRequest {
@@ -945,5 +1047,66 @@ mod tests {
             (ac, part(&before, "deflection").0 + 1, part(&before, "misc").0 - 1)
         );
         assert!(misc.1.contains("Curse"), "the part names the item: {}", misc.1);
+    }
+
+    fn seeded(case: &str) -> std::path::PathBuf {
+        let app_data = std::env::temp_dir().join(format!("codex-custom-items-exchange-{case}-{}", std::process::id()));
+        let _ = std::fs::remove_dir_all(&app_data);
+        std::fs::create_dir_all(&app_data).expect("a temp dir");
+        seed_default_characters_at(&app_data, "0.0.0-test").expect("starter seeding succeeds");
+        app_data
+    }
+
+    fn item(id: &str, name: &str, description: &str) -> CustomRecordDto {
+        CustomRecordDto { id: id.to_owned(), name: name.to_owned(), description: description.to_owned(), weight_lbs: Some(2.0), worn: false, ..Default::default() }
+    }
+
+    /// Item 4: two items exported from Aldric land on Elowen as two; the same file, edited, imported
+    /// again edits them in place (same name) rather than adding a third and fourth.
+    #[test]
+    fn custom_items_exchange_exports_two_and_a_same_name_import_edits() {
+        let app_data = seeded("roundtrip");
+        let characters = app_data.join("characters");
+        let aldric = characters.join("00000000-0000-0000-0000-000000000001");
+        let elowen = characters.join("00000000-0000-0000-0000-000000000002");
+        let custom = CharacterCustomDto { equipment: vec![item("a1", "Lucky Sock", "Smells of luck."), item("a2", "Bent Key", "Opens one door."), item("a3", "Left Here", "")], ..Default::default() };
+        save_character_custom_at_root(&aldric, &custom, "2026-11-22T00:00:00Z").expect("Aldric's items save");
+
+        let file = app_data.join("Custom Items").join("aldric.json");
+        let exported = export_custom_items_at_root(&aldric, &["a1".to_owned(), "a2".to_owned()], &file).expect("export");
+        assert_eq!(exported, 2);
+        let written: CustomItemsFileDto = serde_json::from_str(&std::fs::read_to_string(&file).unwrap()).unwrap();
+        assert_eq!(written.game_system, "pathfinder-1e", "the file names its game system");
+
+        let first = import_custom_items_at_root(&elowen, &file, "2026-11-22T00:00:01Z").expect("import");
+        assert_eq!((first.added, first.edited), (2, 0));
+        let names: Vec<_> = load_character_custom_at_root(&elowen).unwrap().equipment.into_iter().map(|record| record.name).collect();
+        assert_eq!(names, ["Lucky Sock", "Bent Key"]);
+
+        let mut edited = written.clone();
+        edited.items[0].description = "Smells of more luck.".to_owned();
+        std::fs::write(&file, serde_json::to_string(&edited).unwrap()).unwrap();
+        let second = import_custom_items_at_root(&elowen, &file, "2026-11-22T00:00:02Z").expect("re-import");
+        assert_eq!((second.added, second.edited), (0, 2));
+        let after = load_character_custom_at_root(&elowen).unwrap();
+        assert_eq!(after.equipment.len(), 2, "edited, not duplicated");
+        assert_eq!(after.equipment[0].description, "Smells of more luck.");
+        assert_eq!(after, *second.custom);
+        std::fs::remove_dir_all(&app_data).ok();
+    }
+
+    /// Q-4.3: a file from another game system is refused with a message, and nothing is written.
+    #[test]
+    fn custom_items_exchange_refuses_a_starfinder_file_into_a_pathfinder_character() {
+        let app_data = seeded("cross-system");
+        let aldric = app_data.join("characters").join("00000000-0000-0000-0000-000000000001");
+        let file = app_data.join("starfinder.json");
+        let starfinder = CustomItemsFileDto { game_system: "starfinder-1e".to_owned(), items: vec![item("s1", "Laser Spoon", "")] };
+        std::fs::write(&file, serde_json::to_string(&starfinder).unwrap()).unwrap();
+        let before = load_character_custom_at_root(&aldric).unwrap();
+        let refusal = import_custom_items_at_root(&aldric, &file, "2026-11-22T00:00:00Z").expect_err("a Starfinder file is refused");
+        assert!(refusal.contains("starfinder-1e") && refusal.contains("pathfinder-1e"), "the message names both systems: {refusal}");
+        assert_eq!(load_character_custom_at_root(&aldric).unwrap(), before, "nothing was imported");
+        std::fs::remove_dir_all(&app_data).ok();
     }
 }

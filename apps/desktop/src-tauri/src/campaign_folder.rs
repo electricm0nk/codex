@@ -18,6 +18,8 @@ use codex::saved_character::campaign_mirror;
 const KNOWN_FOLDERS_FILE: &str = "campaign-folders.json";
 /// Where dragged-in images go (one of `folder::LAYOUT_DIRS`).
 const ATTACHMENTS_DIR: &str = "Attachments";
+/// Where custom item exchange files go (SD-43 `decisions.md §21`; one of `folder::LAYOUT_DIRS`).
+const CUSTOM_ITEMS_DIR: &str = "Custom Items";
 
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -489,6 +491,16 @@ pub fn create_party_resources_starter_impl(campaign_dir: &str) -> Result<Campaig
     })
 }
 
+/// The campaign's `Custom Items/` folder, made when a campaign from before the skeleton had it
+/// lacks it. A folder that is not a campaign is refused.
+pub fn custom_items_folder_impl(campaign_dir: &str) -> Result<String, String> {
+    let dir = require_absolute(campaign_dir)?;
+    folder::open(&dir).map_err(|err| err.message)?;
+    let items = dir.join(CUSTOM_ITEMS_DIR);
+    fs::create_dir_all(&items).map_err(|err| format!("{}: {err}", items.display()))?;
+    Ok(items.to_string_lossy().into_owned())
+}
+
 pub fn stat_campaign_file_impl(request: &CampaignFileRequest) -> Result<CampaignFileStatDto, String> {
     let path = resolve(&request.campaign_dir, &request.path)?;
     match fs::metadata(&path) {
@@ -721,6 +733,11 @@ pub fn stat_campaign_file(request: CampaignFileRequest) -> Result<CampaignFileSt
 #[tauri::command]
 pub fn create_party_resources_starter(campaign_dir: String) -> Result<CampaignFileStatDto, String> {
     create_party_resources_starter_impl(&campaign_dir)
+}
+
+#[tauri::command]
+pub fn custom_items_folder(campaign_dir: String) -> Result<String, String> {
+    custom_items_folder_impl(&campaign_dir)
 }
 
 #[tauri::command]
@@ -1500,5 +1517,21 @@ mod tests {
         assert_eq!(load_character_campaigns_at(&app_data, "char-aldric").unwrap(), vec![membership]);
         assert!(load_character_campaigns_at(&app_data, "../char-aldric").is_err(), "a traversal id is refused");
         let _ = fs::remove_dir_all(&app_data);
+    }
+
+    /// Item 4 (Q-4.2): a new campaign has `Custom Items/` at its root, and the folder command makes
+    /// it in a campaign created before the skeleton had it.
+    #[test]
+    fn custom_items_exchange_campaign_folder_has_custom_items() {
+        let root = temp_dir("custom-items");
+        let campaigns = root.join("campaigns");
+        let made = create_campaign_folder_at(&root.join("app-data"), &create_request(&campaigns, "Items")).unwrap();
+        assert!(Path::new(&made.campaign_dir).join(CUSTOM_ITEMS_DIR).is_dir(), "the skeleton has Custom Items/");
+        fs::remove_dir(Path::new(&made.campaign_dir).join(CUSTOM_ITEMS_DIR)).unwrap();
+        let dir = custom_items_folder_impl(&made.campaign_dir).unwrap();
+        assert_eq!(Path::new(&dir), Path::new(&made.campaign_dir).join(CUSTOM_ITEMS_DIR));
+        assert!(Path::new(&dir).is_dir(), "an older campaign gains it on first use");
+        assert!(custom_items_folder_impl(&root.to_string_lossy()).is_err(), "a folder that is not a campaign is refused");
+        let _ = fs::remove_dir_all(&root);
     }
 }

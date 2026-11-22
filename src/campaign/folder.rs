@@ -16,7 +16,7 @@ use super::{CampaignFolderSnapshot, CampaignStoreError, LoadedCampaignFolder, Sa
 pub const PARTY_RESOURCES_FILE: &str = "Party Resources.md";
 
 /// Every directory `create_layout` makes, parents before children.
-pub const LAYOUT_DIRS: [&str; 10] = [
+pub const LAYOUT_DIRS: [&str; 11] = [
     "Adventure Log",
     "Maps",
     "Wiki",
@@ -26,6 +26,7 @@ pub const LAYOUT_DIRS: [&str; 10] = [
     "Wiki/Items",
     "Characters",
     "Attachments",
+    "Custom Items",
     ".codex",
 ];
 

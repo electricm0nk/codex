@@ -93,6 +93,7 @@ export const TEMPLATE_TREE: CampaignTreeEntry[] = [
   dir('Adventure Log'),
   dir('Attachments'),
   dir('Characters'),
+  dir('Custom Items'),
   dir('Maps'),
   file('Party Resources.md'),
   dir('Wiki', [dir('Wiki/Factions'), dir('Wiki/Items'), dir('Wiki/NPCs'), dir('Wiki/Places')]),
