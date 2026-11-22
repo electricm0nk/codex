@@ -31,6 +31,13 @@ Run in this order, after SD-42 is merged:
 - **Display:** plain text. No calculations: do not compute hit points healed or any other number.
 - **Override:** the player can override this text in the custom rules menu.
 - **Placement (operator, 2026-11-18):** the printout, under the bio page.
+- **Adjustment (operator, 2026-11-22):** also show a copy of the same rest and recovery text in the app,
+  on the character screen's **Biography** tab, under the biography text. Same text, same order as the
+  printed sheet. It reads from the same source as the printout, with the same player override. It is
+  not a second copy of the rules.
+  - Code to start from (read, not run): `CharacterSheet.tsx` ~4531, the `Biography` tab (`FreeTextTab`).
+  - Check before building: the Biography text area is one large field that saves on blur. The rest text
+    is read-only and must not be saved into the biography text.
 
 ## 3. ENHANCEMENT: new House Rules menu, per character and per game system
 
