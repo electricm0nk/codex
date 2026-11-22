@@ -507,12 +507,33 @@ Run in this order, after SD-42 is merged:
   - Sheet doctrine: print the rule, do not simulate. A chosen ability shows its rule text. Only
     numbers that feed a sheet total get computed. Favored class hit points and skill ranks do feed
     totals (HP, skills), so those are computed; the pool text is printed.
-- **Open questions for the operator:**
-  - (1) Pickers or just a record? My pick: a real picker per pool (choose a talent at the right level,
-    saved on the character, shown on the sheet and the printout), because a menu that forgets the choice
-    does not help the player.
-  - (2) Favored class bonus: choose hit point or skill rank per level, per race rule (for example
-    half-elf, human, and others have alternates). My pick: do the core hit point / skill rank choice
-    first; race-specific alternates are a second step, named in the plan.
-  - (3) Which pools first? My pick: all pools the corpus defines, generic, driven by the registry. Not
-    one lane per class.
+- **Rulings (operator, 2026-11-22):**
+  - It must be in both the UI and the printout.
+  - UI: a new **Abilities** tab next to **Feats** (working name; the operator may rename it).
+  - Delivery: a **strawman** in SD-43, then iterate on it in the next SD. The operator wrote "SD23" and
+    "SD24"; read as SD-43 and SD-44 (SD-23 is an old, closed bundle). Confirm.
+  - The three earlier picks stand as the plan unless the operator says otherwise: a real picker per
+    pool saved on the character; core favored class bonus (hit point or skill rank) first, race
+    alternates second; generic, registry-driven, not one lane per class.
+- **How PCGen does it (read from the pinned oracle at `7f81800`; read-only, nothing copied):**
+  - The Abilities tab is `code/src/java/pcgen/gui2/tabs/AbilitiesInfoTab.java` with a chooser,
+    `AbilityChooserTab.java`. It shows one section per **ability category**, grouped by category type.
+  - A category is declared in data. Example (`ultimate_combat/uc_abilitycategories.lst:34`):
+    `ABILITYCATEGORY:Ninja Trick  VISIBLE:QUALIFY  EDITABLE:YES  EDITPOOL:YES  FRACTIONALPOOL:NO
+    CATEGORY:Special Ability  TYPE:Ninjatrick`. `EDITPOOL:YES` is the player-set pool of picks. It
+    appears only once the character qualifies (`VISIBLE:QUALIFY`).
+  - Each ninja trick is a `CATEGORY:Special Ability` record with its own `TYPE` and prerequisites
+    (`PREABILITY`), for example `Silent Kill` requires a Slayer Talent or Ninja Trick `Assassinate`.
+  - So the pattern is: category with a pool size, a list of eligible records with prerequisites, a
+    "chosen N of M" count, and a picker.
+- **Strawman scope for SD-43 (proposal, to be shaped at planning):**
+  - Abilities tab: one section per pool (Ninja Trick, Rogue Talent, Rage Power, then the rest of the
+    registry), each showing "chosen N of M", the chosen items with rule text, and an Add / Remove picker
+    that checks prerequisites.
+  - A favored class section: pick the favored class, then hit point or skill rank per level.
+  - Printout: the chosen abilities and the favored class bonus, as text under the same headings.
+  - Out of the strawman, left for the next SD: race-specific favored class alternates, retraining,
+    advanced and master tricks that replace earlier picks, and layout polish.
+- **Not yet checked (state in the plan):** how many pools the corpus defines versus the two registered;
+  whether the engine already holds prerequisites for pool members; how the pool size per level is
+  modeled in our engine. Each needs a command, not a guess.
