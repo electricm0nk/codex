@@ -537,3 +537,26 @@ Run in this order, after SD-42 is merged:
 - **Not yet checked (state in the plan):** how many pools the corpus defines versus the two registered;
   whether the engine already holds prerequisites for pool members; how the pool size per level is
   modeled in our engine. Each needs a command, not a guess.
+
+## 23. RELEASE: the minor version follows the SD number — SD-43 ships as 0.43
+
+- **Reported:** 2026-11-22 (operator): "jump our minor version to 0.43… it's getting hard to remember to
+  translate the numbers." SD-43 is built on `tranche-23`; the abilities strawman is iterated in SD-44.
+- **Rule from now on:** the minor version equals the SD number. SD-43 = `0.43.x`, SD-44 = `0.44.x`.
+  This replaces the old "minor = tranche number" rule (`0.22.x` was tranche 22 / SD-42).
+- **What changes (read from the repo, not yet changed):**
+  - Version files at `0.22.0`: `apps/desktop/package.json`, `apps/desktop/src-tauri/Cargo.toml`,
+    `apps/desktop/src-tauri/tauri.conf.json`, plus `Cargo.lock`. SD-42's decisions name 14 surfaces plus
+    `current-release.json` (`docs/release/SD-42-*/decisions.md §2`). Use that list, re-derived by command.
+  - The publish stamp: `.github/workflows/publish-tester-release.yml:125`,
+    `VERSION="0.22.${GITHUB_RUN_NUMBER}"`. It becomes `0.43.`; its comment block gets a new line.
+  - Test fixtures that print `0.22.x` (`scripts/release/__tests__/`) only need updating if a test reads
+    the repo version. Check, do not assume.
+- **Rule kept:** all version surfaces move in ONE commit, at the cut. Not now: it is the first
+  code-bearing cycle of SD-43's package, with its own receipt.
+- **Why it is safe for installed apps (to verify):** `0.43.x` is higher than `0.22.x`, so the updater
+  sees it as an upgrade. Check the update comparison code treats the minor number numerically, and that
+  the signed manifest and channel index accept the new prefix. Not yet run.
+- **Open question for the operator:** the branch is named `tranche-23`. To remove the translation too,
+  rename it `tranche-43` (not pushed yet, so free to do). Docs and tooling mostly say `tranche-N`.
+  My pick: rename to `tranche-43` before the first push.
