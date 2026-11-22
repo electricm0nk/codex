@@ -35,7 +35,7 @@ run with parallel lanes is never resumed; a new run starts with `START=<card>`.)
   - Result: stopped at C1 (`unverified`: receipt lacked `closure check`; kanban SHA was a command). Fixed by a housekeeping agent (`18a03476f0`). Script corrected (`b54b33a6a7`): no worktree isolation (it blocked the lane tree).
 - **Run 2** (2026-11-22): run id `wf_b7054664-514`, same script @ `b54b33a6a7`, args `{"runTag":"r2","start":"C2","done":["C0","C1"]}`. Expected stop: E4.G.
   - Result (~5.2 h, 32 agents): complete E0.4, E1.1, E5.1–E5.3, E6.1, E6.5. C2 blocked-escalated (graphify, see Open blockers). E0.1, E0.2 failed a wrong verify predicate (title regex) — the lead re-ran checks 1–3 (ancestor, kanban SHA, receipt rows) and accepts both. E1.2 receipt names no images → repair. Discovered E1.12 (E0.4), E3.12 (E0.1; the lead wrote its section).
-- **Run 3** (2026-11-22): run id RUN3_ID, args in the commit that records it.
+- **Run 3** (2026-11-22): run id `wf_683f124b-e1f`, script @ `9833284707`, args `done` = C0, C1, E0.1, E0.2, E0.4, E1.1, E5.1–E5.3, E6.1, E6.5; `repair` = E1.2 (Looked-at row). Expected stops: C2 (ruling), E4.G.
 
 ## Operator replies
 
