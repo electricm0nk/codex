@@ -85,7 +85,7 @@ awk -F'|' '$2 ~ /^ (C|E)[0-9]/ {print $5}' kanban.md | sort | uniq -c   # 56 tod
 | E5.3 | Update menu: channel selector beside `Channel:`; wider text blocks | sonnet | complete | E5.2 | settings | no | no | receipt `artifacts/epic_5/E5.3_cycle_receipt.md`; SHA `7c82126eeb0a612d786000a9ac15201b58e8eb29` |
 | E5.4 | Developer tab slimmed + Corpus Ingest Diagnostic embedded | sonnet | todo | E5.3, E2.3 | settings | no | no | `CharacterHubPage.tsx` shared with E2.3 |
 | E5.MC | E5 merge check + epic report | opus | todo | E5.4 | settings | yes (base build) | no | |
-| E6.1 | Campaign folder relocation: copy, verify, switch, skeleton | opus | todo | C1 | campaign | yes (desktop) | hub | |
+| E6.1 | Campaign folder relocation: copy, verify, switch, skeleton | opus | complete | C1 | campaign | yes (desktop) | hub | RED: 0 tests matched `relocate_campaign` (exit 1); GREEN 3 passed; receipt `artifacts/epic_6/E6.1_cycle_receipt.md`; SHA `a2530d82d746d8efeb568dfa209636dcce8af2a7` |
 | E6.2 | House Rules ☰ menu per character and system | opus | todo | E3.MC | sheet | yes (desktop) | hub | |
 | E6.3 | House rule: HP at level-up, seven methods | opus | todo | E6.2 | sheet | yes (root + desktop) | hub | |
 | E6.4 | House rule: Ambidextrous removes the off-hand penalty | opus | todo | E6.3 | sheet | yes (root + desktop) | hub | |
