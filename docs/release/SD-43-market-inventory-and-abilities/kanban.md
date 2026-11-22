@@ -56,6 +56,7 @@ awk -F'|' '$2 ~ /^ (C|E)[0-9]/ {print $5}' kanban.md | sort | uniq -c   # 56 tod
 | E1.9 | Item stats in the Market description box (engine-stated, shared renderer) | opus | todo | E1.8 | market | yes (desktop) | hub | |
 | E1.10 | Filter model: per-list columns and values, `Other`, counts cover every row | opus | todo | E1.9, E0.2 | market | no | no | |
 | E1.11 | Filter column; 200 cap removed; windowed list; first paint measured | opus | todo | E1.10 | market | no | no | |
+| E1.12 | Sell removes the copy the player clicked (copy key, not item id + state) — discovered by E0.4 | opus | todo | E1.5 | gear | yes (desktop) | hub | discovered E0.4 (`artifacts/epic_0/gear-repro.md` §12.2) |
 | E1.MC | E1 merge check + epic report | opus | todo | E1.7, E1.11 | gear | yes (base build) | no | |
 | E2.1 | Fixed layout on the PF sheet; Show Progression visible (items 17 + 21) | opus | todo | E1.7 | sheet | no | hub | |
 | E2.2 | The shared layout on the SF and CPR sheets | sonnet | todo | E2.1 | sheet | no | no | settles Q-8.2 |
@@ -96,7 +97,7 @@ awk -F'|' '$2 ~ /^ (C|E)[0-9]/ {print $5}' kanban.md | sort | uniq -c   # 56 tod
 | E7.4 | Graphify LAST → PR LAST → lead merges when green → watch the develop publish | sonnet | todo | E7.3 | main | no | no | a red publish is a blocker |
 
 Count at authoring, by epic (`awk -F'|' '$2 ~ /^ (C|E)[0-9]/ {gsub(/ /,"",$2); split($2,a,"."); g=(a[1] ~ /^C/)?"C":a[1]; n[g]++} END {for (e in n) print e, n[e]}' kanban.md | sort`):
-C 3, E0 5, E1 12, E2 6, E3 12, E4 3, E5 5, E6 6, E7 4 = 56.
+C 3, E0 5, E1 12, E2 6, E3 12, E4 3, E5 5, E6 6, E7 4 = 56. Discovered: E1.12 (E0.4, 2026-11-22) → E1 13; with E0.1's E3.12 the total is **58**.
 
 `Depends on` equals `epic-breakdown.md §0`'s `After` column except three rows, where it carries the card sections'
 own wording: E1.10 adds E0.2 ("Depends: E1.9 (lane order), E0.2 (data)"), E5.4 adds E2.3 ("Depends: E5.3, E2.3"),

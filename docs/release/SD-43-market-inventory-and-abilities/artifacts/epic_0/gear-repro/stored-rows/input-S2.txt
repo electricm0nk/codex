@@ -1,0 +1,11 @@
+equipment=item:longsword:equipped
+equipment=item:chain_shirt:equipped
+equipment=item:shield:absent
+equipment=power_attack:selected_inactive
+equipment=Sack:absent
+equipment=Sack:selected_inactive
+equipment=Sack:absent
+equipment=Pouch (Belt):absent
+equipment=Bedroll:selected_inactive
+equipment=Blanket:selected_inactive
+equipment=Bag of Holding (Type I):selected_inactive

@@ -50,6 +50,7 @@ warning). A card that only *adds registration lines* to `main.rs` still holds `h
 | E1.9 | Item stats in the Market description box, engine-stated, shared renderer | market | E1.8 | opus | yes (desktop) | hub |
 | E1.10 | Filter model: per-list columns and values, `Other`, counts account for every row | market | E1.9 | opus | no | no |
 | E1.11 | Filter column in the dialog; no 200 cap; windowed list; first-paint measured | market | E1.10 | opus | no | no |
+| E1.12 | Sell removes the copy the player clicked (copy key, not item id + state); discovered by E0.4 | gear | E1.5 | opus | yes (desktop) | hub |
 | E1.MC | E1 merge check + epic report (adversarial; screenshots of gear screen, Market, sell window) | gear | E1.7, E1.11 | opus | yes (base build) | no |
 | E2.1 | Fixed layout on the PF sheet: bar, rail and right column fixed, centre scrolls, `100dvh`; Show Progression visible (17 + 21) | sheet | E1.7 | opus | no | hub |
 | E2.2 | The same shared layout on the SF and CPR sheets | sheet | E2.1 | sonnet | no | no |
@@ -90,7 +91,7 @@ warning). A card that only *adds registration lines* to `main.rs` still holds `h
 | E7.4 | Graphify LAST → PR `tranche-43 → develop` LAST → merge when green → watch the develop publish | main | E7.3 | sonnet | no | no |
 
 Card count: `awk -F'|' '$2 ~ /^ (C|E)[0-9]/' docs/release/SD-43-market-inventory-and-abilities/epic-breakdown.md | awk 'END{print NR}'`
-→ 57 (this table only; 56 at authoring + E3.12 discovered by E0.1; the per-card headings below use `###`).
+→ 58 (this table only; 56 at authoring + E3.12 discovered by E0.1 + E1.12 discovered by E0.4; the per-card headings below use `###`).
 
 **Lanes and their files.** `gear`: `ui/characterHub/GearScreen.tsx`, `gearScreenModel.ts`, `GearDetail.tsx`,
 the sell/move paths of `desktop/character_hub.rs` (under `hub`). `market`: `ui/characterHub/MarketDialog.tsx`,
@@ -350,6 +351,22 @@ change); **Does not cover** (rule 7). Every code-bearing card also runs the four
   description, sort, Only Show Affordable and `+N` tests green; time to first paint on Magic items measured and
   stated "on this machine".
 - **Depends:** E1.10. **Tier:** opus.
+
+### E1.12 — Sell names the copy (discovered by E0.4)
+- **Objective:** the Gear screen's Sell (and the Market inventory's) removes the copy the player clicked. Today
+  `handleGearSell` (`ui/characterHub/CharacterSheet.tsx`) sends `itemId` + `bonus` + `fromState`, and
+  `sell_held_pieces_at_root` (`desktop/character_hub.rs:5635`) takes `first_copy_in_hand` (`desktop/pf1_adapter.rs:1349`),
+  so with several Sacks it sells a different one (E0.4 `artifacts/epic_0/gear-repro.md` §12.2: clicked `Sack|0|2`,
+  removed `Sack|0|1` and its custom name). Drop, Discard and Move already send `copies[0]`.
+- **FILES YOU OWN:** `desktop/character_hub.rs` (sell path and its tests), the remove/sell request DTO and its
+  command registration if it changes, `ui/boundary/removeEquipmentSelection` (or its file), `ui/characterHub/CharacterSheet.tsx`
+  (`handleGearSell`, `handleMarketSell`) (`hub`). Closure check first: `git grep -n "removeEquipmentSelection\|sell_held_pieces_at_root"`.
+- **Failing test first:** two Sack lines Carried, the second holding a Bedroll; sell the second by its copy key →
+  the second line is gone, the first stays, the Bedroll is Carried.
+- **Acceptance:** `cd apps/desktop/src-tauri && cargo test sell_names_the_copy` (≥ 1 test, 0 filtered = FAIL); a
+  frontend test that `handleGearSell`'s request carries `row.held.copies[0]`.
+- **Depends:** E1.5. **Tier:** opus.
+- **Does not cover:** what the sale pays (E1.6) and Drop/Discard (already by copy key).
 
 ### E1.MC — E1 merge check
 - **Objective:** adversarial review of E1's diff against the rulings; screenshots of gear (all sections),

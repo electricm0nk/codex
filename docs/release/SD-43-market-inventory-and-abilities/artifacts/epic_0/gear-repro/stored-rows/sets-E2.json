@@ -1,0 +1,74 @@
+{
+  "schema": 1,
+  "active": "Default",
+  "sets": [
+    {
+      "name": "Default",
+      "locations": [
+        {
+          "copy": {
+            "itemId": "item:longsword",
+            "bonus": 0,
+            "ordinal": 0
+          },
+          "location": {
+            "kind": "slot",
+            "slot": "wield_main"
+          }
+        },
+        {
+          "copy": {
+            "itemId": "item:chain_shirt",
+            "bonus": 0,
+            "ordinal": 0
+          },
+          "location": {
+            "kind": "slot",
+            "slot": "armor"
+          }
+        },
+        {
+          "copy": {
+            "itemId": "item:shield",
+            "bonus": 0,
+            "ordinal": 0
+          },
+          "location": {
+            "kind": "notCarried"
+          }
+        },
+        {
+          "copy": {
+            "itemId": "Bedroll",
+            "bonus": 0,
+            "ordinal": 0
+          },
+          "location": {
+            "kind": "inside",
+            "container": {
+              "itemId": "Sack",
+              "bonus": 0,
+              "ordinal": 0
+            }
+          }
+        },
+        {
+          "copy": {
+            "itemId": "Blanket",
+            "bonus": 0,
+            "ordinal": 0
+          },
+          "location": {
+            "kind": "inside",
+            "container": {
+              "itemId": "Sack",
+              "bonus": 0,
+              "ordinal": 0
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "copies": {}
+}

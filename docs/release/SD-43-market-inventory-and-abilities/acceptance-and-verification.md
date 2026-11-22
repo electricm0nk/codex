@@ -177,7 +177,7 @@ The scan **cannot pass** with any card short of `complete` or with any open bloc
 ```bash
 cd docs/release/SD-43-market-inventory-and-abilities
 test -s kanban.md || { echo NO_KANBAN; exit 2; }
-awk -F'|' '$2 ~ /^ (C|E)[0-9]/ { n++ } END { if (n != 57) print "ROW_COUNT " n }' kanban.md        # prints nothing (56 at authoring, 57 after E0.1 discovered E3.12; a discovered card updates this number, kanban.md and epic-breakdown.md §0 in one commit)
+awk -F'|' '$2 ~ /^ (C|E)[0-9]/ { n++ } END { if (n != 58) print "ROW_COUNT " n }' kanban.md        # prints nothing (56 at authoring, 57 after E0.1 discovered E3.12, 58 after E0.4 discovered E1.12; a discovered card updates this number, kanban.md and epic-breakdown.md §0 in one commit)
 awk -F'|' '$2 ~ /^ (C|E)[0-9]/ && $2 !~ /^ E7\.[2-4] / && $5 !~ /^ complete *$/ { print $2 "|" $5 }' kanban.md   # prints nothing (E7.2's own scan; E7.4 re-runs it with the exemption narrowed to E7\.4)
 awk '/^## Open blockers/{f=1;next} /^## /{f=0} f && /^### /' progress.md | awk 'END{print NR}'        # 0 — a filed blocker is an open card, not a pass
 grep -c '^- E4\.G (20[0-9-]*): ' progress.md                                                         # ≥ 1: the operator's E4.G reply quoted under ## Operator replies
