@@ -57,7 +57,7 @@ line, the `git grep` used for second call sites. A RED that exited 0 is not disp
   `epic-breakdown.md`; the placeholder-name scan re-run (111 of 3,805 equipment; 201 of 51,474 all kinds —
   `content-unit-inventory.md §3`).
 - **Placeholder gate:** see below.
-- **Status:** C0 stays `todo` until the lead reviews both halves.
+- **Status:** C0 `complete` (lead, 2026-11-22, reviewed at `64432acc84`). Lead re-ran the gate: 33 distinct tokens, all in §9 (a)/(b); 56 rows; `SAME_IDS`; `df -h /` 1.4T avail; `origin/tranche-43` = `64432acc84` (already pushed).
 
 ### Placeholder gate output (author, 2026-11-22)
 
