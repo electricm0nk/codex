@@ -10,7 +10,6 @@ import { GearDetail } from './GearDetail';
 import type { EquipmentSetsSummaryDto } from '../boundary/loadSavedCharacterDetail';
 import { OverrideTag } from './OverrideTag';
 import {
-  containerTables,
   copyId,
   DRAG_FORMAT,
   dropTarget,
@@ -31,6 +30,8 @@ const DROP_SELL_DISCARD_CAPTION =
   'Drop keeps the item and marks it Not Carried; Sell returns money under the pricing above; Discard removes it for nothing.';
 
 const panel: CSSProperties = { border: '1px solid var(--color-border)', borderRadius: 6, minWidth: 0, padding: '0.5rem 0.75rem' };
+/** A container's light box (today's panel border, tighter); nested boxes sit inside the parent's. */
+const box: CSSProperties = { ...panel, margin: '0.25rem 0', padding: '0.1rem 0.5rem' };
 const rowStyle: CSSProperties = { alignItems: 'center', borderBottom: '1px solid var(--color-border)', display: 'flex', flexWrap: 'wrap', gap: '0.4rem', justifyContent: 'space-between', padding: '0.25rem 0' };
 const quiet: CSSProperties = { color: 'var(--color-text-faint)', fontSize: '0.75rem' };
 const danger: CSSProperties = { color: 'var(--color-danger, #c0392b)', fontSize: '0.8rem', margin: '0 0 0.25rem' };
@@ -300,7 +301,7 @@ function SetPicker(props: { sets: EquipmentSetsSummaryDto; busy: boolean; action
   );
 }
 
-/** The gear screen's two panels: every row with its buttons on the left, where it is on the right. */
+/** The gear screen: one column under the equipment set, a section per location, each row with its buttons on its line (SD-43 E1.2). */
 export function GearPanels(props: GearPanelsProps) {
   const [filter, setFilter] = useState<GearFilter>('all');
   const [pending, setPending] = useState<(Pending & { at: string }) | null>(null);
@@ -390,61 +391,69 @@ export function GearPanels(props: GearPanelsProps) {
     },
   });
 
-  const treeItem = (item: GearTreeItem, depth: number) => {
-    const at = `tree:${copyId(item.copy)}`;
+  // One held row with its buttons on its line (operator 5-a); a container's capacity and Customize read the copy it stands for.
+  const gearRow = (item: GearTreeItem, at: string) => {
+    const row = item.row;
     return (
-      <div key={at}>
-        <div {...dragSource(item.row)} {...(item.row.isContainer ? dropZone(`inside-${copyId(item.copy)}`, at) : {})} style={{ ...rowStyle, paddingLeft: `${depth * 1}rem` }}>
-          <span>
-            {item.row.label}
-            {tag(item.row)}
-            {item.capacityLabel ? <span style={{ ...quiet, marginLeft: '0.5rem' }}>{item.capacityLabel}</span> : null}
-            {item.overrideTag ? <OverrideTag flag="ignoreContainerCapacity" /> : null}
+      <div {...dragSource(row)} {...(row.isContainer ? dropZone(`inside-${copyId(item.copy)}`, at) : {})} style={rowStyle}>
+        <span>
+          {row.label}
+          {tag(row)}
+          <span style={{ ...quiet, marginLeft: '0.5rem' }}>
+            {`${row.weightLabel} · ${row.locationLabel}`}
+            {item.capacityLabel ? ` · ${item.capacityLabel}` : ''}
           </span>
-          <MoveToMenu model={model} row={item.row} busy={props.busy} onChoose={(location, label) => run({ kind: 'move', row: item.row, location, targetLabel: label }, at)} />
-        </div>
-        {formAt(at)}
-        {item.children.map((child) => treeItem(child, depth + 1))}
+          {item.overrideTag ? <OverrideTag flag="ignoreContainerCapacity" /> : null}
+          {(row.held.properties ?? []).map((property) => (
+            <span key={property} data-testid="gear-property" style={{ ...quiet, display: 'block' }}>
+              {property}
+            </span>
+          ))}
+        </span>
+        <span style={{ display: 'flex', flexShrink: 0, gap: '0.3rem' }}>
+          {customize(row, item.copy, row.label, `gear-row-customize-${row.id}`)}
+          <MoveToMenu model={model} row={row} busy={props.busy} onChoose={(location, label) => run({ kind: 'move', row, location, targetLabel: label }, at)} />
+          {row.held.location.kind !== 'notCarried' ? (
+            <button type="button" data-testid="gear-drop" aria-label={`Drop ${row.label}`} disabled={props.busy} onClick={() => run({ kind: 'drop', row }, at)} style={button}>
+              Drop
+            </button>
+          ) : null}
+          {row.held.itemId.startsWith('custom:') ? null : (
+            <button type="button" data-testid="gear-sell" aria-label={`Sell ${row.label}`} disabled={props.busy} onClick={() => run({ kind: 'sell', row }, at)} style={button}>
+              Sell
+            </button>
+          )}
+          <button type="button" data-testid="gear-discard" aria-label={`Discard ${row.label}`} disabled={props.busy} onClick={() => run({ kind: 'discard', row }, at)} style={button}>
+            Discard
+          </button>
+        </span>
       </div>
     );
   };
-
-  // One held row with its buttons: the top-level list and every container table render the same row.
-  const gearRow = (row: GearRow, at: string) => (
-    <div {...dragSource(row)} {...(row.isContainer ? dropZone(`inside-${row.id}`, at) : {})} style={rowStyle}>
-      <span>
-        {row.label}
-        {tag(row)}
-        <span style={{ ...quiet, marginLeft: '0.5rem' }}>
-          {`${row.weightLabel} · ${row.locationLabel}`}
-          {row.capacityLabel ? ` · ${row.capacityLabel}` : ''}
-        </span>
-        {(row.held.properties ?? []).map((property) => (
-          <span key={property} data-testid="gear-property" style={{ ...quiet, display: 'block' }}>
-            {property}
-          </span>
-        ))}
-      </span>
-      <span style={{ display: 'flex', flexShrink: 0, gap: '0.3rem' }}>
-        {customize(row, row.held.copies[0], row.label, `gear-row-customize-${row.id}`)}
-        <MoveToMenu model={model} row={row} busy={props.busy} onChoose={(location, label) => run({ kind: 'move', row, location, targetLabel: label }, at)} />
-        {row.held.location.kind !== 'notCarried' ? (
-          <button type="button" data-testid="gear-drop" aria-label={`Drop ${row.label}`} disabled={props.busy} onClick={() => run({ kind: 'drop', row }, at)} style={button}>
-            Drop
-          </button>
-        ) : null}
-        {row.held.itemId.startsWith('custom:') ? null : (
-          <button type="button" data-testid="gear-sell" aria-label={`Sell ${row.label}`} disabled={props.busy} onClick={() => run({ kind: 'sell', row }, at)} style={button}>
-            Sell
-          </button>
-        )}
-        <button type="button" data-testid="gear-discard" aria-label={`Discard ${row.label}`} disabled={props.busy} onClick={() => run({ kind: 'discard', row }, at)} style={button}>
-          Discard
-        </button>
-      </span>
-    </div>
-  );
-  const tables = containerTables(model);
+  // A loose row, or a container's light box holding its own row and, indented, its contents (operator 5-b).
+  const gearItem = (item: GearTreeItem): ReactNode => {
+    const at = `row:${item.row.id}`;
+    const line = (
+      <div data-testid={`gear-row-${item.row.id}`} {...selectable(item.row)}>
+        {gearRow(item, at)}
+        {formAt(at)}
+      </div>
+    );
+    if (!item.row.isContainer) {
+      return <div key={at}>{line}</div>;
+    }
+    return (
+      <div key={at} data-testid={`gear-container-${copyId(item.copy)}`} style={box}>
+        {line}
+        <div style={{ paddingLeft: '1rem' }}>{item.children.length === 0 ? <p style={{ ...quiet, margin: '0.2rem 0' }}>Empty</p> : item.children.map(gearItem)}</div>
+      </div>
+    );
+  };
+  // The filter narrows each section's top-level rows; a container shows all it holds.
+  const shown = new Set(filterGearRows(model.rows, filter));
+  const sections = model.tree
+    .map((section) => ({ ...section, items: section.items.filter((item) => shown.has(item.row)) }))
+    .filter((section) => filter === 'all' || section.items.length > 0);
 
   return (
     <section aria-label="Gear" className="no-print" style={{ marginBottom: '1.25rem' }}>
@@ -460,96 +469,51 @@ export function GearPanels(props: GearPanelsProps) {
           {props.refusal}
         </p>
       ) : null}
-      <div style={{ display: 'grid', gap: '0.75rem', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))' }}>
-        <div style={panel}>
-          <label style={{ fontSize: '0.8rem' }}>
-            Show{' '}
-            <select data-testid="gear-filter" value={filter} onChange={(event) => setFilter(event.target.value as GearFilter)}>
-              <option value="all">All</option>
-              <option value="equipped">Equipped</option>
-              <option value="notEquipped">Not equipped</option>
-            </select>
-          </label>
-          {model.rows.length === 0 ? <p style={quiet}>Nothing held yet.</p> : null}
-          {filterGearRows(model.rows, filter)
-            .filter((row) => row.held.location.kind !== 'inside')
-            .map((row) => {
-              const at = `row:${row.id}`;
-              return (
-                <div key={at} data-testid={`gear-row-${row.id}`} {...selectable(row)}>
-                  {gearRow(row, at)}
-                  {formAt(at)}
-                </div>
-              );
-            })}
-          {tables.length > 0 ? (
-            <div style={{ display: 'grid', gap: '0.75rem', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', marginTop: '0.5rem' }}>
-              {tables.map((table) => (
-                <table key={copyId(table.copy)} data-testid={`gear-container-${copyId(table.copy)}`} style={{ ...panel, borderCollapse: 'collapse', width: '100%' }}>
-                  <caption style={{ fontSize: '0.8rem', fontWeight: 700, textAlign: 'left' }}>
-                    {table.loadLabel ? `${table.title} · ${table.loadLabel}` : table.title}{' '}
-                    {customize(table.row, table.copy, table.title, `gear-container-customize-${copyId(table.copy)}`)}
-                  </caption>
-                  <tbody>
-                    {table.rows.length === 0 ? (
-                      <tr>
-                        <td style={quiet}>Empty</td>
-                      </tr>
-                    ) : (
-                      table.rows.map((row) => {
-                        const at = `row:${row.id}`;
-                        return (
-                          <tr key={at} data-testid={`gear-row-${row.id}`} {...selectable(row)}>
-                            <td>
-                              {gearRow(row, at)}
-                              {formAt(at)}
-                            </td>
-                          </tr>
-                        );
-                      })
-                    )}
-                  </tbody>
-                </table>
-              ))}
+      <div style={panel}>
+        {model.warnings.map((warning) => (
+          <p key={copyId(warning.copy)} role="alert" data-testid={`gear-over-${copyId(warning.copy)}`} style={danger}>
+            {warning.text}
+          </p>
+        ))}
+        <label style={{ fontSize: '0.8rem' }}>
+          Show{' '}
+          <select data-testid="gear-filter" value={filter} onChange={(event) => setFilter(event.target.value as GearFilter)}>
+            <option value="all">All</option>
+            <option value="equipped">Equipped</option>
+            <option value="notEquipped">Not equipped</option>
+          </select>
+        </label>
+        {model.rows.length === 0 ? <p style={quiet}>Nothing held yet.</p> : null}
+        {sections.map((section) => (
+          <div key={section.id} {...dropZone(section.id, `section:${section.id}`)}>
+            <div data-testid={`gear-location-${section.id}`} style={{ fontSize: '0.8rem', fontWeight: 700, marginTop: '0.4rem' }}>
+              {section.label}
+              {section.places ? <span style={{ ...quiet, fontWeight: 400, marginLeft: '0.4rem' }}>{section.places}</span> : null}
+              {section.location.kind === 'notCarried' ? <span style={{ ...quiet, fontWeight: 400, marginLeft: '0.4rem' }}>Not counted in carried weight</span> : null}
             </div>
-          ) : null}
-          <p style={{ ...quiet, marginTop: '0.5rem' }}>{DROP_SELL_DISCARD_CAPTION}</p>
-          {props.detail}
-          {customizing ? (
-            <CustomizeCopyDialog
-              key={copyId(customizing.copy)}
-              held={customizing.row.held}
-              target={customizing}
-              busy={props.busy}
-              onRename={(copy, text) => {
-                setCustomizing(null);
-                props.onCustomizeName(copy, text);
-              }}
-              onAttach={(target) => {
-                setCustomizing(null);
-                props.onCustomizeModifier({ copy: target.copy, title: target.title });
-              }}
-              onClose={() => setCustomizing(null)}
-            />
-          ) : null}
-        </div>
-        <div style={panel}>
-          {model.warnings.map((warning) => (
-            <p key={copyId(warning.copy)} role="alert" data-testid={`gear-over-${copyId(warning.copy)}`} style={danger}>
-              {warning.text}
-            </p>
-          ))}
-          {model.tree.map((section) => (
-            <div key={section.id} {...dropZone(section.id, `section:${section.id}`)}>
-              <div data-testid={`gear-location-${section.id}`} style={{ fontSize: '0.8rem', fontWeight: 700, marginTop: '0.4rem' }}>
-                {section.label}
-                {section.places ? <span style={{ ...quiet, fontWeight: 400, marginLeft: '0.4rem' }}>{section.places}</span> : null}
-              </div>
-              {formAt(`section:${section.id}`)}
-              {section.items.map((item) => treeItem(item, 1))}
-            </div>
-          ))}
-        </div>
+            {formAt(`section:${section.id}`)}
+            {section.items.map(gearItem)}
+          </div>
+        ))}
+        <p style={{ ...quiet, marginTop: '0.5rem' }}>{DROP_SELL_DISCARD_CAPTION}</p>
+        {props.detail}
+        {customizing ? (
+          <CustomizeCopyDialog
+            key={copyId(customizing.copy)}
+            held={customizing.row.held}
+            target={customizing}
+            busy={props.busy}
+            onRename={(copy, text) => {
+              setCustomizing(null);
+              props.onCustomizeName(copy, text);
+            }}
+            onAttach={(target) => {
+              setCustomizing(null);
+              props.onCustomizeModifier({ copy: target.copy, title: target.title });
+            }}
+            onClose={() => setCustomizing(null)}
+          />
+        ) : null}
       </div>
     </section>
   );

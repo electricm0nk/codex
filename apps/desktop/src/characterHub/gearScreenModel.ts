@@ -243,9 +243,9 @@ export function gearScreenModel(held: PlacedEquipmentCopyDto[], context: GearCon
     const ids = row.held.copies.map(copyId);
     const inside = ids.some((id) => seen.has(id)) ? [] : rows.filter((candidate) => !placed.has(candidate) && insideRow(candidate, row));
     const deeper = new Set([...seen, ...ids]);
-    return [{ row, copy, capacityLabel: capacityLabel(load), overrideTag: ignore && load?.over === true, children: inside.flatMap((child) => nodesOf(child, deeper)) }];
+    return [{ row, copy, capacityLabel: capacityLabel(load), overrideTag: ignore && load?.over === true, children: orderGearItems(inside.flatMap((child) => nodesOf(child, deeper))) }];
   };
-  const at = (test: (location: LocationDto) => boolean) => rows.filter((row) => test(row.held.location)).flatMap((row) => nodesOf(row, new Set()));
+  const at = (test: (location: LocationDto) => boolean) => orderGearItems(rows.filter((row) => test(row.held.location)).flatMap((row) => nodesOf(row, new Set())));
 
   const tree: GearTreeSection[] = WORN_SLOTS.filter((slot) => slot.slot !== 'none').map(({ slot, label }) => {
     const items = at((location) => location.kind === 'slot' && location.slot === slot);
@@ -256,7 +256,7 @@ export function gearScreenModel(held: PlacedEquipmentCopyDto[], context: GearCon
   const carried: GearTreeSection = { id: 'carried', label: 'Carried', location: { kind: 'carried' }, places: null, items: at((location) => location.kind === 'carried') };
   const notCarried: GearTreeSection = { id: 'notCarried', label: 'Not Carried', location: { kind: 'notCarried' }, places: null, items: at((location) => location.kind === 'notCarried') };
   // A row inside a copy no other row holds (or a cycle the move refused too late) still shows.
-  carried.items.push(...rows.filter((row) => !placed.has(row)).flatMap((row) => nodesOf(row, new Set())));
+  carried.items = orderGearItems([...carried.items, ...rows.filter((row) => !placed.has(row)).flatMap((row) => nodesOf(row, new Set()))]);
   tree.push(carried, notCarried);
 
   const capacityWarnings = ignore
@@ -272,6 +272,13 @@ export function gearScreenModel(held: PlacedEquipmentCopyDto[], context: GearCon
   const warnings = [...capacityWarnings, ...slotWarnings];
 
   return { rows, tree, warnings, capacityOverride: ignore, slotOverride: context.ignoreSlotLimits === true, containerLoads: context.containerLoads };
+}
+
+const NATURAL = new Intl.Collator(undefined, { numeric: true, sensitivity: 'base' });
+
+/** SD-43 E1.2 (operator 5-b): non-containers A–Z, then containers A–Z, natural number order (`Sack #2` before `Sack #10`). */
+function orderGearItems(items: GearTreeItem[]): GearTreeItem[] {
+  return [...items].sort((a, b) => Number(a.row.isContainer) - Number(b.row.isContainer) || NATURAL.compare(a.row.label, b.row.label));
 }
 
 /** Copies in a slot: a count of what is there, one per copy of each row. */
@@ -325,36 +332,6 @@ export function moveTargets(model: GearModel, row: GearRow): MoveTarget[] {
     targets.push({ id: `inside-${copyId(copy)}`, label: `Into ${candidate.label}`, location: { kind: 'inside', container: copy } });
   }
   return targets;
-}
-
-export interface ContainerTable {
-  copy: CopyKeyDto;
-  /** The container's own row: Customize names and modifies `copy` of it. */
-  row: GearRow;
-  title: string;
-  /** The copy's `containerLoads` figure as the engine gave it; null when the engine sent none. */
-  loadLabel: string | null;
-  /** The rows directly inside this copy, one level deep. */
-  rows: GearRow[];
-}
-
-/**
- * One table per container row, bound to the copy holding items, else its first (`decisions.md §38`; SD-42 §27.5),
- * titled as the right panel names the row (`Sack`, `Sack ×3`, a copy's own name; SD-43 E1.1); no weight is summed here.
- */
-export function containerTables(model: GearModel): ContainerTable[] {
-  return model.rows
-    .filter((row) => row.isContainer)
-    .map((row) => {
-      const copy = holderOf(model.rows, row);
-      return {
-        copy,
-        row,
-        title: row.label,
-        loadLabel: capacityLabel(model.containerLoads.find((load) => sameCopy(load.copy, copy))),
-        rows: model.rows.filter((candidate) => insideRow(candidate, row)),
-      };
-    });
 }
 
 /** The drag data's format: the dragged row's id (`GearRow.id`). */
