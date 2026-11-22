@@ -816,17 +816,24 @@ fn market_from_catalog(catalog: &EquipmentCatalogResponse, filter: &MarketFilter
         .filter(|entry| seen.insert(entry.key.as_str()))
         .filter(|entry| !hidden_from_market(entry) && market_category_of(entry) == Some(filter.category))
         .filter(|entry| filter.book.as_ref().is_none_or(|book| &entry.book == book))
-        .filter_map(|entry| {
-            let mut entry = entry.clone();
-            entry.name = market_name(&entry);
-            if needle.as_ref().is_some_and(|n| !entry.name.to_lowercase().contains(n.as_str())) {
-                return None;
-            }
-            let variants = market_variants(&entry, &entry.name);
-            Some(MarketEntryDto { entry, variants })
-        })
+        .map(market_row)
+        .filter(|row| needle.as_ref().is_none_or(|n| row.entry.name.to_lowercase().contains(n.as_str())))
         .collect();
     MarketResponse { entries, types_error: None }
+}
+
+/// A catalog row as the Market shows it: its shown name and the `+N` it is sold at.
+fn market_row(entry: &EquipmentCatalogEntryDto) -> MarketEntryDto {
+    let mut entry = entry.clone();
+    entry.name = market_name(&entry);
+    let variants = market_variants(&entry, &entry.name);
+    MarketEntryDto { entry, variants }
+}
+
+/// The Market row `key` names (the first of that key, as the lists and the buy read it); `None`
+/// when the Market does not offer it.
+pub(crate) fn market_entry(key: &str) -> Option<MarketEntryDto> {
+    catalog_row(key).filter(|entry| !hidden_from_market(entry) && market_category_of(entry).is_some()).map(market_row)
 }
 
 /// The catalog, built once: a Market dialog asks again on every tab and every search, the build

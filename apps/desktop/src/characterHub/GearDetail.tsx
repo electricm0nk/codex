@@ -2,6 +2,7 @@ import type { CSSProperties } from 'react';
 import type { ContainerStatsDto, HeldEquipmentDetailDto } from '../boundary/describeHeldEquipment';
 import type { WeaponDamageDto } from '../boundary/loadSavedCharacterDetail';
 import { hasDescription } from '../equipmentCatalog/EquipmentCatalogScreen';
+import type { BodySlotDto } from '../boundary/listHeldEquipment';
 import { wornLabel } from './gearScreenModel';
 
 /**
@@ -72,6 +73,45 @@ function Field(props: { label: string; text: string; testId: string }) {
   );
 }
 
+/** The record's own facts, as the gear panel and the Market's description box show them. */
+export interface ItemStatsDto {
+  entry: HeldEquipmentDetailDto['entry'];
+  weapon: WeaponDamageDto | null;
+  armor: HeldEquipmentDetailDto['armor'];
+  container: ContainerStatsDto | null;
+}
+
+/**
+ * The item block: stats first, then the prose and the source (SD-43 `decisions.md §13`). One
+ * renderer for a held copy and a Market row.
+ */
+export function ItemStats(props: { stats: ItemStatsDto; slot: BodySlotDto }) {
+  const { entry, weapon, armor, container } = props.stats;
+  return (
+    <dl style={block}>
+      <Field label="Name" text={entry.name} testId="gear-detail-name" />
+      <Field label="Type" text={entry.types.length > 0 ? entry.types.join(', ') : shown(entry.category)} testId="gear-detail-type" />
+      <Field label="Weight" text={unit(entry.weightLbs, 'lb')} testId="gear-detail-weight" />
+      <Field label="Cost" text={unit(entry.costGp, 'gp')} testId="gear-detail-cost" />
+      <Field label="Body slot" text={wornLabel(props.slot)} testId="gear-detail-slot" />
+      <Field label="Damage" text={weapon ? damage(weapon) : ABSENT} testId="gear-detail-damage" />
+      <Field label="Critical" text={weapon ? critical(weapon) : ABSENT} testId="gear-detail-critical" />
+      <Field label="Range" text={unit(weapon?.rangeIncrement, 'ft.')} testId="gear-detail-range" />
+      <Field label="Wield" text={shown(weapon?.wieldCategory)} testId="gear-detail-wield" />
+      <Field label="Weapon properties" text={list(weapon?.properties)} testId="gear-detail-weapon-properties" />
+      <Field label="AC bonus" text={signed(armor?.armorClassBonus)} testId="gear-detail-ac" />
+      <Field label="Enhancement" text={signed(armor?.armorClassEnhancement ?? weapon?.enhancementAttackBonus)} testId="gear-detail-enhancement" />
+      <Field label="Max Dex" text={signed(armor?.maxDex)} testId="gear-detail-max-dex" />
+      <Field label="Armor check penalty" text={signed(armor?.armorCheckPenalty)} testId="gear-detail-acp" />
+      <Field label="Arcane spell failure" text={armor?.spellFailure === undefined ? ABSENT : `${armor.spellFailure}%`} testId="gear-detail-asf" />
+      <Field label="Capacity" text={container ? capacity(container) : ABSENT} testId="gear-detail-capacity" />
+      <Field label="Contents" text={container ? contentsWeigh(container.contentsWeightPct) : ABSENT} testId="gear-detail-contents" />
+      <Field label="Description" text={hasDescription(entry.description) ? entry.description : ABSENT} testId="gear-detail-description" />
+      <Field label="Source" text={shown(entry.book)} testId="gear-detail-book" />
+    </dl>
+  );
+}
+
 export interface GearDetailProps {
   detail: HeldEquipmentDetailDto;
   /** Where the copy is, as the gear screen's row says it. */
@@ -79,31 +119,12 @@ export interface GearDetailProps {
 }
 
 export function GearDetail(props: GearDetailProps) {
-  const { entry, weapon, armor, container, copy } = props.detail;
+  const { copy } = props.detail;
   const named = copy.name !== copy.baseName;
   return (
     <section data-testid="gear-detail" aria-label={`About ${copy.name}`} style={{ borderTop: '1px solid var(--color-border)', marginTop: '0.5rem', paddingTop: '0.4rem' }}>
       <h4 style={{ fontSize: '0.85rem', margin: '0 0 0.25rem' }}>Item</h4>
-      <dl style={block}>
-        <Field label="Name" text={entry.name} testId="gear-detail-name" />
-        <Field label="Type" text={entry.types.length > 0 ? entry.types.join(', ') : shown(entry.category)} testId="gear-detail-type" />
-        <Field label="Weight" text={unit(entry.weightLbs, 'lb')} testId="gear-detail-weight" />
-        <Field label="Cost" text={unit(entry.costGp, 'gp')} testId="gear-detail-cost" />
-        <Field label="Body slot" text={wornLabel(copy.slot)} testId="gear-detail-slot" />
-        <Field label="Damage" text={weapon ? damage(weapon) : ABSENT} testId="gear-detail-damage" />
-        <Field label="Critical" text={weapon ? critical(weapon) : ABSENT} testId="gear-detail-critical" />
-        <Field label="Range" text={unit(weapon?.rangeIncrement, 'ft.')} testId="gear-detail-range" />
-        <Field label="Wield" text={shown(weapon?.wieldCategory)} testId="gear-detail-wield" />
-        <Field label="Weapon properties" text={list(weapon?.properties)} testId="gear-detail-weapon-properties" />
-        <Field label="AC bonus" text={signed(armor?.armorClassBonus)} testId="gear-detail-ac" />
-        <Field label="Max Dex" text={signed(armor?.maxDex)} testId="gear-detail-max-dex" />
-        <Field label="Armor check penalty" text={signed(armor?.armorCheckPenalty)} testId="gear-detail-acp" />
-        <Field label="Arcane spell failure" text={armor?.spellFailure === undefined ? ABSENT : `${armor.spellFailure}%`} testId="gear-detail-asf" />
-        <Field label="Capacity" text={container ? capacity(container) : ABSENT} testId="gear-detail-capacity" />
-        <Field label="Contents" text={container ? contentsWeigh(container.contentsWeightPct) : ABSENT} testId="gear-detail-contents" />
-        <Field label="Description" text={hasDescription(entry.description) ? entry.description : ABSENT} testId="gear-detail-description" />
-        <Field label="Source" text={shown(entry.book)} testId="gear-detail-book" />
-      </dl>
+      <ItemStats stats={props.detail} slot={copy.slot} />
       <h4 style={{ fontSize: '0.85rem', margin: '0 0 0.25rem' }}>This copy</h4>
       <dl style={block}>
         <Field label="Name" text={named ? `${copy.name} (${copy.baseName})` : copy.name} testId="gear-detail-copy-name" />

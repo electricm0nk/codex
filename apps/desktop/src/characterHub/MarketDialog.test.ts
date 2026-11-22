@@ -3,6 +3,7 @@ import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { createElement } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
+import type { MarketEntryDetailDto } from '../boundary/describeMarketEntry';
 import type { MarketEntryDto } from '../boundary/listMarket';
 import { assert, assertEqual } from '../testSupport/asserts';
 import {
@@ -273,6 +274,56 @@ assertEqual(marketPlacementWords('SelectedInactive', null), 'carried', 'an item 
   assertEqual(createItemFields({ ...EMPTY_CREATE_ITEM, name: 'Rock', capacity: '10' }).containerCapacityLbs, null, 'no capacity without Container');
   const create = renderToStaticMarkup(createElement(CreateItemDialogView, { currency: 'gp', draft: EMPTY_CREATE_ITEM, onDraft: () => {}, error: null, busy: false, onCreate: () => {}, onClose: () => {} }));
   assert(create.includes('value="0"') && /<button[^>]*disabled=""[^>]*>Create item<\/button>/.test(create), 'price starts at 0; a name is required');
+}
+
+// SD-43 E1.9 (`decisions.md §13`): the description box shows the engine's stats, through the gear
+// panel's renderer, stats first, then the prose; a stat the record does not state reads `—`.
+{
+  const field = (markup: string, id: string) => markup.match(new RegExp(`data-testid="${id}"[^>]*>([^<]*)<`))?.[1];
+  const bastard: MarketEntryDetailDto = {
+    entry: { key: 'Sword (Bastard)', category: 'ArmsArmor', name: 'Sword (Bastard)', costGp: 35, weightLbs: 6, book: 'CRB', types: ['Weapon', 'Melee'], description: 'Bastard swords are about 4 feet in length.', slot: 'wield_main' } as MarketEntryDetailDto['entry'],
+    weapon: {
+      weaponItemId: 'Sword (Bastard)', weaponRecordKey: 'Sword (Bastard)', baseDice: { count: 1, dieSize: 10 }, strDamageModifier: 0, wieldCategory: 'OneHanded',
+      enhancementAttackBonus: null, enhancementDamageBonus: null, criticalThreatRange: [19, 20], criticalMultiplier: 2, rangeIncrement: null, featEffects: [],
+      inHand: true, unarmed: false, nonlethal: false, usesAmmunition: false, ammunitionCarried: 0,
+    },
+    armor: null,
+    container: null,
+  };
+  const sword = render({ selectedKey: 'Longsword (Base)', stats: bastard });
+  assertEqual(field(sword, 'gear-detail-damage'), '1d10', 'the bastard sword states its die');
+  assertEqual(field(sword, 'gear-detail-critical'), '19–20/×2', 'and its critical');
+  assertEqual(field(sword, 'gear-detail-ac'), '—', 'a weapon states no armor bonus: a dash');
+  assert(sword.indexOf('data-testid="gear-detail-damage"') < sword.indexOf('Bastard swords are about'), 'stats first, then the prose');
+  assert(sword.includes('data-testid="market-description"') && sword.indexOf('data-testid="market-description"') < sword.indexOf('data-testid="gear-detail-damage"'), 'inside the description box');
+
+  const plate: MarketEntryDetailDto = {
+    entry: { key: 'Full Plate', category: 'ArmsArmor', name: '+2 Full Plate', costGp: 5650, weightLbs: 50, book: 'CRB', types: ['Armor', 'Heavy'], description: null, slot: 'armor' } as MarketEntryDetailDto['entry'],
+    weapon: null,
+    armor: { itemId: 'Full Plate', equipmentRecordKey: 'Full Plate', category: 'ArmsArmor', armorClassBonus: 9, armorClassEnhancement: 2, maxDex: 1, armorCheckPenalty: -6, spellFailure: 35 },
+    container: null,
+  };
+  const armor = render({ selectedKey: 'Longsword (Base)', stats: plate });
+  const expected: Array<[string, string]> = [
+    ['gear-detail-name', '+2 Full Plate'],
+    ['gear-detail-cost', '5650 gp'],
+    ['gear-detail-ac', '+9'],
+    ['gear-detail-enhancement', '+2'],
+    ['gear-detail-max-dex', '+1'],
+    ['gear-detail-acp', '-6'],
+    ['gear-detail-asf', '35%'],
+    ['gear-detail-damage', '—'],
+    ['gear-detail-critical', '—'],
+    ['gear-detail-description', '—'],
+  ];
+  for (const [id, text] of expected) {
+    assertEqual(field(armor, id), text, `full plate: ${id}`);
+  }
+  // Until the stats arrive (and in a system shell, which reads none) the box keeps its prose.
+  const prose = render({ selectedKey: 'Longsword (Base)' });
+  assert(prose.includes('data-testid="market-description"') && !prose.includes('data-testid="gear-detail-damage"'), 'no stats: the prose alone');
+  const sheet = readFileSync(join(dirname(fileURLToPath(import.meta.url)), 'CharacterSheet.tsx'), 'utf8');
+  assert(sheet.includes('describeEntry={(row, bonus) => describeMarketEntry({ characterId: props.row.characterId, itemId: row.key, bonus })}'), 'the sheet reads the stats through the boundary');
 }
 
 console.log('MarketDialog.test.ts: all assertions passed');

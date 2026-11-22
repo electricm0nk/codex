@@ -6,6 +6,7 @@ import type { MarketCategory } from '../boundary/listMarket';
 import type { CustomEquipmentBuild } from '../boundary/purchaseCustomEquipment';
 import { BuyCustomDialog } from './BuyCustomDialog';
 import { CreateItemDialog, type CreateItemFields } from './CreateItemDialog';
+import { ItemStats, type ItemStatsDto } from './GearDetail';
 import { wornLabel } from './gearScreenModel';
 import { filterItemPickerEntries, formatMarketPrice, MARKET_ROW_LIMIT, marketPriceGp, marketShownRows } from './itemPickerFilter';
 import {
@@ -149,6 +150,10 @@ export interface MarketDialogViewProps {
   onBuyCustom?: () => void;
   /** Opens Create; absent, there is no Create. */
   onCreate?: () => void;
+  /** The engine's stats for the highlighted row at the chosen `+N` (`decisions.md §13`); absent or `null`, the box shows the prose alone. */
+  stats?: ItemStatsDto | null;
+  /** Why the stats could not be read. */
+  statsError?: string | null;
 }
 
 function weightLabel(row: MarketTableRow): string {
@@ -326,9 +331,16 @@ export function MarketDialogView(props: MarketDialogViewProps) {
           <div
             data-testid="market-description"
             aria-label="Description"
-            style={{ borderTop: '1px solid var(--color-border)', fontSize: '0.8rem', maxHeight: '9rem', minHeight: '4rem', overflowY: 'auto', padding: '0.5rem 0.75rem', whiteSpace: 'pre-wrap' }}
+            style={{ borderTop: '1px solid var(--color-border)', fontSize: '0.8rem', maxHeight: '18rem', minHeight: '4rem', overflowY: 'auto', padding: '0.5rem 0.75rem', whiteSpace: 'pre-wrap' }}
           >
-            {selected ? (selected.description ?? selected.detail ?? '') || 'No description.' : 'Pick an item to read its description.'}
+            {selected && props.statsError ? <p role="alert" style={{ color: 'var(--color-error, #c0392b)', margin: '0 0 0.3rem' }}>{props.statsError}</p> : null}
+            {selected && props.stats ? (
+              <ItemStats stats={props.stats} slot={selected.slot ?? 'none'} />
+            ) : selected ? (
+              (selected.description ?? selected.detail ?? '') || 'No description.'
+            ) : (
+              'Pick an item to read its description.'
+            )}
           </div>
         </div>
 
@@ -479,6 +491,8 @@ export function MarketDialog(props: {
   takesDeals?: boolean;
   onBuyCustom?: (build: CustomEquipmentBuild, quantity: number, negotiatedGp?: number) => Promise<MarketOutcome>;
   onCreate?: (fields: CreateItemFields) => Promise<MarketOutcome>;
+  /** Reads the engine's stats for a row at a `+N`; absent (a system shell), the box shows the prose alone. */
+  describeEntry?: (row: MarketTableRow, bonus: number) => Promise<ItemStatsDto>;
   priceMode: PriceMode;
   onPriceModeChange: (mode: PriceMode) => void;
   error: string | null;
@@ -499,6 +513,7 @@ export function MarketDialog(props: {
   const [subDialog, setSubDialog] = useState<'buyCustom' | 'create' | null>(null);
   const [busy, setBusy] = useState(false);
   const [status, setStatus] = useState<string | null>(null);
+  const [stats, setStats] = useState<{ key: string; bonus: number; stats: ItemStatsDto | null; error: string | null } | null>(null);
   // Synchronous: two clicks in one frame both see `busy` false in state.
   const inFlight = useRef(false);
 
@@ -586,6 +601,25 @@ export function MarketDialog(props: {
     });
     return failure;
   }
+
+  const describedRow = selectedKey ? (rows ?? []).find((row) => row.key === selectedKey) ?? null : null;
+  useEffect(() => {
+    if (!props.describeEntry || !describedRow) {
+      return;
+    }
+    let current = true;
+    const key = describedRow.key;
+    props
+      .describeEntry(describedRow, bonus)
+      .then((next) => current && setStats({ key, bonus, stats: next, error: null }))
+      .catch((cause: unknown) => current && setStats({ key, bonus, stats: null, error: cause instanceof Error ? cause.message : 'Failed to read the stats.' }));
+    return () => {
+      current = false;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [describedRow, bonus]);
+  // Only the answer for the row and `+N` on screen; a slower earlier answer never shows.
+  const shownStats = stats && stats.key === selectedKey && stats.bonus === bonus ? stats : null;
 
   const searched = filterItemPickerEntries(rows ?? [], search) as MarketTableRow[];
   const funds = gpToCopper(props.balance);
@@ -694,6 +728,8 @@ export function MarketDialog(props: {
         deals={deals}
         onBuyCustom={props.onBuyCustom ? () => setSubDialog('buyCustom') : undefined}
         onCreate={props.onCreate ? () => setSubDialog('create') : undefined}
+        stats={shownStats?.stats ?? null}
+        statsError={shownStats?.error ?? null}
       />
       {subDialog === 'buyCustom' && selectedRow && props.onBuyCustom ? (
         <BuyCustomDialog

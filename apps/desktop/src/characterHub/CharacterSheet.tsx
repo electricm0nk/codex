@@ -102,6 +102,7 @@ import type { BaseSavesDto, CreateCharacterOutcome, PilotSnapshotDto } from '../
 import type { SpellCatalogEntryDto } from '../boundary/loadSpellCatalog';
 import { loadClassSpellLevels, type ClassSpellLevelsDto } from '../boundary/loadClassSpellLevels';
 import { ItemPickerModal, type ItemPickerEntry } from './ItemPickerModal';
+import { describeMarketEntry } from '../boundary/describeMarketEntry';
 import { MarketDialog, type MarketDeal, type MarketHeldCopy, type MarketOutcome } from './MarketDialog';
 import { mapMarketTableRows } from './marketModel';
 import type { CreateItemFields } from './CreateItemDialog';
@@ -4743,6 +4744,7 @@ export function CharacterSheet(props: {
           takesDeals
           onBuyCustom={handleMarketBuyCustom}
           onCreate={handleMarketCreate}
+          describeEntry={(row, bonus) => describeMarketEntry({ characterId: props.row.characterId, itemId: row.key, bonus })}
           priceMode={priceMode}
           onPriceModeChange={setPriceMode}
           error={mutationError}

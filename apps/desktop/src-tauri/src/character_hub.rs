@@ -7172,13 +7172,77 @@ pub(crate) fn describe_held_equipment_at_root(root: &Path, copy: &CopyKey) -> Re
     let armor = selection_copy_keys(selections)
         .iter()
         .position(|key| row.copies.contains(key))
-        .and_then(|index| codex::rules_core::equipment_effects::compute_equipment_effects(std::slice::from_ref(&selections[index]), corpus).per_item.into_iter().next())
+        .and_then(|index| armor_stats(&codex::rules_core::equipment_effects::compute_equipment_effects(std::slice::from_ref(&selections[index]), corpus)));
+    Ok(HeldEquipmentDetailDto { entry, weapon, armor, container: container_stats(record), copy: row })
+}
+
+/// The one item's armor stats in `effects`, when it states any.
+fn armor_stats(effects: &codex::rules_core::equipment_effects::EquipmentEffects) -> Option<ResolvedEquipmentEffectDto> {
+    effects
+        .per_item
+        .first()
         .filter(|effect| effect.armor_class_bonus.is_some() || effect.max_dex.is_some() || effect.armor_check_penalty.is_some() || effect.spell_failure.is_some())
-        .map(|effect| map_resolved_equipment_effect_dto(&effect));
-    let container = record
+        .map(map_resolved_equipment_effect_dto)
+}
+
+fn container_stats(record: Option<&codex::rules_core::equipment_record::CorpusEquipmentRecord>) -> Option<ContainerStatsDto> {
+    record
         .filter(|record| record.is_container())
-        .map(|record| ContainerStatsDto { capacity: record.capacity().into(), contents_weight_pct: record.contents_weight_pct });
-    Ok(HeldEquipmentDetailDto { entry, weapon, armor, container, copy: row })
+        .map(|record| ContainerStatsDto { capacity: record.capacity().into(), contents_weight_pct: record.contents_weight_pct })
+}
+
+/// Everything the Market's description box states of one row (SD-43 `decisions.md §13`): the same
+/// record, weapon row, armor stats and container facts as [`HeldEquipmentDetailDto`], for an item
+/// not held, at the `+N` the buyer picked. `null` where the record states none, never 0.
+#[derive(Debug, Clone, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct MarketEntryDetailDto {
+    /// The row as the Market lists it; at a `+N`, that variant's name and price.
+    pub entry: crate::equipment_catalog::EquipmentCatalogEntryDto,
+    pub weapon: Option<WeaponDamageDto>,
+    pub armor: Option<ResolvedEquipmentEffectDto>,
+    pub container: Option<ContainerStatsDto>,
+}
+
+/// Describes the Market row `item_id` at `bonus` (0 is the plain item) as if this character held it
+/// in hand: the engine's weapon row and armor stats for a selection of that one item, the way the
+/// sheet computes a held one. Formats nothing and sums nothing.
+pub(crate) fn describe_market_entry_at_root(root: &Path, item_id: &str, bonus: u8) -> Result<MarketEntryDetailDto, String> {
+    let row = crate::equipment_catalog::market_entry(item_id).ok_or_else(|| format!("'{item_id}' is not on the Market"))?;
+    let mut entry = row.entry;
+    let mut applied_modifiers = Vec::new();
+    if bonus > 0 {
+        let variant = row.variants.into_iter().find(|variant| variant.bonus == bonus).ok_or_else(|| format!("'{item_id}' is not sold at +{bonus}"))?;
+        entry.name = variant.name;
+        entry.cost_gp = Some(variant.price_gp);
+        applied_modifiers.push(variant.modifier_key);
+    }
+    let selection = EquipmentSelection { item_id: item_id.to_owned(), equipped_or_active: true, active_state: ActiveState::EquippedActive, applied_modifiers };
+    let corpus = corpus_fixture_bundle();
+    let effects = codex::rules_core::equipment_effects::compute_equipment_effects(std::slice::from_ref(&selection), corpus);
+    // The character's own input, holding only this item: the weapon row reads its feats, not its gear.
+    let mut input = SavedCharacterStore::load(root).map_err(|err| err.message)?.character_input;
+    input.chosen.equipment_selections = vec![selection];
+    let weapon = map_weapon_damage_dto(&codex::rules_core::damage_total::resolve_weapon_damage_breakdown(&input, corpus, &effects, 0)).into_iter().next();
+    let container = container_stats(codex::rules_core::equipment_resolver::equipment_converted_resolve(item_id, corpus));
+    Ok(MarketEntryDetailDto { entry, weapon, armor: armor_stats(&effects), container })
+}
+
+#[derive(Debug, Clone, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct DescribeMarketEntryRequest {
+    pub character_id: String,
+    pub item_id: String,
+    /// The chosen `+N`; 0 is the plain item.
+    #[serde(default)]
+    pub bonus: u8,
+}
+
+/// The Market's description box for one row; see [`describe_market_entry_at_root`].
+#[tauri::command]
+pub fn describe_market_entry(app: tauri::AppHandle, request: DescribeMarketEntryRequest) -> Result<MarketEntryDetailDto, String> {
+    let root = resolve_character_root(&app, &request.character_id)?;
+    describe_market_entry_at_root(&root, &request.item_id, request.bonus)
 }
 
 #[derive(Debug, Clone, Deserialize)]
@@ -23816,6 +23880,97 @@ mod tests {
         let missing = describe_held_equipment_at_root(&root, &sets_key("Sack", 3));
         std::fs::remove_dir_all(&root).ok();
         assert!(missing.unwrap_err().contains("does not hold"));
+    }
+
+    // ----- SD-43 E1.9: stats in the Market's description box (`decisions.md §13`) -----
+
+    fn market_rows(category: crate::equipment_catalog::MarketCategory) -> Vec<crate::equipment_catalog::MarketEntryDto> {
+        crate::equipment_catalog::list_market(crate::equipment_catalog::MarketFilter { category, name_contains: None, book: None }).entries
+    }
+
+    /// The Market row shown as `name`, as the dialog lists it.
+    fn market_key(category: crate::equipment_catalog::MarketCategory, name: &str) -> String {
+        market_rows(category).into_iter().find(|row| row.entry.name == name).unwrap_or_else(|| panic!("the Market lists {name}")).entry.key
+    }
+
+    /// A Bastard Sword on the Market states its die and its critical, as the sheet's row would.
+    #[test]
+    fn describe_market_bastard_sword_states_damage_and_critical() {
+        let root = sets_root("describe-market-bastard", &[]);
+        let key = market_key(crate::equipment_catalog::MarketCategory::Weapon, "Sword (Bastard)");
+        let detail = describe_market_entry_at_root(&root, &key, 0).expect("the sword is on the Market");
+        std::fs::remove_dir_all(&root).ok();
+        let weapon = detail.weapon.as_ref().expect("a bastard sword has weapon stats");
+        let dice = weapon.base_dice.expect("the record's die");
+        assert_eq!((dice.count, dice.die_size, weapon.critical_threat_range, weapon.critical_multiplier), (1, 10, Some([19, 20]), Some(2)));
+        assert!(detail.armor.is_none() && detail.container.is_none(), "{detail:?}");
+    }
+
+    /// Full Plate states its armor bonus, max Dex, check penalty and spell failure; at `+2` the
+    /// name, price and enhancement follow the chosen bonus.
+    #[test]
+    fn describe_market_full_plate_states_armor_stats_and_follows_the_bonus() {
+        let root = sets_root("describe-market-full-plate", &[]);
+        let key = market_key(crate::equipment_catalog::MarketCategory::Armor, "Full Plate");
+        let plain = describe_market_entry_at_root(&root, &key, 0).expect("full plate is on the Market");
+        let plus_two = describe_market_entry_at_root(&root, &key, 2).expect("full plate is sold at +2");
+        let refused = describe_market_entry_at_root(&root, &key, 9);
+        std::fs::remove_dir_all(&root).ok();
+        let armor = plain.armor.as_ref().expect("armor stats");
+        assert_eq!((armor.armor_class_bonus, armor.max_dex, armor.armor_check_penalty, armor.spell_failure), (Some(9), Some(1), Some(-6), Some(35.0)));
+        assert!(plain.weapon.is_none(), "{:?}", plain.weapon);
+        assert_eq!(plus_two.entry.name, "+2 Full Plate");
+        let listed = market_rows(crate::equipment_catalog::MarketCategory::Armor).into_iter().find(|row| row.entry.key == key).unwrap().variants;
+        assert_eq!(plus_two.entry.cost_gp, listed.iter().find(|variant| variant.bonus == 2).map(|variant| variant.price_gp), "the +2 row's price, as the Market lists it");
+        assert_eq!(plus_two.entry.cost_gp, Some(5650.0), "1,500 gp + 150 gp masterwork + 4,000 gp for +2");
+        assert_eq!(plus_two.armor.as_ref().and_then(|armor| armor.armor_class_enhancement), Some(2));
+        assert!(refused.unwrap_err().contains("+9"));
+    }
+
+    /// Proof width (`decisions.md §13`): one row of every category and every `TYPE` shape the
+    /// Market lists, described; per stat, how many state none (the box's `—`). Printed for the
+    /// receipt. A row the Market sells at `+N` must state the number the `+N` adds to.
+    #[test]
+    fn describe_market_samples_every_category_and_type_shape() {
+        use crate::equipment_catalog::MarketCategory;
+        let root = sets_root("describe-market-sample", &[]);
+        const STATS: [&str; 12] = ["cost", "weight", "description", "damage", "critical", "range", "wield", "ac", "max dex", "acp", "asf", "capacity"];
+        println!("| category | shapes | {} |", STATS.join(" | "));
+        println!("|---|---|{}", "---|".repeat(STATS.len()));
+        let mut described = 0;
+        for category in [MarketCategory::Weapon, MarketCategory::Armor, MarketCategory::Shield, MarketCategory::Gear, MarketCategory::MagicItem] {
+            let mut seen = std::collections::BTreeSet::new();
+            let mut dashes = [0usize; 12];
+            for row in market_rows(category).into_iter().filter(|row| seen.insert(row.entry.types.join("."))) {
+                let detail = describe_market_entry_at_root(&root, &row.entry.key, 0).unwrap_or_else(|err| panic!("{}: {err}", row.entry.key));
+                let (weapon, armor) = (detail.weapon.as_ref(), detail.armor.as_ref());
+                let absent = [
+                    detail.entry.cost_gp.is_none(),
+                    detail.entry.weight_lbs.is_none(),
+                    detail.entry.description.is_none(),
+                    weapon.is_none_or(|w| w.base_dice.is_none()),
+                    weapon.is_none_or(|w| w.critical_threat_range.is_none() && w.critical_multiplier.is_none()),
+                    weapon.is_none_or(|w| w.range_increment.is_none()),
+                    weapon.is_none_or(|w| w.wield_category.is_none()),
+                    armor.is_none_or(|a| a.armor_class_bonus.is_none()),
+                    armor.is_none_or(|a| a.max_dex.is_none()),
+                    armor.is_none_or(|a| a.armor_check_penalty.is_none()),
+                    armor.is_none_or(|a| a.spell_failure.is_none()),
+                    detail.container.is_none(),
+                ];
+                for (count, missing) in dashes.iter_mut().zip(absent) {
+                    *count += usize::from(missing);
+                }
+                if !row.variants.is_empty() {
+                    let reaches = if category == MarketCategory::Weapon { !absent[3] } else { !absent[7] };
+                    assert!(reaches, "{} is sold at +N but states no number it adds to: {detail:?}", row.entry.key);
+                }
+                described += 1;
+            }
+            println!("| {category:?} | {} | {} |", seen.len(), dashes.map(|n| n.to_string()).join(" | "));
+        }
+        std::fs::remove_dir_all(&root).ok();
+        assert!(described > 50, "every shape described: {described}");
     }
 }
 
