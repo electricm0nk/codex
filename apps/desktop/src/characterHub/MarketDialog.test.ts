@@ -15,7 +15,7 @@ import {
   marketShownRows,
   MARKET_ROW_LIMIT,
 } from './itemPickerFilter';
-import { MARKET_CATEGORIES, MarketDialogView, type MarketDealsProps, type MarketDialogViewProps } from './MarketDialog';
+import { MARKET_CATEGORIES, MarketDialogView, sellValueGp, type MarketDealsProps, type MarketDialogViewProps } from './MarketDialog';
 import { mapMarketTableRows } from './marketModel';
 import { buildOf, BuyCustomDialogView, EMPTY_BUY_CUSTOM } from './BuyCustomDialog';
 import { createItemFields, CreateItemDialogView, EMPTY_CREATE_ITEM } from './CreateItemDialog';
@@ -129,6 +129,20 @@ assertEqual(marketPlacementWords('SelectedInactive', null), 'carried', 'an item 
   assert(html.includes('name="market-price-mode"'), 'its radios are not the sheet tab\'s group');
   assert(html.includes('2,000 gp'), 'the balance carries the currency label');
   assert(/<button[^>]*disabled=""[^>]*>Buy<\/button>/.test(html), 'Buy waits for a pick');
+}
+
+// E1.8: the inventory row's value cell is the engine's sell rule on the whole stack, under the live price option.
+{
+  const [row] = mapMarketEntries([{ ...SWORD, costGp: 10 } as MarketEntryDto]);
+  const stack = { itemId: 'Longsword (Base)', name: 'Longsword (Base)', bonus: 0, quantity: 3, baseQuantity: 1 };
+  assertEqual(sellValueGp(row, stack, 'standard'), 15, 'a 3-stack of 10 gp sells for 50 % of 30 gp');
+  assertEqual(sellValueGp(row, stack, 'cashless'), 0, 'cashless sells for nothing');
+  assertEqual(sellValueGp(null, stack, 'standard'), null, 'an unlisted copy has no value');
+  const view = (mode: 'standard' | 'cashless') =>
+    render({ priceMode: mode, inventory: [stack], sellValue: (copy) => sellValueGp(row, copy, mode) });
+  assert(/data-testid="market-sell-value"[^>]*>15 gp<\/td>/.test(view('standard')), 'standard shows the 50 % total');
+  assert(/data-testid="market-sell-value"[^>]*>\u2014<\/td>/.test(view('cashless')), 'cashless shows a dash');
+  assert(/data-testid="market-sell-value"[^>]*>\u2014<\/td>/.test(render({ inventory: [stack], sellValue: () => null })), 'no price shows a dash');
 }
 
 // A pick offers its bonuses and prices the one chosen.

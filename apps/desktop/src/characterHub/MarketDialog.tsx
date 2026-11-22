@@ -88,6 +88,11 @@ export interface MarketDealsProps {
   onCancelNegotiation: () => void;
 }
 
+/** What the whole held stack sells for under `mode`: the engine's sell rule (`sellNegotiateGp`), `null` without a listed price. */
+export function sellValueGp(row: MarketTableRow | null, copy: MarketHeldCopy, mode: PriceMode): number | null {
+  return row ? sellNegotiateGp(marketPriceGp(row, copy.bonus), copy.quantity ?? 1, copy.baseQuantity ?? 1, mode) : null;
+}
+
 export interface MarketDialogViewProps {
   category: MarketCategory;
   onCategory: (category: MarketCategory) => void;
@@ -111,6 +116,8 @@ export interface MarketDialogViewProps {
   /** What the character holds, one row per stack; `null` until it has loaded. */
   inventory: MarketHeldCopy[] | null;
   onSell: (copy: MarketHeldCopy) => void;
+  /** The gp one held stack sells for under the live price option; `null` is no price. Absent, the row has no value cell. */
+  sellValue?: (copy: MarketHeldCopy) => number | null;
   priceMode: PriceMode;
   onPriceModeChange: (mode: PriceMode) => void;
   /** A buy or sale is in flight: a second click must not charge twice. */
@@ -324,6 +331,14 @@ export function MarketDialogView(props: MarketDialogViewProps) {
                       </button>
                     </td>
                     <td style={cell}>{copy.quantity !== undefined && copy.quantity > 1 ? `×${copy.quantity}` : ''}</td>
+                    {props.sellValue ? (
+                      <td data-testid="market-sell-value" style={cell}>
+                        {props.priceMode === 'cashless' ? '\u2014' : (() => {
+                          const gp = props.sellValue(copy);
+                          return gp === null ? '\u2014' : formatMarketPrice(gp, props.currency);
+                        })()}
+                      </td>
+                    ) : null}
                     {deals ? (
                       <td style={cell}>
                         <button type="button" disabled={props.busy} onClick={() => deals.onNegotiateSell(copy)} style={smallButton}>
@@ -652,6 +667,7 @@ export function MarketDialog(props: {
           void act(() => props.onBuy(selectedRow, bonus, deals ? { quantity: count } : undefined));
         }}
         inventory={inventory}
+        sellValue={(copy) => sellValueGp(rowOfCopy(copy), copy, props.priceMode)}
         onSell={(copy) => void act(() => props.onSell(copy, deals ? { quantity: sellPieces(copy) } : undefined))}
         priceMode={props.priceMode}
         onPriceModeChange={props.onPriceModeChange}
