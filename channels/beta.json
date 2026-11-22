@@ -1,11 +1,11 @@
 {
   "channel": "beta",
-  "manifest_url": "https://raw.githubusercontent.com/electricm0nk/codex/update-index/manifests/beta/v0.22.165-336f1b1d/update-manifest.json",
-  "publication_timestamp": "2026-11-22T03:44:51Z",
-  "release_url": "https://github.com/electricm0nk/codex/releases/tag/beta-v0.22.165-336f1b1d",
+  "manifest_url": "https://raw.githubusercontent.com/electricm0nk/codex/update-index/manifests/beta/v0.22.167-3ef53226/update-manifest.json",
+  "publication_timestamp": "2026-11-22T05:02:24Z",
+  "release_url": "https://github.com/electricm0nk/codex/releases/tag/beta-v0.22.167-3ef53226",
   "schema_version": "1.0.0",
   "signature": null,
-  "tag": "beta/v0.22.165-336f1b1d",
+  "tag": "beta/v0.22.167-3ef53226",
   "tranche_id": "STC-CODEX-SD-16",
-  "version": "0.22.165"
+  "version": "0.22.167"
 }
