@@ -79,6 +79,7 @@ line, the `git grep` used for second call sites. A RED that exited 0 is not disp
 |---|---|---|---|---|---|
 | 2026-11-22 | C1 | complete | this commit (`git log -1 --format=%H -- docs/release/current-release.json`) | `artifacts/cycle_0/C1_cycle_receipt.md` | Pointer → tranche 43 + interim `release-notes.md`; resolver exit 0; pytest `tools/release` 62 passed, 2 subtests passed |
 | 2026-11-22 | E0.1 | complete | `d9c84afeaf037a84a04700c640447e1a1f935c14` | `artifacts/epic_0/E0.1_cycle_receipt.md` | census `--check` exit 0; 7 sub-tabs non-null; 1,913/16,348 reproduced; 1,329 class-granted choice sites, impl A = impl B; Q-22.2 settled (DISPLAYLOCATION); 34 data gaps, 30 ingest → discovered E3.12 (count 56 → 57); `fetch-pcgen-oracle.sh --print-env` does not exist (retro correction) |
+| 2026-11-22 | E0.4 | complete | `952d79c7e1af9e2fca2868391d8cad4288e4d059` | `artifacts/epic_0/E0.4_cycle_receipt.md` | Items 5/7/12 reproduced on a fresh Tomas (isolated root): `#N` = display bug; drop on a child row → section (data bug); left container tables have no drop zone; Backpack sale already sends contents to Carried; Sell removes a different same-item copy → discovered E1.12 (57 cards) |
 
 ## Epic reports
 

@@ -43,7 +43,7 @@ awk -F'|' '$2 ~ /^ (C|E)[0-9]/ {print $5}' kanban.md | sort | uniq -c   # 56 tod
 | E0.1 | Abilities census: seven sub-tabs, every class-granted choice by mechanism (§22c), pools, saved fields, budgets, prereqs, pool sizes per level, PCGen mapping, data-gap list | opus | complete | C1 | census | no | no | settles Q-22.2; RED `abilities_census.py --check` exit 2 (no such file); GREEN exit 0; 1,329 class-granted choice sites (A=B); 34 data gaps (30 ingest → E3.12); receipt `artifacts/epic_0/E0.1_cycle_receipt.md`; SHA `d9c84afeaf037a84a04700c640447e1a1f935c14` |
 | E0.2 | Market count reconciliation test over `built_catalog()` | opus | todo | C1 | market | yes (desktop) | no | settles Q-11.1 |
 | E0.3 | Placeholder-name scan widened to every kind and surface | sonnet | todo | C1 | census | no | no | must reproduce 111 / 201 |
-| E0.4 | Reproduce items 5, 7, 12 on a fresh Brother Tomas Vane | opus | todo | C1 | gear | yes (app build) | no | isolated app-data root |
+| E0.4 | Reproduce items 5, 7, 12 on a fresh Brother Tomas Vane | opus | complete | C1 | gear | yes (app build) | no | RED: `test -f …/gear-repro.md` exit 1 (2026-11-22); receipt `artifacts/epic_0/E0.4_cycle_receipt.md`; SHA `952d79c7e1af9e2fca2868391d8cad4288e4d059`; discovered E1.12 |
 | E0.5 | Rest-rule census (classes, races); House Rules per system (PF, SF, CPR) | sonnet | todo | C1 | census | no | no | settles Q-2.1 input, Q-3.5 |
 | E1.1 | Container truth: no `#N`, custom names, filled container never stacked, split on put-into-stack | opus | todo | E0.4 | gear | yes (desktop) | hub | |
 | E1.2 | One-column gear list: order, natural sort, nested boxes, Not Carried section | opus | todo | E1.1 | gear | no | no | |
