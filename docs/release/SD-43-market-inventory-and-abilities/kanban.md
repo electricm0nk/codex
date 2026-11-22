@@ -89,7 +89,7 @@ awk -F'|' '$2 ~ /^ (C|E)[0-9]/ {print $5}' kanban.md | sort | uniq -c   # 56 tod
 | E6.2 | House Rules ☰ menu per character and system | opus | todo | E3.MC | sheet | yes (desktop) | hub | |
 | E6.3 | House rule: HP at level-up, seven methods | opus | todo | E6.2 | sheet | yes (root + desktop) | hub | |
 | E6.4 | House rule: Ambidextrous removes the off-hand penalty | opus | todo | E6.3 | sheet | yes (root + desktop) | hub | |
-| E6.5 | Custom items export/import | opus | todo | E6.1 | campaign | yes (desktop) | hub | |
+| E6.5 | Custom items export/import | opus | complete | E6.1 | campaign | yes (desktop) | hub | RED: receipt absent, 0 export/import fns (exit 1); GREEN `custom_items_exchange` 3 passed; receipt `artifacts/epic_6/E6.5_cycle_receipt.md`; SHA `f5a12da36086c5abd1d02685fc3bbff24e30b4c1` |
 | E6.MC | E6 merge check + epic report | opus | todo | E6.4, E6.5 | campaign | yes (base build) | no | |
 | E7.1 | ui-smoke rows for every changed screen; inventory regenerated | sonnet | todo | E1.MC, E2.MC, E3.MC, E4.2, E5.MC, E6.MC | main | no | no | sole `spec.json` writer |
 | E7.2 | Final-acceptance scan (widest verify, packaged resources, fresh install, P-8) → retrospective written and cited → sweep | opus | todo | E7.1 | main | no | no | stops with no retro/sweep/PR if anything is short |
